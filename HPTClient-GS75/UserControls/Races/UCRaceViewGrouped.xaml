@@ -1,0 +1,1033 @@
+﻿<HPT:UCMarkBetControl x:Class="HPTClient.UCRaceViewGrouped"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:x2="http://schemas.microsoft.com/netfx/2007/xaml/presentation"
+    xmlns:HPT="clr-namespace:HPTClient"
+    xmlns:dat="clr-namespace:System.Windows.Data;assembly=PresentationFramework"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+    Unloaded="UserControl_Unloaded" Loaded="UserControl_Loaded"
+    x:Name="ucRaceView" DataContextChanged="ucRaceView_DataContextChanged">
+    <UserControl.Resources>
+
+        <BooleanToVisibilityConverter x:Key="hptVisibilityConverter"/>
+
+        <Style x:Key="OwnRankSelectedItemStyle" TargetType="{x:Type ComboBox}">
+            <Setter Property="Background" Value="{StaticResource StandardBrush}"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="10"/>
+        </Style>
+
+        <Style x:Key="TrioPlaceTextStyle" TargetType="{x:Type TextBlock}">
+            <Style.Setters>
+                <Setter Property="FontSize" Value="9"/>
+                <Setter Property="TextAlignment" Value="Right"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style.Setters>
+        </Style>
+
+        <Style x:Key="TrioFirstPlaceTextStyle" BasedOn="{StaticResource TrioPlaceTextStyle}" TargetType="{x:Type TextBlock}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding TrioFirstPlaceHighlighted}" Value="true">
+                    <Setter Property="TextDecorations" Value="Underline"/>
+                    <Setter Property="FontSize" Value="10"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="TrioSecondPlaceTextStyle" BasedOn="{StaticResource TrioPlaceTextStyle}" TargetType="{x:Type TextBlock}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding TrioSecondPlaceHighlighted}" Value="true">
+                    <Setter Property="TextDecorations" Value="Underline"/>
+                    <Setter Property="FontSize" Value="10"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="TrioThirdPlaceTextStyle" BasedOn="{StaticResource TrioPlaceTextStyle}" TargetType="{x:Type TextBlock}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding TrioThirdPlaceHighlighted}" Value="true">
+                    <Setter Property="TextDecorations" Value="Underline"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <DataTemplate x:Key="ReservRadioButtonTemplate">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <RadioButton GroupName="{Binding Path=ParentRace.Reserv1GroupName}" Template="{StaticResource RadioButtonControlTemplate}" Checked="RadioButton_Checked"                             
+                             Content="1" IsChecked="{Binding Reserv1,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding NotScratched}" 
+                             Grid.Column="0" Foreground="WhiteSmoke" ></RadioButton>
+                <RadioButton GroupName="{Binding Path=ParentRace.Reserv2GroupName}" Template="{StaticResource RadioButtonControlTemplate}" Checked="RadioButton_Checked"
+                             Content="2" IsChecked="{Binding Reserv2,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding NotScratched}" 
+                             Grid.Column="1" Foreground="WhiteSmoke"></RadioButton>
+            </Grid>
+        </DataTemplate>
+
+        <CollectionViewSource x:Key="HorseListView" Source="{Binding HorseList}">
+            <!--<CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription PropertyName="{Binding Path=GroupDescriptionProperty,ElementName=ucRaceView}"/>
+            </CollectionViewSource.GroupDescriptions>-->
+        </CollectionViewSource>
+
+    </UserControl.Resources>
+
+    <Grid>
+        <ListView Name="lvwLopp" ItemsSource="{Binding Source={StaticResource HorseListView}}" KeyUp="lvwLopp_KeyUp" 
+                  Grid.Row="1" BorderThickness="0"
+                  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                  GridViewColumnHeader.Click="GridViewColumnHeader_Click"
+                  ContextMenu="{Binding Path=CMColumnsToShow,ElementName=ucRaceView}"
+                  MouseDown="lvwLopp_MouseDown">
+
+            <ListView.Resources>
+                <Style TargetType="{x:Type GridViewColumnHeader}">
+                    <Style.Setters>
+                        <Setter Property="BorderBrush" Value="Black"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                        <Setter Property="Background" Value="{StaticResource HeaderGrayBrush}"/>
+                    </Style.Setters>
+                </Style>
+
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="Background" Value="{Binding VinnaroddsColor,Mode=OneWay}"/>
+                    <Setter Property="BorderBrush" Value="Black"></Setter>
+                    <Setter Property="BorderThickness" Value="0.5"></Setter>
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="Margin" Value="0.5"/>
+                    <Setter Property="Padding" Value="0.5"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsHighlighted}" Value="true">
+                            <Setter Property="Background" Value="{StaticResource StandardBrush}"/>
+                            <Setter Property="BorderBrush" Value="Black"/>
+                            <Setter Property="BorderThickness" Value="3"/>
+                            <Setter Property="Margin" Value="0"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.Resources>
+
+            <ListView.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.ContainerStyle>
+                        <Style TargetType="{x:Type GroupItem}">
+                            <Setter Property="Margin" Value="0,0,0,5"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type GroupItem}">
+                                        <Expander IsExpanded="True" BorderBrush="Black" BorderThickness="1" Background="Orange" 
+                                                  Tag="{Binding Path=Name}" Loaded="Expander_Loaded">
+                                            <Expander.Header>
+                                                <WrapPanel Orientation="Horizontal" Background="Orange">
+                                                    
+                                                    <Border BorderBrush="Black" BorderThickness="1" CornerRadius="2" Background="LightSkyBlue">
+                                                        <TextBlock FontWeight="Bold" Text="{Binding Path=Name}" Margin="1" Padding="1">
+                                                            <TextBlock.ToolTip>
+                                                                <ToolTip Background="{StaticResource BackgroundBrush}" ToolTipService.ShowDuration="20000" DataContext="{Binding Path=PlacementTarget.DataContext, RelativeSource={x:Static RelativeSource.Self}}">
+                                                                    <Border BorderBrush="Black" BorderThickness="1" Margin="2">
+                                                                        <TextBlock Text="{Binding Path=Items[0].ParentRace.RaceInfoLong}" Style="{StaticResource tbStyle}" Margin="2"/>
+                                                                    </Border>
+                                                                </ToolTip>
+                                                            </TextBlock.ToolTip>
+                                                        </TextBlock>
+                                                    </Border>
+                                                    
+                                                    <Button x:Name="btnHideOthers" Content="Dölj övriga" Click="btnHideOthers_Click" Tag="{Binding Path=Name}"/>
+                                                    
+                                                    <TextBlock Margin="10,2,2,2" Background="Orange" Text="Summor:" FontWeight="Bold"/>
+                                                    <TextBlock Margin="2" Background="Orange">
+                                                        <TextBlock.Text>
+                                                            <MultiBinding StringFormat="{}Egen rank:{0:##0}, Poäng:{1:##0}, ABC-rank:{2:##0}, Chansvärdering:{3:P1}">
+                                                                <Binding Path="Items[0].ParentRace.RankOwnSum"/>
+                                                                <Binding Path="Items[0].ParentRace.RankAlternateSum"/>
+                                                                <Binding Path="Items[0].ParentRace.RankABCSum"/>
+                                                                <Binding Path="Items[0].ParentRace.OwnProbabilitySum"/>
+                                                            </MultiBinding>
+                                                        </TextBlock.Text>
+                                                    </TextBlock>
+
+                                                    <TextBlock Margin="10,2,2,2" Background="Orange" Text="Starttid:" FontWeight="Bold"/>
+                                                    <TextBlock Margin="2" Text="{Binding Path=Items[0].ParentRace.PostTime,StringFormat={}{0:HH:mm}}" Background="Orange"/>
+
+                                                </WrapPanel>
+                                            </Expander.Header>
+                                            <Expander.Content>
+                                                <Border Background="White" Margin="1">
+                                                    <ItemsPresenter/>
+                                                </Border>
+                                            </Expander.Content>
+                                        </Expander>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </GroupStyle.ContainerStyle>
+                </GroupStyle>
+            </ListView.GroupStyle>
+
+            <ListView.View>
+                <GridView x:Name="gvwVxxSpel">
+
+                    <!--Utgång-->
+                    <GridViewColumn x:Name="gvcComplimentaryRuleSelect">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox Name="chkComplimentarySelect" IsEnabled="{Binding NotScratched}" IsChecked="{Binding SelectedForComplimentaryRule}" Template="{StaticResource CheckBoxControlTemplate}" Content="{Binding ComplimentaryText}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                        <GridViewColumnHeader Tag="SelectedForComplimentaryRule" Content="Utgång"
+                                    ToolTipService.ToolTip="Klicka för att inkludera häst i vald utgång"/>
+                    </GridViewColumn>
+
+                    <!--Avdelning-->
+                    <GridViewColumn x:Name="gvcLegNr">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Left" FontWeight="Bold" Text="{Binding ParentRace.LegNrString}" HorizontalAlignment="Right" MouseLeftButtonUp="TextBlock_MouseLeftButtonUp_1">
+                                    <TextBlock.ToolTip>
+                                        <ToolTip Background="{StaticResource BackgroundBrush}" ToolTipService.ShowDuration="20000" DataContext="{Binding Path=PlacementTarget.DataContext, RelativeSource={x:Static RelativeSource.Self}}">
+                                            <Border BorderBrush="Black" BorderThickness="1" Margin="2">
+                                                <TextBlock Text="{Binding Path=ParentRace.RaceInfoLong}" Style="{StaticResource tbStyle}" Margin="2"/>
+                                            </Border>
+                                        </ToolTip>
+                                    </TextBlock.ToolTip>
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                        <GridViewColumnHeader Tag="ParentRace.LegNrString" Content="Avd"                                              
+                                    ToolTipService.ToolTip="Avdelningsnummer"/>
+                    </GridViewColumn>
+
+                    <!--Värde-->
+                    <GridViewColumn x:Name="gvcSystemValue">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Left" FontWeight="Bold" Text="{Binding Path=ParentRace.LegResult.Value,StringFormat={}{0:N0},ConverterCulture=sv-SE}" HorizontalAlignment="Right">
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                        <GridViewColumnHeader Tag="ParentRace.LegResult.Value" Content="Värde"                                              
+                                    ToolTipService.ToolTip="Värde efter aktuell avdelning" MinWidth="100"/>
+                    </GridViewColumn>
+
+                    <!--Kvarvarande system-->
+                    <GridViewColumn x:Name="gvcSystemsLeft">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Left" FontWeight="Bold" Text="{Binding Path=ParentRace.LegResult.SystemsLeft,StringFormat={}{0:N0},ConverterCulture=sv-SE}" HorizontalAlignment="Right">
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                        <GridViewColumnHeader Tag="ParentRace.LegResult.SystemsLeft" Content="System"                                              
+                                    ToolTipService.ToolTip="Kvarvarande system" MinWidth="100"/>
+                    </GridViewColumn>
+
+                    <!--Länk till resultatsidan på atg.se-->
+                    <GridViewColumn x:Name="gvcATGResultLink">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label>
+                                    <Hyperlink x:Name="hlATGResultLink" NavigateUri="{Binding Path=ParentRace.ATGResultLink}">Loppresultat</Hyperlink>
+                                </Label>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                        <GridViewColumnHeader Tag="ParentRace.LegResult.SystemsLeft" Content="ATG"                                              
+                                    ToolTipService.ToolTip="Resultat på atg.se" MinWidth="100"/>
+                    </GridViewColumn>
+
+                    <!--Startnummer-->
+                    <GridViewColumn x:Name="gvcStartNr">
+                        <GridViewColumnHeader Tag="StartNr" Content="Nr" MouseDown="GridViewColumnHeader_MouseDown"
+                                    ToolTipService.ToolTip="Hästens startnummer">
+                        </GridViewColumnHeader>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox Name="chkNrSelect" IsEnabled="{Binding NotScratched}" IsChecked="{Binding Selected}" Template="{StaticResource CheckBoxControlTemplate}" Content="{Binding StartNr}" MouseRightButtonUp="chkNrSelect_MouseUp"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!-- ABCDEF-reducering -->
+                    <GridViewColumn x:Name="gvcABCD">
+                        <GridViewColumnHeader x:Name="gvchABCD" Content="Prio" HorizontalContentAlignment="Left" Tag="PrioSort" MouseDown="gvcABCD_MouseDown"
+                                    ToolTipService.ToolTip="ABCD-rank. Klicka A, B, C eller D för att ange hästens rank."/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <ItemsControl ItemsSource="{Binding HorseXReductionList}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <CheckBox Template="{StaticResource CheckBoxABCDControlTemplate}"
+                                                         Content="{Binding Prio}" Tag="{Binding Prio}"
+                                                         IsChecked="{Binding Selected}" IsEnabled="{Binding Path=Horse.NotScratched}" 
+                                                         Visibility="{Binding Path=Selectable,Converter={StaticResource hptVisibilityConverter}}" 
+                                                         Foreground="WhiteSmoke" MouseRightButtonUp="gvchABCD_MouseRightButtonUp"></CheckBox>
+                                            <!--<RadioButton Template="{StaticResource RadioButtonControlTemplate}" 
+                                                         Content="{Binding Prio}" Tag="{Binding Prio}" GroupName="{Binding Path=Horse.HorseUniqueCode}" 
+                                                         IsChecked="{Binding Selected,BindsDirectlyToSource=True}" IsEnabled="{Binding Path=Horse.NotScratched}" 
+                                                         Visibility="{Binding Path=Selectable,Converter={StaticResource hptVisibilityConverter}}" 
+                                                         Foreground="WhiteSmoke" MouseRightButtonUp="gvchABCD_MouseRightButtonUp"></RadioButton>-->
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Lås-->
+                    <GridViewColumn x:Name="gvcLocked">
+                        <GridViewColumnHeader Tag="Locked" Content="Lås" MouseDown="GridViewColumnHeader_MouseDown"
+                                    ToolTipService.ToolTip="Välj om hästen ska vara låst i mallar, nybörjarsystem etc">
+                        </GridViewColumnHeader>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox x:Name="chkLocked" Grid.Column="3" Margin="0,-1" Padding="0,-1" Width="Auto" IsEnabled="{Binding NotScratched}"
+                                                  Template="{StaticResource CheckBoxControlTemplate}" IsChecked="{Binding Locked}">
+                                    <TextBlock Text="Lås" FontSize="10" Padding="2" Foreground="Black" FontWeight="Bold"/>
+                                </CheckBox>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Trio-1:a-->
+                    <GridViewColumn x:Name="gvcTrio1">
+                        <GridViewColumnHeader Content="1:a" HorizontalContentAlignment="Left" Tag="PercentFirst"
+                                    ToolTipService.ToolTip="Välj för första plats"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox Template="{StaticResource CheckBoxHorsePositionTemplate}" x:Name="chkTrio1"
+                                          Tag="1" IsChecked="{Binding TrioFirstPlace}" IsEnabled="{Binding NotScratched}" Foreground="Black">
+                                    <CheckBox.Content>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Style="{StaticResource TrioFirstPlaceTextStyle}" Text="{Binding Path=PercentFirst,StringFormat={}{0}%}"/>
+                                            <TextBlock Style="{StaticResource TrioFirstPlaceTextStyle}" Text="{Binding Path=PercentFirstRelative,StringFormat=({0:F2})}"/>
+                                        </StackPanel>
+                                    </CheckBox.Content>
+                                </CheckBox>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Trio-2:a-->
+                    <GridViewColumn x:Name="gvcTrio2">
+                        <GridViewColumnHeader Content="2:a" HorizontalContentAlignment="Left" Tag="PercentSecond"
+                                    ToolTipService.ToolTip="Välj för andra plats"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox Template="{StaticResource CheckBoxHorsePositionTemplate}" x:Name="chkTrio2"
+                                           Tag="2" IsChecked="{Binding TrioSecondPlace}" IsEnabled="{Binding NotScratched}" Foreground="Black">
+                                    <CheckBox.Content>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Style="{StaticResource TrioSecondPlaceTextStyle}" Text="{Binding Path=PercentSecond,StringFormat={}{0}%}"/>
+                                            <TextBlock Style="{StaticResource TrioSecondPlaceTextStyle}" Text="{Binding Path=PercentSecondRelative,StringFormat=({0:F2})}"/>
+                                        </StackPanel>
+                                    </CheckBox.Content>
+                                </CheckBox>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Trio-3:a-->
+                    <GridViewColumn x:Name="gvcTrio3">
+                        <GridViewColumnHeader Content="3:a" HorizontalContentAlignment="Left" Tag="PercentThird"
+                                    ToolTipService.ToolTip="Välj för tredje plats"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox Template="{StaticResource CheckBoxHorsePositionTemplate}" x:Name="chkTrio3"
+                                           Tag="1" IsChecked="{Binding TrioThirdPlace}" IsEnabled="{Binding NotScratched}" Foreground="Black">
+                                    <CheckBox.Content>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Style="{StaticResource TrioThirdPlaceTextStyle}" Text="{Binding Path=PercentThird,StringFormat={}{0}%}"/>
+                                            <TextBlock Style="{StaticResource TrioThirdPlaceTextStyle}" Text="{Binding Path=PercentThirdRelative,StringFormat=({0:F2})}"/>
+                                        </StackPanel>
+                                    </CheckBox.Content>
+                                </CheckBox>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Trioindex-->
+                    <GridViewColumn x:Name="gvcTrioIndex">
+                        <GridViewColumnHeader Content="Index" HorizontalContentAlignment="Left" Tag="TrioIndex"
+                                    ToolTipService.ToolTip="Trioindex jämfört med andra hästar"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Right" Text="{Binding TrioIndex}" HorizontalAlignment="Right"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Namn-->
+                    <GridViewColumn x:Name="gvcNamn">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock x:Name="txtHorseName" Text="{Binding HorseName}" FontWeight="Bold" 
+                                           MouseUp="txtHorseName_MouseUp" MouseDown="txtHorseName_MouseDown"
+                                           ContextMenu="{Binding Path=CMHorse,ElementName=ucRaceView}">
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                        <GridViewColumnHeader Tag="HorseName" Content="Namn" MouseDown="GridViewColumnHeader_MouseDown"
+                                    ToolTipService.ToolTip="Hästens namn och nationalitet"/>
+                    </GridViewColumn>
+
+                    <!--Distans-->
+                    <GridViewColumn x:Name="gvcDistance">
+                        <GridViewColumnHeader Content="Distans" HorizontalContentAlignment="Left" Tag="Distance"
+                                    ToolTipService.ToolTip="Distans inklusive tillägg"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Right" Text="{Binding Distance}" HorizontalAlignment="Right"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Skoinfo-->
+                    <GridViewColumn x:Name="gvcShoeInfo">
+                        <GridViewColumnHeader Content="Skoinfo" HorizontalContentAlignment="Left"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <HPT:UCShoeInfo DataContext="{Binding ShoeInfoCurrent}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Sulkyinfo-->
+                    <GridViewColumn x:Name="gvcSulkyInfo">
+                        <GridViewColumnHeader Content="Vagninfo" HorizontalContentAlignment="Left"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock HorizontalAlignment="Left" Text="{Binding SulkyInfoCurrent.Text}">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SulkyInfoCurrent.SulkyChanged}" Value="true">
+                                                    <Setter Property="FontWeight" Value="Bold"/>
+                                                    <Setter Property="FontStyle" Value="Italic"/>
+                                                    <!--<Setter Property="Foreground" Value="Red"/>-->
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Kön-->
+                    <GridViewColumn x:Name="gvcSex">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock x:Name="txtSex" Text="{Binding Sex}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                        <GridViewColumnHeader Tag="Sex" Content="Kön"
+                                    ToolTipService.ToolTip="Hästens kön"/>
+                    </GridViewColumn>
+
+                    <!--Ålder-->
+                    <GridViewColumn x:Name="gvcAge">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock x:Name="txtAge" Text="{Binding Age}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                        <GridViewColumnHeader Tag="Age" Content="Ålder"
+                                    ToolTipService.ToolTip="Hästens ålder"/>
+                    </GridViewColumn>
+
+                    <!--Bana-->
+                    <GridViewColumn x:Name="gvcTrack">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock HorizontalAlignment="Left" Text="{Binding HomeTrackInfo}">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsHomeTrack}" Value="true">
+                                                    <Setter Property="FontWeight" Value="Bold"/>
+                                                    <Setter Property="FontStyle" Value="Italic"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                        <GridViewColumnHeader Tag="DistanceFromHomeTrack" Content="Bana"
+                                    ToolTipService.ToolTip="Hästens hemmabana"/>
+                    </GridViewColumn>
+
+                    <!--Kusk-->
+                    <GridViewColumn x:Name="gvcDriver">
+                        <GridViewColumnHeader Tag="DriverNameShort" Content="Kusk"
+                                    ToolTipService.ToolTip="Kuskens namn. Sortering stigande på efternamn."/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                
+                                    <TextBlock x:Name="txtDriverName" Text="{Binding DriverName}" MouseUp="txtDriverName_MouseUp">                                    
+                                        <TextBlock.Style>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Path=DriverChangedSinceLastStart}" Value="true">
+                                                        <Setter Property="FontStyle" Value="Italic"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Path=DriverChanged}" Value="true">
+                                                        <Setter Property="FontWeight" Value="Bold"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+
+                                    <Border Visibility="{Binding Path=DriverChanged,Converter={StaticResource hptVisibilityConverter}}" BorderBrush="Black" BorderThickness="1" Background="WhiteSmoke" Margin="5,2,2,2">
+                                        <TextBlock Text="NY" Foreground="Red" FontWeight="Bold" Padding="1,-1" FontSize="10"/>
+                                    </Border>
+                                    
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Tränare-->
+                    <GridViewColumn x:Name="gvcTrainer">
+                        <GridViewColumnHeader Tag="TrainerNameShort" Content="Tränare"
+                                    ToolTipService.ToolTip="Tränarens namn. Sortering stigande på efternamn."/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock x:Name="txtTrainerName" Text="{Binding TrainerName}" MouseUp="txtTrainerName_MouseUp">
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Ägare-->
+                    <GridViewColumn x:Name="gvcOwner">
+                        <GridViewColumnHeader Tag="Owner" Content="Ägare"
+                                    ToolTipService.ToolTip="Ägares namn"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock x:Name="txtOwner" Text="{Binding OwnerName}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Uppfödare-->
+                    <GridViewColumn x:Name="gvcBreeder">
+                        <GridViewColumnHeader Tag="Breeder" Content="Uppfödare"
+                                    ToolTipService.ToolTip="Uppfödares namn"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock x:Name="txtBreeder" Text="{Binding BreederName}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Vinnarodds-->
+                    <GridViewColumn x:Name="gvcVinnarOdds">
+                        <GridViewColumnHeader Tag="VinnarOdds" Content="Vinnarodds"
+                                    ToolTipService.ToolTip="ATGs vinnarodds på hästen"
+                                    MouseDown="gvcSpikes_MouseDown"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Right" FontWeight="Bold" HorizontalAlignment="Right"
+                                           Text="{Binding Path=VinnarOddsExact,StringFormat=F2}"/>
+                                <!--<TextBlock TextAlignment="Right" FontWeight="Bold" HorizontalAlignment="Right">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} ({1:##0.00})">
+                                            <Binding Path="VinnarOddsString"/>
+                                            <Binding Path="VinnarOddsExact"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>-->
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Relativt vinnarodds-->
+                    <GridViewColumn x:Name="gvcVinnarOddsRelative">
+                        <GridViewColumnHeader Tag="VinnarOddsRelative" Content="Rel. odds"
+                                    ToolTipService.ToolTip="Relativt vinnarodds"
+                                    MouseDown="gvcSpikes_MouseDown">
+                        </GridViewColumnHeader>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Right" Text="{Binding Path=VinnarOddsRelative,StringFormat={}{0:F0}}" HorizontalAlignment="Right"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Platsodds-->
+                    <GridViewColumn x:Name="gvcPlatsOdds">
+                        <GridViewColumnHeader Tag="MaxPlatsOdds" Content="Platsodds"
+                                    ToolTipService.ToolTip="Intervall för ATGs platsodds"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Right" Text="{Binding PlatsOddsString}" HorizontalAlignment="Right"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Insatsfördelning-->
+                    <GridViewColumn x:Name="gvcStakeDistributionPercent">
+                        <GridViewColumnHeader Tag="StakeDistributionShare" Content="Insatsfördelning"
+                                    ToolTipService.ToolTip="Visar insatsfördelning i procent"
+                                    MouseDown="gvcSpikes_MouseDown"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Right" FontWeight="Bold" HorizontalAlignment="Right"
+                                           Text="{Binding Path=StakeDistributionShare,StringFormat=P2}"/>
+                                <!--<TextBlock TextAlignment="Right" FontWeight="Bold" HorizontalAlignment="Right">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} ({1:P2})">
+                                            <Binding Path="StakeDistributionPercent"/>
+                                            <Binding Path="StakeDistributionShare"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>-->
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Insatsfördelning (ackumulerad)-->
+                    <GridViewColumn x:Name="gvcStakeDistributionShareAccumulated">
+                        <GridViewColumnHeader Tag="StakeDistributionShareAccumulated" Content="Insatsförd. (ack)"
+                                    ToolTipService.ToolTip="Visar ackumulerad insatsfördelning i procent"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Right" FontWeight="Bold" HorizontalAlignment="Right" Text="{Binding StakeDistributionShareAccumulated,StringFormat=P2}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Streckprocent-->
+                    <!--<GridViewColumn x:Name="gvcMarksPercent">
+                        <GridViewColumnHeader Tag="MarksQuantity" Content="Streckprocent"
+                                    ToolTipService.ToolTip="Streckprocent för aktuellt streckspel"
+                                    MouseDown="gvcSpikes_MouseDown"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Right" FontWeight="Bold" HorizontalAlignment="Right">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} ({1:P1})">
+                                            <Binding Path="MarksPercent"/>
+                                            <Binding Path="MarksPercentExact"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>-->
+
+                    <!--Streckantal-->
+                    <!--<GridViewColumn x:Name="gvcMarksQuantity">
+                        <GridViewColumnHeader Tag="MarksQuantity" Content="Antal"
+                                    ToolTipService.ToolTip="Antal streck för aktuellt streckspel"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Right" Text="{Binding MarksQuantity}" HorizontalAlignment="Right"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>-->
+
+                    <!--Streckandel-->
+                    <!--<GridViewColumn x:Name="gvcMarksShare">
+                        <GridViewColumnHeader Tag="MarksShare" Content="Streckandel"
+                                    ToolTipService.ToolTip="Andel streck för häst i förhållande till totala antalet streck i avdelningen"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Right" Text="{Binding Path=MarksShare, StringFormat=P1}" HorizontalAlignment="Right"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>-->
+
+                    <!--Vinnaroddsandel-->
+                    <GridViewColumn x:Name="gvcVinnarOddsShare">
+                        <GridViewColumnHeader Tag="VinnarOddsShare" Content="Vinnarandel"
+                                    ToolTipService.ToolTip="Andel av Vinnarodds-potten som satsats på hästen"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Right" Text="{Binding Path=VinnarOddsShare, StringFormat=P2}" HorizontalAlignment="Right"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Platsoddsandel-->
+                    <GridViewColumn x:Name="gvcPlatsoddsShare">
+                        <GridViewColumnHeader Tag="PlatsOddsShare" Content="Platsandel"
+                                    ToolTipService.ToolTip="Andel av platsspels-potten som satsats på hästen"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Right" Text="{Binding Path=PlatsOddsShare, StringFormat=P2}" HorizontalAlignment="Right"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Tvillingandel-->
+                    <GridViewColumn x:Name="gvcTvillingShare">
+                        <GridViewColumnHeader Tag="TvillingShare" Content="Tvillingandel"
+                                    ToolTipService.ToolTip="Andel av Tvilling-potten som satsats på hästen"
+                                    MouseDown="gvcSpikes_MouseDown"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Right" Text="{Binding Path=TvillingShare, StringFormat=P2}" HorizontalAlignment="Right"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Trioandel-->
+                    <GridViewColumn x:Name="gvcTrioShare">
+                        <GridViewColumnHeader Tag="TrioShare" Content="Trioandel"
+                                    ToolTipService.ToolTip="Andel av Trio-potten som satsats på hästen"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Right" Text="{Binding Path=TrioShare, StringFormat=P2}" HorizontalAlignment="Right"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Dubbelandel-->
+                    <GridViewColumn x:Name="gvcDoubleShare">
+                        <GridViewColumnHeader Tag="DoubleShare" Content="DD/LD-andel"
+                                    ToolTipService.ToolTip="Andel av DD/LD-potten som satsats på hästen"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Right" Text="{Binding Path=DoubleShare, StringFormat=P2}" HorizontalAlignment="Right"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Alternativ insatsfördelning-->
+                    <GridViewColumn x:Name="gvcStakeShareAlternate">
+                        <GridViewColumnHeader Tag="StakeShareAlternate" Content="Alt. insatsförd."
+                                    ToolTipService.ToolTip="Insatsfördelning för hästen på alternativt streckspel"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Right" Text="{Binding Path=StakeShareAlternate, StringFormat=P2}" HorizontalAlignment="Right"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Alternativ insatsfördelning 2-->
+                    <GridViewColumn x:Name="gvcStakeShareAlternate2">
+                        <GridViewColumnHeader Tag="StakeShareAlternate2" Content="Alt. insatsförd. 2"
+                                    ToolTipService.ToolTip="Insatsfördelning för hästen på alternativt streckspel"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Right" Text="{Binding Path=StakeShareAlternate2, StringFormat=P2}" HorizontalAlignment="Right"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Streckbarhet-->
+                    <GridViewColumn x:Name="gvcMarkability">
+                        <GridViewColumnHeader Tag="Markability" Content="Streckbarhet"
+                                    ToolTipService.ToolTip="Beräknad streckbarhet (insatsfördelning i förhållande till vinnarodds/platsodds och eventuellt andra streckspel). Ju högre, desto bättre."
+                                    MouseDown="gvcSpikes_MouseDown"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Right" Text="{Binding Path=Markability, StringFormat=F2}" HorizontalAlignment="Right"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Täckning-->
+                    <GridViewColumn x:Name="gvcSystemCoverage">
+                        <GridViewColumnHeader Tag="SystemCoverage" Content="Täckning" MinWidth="80"
+                                    ToolTipService.ToolTip="Procentandel av det reducerade systmet som innehåller streck på hästen."/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Right" HorizontalAlignment="Right">
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0:P2} ({1})">
+                                        <Binding Path="SystemCoverage"/>
+                                        <Binding Path="NumberOfCoveredRows"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Reserver-->
+                    <GridViewColumn x:Name="gvcReserv" CellTemplate="{StaticResource ReservRadioButtonTemplate}">
+                        <GridViewColumnHeader x:Name="gvcReservHeader" Content="Reserver" HorizontalContentAlignment="Left"
+                                    ToolTipService.ToolTip="Markering av reserv 1 och 2"
+                                              MouseDown="gvcReservHeader_MouseDown"/>
+                    </GridViewColumn>
+
+                    <!--Rekord-->
+                    <GridViewColumn x:Name="gvcRecord">
+                        <GridViewColumnHeader Tag="Record.Time" Content="Rekord"
+                                    ToolTipService.ToolTip="Hästens rekordtid på distansen"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Right" Text="{Binding Path=Record.Time}" HorizontalAlignment="Right" MouseUp="txtHorseName_MouseUp"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Form-->
+                    <GridViewColumn x:Name="gvcShape">
+                        <GridViewColumnHeader Tag="Shape" Content="Form"
+                                    ToolTipService.ToolTip="Hästens form utifrån de senaste starterna"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Right" Text="{Binding Path=Shape}" HorizontalAlignment="Right"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Datum för senaste start-->
+                    <GridViewColumn x:Name="gvcLastStartDate">
+                        <GridViewColumnHeader Tag="ResultList[0].DateString" Content="Senaste start"
+                                    ToolTipService.ToolTip="Senaste datum hästen startade">
+                        </GridViewColumnHeader>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock x:Name="txtLastStartDate" TextAlignment="Right" HorizontalAlignment="Right" MouseUp="txtLastStartDate_MouseUp"
+                                           ToolTip="{Binding Path=DaysBetweenStarts,StringFormat=Dagar mellan tidigare starter: {0}}">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0:yyyy-MM-dd} ({1} dagar)">
+                                            <Binding Path="ResultList[0].Date"/>
+                                            <Binding Path="DaysSinceLastStart"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Resultat senaste 5-->
+                    <GridViewColumn x:Name="gvcResultRow">
+                        <GridViewColumnHeader Tag="MeanPlaceLast5" Content="5 senaste"
+                                    ToolTipService.ToolTip="Resultat senaste fem starterna">
+                        </GridViewColumnHeader>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Right" Text="{Binding Path=ResultRow}" HorizontalAlignment="Right" MouseUp="txtHorseName_MouseUp"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Intjänade pengar-->
+                    <GridViewColumn x:Name="gvcEarnings">
+                        <GridViewColumnHeader Tag="TotalStatistics.Earning" Content="Intjänat totalt"
+                                    ToolTipService.ToolTip="Totalt insprungna pengar">
+                        </GridViewColumnHeader>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Right" Text="{Binding Path=TotalStatistics.Earning,StringFormat={}{0:N0},ConverterCulture=sv-SE}" HorizontalAlignment="Right"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Intjänade pengar senaste fem-->
+                    <GridViewColumn  x:Name="gvcEarningsMeanLast5">
+                        <GridViewColumnHeader Tag="EarningsMeanLast5" Content="Intjänat senaste 5"
+                                    ToolTipService.ToolTip="Genomsnittligt intjänade pengar de fem senaste starterna">
+                        </GridViewColumnHeader>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Right" Text="{Binding Path=EarningsMeanLast5,StringFormat={}{0:N0},ConverterCulture=sv-SE}" HorizontalAlignment="Right"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Rank genomsnitt-->
+                    <GridViewColumn x:Name="gvcRankMean">
+                        <GridViewColumnHeader Tag="RankWeighted" Content="Snittrank (viktad)"
+                                    ToolTipService.ToolTip="Genomsnittligt rankvärde för hästen utifrån de rankvariabler som valts under rankreducering"
+                                    MouseDown="gvcSpikes_MouseDown"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Right" FontWeight="Bold" HorizontalAlignment="Right" MouseUp="TextBlock_MouseUp">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0:F1} ({1:F1})">
+                                            <Binding Path="RankMean"/>
+                                            <Binding Path="RankWeighted"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Rank egen-->
+                    <GridViewColumn x:Name="gvcRankOwn">
+                        <GridViewColumnHeader Tag="RankOwn" Content="Egen rank"
+                                    ToolTipService.ToolTip="Ange din egen rank från 0-100"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <xctk:IntegerUpDown x:Name="iudOwnrank" Minimum="0" Maximum="100" Value="{Binding RankOwn}" Padding="0,-1,0,-1" Margin="0,-1,0,-1" 
+                                                    ValueChanged="IntegerUpDown_ValueChanged" TextBlock.FontSize="11" KeyUp="iudOwnRank_KeyUp" Focusable="True"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Poäng (Rank alternativ)-->
+                    <GridViewColumn x:Name="gvcRankAlternate">
+                        <GridViewColumnHeader Tag="RankAlternate" Content="Poäng"
+                                    ToolTipService.ToolTip="Ange poäng från 1-100"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <xctk:IntegerUpDown x:Name="iudAlternateRank" Minimum="0" Maximum="100" Value="{Binding RankAlternate}" Padding="0,-1,0,-1" Margin="0,-1,0,-1" 
+                                                    ValueChanged="IntegerUpDown_ValueChanged_1" TextBlock.FontSize="11" KeyUp="iudAlternateRank_KeyUp" Focusable="True"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+
+                    <!--Egen chansvärdering-->
+                    <GridViewColumn x:Name="gvcOwnProbability">
+                        <GridViewColumnHeader Tag="OwnProbability" Content="Egen chansvärdering"
+                                    ToolTipService.ToolTip="Ange din egen chansvärdering från 0,1-100,0 %"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <xctk:DecimalUpDown x:Name="dudOwnProbability" Minimum="0" Maximum="1" Value="{Binding OwnProbability}" Padding="0,-1,0,-1" Margin="0,-1,0,-1" Focusable="True"
+                                                    ValueChanged="dudOwnProbability_ValueChanged"  FormatString="P1" Increment="0.01"  TextBlock.FontSize="11" KeyUp="dudOwnProbability_KeyUp"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Tipsrank-->
+                    <GridViewColumn  x:Name="gvcRankTip">
+                        <GridViewColumnHeader Tag="RankTip" Content="Tipsrank"
+                                    ToolTipService.ToolTip="Rank från inklistrat tips">
+                        </GridViewColumnHeader>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Right" Text="{Binding RankTip}" HorizontalAlignment="Right"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Nästagångare och noteringar-->
+                    <GridViewColumn x:Name="gvcNextTimer">
+                        <GridViewColumnHeader Tag="OwnInformation.NextTimer" Content="Egen info" MouseDown="gvcNextTimer_MouseDown"
+                                    ToolTipService.ToolTip="Bocka för om du anser att hästen är en nästagångare. Tryck på [...] för att fylla i egna noteringar"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Margin="0">
+                                    <CheckBox x:Name="chkNextTimer" IsChecked="{Binding Path=OwnInformation.NextTimer}" Padding="0,-1,0,-1" Margin="0,-1,1,-1"
+                                                  Template="{StaticResource CheckBoxControlTemplate}">
+                                        <TextBlock Text="NG" FontSize="10" Padding="2" Foreground="Black" FontWeight="Bold"/>
+                                    </CheckBox>
+                                    <Button x:Name="btnNotes" Height="16" Width="16" Click="btnNotes_Click" Padding="0,-1,0,-1" Margin="1,-1,0,-1"
+                                            ToolTip="{Binding Path=OwnInformation.Comment}" VerticalContentAlignment="Top">
+                                        <Button.Style>
+                                            <Style TargetType="{x:Type Button}">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Path=OwnInformation.HasComment}" Value="true">
+                                                        <Setter Property="Background" Value="OrangeRed"/>
+                                                        <Setter Property="Content" Value="{Binding Path=OwnInformation.HorseOwnInformationCommentList.Count}"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--ATG-rank-->
+                    <GridViewColumn x:Name="gvcRankATG">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock x:Name="txtRankATG">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} ({1})">
+                                            <Binding Path="RankATG"/>
+                                            <Binding Path="StartPoint"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                        <GridViewColumnHeader Tag="RankATG" Content="ATG-Rank"
+                                    ToolTipService.ToolTip="Hästens rank i ATGs turordning"/>
+                    </GridViewColumn>
+
+                    <!--Inbördes möten-->
+                    <GridViewColumn x:Name="gvcHeadToHead">
+                        <GridViewColumnHeader Tag="NumberOfHeadToHeadWins" Content="H2H"
+                                    ToolTipService.ToolTip="Visar lista med inbördes möten med andra hästar"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Right" HorizontalAlignment="Right" MouseLeftButtonUp="TextBlock_MouseLeftButtonUp">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding HasHeadToHeadResults}" Value="true">
+                                                    <Setter Property="TextDecorations" Value="Underline"/>
+                                                    <Setter Property="FontWeight" Value="Bold"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} - {1} - {2}">
+                                            <Binding Path="NumberOfHeadToHeadWins"/>
+                                            <Binding Path="NumberOfHeadToHeadLosses"/>
+                                            <Binding Path="NumberOfHeadToHeadEqual"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Relativ differens-->
+                    <GridViewColumn x:Name="gvcRelativeDifference">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+
+                                <TextBlock x:Name="tbRelativeDifference" Text="{Binding Path=HistoryRelativeDifferenceUnadjusted,StringFormat=P1}"/>
+
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                        <GridViewColumnHeader Tag="HistoryRelativeDifferenceUnadjusted" Content="Insatsutveckling" MouseDown="GridViewColumnHeader_MouseDown_1"
+                                    ToolTipService.ToolTip="Hur mycket hästens insatsfördelning stigit eller sjunkit i procent mellan första och senaste siffrorna"/>
+                    </GridViewColumn>
+
+                    <!--Relativ differens Vinnare-->
+                    <GridViewColumn x:Name="gvcRelativeDifferenceVinnare">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+
+                                <TextBlock x:Name="tbRelativeDifference" Text="{Binding Path=HistoryRelativeDifferenceVinnareUnadjusted,StringFormat=P1}"/>
+
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                        <GridViewColumnHeader Tag="HistoryRelativeDifferenceVinnareUnadjusted" Content="Insatsutveckling (V)" MouseDown="GridViewColumnHeader_MouseDown_1"
+                                    ToolTipService.ToolTip="Hur mycket hästens andel i vinnarspelet stigit eller sjunkit i procent mellan första och senaste siffrorna"/>
+                    </GridViewColumn>
+
+                    <!--Relativ differens Plats-->
+                    <GridViewColumn x:Name="gvcRelativeDifferencePlats">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+
+                                <TextBlock x:Name="tbRelativeDifference" Text="{Binding Path=HistoryRelativeDifferencePlatsUnadjusted,StringFormat=P1}"/>
+
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                        <GridViewColumnHeader Tag="HistoryRelativeDifferencePlatsUnadjusted" Content="Insatsutveckling (P)" MouseDown="GridViewColumnHeader_MouseDown_1" 
+                                    ToolTipService.ToolTip="Hur mycket hästens andel i platsspelet stigit eller sjunkit i procent mellan första och senaste siffrorna"/>
+                    </GridViewColumn>
+
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</HPT:UCMarkBetControl>

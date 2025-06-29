@@ -1,0 +1,442 @@
+﻿<HPT:UCMarkBetControl x:Class="HPTClient.UCTrends"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             xmlns:HPT="clr-namespace:HPTClient"
+             x:Name="ucTrends">
+    <UserControl.Resources>
+
+        <BooleanToVisibilityConverter x:Key="hptVisibilityConverter"/>
+
+        <HPT:IntToMoneyStringConverter x:Key="hptMoneyConverter"/>
+
+        <CollectionViewSource x:Key="HorseListView" Source="{Binding HorseList}"/>
+        
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Padding" Value="2,1"/>
+        </Style>
+        
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Horizontal">
+
+                <Button x:Name="btnGetRaceDayInfoHistory" Content="Hämta trender" Click="btnGetRaceDayInfoHistory_Click" Width="Auto" Margin="2"/>
+
+                <ComboBox x:Name="cmbUpdateInterval" Text="Uppdateringsintervall" HorizontalAlignment="Stretch" Width="120"
+                                        Margin="2" SelectionChanged="cmbUpdateInterval_SelectionChanged" Grid.Column="1">
+                    <ComboBoxItem Content="Aldrig" Tag="0"/>
+                    <ComboBoxItem Content="Var 3:e minut" Tag="3"/>
+                    <ComboBoxItem Content="Var 5:e minut" Tag="5"/>
+                    <ComboBoxItem Content="Var 10:e minut" Tag="10"/>
+                    <ComboBoxItem Content="Var 15:e minut" Tag="15"/>
+                    <ComboBoxItem Content="Var 20:e minut" Tag="20"/>
+                    <ComboBoxItem Content="En gång i halvtimmen" Tag="30"/>
+                    <ComboBoxItem Content="En gång i timmen" Tag="60"/>
+                </ComboBox>
+                
+                <!--<ComboBox x:Name="cmbChooseTrendData" Margin="2" SelectionChanged="cmbChooseTrendData_SelectionChanged" Width="120">
+                    <ComboBoxItem Content="Insatsfördelning" Tag="I" IsSelected="True"/>
+                    <ComboBoxItem Content="Vinnare" Tag="V"/>
+                    <ComboBoxItem Content="Plats" Tag="P"/>
+                </ComboBox>-->
+
+                <!--<TextBlock Text="Jämförelseomsättning" Margin="12,1,2,1" VerticalAlignment="Center"/>-->
+
+                <!--<ComboBox x:Name="cmbChooseTurnover" Margin="2" SelectionChanged="cmbChooseTrendData_SelectionChanged" Width="80" ItemsSource="{Binding Path=TimeList,ElementName=ucTrends}">-->
+                <!--<ComboBox x:Name="cmbChooseTurnover" Margin="2" SelectionChanged="cmbChooseTrendData_SelectionChanged" Width="80">
+                    <ComboBoxItem Content="~90%" Tag="1"/>
+                    <ComboBoxItem Content="~80%" Tag="2"/>
+                    <ComboBoxItem Content="~70%" Tag="3"/>
+                    <ComboBoxItem Content="~60%" Tag="4"/>
+                    <ComboBoxItem Content="~50%" Tag="5"/>
+                    <ComboBoxItem Content="~40%" Tag="6"/>
+                    <ComboBoxItem Content="~30%" Tag="7"/>
+                    <ComboBoxItem Content="~20%" Tag="8"/>
+                    <ComboBoxItem Content="~10%" Tag="9"/>
+                </ComboBox>-->
+
+                <!--<TextBlock Text="Starttidpunkt" Margin="12,1,2,1" VerticalAlignment="Center"/>
+
+                <ComboBox x:Name="cmbChooseStartTime" Margin="2" SelectionChanged="cmbChooseTrendData_SelectionChanged" Width="80" ItemsSource="{Binding Path=TimeList,ElementName=ucTrends}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding StringFormat={}HH:mm}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>-->
+
+                <!--<CheckBox x:Name="chkShowAllTrends" Content="Visa all insatsutveckling" Checked="chkShowAllTrends_Checked" Unchecked="chkShowAllTrends_Checked" Margin="12,1,2,1" VerticalAlignment="Center"/>-->
+                
+            </StackPanel>
+
+            <ListView Name="lvwLopp" ItemsSource="{Binding Source={StaticResource HorseListView}}" 
+                  Grid.Row="1" BorderThickness="0"
+                  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                  ContextMenu="{Binding Path=CMColumnsToShow,ElementName=ucRaceView}"
+                  GridViewColumnHeader.Click="GridViewColumnHeader_Click">
+
+                <ListView.Resources>
+                    <!--<Style TargetType="{x:Type GridViewColumnHeader}">
+                        <Style.Setters>
+                            <Setter Property="BorderBrush" Value="Black"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                            <Setter Property="Background" Value="{StaticResource HeaderGrayBrush}"/>
+                        </Style.Setters>
+                    </Style>-->
+
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Setter Property="BorderBrush" Value="Black"></Setter>
+                        <Setter Property="BorderThickness" Value="0.5"></Setter>
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        <Setter Property="Margin" Value="0.5"/>
+                        <Setter Property="Padding" Value="0.5"/>
+                    </Style>
+                </ListView.Resources>
+
+                <ListView.GroupStyle>
+                    <GroupStyle>
+                        <GroupStyle.ContainerStyle>
+                            <Style TargetType="{x:Type GroupItem}">
+                                <Setter Property="Margin" Value="0,0,0,5"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type GroupItem}">
+                                            <Expander IsExpanded="True" BorderBrush="Black" BorderThickness="1" Background="Orange" 
+                                                  Tag="{Binding Path=Name}"><!--Loaded="Expander_Loaded"-->
+                                                <Expander.Header>
+                                                    <WrapPanel Orientation="Horizontal" Background="Orange">
+
+                                                        <Border BorderBrush="Black" BorderThickness="1" CornerRadius="2" Background="LightSkyBlue">
+                                                            <TextBlock FontWeight="Bold" Text="{Binding Path=Name}" Margin="1" Padding="1">
+                                                            <TextBlock.ToolTip>
+                                                                <ToolTip Background="{StaticResource BackgroundBrush}" ToolTipService.ShowDuration="20000" DataContext="{Binding Path=PlacementTarget.DataContext, RelativeSource={x:Static RelativeSource.Self}}">
+                                                                    <Border BorderBrush="Black" BorderThickness="1" Margin="2">
+                                                                        <TextBlock Text="{Binding Path=Items[0].ParentRace.RaceInfoLong}" Style="{StaticResource tbStyle}" Margin="2"/>
+                                                                    </Border>
+                                                                </ToolTip>
+                                                            </TextBlock.ToolTip>
+                                                        </TextBlock>
+                                                        </Border>
+
+                                                        <CheckBox x:Name="chkLocked" Grid.Column="3" Margin="5,0,1,0" Padding="0" Width="Auto"
+                                                            Template="{StaticResource CheckBoxControlTemplate}" IsChecked="{Binding Path=Items[0].ParentRace.Locked}">
+                                                            <TextBlock Text="Lås" FontSize="10" Padding="2" Foreground="Black" FontWeight="Bold"/>
+                                                        </CheckBox>
+
+                                                        <Button x:Name="btnHideOthers" Content="Dölj övriga" Tag="{Binding Path=Name}"/> <!--Click="btnHideOthers_Click"-->
+
+                                                        <TextBlock Margin="10,2,2,2" Background="Orange" Text="Omsättning:" FontWeight="Bold"/>
+                                                        <TextBlock Margin="2" Background="Orange">
+                                                            <TextBlock.Text>
+                                                                <MultiBinding StringFormat="{}V:{0:N0} kr, P:{1:N0} kr" ConverterCulture="sv-SE">
+                                                                    <Binding Path="Items[0].ParentRace.TurnoverVinnare"/>
+                                                                    <Binding Path="Items[0].ParentRace.TurnoverPlats"/>
+                                                                </MultiBinding>
+                                                            </TextBlock.Text>
+                                                        </TextBlock>
+
+                                                        <TextBlock Margin="10,2,2,2" Background="Orange" Text="Starttid:" FontWeight="Bold"/>
+                                                        <TextBlock Margin="2" Text="{Binding Path=Items[0].ParentRace.PostTime,StringFormat={}{0:HH:mm}}" Background="Orange"/>
+
+                                                    </WrapPanel>
+                                                </Expander.Header>
+                                                <Expander.Content>
+                                                    <Border Background="White" Margin="1">
+                                                        <ItemsPresenter/>
+                                                    </Border>
+                                                </Expander.Content>
+                                            </Expander>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </GroupStyle.ContainerStyle>
+                    </GroupStyle>
+                </ListView.GroupStyle>
+
+                <ListView.View>
+                    <GridView x:Name="gvwVxxSpel">
+
+                        <!--Startnummer-->
+                        <GridViewColumn x:Name="gvcStartNr">
+                            <GridViewColumnHeader Tag="StartNr" Content="Nr"
+                                    ToolTipService.ToolTip="Hästens startnummer"><!--MouseDown="GridViewColumnHeader_MouseDown"-->
+                            </GridViewColumnHeader>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox Name="chkNrSelect" IsEnabled="{Binding NotScratched}" IsChecked="{Binding Selected}" Template="{StaticResource CheckBoxControlTemplate}" Content="{Binding StartNr}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                        <!-- ABCDEF-reducering -->
+                        <GridViewColumn x:Name="gvcABCD">
+                            <GridViewColumnHeader x:Name="gvchABCD" Content="Prio" HorizontalContentAlignment="Left" Tag="PrioSort"
+                                    ToolTipService.ToolTip="ABCD-rank. Klicka A, B, C eller D för att ange hästens rank."/> <!--MouseDown="gvcABCD_MouseDown"-->
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ItemsControl ItemsSource="{Binding HorseXReductionList}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <CheckBox Template="{StaticResource CheckBoxABCDControlTemplate}"
+                                                         Content="{Binding Prio}" Tag="{Binding Prio}"
+                                                         IsChecked="{Binding Selected}" IsEnabled="{Binding Path=Horse.NotScratched}" 
+                                                         Visibility="{Binding Path=Selectable,Converter={StaticResource hptVisibilityConverter}}" 
+                                                         Foreground="WhiteSmoke"></CheckBox>
+                                                <!--<RadioButton Template="{StaticResource RadioButtonControlTemplate}" 
+                                                         Content="{Binding Prio}" Tag="{Binding Prio}" GroupName="{Binding Path=Horse.HorseUniqueCode}" 
+                                                         IsChecked="{Binding Selected,BindsDirectlyToSource=True}" IsEnabled="{Binding Path=Horse.NotScratched}" 
+                                                         Visibility="{Binding Path=Selectable,Converter={StaticResource hptVisibilityConverter}}" 
+                                                         Foreground="WhiteSmoke" MouseRightButtonUp="gvchABCD_MouseRightButtonUp"></RadioButton>-->
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                        <!--Namn-->
+                        <GridViewColumn x:Name="gvcNamn">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock x:Name="txtHorseName" Text="{Binding HorseName}" FontWeight="Bold" >
+                                           <!--MouseUp="txtHorseName_MouseUp" MouseDown="txtHorseName_MouseDown"
+                                           ContextMenu="{Binding Path=CMHorse,ElementName=ucRaceView}">-->
+                                    </TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                            <GridViewColumnHeader Tag="HorseName" Content="Namn" 
+                                    ToolTipService.ToolTip="Hästens namn och nationalitet"/> <!--MouseDown="GridViewColumnHeader_MouseDown"-->
+                        </GridViewColumn>
+
+                        <!--Relativ differens-->
+                        <GridViewColumn x:Name="gvcRelativeDifference">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+
+                                    <TextBlock x:Name="tbRelativeDifference" Text="{Binding Path=HistoryRelativeDifferenceUnadjusted,StringFormat=P1}" FontWeight="Bold" Background="{Binding HistoryRelativeDifferenceColour}"/>
+
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                            <GridViewColumnHeader Tag="HistoryRelativeDifferenceUnadjusted" Content="Insatsutveckling" 
+                                    ToolTipService.ToolTip="Hur mycket hästens insatsfördelning stigit eller sjunkit i procent mellan första och senaste siffrorna"/>
+                        </GridViewColumn>
+
+                        <!--Relativ differens Vinnare-->
+                        <!--<GridViewColumn x:Name="gvcRelativeDifferenceVinnare">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+
+                                    <TextBlock x:Name="tbRelativeDifference" Text="{Binding Path=HistoryRelativeDifferenceVinnareUnadjusted,StringFormat=P1}" FontWeight="Bold" Background="{Binding HistoryRelativeDifferenceVinnareColour}"/>
+
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                            <GridViewColumnHeader Tag="HistoryRelativeDifferenceVinnareUnadjusted" Content="Insatsutveckling (V)" 
+                                    ToolTipService.ToolTip="Hur mycket hästens andel i vinnarspelet stigit eller sjunkit i procent mellan första och senaste siffrorna"/>
+                        </GridViewColumn>-->
+
+                        <!--Relativ differens Plats-->
+                        <!--<GridViewColumn x:Name="gvcRelativeDifferencePlats">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+
+                                    <TextBlock x:Name="tbRelativeDifference" Text="{Binding Path=HistoryRelativeDifferencePlatsUnadjusted,StringFormat=P1}" FontWeight="Bold" Background="{Binding HistoryRelativeDifferencePlatsColour}"/>
+
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                            <GridViewColumnHeader Tag="HistoryRelativeDifferencePlatsUnadjusted" Content="Insatsutveckling (P)" 
+                                    ToolTipService.ToolTip="Hur mycket hästens andel i platsspelet stigit eller sjunkit i procent mellan första och senaste siffrorna"/>
+                        </GridViewColumn>-->
+
+                        <!--Historia insatsfördelning-->
+                        <GridViewColumn x:Name="gvcHistory">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ItemsControl ItemsSource="{Binding HorseHistoryInfoGroupedList}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Width="126" Background="{Binding Path=StakeHistoryMain.BackColor}">
+                                                    <TextBlock Margin="2" FontWeight="{Binding Path=StakeHistoryMain.FontWeight}" FontFamily="Segoe UI,Eras ITC">
+                                                        <TextBlock.Text>
+                                                            <MultiBinding StringFormat="{}{0:P2} ({1:P2})">
+                                                                <Binding Path="StakeHistoryMain.StakeShare"/>
+                                                                <Binding Path="StakeHistoryMain.StakeSharePeriod"/>
+                                                            </MultiBinding>
+                                                        </TextBlock.Text>
+                                                    </TextBlock>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                            <GridViewColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <ItemsControl ItemsSource="{Binding Path=MarkBet.RaceDayInfo.TurnoverHistoryList,ElementName=ucTrends}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border BorderThickness="1" BorderBrush="Black" Margin="1" Padding="1">
+                                                    <Grid Width="120">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition/>
+                                                            <RowDefinition/>
+                                                        </Grid.RowDefinitions>
+                                                        <Grid.Style>
+                                                            <Style TargetType="Grid">
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding Path=IsSelected}" Value="true">
+                                                                        <Setter Property="TextBlock.FontWeight" Value="Bold"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Grid.Style>
+
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="{Binding Path=Timestamp,StringFormat=HH:mm}" Margin="3,1,1,1"/>
+                                                            <Button x:Name="btnSelectStartPoint" Content="Välj" Click="btnSelectStartPoint_Click" Padding="1,-1,1,-1" Margin="5,-1,1,-1"/>
+                                                        </StackPanel>
+
+                                                        <TextBlock Width="120" Grid.Row="1" Margin="3,1,1,1">
+                                                            <TextBlock.Text>
+                                                                <MultiBinding StringFormat="{}{0} ({1:P0})">
+                                                                    <Binding Path="Turnover" Converter="{StaticResource hptMoneyConverter}"/>
+                                                                    <Binding Path="Percentage"/>
+                                                                </MultiBinding>
+                                                            </TextBlock.Text>
+                                                        </TextBlock>                                                   
+                                                    
+                                                    </Grid>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </DataTemplate>
+                            </GridViewColumn.HeaderTemplate>
+                        </GridViewColumn>
+
+                        <!--Historia vinnare-->
+                        <!--<GridViewColumn x:Name="gvcHistoryVinnare">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ItemsControl ItemsSource="{Binding HorseHistoryInfoGroupedList}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Width="100" Background="{Binding Path=BackColor}">
+                                                    <TextBlock Margin="2" FontWeight="{Binding Path=FontWeight}" FontFamily="Segoe UI,Eras ITC">
+                                                        <TextBlock.Text>
+                                                            <MultiBinding StringFormat="{}{0:P2} ({1:P2})">
+                                                                <Binding Path="VinnarOddsShare"/>
+                                                                <Binding Path="VinnarOddsSharePeriod"/>
+                                                            </MultiBinding>
+                                                        </TextBlock.Text>
+                                                    </TextBlock>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                            <GridViewColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <ItemsControl ItemsSource="{Binding Path=MarkBet.RaceDayInfo.TimestampListVPHistory,ElementName=ucTrends}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding StringFormat={}HH:mm}" Width="100"/>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </DataTemplate>
+                            </GridViewColumn.HeaderTemplate>
+                        </GridViewColumn>-->
+
+                        <!--Historia plats-->
+                        <!--<GridViewColumn x:Name="gvcHistoryPlats">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ItemsControl ItemsSource="{Binding HorseHistoryInfoGroupedList}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Width="100" Background="{Binding Path=BackColor}">
+                                                    <TextBlock Margin="2" FontWeight="{Binding Path=FontWeight}" FontFamily="Segoe UI,Eras ITC">
+                                                        <TextBlock.Text>
+                                                            <MultiBinding StringFormat="{}{0:P2} ({1:P2})">
+                                                                <Binding Path="PlatsOddsShare"/>
+                                                                <Binding Path="PlatsOddsSharePeriod"/>
+                                                            </MultiBinding>
+                                                        </TextBlock.Text>
+                                                    </TextBlock>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                            <GridViewColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <ItemsControl ItemsSource="{Binding Path=MarkBet.RaceDayInfo.TimestampListVPHistory,ElementName=ucTrends}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding StringFormat={}HH:mm}" Width="100"/>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </DataTemplate>
+                            </GridViewColumn.HeaderTemplate>
+                        </GridViewColumn>-->
+
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+    </Grid>
+</HPT:UCMarkBetControl>

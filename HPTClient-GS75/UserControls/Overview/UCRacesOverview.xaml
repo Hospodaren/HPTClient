@@ -1,0 +1,163 @@
+﻿<HPT:UCMarkBetControl x:Class="HPTClient.UCRacesOverview"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+            xmlns:HPT="clr-namespace:HPTClient"
+             xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             mc:Ignorable="d" d:DesignWidth="862"
+                      IsVisibleChanged="UCMarkBetControl_IsVisibleChanged"
+                      x:Name="ucRacesOverview"
+                      DataContextChanged="ucRacesOverview_DataContextChanged">
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <ListBox x:Name="lstOverview" ItemsSource="{Binding RaceList,ElementName=ucRacesOverview}" Background="{StaticResource BackgroundBrush}" ToggleButton.Unchecked="lstOverview_Unchecked"
+                     VerticalContentAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                <!--xctk:IntegerUpDown.ValueChanged="IntegerUpDown_ValueChanged">-->
+                <ListBox.LayoutTransform>
+                    <ScaleTransform ScaleX="{Binding Path=Value,ElementName=dudZoom}" ScaleY="{Binding Path=Value,ElementName=dudZoom}"/>
+                </ListBox.LayoutTransform>
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical" ClipToBounds="False" VerticalAlignment="Top"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+
+            </ListBox>
+            <StackPanel Orientation="Horizontal" Grid.Row="1">
+
+                <GroupBox Background="{StaticResource BackgroundBrush}" HeaderTemplate="{StaticResource GroupBoxHeaderTemplate}" Header="Inställningar" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="Black">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <TextBlock Text="Sortering" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" Margin="2,2,12,2"/>
+
+                        <ComboBox x:Name="cmbSort" SelectionChanged="cmbSort_SelectionChanged" Margin="2,2,12,2" Width="150" Grid.Row="1" SelectedIndex="0">
+                            <ComboBoxItem Content="Egen rank" Tag="RankOwn"/>
+                            <ComboBoxItem Content="Startnummer" Tag="StartNr"/>
+                            <ComboBoxItem Content="Vinnarodds" Tag="VinnarOdds"/>
+                            <ComboBoxItem Content="Insatsfördelning" Tag="StakeDistributionShare"/>
+                            <ComboBoxItem Content="Snittrank" Tag="RankWeighted"/>
+                            <ComboBoxItem Content="Tipsrank" Tag="RankTip"/>
+                            <ComboBoxItem Content="Namn" Tag="HorseName"/>
+                        </ComboBox>
+
+
+                        <TextBlock Text="Zoom" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" Margin="2,2,12,2" Grid.Column="1"/>
+                        <xctk:DecimalUpDown Name="dudZoom" Minimum="0.5" Maximum="2.0" Increment="0.1" FormatString="P0" Value="0.9" Margin="2,2,12,2" Width="60" Grid.Column="1" Grid.Row="1"/>
+
+                        <CheckBox x:Name="chkHideScratched" Content="Dölj strukna" Checked="chkHideScratched_Checked" Unchecked="chkHideScratched_Checked" 
+                          Margin="2,2,12,2" TextElement.FontSize="12" TextElement.FontWeight="Bold" VerticalAlignment="Center" Grid.Column="2"/>
+
+                        <CheckBox x:Name="chkShowOnlySelected" Content="Visa bara valda" Checked="chkShowOnlySelected_Checked" Unchecked="chkShowOnlySelected_Checked" 
+                          Margin="2,2,12,2" TextElement.FontSize="12" TextElement.FontWeight="Bold" VerticalAlignment="Center" Grid.Column="2" Grid.Row="1"/>
+
+                        <!--<RadioButton x:Name="rbShowRankOwn" Content="Visa Egen rank" Grid.Column="3" Margin="2,2,12,2" TextElement.FontWeight="Bold" IsChecked="True"/>
+
+                        <RadioButton x:Name="rbShowRankAlternate" Content="Visa Poäng" Grid.Column="3" Grid.Row="1" Margin="2,2,12,2" TextElement.FontWeight="Bold"/>-->
+
+                        <Button x:Name="btnSelectAll" Content="Välj alla" Click="btnSelectAll_Click" Margin="2" Grid.Column="4" Grid.Row="1"/>
+
+                    </Grid>
+
+                </GroupBox>
+                
+                <GroupBox Background="{StaticResource BackgroundBrush}" Name="gbReduction" BorderBrush="Black" HeaderTemplate="{StaticResource GroupBoxHeaderCheckBoxTemplate}"
+                                  ToolTip="Inställningar för intervallreducering med Egen rank">
+                    <GroupBox.Header>
+                        <CheckBox x:Name="chkUseOwnRankInterval" Content="Egen rank" FontFamily="Arial" FontSize="12" FontWeight="Bold" Margin="3" IsChecked="{Binding Path=MarkBet.OwnRankSumReductionRule.Use,ElementName=ucRacesOverview}" ToolTip="Bocka i om du vill använda reduceringen">
+                            <!--<TextBlock  HorizontalAlignment="Center" VerticalAlignment="Bottom" FontFamily="Arial" FontSize="12" FontWeight="Bold" Foreground="Black" Text="Egen rank" />-->
+                        </CheckBox>
+
+                    </GroupBox.Header>
+                    
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button x:Name="btnSetRankOwn" Content="Sätt egen rank" Click="btnSetRankOwn_Click"  Margin="2,2,12,2" ToolTip="Sätt egen rank automatiskt utifrån nuvarande sortering" Grid.Row="1"/>
+
+                        <TextBlock Text="{Binding Path=MarkBet.OwnRankSumReductionRule.LowestSum,ElementName=ucRacesOverview,StringFormat={}Min ({0})}" VerticalAlignment="Center" FontSize="12" Margin="2,2,12,2" Grid.Column="1"/>
+                        <xctk:IntegerUpDown Increment="{Binding Path=MarkBet.OwnRankSumReductionRule.IncrementLower,ElementName=ucRacesOverview}" Value="{Binding Path=MarkBet.OwnRankSumReductionRule.MinSum,ElementName=ucRacesOverview}" 
+                                            Minimum="{Binding Path=MarkBet.OwnRankSumReductionRule.LowestSum,Mode=OneTime,ElementName=ucRacesOverview}" 
+                                            Maximum="{Binding Path=MarkBet.OwnRankSumReductionRule.HighestSum,Mode=OneTime,ElementName=ucRacesOverview}"
+                                            Grid.Column="1" Grid.Row="1" Width="50"
+                                            ValueChanged="IntegerUpDown_ValueChanged_1"/>
+
+                        <TextBlock Text="{Binding Path=MarkBet.OwnRankSumReductionRule.HighestSum,ElementName=ucRacesOverview,StringFormat={}Max ({0})}" VerticalAlignment="Center" FontSize="12" Margin="2,2,12,2" Grid.Column="2"/>
+                        <xctk:IntegerUpDown Increment="{Binding Path=MarkBet.OwnRankSumReductionRule.IncrementUpper,ElementName=ucRacesOverview}" Value="{Binding Path=MarkBet.OwnRankSumReductionRule.MaxSum,ElementName=ucRacesOverview}" 
+                                            Minimum="{Binding Path=MarkBet.OwnRankSumReductionRule.LowestSum,Mode=OneTime,ElementName=ucRacesOverview}" 
+                                            Maximum="{Binding Path=MarkBet.OwnRankSumReductionRule.HighestSum,Mode=OneTime,ElementName=ucRacesOverview}"
+                                            Grid.Column="2" Grid.Row="1" Width="50"
+                                            ValueChanged="IntegerUpDown_ValueChanged_1"/>
+
+                    </Grid>
+
+                </GroupBox>
+
+                <!--<GroupBox Background="{StaticResource BackgroundBrush}" Name="gbReductionAlternate" BorderBrush="Black" HeaderTemplate="{StaticResource GroupBoxHeaderCheckBoxTemplate}"
+                                  ToolTip="Inställningar för intervallreducering med Poäng">
+                    <GroupBox.Header>
+                        <CheckBox x:Name="chkUseAlternateRankInterval" Content="Poäng" FontFamily="Arial" FontSize="12" FontWeight="Bold" Margin="3" IsChecked="{Binding Path=MarkBet.AlternateRankSumReductionRule.Use,ElementName=ucRacesOverview}" ToolTip="Bocka i om du vill använda reduceringen">
+                        </CheckBox>
+
+                    </GroupBox.Header>
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="{Binding Path=MarkBet.AlternateRankSumReductionRule.LowestSum,ElementName=ucRacesOverview,StringFormat={}Min ({0})}" VerticalAlignment="Center" FontSize="12" Margin="2,2,12,2" Grid.Column="1"/>
+                        <xctk:IntegerUpDown Increment="{Binding Path=MarkBet.AlternateRankSumReductionRule.IncrementLower,ElementName=ucRacesOverview}" Value="{Binding Path=MarkBet.AlternateRankSumReductionRule.MinSum,ElementName=ucRacesOverview}" 
+                                            Minimum="{Binding Path=MarkBet.AlternateRankSumReductionRule.LowestSum,Mode=OneTime,ElementName=ucRacesOverview}" 
+                                            Maximum="{Binding Path=MarkBet.AlternateRankSumReductionRule.HighestSum,Mode=OneTime,ElementName=ucRacesOverview}"
+                                            Grid.Column="1" Grid.Row="1" Width="50"
+                                            ValueChanged="iudRankAlternate_ValueChanged"/>
+
+                        <TextBlock Text="{Binding Path=MarkBet.AlternateRankSumReductionRule.HighestSum,ElementName=ucRacesOverview,StringFormat={}Max ({0})}" VerticalAlignment="Center" FontSize="12" Margin="2,2,12,2" Grid.Column="2"/>
+                        <xctk:IntegerUpDown Increment="{Binding Path=MarkBet.AlternateRankSumReductionRule.IncrementUpper,ElementName=ucRacesOverview}" Value="{Binding Path=MarkBet.AlternateRankSumReductionRule.MaxSum,ElementName=ucRacesOverview}" 
+                                            Minimum="{Binding Path=MarkBet.AlternateRankSumReductionRule.LowestSum,Mode=OneTime,ElementName=ucRacesOverview}" 
+                                            Maximum="{Binding Path=MarkBet.AlternateRankSumReductionRule.HighestSum,Mode=OneTime,ElementName=ucRacesOverview}"
+                                            Grid.Column="2" Grid.Row="1" Width="50"
+                                            ValueChanged="iudRankAlternate_ValueChanged"/>
+
+                    </Grid>
+
+                </GroupBox>-->
+
+            </StackPanel>
+        </Grid>
+    </Grid>
+</HPT:UCMarkBetControl>

@@ -1,0 +1,504 @@
+﻿<HPT:UCMarkBetControl x:Class="HPTClient.UCCorrectionMarkingBet"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    DataContextChanged="UserControl_DataContextChanged"
+    xmlns:HPT="clr-namespace:HPTClient"
+    Loaded="UserControl_Loaded"
+                      x:Name="ucCorrectionMarkingBet">
+    <UserControl.Resources>
+
+        <BooleanToVisibilityConverter x:Key="hptVisibilityConverter"/>
+
+        <Style x:Key="ListViewItemStyle" TargetType="{x:Type ListViewItem}">
+            <Setter Property="Background" Value="{Binding NumberOfCorrectsColor}"/>
+            <Setter Property="BorderBrush" Value="Black"></Setter>
+            <Setter Property="BorderThickness" Value="0.5"></Setter>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        </Style>
+
+        <Style x:Key="ColumnHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
+            <Style.Setters>
+                <Setter Property="BorderBrush" Value="Black"/>
+                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                <Setter Property="Background" Value="{StaticResource HeaderGrayBrush}"/>
+            </Style.Setters>
+        </Style>
+
+        <Style x:Key="tbBigStylePayOut" BasedOn="{StaticResource tbBigStyle}" TargetType="{x:Type TextBlock}">
+            <Setter Property="FontSize" Value="14"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=IsChecked,ElementName=chkSimulate}" Value="true">
+                    <Setter Property="FontStyle" Value="Italic"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <!--<RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>-->
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+                <!--<RowDefinition/>-->
+            </Grid.RowDefinitions>
+            
+            <Expander ExpandDirection="Down" IsExpanded="True" BorderBrush="Black" BorderThickness="1" Margin="2">
+                <Expander.Header>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                        <TextBlock Text="Detaljerad vinnarinformation" FontSize="14" FontWeight="Bold" Foreground="Black"
+                                   ToolTip="Visar detaljerad information om vinnande hästar. Klicka på pilen för att visa eller dölja listan."/>
+                        <CheckBox x:Name="chkLockCoupons" Content="Lås kuponger" Margin="10,1" VerticalAlignment="Center" HorizontalAlignment="Right" TextElement.Foreground="Black"
+                                  ToolTip="Lås kuponger så uppdaterade startlistor inte påverkar" IsChecked="{Binding Path=MarkBet.LockCoupons,ElementName=ucCorrectionMarkingBet}"/>
+                        <CheckBox x:Name="chkHandleScratchedHorseAutomatically" Content="Hantera strykningar automatiskt"
+                                  Margin="10,1" VerticalAlignment="Center" HorizontalAlignment="Right" TextElement.Foreground="Black"
+                                  ToolTip="Uppdaterar kupongerna utifrån sena strykningar automatiskt" Checked="chkHandleScratchedHorseAutomatically_Checked" Unchecked="chkHandleScratchedHorseAutomatically_Checked"/>
+                        <RadioButton x:Name="rbShowCoupons" Content="Visa kuponger" Margin="10,1" IsChecked="True"/>
+                        <RadioButton x:Name="rbShowHorses" Content="Visa hästar" Margin="4,1"/>
+                    </StackPanel>
+                </Expander.Header>
+                <HPT:UCRaceView/>
+            </Expander>
+
+            <Expander ExpandDirection="Down" IsExpanded="True" Margin="2" BorderBrush="Black" BorderThickness="1" Grid.Row="1" 
+                      Visibility="{Binding Path=IsChecked,ElementName=rbShowCoupons,Converter={StaticResource hptVisibilityConverter}}">
+                <Expander.Header>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                        <TextBlock Text="Kuponger" FontSize="14" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Left"/>
+                        <CheckBox x:Name="chkShowReserver" Content="Visa reserver" Margin="10,1" VerticalAlignment="Center" HorizontalAlignment="Right" TextElement.Foreground="Black"
+                                  ToolTip="Visa reserver."/>
+                        <CheckBox x:Name="chkSimulate" Content="Simulera utfall" Margin="10,1" VerticalAlignment="Center" HorizontalAlignment="Right" TextElement.Foreground="Black"
+                                  ToolTip="Välj vinnande hästar nedan för att testa utfall och se ungefärlig utdelning." Checked="chkSimulate_Checked" Unchecked="chkSimulate_Unchecked"/>
+                        <!--<CheckBox x:Name="chkLockCoupons" Content="Lås kuponger" Margin="10,1" VerticalAlignment="Center" HorizontalAlignment="Right" TextElement.Foreground="Black"
+                                  ToolTip="Lås kuponger så uppdaterade startlistor inte påverkar" IsChecked="{Binding Path=MarkBet.LockCoupons,ElementName=ucCorrectionMarkingBet}"/>
+                        <CheckBox x:Name="chkHandleScratchedHorseAutomatically" Content="Hantera strykningar automatiskt"
+                                  Margin="10,1" VerticalAlignment="Center" HorizontalAlignment="Right" TextElement.Foreground="Black"
+                                  ToolTip="Uppdaterar kupongerna utifrån sena strykningar automatiskt" Checked="chkHandleScratchedHorseAutomatically_Checked" Unchecked="chkHandleScratchedHorseAutomatically_Checked"/>-->
+                        <Button x:Name="btnClearCorrection" Content="Rensa" Margin="10,1" Click="btnClearCorrection_Click" Padding="1,-1"/>
+                    </StackPanel>
+                </Expander.Header>
+
+                <ListView Name="lvwCoupons" ItemsSource="{Binding Path=CouponHelper.CouponList}" ItemContainerStyle="{StaticResource ListViewItemStyle}" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="1">
+                    <ListView.View>
+                        <GridView x:Name="gvwCoupons">
+
+                            <!--Kupongnummer-->
+                            <GridViewColumn DisplayMemberBinding="{Binding Path=CouponId,StringFormat=' {0:N0}',ConverterCulture=sv-SE}">
+                                <GridViewColumnHeader Click="GridViewColumnHeader_Click" Style="{StaticResource ColumnHeaderStyle}" Tag="CouponId" Content="Kupong"
+                                                  ToolTip="Kupongens löpnummer i inlämnad fil"/>
+                            </GridViewColumn>
+
+                            <!--Kupongstorlek-->
+                            <GridViewColumn DisplayMemberBinding="{Binding Path=SystemSize,StringFormat=' {0:N0}',ConverterCulture=sv-SE}">
+                                <GridViewColumnHeader Click="GridViewColumnHeader_Click" Style="{StaticResource ColumnHeaderStyle}" Tag="SystemSize" Content="Kupongstorlek"
+                                                  ToolTip="Kupongstorlek i antal rader"/>
+                            </GridViewColumn>
+
+                            <!--V6/V7-->
+                            <GridViewColumn x:Name="gvcV6">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding V6,Mode=OneWay}" IsEnabled="False"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                                <GridViewColumnHeader Style="{StaticResource ColumnHeaderStyle}" Tag="RowNumber" Content="V6/V7/V8"
+                                                  ToolTip="Visar med en bock vilka kuponger som har V6/V7/V8-alternativet valt"/>
+                            </GridViewColumn>
+
+                            <!--Flerbong-->
+                            <GridViewColumn x:Name="gvcBetMultiplier" DisplayMemberBinding="{Binding BetMultiplier}">
+                                <GridViewColumnHeader Click="GridViewColumnHeader_Click" Style="{StaticResource ColumnHeaderStyle}" Tag="BetMultiplier" Content="Flerbong"
+                                                  ToolTip="Visar hur många flerbongar man har lämnat in (1 innebär ett vanligt system)"/>
+                            </GridViewColumn>
+
+                            <!--Antal rätt-->
+                            <GridViewColumn DisplayMemberBinding="{Binding NumberOfCorrect}">
+                                <GridViewColumnHeader Click="GridViewColumnHeader_Click" Style="{StaticResource ColumnHeaderStyle}" Tag="NumberOfCorrect" Content="Antal rätt"
+                                                  ToolTip="Visar antal rätt på respektive kupong"/>
+                            </GridViewColumn>
+
+                            <!--Vinst på kupongen-->
+                            <GridViewColumn DisplayMemberBinding="{Binding Winnings}">
+                                <GridViewColumnHeader Click="GridViewColumnHeader_Click" Style="{StaticResource ColumnHeaderStyle}" Tag="Winnings" Content="Vinst"
+                                                  ToolTip="Visar hur många kronor man vunnit på varje kupong"/>
+
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Path=PayOutAmount,StringFormat={}{0:N0},ConverterCulture=sv-SE}" TextAlignment="Right" HorizontalAlignment="Right"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+
+                            </GridViewColumn>
+
+                            <!--Kupongen-->
+                            <GridViewColumn>
+                                <GridViewColumnHeader Style="{StaticResource ColumnHeaderStyle}"
+                                                  ToolTip="Visar resultat i samtliga färdiga lopp.">
+                                    <ItemsControl x:Name="icResult" ItemsSource="{Binding Path=RaceDayInfo.RaceList}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border BorderBrush="Black" BorderThickness="1" CornerRadius="2" Margin="1">
+                                                    <WrapPanel Orientation="Horizontal" Width="126" Margin="2">
+
+                                                        <TextBlock x:Name="tbLegNrString" Text="{Binding Path=LegNrString}" FontWeight="Bold"/>
+                                                        <TextBlock Text="{Binding Path=LegResult.Value,StringFormat={}({0:N0} kr),ConverterCulture=sv-SE}"/>
+
+                                                        <ComboBox x:Name="cmbFirstWinner" ItemsSource="{Binding HorseList}" Width="120" SelectedItem="{Binding Path=LegResult.WinnerList[0],Mode=TwoWay}" SelectionChanged="ComboBox_SelectionChanged">
+                                                            <ComboBox.ItemTemplate>
+                                                                <DataTemplate>
+                                                                    <StackPanel Orientation="Horizontal" Margin="1">
+                                                                        <CheckBox Name="chkNrSelect" IsEnabled="{Binding NotScratched}" IsChecked="{Binding Selected}" Template="{StaticResource CheckBoxControlTemplate}" Content="{Binding StartNr}" Padding="3,0"/>
+                                                                        <TextBlock Style="{StaticResource tbStyle}" Padding="4,1,1,1" IsEnabled="True">
+                                                                            <TextBlock.Text>
+                                                                                <MultiBinding StringFormat="{}{0} ({1:P1})">
+                                                                                    <Binding Path="HorseName"></Binding>
+                                                                                    <Binding Path="StakeDistributionShare"></Binding>
+                                                                                </MultiBinding>
+                                                                            </TextBlock.Text>
+                                                                        </TextBlock>
+                                                                    </StackPanel>
+                                                                </DataTemplate>
+                                                            </ComboBox.ItemTemplate>
+                                                        </ComboBox>
+                                                    
+                                                        <ComboBox x:Name="cmbSecondWinner" ItemsSource="{Binding HorseList}" SelectedItem="{Binding Path=LegResult.WinnerList[1],Mode=TwoWay}" Visibility="{Binding Path=SplitVictory,Converter={StaticResource hptVisibilityConverter}}">
+                                                            <ComboBox.ItemTemplate>
+                                                                <DataTemplate>
+                                                                    <StackPanel Orientation="Horizontal" Margin="1">
+                                                                        <CheckBox Name="chkNrSelect" IsEnabled="{Binding NotScratched}" IsChecked="{Binding Selected}" Template="{StaticResource CheckBoxControlTemplate}" Content="{Binding StartNr}" Padding="3,0"/>
+                                                                        <TextBlock Text="{Binding HorseName}" Style="{StaticResource tbStyle}" Padding="4,1,1,1"/>
+                                                                    </StackPanel>
+                                                                </DataTemplate>
+                                                            </ComboBox.ItemTemplate>
+                                                        </ComboBox>
+                                                    
+                                                    </WrapPanel>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </GridViewColumnHeader>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ItemsControl ItemsSource="{Binding CouponRaceList}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Orientation="Horizontal"/>
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Vertical">
+
+                                                        <ItemsControl ItemsSource="{Binding HorseList}">
+                                                            <ItemsControl.ItemsPanel>
+                                                                <ItemsPanelTemplate>
+                                                                    <WrapPanel Orientation="Horizontal" Width="134"/>
+                                                                </ItemsPanelTemplate>
+                                                            </ItemsControl.ItemsPanel>
+                                                            <ItemsControl.ItemTemplate>
+                                                                <DataTemplate>
+                                                                    <CheckBox IsChecked="{Binding Correct}" Template="{StaticResource CheckBoxControlTemplate}" Content="{Binding StartNr}"/>
+                                                                </DataTemplate>
+                                                            </ItemsControl.ItemTemplate>
+                                                        </ItemsControl>
+
+                                                        <StackPanel Orientation="Horizontal" Visibility="{Binding Path=IsChecked,ElementName=chkShowReserver,Converter={StaticResource hptVisibilityConverter}}">
+                                                            <Grid>
+                                                                <Rectangle Stroke="LightBlue" Width="24" Height="16" StrokeThickness="1" RadiusX="3" RadiusY="3" Fill="AliceBlue">
+                                                                </Rectangle>
+                                                                <TextBlock Text="{Binding Reserv1}" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial" FontSize="12" FontWeight="Bold" Foreground="Blue"/>
+                                                            </Grid>
+                                                            <Grid>
+                                                                <Rectangle Stroke="LightBlue" Width="24" Height="16" StrokeThickness="1" RadiusX="3" RadiusY="3" Fill="AliceBlue">
+                                                                </Rectangle>
+                                                                <TextBlock Text="{Binding Reserv2}" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial" FontSize="12" FontWeight="Bold" Foreground="Blue"/>
+                                                            </Grid>
+                                                        </StackPanel>
+
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <!--Vinst på kupong-->
+                            <!--<GridViewColumn DisplayMemberBinding="{Binding HorseListObservable[6]}" x:Name="gvcAvd7" >
+                            <GridViewColumnHeader Style="{StaticResource ColumnHeaderStyle}" Tag="StartNr" Content="{Binding Path=markBet.RaceDayInfo.RaceList[6].LegNrString}"/>
+                        </GridViewColumn>-->
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+
+            </Expander>
+
+            <Expander ExpandDirection="Down" IsExpanded="True" Margin="2" BorderBrush="Black" BorderThickness="1" Grid.Row="1" 
+                      Visibility="{Binding Path=IsChecked,ElementName=rbShowHorses,Converter={StaticResource hptVisibilityConverter}}">
+                <Expander.Header>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                        <TextBlock Text="Hästar" FontSize="14" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Left"/>
+                        <!--<CheckBox x:Name="chkShowReserver" Content="Visa reserver" Margin="10,1" VerticalAlignment="Center" HorizontalAlignment="Right" TextElement.Foreground="Black"
+                                  ToolTip="Visa reserver."/>
+                        <CheckBox x:Name="chkSimulate" Content="Simulera utfall" Margin="10,1" VerticalAlignment="Center" HorizontalAlignment="Right" TextElement.Foreground="Black"
+                                  ToolTip="Välj vinnande hästar nedan för att testa utfall och se ungefärlig utdelning." Checked="chkSimulate_Checked" Unchecked="chkSimulate_Unchecked"/>
+                        <CheckBox x:Name="chkLockCoupons" Content="Lås kuponger" Margin="10,1" VerticalAlignment="Center" HorizontalAlignment="Right" TextElement.Foreground="Black"
+                                  ToolTip="Lås kuponger så uppdaterade startlistor inte påverkar" IsChecked="{Binding Path=MarkBet.LockCoupons,ElementName=ucCorrectionMarkingBet}"/>
+                        <CheckBox x:Name="chkHandleScratchedHorseAutomatically" Content="Hantera strykningar automatiskt"
+                                  Margin="10,1" VerticalAlignment="Center" HorizontalAlignment="Right" TextElement.Foreground="Black"
+                                  ToolTip="Uppdaterar kupongerna utifrån sena strykningar automatiskt" Checked="chkHandleScratchedHorseAutomatically_Checked" Unchecked="chkHandleScratchedHorseAutomatically_Checked"/>
+                        <Button x:Name="btnClearCorrection" Content="Rensa" Margin="10,1" Click="btnClearCorrection_Click" Padding="1,-1"/>-->
+                    </StackPanel>
+                </Expander.Header>
+
+                <Grid>
+                <ListBox x:Name="lstRaces" ItemsSource="{Binding Path=MarkBet.RaceDayInfo.RaceList,ElementName=ucCorrectionMarkingBet}" VerticalContentAlignment="Top"
+                          ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid MaxWidth="240">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+
+                                <Border BorderBrush="Black" BorderThickness="1" Background="LightBlue">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Path=LegNrString}" FontWeight="Bold" Padding="2"/>
+                                        <TextBlock Text="{Binding Path=RaceInfoShort}" Padding="2"/>
+                                    </StackPanel>
+                                </Border>
+                                
+                                <ListBox ItemsSource="{Binding Path=HorseList}" VerticalAlignment="Top" VerticalContentAlignment="Top" HorizontalContentAlignment="Stretch"
+                                          ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Grid.Row="1">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border BorderBrush="Black" BorderThickness="1" Padding="1" Margin="1">
+                                                <HPT:UCHorseResultInfo HorizontalAlignment="Stretch"/>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                                
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                </Grid>
+            </Expander>
+
+        </Grid>
+        
+        <Grid  Grid.Column="1" ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <StackPanel Orientation="Vertical" Background="{StaticResource BackgroundBrush}">
+
+                <GroupBox x:Name="gbCorrectionResult" Background="{StaticResource BackgroundBrush}" Visibility="Collapsed" BorderBrush="Black" HeaderTemplate="{StaticResource GroupBoxHeaderTemplate}" Header="Resultat" HorizontalAlignment="Left" Margin="2"
+                          ToolTip="Visar utdelning och antal vinnande rader på ditt system">
+                    <StackPanel Orientation="Vertical">
+
+                        <ItemsControl ItemsSource="{Binding Path=RaceDayInfo.RaceList}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Border BorderBrush="Black" BorderThickness="1" CornerRadius="2" Margin="1">
+                                            <TextBlock Style="{StaticResource tbBigStyle}" FontSize="14" Text="{Binding LegNr}" Margin="2"/>
+                                        </Border>
+                                        <Border BorderBrush="Black" BorderThickness="1" CornerRadius="2" Margin="1" Width="140">
+                                            <WrapPanel Orientation="Horizontal" Margin="2" VerticalAlignment="Center">
+                                                <TextBlock Style="{StaticResource tbStyle}" Text="{Binding Path=LegResult.WinnerStrings[0]}" Width="Auto"/>
+                                                <TextBlock Style="{StaticResource tbStyle}" Text="{Binding Path=LegResult.WinnerStrings[1]}"/>
+                                            </WrapPanel>
+                                        </Border>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <ItemsControl ItemsSource="{Binding Path=RaceDayInfo.PayOutList}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Style="{StaticResource tbBigStylePayOut}" FontSize="14" Padding="2">
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0} rätt ({1}): {2:N0} kr" ConverterCulture="sv-SE">
+                                                <Binding Path="NumberOfCorrect"></Binding>
+                                                <Binding Path="NumberOfWinningRows"></Binding>
+                                                <Binding Path="PayOutAmount"></Binding>
+                                             </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <TextBlock Style="{StaticResource tbBigStyle}" FontSize="14" Text="{Binding Path=CouponHelper.TotalWinnings,StringFormat='Total Vinst: {0:N0} kr',ConverterCulture=sv-SE}" Padding="2,6,2,2"/>
+
+                        <Button x:Name="btnAnalyzeResult" Content="Analys" Padding="2,1" Margin="2" Click="btnAnalyzeResult_Click"
+                                ToolTip="Analyserar vinnande hästar utifrån rank" IsEnabled="{Binding Path=MarkBet.RaceDayInfo.HasResult,ElementName=ucCorrectionMarkingBet}"/>
+
+                        <Button x:Name="btnWinnerList" Content="Visa vinstlista" IsEnabled="False" Click="btnWinnerList_Click" Padding="2,1" Margin="2"/>
+
+                        <Button x:Name="btnSuggestNextTimers" Content="Föreslå nästagångare" IsEnabled="False" Click="btnSuggestNextTimers_Click" Padding="2,1" Margin="2"/>
+
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox x:Name="gbCorrectionStatus" Visibility="Collapsed" Background="{StaticResource BackgroundBrush}" BorderBrush="Black" HeaderTemplate="{StaticResource GroupBoxHeaderTemplate}" Header="Status" HorizontalAlignment="Left" Margin="2">
+                    <TextBlock x:Name="txtRowStatus" VerticalAlignment="Center" FontSize="12" HorizontalAlignment="Left" Padding="3" Grid.Column="2" Style="{StaticResource tbMediumStyle}"/>
+                </GroupBox>
+
+                <GroupBox x:Name="gbHorsesInNextRace" Background="{StaticResource BackgroundBrush}" BorderBrush="Black" HeaderTemplate="{StaticResource GroupBoxHeaderTemplate}" Header="Nästa lopp" HorizontalAlignment="Left" Margin="2">
+
+                    <StackPanel Orientation="Vertical">
+                   
+                        <ItemsControl ItemsSource="{Binding Path=HorseListRemainingRows,ElementName=ucCorrectionMarkingBet}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="16"/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Text="{Binding Path=StartNr}" FontWeight="Bold" TextAlignment="Right" HorizontalAlignment="Stretch"/>
+                                    <TextBlock Text="{Binding Path=HorseName}" Grid.Column="1" Margin="5,1,10,1"/>
+                                        <TextBlock Text="{Binding Path=NumberOfRowsWithPossibility}" FontWeight="Bold" Grid.Column="2" TextAlignment="Right" HorizontalAlignment="Stretch"/>
+                                        <!--<TextBlock Text="{Binding Path=NumberOfRowsWithAllCorrect,StringFormat=N0,ConverterCulture=sv-SE}" FontWeight="Bold" Grid.Column="2" TextAlignment="Right" HorizontalAlignment="Stretch"/>
+                                    <TextBlock Text="{Binding Path=NumberOfRowsWithOneError}" Grid.Column="3"/>
+                                    <TextBlock Text="{Binding Path=NumberOfRowsWithTwoErrors}" Grid.Column="4"/>-->
+                                    
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                        <!--<TextBlock Text="{Binding Path=MaxPotentialWinnings,StringFormat='Maxvinst: {0:N0} kr',ConverterCulture=sv-SE}" 
+                                   FontWeight="Bold" Margin="2,10,2,2"/>-->
+
+                        <TextBlock Text="{Binding Path=MarkBet.MaxPotentialWinnings,ElementName=ucCorrectionMarkingBet,StringFormat='Maxvinst: {0:N0} kr',ConverterCulture=sv-SE}" FontWeight="Bold" Margin="2,10,2,2"/>
+
+                        <!--<TextBlock Text="{Binding Path=MarkBet.MaxPotentialWinnings,StringFormat='Maxvinst: {0:N0} kr',ElementName=ucCorrectionMarkingBet,ConverterCulture=sv-SE}" 
+                                   FontWeight="Bold" Margin="2,10,2,2"/>-->
+                        
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox x:Name="gbSmallestPayout" Visibility="Collapsed" Background="{StaticResource BackgroundBrush}" BorderBrush="Black" HeaderTemplate="{StaticResource GroupBoxHeaderTemplate}" Header="Lägsta utdelning" HorizontalAlignment="Left" Margin="2">
+                    <ItemsControl ItemsSource="{Binding Path=BetType.PayOutDummyList}" x:Name="icWorstCaseScenario">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Style="{StaticResource tbBigStylePayOut}" FontSize="14" Padding="2">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} rätt: {1:N0} kr" ConverterCulture="sv-SE">
+                                            <Binding Path="NumberOfCorrect"></Binding>
+                                            <Binding Path="PayOutAmount"></Binding>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </GroupBox>
+
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.ColumnSpan="2" Grid.Row="1" Margin="2" MaxHeight="40" VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+                <TextBlock x:Name="txtError" VerticalAlignment="Center" Foreground="Red" FontSize="14" FontWeight="DemiBold" HorizontalAlignment="Left"/>
+
+                <StackPanel Orientation="Horizontal" Grid.Column="1">
+
+                    <Button x:Name="btnRetrieveResult" Content="Smygen" Click="btnRetrieveResult_Click" Padding="1" Margin="2"
+                            ToolTip="Hämtar resultat för färdiga lopp utan att visa det i gränssnittet"/>
+
+                    <ItemsControl ItemsSource="{Binding Path=RaceDayInfo.RaceList}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button x:Name="btnSneak" Content="{Binding LegNr}" IsEnabled="{Binding Path=HasResult}" Tag="{Binding LegNr}" Click="btnSneak_Click" Width="24" Margin="0,2" TextElement.FontSize="14" FontWeight="ExtraBold"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                </StackPanel>
+
+            <CheckBox x:Name="chkShowOnlyCouponsWithPotential" Checked="chkShowOnlyCouponsWithPotential_Checked" Unchecked="chkShowOnlyCouponsWithPotential_Unchecked"
+                      Padding="2,6,2,2" Margin="2,6,2,2" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <TextBlock Text="Bara kuponger med vinstchans" Style="{StaticResource tbMediumStyle}" Margin="2,-8,20,2"/>
+            </CheckBox>
+
+            <CheckBox x:Name="chkPlaySound" Padding="2,6,2,2" Margin="2,6,2,2" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <TextBlock Text="Spela ljud" Style="{StaticResource tbMediumStyle}" Margin="2,-8,20,2"/>
+            </CheckBox>
+
+            <CheckBox x:Name="chkAutomaticCorrection" Padding="2,6,2,2" Margin="2,6,2,2" Grid.Column="4" HorizontalAlignment="Right" VerticalAlignment="Center" Checked="chkAutomaticCorrection_Checked" Unchecked="chkAutomaticCorrection_Checked">
+                <TextBlock Text="Automatiskt rättning" VerticalAlignment="Center" Style="{StaticResource tbMediumStyle}" Grid.Column="4" HorizontalAlignment="Right" Margin="2,-8,20,2"/>
+            </CheckBox>                
+
+                <Button x:Name="btnCorrect" Content="Rätta nu" Margin="2" Click="btnCorrect_Click" Grid.Column="6"
+                        ToolTip="Hämtar resultat och rättar ditt system"/>
+                
+            </Grid>
+        </Grid>
+    
+    <!--</Grid>-->
+</HPT:UCMarkBetControl>

@@ -1,0 +1,28 @@
+﻿<UserControl x:Class="HPTClient.UCATGHomepage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Border Background="{StaticResource BackgroundBrush}" BorderBrush="Black" BorderThickness="1">
+            <Label>
+                <Hyperlink x:Name="hlATG" NavigateUri="http://www.atg.se" RequestNavigate="hlATG_RequestNavigate">Öppna ATGs hemsida i extern webbläsare</Hyperlink>
+            </Label>
+        </Border>
+        
+        <Border  Grid.Row="1">
+            <WebBrowser Source="http://www.atg.se"/>
+        </Border>
+
+        <!--<WebBrowser Source="http://www.atg.se" Margin="-50,-100,50,100"/>-->
+        <!--<Button Width="300" Height="200" Content="Button" HorizontalAlignment="Left" Margin="132,154,0,0" Name="button1" VerticalAlignment="Top"/>-->
+        <!--<Button Width="300" Height="200" Content="TEST"--> 
+    </Grid>
+</UserControl>

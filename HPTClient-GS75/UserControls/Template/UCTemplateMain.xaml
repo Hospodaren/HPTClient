@@ -1,0 +1,84 @@
+﻿<UserControl x:Class="HPTClient.UCTemplateMain"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:EXT="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:HPT="clr-namespace:HPTClient"
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="600">
+    <Grid>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="btnImportRankVariableTemplates" Margin="2" Content="Importera" Click="btnImportRankVariableTemplates_Click" HorizontalAlignment="Left" Width="Auto"/>
+                <Button x:Name="btnExportRankVariableTemplates" Margin="2,2,2,0" Content="Exportera" Click="btnExportRankVariableTemplates_Click" HorizontalAlignment="Left" Width="Auto" Height="22" VerticalAlignment="Top"/>
+            </StackPanel>
+
+            <TabControl x:Name="tcTemplateMain" TabStripPlacement="Top" Grid.Row="1">
+
+                <TabItem x:Name="tiRankVariablesTemplate">
+                    <TabItem.Header>
+                        <HPT:UCTabItemHeader Text="Rankvariabelmallar"/>
+                    </TabItem.Header>
+                    <HPT:UCRankVariablesTemplateList/>
+                </TabItem>
+
+                <TabItem x:Name="tiTemplateABCD">
+                    <TabItem.Header>
+                        <HPT:UCTabItemHeader Text="ABCD-mallar"/>
+                    </TabItem.Header>
+                    <HPT:UCMarkBetTemplateABCD/>
+                </TabItem>
+
+                <TabItem x:Name="tiTemplateRank">
+                    <TabItem.Header>
+                        <HPT:UCTabItemHeader Text="Rankmallar"/>
+                    </TabItem.Header>
+                    <HPT:UCMarkBetTemplateRank/>
+                </TabItem>
+
+                <TabItem x:Name="tiTemplateGroupInterval">
+                    <TabItem.Header>
+                        <HPT:UCTabItemHeader Text="Gruppintervallmallar"/>
+                    </TabItem.Header>
+                    <HPT:UCGroupIntervalTemplateList/>
+                </TabItem>
+
+                <TabItem x:Name="tiTemplateHorseRankReduction">
+                    <TabItem.Header>
+                        <HPT:UCTabItemHeader Text="Rankreduceringsmallar"/>
+                    </TabItem.Header>
+                    <HPT:UCHorseRankSumReductionTemplateList/>
+                </TabItem>
+
+                <TabItem x:Name="tiStartNumberRank">
+                    <TabItem.Header>
+                        <HPT:UCTabItemHeader Text="Spårrank"/>
+                    </TabItem.Header>
+                    <ItemsControl ItemsSource="{Binding Path=StartNumberRankCollectionList}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <HPT:UCStartNumberRankTemplate/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+
+                    </ItemsControl>
+                </TabItem>
+
+            </TabControl>
+
+        </Grid>
+    </Grid>
+</UserControl>

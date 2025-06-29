@@ -1,0 +1,979 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+
+RELEASE NOTES
+
+atg_filebetting.xsd version 1.8.2
+
+Changes in version 1.8.2
+- Added support for new bet type Grand Slam 75.
+- Removed the unsupported Raket bet type.
+
+Changes in version 1.8.1
+- The v7 and v8 attributes for V75 and V86 are now deprecated. If they should be used they must be set to "false" or "0".
+- The trackcode and raceno attributes are no longer optional for Trio bets, they must always be set.
+- Now allowing 20 marks (horses) correctly for Vinnare/Plats, Komb, Tvilling and Trio.
+- Except for the changes described above, this schema is fully compatible with xml-files created using version 1.8.0.
+
+Changes in version 1.8.0
+- Added support for new bet type V86.
+- new XSD validation implementation at ATG. Old "bugs" in XSD validation migth be processed differently. For instance attribute createdtime.
+- betmultiplier is stated as optional with default value 1. Defaults to 1 if not present.
+- V4 now has 20 selections.
+
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.8.2">
+	<xs:complexType name="betcouponsType">
+		<xs:annotation>
+			<xs:documentation>Encapsulates the bet coupons.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence maxOccurs="unbounded">
+			<xs:element name="v86Coupon" type="v86CouponType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="v75Coupon" type="v75CouponType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="v65Coupon" type="v65CouponType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="v64Coupon" type="v64CouponType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="v5Coupon" type="v5CouponType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="v4Coupon" type="v4CouponType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="v3Coupon" type="v3CouponType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="gs75Coupon" type="gs75CouponType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="DDCoupon" type="DDCouponType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="LDCoupon" type="LDCouponType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="VPCoupon" type="VPCouponType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="kombCoupon" type="kombCouponType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="tvillingCoupon" type="tvillingCouponType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="trioCoupon" type="trioCouponType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="issuer">
+		<xs:annotation>
+			<xs:documentation>Root element. Contains information about file generation.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="betcoupons" type="betcouponsType"/>
+			</xs:sequence>
+			<xs:attribute name="company" use="optional">
+				<xs:annotation>
+					<xs:documentation>Name of the company issuing the product that created the file.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="64"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="product" use="optional">
+				<xs:annotation>
+					<xs:documentation>Name of the product that created the file.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="64"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="version" use="optional">
+				<xs:annotation>
+					<xs:documentation>Version of the product that created the file.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="64"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="createddate" type="xs:date" use="optional">
+				<xs:annotation>
+					<xs:documentation>The date that the file was created (yyyy-mm-dd).</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="createdtime" type="xs:time" use="optional">
+				<xs:annotation>
+					<xs:documentation>The time of day that the file was created (hh:mm:ss). 24-hr format.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="schemaversion" type="xs:string" fixed="ATG File Betting XSD ver 1.8">
+				<xs:annotation>
+					<xs:documentation>Version of the XML Schema Definition (XSD) with which the XML-file was validated. This is a fixed string.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="legType">
+		<xs:annotation>
+			<xs:documentation>A leg in a multi-leg bet type.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="legno" use="required">
+			<xs:annotation>
+				<xs:documentation>The number (order) of the leg in a multi-leg bet. Must be a value between 1 and 8.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="1"/>
+					<xs:maxInclusive value="8"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="marks" use="required">
+			<xs:annotation>
+				<xs:documentation>A sequence of fifteen "0" or "1", representing a mark (1) or no mark (0), for the runner in starting position 1 through 15, from left to right. E.g. the string "010100000010000" would be interpreted as a leg containing three marks, for the runners designated the starting positions 2, 4 and 11.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="[0-1]{15}"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="r1" use="optional">
+			<xs:annotation>
+				<xs:documentation>The optional choice of first reserve. Must be a number between 1 and 15. </xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="1"/>
+					<xs:maxInclusive value="15"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="r2" use="optional">
+			<xs:annotation>
+				<xs:documentation>The optional choice of second reserve. Must be a number between 1 and 15. </xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="1"/>
+					<xs:maxInclusive value="15"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="legType20">
+		<xs:annotation>
+			<xs:documentation>A leg in a multi-leg bet type of 20 selections.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="legno" use="required">
+			<xs:annotation>
+				<xs:documentation>The number (order) of the leg in a multi-leg bet. Must be a value between 1 and 8.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="1"/>
+					<xs:maxInclusive value="8"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="marks" use="required">
+			<xs:annotation>
+				<xs:documentation>A sequence of fifteen "0" or "1", representing a mark (1) or no mark (0), for the runner in starting position 1 through 20, from left to right. E.g. the string "01010000001000010000" would be interpreted as a leg containing three marks, for the runners designated the starting positions 2, 4, and 16.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="[0-1]{20}"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="r1" use="optional">
+			<xs:annotation>
+				<xs:documentation>The optional choice of first reserve. Must be a number between 1 and 20. </xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="1"/>
+					<xs:maxInclusive value="20"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="r2" use="optional">
+			<xs:annotation>
+				<xs:documentation>The optional choice of second reserve. Must be a number between 1 and 20. </xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="1"/>
+					<xs:maxInclusive value="20"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="v4CouponType">
+		<xs:annotation>
+			<xs:documentation>The coupon for the V4 (Pick4) bet type.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="leg" type="legType20" minOccurs="4" maxOccurs="4"/>
+		</xs:sequence>
+		<xs:attribute name="couponid" use="required">
+			<xs:annotation>
+				<xs:documentation>The sequence number of the coupon in the file, starting with 1 for the first coupon and incrementing by 1 for each additional coupon contained in the file.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="1"/>
+					<xs:maxInclusive value="9999"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="date" type="xs:date" use="required">
+			<xs:annotation>
+				<xs:documentation>The date of the meeting that the bet concerns. (yyyy-mm-dd)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="trackcode" use="required">
+			<xs:annotation>
+				<xs:documentation>The numeric code for the track where the meeting is held that the bet concerns. Min 1, max 99.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="1"/>
+					<xs:maxInclusive value="99"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="betmultiplier" use="optional" default="1">
+			<xs:annotation>
+				<xs:documentation>The number of times that the bet (coupon) will be entered. Default and minimum is 1, maximum is 100. The following multipliers are valid: 1 (default), 2, 3, 4, 5, 10, 50, 100.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="1"/>
+					<xs:maxInclusive value="100"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="v5CouponType">
+		<xs:annotation>
+			<xs:documentation>The coupon for the V5 (Pick5) bet type.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="leg" type="legType" minOccurs="5" maxOccurs="5"/>
+		</xs:sequence>
+		<xs:attribute name="couponid" use="required">
+			<xs:annotation>
+				<xs:documentation>The sequence number of the coupon in the file, starting with 1 for the first coupon and incrementing by 1 for each additional coupon contained in the file.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="1"/>
+					<xs:maxInclusive value="9999"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="date" type="xs:date" use="required">
+			<xs:annotation>
+				<xs:documentation>The date of the meeting that the bet concerns. (yyyy-mm-dd)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="trackcode" use="required">
+			<xs:annotation>
+				<xs:documentation>The numeric code for the track where the meeting is held that the bet concerns.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="1"/>
+					<xs:maxInclusive value="99"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="betmultiplier" use="optional" default="1">
+			<xs:annotation>
+				<xs:documentation>The number of times that the bet (coupon) will be entered. Default and minimum is 1, maximum is 100. The following multipliers are valid: 1 (default), 2, 5, 10, 20, 50, 100.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="1"/>
+					<xs:maxInclusive value="100"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="v64CouponType">
+		<xs:annotation>
+			<xs:documentation>The coupon for the V64 (Pick6-4) bet type.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="leg" type="legType" minOccurs="6" maxOccurs="6"/>
+		</xs:sequence>
+		<xs:attribute name="couponid" use="required">
+			<xs:annotation>
+				<xs:documentation>The sequence number of the coupon in the file, starting with 1 for the first coupon and incrementing by 1 for each additional coupon contained in the file.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="1"/>
+					<xs:maxInclusive value="9999"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="date" type="xs:date" use="required">
+			<xs:annotation>
+				<xs:documentation>The date of the meeting that the bet concerns. (yyyy-mm-dd)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="betmultiplier" use="optional" default="1">
+			<xs:annotation>
+				<xs:documentation>The number of times that the bet (coupon) will be entered. Default and minimum is 1, maximum is 100. The following multipliers are valid: 1 (default), 2, 3, 4, 5, 10, 50, 100.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="1"/>
+					<xs:maxInclusive value="100"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="v6" type="xs:boolean" use="optional" default="0">
+			<xs:annotation>
+				<xs:documentation>Restricts the bet to participation in the six-right pool only if set.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="v65CouponType">
+		<xs:annotation>
+			<xs:documentation>The coupon for the V65 (Pick6-5) bet type.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="leg" type="legType" minOccurs="6" maxOccurs="6"/>
+		</xs:sequence>
+		<xs:attribute name="couponid" use="required">
+			<xs:annotation>
+				<xs:documentation>The sequence number of the coupon in the file, starting with 1 for the first coupon and incrementing by 1 for each additional coupon contained in the file.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="1"/>
+					<xs:maxInclusive value="9999"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="date" type="xs:date" use="required">
+			<xs:annotation>
+				<xs:documentation>The date of the meeting that the bet concerns. (yyyy-mm-dd)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="betmultiplier" use="optional" default="1">
+			<xs:annotation>
+				<xs:documentation>The number of times that the bet (coupon) will be entered. Default and minimum is 1, maximum is 100. The following multipliers are valid: 1 (default), 2, 3, 4, 5, 10, 50, 100.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="1"/>
+					<xs:maxInclusive value="100"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="v6" type="xs:boolean" use="optional" default="0">
+			<xs:annotation>
+				<xs:documentation>Restricts the bet to participation in the six-right pool only if set.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="v75CouponType">
+		<xs:annotation>
+			<xs:documentation>The coupon for the V75 (Pick7-5) bet type.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="leg" type="legType" minOccurs="7" maxOccurs="7"/>
+		</xs:sequence>
+		<xs:attribute name="couponid" use="required">
+			<xs:annotation>
+				<xs:documentation>The sequence number of the coupon in the file, starting with 1 for the first coupon and incrementing by 1 for each additional coupon contained in the file.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="1"/>
+					<xs:maxInclusive value="9999"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="date" type="xs:date" use="required">
+			<xs:annotation>
+				<xs:documentation>The date of the meeting that the bet concerns. (yyyy-mm-dd)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="betmultiplier" use="optional" default="1">
+			<xs:annotation>
+				<xs:documentation>The number of times that the bet (coupon) will be entered. Default and minimum is 1, maximum is 100. The following multipliers are valid: 1 (default), 2, 5, 10, 20, 50, 100.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="1"/>
+					<xs:maxInclusive value="100"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="v7" type="xs:boolean" use="optional" fixed="false">
+			<xs:annotation>
+				<xs:documentation>Deprecated attribute, can only be set to false - Restricts the bet to participation in the seven-right pool only if set.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="gs75CouponType">
+		<xs:annotation>
+			<xs:documentation>The coupon for the Grand Slam 75 bet type.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="leg" type="legType" minOccurs="7" maxOccurs="7"/>
+		</xs:sequence>
+		<xs:attribute name="couponid" use="required">
+			<xs:annotation>
+				<xs:documentation>The sequence number of the coupon in the file, starting with 1 for the first coupon and incrementing by 1 for each additional coupon contained in the file.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="1"/>
+					<xs:maxInclusive value="9999"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="date" type="xs:date" use="required">
+			<xs:annotation>
+				<xs:documentation>The date of the meeting that the bet concerns. (yyyy-mm-dd)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="betmultiplier" use="optional" default="1">
+			<xs:annotation>
+				<xs:documentation>The number of times that the bet (coupon) will be entered. Default and minimum is 1, maximum is 100. The following multipliers are valid: 1 (default), 2, 5, 10, 20, 50, 100.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="1"/>
+					<xs:maxInclusive value="100"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="v86CouponType">
+		<xs:annotation>
+			<xs:documentation>The coupon for the V86 (Pick8-6) bet type.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="leg" type="legType" minOccurs="8" maxOccurs="8"/>
+		</xs:sequence>
+		<xs:attribute name="couponid" use="required">
+			<xs:annotation>
+				<xs:documentation>The sequence number of the coupon in the file, starting with 1 for the first coupon and incrementing by 1 for each additional coupon contained in the file.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="1"/>
+					<xs:maxInclusive value="9999"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="date" type="xs:date" use="required">
+			<xs:annotation>
+				<xs:documentation>The date of the meeting that the bet concerns. (yyyy-mm-dd)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="trackcode" use="required">
+			<xs:annotation>
+				<xs:documentation>The numeric code for the track where the meeting is held that the bet concerns.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="1"/>
+					<xs:maxInclusive value="99"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="betmultiplier" use="optional" default="1">
+			<xs:annotation>
+				<xs:documentation>The number of times that the bet (coupon) will be entered. Default and minimum is 1, maximum is 100. The following multipliers are valid: 1 (default), 2, 5, 10, 20, 50, 100.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="1"/>
+					<xs:maxInclusive value="100"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="v8" type="xs:boolean" use="optional" fixed="false">
+			<xs:annotation>
+				<xs:documentation>Deprecated attribute, can only be set to false - Restricts the bet to participation in the eight-right pool only if set.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="DDCouponType">
+		<xs:annotation>
+			<xs:documentation>The coupon for the Daily Double bet type. Pick the winner in two races.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="couponid" use="required">
+			<xs:annotation>
+				<xs:documentation>The sequence number of the coupon in the file, starting with 1 for the first coupon and incrementing by 1 for each additional coupon contained in the file.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="1"/>
+					<xs:maxInclusive value="9999"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="date" type="xs:date" use="required">
+			<xs:annotation>
+				<xs:documentation>The date of the meeting that the bet concerns. (yyyy-mm-dd)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="marks1" use="required">
+			<xs:annotation>
+				<xs:documentation>A sequence of fifteen "0" or "1", representing a mark (1) or no mark (0), for the runner in starting position 1 through 15, from left to right, in the first DD-race.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="[0-1]{15}"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="marks2" use="required">
+			<xs:annotation>
+				<xs:documentation>A sequence of fifteen "0" or "1", representing a mark (1) or no mark (0), for the runner in starting position 1 through 15, from left to right, in the second DD-race. </xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="[0-1]{15}"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="stake" use="required">
+			<xs:annotation>
+				<xs:documentation>Amount staked per combination, in SEK. The following pre-defined stakes are valid: 5, 10, 20, 30, 40, 50, 100, 200, 500, 1000.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:maxInclusive value="1000"/>
+					<xs:minInclusive value="5"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="VPCouponType">
+		<xs:annotation>
+			<xs:documentation>The coupon for the Vinnare-Plats (Win-Show) bet types</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="couponid" use="required">
+			<xs:annotation>
+				<xs:documentation>The sequence number of the coupon in the file, starting with 1 for the first coupon and incrementing by 1 for each additional coupon contained in the file.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="1"/>
+					<xs:maxInclusive value="9999"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="date" type="xs:date" use="required">
+			<xs:annotation>
+				<xs:documentation>The date of the meeting that the bet concerns. (yyyy-mm-dd)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="trackcode" use="required">
+			<xs:annotation>
+				<xs:documentation>The numeric code for the track where the meeting is held that the bet concerns. Min 1, max 99.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="1"/>
+					<xs:maxInclusive value="99"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="raceno" use="required">
+			<xs:annotation>
+				<xs:documentation>The race number in the meeting that the bet concerns. Min 1, max 15.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="1"/>
+					<xs:maxInclusive value="15"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="marks" use="required">
+			<xs:annotation>
+				<xs:documentation>A sequence of fifteen to twenty "0" or "1", representing a mark (1) or no mark (0), for the runner in starting position 1 through 20, from left to right.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="[0-1]{15,20}"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="winbet" type="xs:boolean" use="required">
+			<xs:annotation>
+				<xs:documentation>Bet to win if set.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="showbet" type="xs:boolean" use="required">
+			<xs:annotation>
+				<xs:documentation>Bet to finish in top three if set.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="stake" use="required">
+			<xs:annotation>
+				<xs:documentation>Amount staked per selection/bettype combination, in SEK. The following pre-defined stakes are valid: 5, 10, 20, 30, 40, 50, 100, 200, 500, 1000, 2000, 5000.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:maxInclusive value="5000"/>
+					<xs:minInclusive value="5"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="trioCouponType">
+		<xs:annotation>
+			<xs:documentation>The coupon for the Trio (Trifecta) bet type. Pick 1st, 2nd and 3rd in the correct order.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="couponid" use="required">
+			<xs:annotation>
+				<xs:documentation>The sequence number of the coupon in the file, starting with 1 for the first coupon and incrementing by 1 for each additional coupon contained in the file.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="1"/>
+					<xs:maxInclusive value="9999"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="date" type="xs:date" use="required">
+			<xs:annotation>
+				<xs:documentation>The date of the meeting that the bet concerns. (yyyy-mm-dd)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="trackcode" use="required">
+			<xs:annotation>
+				<xs:documentation>The numeric code for the track where the meeting is held that the bet concerns.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="1"/>
+					<xs:maxInclusive value="99"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="raceno" use="required">
+			<xs:annotation>
+				<xs:documentation>The race number in the meeting that the bet concerns. Min 1, max 15.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="1"/>
+					<xs:maxInclusive value="15"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="marks1st" use="required">
+			<xs:annotation>
+				<xs:documentation>A sequence of fifteen to twenty "0" or "1", representing a mark (1) or no mark (0), for the runner in starting position 1 through 20, from left to right, to win.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="[0-1]{15,20}"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="marks2nd" use="required">
+			<xs:annotation>
+				<xs:documentation>A sequence of fifteen to twenty "0" or "1", representing a mark (1) or no mark (0), for the runner in starting position 1 through 20, from left to right, to place second.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="[0-1]{15,20}"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="marks3rd" use="required">
+			<xs:annotation>
+				<xs:documentation>A sequence of fifteen to twenty "0" or "1", representing a mark (1) or no mark (0), for the runner in starting position 1 through 20, from left to right, to place third.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="[0-1]{15,20}"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="stake" use="required">
+			<xs:annotation>
+				<xs:documentation>Amount staked per combination, in SEK. The following pre-defined stakes are valid: 2, 5, 10, 20, 30, 40, 50, 100, 200, 500.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="2"/>
+					<xs:maxInclusive value="500"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="kombCouponType">
+		<xs:annotation>
+			<xs:documentation>The coupon for the Komb (Exacta) bet type. Pick 1st and 2nd in the correct order.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="couponid" use="required">
+			<xs:annotation>
+				<xs:documentation>The sequence number of the coupon in the file, starting with 1 for the first coupon and incrementing by 1 for each additional coupon contained in the file.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="1"/>
+					<xs:maxInclusive value="9999"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="date" type="xs:date" use="required">
+			<xs:annotation>
+				<xs:documentation>The date of the meeting that the bet concerns. (yyyy-mm-dd)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="trackcode" use="required">
+			<xs:annotation>
+				<xs:documentation>The numeric code for the track where the meeting is held that the bet concerns. Min 1, max 99.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="1"/>
+					<xs:maxInclusive value="99"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="raceno" use="required">
+			<xs:annotation>
+				<xs:documentation>The race number in the meeting that the bet concerns. Min 1, max 15.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="1"/>
+					<xs:maxInclusive value="15"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="marks1st" use="required">
+			<xs:annotation>
+				<xs:documentation>A sequence of fifteen to twenty "0" or "1", representing a mark (1) or no mark (0), for the runner in starting position 1 through 20, from left to right, to win.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="[0-1]{15,20}"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="marks2nd" use="required">
+			<xs:annotation>
+				<xs:documentation>A sequence of fifteen to twenty "0" or "1", representing a mark (1) or no mark (0), for the runner in starting position 1 through 20, from left to right, to place second.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="[0-1]{15,20}"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="stake" use="required">
+			<xs:annotation>
+				<xs:documentation>Amount staked per combination, in SEK. The following pre-defined stakes are valid:: 5, 10, 20, 30, 40, 50, 100, 200, 500, 1000.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="5"/>
+					<xs:maxInclusive value="1000"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="v3CouponType">
+		<xs:annotation>
+			<xs:documentation>The coupon for the V3 bet type. Pick the winner in three races.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="couponid" use="required">
+			<xs:annotation>
+				<xs:documentation>The sequence number of the coupon in the file, starting with 1 for the first coupon and incrementing by 1 for each additional coupon contained in the file.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="1"/>
+					<xs:maxInclusive value="9999"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="date" type="xs:date" use="required">
+			<xs:annotation>
+				<xs:documentation>The date of the meeting that the bet concerns. (yyyy-mm-dd)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="trackcode" use="required">
+			<xs:annotation>
+				<xs:documentation>The numeric code for the track where the meeting is held that the bet concerns. Min 1, max 99.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="1"/>
+					<xs:maxInclusive value="99"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="marks1" use="required">
+			<xs:annotation>
+				<xs:documentation>A sequence of fifteen "0" or "1", representing a mark (1) or no mark (0), for the runner in starting position 1 through 15, from left to right, in the first V3-leg.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="[0-1]{15}"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="marks2" use="required">
+			<xs:annotation>
+				<xs:documentation>A sequence of fifteen "0" or "1", representing a mark (1) or no mark (0), for the runner in starting position 1 through 15, from left to right, in the second V3-leg.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="[0-1]{15}"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="marks3" use="required">
+			<xs:annotation>
+				<xs:documentation>A sequence of fifteen "0" or "1", representing a mark (1) or no mark (0), for the runner in starting position 1 through 15, from left to right, in the third V3-leg.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="[0-1]{15}"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="betmultiplier" use="optional" default="1">
+			<xs:annotation>
+				<xs:documentation>The number of times that the bet (coupon) will be entered. Default and minimum is 1, maximum is 100. The following multipliers are valid: 1 (default), 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 40, 50, 60, 80, 100.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="1"/>
+					<xs:maxInclusive value="100"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="tvillingCouponType">
+		<xs:annotation>
+			<xs:documentation>The coupon for the Tvilling (Quinella) bet type. Pick 1st and 2nd regardless of order.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="couponid" use="required">
+			<xs:annotation>
+				<xs:documentation>The sequence number of the coupon in the file, starting with 1 for the first coupon and incrementing by 1 for each additional coupon contained in the file.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="1"/>
+					<xs:maxInclusive value="9999"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="date" type="xs:date" use="required">
+			<xs:annotation>
+				<xs:documentation>The date of the meeting that the bet concerns. (yyyy-mm-dd)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="trackcode" use="required">
+			<xs:annotation>
+				<xs:documentation>The numeric code for the track where the meeting is held that the bet concerns. Min 1, max 99.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="1"/>
+					<xs:maxInclusive value="99"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="raceno" use="required">
+			<xs:annotation>
+				<xs:documentation>The race number in the meeting that the bet concerns. Min 1, max 15</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="1"/>
+					<xs:maxInclusive value="15"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="marks" use="required">
+			<xs:annotation>
+				<xs:documentation>A sequence of fifteen to twenty "0" or "1", representing a mark (1) or no mark (0), for the runner in starting position 1 through 20, from left to right, to place in the Tvilling bet (finish first or second).</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="[0-1]{15,20}"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="umarks" use="optional">
+			<xs:annotation>
+				<xs:documentation>This field is optional. A sequence of fifteen to twenty "0" or "1", representing a mark (1) or no mark (0), for the runner in starting position 1 through 20, from left to right. Each mark in this field, if present, is combined with all marks from the previous field.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="[0-1]{15,20}"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="stake" use="required">
+			<xs:annotation>
+				<xs:documentation>Amount staked per combination, in SEK. The following pre-defined stakes are valid: 5, 10, 20, 30, 40, 50, 100, 200, 500, 1000.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="5"/>
+					<xs:maxInclusive value="1000"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="LDCouponType">
+		<xs:annotation>
+			<xs:documentation>The coupon for the Lunch Double bet type. Pick the winner in two races.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="couponid" use="required">
+			<xs:annotation>
+				<xs:documentation>The sequence number of the coupon in the file, starting with 1 for the first coupon and incrementing by 1 for each additional coupon contained in the file.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="1"/>
+					<xs:maxInclusive value="9999"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="date" type="xs:date" use="required">
+			<xs:annotation>
+				<xs:documentation>The date of the meeting that the bet concerns. (yyyy-mm-dd)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="marks1" use="required">
+			<xs:annotation>
+				<xs:documentation>A sequence of fifteen "0" or "1", representing a mark (1) or no mark (0), for the runner in starting position 1 through 15, from left to right, in the first LD-race.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="[0-1]{15}"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="marks2" use="required">
+			<xs:annotation>
+				<xs:documentation>A sequence of fifteen "0" or "1", representing a mark (1) or no mark (0), for the runner in starting position 1 through 15, from left to right, in the second LD-race.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="[0-1]{15}"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="stake" use="required">
+			<xs:annotation>
+				<xs:documentation>Amount staked per combination, in SEK. The following pre-defined stakes are valid: 5, 10, 20, 30, 40, 50, 100, 200, 500, 1000.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="5"/>
+					<xs:maxInclusive value="1000"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+</xs:schema>

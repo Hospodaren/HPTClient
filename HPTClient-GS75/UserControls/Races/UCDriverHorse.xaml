@@ -1,0 +1,71 @@
+﻿<UserControl x:Class="HPTClient.UCDriverHorse"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:HPT="clr-namespace:HPTClient">
+    <UserControl.Resources>
+        <Style x:Key="HorseListViewItemStyle" TargetType="{x:Type ListViewItem}">
+            <Setter Property="Background" Value="{Binding VinnaroddsColor}"/>
+            <Setter Property="BorderBrush" Value="Black"></Setter>
+            <Setter Property="BorderThickness" Value="0.5"></Setter>
+        </Style>
+    </UserControl.Resources>
+    <Border BorderBrush="Black" BorderThickness="1">
+        <Grid>
+            <ListView Name="lvwLopp" ClipToBounds="False" BorderBrush="WhiteSmoke" BorderThickness="6" ItemsSource="{Binding DriverHorseList}" KeyUp="lvwLopp_KeyUp" ItemContainerStyle="{StaticResource HorseListViewItemStyle}" Grid.Row="1">
+                <ListView.View>
+                    <!--<GridView x:Name="gvwVxxSpel">
+                        <GridViewColumn DisplayMemberBinding="{Binding ParentRace.RaceNr}" Header="Lopp" x:Name="gvcLopp" />
+                        <GridViewColumn CellTemplate="{StaticResource CheckBoxNrTemplate}" Header="Nr" x:Name="gvcStartNr" />
+                        <GridViewColumn x:Name="gvcABCD" Header="Prio" CellTemplate="{StaticResource rbABCDTemplate}" />
+                        <GridViewColumn CellTemplate="{StaticResource HorsenameText}" Header="Namn" Width="150" x:Name="gvcNamn" />
+                        <GridViewColumn DisplayMemberBinding="{Binding TrainerName}" Header="Tränare" Width="150" x:Name="gvcTrainer" />
+                        <GridViewColumn DisplayMemberBinding="{Binding VinnarOdds}" Header="Vinnarodds" x:Name="gvcVinnarOdds" />
+                        <GridViewColumn DisplayMemberBinding="{Binding PlatsOddsString}" Header="Platsodds" x:Name="gvcPlatsOdds" />
+                        <GridViewColumn DisplayMemberBinding="{Binding MarksPercent}" Header="Procent" x:Name="gvcMarksPercent" />
+                        <GridViewColumn DisplayMemberBinding="{Binding MarksQuantity}" Header="Antal" x:Name="gvcMarksQuantity" />
+                        <GridViewColumn DisplayMemberBinding="{Binding MarksShareString}" Header="Andel" x:Name="gvcMarksShare" />
+                    </GridView>-->
+                    <GridView x:Name="gvwVxxSpel">
+                        <GridViewColumn DisplayMemberBinding="{Binding ParentRace.LegNrString}" x:Name="gvcLopp">
+                            <GridViewColumnHeader Content="Avd" HorizontalContentAlignment="Left" />
+                        </GridViewColumn>
+                        <GridViewColumn CellTemplate="{StaticResource CheckBoxNrTemplate}" x:Name="gvcStartNr">
+                            <GridViewColumnHeader Content="Nr" HorizontalContentAlignment="Left" />
+                        </GridViewColumn>
+                        <GridViewColumn x:Name="gvcABCD" Header="Prio" CellTemplate="{StaticResource rbABCDTemplate}" />
+                        <GridViewColumn CellTemplate="{StaticResource HorsenameText}" Width="150" x:Name="gvcNamn">
+                            <GridViewColumnHeader Content="Namn" HorizontalContentAlignment="Left" />
+                        </GridViewColumn>
+                        <GridViewColumn  DisplayMemberBinding="{Binding DriverName}" Width="150" x:Name="gvcKusk">
+                            <GridViewColumnHeader Content="Kusk" HorizontalContentAlignment="Left" />
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding TrainerrName}" Width="150" x:Name="gvcTrainer">
+                            <GridViewColumnHeader Content="Tränare" HorizontalContentAlignment="Left" />
+                        </GridViewColumn>
+                        <!--<GridViewColumn CellTemplate="{StaticResource DrivernameText}" Width="150" x:Name="gvcKusk">
+                            <GridViewColumnHeader Content="Kusk" HorizontalContentAlignment="Left" />
+                        </GridViewColumn>
+                        <GridViewColumn CellTemplate="{StaticResource TrainernameText}" Width="150" x:Name="gvcTrainer">
+                            <GridViewColumnHeader Content="Tränare" HorizontalContentAlignment="Left" />
+                        </GridViewColumn>-->
+                        <GridViewColumn DisplayMemberBinding="{Binding VinnarOddsString}" x:Name="gvcVinnarOdds">
+                            <GridViewColumnHeader Content="Vinnarodds" HorizontalContentAlignment="Left" />
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding PlatsOddsString}" x:Name="gvcPlatsOdds">
+                            <GridViewColumnHeader Content="Platsodds" HorizontalContentAlignment="Left" />
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding MarksPercent}" x:Name="gvcMarksPercent">
+                            <GridViewColumnHeader Content="Procent" HorizontalContentAlignment="Left" />
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding MarksQuantity}" x:Name="gvcMarksQuantity">
+                            <GridViewColumnHeader Content="Antal" HorizontalContentAlignment="Left" />
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding MarksShareString}" x:Name="gvcMarksShare">
+                            <GridViewColumnHeader Content="Andel" HorizontalContentAlignment="Left" />
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+    </Border>
+</UserControl>

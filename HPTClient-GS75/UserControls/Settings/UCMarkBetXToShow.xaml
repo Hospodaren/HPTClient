@@ -1,0 +1,46 @@
+﻿<UserControl x:Class="HPTClient.UCMarkBetXToShow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             Loaded="UserControl_Loaded"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+
+        <Style x:Key="notPayingCustomerStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource tbStyle}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsPayingCustomer}" Value="false">
+                    <Setter Property="Foreground" Value="Gray"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <GroupBox x:Name="gbSettings" Background="{StaticResource BackgroundBrush}" BorderBrush="Black" HeaderTemplate="{StaticResource GroupBoxHeaderTemplate}" Header="ABCDEF" HorizontalAlignment="Stretch" Margin="2,2,6,2">
+            <StackPanel Orientation="Vertical">
+                <CheckBox x:Name="chkA" Margin="2" IsChecked="{Binding UseA}" VerticalAlignment="Center">
+                    <TextBlock Style="{StaticResource tbStyle}" Text="A-Hästar"/>
+                </CheckBox>
+                <CheckBox x:Name="chkB" Margin="2" IsChecked="{Binding UseB}" VerticalAlignment="Center">
+                    <TextBlock Style="{StaticResource tbStyle}" Text="B-Hästar"/>
+                </CheckBox>
+                <CheckBox x:Name="chkC" Margin="2" IsChecked="{Binding UseC}" VerticalAlignment="Center">
+                    <TextBlock Style="{StaticResource tbStyle}" Text="C-Hästar"/>
+                </CheckBox>
+                <CheckBox x:Name="chkD" Margin="2" IsChecked="{Binding UseD}" VerticalAlignment="Center" >
+                    <TextBlock Style="{StaticResource notPayingCustomerStyle}" Text="D-Hästar"/>
+                </CheckBox>
+                <CheckBox x:Name="chkE" Margin="2" IsChecked="{Binding UseE}" VerticalAlignment="Center" >
+                    <TextBlock Style="{StaticResource notPayingCustomerStyle}" Text="E-Hästar"/>
+                </CheckBox>
+                <CheckBox x:Name="chkF" Margin="2" IsChecked="{Binding UseF}" VerticalAlignment="Center">
+                    <TextBlock Style="{StaticResource notPayingCustomerStyle}" Text="F-Hästar"/>
+                </CheckBox>
+            </StackPanel>
+        </GroupBox>
+    </Grid>
+</UserControl>

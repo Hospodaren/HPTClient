@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issuer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="https://www.atg.se/services/schemas/filebet/1.8.2/atg_filebetting.xsd"
+	company="Name of the company that generated this file" product="Name of the product that generated this file"
+    version="Version of the product that generated this file"
+	createddate="2016-11-29" createdtime="11:59:39" schemaversion="ATG File Betting XSD ver 1.8">
+	<betcoupons>
+		<gs75Coupon couponid="1" date="2016-11-29" betmultiplier="1">
+			<leg legno="1" marks="000010000000000" r1="4" r2="8" />
+			<leg legno="2" marks="000001000000000" r1="1" r2="3" />
+			<leg legno="3" marks="000100000000000" r1="3" r2="2" />
+			<leg legno="4" marks="001000000000000" r1="2" r2="8" />
+			<leg legno="5" marks="111111111100000" r1="6" r2="9" />
+			<leg legno="6" marks="000001000000000" r1="9" r2="1" />
+			<leg legno="7" marks="101111001100000" r1="8" r2="2" />
+		</gs75Coupon>
+		<gs75Coupon couponid="2" date="2016-11-29" betmultiplier="1">
+			<leg legno="1" marks="000100010000000" r1="7" r2="9" />
+			<leg legno="2" marks="000001000000000" r1="1" r2="3" />
+			<leg legno="3" marks="000100000000000" r1="3" r2="2" />
+			<leg legno="4" marks="001000000000000" r1="2" r2="8" />
+			<leg legno="5" marks="101001011100000" r1="4" r2="5" />
+			<leg legno="6" marks="000001000000000" r1="9" r2="1" />
+			<leg legno="7" marks="101111001100000" r1="8" r2="2" />
+		</gs75Coupon>
+		<gs75Coupon couponid="3" date="2016-11-29" betmultiplier="1">
+			<leg legno="1" marks="001000101000000" />
+			<leg legno="2" marks="000001000000000" r1="1" />
+			<leg legno="3" marks="000100000000000" r1="3" r2="2" />
+			<leg legno="4" marks="001000000000000" />
+			<leg legno="5" marks="110110100110000" />
+			<leg legno="6" marks="000001000000000" />
+			<leg legno="7" marks="101100001000000" />
+		</gs75Coupon>
+	</betcoupons>
+</issuer>

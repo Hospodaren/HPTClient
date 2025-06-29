@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://kubin.se/hptservice" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://kubin.se/hptservice" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://kubin.se/hptservice/Imports">
+      <xsd:import schemaLocation="http://jes/HPTService.svc?xsd=xsd0" namespace="http://kubin.se/hptservice" />
+      <xsd:import schemaLocation="http://jes/HPTService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://jes/HPTService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/HPTServiceLibrary" />
+      <xsd:import schemaLocation="http://jes/HPTService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IHPTService_Authenticate_InputMessage">
+    <wsdl:part name="parameters" element="tns:Authenticate" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_Authenticate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AuthenticateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_LogOut_InputMessage">
+    <wsdl:part name="parameters" element="tns:LogOut" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_LogOut_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LogOutResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_RegisterUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegisterUser" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_RegisterUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegisterUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_SaveSystem_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveSystem" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_SaveSystem_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveSystemResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_UploadSystem_InputMessage">
+    <wsdl:part name="parameters" element="tns:UploadSystem" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_UploadSystem_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UploadSystemResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_UploadTemplates_InputMessage">
+    <wsdl:part name="parameters" element="tns:UploadTemplates" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_UploadTemplates_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UploadTemplatesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_UploadComments_InputMessage">
+    <wsdl:part name="parameters" element="tns:UploadComments" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_UploadComments_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UploadCommentsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_UploadRaceDayInfoComments_InputMessage">
+    <wsdl:part name="parameters" element="tns:UploadRaceDayInfoComments" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_UploadRaceDayInfoComments_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UploadRaceDayInfoCommentsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_RetrieveKey_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveKey" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_RetrieveKey_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveKeyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_GetCalendarZip_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCalendarZip" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_GetCalendarZip_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCalendarZipResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_GetRaceDayInfoByTrackAndDateZip_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRaceDayInfoByTrackAndDateZip" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_GetRaceDayInfoByTrackAndDateZip_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRaceDayInfoByTrackAndDateZipResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_GetRaceDayInfoListByTrackAndDateZip_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRaceDayInfoListByTrackAndDateZip" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_GetRaceDayInfoListByTrackAndDateZip_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRaceDayInfoListByTrackAndDateZipResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_GetResultMarkingBetZip_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetResultMarkingBetZip" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_GetResultMarkingBetZip_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetResultMarkingBetZipResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_GetCalendarDummy_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCalendarDummy" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_GetCalendarDummy_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCalendarDummyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_GetRaceDayInfoDummy_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRaceDayInfoDummy" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_GetRaceDayInfoDummy_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRaceDayInfoDummyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_GetRaceDayInfoHistoryGroupedByTrackAndDateDummy_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRaceDayInfoHistoryGroupedByTrackAndDateDummy" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_GetRaceDayInfoHistoryGroupedByTrackAndDateDummy_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRaceDayInfoHistoryGroupedByTrackAndDateDummyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_GetResultMarkingBetDummy_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetResultMarkingBetDummy" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_GetResultMarkingBetDummy_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetResultMarkingBetDummyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_GetRaceDayInfoReductionDummy_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRaceDayInfoReductionDummy" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_GetRaceDayInfoReductionDummy_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRaceDayInfoReductionDummyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_GetNextStartDummy_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetNextStartDummy" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_GetNextStartDummy_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetNextStartDummyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_GetUserRaceDayInfoCommentsCollectionDummy_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserRaceDayInfoCommentsCollectionDummy" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_GetUserRaceDayInfoCommentsCollectionDummy_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserRaceDayInfoCommentsCollectionDummyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_GetUserSystemCollectionDummy_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserSystemCollectionDummy" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_GetUserSystemCollectionDummy_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserSystemCollectionDummyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_GetSaveSystemDummy_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSaveSystemDummy" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_GetSaveSystemDummy_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSaveSystemDummyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_SendMailDummy_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendMailDummy" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_SendMailDummy_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendMailDummyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_UploadCompleteSystemDummy_InputMessage">
+    <wsdl:part name="parameters" element="tns:UploadCompleteSystemDummy" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_UploadCompleteSystemDummy_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UploadCompleteSystemDummyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_UploadConfigurationDummy_InputMessage">
+    <wsdl:part name="parameters" element="tns:UploadConfigurationDummy" />
+  </wsdl:message>
+  <wsdl:message name="IHPTService_UploadConfigurationDummy_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UploadConfigurationDummyResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IHPTService">
+    <wsdl:operation name="Authenticate">
+      <wsdl:input wsaw:Action="http://kubin.se/hptservice/IHPTService/Authenticate" message="tns:IHPTService_Authenticate_InputMessage" />
+      <wsdl:output wsaw:Action="http://kubin.se/hptservice/IHPTService/AuthenticateResponse" message="tns:IHPTService_Authenticate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LogOut">
+      <wsdl:input wsaw:Action="http://kubin.se/hptservice/IHPTService/LogOut" message="tns:IHPTService_LogOut_InputMessage" />
+      <wsdl:output wsaw:Action="http://kubin.se/hptservice/IHPTService/LogOutResponse" message="tns:IHPTService_LogOut_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RegisterUser">
+      <wsdl:input wsaw:Action="http://kubin.se/hptservice/IHPTService/RegisterUser" message="tns:IHPTService_RegisterUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://kubin.se/hptservice/IHPTService/RegisterUserResponse" message="tns:IHPTService_RegisterUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveSystem">
+      <wsdl:input wsaw:Action="http://kubin.se/hptservice/IHPTService/SaveSystem" message="tns:IHPTService_SaveSystem_InputMessage" />
+      <wsdl:output wsaw:Action="http://kubin.se/hptservice/IHPTService/SaveSystemResponse" message="tns:IHPTService_SaveSystem_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadSystem">
+      <wsdl:input wsaw:Action="http://kubin.se/hptservice/IHPTService/UploadSystem" message="tns:IHPTService_UploadSystem_InputMessage" />
+      <wsdl:output wsaw:Action="http://kubin.se/hptservice/IHPTService/UploadSystemResponse" message="tns:IHPTService_UploadSystem_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadTemplates">
+      <wsdl:input wsaw:Action="http://kubin.se/hptservice/IHPTService/UploadTemplates" message="tns:IHPTService_UploadTemplates_InputMessage" />
+      <wsdl:output wsaw:Action="http://kubin.se/hptservice/IHPTService/UploadTemplatesResponse" message="tns:IHPTService_UploadTemplates_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadComments">
+      <wsdl:input wsaw:Action="http://kubin.se/hptservice/IHPTService/UploadComments" message="tns:IHPTService_UploadComments_InputMessage" />
+      <wsdl:output wsaw:Action="http://kubin.se/hptservice/IHPTService/UploadCommentsResponse" message="tns:IHPTService_UploadComments_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadRaceDayInfoComments">
+      <wsdl:input wsaw:Action="http://kubin.se/hptservice/IHPTService/UploadRaceDayInfoComments" message="tns:IHPTService_UploadRaceDayInfoComments_InputMessage" />
+      <wsdl:output wsaw:Action="http://kubin.se/hptservice/IHPTService/UploadRaceDayInfoCommentsResponse" message="tns:IHPTService_UploadRaceDayInfoComments_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveKey">
+      <wsdl:input wsaw:Action="http://kubin.se/hptservice/IHPTService/RetrieveKey" message="tns:IHPTService_RetrieveKey_InputMessage" />
+      <wsdl:output wsaw:Action="http://kubin.se/hptservice/IHPTService/RetrieveKeyResponse" message="tns:IHPTService_RetrieveKey_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCalendarZip">
+      <wsdl:input wsaw:Action="http://kubin.se/hptservice/IHPTService/GetCalendarZip" message="tns:IHPTService_GetCalendarZip_InputMessage" />
+      <wsdl:output wsaw:Action="http://kubin.se/hptservice/IHPTService/GetCalendarZipResponse" message="tns:IHPTService_GetCalendarZip_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRaceDayInfoByTrackAndDateZip">
+      <wsdl:input wsaw:Action="http://kubin.se/hptservice/IHPTService/GetRaceDayInfoByTrackAndDateZip" message="tns:IHPTService_GetRaceDayInfoByTrackAndDateZip_InputMessage" />
+      <wsdl:output wsaw:Action="http://kubin.se/hptservice/IHPTService/GetRaceDayInfoByTrackAndDateZipResponse" message="tns:IHPTService_GetRaceDayInfoByTrackAndDateZip_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRaceDayInfoListByTrackAndDateZip">
+      <wsdl:input wsaw:Action="http://kubin.se/hptservice/IHPTService/GetRaceDayInfoListByTrackAndDateZip" message="tns:IHPTService_GetRaceDayInfoListByTrackAndDateZip_InputMessage" />
+      <wsdl:output wsaw:Action="http://kubin.se/hptservice/IHPTService/GetRaceDayInfoListByTrackAndDateZipResponse" message="tns:IHPTService_GetRaceDayInfoListByTrackAndDateZip_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetResultMarkingBetZip">
+      <wsdl:input wsaw:Action="http://kubin.se/hptservice/IHPTService/GetResultMarkingBetZip" message="tns:IHPTService_GetResultMarkingBetZip_InputMessage" />
+      <wsdl:output wsaw:Action="http://kubin.se/hptservice/IHPTService/GetResultMarkingBetZipResponse" message="tns:IHPTService_GetResultMarkingBetZip_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCalendarDummy">
+      <wsdl:input wsaw:Action="http://kubin.se/hptservice/IHPTService/GetCalendarDummy" message="tns:IHPTService_GetCalendarDummy_InputMessage" />
+      <wsdl:output wsaw:Action="http://kubin.se/hptservice/IHPTService/GetCalendarDummyResponse" message="tns:IHPTService_GetCalendarDummy_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRaceDayInfoDummy">
+      <wsdl:input wsaw:Action="http://kubin.se/hptservice/IHPTService/GetRaceDayInfoDummy" message="tns:IHPTService_GetRaceDayInfoDummy_InputMessage" />
+      <wsdl:output wsaw:Action="http://kubin.se/hptservice/IHPTService/GetRaceDayInfoDummyResponse" message="tns:IHPTService_GetRaceDayInfoDummy_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRaceDayInfoHistoryGroupedByTrackAndDateDummy">
+      <wsdl:input wsaw:Action="http://kubin.se/hptservice/IHPTService/GetRaceDayInfoHistoryGroupedByTrackAndDateDummy" message="tns:IHPTService_GetRaceDayInfoHistoryGroupedByTrackAndDateDummy_InputMessage" />
+      <wsdl:output wsaw:Action="http://kubin.se/hptservice/IHPTService/GetRaceDayInfoHistoryGroupedByTrackAndDateDummyResponse" message="tns:IHPTService_GetRaceDayInfoHistoryGroupedByTrackAndDateDummy_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetResultMarkingBetDummy">
+      <wsdl:input wsaw:Action="http://kubin.se/hptservice/IHPTService/GetResultMarkingBetDummy" message="tns:IHPTService_GetResultMarkingBetDummy_InputMessage" />
+      <wsdl:output wsaw:Action="http://kubin.se/hptservice/IHPTService/GetResultMarkingBetDummyResponse" message="tns:IHPTService_GetResultMarkingBetDummy_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRaceDayInfoReductionDummy">
+      <wsdl:input wsaw:Action="http://kubin.se/hptservice/IHPTService/GetRaceDayInfoReductionDummy" message="tns:IHPTService_GetRaceDayInfoReductionDummy_InputMessage" />
+      <wsdl:output wsaw:Action="http://kubin.se/hptservice/IHPTService/GetRaceDayInfoReductionDummyResponse" message="tns:IHPTService_GetRaceDayInfoReductionDummy_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetNextStartDummy">
+      <wsdl:input wsaw:Action="http://kubin.se/hptservice/IHPTService/GetNextStartDummy" message="tns:IHPTService_GetNextStartDummy_InputMessage" />
+      <wsdl:output wsaw:Action="http://kubin.se/hptservice/IHPTService/GetNextStartDummyResponse" message="tns:IHPTService_GetNextStartDummy_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserRaceDayInfoCommentsCollectionDummy">
+      <wsdl:input wsaw:Action="http://kubin.se/hptservice/IHPTService/GetUserRaceDayInfoCommentsCollectionDummy" message="tns:IHPTService_GetUserRaceDayInfoCommentsCollectionDummy_InputMessage" />
+      <wsdl:output wsaw:Action="http://kubin.se/hptservice/IHPTService/GetUserRaceDayInfoCommentsCollectionDummyResponse" message="tns:IHPTService_GetUserRaceDayInfoCommentsCollectionDummy_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserSystemCollectionDummy">
+      <wsdl:input wsaw:Action="http://kubin.se/hptservice/IHPTService/GetUserSystemCollectionDummy" message="tns:IHPTService_GetUserSystemCollectionDummy_InputMessage" />
+      <wsdl:output wsaw:Action="http://kubin.se/hptservice/IHPTService/GetUserSystemCollectionDummyResponse" message="tns:IHPTService_GetUserSystemCollectionDummy_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSaveSystemDummy">
+      <wsdl:input wsaw:Action="http://kubin.se/hptservice/IHPTService/GetSaveSystemDummy" message="tns:IHPTService_GetSaveSystemDummy_InputMessage" />
+      <wsdl:output wsaw:Action="http://kubin.se/hptservice/IHPTService/GetSaveSystemDummyResponse" message="tns:IHPTService_GetSaveSystemDummy_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendMailDummy">
+      <wsdl:input wsaw:Action="http://kubin.se/hptservice/IHPTService/SendMailDummy" message="tns:IHPTService_SendMailDummy_InputMessage" />
+      <wsdl:output wsaw:Action="http://kubin.se/hptservice/IHPTService/SendMailDummyResponse" message="tns:IHPTService_SendMailDummy_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadCompleteSystemDummy">
+      <wsdl:input wsaw:Action="http://kubin.se/hptservice/IHPTService/UploadCompleteSystemDummy" message="tns:IHPTService_UploadCompleteSystemDummy_InputMessage" />
+      <wsdl:output wsaw:Action="http://kubin.se/hptservice/IHPTService/UploadCompleteSystemDummyResponse" message="tns:IHPTService_UploadCompleteSystemDummy_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadConfigurationDummy">
+      <wsdl:input wsaw:Action="http://kubin.se/hptservice/IHPTService/UploadConfigurationDummy" message="tns:IHPTService_UploadConfigurationDummy_InputMessage" />
+      <wsdl:output wsaw:Action="http://kubin.se/hptservice/IHPTService/UploadConfigurationDummyResponse" message="tns:IHPTService_UploadConfigurationDummy_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

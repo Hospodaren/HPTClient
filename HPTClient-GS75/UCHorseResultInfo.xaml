@@ -1,0 +1,116 @@
+﻿<UserControl x:Class="HPTClient.UCHorseResultInfo"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:HPTClient"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=HorseResultInfo.Place}" Value="1">
+                            <Setter Property="Background" Value="LightGreen"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Path=HorseResultInfo.Place}" Value="2">
+                            <Setter Property="Background" Value="LightGoldenrodYellow"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Path=HorseResultInfo.Place}" Value="3">
+                            <Setter Property="Background" Value="LightGoldenrodYellow"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Path=Scratched}" Value="true">
+                            <Setter Property="Background" Value="LightGray"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Path=HorseResultInfo.PlaceString}" Value="D">
+                            <Setter Property="Background" Value="LightPink"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <CheckBox Name="chkNrSelect" IsEnabled="{Binding NotScratched}" IsChecked="{Binding Selected}" Template="{StaticResource CheckBoxControlTemplate}">
+                    <CheckBox.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Path=StartNr}" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding Path=PrioString}"/>
+                        </StackPanel>
+                    </CheckBox.Content>
+                </CheckBox>
+
+                <TextBlock x:Name="txtHorseName" Text="{Binding HorseName}" FontWeight="Bold" Grid.Column="1" Margin="4,1,1,1"/>
+
+                <TextBlock Text="{Binding Path=NumberOfRowsWithPossibility}" Grid.Column="2" Margin="8,1,1,1" FontWeight="Bold" FontStyle="Italic"/>
+                
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="BorderBrush" Value="Black"></Setter>
+                        <Setter Property="BorderThickness" Value="1,1,0,1"></Setter>
+                        <Setter Property="Padding" Value="1"></Setter>
+                        <!--<Setter Property="CornerRadius" Value="1"></Setter>-->
+                    </Style>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Setter Property="FontSize" Value="11"></Setter>
+                        <!--<Setter Property="FontWeight" Value="Bold"></Setter>-->
+                        <Setter Property="Margin" Value="1,0"></Setter>
+                        <Setter Property="Padding" Value="1"></Setter>
+                        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                    </Style>
+                </Grid.Resources>
+
+                <Border Background="White">
+                    <TextBlock Text="{Binding Path=HorseResultInfo.PlaceString}"/>
+                    <!--<TextBlock>
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0} ({1})">
+                                <Binding Path="HorseResultInfo.Place"></Binding>
+                                <Binding Path="HorseResultInfo.FinishingPosition"></Binding>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>-->
+                </Border>
+
+                <Border Background="White" Grid.Column="1">
+                    <TextBlock Text="{Binding Path=HorseResultInfo.KmTime,StringFormat={}{0:m':'ss','f}}"/>
+                </Border>
+
+                <Border Background="White" Grid.Column="2">
+                    <TextBlock Text="{Binding Path=HorseResultInfo.Earning,StringFormat={}{0:N0} kr,ConverterCulture=sv-SE}"/>
+                </Border>
+
+                <Border Background="White" Grid.Column="3">
+                    <TextBlock Text="{Binding Path=StakeDistributionShareFinal,StringFormat=P2}"/>
+                </Border>
+
+                <Border Background="White" Grid.Column="4" BorderThickness="1">
+                    <TextBlock Text="{Binding Path=VinnarDddsFinal,StringFormat=N2}"/>
+                </Border>
+
+            </Grid>
+
+        </Grid>
+    </Grid>
+</UserControl>

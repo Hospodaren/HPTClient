@@ -1,0 +1,422 @@
+﻿<HPT:UCMarkBetControl x:Class="HPTClient.UCSingleRowCollectionView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:HPT="clr-namespace:HPTClient" 
+                      xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+                      Loaded="ucSingleRowCollectionView_Loaded"
+                      x:Name="ucSingleRowCollectionView">
+    <UserControl.Resources>
+
+        <Style x:Key="ColumnHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
+            <Style.Setters>
+                <Setter Property="BorderBrush" Value="Black"/>
+                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                <Setter Property="Background" Value="{StaticResource HeaderGrayBrush}"/>
+                <Setter Property="ContextMenu" Value="{Binding Path=CMColumnsToShow,ElementName=ucSingleRowCollectionView}"/>
+            </Style.Setters>
+        </Style>
+
+        <!--<Style x:Key="ListviewItemStyle" TargetType="{x:Type ListViewItem}">
+            <Style.Setters>
+                <Setter Property="BorderBrush" Value="Black"/>
+                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                <Setter Property="Background" Value="{StaticResource HeaderGrayBrush}"/>
+                <Setter Property="ContextMenu" Value="{Binding Path=CMSingleRow,ElementName=ucSingleRowCollectionView}"/>
+            </Style.Setters>
+        </Style>-->
+
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <ListView Name="lvwSingleRows" ItemsSource="{Binding Path=SingleRowsObservable,ElementName=ucSingleRowCollectionView}" PreviewMouseDown="lvwSingleRows_MouseDown"
+                  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" ContextMenu="{Binding Path=CMSingleRow,ElementName=ucSingleRowCollectionView}">
+            <ListView.View>
+                <GridView x:Name="gvwSingleRows">
+
+                    <!--Välja om rad ska vara med-->
+                    <GridViewColumn x:Name="gvcRowNumber">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox x:Name="chkSingleRowSelect" Content="{Binding RowNumber}" IsChecked="{Binding SelectedForEditing}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                        <GridViewColumnHeader Click="gvcRowSingleRow_Click"  Style="{StaticResource ColumnHeaderStyle}" Tag="RowNumber" Content="Radnummer">
+                            <GridViewColumnHeader.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem x:Name="miSelectAllFiltered" Click="miSelectAllFiltered_Click" Header="Välj alla filtrerade"/>
+                                    <MenuItem x:Name="miClearSelected" Click="miClearSelected_Click" Header="Rensa valda"/>
+                                </ContextMenu>
+                            </GridViewColumnHeader.ContextMenu>
+                        </GridViewColumnHeader>
+                    </GridViewColumn>
+
+                    <!--Radvärde-->
+                    <GridViewColumn x:Name="gvcRowValue" DisplayMemberBinding="{Binding Path=RowValue,StringFormat=' {0:N0}',ConverterCulture=sv-SE}">
+                        <GridViewColumnHeader Click="gvcRowSingleRow_Click"  Style="{StaticResource ColumnHeaderStyle}" Tag="RowValue" Content="Radvärde" ContextMenu="{Binding Path=CMColumnsToShow,ElementName=ucSingleRowCollectionView}"/>
+                    </GridViewColumn>
+
+                    <!--Radvärde utan strykningar-->
+                    <GridViewColumn x:Name="gvcRowValueWithoutScratchings" DisplayMemberBinding="{Binding Path=RowValueWithoutScratchings,StringFormat=' {0:N0}',ConverterCulture=sv-SE}">
+                        <GridViewColumnHeader Click="gvcRowSingleRow_Click"  Style="{StaticResource ColumnHeaderStyle}" Tag="RowValueWithoutScratchings" 
+                                              Content="Radvärde utan strykningar" 
+                                              ContextMenu="{Binding Path=CMColumnsToShow,ElementName=ucSingleRowCollectionView}"/>
+                    </GridViewColumn>
+
+                    <!--V6/V7/V8-->
+                    <GridViewColumn x:Name="gvcV6">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox x:Name="chkV6" Checked="chkV6_Checked" Unchecked="chkV6_Checked" IsChecked="{Binding V6}" IsEnabled="{Binding SelectedForEditing}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                        <!--<GridViewColumnHeader Click="gvcRowSingleRow_Click"  Style="{StaticResource ColumnHeaderStyle}" Content="V6/V7/V8" Tag="V6" ContextMenu="{Binding Path=CMColumnsToShow,ElementName=ucSingleRowCollectionView}"/>-->
+                        <GridViewColumnHeader Click="gvcRowSingleRow_Click"  Style="{StaticResource ColumnHeaderStyle}" Content="V6" Tag="V6" 
+                                              MouseRightButtonDown="gvcV6_MouseDown"
+                                              ContextMenu="{Binding Path=CMColumnsToShow,ElementName=ucSingleRowCollectionView}"/>
+                    </GridViewColumn>
+
+                    <!--Radvärde med V6/V7/V8-->
+                    <GridViewColumn x:Name="gvcRowValueV6" DisplayMemberBinding="{Binding Path=RowValueV6,StringFormat=' {0:N0}',ConverterCulture=sv-SE}">
+                        <GridViewColumnHeader Click="gvcRowSingleRow_Click"  Style="{StaticResource ColumnHeaderStyle}" Tag="RowValueV6" Content="Radvärde (V6/V7/V8)" ContextMenu="{Binding Path=CMColumnsToShow,ElementName=ucSingleRowCollectionView}"/>
+                    </GridViewColumn>
+
+                    <!--Flerbong-->
+                    <GridViewColumn x:Name="gvcBetMultiplier">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <xctk:IntegerUpDown x:Name="iudBetMultiplierSingleRow" Minimum="1" Value="{Binding BetMultiplier}" 
+                                                    Padding="0,-1,0,-1" Margin="0,-1,0,-1" IsEnabled="{Binding SelectedForEditing}"
+                                                    ValueChanged="iudBetMultiplierSingleRow_ValueChanged" TextBlock.FontSize="11"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                        <GridViewColumnHeader Click="gvcRowSingleRow_Click"  Style="{StaticResource 
+                                                ColumnHeaderStyle}" Tag="BetMultiplier" Content="Flerbong" 
+                                              MouseRightButtonDown="gvcV6_MouseDown"
+                                              ContextMenu="{Binding Path=CMColumnsToShow,ElementName=ucSingleRowCollectionView}"/>
+                    </GridViewColumn>
+
+                    <!--Radvärde med flerbong-->
+                    <GridViewColumn x:Name="gvcRowValueBetMultiplier" DisplayMemberBinding="{Binding Path=RowValueBetMultiplier,StringFormat=' {0:N0}',ConverterCulture=sv-SE}">
+                        <GridViewColumnHeader Click="gvcRowSingleRow_Click"  Style="{StaticResource ColumnHeaderStyle}" Tag="RowValueBetMultiplier" Content="Radvärde (Flerbong)" ContextMenu="{Binding Path=CMColumnsToShow,ElementName=ucSingleRowCollectionView}"/>
+                    </GridViewColumn>
+
+                    <!--Radvärde 1 fel-->
+                    <GridViewColumn x:Name="gvcRowValueOneError">
+                        <GridViewColumnHeader Click="gvcRowSingleRow_Click"  Style="{StaticResource ColumnHeaderStyle}" Tag="RowValueOneErrorLower" Content="Radvärde (1 fel)">
+                            <GridViewColumnHeader.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem x:Name="miCalculateRowValueWithError" Click="miCalculateRowValueWithError_Click" Header="Beräkna värde vid 1 och 2 fel"/>
+                                </ContextMenu>
+                            </GridViewColumnHeader.ContextMenu>
+                        </GridViewColumnHeader>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Right" HorizontalAlignment="Right">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0:N0} ({1:N0} - {2:N0})" ConverterCulture="sv-SE">
+                                            <Binding Path="RowValueOneError"/>
+                                            <Binding Path="RowValueOneErrorLower"/>
+                                            <Binding Path="RowValueOneErrorUpper"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Radvärde 2 fel-->
+                    <GridViewColumn x:Name="gvcRowValueTwoErrors">
+                        <GridViewColumnHeader Click="gvcRowSingleRow_Click"  Style="{StaticResource ColumnHeaderStyle}" Tag="RowValueTwoErrorsLower" Content="Radvärde (2 fel)">
+                            <GridViewColumnHeader.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem x:Name="miCalculateRowValueWithError2" Click="miCalculateRowValueWithError_Click" Header="Beräkna värde vid 1 och 2 fel"/>
+                                </ContextMenu>
+                            </GridViewColumnHeader.ContextMenu>
+                        </GridViewColumnHeader>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Right" HorizontalAlignment="Right">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0:N0} ({1:N0} - {2:N0})" ConverterCulture="sv-SE">
+                                            <Binding Path="RowValueTwoErrors"/>
+                                            <Binding Path="RowValueTwoErrorsLower"/>
+                                            <Binding Path="RowValueTwoErrorsUpper"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Chansvärdering-->
+                    <!--<GridViewColumn x:Name="gvcOwnProbability" DisplayMemberBinding="{Binding Path=OwnProbabilityQuota,StringFormat={}{0:P1}}">
+                        <GridViewColumnHeader Click="gvcRowSingleRow_Click"  Style="{StaticResource ColumnHeaderStyle}" Tag="OwnProbabilityQuota" Content="Chansvärdering" ContextMenu="{Binding Path=CMColumnsToShow,ElementName=ucSingleRowCollectionView}"/>
+                    </GridViewColumn>-->
+                    <GridViewColumn x:Name="gvcOwnProbability">
+                        <GridViewColumnHeader Click="gvcRowSingleRow_Click"  Style="{StaticResource ColumnHeaderStyle}" Tag="OwnProbabilityQuota" Content="Chansvärdering (EV)" ContextMenu="{Binding Path=CMColumnsToShow,ElementName=ucSingleRowCollectionView}"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Right" HorizontalAlignment="Right">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0:P2} ({1:P2})">
+                                            <Binding Path="OwnProbabilityQuota"/>
+                                            <Binding Path="OwnProbabilityEV"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    
+                    <!--Insatsfördelningssumma-->
+                    <GridViewColumn x:Name="gvcStakePercentSum" DisplayMemberBinding="{Binding StakePercentSum}">
+                        <GridViewColumnHeader Click="gvcRowSingleRow_Click"  Style="{StaticResource ColumnHeaderStyle}" Tag="StakePercentSum" Content="Insatsfördelningssumma" ContextMenu="{Binding Path=CMColumnsToShow,ElementName=ucSingleRowCollectionView}"/>
+                    </GridViewColumn>
+
+                    <!--Spårsumma-->
+                    <GridViewColumn x:Name="gvcStartNumberSum" DisplayMemberBinding="{Binding StartNrSum}">
+                        <GridViewColumnHeader Click="gvcRowSingleRow_Click"  Style="{StaticResource ColumnHeaderStyle}" Tag="StartNrSum" Content="Spårsumma" ContextMenu="{Binding Path=CMColumnsToShow,ElementName=ucSingleRowCollectionView}"/>
+                    </GridViewColumn>
+
+                    <!--Ranksumma-->
+                    <GridViewColumn x:Name="gvcRankSum" DisplayMemberBinding="{Binding Path=RankSum, StringFormat=F1}">
+                        <GridViewColumnHeader Click="gvcRowSingleRow_Click"  Style="{StaticResource ColumnHeaderStyle}" Tag="RankSum" Content="Ranksumma" ContextMenu="{Binding Path=CMColumnsToShow,ElementName=ucSingleRowCollectionView}"/>
+                    </GridViewColumn>
+
+                    <!--Avdelning 1-8-->
+                    <GridViewColumn DisplayMemberBinding="{Binding HorseList[0]}" x:Name="gvcAvd1" >
+                        <GridViewColumnHeader Click="gvcRowSingleRow_Click"  Style="{StaticResource ColumnHeaderStyle}" Tag="HorseList[0].StartNr" Content="{Binding Path=RaceDayInfo.RaceList[0].LegNrString}"/>
+                    </GridViewColumn>
+
+                    <GridViewColumn DisplayMemberBinding="{Binding HorseList[1]}" x:Name="gvcAvd2">
+                        <GridViewColumnHeader Click="gvcRowSingleRow_Click"  Style="{StaticResource ColumnHeaderStyle}" Tag="HorseList[1].StartNr" Content="{Binding Path=RaceDayInfo.RaceList[1].LegNrString}"/>
+                    </GridViewColumn>
+
+                    <GridViewColumn DisplayMemberBinding="{Binding HorseList[2]}" x:Name="gvcAvd3" >
+                        <GridViewColumnHeader Click="gvcRowSingleRow_Click"  Style="{StaticResource ColumnHeaderStyle}" Tag="HorseList[2].StartNr" Content="{Binding Path=RaceDayInfo.RaceList[2].LegNrString}"/>
+                    </GridViewColumn>
+
+                    <GridViewColumn DisplayMemberBinding="{Binding HorseList[3]}" x:Name="gvcAvd4" >
+                        <GridViewColumnHeader Click="gvcRowSingleRow_Click"  Style="{StaticResource ColumnHeaderStyle}" Tag="HorseList[3].StartNr" Content="{Binding Path=RaceDayInfo.RaceList[3].LegNrString}"/>
+                    </GridViewColumn>
+
+                    <GridViewColumn DisplayMemberBinding="{Binding HorseList[4]}" x:Name="gvcAvd5" >
+                        <GridViewColumnHeader Click="gvcRowSingleRow_Click"  Style="{StaticResource ColumnHeaderStyle}" Tag="HorseList[4].StartNr" Content="{Binding Path=RaceDayInfo.RaceList[4].LegNrString}"/>
+                    </GridViewColumn>
+
+                    <GridViewColumn DisplayMemberBinding="{Binding HorseList[5]}" x:Name="gvcAvd6" >
+                        <GridViewColumnHeader Click="gvcRowSingleRow_Click"  Style="{StaticResource ColumnHeaderStyle}" Tag="HorseList[5].StartNr" Content="{Binding Path=RaceDayInfo.RaceList[5].LegNrString}"/>
+                    </GridViewColumn>
+
+                    <GridViewColumn DisplayMemberBinding="{Binding HorseList[6]}" x:Name="gvcAvd7" >
+                        <GridViewColumnHeader Click="gvcRowSingleRow_Click"  Style="{StaticResource ColumnHeaderStyle}" Tag="HorseList[6].StartNr" Content="{Binding Path=RaceDayInfo.RaceList[6].LegNrString}"/>
+                    </GridViewColumn>
+
+                    <GridViewColumn DisplayMemberBinding="{Binding HorseList[7]}" x:Name="gvcAvd8" >
+                        <GridViewColumnHeader Click="gvcRowSingleRow_Click"  Style="{StaticResource ColumnHeaderStyle}" Tag="HorseList[7].StartNr" Content="{Binding Path=RaceDayInfo.RaceList[7].LegNrString}"/>
+                    </GridViewColumn>
+
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <Border BorderBrush="Black" BorderThickness="1" CornerRadius="2" Grid.Row="1" Margin="2">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="320"/>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+
+                    <CheckBox x:Name="chkV6SingleRows" IsChecked="{Binding Path=V6SingleRows}" Margin="2" Visibility="{Binding Path=V6Visibility}" Grid.ColumnSpan="2">
+                        <TextBlock Text="{Binding Path=Value, ElementName=iudV6SingleRows,StringFormat='Spela V6/V7 på rader med lågt radvärde (under {0:N0} kr)',ConverterCulture=sv-SE}"/>
+                        </CheckBox>
+                    <xctk:IntegerUpDown x:Name="iudV6SingleRows" FormatString="C0" Value="{Binding Path=V6UpperBoundary}" Minimum="0" Maximum="100000000" Increment="1000" Grid.Column="2" Margin="2" Visibility="{Binding Path=V6Visibility}"/>
+
+                    <CheckBox x:Name="chkV6OwnRank" IsChecked="{Binding Path=V6OwnRank}" Margin="2" Visibility="{Binding Path=V6Visibility}" Grid.ColumnSpan="2" Grid.Row="1">
+                        <TextBlock Text="{Binding Path=Value, ElementName=iudV6OwnRank,StringFormat='Spela V6/V7 på rader med egen poängsumma upp till {0:N0}',ConverterCulture=sv-SE}"/>
+                        </CheckBox>
+                    <xctk:IntegerUpDown x:Name="iudV6OwnRank" Value="{Binding Path=V6OwnRankMax}" Minimum="0" Maximum="1000" Increment="1" Grid.Row="1" Grid.Column="2" Margin="2" Visibility="{Binding Path=V6Visibility}"/>
+                
+                    <CheckBox x:Name="chkSingleRowBetMultiplier" IsChecked="{Binding Path=SingleRowBetMultiplier}" Margin="2" Grid.Row="2" Grid.ColumnSpan="2">
+                        <TextBlock Text="{Binding Path=Value, ElementName=iudBetmultiplier,StringFormat='Spela flerbong på enkelrader för att nå målvinst ({0:N0} kr)',ConverterCulture=sv-SE}"/>
+                    </CheckBox>
+                    <xctk:IntegerUpDown x:Name="iudBetmultiplier" FormatString="C0" Value="{Binding Path=SingleRowTargetProfit}" Minimum="0" Maximum="100000000" Increment="1000" Grid.Column="2" Grid.Row="2" Margin="2"/>
+
+                    <CheckBox x:Name="chkOwnProbability" IsChecked="{Binding Path=OwnProbabilityReductionRule.Use}" Margin="2" Grid.Row="3" Grid.ColumnSpan="2">
+                        <TextBlock Text="{Binding Path=Value, ElementName=dudMinOwnProbability,StringFormat='Ta bort rader med chansvärdeskvot under {0:P1}'}"/>
+                    </CheckBox>
+                    <xctk:DecimalUpDown x:Name="dudMinOwnProbability" Value="{Binding Path=OwnProbabilityReductionRule.MinProbability}" ValueChanged="dudMinOwnProbability_ValueChanged"  FormatString="P1" Minimum="0" Maximum="10" Increment="0.01" Grid.Column="2" Grid.Row="3" Margin="2"/>
+
+                    <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.ColumnSpan="2">
+                        <CheckBox x:Name="chkGuaranteeReduction" IsChecked="{Binding Path=GuaranteeReduction}" Margin="2">
+                            <TextBlock Text="{Binding Path=Value, ElementName=iudnumberOfToleratedErrors,StringFormat='Använd garantireducering (högst {0} fel)'}"/>
+                        </CheckBox>
+                        <CheckBox x:Name="chkFastGuaranteeReduction" IsChecked="{Binding Path=FastGuaranteeReduction}" Margin="8,2">
+                            <TextBlock Text="Snabb"/>
+                        </CheckBox>
+                    </StackPanel>
+                    <xctk:IntegerUpDown x:Name="iudnumberOfToleratedErrors" Value="{Binding Path=NumberOfToleratedErrors}" Minimum="0" Maximum="2" Increment="1" Grid.Column="2" Grid.Row="4" Margin="2"/>
+
+                    <CheckBox x:Name="chkRandomRowReduction" IsChecked="{Binding Path=RandomRowReduction}" Margin="2" Grid.Row="5" Grid.ColumnSpan="2">
+                        <TextBlock Text="{Binding Path=Value, ElementName=iudRandomRowReductionTarget,StringFormat='Ta slumpmässigt bort rader för att nå {0} kr i insats'}"/>
+                    </CheckBox>
+                    <xctk:IntegerUpDown x:Name="iudRandomRowReductionTarget" Value="{Binding Path=RandomRowReductionTarget}" FormatString="C0" Minimum="0" Maximum="10000000" Increment="100" Grid.Column="2" Grid.Row="5" Margin="2"/>
+
+                    <CheckBox x:Name="chkBetMultiplierRowAddition" IsChecked="{Binding Path=BetMultiplierRowAddition}" Margin="2" Grid.Row="6" Grid.ColumnSpan="2">
+                        <TextBlock Text="{Binding Path=Value, ElementName=iudBetMultiplierRowAdditionTarget,StringFormat='Spela flerbong för att uppnå {0} kr i insats'}"/>
+                    </CheckBox>
+                    <xctk:IntegerUpDown x:Name="iudBetMultiplierRowAdditionTarget" Value="{Binding Path=BetMultiplierRowAdditionTarget}" FormatString="C0" Minimum="0" Maximum="10000000" Increment="100" Grid.Column="2" Grid.Row="6" Margin="2"/>
+
+                    <CheckBox x:Name="chkOwnProbabilityCost" IsChecked="{Binding Path=OwnProbabilityCost}" Margin="2" Grid.Row="7" Grid.ColumnSpan="2">
+                        <TextBlock Text="{Binding Path=Value, ElementName=iudOwnProbabilityCostTarget,StringFormat='Ta bort rader med låg chansvärdering för att nå {0} kr i insats'}"/>
+                    </CheckBox>
+                    <xctk:IntegerUpDown x:Name="iudOwnProbabilityCostTarget" Value="{Binding Path=OwnProbabilityCostTarget}" FormatString="C0" Minimum="0" Maximum="10000000" Increment="100" Grid.Column="2" Grid.Row="7" Margin="2"/>
+
+                </Grid>
+                
+                <GroupBox Header="Radvärdesberäkningar/filter" Grid.Column="1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <ListBox x:Name="lstRowValueCalculation" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" ItemsSource="{Binding Path=RaceDayInfo.RaceList}" 
+                            Background="{StaticResource BackgroundBrush}"
+                            ToggleButton.Checked="lstRowValueCalculation_Checked" ToggleButton.Unchecked="lstRowValueCalculation_Checked">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid HorizontalAlignment="Stretch">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="14" FontWeight="SemiBold" Foreground="Black" Text="{Binding LegNrString}" Grid.Column="0" Padding="2,0,3,0"/>
+
+                                        <ItemsControl x:Name="icHorseList" ItemsSource="{Binding HorseList}" ItemTemplate="{StaticResource CheckBoxRowValueTemplate}" 
+                                                  Grid.Column="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" MinWidth="360">
+
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch"/>
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+
+                                        </ItemsControl>
+
+                                        <!--<Button x:Name="btnClearRace" Grid.Column="2" Content="Rensa" Click="btnClearRace_Click" Margin="4,0"/>
+
+                                    <TextBlock Grid.Column="3" Text="{Binding Path=SelectedHorse.Name}" FontSize="12" Foreground="Black" FontWeight="Bold" Margin="4,1,1,1"/>-->
+
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                        <TextBlock Grid.Row="1" Grid.ColumnSpan="2" FontWeight="Bold">
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0:N0} rader av {1:N0} valda" ConverterCulture="sv-SE">
+                                    <Binding Path="SingleRowsObservable.Count" ElementName="ucSingleRowCollectionView"/>
+                                    <Binding Path="ReducedSize"/>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                        
+                        <ListBox x:Name="lstRowValueIntervals" ItemsSource="{Binding Path=BetType.PayOutDummyList}" Grid.Column="1">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical"/>
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                            
+                            
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="2">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Text="{Binding Path=NumberOfCorrect,StringFormat={}{0} rätt}" FontWeight="Bold"/>
+                                        <TextBlock Text="{Binding Path=MinRowValue,StringFormat=N0,ConverterCulture=sv-SE}" Grid.Row="1" Grid.Column="0"/>
+                                        <TextBlock Text=" - " Grid.Row="1" Grid.Column="1"/>
+                                        <TextBlock Text="{Binding Path=MaxRowValue,StringFormat=N0,ConverterCulture=sv-SE}" Grid.Row="1" Grid.Column="2"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                    </Grid>
+                    
+
+                </GroupBox>
+
+                <!--<Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="320"/>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+
+                    <CheckBox x:Name="chkRandomRowReduction" IsChecked="{Binding Path=RandomRowReduction}" Margin="2" Grid.Row="0" Grid.ColumnSpan="2">
+                        <TextBlock Text="{Binding Path=Value, ElementName=iudRandomRowReductionTarget,StringFormat='Ta slumpmässigt bort rader för att nå {0} kr i insats'}"/>
+                    </CheckBox>
+                    <xctk:IntegerUpDown x:Name="iudRandomRowReductionTarget" Value="{Binding Path=RandomRowReductionTarget}" FormatString="C0" Minimum="0" Maximum="10000000" Increment="100" Grid.Column="2" Grid.Row="0" Margin="2"/>
+
+                    <CheckBox x:Name="chkBetMultiplierRowAddition" IsChecked="{Binding Path=BetMultiplierRowAddition}" Margin="2" Grid.Row="1" Grid.ColumnSpan="2">
+                        <TextBlock Text="{Binding Path=Value, ElementName=iudBetMultiplierRowAdditionTarget,StringFormat='Spela flerbong för att uppnå {0} kr i insats'}"/>
+                    </CheckBox>
+                    <xctk:IntegerUpDown x:Name="iudBetMultiplierRowAdditionTarget" Value="{Binding Path=BetMultiplierRowAdditionTarget}" FormatString="C0" Minimum="0" Maximum="10000000" Increment="100" Grid.Column="2" Grid.Row="1" Margin="2"/>
+
+                    <CheckBox x:Name="chkOwnProbabilityCost" IsChecked="{Binding Path=OwnProbabilityCost}" Margin="2" Grid.Row="2" Grid.ColumnSpan="2">
+                        <TextBlock Text="{Binding Path=Value, ElementName=iudOwnProbabilityCostTarget,StringFormat='Ta bort rader med låg chansvärdering för att nå {0} kr i insats'}"/>
+                    </CheckBox>
+                    <xctk:IntegerUpDown x:Name="iudOwnProbabilityCostTarget" Value="{Binding Path=OwnProbabilityCostTarget}" FormatString="C0" Minimum="0" Maximum="10000000" Increment="100" Grid.Column="2" Grid.Row="2" Margin="2"/>
+
+                </Grid>-->
+
+            </Grid>
+
+        </Border>
+
+    </Grid>
+</HPT:UCMarkBetControl>

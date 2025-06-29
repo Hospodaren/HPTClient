@@ -1,0 +1,1320 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AC0D4907-7ACA-443B-9900-BA7E895C6182}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>HPTClient</RootNamespace>
+    <AssemblyName>HPTrav5</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <InstallUrl>http://download.hpt.nu/</InstallUrl>
+    <UpdateUrl>http://download.hpt.nu/</UpdateUrl>
+    <SupportUrl>http://www.hpt.nu</SupportUrl>
+    <ErrorReportUrl>http://www.hpt.nu</ErrorReportUrl>
+    <ProductName>Hjälp på traven 5.3</ProductName>
+    <PublisherName>HPT</PublisherName>
+    <SuiteName>Hjälp på...</SuiteName>
+    <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
+    <ApplicationRevision>102</ApplicationRevision>
+    <ApplicationVersion>5.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>3355D5589AEBC7D67C91BC34AD3394093046DB16</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>HPTClient_3_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icons\HPT.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>HPTCert2025.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Ionic.Zip">
+      <HintPath>..\..\..\..\Dropbox\HPT\HPT52\Ionic.Zip.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="ReachFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Printing" />
+    <Reference Include="System.Runtime.Serialization">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationProvider">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationCore">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationFramework">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="ATGDriverInformation.cs" />
+    <Compile Include="ATGHorseInformation.cs" />
+    <Compile Include="ATGHorseStartInformation.cs" />
+    <Compile Include="ATGLinkCreator.cs" />
+    <Compile Include="atg_filebetting_1_8_6.cs">
+      <DependentUpon>atg_filebetting_1_8_6.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="BetTypeToImageConverter.cs" />
+    <Compile Include="DBHelper.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="HelperClasses\CustomAttributes.cs" />
+    <Compile Include="HPTAlternateRankSumReductionRule.cs" />
+    <Compile Include="HPTClasses\Config\CombinationDataToShow.cs" />
+    <Compile Include="HPTClasses\Config\HorseDataToShow.cs" />
+    <Compile Include="HPTClasses\Config\HPTBetTypesToShow.cs" />
+    <Compile Include="HPTClasses\Config\HPTDataToShow.cs" />
+    <Compile Include="HPTClasses\Config\HPTGUIElementsToShow.cs" />
+    <Compile Include="HPTClasses\Config\HPTRankTemplate.cs" />
+    <Compile Include="HPTClasses\HPTHorse\HPTHeadToHeadCollection.cs" />
+    <Compile Include="HPTClasses\HPTHorse\HPTHorse.cs" />
+    <Compile Include="HPTClasses\HPTHorse\HPTHorseHistoryInfo.cs" />
+    <Compile Include="HPTClasses\HPTHorse\HPTHorseOwnInformation.cs" />
+    <Compile Include="HPTClasses\HPTHorse\HPTHorseRecord.cs" />
+    <Compile Include="HPTClasses\HPTHorse\HPTHorseResult.cs" />
+    <Compile Include="HPTClasses\HPTHorse\HPTHorseResultInfo.cs" />
+    <Compile Include="HPTClasses\HPTHorse\HPTHorseShoeInfo.cs" />
+    <Compile Include="HPTClasses\HPTHorse\HPTHorseSulkyInfo.cs" />
+    <Compile Include="HPTClasses\HPTHorse\HPTHorseXReduction.cs" />
+    <Compile Include="HPTClasses\HPTHorse\HPTHorseYearStatistics.cs" />
+    <Compile Include="HPTClasses\HPTInfoClasses\HPTHorseLight.cs" />
+    <Compile Include="HPTClasses\HPTInfoClasses\HPTRaceDayInfoCommentCollection.cs" />
+    <Compile Include="HPTClasses\HPTInfoClasses\HPTRaceDayInfoLight.cs" />
+    <Compile Include="HPTClasses\HPTInfoClasses\HPTRaceLight.cs" />
+    <Compile Include="HPTClasses\HPTInfoClasses\HPTScratchedHorsesInfo.cs" />
+    <Compile Include="HPTClasses\HPTMarkBetTemplate\ABCDTemplateSettings.cs" />
+    <Compile Include="HPTClasses\HPTMarkBetTemplate\HPTMarkBetTemplate.cs" />
+    <Compile Include="HPTClasses\HPTMarkBetTemplate\HPTMarkBetTemplateABCD.cs" />
+    <Compile Include="HPTClasses\HPTMarkBetTemplate\HPTMarkBetTemplateRank.cs" />
+    <Compile Include="HPTClasses\HPTMarkBetTemplate\HPTMarkBetTemplateResult.cs" />
+    <Compile Include="HPTClasses\HPTMarkBetTemplate\HPTTemplateCollection.cs" />
+    <Compile Include="HPTClasses\HPTMarkBetTemplate\HPTTemplateForBeginners.cs" />
+    <Compile Include="HPTClasses\HPTReductionClasses\HPTCombinationListInfo.cs" />
+    <Compile Include="HPTClasses\HPTReductionClasses\HPTHorseForReduction.cs" />
+    <Compile Include="HPTClasses\HPTReductionClasses\HPTMarkBetSingleRowEdited.cs" />
+    <Compile Include="HPTClasses\HPTReductionClasses\HPTMarkBetTemplateGroupInterval.cs" />
+    <Compile Include="HPTClasses\HPTReductionClasses\HPTNumberOfRules.cs" />
+    <Compile Include="HPTClasses\HPTReductionClasses\HPTRaceDayInfoForReduction.cs" />
+    <Compile Include="HPTClasses\HPTReductionClasses\HPTRowAnalyzer.cs" />
+    <Compile Include="HPTClasses\HPTReductionRuleClasses\HPTATGRankSumReductionRule.cs" />
+    <Compile Include="HPTClasses\HPTReductionRuleClasses\HPTComplementaryRulesCollection.cs" />
+    <Compile Include="HPTClasses\HPTReductionRuleClasses\HPTGroupIntervalRulesCollection.cs" />
+    <Compile Include="HPTClasses\HPTReductionRuleClasses\HPTHorseRankReductionRule.cs" />
+    <Compile Include="HPTClasses\HPTReductionRuleClasses\HPTHorseRankSumReductionRule.cs" />
+    <Compile Include="HPTClasses\HPTReductionRuleClasses\HPTMultiABCDEFReductionRule.cs" />
+    <Compile Include="HPTClasses\HPTReductionRuleClasses\HPTIntervalReductionRule.cs" />
+    <Compile Include="HPTClasses\HPTReductionRuleClasses\HPTOddsSumReductionRule.cs" />
+    <Compile Include="HPTClasses\HPTReductionRuleClasses\HPTOwnRankSumReductionRule.cs" />
+    <Compile Include="HPTClasses\HPTReductionRuleClasses\HPTPersonRulesCollection.cs" />
+    <Compile Include="HPTClasses\HPTReductionRuleClasses\HPTRulesCollection.cs" />
+    <Compile Include="HPTClasses\HPTReductionRuleClasses\HPTStakePercentSumReductionRule.cs" />
+    <Compile Include="HPTClasses\HPTReductionRuleClasses\HPTComplimentaryReductionRule.cs" />
+    <Compile Include="HPTClasses\HPTReductionRuleClasses\HPTDriverReductionRule.cs" />
+    <Compile Include="HPTClasses\HPTReductionRuleClasses\HPTGroupIntervalReductionRule.cs" />
+    <Compile Include="HPTClasses\HPTReductionRuleClasses\HPTIntervalGroup.cs" />
+    <Compile Include="HPTClasses\HPTReductionRuleClasses\HPTNumberOfWinners.cs" />
+    <Compile Include="HPTClasses\HPTReductionRuleClasses\HPTPercentSumReductionRule.cs" />
+    <Compile Include="HPTClasses\HPTReductionRuleClasses\HPTPersonReductionRule.cs" />
+    <Compile Include="HPTClasses\HPTReductionRuleClasses\HPTRankReductionRule.cs" />
+    <Compile Include="HPTClasses\HPTReductionRuleClasses\HPTRowValueReductionRule.cs" />
+    <Compile Include="HPTClasses\HPTReductionRuleClasses\HPTStartNrSumReductionRule.cs" />
+    <Compile Include="HPTClasses\HPTReductionRuleClasses\HPTTrainerReductionRule.cs" />
+    <Compile Include="HPTClasses\HPTReductionRuleClasses\HPTV6BetMultiplierRule.cs" />
+    <Compile Include="HPTClasses\HPTReductionRuleClasses\HPTXReductionRule.cs" />
+    <Compile Include="HPTClasses\HPTReductionRuleClasses\HPTNumberOfWinnersReductionRule.cs" />
+    <Compile Include="HPTClasses\HPTReductionRuleClasses\HPTReductionRule.cs" />
+    <Compile Include="HPTClasses\HPTReductionRuleClasses\ReductionRuleInfo.cs" />
+    <Compile Include="HPTClasses\HPTResultClasses\ATGCouponHelper.cs" />
+    <Compile Include="HPTClasses\HPTResultClasses\ATGXmlFile.cs">
+      <SubType>code</SubType>
+    </Compile>
+    <Compile Include="HPTClasses\HPTResultClasses\HPTResultAnalyzer.cs" />
+    <Compile Include="HPTClasses\HPTResultClasses\HPTResultMarkingBet.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HPTClasses\Config\HPTColorInterval.cs" />
+    <Compile Include="HPTClasses\Config\HPTMailList.cs" />
+    <Compile Include="HPTClasses\Config\HPTMailRecipient.cs" />
+    <Compile Include="HPTClasses\Config\HPTMarkBetTabsToShow.cs" />
+    <Compile Include="HPTClasses\HPTHorseListContainer.cs" />
+    <Compile Include="HPTClasses\HPTReductionRuleClasses\HPTMultipleChoiceReductionRule.cs" />
+    <Compile Include="HPTClasses\HPTReductionRuleClasses\HPTABCDEFReductionRule.cs" />
+    <Compile Include="HPTClasses\HPTUserData\HPTUserSystem.cs" />
+    <Compile Include="HPTClasses\HPTUserData\HPTUserSystemCollection.cs" />
+    <Compile Include="HPTEnumValueConverter.cs" />
+    <Compile Include="HPTHorseNextStart.cs" />
+    <Compile Include="HPTHorseRankSumReductionRuleCollection.cs" />
+    <Compile Include="HPTClasses\HPTReductionRuleClasses\HPTOwnProbabilityReductionRule.cs" />
+    <Compile Include="ATGHorseRecordList.cs" />
+    <Compile Include="HPTHorseTrioInfo.cs" />
+    <Compile Include="HPTRowValueInterval.cs" />
+    <Compile Include="HPTSingleRowsRowValueInterval.cs" />
+    <Compile Include="HPTStartNumberRank.cs" />
+    <Compile Include="HPTStartNumberRankCollection.cs" />
+    <Compile Include="HPTTipsParser.cs" />
+    <Compile Include="HPTTrackDistance.cs" />
+    <Compile Include="HPTTurnoverHistory.cs" />
+    <Compile Include="IntToMoneyStringConverter.cs" />
+    <Compile Include="Service References\HPTService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="SingleRowDataToShow.cs" />
+    <Compile Include="TrackIdToNameConverter.cs" />
+    <Compile Include="UCCalendarRaceDayInfoButton.xaml.cs">
+      <DependentUpon>UCCalendarRaceDayInfoButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UCCorrectionHorse.xaml.cs">
+      <DependentUpon>UCCorrectionHorse.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UCDriverInfo.xaml.cs">
+      <DependentUpon>UCDriverInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UCHorseRankSumReductionRule.xaml.cs">
+      <DependentUpon>UCHorseRankSumReductionRule.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UCHorseRankSumReductionRuleTemplate.xaml.cs">
+      <DependentUpon>UCHorseRankSumReductionRuleTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UCHorseRankSumReductionTemplate.xaml.cs">
+      <DependentUpon>UCHorseRankSumReductionTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UCHorseRankSumReductionTemplateList.xaml.cs">
+      <DependentUpon>UCHorseRankSumReductionTemplateList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UCHorseResultInfo.xaml.cs">
+      <DependentUpon>UCHorseResultInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UCOwnInformationView.xaml.cs">
+      <DependentUpon>UCOwnInformationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UCOwnRankSumReduction.xaml.cs">
+      <DependentUpon>UCOwnRankSumReduction.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UCPrintAndCopySettings.xaml.cs">
+      <DependentUpon>UCPrintAndCopySettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UCRaceForOverview.xaml.cs">
+      <DependentUpon>UCRaceForOverview.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UCRankVariableReductionsToShow.xaml.cs">
+      <DependentUpon>UCRankVariableReductionsToShow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UCReductionRuleStatistics.xaml.cs">
+      <DependentUpon>UCReductionRuleStatistics.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UCStartNumberRankTemplate.xaml.cs">
+      <DependentUpon>UCStartNumberRankTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UCTrendCell.xaml.cs">
+      <DependentUpon>UCTrendCell.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UCTrends.xaml.cs">
+      <DependentUpon>UCTrends.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UCTrioPlaceInfo.xaml.cs">
+      <DependentUpon>UCTrioPlaceInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\CombinationGames\UCTvillingTrioRace.xaml.cs">
+      <DependentUpon>UCTvillingTrioRace.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UCWinnerList.xaml.cs">
+      <DependentUpon>UCWinnerList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\CombinationGames\UCCombBetControl.cs" />
+    <Compile Include="UserControls\CombinationGames\UCCombinationRaceHandling.xaml.cs">
+      <DependentUpon>UCCombinationRaceHandling.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\CombinationGames\UCCombinationsGameHandling.xaml.cs">
+      <DependentUpon>UCCombinationsGameHandling.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\CombinationGames\UCCombinationView.xaml.cs">
+      <DependentUpon>UCCombinationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Horse\UCCompactHorseWide.xaml.cs">
+      <DependentUpon>UCCompactHorseWide.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Horse\UCHeadToHeadRace.xaml.cs">
+      <DependentUpon>UCHeadToHeadRace.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Horse\UCHorseCommentList.xaml.cs">
+      <DependentUpon>UCHorseCommentList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Horse\UCHorseCommentView.xaml.cs">
+      <DependentUpon>UCHorseCommentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Horse\UCNotes.xaml.cs">
+      <DependentUpon>UCNotes.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Horse\UCShoeInfo.xaml.cs">
+      <DependentUpon>UCShoeInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\MarkingBetGeneral\UCMarkBetControl.cs" />
+    <Compile Include="UserControls\MarkingBetGeneral\UCMarkBetWarnings.xaml.cs">
+      <DependentUpon>UCMarkBetWarnings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\MarkingBetReductions\UCABCDReductionSettings.xaml.cs">
+      <DependentUpon>UCABCDReductionSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\MarkingBetReductions\UCHorseRankSumReduction.xaml.cs">
+      <DependentUpon>UCHorseRankSumReduction.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\MarkingBetReductions\UCIntervalReductionNew.xaml.cs">
+      <DependentUpon>UCIntervalReductionNew.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\MarkingBetReductions\UCMultiABCD.xaml.cs">
+      <DependentUpon>UCMultiABCD.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\MarkingBetReductions\UCV6BetMultiplier.xaml.cs">
+      <DependentUpon>UCV6BetMultiplier.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\MarkingBetReductions\UCV6BetMultiplierRule.xaml.cs">
+      <DependentUpon>UCV6BetMultiplierRule.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Overview\UCOverviewFromTips.xaml.cs">
+      <DependentUpon>UCOverviewFromTips.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Overview\UCRacesOverview.xaml.cs">
+      <DependentUpon>UCRacesOverview.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Overview\UCRankRaceOverview.xaml.cs">
+      <DependentUpon>UCRankRaceOverview.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Printing\UCMarkingBetSystemPicture.xaml.cs">
+      <DependentUpon>UCMarkingBetSystemPicture.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Races\UCRacesGrouped.xaml.cs">
+      <DependentUpon>UCRacesGrouped.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Races\UCRacesTabControl.xaml.cs">
+      <DependentUpon>UCRacesTabControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Races\UCRaceViewGrouped.xaml.cs">
+      <DependentUpon>UCRaceViewGrouped.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Races\UCRaceView.xaml.cs">
+      <DependentUpon>UCRaceView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UserControls\ResultAnalyzer\UCResultAnalyzer.xaml.cs">
+      <DependentUpon>UCResultAnalyzer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ResultAnalyzer\UCResultAnalyzerList.xaml.cs">
+      <DependentUpon>UCResultAnalyzerList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Settings\UCGeneralSettings.xaml.cs">
+      <DependentUpon>UCGeneralSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Settings\UCGUISettings.xaml.cs">
+      <DependentUpon>UCGUISettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Settings\UCSettingsCombination.xaml.cs">
+      <DependentUpon>UCSettingsCombination.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Template\UCBeginnerWizard.xaml.cs">
+      <DependentUpon>UCBeginnerWizard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Template\UCGroupIntervalTemplate.xaml.cs">
+      <DependentUpon>UCGroupIntervalTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Template\UCGroupIntervalTemplateList.xaml.cs">
+      <DependentUpon>UCGroupIntervalTemplateList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Template\UCMarkBetTemplateABCD.xaml.cs">
+      <DependentUpon>UCMarkBetTemplateABCD.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Template\UCMarkBetTemplateRank.xaml.cs">
+      <DependentUpon>UCMarkBetTemplateRank.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Template\UCRankVariablesTemplate.xaml.cs">
+      <DependentUpon>UCRankVariablesTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Template\UCRankVariablesTemplateList.xaml.cs">
+      <DependentUpon>UCRankVariablesTemplateList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Template\UCTemplateMain.xaml.cs">
+      <DependentUpon>UCTemplateMain.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Template\UCTemplateWorkshop.xaml.cs">
+      <DependentUpon>UCTemplateWorkshop.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\UCBetTabItemHeader.xaml.cs">
+      <DependentUpon>UCBetTabItemHeader.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\UCGenericTabItemHeader.xaml.cs">
+      <DependentUpon>UCGenericTabItemHeader.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\UCTabItemHeader.xaml.cs">
+      <DependentUpon>UCTabItemHeader.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\UserData\UCUserInformation.xaml.cs">
+      <DependentUpon>UCUserInformation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\UserData\UCUserRaceDayInfoCommentsList.xaml.cs">
+      <DependentUpon>UCUserRaceDayInfoCommentsList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\UserData\UCUserSystemUpload.xaml.cs">
+      <DependentUpon>UCUserSystemUpload.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\MarkingBetReductions\UCGroupIntervalReduction.xaml.cs">
+      <DependentUpon>UCGroupIntervalReduction.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="HPTClasses\HPTReductionClasses\HPTHorseRankVariable.cs" />
+    <Compile Include="HPTClasses\HPTReductionClasses\HPTHorseVariable.cs" />
+    <Compile Include="HPTClasses\Config\HPTMailSender.cs" />
+    <Compile Include="HPTClasses\HPTReductionClasses\HPTMarkBetSingleRowCombination.cs" />
+    <Page Include="ATGCalendar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UCCalendarRaceDayInfoButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UCCorrectionHorse.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UCDriverInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UCHorseRankSumReductionRule.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UCHorseRankSumReductionRuleTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UCHorseRankSumReductionTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UCHorseRankSumReductionTemplateList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UCHorseResultInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UCOwnInformationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UCOwnRankSumReduction.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UCPrintAndCopySettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UCRaceForOverview.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UCRankVariableReductionsToShow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UCReductionRuleStatistics.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UCStartNumberRankTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UCTrendCell.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UCTrends.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UCTrioPlaceInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\CombinationGames\UCTvillingTrioRace.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UCWinnerList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\CombinationGames\UCCombinationRaceHandling.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\CombinationGames\UCCombinationsGameHandling.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\CombinationGames\UCCombinationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Horse\UCCompactHorseWide.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Horse\UCHeadToHeadRace.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Horse\UCHorseCommentList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="UserControls\Horse\UCHorseCommentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="UserControls\Horse\UCNotes.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Horse\UCShoeInfo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\MarkingBetGeneral\UCMarkBetWarnings.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\MarkingBetReductions\UCABCDReductionSettings.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\MarkingBetReductions\UCHorseRankSumReduction.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\MarkingBetReductions\UCIntervalReductionNew.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\MarkingBetReductions\UCMultiABCD.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\MarkingBetReductions\UCV6BetMultiplier.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\MarkingBetReductions\UCV6BetMultiplierRule.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Overview\UCOverviewFromTips.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Overview\UCRacesOverview.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Overview\UCRankRaceOverview.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Printing\UCMarkingBetSystemPicture.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Races\UCRacesGrouped.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Races\UCRacesTabControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Races\UCRaceViewGrouped.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Races\UCRaceView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ResultAnalyzer\UCResultAnalyzer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\ResultAnalyzer\UCResultAnalyzerList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Settings\UCGeneralSettings.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Settings\UCGUISettings.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Settings\UCSettingsCombination.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Template\UCBeginnerWizard.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Template\UCGroupIntervalTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Template\UCGroupIntervalTemplateList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Template\UCMarkBetTemplateABCD.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Template\UCMarkBetTemplateRank.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Template\UCRankVariablesTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Template\UCRankVariablesTemplateList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Template\UCTemplateMain.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Template\UCTemplateWorkshop.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\UCBetTabItemHeader.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\UCGenericTabItemHeader.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\UCTabItemHeader.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\UserData\UCUserInformation.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\UserData\UCUserRaceDayInfoCommentsList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\UserData\UCUserSystemUpload.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\MarkingBetReductions\UCGroupIntervalReduction.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="HPTAboutBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\ControlAndDataTemplates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\ColorsAndBrushes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Styles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Settings\UCAllSettingsTabItemHeader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Overview\UCCompactHorseBig.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\WebPages\UCErrorLog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\WebPages\UCErrorLogTabItemHeader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Settings\UCMarkBetXToShow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Overview\UCRankOverview.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Overview\UCRankOverviewPart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\MarkingBetReductions\UCComplimentaryRules.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Races\UCHorseYearStatistics.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\CombinationGames\UCTrioGame.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\CombinationGames\UCDoubleGame.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\CombinationGames\UCTvillingGame.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Correction\UCCorrectionMarkingBet.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Correction\UCCorrectionTabItemHeader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Settings\UCMarkBetTabsToShow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Printing\UCMarkingBetSystemDocument.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\MarkingBetReductions\UCPersonReduction.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\SingleRows\UCSingleRowCollectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Settings\UCCalendarSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Settings\UCColorPicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Overview\UCCompactHorse.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Settings\UCDataToShowSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Settings\UCSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Races\UCDriverHorse.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Races\UCTrainerHorse.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\MarkingBetGeneral\UCMarksGame.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Races\UCResultView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ATGCalendar.xaml.cs">
+      <DependentUpon>ATGCalendar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="HelperClasses\EnumHelper.cs" />
+    <Compile Include="HelperClasses\PublicEnums.cs" />
+    <Compile Include="HPTAboutBox.xaml.cs">
+      <DependentUpon>HPTAboutBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="HPTClasses\Config\HPTConfig.cs" />
+    <Compile Include="HPTClasses\General\HPTInterfaces.cs" />
+    <Compile Include="HPTClasses\HPTResultClasses\HPTCouponCorrector.cs" />
+    <Compile Include="HPTClasses\HPTInfoClasses\HPTPerson.cs" />
+    <Compile Include="HPTClasses\HPTReductionClasses\HPTMarkBetSingleRowCollection.cs" />
+    <Compile Include="HPTClasses\HPTReductionClasses\HPTBet.cs" />
+    <Compile Include="HPTClasses\HPTInfoClasses\HPTBetType.cs" />
+    <Compile Include="HPTClasses\HPTInfoClasses\HPTCalendar.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HPTClasses\HPTInfoClasses\HPTCombination.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HPTClasses\HPTInfoClasses\HPTRace.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HPTClasses\HPTInfoClasses\HPTRaceDayInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HPTClasses\HPTReductionClasses\HPTCombBet.cs" />
+    <Compile Include="HPTClasses\HPTReductionClasses\HPTMarkBet.cs" />
+    <Compile Include="HPTClasses\HPTReductionClasses\HPTMarkBetSingleRow.cs" />
+    <Compile Include="HPTClasses\General\HPTEnums.cs" />
+    <Compile Include="HPTClasses\HPTResultClasses\HPTResult.cs" />
+    <Compile Include="HPTClasses\HPTResultClasses\HPTResultCombination.cs" />
+    <Compile Include="HelperClasses\HPTSerializer.cs" />
+    <Compile Include="HelperClasses\HPTServiceConnector.cs" />
+    <Compile Include="HelperClasses\HPTServiceToHPTHelper.cs" />
+    <Compile Include="HPTClasses\General\HPTSystemDirectory.cs" />
+    <Compile Include="HPTClasses\General\HPTVersion.cs" />
+    <Compile Include="HPTClasses\General\Notifier.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="HelperClasses\TabItemTemplateSelector.cs" />
+    <Compile Include="UserControls\Settings\UCAllSettingsTabItemHeader.xaml.cs">
+      <DependentUpon>UCAllSettingsTabItemHeader.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Overview\UCCompactHorseBig.xaml.cs">
+      <DependentUpon>UCCompactHorseBig.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\WebPages\UCErrorLog.xaml.cs">
+      <DependentUpon>UCErrorLog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\WebPages\UCErrorLogTabItemHeader.xaml.cs">
+      <DependentUpon>UCErrorLogTabItemHeader.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Settings\UCMarkBetXToShow.xaml.cs">
+      <DependentUpon>UCMarkBetXToShow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Overview\UCRankOverview.xaml.cs">
+      <DependentUpon>UCRankOverview.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Overview\UCRankOverviewPart.xaml.cs">
+      <DependentUpon>UCRankOverviewPart.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\MarkingBetReductions\UCComplimentaryRules.xaml.cs">
+      <DependentUpon>UCComplimentaryRules.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Races\UCHorseYearStatistics.xaml.cs">
+      <DependentUpon>UCHorseYearStatistics.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\CombinationGames\UCTrioGame.xaml.cs">
+      <DependentUpon>UCTrioGame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\CombinationGames\UCDoubleGame.xaml.cs">
+      <DependentUpon>UCDoubleGame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\CombinationGames\UCTvillingGame.xaml.cs">
+      <DependentUpon>UCTvillingGame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Correction\UCCorrectionMarkingBet.xaml.cs">
+      <DependentUpon>UCCorrectionMarkingBet.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Correction\UCCorrectionTabItemHeader.xaml.cs">
+      <DependentUpon>UCCorrectionTabItemHeader.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Settings\UCMarkBetTabsToShow.xaml.cs">
+      <DependentUpon>UCMarkBetTabsToShow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Printing\UCMarkingBetSystemDocument.xaml.cs">
+      <DependentUpon>UCMarkingBetSystemDocument.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\MarkingBetReductions\UCPersonReduction.xaml.cs">
+      <DependentUpon>UCPersonReduction.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\SingleRows\UCSingleRowCollectionView.xaml.cs">
+      <DependentUpon>UCSingleRowCollectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Settings\UCCalendarSettings.xaml.cs">
+      <DependentUpon>UCCalendarSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Settings\UCColorPicker.xaml.cs">
+      <DependentUpon>UCColorPicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Overview\UCCompactHorse.xaml.cs">
+      <DependentUpon>UCCompactHorse.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Settings\UCDataToShowSettings.xaml.cs">
+      <DependentUpon>UCDataToShowSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Settings\UCSettings.xaml.cs">
+      <DependentUpon>UCSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Races\UCDriverHorse.xaml.cs">
+      <DependentUpon>UCDriverHorse.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UserControls\Races\UCTrainerHorse.xaml.cs">
+      <DependentUpon>UCTrainerHorse.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\MarkingBetGeneral\UCMarksGame.xaml.cs">
+      <DependentUpon>UCMarksGame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Races\UCResultView.xaml.cs">
+      <DependentUpon>UCResultView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="HelperClasses\Crc16.cs" />
+    <Compile Include="HPTClasses\HPTResultClasses\HPTCoupon.cs" />
+    <Compile Include="HPTClasses\HPTResultClasses\HPTCouponRace.cs" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="atg_filebetting_1_8_2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="atg_filebetting_1_8_6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="HorseRecordList.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="HPTCert2013.pfx" />
+    <None Include="HPTCert2020.pfx" />
+    <None Include="HPTCert2024.pfx" />
+    <None Include="HPTCert2025.pfx" />
+    <None Include="HPTClient_2_TemporaryKey.pfx" />
+    <None Include="HPTClient_3_TemporaryKey.pfx" />
+    <None Include="HPTClient_TemporaryKey.pfx" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+    <None Include="Service References\HPTService\HPTClient.HPTService.AuthenticationResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\HPTService\HPTClient.HPTService.HPTATGSystem.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\HPTService\HPTClient.HPTService.HPTCalendar.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\HPTService\HPTClient.HPTService.HPTCalendarLight.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\HPTService\HPTClient.HPTService.HPTCorrectionSystemResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\HPTService\HPTClient.HPTService.HPTCoupon.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\HPTService\HPTClient.HPTService.HPTHorseNextStart.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\HPTService\HPTClient.HPTService.HPTLogMessage.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\HPTService\HPTClient.HPTService.HPTRaceDayInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\HPTService\HPTClient.HPTService.HPTRaceDayInfoHistoryInfoGrouped.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\HPTService\HPTClient.HPTService.HPTRaceDayInfoLight.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\HPTService\HPTClient.HPTService.HPTRaceDayInfoReduction.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\HPTService\HPTClient.HPTService.HPTRaceKey.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\HPTService\HPTClient.HPTService.HPTRegistration.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\HPTService\HPTClient.HPTService.HPTResultMarkingBet.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\HPTService\HPTClient.HPTService.HPTSaveSystem.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\HPTService\HPTClient.HPTService.HPTUser.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\HPTService\HPTClient.HPTService.HPTUserRaceDayInfoCommentsCollection.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\HPTService\HPTClient.HPTService.HPTUserSystemCollection.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\HPTService\HPTClient.HPTService.HPTUserSystemComplete.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\HPTService\HPTClient.HPTService.HPTUserSystemToMail.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ATGLogga.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\delete_16x.ico" />
+    <Resource Include="Icons\folderopen.ico" />
+    <Resource Include="Icons\help.ico" />
+    <Resource Include="Icons\INFO.ICO" />
+    <Resource Include="Icons\mail.ico" />
+    <Resource Include="Icons\printer.ico" />
+    <Resource Include="Icons\propertiesORoptions.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="HPTSplash.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\globe.ico" />
+    <Resource Include="Icons\otheroptions.ico" />
+    <Resource Include="Icons\save-32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ImagesSmall\hpt1024.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\HPTServiceLibrary.AuthenticationResponse.datasource" />
+    <None Include="Properties\DataSources\HPTServiceLibrary.HPTCalendar.datasource" />
+    <None Include="Properties\DataSources\HPTServiceLibrary.HPTRace.datasource" />
+    <None Include="Properties\DataSources\HPTServiceLibrary.HPTRaceDayInfo.datasource" />
+    <None Include="Properties\DataSources\HPTServiceLibrary.HPTResultMarkingBet.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\ATG.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="hpt1024.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\error.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\rc_html.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client,KB2468871">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 and x64%29 and Update for .NET Framework 4 %28KB2468871%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.1 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.4.5">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 4.5</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ImagesSmall\Facebook.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\AOT.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ATGImagesBW\ATGSmall.png" />
+    <Resource Include="ATGImagesBW\DDSmall.png" />
+    <Resource Include="ATGImagesBW\LDSmall.png" />
+    <Resource Include="ATGImagesBW\TSmall.png" />
+    <Resource Include="ATGImagesBW\TVSmall.png" />
+    <Resource Include="ATGImagesBW\V4Small.png" />
+    <Resource Include="ATGImagesBW\V5Small.png" />
+    <Resource Include="ATGImagesBW\V64Small.png" />
+    <Resource Include="ATGImagesBW\V65Small.png" />
+    <Resource Include="ATGImagesBW\V75Small.png" />
+    <Resource Include="ATGImagesBW\V86Small.png" />
+    <Resource Include="ATGImages\ATGSmall.png" />
+    <Resource Include="ATGImages\DDSmall.png" />
+    <Resource Include="ATGImages\LDSmall.png" />
+    <Resource Include="ATGImages\TSmall.png" />
+    <Resource Include="ATGImages\TVSmall.png" />
+    <Resource Include="ATGImages\V4Small.png" />
+    <Resource Include="ATGImages\V5Small.png" />
+    <Resource Include="ATGImages\V64Small.png" />
+    <Resource Include="ATGImages\V65Small.png" />
+    <Resource Include="ATGImages\V75Small.png" />
+    <Resource Include="ATGImages\V86Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ImagesSmall\hpt128.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\HPTService\HPTService1.disco" />
+    <None Include="Service References\HPTService\HPTService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\HPTService\HPTService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\HPTService\HPTService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\HPTService\HPTService3.wsdl" />
+    <None Include="Service References\HPTService\HPTService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\HPTService\HPTService31.wsdl" />
+    <None Include="Service References\HPTService\HPTService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\HPTService\HPTService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\HPTService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\HPTService\configuration.svcinfo" />
+    <None Include="Service References\HPTService\configuration91.svcinfo" />
+    <Resource Include="HPTPublish.ico" />
+    <Resource Include="ATGImages\ATGXSmall.png" />
+    <Resource Include="ATGImages\DDXSmall.png" />
+    <Resource Include="ATGImages\LDXSmall.png" />
+    <Resource Include="ATGImages\TVXSmall.png" />
+    <Resource Include="ATGImages\TXSmall.png" />
+    <Resource Include="ATGImages\V4XSmall.png" />
+    <Resource Include="ATGImages\V5XSmall.png" />
+    <Resource Include="ATGImages\V64XSmall.png" />
+    <Resource Include="ATGImages\V65XSmall.png" />
+    <Resource Include="ATGImages\V75XSmall.png" />
+    <Resource Include="ATGImages\V86XSmall.png" />
+    <Resource Include="ATGImages\GS75Small.png" />
+    <Resource Include="ATGImages\GS75XSmall.png" />
+    <Resource Include="ATGImagesBW\GS75Small.png" />
+    <Content Include="HptLogo.ico" />
+    <Resource Include="Icons\HPT.ico" />
+    <SplashScreen Include="HPTSplash.png" />
+    <Resource Include="HptLogoSmall.png" />
+    <Content Include="Icons\HPTPublish.ico" />
+    <EmbeddedResource Include="Sounds\horse.wav" />
+    <Resource Include="Test.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <FileAssociation Include=".hpt5">
+      <Visible>False</Visible>
+      <Description>Hjälp på Traven 5-System</Description>
+      <Progid>hpt5.system</Progid>
+      <DefaultIcon>HptLogo.ico</DefaultIcon>
+    </FileAssociation>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\HPTService\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

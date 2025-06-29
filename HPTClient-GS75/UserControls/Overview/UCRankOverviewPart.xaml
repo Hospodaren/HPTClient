@@ -1,0 +1,76 @@
+﻿<UserControl x:Class="HPTClient.UCRankOverviewPart"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             x:Name="ucRankOverviewPart"
+             d:DesignHeight="300" d:DesignWidth="300">
+
+    <UserControl.Resources>
+
+        <Style x:Key="tbRankStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="Width" Value="13"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontStretch" Value="Condensed"/>
+        </Style>
+
+    </UserControl.Resources>
+    
+    <Grid>
+        <Expander ExpandDirection="Down" IsExpanded="True">
+
+            <Expander.Header>
+                <TextBlock Style="{StaticResource tbStyle}" Text="{Binding Text,ElementName=ucRankOverviewPart}" HorizontalAlignment="Stretch" FontSize="12" Padding="2" Width="120" TextAlignment="Left"/>
+            </Expander.Header>
+
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
+
+                <ItemsControl ItemsSource="{Binding}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+
+                                <CheckBox IsChecked="{Binding Use}" VerticalAlignment="Center" Margin="0,1,2,1" MinWidth="120">
+                                    <TextBlock Style="{StaticResource tbStyle}" Text="{Binding Text}"/>
+                                </CheckBox>
+
+                                <ItemsControl ItemsSource="{Binding Path=RaceHorseRankList}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+
+                                            <ItemsControl ItemsSource="{Binding Path=HorseRankList}" Padding="2,0">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <StackPanel Orientation="Horizontal"/>
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Border BorderBrush="Black" BorderThickness="0.5" Background="{Binding BackColor}">
+                                                            <TextBlock Text="{Binding Rank}" Style="{StaticResource tbRankStyle}"/>
+                                                        </Border>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+            </StackPanel>
+        </Expander>
+    </Grid>
+</UserControl>

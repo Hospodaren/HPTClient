@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
+  <asmv1:assemblyIdentity name="HPTrav5.exe" version="5.0.0.90" publicKeyToken="7cdc8bece4e695f2" language="neutral" processorArchitecture="msil" type="win32" />
+  <description asmv2:iconFile="Icons\HPT.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
+  <application />
+  <entryPoint>
+    <assemblyIdentity name="HPTrav5" version="4.9.0.0" publicKeyToken="7CDC8BECE4E695F2" language="neutral" processorArchitecture="msil" />
+    <commandLine file="HPTrav5.exe" parameters="" />
+  </entryPoint>
+  <trustInfo>
+    <security>
+      <applicationRequestMinimum>
+        <PermissionSet Unrestricted="true" ID="Custom" SameSite="site" />
+        <defaultAssemblyRequest permissionSetReference="Custom" />
+      </applicationRequestMinimum>
+      <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
+        <!--
+          UAC Manifest Options
+          If you want to change the Windows User Account Control level replace the 
+          requestedExecutionLevel node with one of the following.
+
+        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
+        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
+        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
+
+         If you want to utilize File and Registry Virtualization for backward 
+         compatibility then delete the requestedExecutionLevel node.
+    -->
+        <requestedExecutionLevel level="asInvoker" uiAccess="false" />
+      </requestedPrivileges>
+    </security>
+  </trustInfo>
+  <dependency>
+    <dependentOS>
+      <osVersionInfo>
+        <os majorVersion="5" minorVersion="1" buildNumber="2600" servicePackMajor="0" />
+      </osVersionInfo>
+    </dependentOS>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="Microsoft.Windows.CommonLanguageRuntime" version="4.0.30319.0" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="HPTrav5.exe" size="3720568">
+      <assemblyIdentity name="HPTrav5" version="4.9.0.0" publicKeyToken="7CDC8BECE4E695F2" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>ooFU35VvwgGNF+Kelg3YAgSB9nhHEWzUnc9Q6++QHzE=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Ionic.Zip.dll" size="445440">
+      <assemblyIdentity name="Ionic.Zip" version="1.9.1.5" publicKeyToken="EDBE51AD942A3F5C" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>XARJuKm2XzbLambBrJN5+PYqdd/M/aZ/6VlWMXezxbA=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Xceed.Wpf.Toolkit.dll" size="1038336">
+      <assemblyIdentity name="Xceed.Wpf.Toolkit" version="2.5.0.0" publicKeyToken="3E4669D2F30244F4" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>069nuwFt6QDlBScYAhlIdDRf28UsH7WOqGXIv3ie2lI=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <file name="HptLogo.ico" size="309326">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>t93YYO7ONv5STBSABtbDdM0SaMNoI1/Ftzb1Br9exCc=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="HPTrav5.exe.config" size="2716">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>HsYwfWQfT+dfygGLANdh3j2DJt6KqEM/lrxGn9bZA20=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Icons\HPT.ico" size="309326">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>mm8I2hJk2aCHGYv7Du1f0pYV8fC2K+p9RIde9xEJ/wM=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Icons\HPTPublish.ico" size="1078">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>WtghHd+G71f1FFL2BZoCbhn70gOzFcNMxR2O2IxT47I=</dsig:DigestValue>
+    </hash>
+  </file>
+  <fileAssociation extension=".hpt5" description="Hjälp på Traven 5-System" progid="hpt5.system" defaultIcon="HptLogo.ico" xmlns="urn:schemas-microsoft-com:clickonce.v1" />
+<publisherIdentity name="CN=HPT certifikat 2013" issuerKeyHash="1bade0617d2d24c62e3b83b8e45ec6c1e3b96f45" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>m03xjeSJ6JkY9Vu4XILbfxFgniE=</DigestValue></Reference></SignedInfo><SignatureValue>D6fL7Z+fwZr2xndEv889tZBmLPw2xNCwSFMl+4q/xKEyswwJvQj/ThcB7PVGR8XczSrpbeJLcRBSX9eJFAOPJTCQWxV0Cbn05ebR7+J4pvYBX8t0oZWtS3QhQovbXeJa4dpwwY1OliGzAxVda/KO8m7onXgCElx1HqzNaHkIthw=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>xaorgOmMSHiPzJ7RDGc9xWrK/nxFBkO3xTxHlpVOHxE4Md/jgUxIVBuECPl/UCu6Y74F986+gBV3PRMPLbtIjS7ejyZLC2nWTozIgIsch/LfO+uxrXniyLiqKl910fu/LorH9yCHMnHF/rbPUMuzH7keZSTRb2xRL4nTtZ0ePKs=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="219e60117fdb825cb85bf51899e889e48df14d9b" Description="" Url=""><as:assemblyIdentity name="HPTrav5.exe" version="5.0.0.90" publicKeyToken="7cdc8bece4e695f2" language="neutral" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=HPT certifikat 2013</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>0wSynNzPzsG5VofzoRiPMX5djyc=</DigestValue></Reference></SignedInfo><SignatureValue>hZxnYs/3Z7NJiE5OcWUva1YPViS4KDCSY9VBeDWmJP+3JN5qI+brlsmqjeXGlJTRYRgs2mzvKG+bnjYVK3KMJmhZNgLcItHrTEPP0sGIh2UB+K5b3u9DJhgPggv99qOAzWzRO2OOYqBLfES7gM0PoPB4E7rGzvtHj3Xk0A3pNNc=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>xaorgOmMSHiPzJ7RDGc9xWrK/nxFBkO3xTxHlpVOHxE4Md/jgUxIVBuECPl/UCu6Y74F986+gBV3PRMPLbtIjS7ejyZLC2nWTozIgIsch/LfO+uxrXniyLiqKl910fu/LorH9yCHMnHF/rbPUMuzH7keZSTRb2xRL4nTtZ0ePKs=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIBvzCCASigAwIBAgIQEXZoyLbIXaJN/wlFZu8FgzANBgkqhkiG9w0BAQUFADAeMRwwGgYDVQQDExNIUFQgY2VydGlmaWthdCAyMDEzMB4XDTEzMDMyNDE0Mjk0MFoXDTE4MDMyNDE0Mjk0MFowHjEcMBoGA1UEAxMTSFBUIGNlcnRpZmlrYXQgMjAxMzCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEAxaorgOmMSHiPzJ7RDGc9xWrK/nxFBkO3xTxHlpVOHxE4Md/jgUxIVBuECPl/UCu6Y74F986+gBV3PRMPLbtIjS7ejyZLC2nWTozIgIsch/LfO+uxrXniyLiqKl910fu/LorH9yCHMnHF/rbPUMuzH7keZSTRb2xRL4nTtZ0ePKsCAwEAATANBgkqhkiG9w0BAQUFAAOBgQCXeb6kHy+soS537eWj9Vjucc84dZ9YWbgsVAjcMlb14yltJPB4dEqI0Ncg6Y4HuWa4WVEIYYhVQws2UjWvJi3MsN7Z8wZYxHULuXCEU10+r/vGyUKlxtas6ECYRjEsYMeFPJZYka1hoWFNGxu37sxSWqTmlkUaeB6fk6fOHWq+Lg==</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>

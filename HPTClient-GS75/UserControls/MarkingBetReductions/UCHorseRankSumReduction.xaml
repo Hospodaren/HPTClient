@@ -1,0 +1,125 @@
+﻿<HPT:UCMarkBetControl x:Class="HPTClient.UCHorseRankSumReduction"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+            xmlns:HPT="clr-namespace:HPTClient"
+                      x:Name="ucHorseRankSumReduction"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <HPT:UCMarkBetControl.Resources>
+
+    </HPT:UCMarkBetControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <GroupBox Background="{StaticResource BackgroundBrush}" Name="gbReduction" BorderBrush="Black" HorizontalAlignment="Left" HeaderTemplate="{StaticResource GroupBoxHeaderCheckBoxTemplate}">
+            <GroupBox.Header>
+                <CheckBox x:Name="chkUseRule" Margin="3" IsChecked="{Binding Path=ReductionRank}">
+                    <TextBlock  HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                    FontFamily="Arial" FontSize="12" FontWeight="Bold" Foreground="Black" Text="Använd rankreducering (Snittrank)" />
+                </CheckBox>
+            </GroupBox.Header>
+
+            <Grid Width="630">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Lägsta värde" TextAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" FontSize="12" FontWeight="Bold" Foreground="Black"/>
+                <TextBlock Text="{Binding Path=SingleRowCollection.MinRankSum,StringFormat=F1}" TextAlignment="Center" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1"/>
+
+                <TextBlock Text="Högsta värde" TextAlignment="Center" HorizontalAlignment="Center" Grid.Column="2" FontSize="12" FontWeight="Bold" Foreground="Black"/>
+                <TextBlock Text="{Binding Path=SingleRowCollection.MaxRankSum,StringFormat=F1}" TextAlignment="Center" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="1"/>
+
+                <TextBlock Text="Minimum" TextAlignment="Center" HorizontalAlignment="Center" Grid.Column="3" FontSize="12" FontWeight="Bold" Foreground="Black"/>
+                <xctk:DecimalUpDown x:Name="dudMinValue" Grid.Column="3" Grid.Row="1" FormatString="F1"
+                                                   Increment="0.1" Value="{Binding MinRankSum}" 
+                                                   Minimum="{Binding Path=SingleRowCollection.MinRankSum}" 
+                                                   Maximum="{Binding Path=SingleRowCollection.MaxRankSum}"
+                                                   ValueChanged="dudMinValue_ValueChanged"/>
+
+                <TextBlock Text="Maximum" TextAlignment="Center" HorizontalAlignment="Center" Grid.Column="4" FontSize="12" FontWeight="Bold" Foreground="Black"/>
+                <xctk:DecimalUpDown x:Name="dudMaxValue" Grid.Column="4" Grid.Row="1" FormatString="F1"
+                                                   Increment="0.1" Value="{Binding MaxRankSum}" 
+                                                   Minimum="{Binding Path=SingleRowCollection.MinRankSum}" 
+                                                   Maximum="{Binding Path=SingleRowCollection.MaxRankSum}"
+                                                   ValueChanged="dudMinValue_ValueChanged"/>
+
+
+                <TextBlock Text="Minimum (%)" TextAlignment="Center" HorizontalAlignment="Center" Grid.Column="5" FontSize="12" FontWeight="Bold" Foreground="Black"/>
+                <xctk:IntegerUpDown x:Name="iudMinValue" Grid.Column="5" Grid.Row="1"
+                                                   Increment="5" Value="{Binding MinRankSumPercent}" 
+                                                   Minimum="0" Maximum="100"
+                                                   ValueChanged="dudMinValue_ValueChanged"/>
+
+                <TextBlock Text="Maximum (%)" TextAlignment="Center" HorizontalAlignment="Center" Grid.Column="6" FontSize="12" FontWeight="Bold" Foreground="Black"/>
+                <xctk:IntegerUpDown x:Name="iudMaxValue" Grid.Column="6" Grid.Row="1"
+                                                   Increment="5" Value="{Binding MaxRankSumPercent}" 
+                                                   Minimum="0" Maximum="100"
+                                                   ValueChanged="dudMinValue_ValueChanged"/>
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Grid.Row="1" Background="{StaticResource BackgroundBrush}" Name="gbRankvariables" BorderBrush="Black" HorizontalAlignment="Left" HeaderTemplate="{StaticResource GroupBoxHeaderCheckBoxTemplate}">
+            <GroupBox.Header>
+                <CheckBox x:Name="chkUseHorseRankRule" Margin="3" IsChecked="{Binding Path=ReductionHorseRank}">
+                    <TextBlock  HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                    FontFamily="Arial" FontSize="12" FontWeight="Bold" Foreground="Black" Text="Använd rankvariabelreducering" />
+                </CheckBox>
+            </GroupBox.Header>
+            
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                
+                <StackPanel Orientation="Horizontal">
+
+                    <Border>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock x:Name="tbUseTemplate" Text="Välj mall" Margin="2" VerticalAlignment="Center" FontSize="12" Foreground="Black"/>
+                            <ComboBox x:Name="cmbHorseRankSumRulesCollection" DisplayMemberPath="Name"
+                                  ItemsSource="{Binding Path=HorseRankSumReductionRuleCollectionList}" Margin="2" Width="100"/>
+                            <Button x:Name="btnSelectTemplate" Content="OK" Click="btnSelectTemplate_Click" Margin="2" Width="50"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox x:Name="txtNewTemplateName" Margin="2" VerticalAlignment="Center" Text="{Binding Name}" Width="200"/>
+                            <Button x:Name="btnSaveAsTemplate" Click="btnSaveAsTemplate_Click" Content="Spara som mall"/>
+                        </StackPanel>
+                    </Border>
+
+                </StackPanel>
+
+                <ListBox ItemsSource="{Binding HorseRankSumReductionRuleList}" Grid.Row="1">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+
+                            <HPT:UCHorseRankSumReductionRule MarkBet="{Binding Path=MarkBet,ElementName=ucHorseRankSumReduction}"/>
+
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+
+        </GroupBox>
+    </Grid>
+</HPT:UCMarkBetControl>

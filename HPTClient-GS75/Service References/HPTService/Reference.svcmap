@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="7e9e8953-9d55-4c4d-9bad-00e8b5ddeb08" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost/HPTService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="HPTService.xsd" MetadataType="Schema" ID="03decc09-1846-47a6-a62a-7f96487609f0" SourceId="1" SourceUrl="http://jes/HPTService.svc?xsd=xsd1" />
+    <MetadataFile FileName="HPTService1.xsd" MetadataType="Schema" ID="9f1ed2c6-b65b-4dec-a1a6-8564bad4fdd9" SourceId="1" SourceUrl="http://jes/HPTService.svc?xsd=xsd0" />
+    <MetadataFile FileName="HPTService1.disco" MetadataType="Disco" ID="204dfb53-c4e4-4e8f-b68c-0e73241479ce" SourceId="1" SourceUrl="http://jes/HPTService.svc?disco" />
+    <MetadataFile FileName="HPTService2.xsd" MetadataType="Schema" ID="15238aa0-3b1e-4458-9193-f2614f425e8d" SourceId="1" SourceUrl="http://jes/HPTService.svc?xsd=xsd2" />
+    <MetadataFile FileName="HPTService3.xsd" MetadataType="Schema" ID="3a31d9b2-04c7-4bd6-b7f4-e1060cec50f7" SourceId="1" SourceUrl="http://jes/HPTService.svc?xsd=xsd5" />
+    <MetadataFile FileName="HPTService3.wsdl" MetadataType="Wsdl" ID="3fa12d17-2d81-4936-b291-f943cbe0a5cb" SourceId="1" SourceUrl="http://jes/HPTService.svc?wsdl=wsdl0" />
+    <MetadataFile FileName="HPTService31.wsdl" MetadataType="Wsdl" ID="46794164-abd0-4d03-bac7-422b193fe15f" SourceId="1" SourceUrl="http://jes/HPTService.svc?wsdl" />
+    <MetadataFile FileName="HPTService4.xsd" MetadataType="Schema" ID="c038f15f-c927-42db-86d4-f7691dda7133" SourceId="1" SourceUrl="http://jes/HPTService.svc?xsd=xsd3" />
+    <MetadataFile FileName="HPTService5.xsd" MetadataType="Schema" ID="bf017d5c-b3d1-4ae2-893f-c1a66b9982d7" SourceId="1" SourceUrl="http://jes/HPTService.svc?xsd=xsd4" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Client name="Chromecast">
+  <TranscodeTargets>
+    <VideoProfile protocol="http" container="mkv" codec="h264,h265,hevc" audioCodec="eac3,ac3,aac,mp3" context="streaming" />
+    <MusicProfile container="mkv" codec="opus" />
+    <PhotoProfile container="jpeg" />
+    <SubtitleProfile container="ass" codec="ass" />
+  </TranscodeTargets>
+  <CodecProfiles>
+    <VideoCodec name="*">
+      <Limitations>
+        <UpperBound name="video.bitDepth" value="10" />
+        <UpperBound name="video.bitrate" value="75000"/>
+        <UpperBound name="video.width" value="3840" isRequired="true" />
+        <UpperBound name="video.height" value="2176" isRequired="true" />
+      </Limitations>
+    </VideoCodec>
+    <VideoAudioCodec name="*">
+      <Limitations>
+        <UpperBound name="audio.channels" value="8" />
+      </Limitations>
+    </VideoAudioCodec>
+  </CodecProfiles>
+</Client>

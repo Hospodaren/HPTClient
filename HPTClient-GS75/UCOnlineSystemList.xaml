@@ -1,0 +1,78 @@
+﻿<UserControl x:Class="HPTClient.UCOnlineSystemList"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+            xmlns:HPT="clr-namespace:HPTClient"
+             d:DesignHeight="300" d:DesignWidth="300"
+             x:Name="ucOnlineSystemList"
+             MinWidth="400" MinHeight="300" MaxHeight="600" MaxWidth="800">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisConverter"/>
+        <HPT:TrackIdToNameConverter x:Key="TrackConverter"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Horizontal">
+
+                <!--<Image Source="{Binding Path=RaceDayInfoLight.BetTypeATGSource,ElementName=ucUserSystemList}" Height="24"/>
+
+                <TextBlock FontSize="16" FontWeight="Bold" VerticalAlignment="Center" Padding="3,1" Text="{Binding Path=RaceDayInfoLight,ElementName=ucUserSystemList}"/>-->
+
+                <Button x:Name="btnDownloadSelectedSystems" Content="Ladda ner valda (max 3)" ToolTip="Ladda ner valda system från HPTs server (max 3)"
+                        Click="btnDownloadSelectedSystems_Click" Margin="1"/>
+                
+                <!--<Button x:Name="btnDeleteSelectedSystems" Content="Ta bort valda (endast egna)" ToolTip="Ta bort valda system från HPTs server (endast system du själv laddat upp)"
+                        Click="btnDeleteSelectedSystems_Click_1" Margin="1"/>-->
+                <!--<Button x:Name="btnGetCommentsList" Content="Hämta lista" ToolTip="Hämta lista med tillgängliga kommentarer från HPTs server"
+                        Click="btnGetCommentsList_Click" Margin="1"/>-->
+            </StackPanel>
+
+            <ListView x:Name="lvwAvailableComments" ItemsSource="{Binding}" Grid.Row="1">
+                <ListView.View>
+                    <GridView>
+
+                        <GridViewColumn Header="Spelform">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox Content="{Binding BetType}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                        <GridViewColumn Header="Datum" DisplayMemberBinding="{Binding Path=RaceDayDate,StringFormat='yyyy-MM-dd'}"/>
+
+                        <GridViewColumn Header="Bana" DisplayMemberBinding="{Binding Path=TrackId,Converter={StaticResource TrackConverter}}"/>
+
+                        <GridViewColumn Header="Namn" DisplayMemberBinding="{Binding UserName}"/>
+
+                        <GridViewColumn Header="Beskrivning" DisplayMemberBinding="{Binding Comment}"/>
+
+                        <GridViewColumn Header="Reducerad storlek" DisplayMemberBinding="{Binding ReducedSize}"/>
+
+                        <GridViewColumn Header="Ramstorlek" DisplayMemberBinding="{Binding OriginalSize}"/>
+
+                        <GridViewColumn Header="Skapad" DisplayMemberBinding="{Binding Path=Timestamp,StringFormat='yyyy-MM-dd HH:mm'}"/>
+
+                        <!--<GridViewColumn Header="Ta bort">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button x:Name="btnRemoveSystem" Click="btnRemoveSystem_Click_1" Padding="1" Margin="0,-1" Content="Ta bort"
+                                            Visibility="{Binding Path=IsOwnSystem,Converter={StaticResource BoolToVisConverter}}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>-->
+
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+        </Grid>
+    </Grid>
+</UserControl>
