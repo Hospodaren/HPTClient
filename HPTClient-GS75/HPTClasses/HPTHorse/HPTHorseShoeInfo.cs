@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Runtime.Serialization;
 using System.Xml.Serialization;
-using System.Runtime.Serialization;
 
 namespace HPTClient
 {
@@ -69,7 +65,7 @@ namespace HPTClient
                 OnPropertyChanged("PreviousUsed");
             }
         }
-        
+
         private bool? hindshoes;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public bool? Hindshoes
@@ -86,7 +82,7 @@ namespace HPTClient
                 {
                     this.HindshoesString1 = string.Empty;
                     this.HindshoesString2 = string.Empty;
-                } 
+                }
                 else if (value == true)
                 {
                     this.HindshoesString1 = "C";

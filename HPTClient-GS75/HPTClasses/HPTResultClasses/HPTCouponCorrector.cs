@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace HPTClient
 {
@@ -73,7 +72,7 @@ namespace HPTClient
 
                     // Skapa resultatlänk till atg.se
                     ATGLinkCreator.CreateRaceResultLink(hptRace);
-                }                
+                }
             }
 
 
@@ -101,7 +100,7 @@ namespace HPTClient
                             else
                             {
                                 this.CouponHelper.TotalWinnings += this.RaceDayInfo.PayOutList[1].PayOutAmount * coupon.NumberOfOneError * coupon.BetMultiplier;
-                            }                            
+                            }
                             break;
                         case "V64":
                         case "V75":
@@ -115,7 +114,7 @@ namespace HPTClient
                             {
                                 this.CouponHelper.TotalWinnings += this.RaceDayInfo.PayOutList[1].PayOutAmount * coupon.NumberOfOneError * coupon.BetMultiplier;
                                 this.CouponHelper.TotalWinnings += this.RaceDayInfo.PayOutList[2].PayOutAmount * coupon.NumberOfTwoErrors * coupon.BetMultiplier;
-                            }                            
+                            }
                             break;
                         case "V4":
                         case "V5":
@@ -274,7 +273,7 @@ namespace HPTClient
                 }
             }
 
-            this.HorseList.Clear(); 
+            this.HorseList.Clear();
             IEnumerable<HPTHorse> horseListCorrect = this.RaceDayInfo.RaceList
                  .Where(r => r.LegResult != null && r.LegResult.WinnerList != null)
                  .SelectMany(r => r.LegResult.WinnerList);
@@ -403,10 +402,10 @@ namespace HPTClient
         public void RetrieveResult(bool setValues)
         {
             var serviceConnector = new HPTServiceConnector();
-            serviceConnector.GetResultMarkingBetByTrackAndDate(this.RaceDayInfo.BetType.Code, this.RaceDayInfo.TrackId, this.RaceDayInfo.RaceDayDate, this.RaceDayInfo,setValues);
+            serviceConnector.GetResultMarkingBetByTrackAndDate(this.RaceDayInfo.BetType.Code, this.RaceDayInfo.TrackId, this.RaceDayInfo.RaceDayDate, this.RaceDayInfo, setValues);
             ReplaceScratchedHorses();
         }
-        
+
         public bool ReplaceScratchedHorses()
         {
             bool replaced = false;
@@ -421,7 +420,7 @@ namespace HPTClient
                         {
                             replaced = true;
                         }
-                    }                    
+                    }
                 }
             }
             return replaced;

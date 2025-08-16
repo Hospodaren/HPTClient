@@ -1,22 +1,16 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Xml;
-using System.Xml.Serialization;
-using System.Collections.ObjectModel;
-using Microsoft.Win32;
-using System.IO;
-using System.Threading;
 
 namespace HPTClient
 {
@@ -29,7 +23,6 @@ namespace HPTClient
         public HPTCalendar hptCalendar { get; set; }
         public ObservableCollection<HPTGUIMessage> LoadingInfoList { get; set; }
         public ObservableCollection<HPTGUIMessage> MessageList { get; set; }
-        //internal HPTService.AuthenticationResponse response;
         private FileSystemWatcher ftw;
         private bool isOffline;
 
@@ -59,8 +52,6 @@ namespace HPTClient
                     {
                         this.Config.AddToErrorLog(tempExc);
                     }
-                    //TimeSpan ts1 = DateTime.Now - dt1;
-                    //string s1 = ts1.TotalMilliseconds.ToString();
                 }
                 catch (Exception configExc)
                 {
@@ -124,19 +115,7 @@ namespace HPTClient
                     {
                         this.Config = HPTConfig.CreateHPTConfig();
                     }
-
-                    //// Autentisera och hämta kalender
-                    //this.response = HPTServiceConnector.AuthenticateAndGetCalendar();
-
-                    // Sätt värden för sparning till Config
-                    //this.Config.IsPayingCustomer = this.response.IsPayingCustomer;
-                    //this.Config.MarkBetTabsToShow.IsPayingCustomer = this.response.IsPayingCustomer;
-                    //this.Config.PROVersionExpirationDate = this.response.PROVersionExpirationDate;
                     this.Config.PROVersionExpirationDate = DateTime.Today.AddMonths(3);
-                    //if (!this.Config.IsPayingCustomer)
-                    //{
-                    //    this.Config.FirstTimeHPT5User = true;
-                    //}
 
                     if (this.CalendarZip == null)  // Hämta kalender separat
                     {
@@ -169,73 +148,17 @@ namespace HPTClient
                         ThreadPool.QueueUserWorkItem(new WaitCallback(GetCalendar), ThreadPriority.Normal);
                     }
                 }
-                catch (System.ServiceModel.EndpointNotFoundException exc)
+                catch (System.ServiceModel.EndpointNotFoundException)
                 {
-                    //this.response = new HPTService.AuthenticationResponse()
-                    //{
-                    //    ErrorMessage = "Server nere eller internetuppkoppling saknas",
-                    //    HasInvalidVersion = false,
-                    //    HasOldVersion = false,
-                    //    IsPayingCustomer = false,
-                    //    Message = "Det gick inte att autenticera mot servern",
-                    //    PROVersionExpirationDate = DateTime.MinValue                        
-                    //};
-
                     this.isOffline = true;
                 }
 
                 // Hantering av Gratis/PRO
-                this.Config.VersionText = "Hjälp på Traven! 5.34";
+                //this.Config.VersionText = "Hjälp på Traven! 5.34";'
+                this.Config.VersionText = "Hjälp på Traven läggs ner, mer info på www.hpt.nu";
                 this.VersionText = this.Config.VersionText;
-
-                //TimeSpan ts = this.response.PROVersionExpirationDate - DateTime.Now;
-                //if (this.response.IsPayingCustomer && this.response.PROVersionExpirationDate > DateTime.Now)    // PRO-användare
-                //{
-                //    string daysLeftString = string.Empty;
-                //    if (ts.TotalDays > 0 && ts.TotalDays < 30)
-                //    {
-                //        daysLeftString = ", " + ts.TotalDays.ToString("#0") + " dagar kvar";
-                //    }
-                //    this.Config.VersionText = $"Hjälp på Traven! 5.33 - PRO ({this.response.PROVersionExpirationDate.ToString("yyyy-MM-dd")}{daysLeftString})";
-                //}
-                //else    // Snåljåp
-                //{
-                //    this.Config.VersionText = "Hjälp på Traven! 5.33 - DEMO";
-                //}
-
-                //// Kör på flera datorer samtidigt ELLER har för gammal version
-                //if (this.response.HasInvalidVersion)    
-                //{
-                //    var licenseMessage = new HPTGUIMessage()
-                //    {
-                //        ButtonVisibility = System.Windows.Visibility.Visible,
-                //        Message = this.response.WarningMessage
-                //    };
-                //    //this.MessageList.Add(licenseMessage);
-                //}
-
-
-                //if (!this.isOffline)
-                //{
-                //    // Visa påminnelser om uppgradering
-                //    if (this.response.PROVersionExpirationDate == DateTime.MinValue)
-                //    {
-                //        HPTConfig.Config.FirstTimeHPT5User = true;
-                //    }
-                //    else if (this.response.PROVersionExpirationDate < DateTime.Now)
-                //    {
-                //        this.UpgradeToPROVisibility = System.Windows.Visibility.Visible;
-                //    }
-
-                //    //// Hämta RSS-flöde med nyheter
-                //    //// TEST
-                //    ////this.Config.LastUse = DateTime.Now.AddYears(-1);
-                //    //ThreadPool.QueueUserWorkItem(new WaitCallback(HandleNews), ThreadPriority.Normal);
-                //    //this.Config.LastUse = DateTime.Now.AddMinutes(5D);
-                //    //this.isOffline = false;
-                //}
             }
-            catch (System.ServiceModel.EndpointNotFoundException enfExc)
+            catch (System.ServiceModel.EndpointNotFoundException)
             {
                 this.isOffline = true;
             }
@@ -273,71 +196,10 @@ namespace HPTClient
             }
         }
 
-        //private void HandleNews(object timerData)
+        //void ftw_Created(object sender, FileSystemEventArgs e)
         //{
-        //    if (HPTServiceConnector.HasNewsSinceLastUse())
-        //    {
-        //        try
-        //        {
-        //            Dispatcher.Invoke(SetNewsAsVisible);
-        //            //SetNewsAsVisible();
-        //        }
-        //        catch (Exception exc)
-        //        {
-        //            string s = exc.Message;
-        //            Dispatcher.Invoke(SetNewsAsVisible);
-        //        }
-        //    }
+        //    UpdateDirectoriesInBackground();
         //}
-
-        //private void SetNewsAsVisible()
-        //{
-        //    // Visa text om nyheter
-        //    this.LatestNewsHeadline = HPTServiceConnector.LatestNewsHeadline;
-        //    this.NewsVisibility = System.Windows.Visibility.Visible;
-        //}
-
-        internal void HandleValidatedPro()
-        {
-            // Se till att alla inställningar är tillgängliga
-            this.miTemplates.IsEnabled = true;
-            this.miSettingsVxx.IsEnabled = true;
-            this.miSettingsCombination.IsEnabled = true;
-
-            this.atgCalendar.hptCalendar.RaceDayInfoList
-                .SelectMany(rdi => rdi.BetTypeList)
-                .ToList()
-                .ForEach(bt =>
-                {
-                    bt.IsEnabled = true;
-                    bt.BetTypeATGLogo = bt.GetBetTypeATGLogo();
-                });
-
-            this.tiNextTimers.IsEnabled = true;
-            //if (HPTConfig.Config.IsPayingCustomer)
-            //{
-            //    // Se till att alla inställningar är tillgängliga
-            //    this.miTemplates.IsEnabled = true;
-            //    this.miSettingsVxx.IsEnabled = true;
-            //    this.miSettingsCombination.IsEnabled = true;
-
-            //    this.atgCalendar.hptCalendar.RaceDayInfoList
-            //        .SelectMany(rdi => rdi.BetTypeList)
-            //        .ToList()
-            //        .ForEach(bt =>
-            //            {
-            //                bt.IsEnabled = true;
-            //                bt.BetTypeATGLogo = bt.GetBetTypeATGLogo();
-            //            });
-
-            //    this.tiNextTimers.IsEnabled = true;
-            //}
-        }
-
-        void ftw_Created(object sender, FileSystemEventArgs e)
-        {
-            UpdateDirectoriesInBackground();
-        }
 
         private void UpdateDirectoriesInBackground()
         {
@@ -345,7 +207,7 @@ namespace HPTClient
             {
                 Dispatcher.Invoke(new Action(HPTConfig.Config.UpdateHPTSystemDirectories), null);
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 try
                 {
@@ -361,7 +223,7 @@ namespace HPTClient
             {
                 Dispatcher.Invoke(new Action(HPTConfig.Config.SetNonSerializedValues), null);
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 try
                 {
@@ -379,9 +241,9 @@ namespace HPTClient
                 var bt = (HPTBetType)fe.DataContext;
 
                 //bt.
-                
+
                 LoadNewTabItem(bt, 0);
-    
+
             }
             catch (Exception exc)
             {
@@ -645,10 +507,6 @@ namespace HPTClient
         {
             try
             {
-                //if (!this.Config.IsPayingCustomer && hmb.RaceDayInfo.RaceDayDate >= DateTime.Today.AddDays(2D))
-                //{
-                //    return;
-                //}
                 hmb.Config = this.Config;
                 hmb.RaceDayInfo.DataToShow = this.Config.DataToShowVxx;
                 this.Config.AvailableBets.Add(hmb);
@@ -725,13 +583,13 @@ namespace HPTClient
                 if (hmb.BetType.HasMultiplePools)
                 {
                     MenuItem miCalculateJackpotRows = new MenuItem()
-                            {
-                                Header = "Blir det jackpott?",
-                                Tag = ucMarksGame,
-                                DataContext = hmb
-                            };
+                    {
+                        Header = "Blir det jackpott?",
+                        Tag = ucMarksGame,
+                        DataContext = hmb
+                    };
                     cm.Items.Add(miCalculateJackpotRows);
-                    miCalculateJackpotRows.Click += miCalculateJackpotRows_Click; 
+                    miCalculateJackpotRows.Click += miCalculateJackpotRows_Click;
                 }
 
                 // Lägg till val för att beräkna antalet möjliga ensamma rader
@@ -861,11 +719,6 @@ namespace HPTClient
         {
             try
             {
-                //if (!this.Config.IsPayingCustomer)
-                //{
-                //    return;
-                //}
-
                 hcb.Config = this.Config;
                 this.Config.AvailableBets.Add(hcb);
 
@@ -958,6 +811,7 @@ namespace HPTClient
                 GC.Collect();
             }
         }
+
         private void miOpen_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog ofdOpenHPT = new OpenFileDialog();
@@ -985,7 +839,7 @@ namespace HPTClient
                             HPTCombBet hcb = HPTSerializer.DeserializeHPTCombinationSystem(ofd.FileName);
                             AddTabItem(hcb);
                         }
-                        catch (Exception exc)
+                        catch (Exception)
                         {
                             HPTMarkBet hmb = HPTSerializer.DeserializeHPTSystem(ofd.FileName);
                             hmb.SaveDirectory = HPTConfig.MyDocumentsPath + hmb.RaceDayInfo.ToDateAndTrackString() + "\\";
@@ -1000,7 +854,7 @@ namespace HPTClient
                             hmb.SaveDirectory = HPTConfig.MyDocumentsPath + hmb.RaceDayInfo.ToDateAndTrackString() + "\\";
                             AddTabItem(hmb);
                         }
-                        catch (Exception exc)
+                        catch (Exception)
                         {
                             HPTCombBet hcb = HPTSerializer.DeserializeHPTCombinationSystem(ofd.FileName);
                             AddTabItem(hcb);
@@ -1041,7 +895,7 @@ namespace HPTClient
                 this.Config.ApplicationWidth = this.ActualWidth;
                 this.Config.ApplicationStartupLocation = this.WindowStartupLocation;
                 this.Config.ApplicationWindowState = this.WindowState;
-                
+
                 this.Config.SaveConfig();
                 //this.Config.SaveLogFile();
             }
@@ -1059,16 +913,6 @@ namespace HPTClient
             {
                 string s = exc.Message;
             }
-
-            //// Logga ut
-            //try
-            //{
-            //    HPTServiceConnector.LogOut();
-            //}
-            //catch (Exception exc)
-            //{
-            //    string s = exc.Message;
-            //}
 
             // Ta bort temporära filer
             try
@@ -1096,62 +940,6 @@ namespace HPTClient
                     // Uppdatera värden som inte sparas i konfigurationen
                     SetNonSerializeConfigValues();
 
-                    ////ValidateAndLoad();
-                    //if (!this.Config.IsPayingCustomer)
-                    //{
-                    //    //this.miSettingsAll.IsEnabled = false;
-                    //    //this.miSettingsDouble.IsEnabled = false;
-                    //    //this.miSettingsTrio.IsEnabled = false;
-                    //    //this.miSettingsTvilling.IsEnabled = false;
-                    //    //this.miTemplates.IsEnabled = false;
-                    //    //this.miDownLoadSystem.IsEnabled = false;
-                    //    //this.miSettingsVxx.IsEnabled = false;
-                    //    //this.miSettingsCombination.IsEnabled = false;
-                    //    this.tiNextTimers.IsEnabled = false;
-                    //}
-
-
-                    //try
-                    //{
-                    //    if (!string.IsNullOrEmpty(App.FileToOpen))
-                    //    {
-                    //        HPTConfig.AddToErrorLogStatic(new Exception(App.FileToOpen));
-                    //        HPTMarkBet hmb = HPTSerializer.DeserializeHPTSystem(App.FileToOpen);
-                    //        hmb.ResetFilenameAndSave();
-                    //        AddTabItem(hmb);
-                    //    }
-                    //}
-                    //catch (Exception exc)
-                    //{
-                    //    HPTConfig.AddToErrorLogStatic(exc);
-                    //}
-
-                    //var rexFileName = new Regex(@"\"\s ")
-                    //System.Environment.CommandLine
-
-                    //if (HPTConfig.Config.FirstTimeHPT5User || !this.Config.IsPayingCustomer)
-                    //{
-                    //    this.tiNextTimers.IsEnabled = false;
-
-                    //    // Öppna fönster när HPT 5 startas första gången
-                    //    var wndFirstTimeHPT5User = new WFirstTimeHPT5()
-                    //    {
-                    //        Owner = this,
-                    //        DataContext = HPTConfig.Config,
-                    //        SizeToContent = System.Windows.SizeToContent.WidthAndHeight,
-                    //        WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner
-                    //    };
-                    //    bool? result = wndFirstTimeHPT5User.ShowDialog();
-                    //    if (result == false)
-                    //    {
-                    //        Application.Current.Shutdown();
-                    //    }
-                    //    else
-                    //    {
-                    //        SetRaceDayInfosToShow();
-                    //    }
-                    //}
-
                     // Filnamn på kommandoraden
                     if (AppDomain.CurrentDomain.SetupInformation.ActivationArguments != null && AppDomain.CurrentDomain.SetupInformation.ActivationArguments.ActivationData != null && AppDomain.CurrentDomain.SetupInformation.ActivationArguments.ActivationData.Any())
                     {
@@ -1163,31 +951,12 @@ namespace HPTClient
                             hmb.SaveDirectory = HPTConfig.MyDocumentsPath + hmb.RaceDayInfo.ToDateAndTrackString() + "\\";
                             AddTabItem(hmb);
                         }
-                        catch (Exception exc)
+                        catch (Exception)
                         {
                             HPTCombBet hcb = HPTSerializer.DeserializeHPTCombinationSystem(fileName.LocalPath);
                             AddTabItem(hcb);
                         }
                     }
-                    //if (!string.IsNullOrEmpty(System.Environment.CommandLine))
-                    //{
-                    //    var commandParts = System.Environment.CommandLine.Split(new string[] { "\" " }, 2, StringSplitOptions.RemoveEmptyEntries);
-                    //    if (commandParts.Length > 1)
-                    //    {
-                    //        string fileName = commandParts[1];
-                    //        try
-                    //        {
-                    //            HPTMarkBet hmb = HPTSerializer.DeserializeHPTSystem(fileName);
-                    //            hmb.SaveDirectory = HPTConfig.MyDocumentsPath + hmb.RaceDayInfo.ToDateAndTrackString() + "\\";
-                    //            AddTabItem(hmb);
-                    //        }
-                    //        catch (Exception exc)
-                    //        {
-                    //            HPTCombBet hcb = HPTSerializer.DeserializeHPTCombinationSystem(fileName);
-                    //            AddTabItem(hcb);
-                    //        }
-                    //    }
-                    //}
                 }
                 catch (Exception exc)
                 {
@@ -1195,7 +964,7 @@ namespace HPTClient
                 }
             }
         }
-                
+
         void miFile_Click(object sender, RoutedEventArgs e)
         {
             Cursor = Cursors.Wait;
@@ -1221,14 +990,14 @@ namespace HPTClient
                         hmb.SaveDirectory = HPTConfig.MyDocumentsPath + hmb.RaceDayInfo.ToDateAndTrackString() + "\\";
                         AddTabItem(hmb);
                     }
-                else if (sysFile.FileNameShort.ToUpper().StartsWith("DD_")
-                    || sysFile.FileNameShort.ToUpper().StartsWith("LD_")
-                    || sysFile.FileNameShort.ToUpper().StartsWith("TV_")
-                    || sysFile.FileNameShort.ToUpper().StartsWith("T_"))
-                {
-                    HPTCombBet hcb = HPTSerializer.DeserializeHPTCombinationSystem(sysFile.FileName);
-                    AddTabItem(hcb);
-                }
+                    else if (sysFile.FileNameShort.ToUpper().StartsWith("DD_")
+                        || sysFile.FileNameShort.ToUpper().StartsWith("LD_")
+                        || sysFile.FileNameShort.ToUpper().StartsWith("TV_")
+                        || sysFile.FileNameShort.ToUpper().StartsWith("T_"))
+                    {
+                        HPTCombBet hcb = HPTSerializer.DeserializeHPTCombinationSystem(sysFile.FileName);
+                        AddTabItem(hcb);
+                    }
                     else
                     {
                         try
@@ -1237,7 +1006,7 @@ namespace HPTClient
                             hmb.SaveDirectory = HPTConfig.MyDocumentsPath + hmb.RaceDayInfo.ToDateAndTrackString() + "\\";
                             AddTabItem(hmb);
                         }
-                        catch (InvalidOperationException exc)
+                        catch (InvalidOperationException)
                         {
                             HPTCombBet hcb = HPTSerializer.DeserializeHPTCombinationSystem(sysFile.FileName);
                             hcb.SaveDirectory = HPTConfig.MyDocumentsPath + hcb.RaceDayInfo.ToDateAndTrackString() + "\\";
@@ -1246,7 +1015,7 @@ namespace HPTClient
                     }
                 }
             }
-            catch (InvalidOperationException ioExc)
+            catch (InvalidOperationException)
             {
                 try
                 {
@@ -1254,7 +1023,7 @@ namespace HPTClient
                     hmb.SaveDirectory = HPTConfig.MyDocumentsPath + hmb.RaceDayInfo.ToDateAndTrackString() + "\\";
                     AddTabItem(hmb);
                 }
-                catch (InvalidOperationException exc)
+                catch (InvalidOperationException)
                 {
                     HPTCombBet hcb = HPTSerializer.DeserializeHPTCombinationSystem(sysFile.FileName);
                     hcb.SaveDirectory = HPTConfig.MyDocumentsPath + hcb.RaceDayInfo.ToDateAndTrackString() + "\\";
@@ -1270,7 +1039,7 @@ namespace HPTClient
                 Cursor = Cursors.Arrow;
             }
         }
-        
+
         private void miUpdateCalendar_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -1297,18 +1066,18 @@ namespace HPTClient
             aboutBox.ShowDialog();
         }
 
-        private void btnDownload_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                //System.Diagnostics.Process.Start(this.response.DownloadURL);
-                this.MessageList.RemoveAt(0);
-            }
-            catch (Exception exc)
-            {
-                this.Config.AddToErrorLog(exc);
-            }
-        }
+        //private void btnDownload_Click(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        //System.Diagnostics.Process.Start(this.response.DownloadURL);
+        //        this.MessageList.RemoveAt(0);
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        this.Config.AddToErrorLog(exc);
+        //    }
+        //}
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
@@ -1364,122 +1133,87 @@ namespace HPTClient
             AddTabItem(new UCTemplateMain(), string.Empty, "Mallar", "/Icons/propertiesoroptions.ico", this.Config);
         }
 
-        private void miSettingsAll_Click(object sender, RoutedEventArgs e)
-        {
-            AddTabItem(new UCSettings(), string.Empty, "Inställningar", "/Icons/propertiesoroptions.ico", this.Config);
-        }
+        //private void miSettingsAll_Click(object sender, RoutedEventArgs e)
+        //{
+        //    AddTabItem(new UCSettings(), string.Empty, "Inställningar", "/Icons/propertiesoroptions.ico", this.Config);
+        //}
 
         private void miErrorLog_Click(object sender, RoutedEventArgs e)
         {
             AddTabItem(new UCErrorLog(), string.Empty, "Fellogg", "/Icons/error.ico", this.Config);
         }
 
-        //private void miUpgradeToPRO_Click(object sender, RoutedEventArgs e)
-        //{
-        //    AddTabItem(new UCUpgradeToPRO(), string.Empty, "Uppgradera", "/Icons/HPT.ico", null);
-        //}
-
-        //private void OpenRegisterWindow()
-        //{
-        //    WRegistration wReg = new WRegistration();
-        //    wReg.Owner = this;
-        //    wReg.DataContext = HPTConfig.Config;
-        //    wReg.Closing += new System.ComponentModel.CancelEventHandler(wReg_Closing);
-        //    wReg.ShowDialog();
-        //}
-
-        //private void miRegister_Click(object sender, RoutedEventArgs e)
-        //{
-        //    OpenRegisterWindow();
-        //}
-
-        //void wReg_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        //{
-        //    try
-        //    {
-        //        WRegistration wReg = (WRegistration)sender;
-        //        if (wReg.GoToPayson)
-        //        {
-        //            AddTabItem(new UCUpgradeToPRO(), "Köp/förläng HPT Pro", "HPT", "/Icons/HPT.ico", null);
-        //        }
-        //    }
-        //    catch (Exception exc)
-        //    {
-        //        Config.AddToErrorLog(exc);
-        //    }
-        //}
-
         #endregion
 
         #region Hantering av menyalternativ under Hjälp-menyn
 
-        private string ManualURL
-        {
-            get
-            {
-                return HPTConfig.MyDocumentsPath + "HPT53Manual.pdf";
-            }
-        }
+        //private string ManualURL
+        //{
+        //    get
+        //    {
+        //        return HPTConfig.MyDocumentsPath + "HPT53Manual.pdf";
+        //    }
+        //}
 
         #endregion
 
         #region Dependency properties för vad som ska visas i forma av meddelanden
 
-        public Visibility TryPROVisibility
-        {
-            get { return (Visibility)GetValue(TryPROVisibilityProperty); }
-            set { SetValue(TryPROVisibilityProperty, value); }
-        }
+        //public Visibility TryPROVisibility
+        //{
+        //    get { return (Visibility)GetValue(TryPROVisibilityProperty); }
+        //    set { SetValue(TryPROVisibilityProperty, value); }
+        //}
 
-        // Using a DependencyProperty as the backing store for TryPROVisibility.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty TryPROVisibilityProperty =
-            DependencyProperty.Register("TryPROVisibility", typeof(Visibility), typeof(ATGCalendar), new UIPropertyMetadata(Visibility.Collapsed));
-
-
-        public Visibility UpgradeToPROVisibility
-        {
-            get { return (Visibility)GetValue(UpgradeToPROVisibilityProperty); }
-            set { SetValue(UpgradeToPROVisibilityProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for UpgradeToPROVisibility.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty UpgradeToPROVisibilityProperty =
-            DependencyProperty.Register("UpgradeToPROVisibility", typeof(Visibility), typeof(ATGCalendar), new UIPropertyMetadata(Visibility.Collapsed));
+        //// Using a DependencyProperty as the backing store for TryPROVisibility.  This enables animation, styling, binding, etc...
+        //public static readonly DependencyProperty TryPROVisibilityProperty =
+        //    DependencyProperty.Register("TryPROVisibility", typeof(Visibility), typeof(ATGCalendar), new UIPropertyMetadata(Visibility.Collapsed));
 
 
-        public Visibility NewsVisibility
-        {
-            get { return (Visibility)GetValue(NewsVisibilityProperty); }
-            set { SetValue(NewsVisibilityProperty, value); }
-        }
+        //public Visibility UpgradeToPROVisibility
+        //{
+        //    get { return (Visibility)GetValue(UpgradeToPROVisibilityProperty); }
+        //    set { SetValue(UpgradeToPROVisibilityProperty, value); }
+        //}
 
-        // Using a DependencyProperty as the backing store for NewsVisibility.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty NewsVisibilityProperty =
-            DependencyProperty.Register("NewsVisibility", typeof(Visibility), typeof(ATGCalendar), new UIPropertyMetadata(Visibility.Collapsed));
-        
+        //// Using a DependencyProperty as the backing store for UpgradeToPROVisibility.  This enables animation, styling, binding, etc...
+        //public static readonly DependencyProperty UpgradeToPROVisibilityProperty =
+        //    DependencyProperty.Register("UpgradeToPROVisibility", typeof(Visibility), typeof(ATGCalendar), new UIPropertyMetadata(Visibility.Collapsed));
 
-        public Visibility LicenseInformationVisibility
-        {
-            get { return (Visibility)GetValue(LicenseInformationVisibilityProperty); }
-            set { SetValue(LicenseInformationVisibilityProperty, value); }
-        }
 
-        // Using a DependencyProperty as the backing store for UpgradeToPROVisibility.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty LicenseInformationVisibilityProperty =
-            DependencyProperty.Register("LicenseInformationVisibility", typeof(Visibility), typeof(ATGCalendar), new UIPropertyMetadata(Visibility.Collapsed));
+        //public Visibility NewsVisibility
+        //{
+        //    get { return (Visibility)GetValue(NewsVisibilityProperty); }
+        //    set { SetValue(NewsVisibilityProperty, value); }
+        //}
+
+        //// Using a DependencyProperty as the backing store for NewsVisibility.  This enables animation, styling, binding, etc...
+        //public static readonly DependencyProperty NewsVisibilityProperty =
+        //    DependencyProperty.Register("NewsVisibility", typeof(Visibility), typeof(ATGCalendar), new UIPropertyMetadata(Visibility.Collapsed));
+
+
+        //public Visibility LicenseInformationVisibility
+        //{
+        //    get { return (Visibility)GetValue(LicenseInformationVisibilityProperty); }
+        //    set { SetValue(LicenseInformationVisibilityProperty, value); }
+        //}
+
+        //// Using a DependencyProperty as the backing store for UpgradeToPROVisibility.  This enables animation, styling, binding, etc...
+        //public static readonly DependencyProperty LicenseInformationVisibilityProperty =
+        //    DependencyProperty.Register("LicenseInformationVisibility", typeof(Visibility), typeof(ATGCalendar), new UIPropertyMetadata(Visibility.Collapsed));
 
 
         // Rubrik på senaste nyheten
         //public string LatestNewsHeadline { get; set; }
-        public string LatestNewsHeadline
-        {
-            get { return (string)GetValue(LatestNewsHeadlineProperty); }
-            set { SetValue(LatestNewsHeadlineProperty, value); }
-        }
+        //public string LatestNewsHeadline
+        //{
+        //    get { return (string)GetValue(LatestNewsHeadlineProperty); }
+        //    set { SetValue(LatestNewsHeadlineProperty, value); }
+        //}
 
-        // Using a DependencyProperty as the backing store for LatestNewsHeadline.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty LatestNewsHeadlineProperty =
-            DependencyProperty.Register("LatestNewsHeadline", typeof(string), typeof(ATGCalendar), new PropertyMetadata(string.Empty));
+        //// Using a DependencyProperty as the backing store for LatestNewsHeadline.  This enables animation, styling, binding, etc...
+        //public static readonly DependencyProperty LatestNewsHeadlineProperty =
+        //    DependencyProperty.Register("LatestNewsHeadline", typeof(string), typeof(ATGCalendar), new PropertyMetadata(string.Empty));
 
 
 
@@ -1492,27 +1226,6 @@ namespace HPTClient
         // Using a DependencyProperty as the backing store for VersionText.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty VersionTextProperty =
             DependencyProperty.Register("VersionText", typeof(string), typeof(ATGCalendar), new UIPropertyMetadata(string.Empty));
-
-        #endregion
-
-        #region Hantera knapptryckningar från meddelanden
-
-        //private void btnUpgradeToPro_Click(object sender, RoutedEventArgs e)
-        //{
-        //    this.UpgradeToPROVisibility = Visibility.Collapsed;
-        //    miUpgradeToPRO_Click(sender, e);
-        //}
-
-        //private void btnCloseAndUseFree_Click(object sender, RoutedEventArgs e)
-        //{
-        //    this.TryPROVisibility = Visibility.Collapsed;
-        //}
-
-        //private void btnTryPro_Click(object sender, RoutedEventArgs e)
-        //{
-        //    this.TryPROVisibility = Visibility.Collapsed;
-        //    miRegister_Click(sender, e);
-        //}
 
         #endregion
 
@@ -1542,118 +1255,38 @@ namespace HPTClient
 
         }
 
-        private void miSelectProfile_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Cursor = Cursors.Wait;
-                var fe = (FrameworkElement)sender;
-                var profile = (GUIProfile)Convert.ToInt32(fe.Tag);
+        //private void miSelectProfile_Click(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        Cursor = Cursors.Wait;
+        //        var fe = (FrameworkElement)sender;
+        //        var profile = (GUIProfile)Convert.ToInt32(fe.Tag);
 
-                // Sätt kolumner och flikar till vald profil
-                HPTConfig.Config.SetMarkBetProfile(profile);
-                
-                //// Gränssnittselement
-                //var elementsToShow = HPTConfig.Config.GetElementsToShow(profile);
-                //HPTConfig.Config.GUIElementsToShow = elementsToShow;
+        //        // Sätt kolumner och flikar till vald profil
+        //        HPTConfig.Config.SetMarkBetProfile(profile);
 
-                foreach (var uc in this.UCMarksGameList)
-                {
-                    uc.ApplyGUIElementsToShow(HPTConfig.Config.GUIElementsToShow);
-                    uc.ApplyProfile(profile);
-                }
-            }
-            catch (Exception exc)
-            {
-                string s = exc.Message;
-            }
-            Cursor = Cursors.Arrow;
-        }
+        //        //// Gränssnittselement
+        //        //var elementsToShow = HPTConfig.Config.GetElementsToShow(profile);
+        //        //HPTConfig.Config.GUIElementsToShow = elementsToShow;
 
-        private void miResetProfiles_Click(object sender, RoutedEventArgs e)
-        {
-            HPTConfig.Config.HandleDataToShow();
-        }
+        //        foreach (var uc in this.UCMarksGameList)
+        //        {
+        //            uc.ApplyGUIElementsToShow(HPTConfig.Config.GUIElementsToShow);
+        //            uc.ApplyProfile(profile);
+        //        }
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        string s = exc.Message;
+        //    }
+        //    Cursor = Cursors.Arrow;
+        //}
 
-        #region Slå ihop system
-
-        // KOMMANDE
-        internal void GetMarkBetsWithMultipleTabs()
-        {
-            var markBetList = new List<HPTMarkBet>();
-
-            var groupedMarkBetList = HPTConfig.Config.AvailableBets
-                .Where(b => b.GetType() == typeof(HPTMarkBet))
-                .Cast<HPTMarkBet>()
-                .GroupBy(mb => new { mb.BetType.Code, mb.RaceDayInfo.RaceDayDate.Date, mb.RaceDayInfo.TrackId })
-                .Where(grp => grp.Count() > 1)
-                .ToList();                
-        }
-
-        // KOMMANDE
-        internal void MergeMarkBets(IEnumerable<HPTMarkBet> markBetsToMerge)
-        {
-            try
-            {
-                // Det finns inget att slå ihop...
-                if (markBetsToMerge == null || markBetsToMerge.Count() < 2)
-                {
-                    return;
-                }
-
-                // Klona den första i lista och låt den bli den nya ihopslagna systemet
-                var mergedMarkBet = markBetsToMerge.First().Clone();
-                mergedMarkBet.ClearAll();
-                //mergedMarkBet.SingleRowCollection.SingleRows = new List<HPTMarkBetSingleRow>();
-                //mergedMarkBet.SingleRowCollection.SingleRowsObservable = new ObservableCollection<HPTMarkBetSingleRow>();
-                mergedMarkBet.SingleRowCollection.SingleRows = new List<HPTMarkBetSingleRow>();
-
-
-                var allSelectedHorses = markBetsToMerge.SelectMany(mb => mb.RaceDayInfo.RaceList).SelectMany(r => r.HorseListSelected).ToList();
-
-                foreach (var markBetToMerge in markBetsToMerge)
-                {
-                    foreach (var selectedHorse in markBetToMerge.RaceDayInfo.HorseListSelected)
-                    {
-
-                    }
-                }
-
-                // Slå ihop alla enkelrader i en lååång lista
-                var allSingleRows = markBetsToMerge.SelectMany(mb => mb.SingleRowCollection.SingleRows).ToList();
-
-                // Gruppera varje unik kombination av hästar i enkelradslista
-                var distinctRowsStep1 = allSingleRows.GroupBy(sr => sr.UniqueCode).ToList();
-                int rowNumber = 1;
-                foreach (var groupedSingleRows in distinctRowsStep1)
-                {
-                    int maxBetMultiplier = groupedSingleRows.Max(sr => sr.BetMultiplier);
-                    var mergedSingleRow = groupedSingleRows.First().Clone();
-                    if (groupedSingleRows.Count() > 1) // Raden finns flera gånger
-                    {
-                        bool v6 = groupedSingleRows.Any(sr => sr.V6);
-                        mergedSingleRow = groupedSingleRows.First(sr => sr.BetMultiplier == maxBetMultiplier).Clone();
-                        mergedSingleRow.V6 = v6;
-                    }
-                    mergedSingleRow.CreateBetMultiplierList(mergedMarkBet);
-                    mergedSingleRow.RowNumber = rowNumber++;
-                    mergedMarkBet.SingleRowCollection.SingleRows.Add(mergedSingleRow);
-                }
-
-                // Skapa den ihopslagna enkelradslistan och gör kuponger av den
-                //mergedMarkBet.SingleRowCollection.SingleRowsObservable = new ObservableCollection<HPTMarkBetSingleRow>(mergedMarkBet.SingleRowCollection.SingleRows);
-                mergedMarkBet.SingleRowCollection.CompressToCoupons();
-                mergedMarkBet.CouponCorrector.CouponHelper.CreateATGFile();
-                mergedMarkBet.LockCoupons = true;
-                AddTabItem(mergedMarkBet);
-            }
-            catch (Exception exc)
-            {
-                string s = exc.Message;
-            }
-        }
-
-        #endregion
+        //private void miResetProfiles_Click(object sender, RoutedEventArgs e)
+        //{
+        //    HPTConfig.Config.HandleDataToShow();
+        //}
 
         #region Hämta historiska
 
@@ -1701,7 +1334,7 @@ namespace HPTClient
                     //        var horse = r.HorseList.First(h => h.StartNr == r.LegResult.Winners[0]);
                     //        horseListToSelect.Add(horse);
                     //    });
-                    
+
                     //hptRdi.PayOutList[0].PayOutAmount = markBet.CouponCorrector.CalculatePayOutAlt(horseListToSelect, hptRdi.BetType.PoolShare * hptRdi.BetType.RowCost);
 
                     //foreach (var payOut in hptRdi.PayOutList)
@@ -1946,31 +1579,31 @@ namespace HPTClient
         }
 
         #endregion
-        
 
-        private void miThreeMonthsSubscription_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                System.Diagnostics.Process.Start("https://www.payson.se/myaccount/pay?De=Tre+m%e5naders+%27Hj%e4lp+p%e5+traven+PRO%27&Se=hjalp.pa.traven%40gmail.com&Cost=99%2c00&Currency=SEK&Sp=1&Lang=SE");
-            }
-            catch (Exception exc)
-            {
-                string s = exc.Message;
-            }
-        }
 
-        private void miOneYearSubscription_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                System.Diagnostics.Process.Start("https://www.payson.se/myaccount/pay?De=Ett+%e5rs+%27Hj%e4lp+p%e5+traven+PRO%27&Se=hjalp.pa.traven%40gmail.com&Cost=299%2c00&Currency=SEK&Sp=1&Lang=SE");
-            }
-            catch (Exception exc)
-            {
-                string s = exc.Message;
-            }
-        }
+        //private void miThreeMonthsSubscription_Click(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        System.Diagnostics.Process.Start("https://www.payson.se/myaccount/pay?De=Tre+m%e5naders+%27Hj%e4lp+p%e5+traven+PRO%27&Se=hjalp.pa.traven%40gmail.com&Cost=99%2c00&Currency=SEK&Sp=1&Lang=SE");
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        string s = exc.Message;
+        //    }
+        //}
+
+        //private void miOneYearSubscription_Click(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        System.Diagnostics.Process.Start("https://www.payson.se/myaccount/pay?De=Ett+%e5rs+%27Hj%e4lp+p%e5+traven+PRO%27&Se=hjalp.pa.traven%40gmail.com&Cost=299%2c00&Currency=SEK&Sp=1&Lang=SE");
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        string s = exc.Message;
+        //    }
+        //}
 
         private void HandleCalendarFilter()
         {
@@ -2043,303 +1676,6 @@ namespace HPTClient
                 }
             }
         }
-
-
-
-        #region Obsolete
-
-        internal void CollectJackpotDataFromOldMarkBets(string filePath)
-        {
-            var sbMarkBetStatistics = new StringBuilder();
-            var sbRaceStatistics = new StringBuilder();
-
-            Directory.GetFiles(filePath, "*V75*.hpt5")
-                .ToList()
-                .ForEach(f =>
-                {
-                    var markBet = HPTSerializer.DeserializeHPTSystem(f);
-
-                });
-        }
-
-        private void OpenRegisterWindowTest()
-        {
-            var wndDownloadSystem = new Window()
-            {
-                SizeToContent = SizeToContent.WidthAndHeight,
-                Title = "TEST!!",
-                ShowInTaskbar = false,
-                ResizeMode = ResizeMode.NoResize
-            };
-            wndDownloadSystem.Content = new TextBlock()
-            {
-                Text = "Nu händer det grejer!",
-                FontSize = 36D
-            };
-            wndDownloadSystem.Show();
-        }
-
-
-        //private void miUploadConfiguration_Click(object sender, RoutedEventArgs e)
-        //{
-        //    bool result = HPTServiceConnector.UploadConfiguration();
-        //    if (result)
-        //    {
-        //        MessageBox.Show("Konfiguration uppladdad till HPTs server", "Uppladdning klar", MessageBoxButton.OK, MessageBoxImage.Information);
-        //    }
-        //    else
-        //    {
-        //        MessageBox.Show("Något gick snett när konfiguration skulle laddas upp till HPTs server", "Uppladdning misslyckades", MessageBoxButton.OK, MessageBoxImage.Error);
-        //    }
-        //}
-
-        //private void miDownloadConfiguration_Click(object sender, RoutedEventArgs e)
-        //{
-        //    var userConfiguration = HPTServiceConnector.DownloadConfigurationByEMail(HPTConfig.Config.EMailAddress, HPTConfig.Config.Password);
-        //    if (userConfiguration == null)
-        //    {
-        //        MessageBox.Show("Något gick snett vid hämtning av konfiguration, försök igen senare.", "Hämtning misslyckades", MessageBoxButton.OK, MessageBoxImage.Error);
-
-        //    }
-        //    else if (userConfiguration.UserConfiguration != null)
-        //    {
-        //        try
-        //        {
-        //            string text = string.Format("Konfigurationen laddades upp {0:yyyy-MM-dd}\r\nTryck Ja för att applicera och starta om\r\nTryck Nej för att applicera och fortsätta med dina system\r\nTryck Avbryt för att behålla nuvarande konfiguration", userConfiguration.Timestamp);
-        //            var dr = MessageBox.Show(text, "Hantera konfiguration", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
-        //            if (dr == MessageBoxResult.Yes || dr == MessageBoxResult.No)
-        //            {
-        //                // Applicera konfigurationen
-        //                var config = (HPTConfig)HPTSerializer.DeserializeHPTObject(typeof(HPTConfig), userConfiguration.UserConfiguration);
-        //                config.HandleMarkBetTabsToShow();
-        //                config.HPTSystemDirectories = new ObservableCollection<HPTSystemDirectory>();
-        //                config.RecentFileList = new ObservableCollection<HPTSystemFile>();
-        //                config.MarkBetSystemList = new ObservableCollection<HPTRaceDayInfoLight>();
-        //                config.SetNonSerializedValues();
-        //                HPTConfig.Config = config;
-        //                this.Config = config;
-        //                config.SaveConfig();
-        //                if (dr == MessageBoxResult.Yes)
-        //                {
-        //                    System.Diagnostics.Process.Start("iexplore.exe", "http://download.hpt.nu");
-        //                    Application.Current.Shutdown();
-        //                }
-        //            }
-        //        }
-        //        catch (Exception exc)
-        //        {
-        //            MessageBox.Show("Något gick snett vid applicering av konfiguration", "Applicering misslyckades", MessageBoxButton.OK, MessageBoxImage.Error);
-        //        }
-        //    }
-        //}
-
-        //private void miFacebook_Click(object sender, RoutedEventArgs e)
-        //{
-        //    AddTabItem(new UCFacebook(), "HPT", "Facebook", "/ImagesSmall/Facebook.png", null);
-        //}
-
-        //private void btnHomepage_Click(object sender, RoutedEventArgs e)
-        //{
-        //    AddTabItem(new UCHomepage(), string.Empty, "Hjälp på traven", "../../Icons/HPT.ico", null);
-        //}
-
-        //private void miManual_Click(object sender, RoutedEventArgs e)
-        //{
-        //    if (!File.Exists(this.ManualURL))
-        //    {
-        //        System.Diagnostics.Process.Start("http://www.hpt.nu/ladda-ner/HPT53Manual.pdf");
-        //    }
-        //    else
-        //    {
-        //        System.Diagnostics.Process.Start(this.ManualURL);
-        //    }
-        //}
-
-        //private void miExamples_Click(object sender, RoutedEventArgs e)
-        //{
-        //    var ucExamples = new UCExamples();
-        //    ucExamples.ExampleSelected += uc_ExampleSelected;
-        //    AddTabItem(ucExamples, string.Empty, "Exempel", "/Icons/HPT.ico", null);
-        //}
-
-        //void uc_ExampleSelected(Uri fileUri, EventArgs e)
-        //{
-        //    try
-        //    {
-        //        string localPath = fileUri.LocalPath;
-        //        HPTMarkBet markBet = HPTSerializer.DeserializeHPTSystem(localPath);
-        //        AddTabItem(markBet);
-        //    }
-        //    catch (Exception exc)
-        //    {
-        //        string s = exc.Message;
-        //    }
-        //}
-
-        //private void miArticles_Click(object sender, RoutedEventArgs e)
-        //{
-        //    //AddTabItem(new UCArticles(), "www.alltomtrav.info", "Artikel", "/Icons/AOT.ico", null);
-        //    AddTabItem(new UCArticles(), "http://veckansreducerade.se/", "Veckans reducerade", @"..\..\HptLogoSmall.png", null);
-        //}
-
-        //private void miForum_Click(object sender, RoutedEventArgs e)
-        //{
-        //    //AddTabItem(new UCForum(), "forum.alltomtrav.info", "Forum", "/Icons/AOT.ico", null);
-        //    AddTabItem(new UCForum(), "http://veckansreducerade.se/forum/index.php", "Forum", @"..\..\HptLogoSmall.png", null);
-        //}
-
-        //private void btnCloseAndIgnore_Click(object sender, RoutedEventArgs e)
-        //{
-        //    this.UpgradeToPROVisibility = Visibility.Collapsed;
-        //}
-
-        //private void btnGoToHomepage_Click(object sender, RoutedEventArgs e)
-        //{
-        //    miNews_Click(sender, e);
-        //    this.NewsVisibility = System.Windows.Visibility.Collapsed;
-        //}
-
-        //private void btnCloseNewsInfo_Click(object sender, RoutedEventArgs e)
-        //{
-        //    this.NewsVisibility = System.Windows.Visibility.Collapsed;
-        //}
-
-        //private void btnLicenseInformationCloseAndIgnore_Click(object sender, RoutedEventArgs e)
-        //{
-        //    this.LicenseInformationVisibility = System.Windows.Visibility.Collapsed;
-        //}
-
-        //private void miGetManual_Click(object sender, RoutedEventArgs e)
-        //{
-        //    System.Diagnostics.Process.Start("http://www.hpt.nu/ladda-ner/HPT53Manual.pdf");    // http://www.hpt.nu/ladda-ner/HPT53Manual.pdf
-        //}
-
-        //private void btnBuyAYearsLicense_Click(object sender, RoutedEventArgs e)
-        //{
-        //    System.Diagnostics.Process.Start(HPTConfig.PaysonURL);
-        //}
-
-        //private void miNews_Click(object sender, RoutedEventArgs e)
-        //{
-        //    AddTabItem(new UCHomepage(), string.Empty, "Nyheter", "/Icons/HPT.ico", null);
-        //}
-
-        //private void miATG_Click(object sender, RoutedEventArgs e)
-        //{
-        //    AddTabItem(new UCATGHomepage(), string.Empty, "ATG", "/ATGImages/ATGSmall.png", null);
-        //}
-
-        //private void btnBuySixMonthsLicense_Click(object sender, RoutedEventArgs e)
-        //{
-        //    System.Diagnostics.Process.Start(HPTConfig.PaysonURLThreeMonths);
-        //}
-
-        //private void dudZoom_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
-        //{
-        //    // KOD HÄR?
-        //}
-
-        //private void miDownLoadSystem_Click(object sender, RoutedEventArgs e)
-        //{
-        //    var mi = (MenuItem)e.OriginalSource;
-        //    if (mi.DataContext.GetType() == typeof(HPTRaceDayInfoLight))
-        //    {
-        //        var raceDayInfoLight = (HPTRaceDayInfoLight)mi.DataContext;
-
-        //        Cursor = Cursors.Wait;
-        //        var systemCollection = HPTServiceConnector.DownloadSystemList(raceDayInfoLight);
-
-        //        var wndDownloadSystem = new Window()
-        //        {
-        //            SizeToContent = SizeToContent.WidthAndHeight,
-        //            Title = "Ladda ner system!",
-        //            ShowInTaskbar = false,
-        //            ResizeMode = ResizeMode.NoResize,
-        //            Owner = App.Current.MainWindow
-        //        };
-        //        wndDownloadSystem.Content = new UCUserSystemList(this)
-        //        {
-        //            DataContext = systemCollection,
-        //            RaceDayInfoLight = raceDayInfoLight
-        //        };
-        //        Cursor = Cursors.Arrow;
-        //        wndDownloadSystem.ShowDialog();
-        //    }
-        //}
-
-        //internal void DownloadOnlineSystem(HPTService.HPTUserSystem userSystem)
-        //{
-        //    var markBet = HPTServiceConnector.DownloadSystemOnlineByUniqueId(userSystem.UniqueId);
-        //    AddTabItem(markBet);
-        //}
-
-        //private void miDownloadOnlineSystem_Click(object sender, RoutedEventArgs e)
-        //{
-        //    Cursor = Cursors.Wait;
-        //    try
-        //    {
-        //        var serviceConnector = new HPTServiceConnector();
-
-        //        var userSystemList = HPTServiceConnector.DownloadSystemOnlineList(DateTime.MinValue, DateTime.MaxValue);
-        //        if (userSystemList != null && userSystemList.Count > 0)
-        //        {
-        //            //var userSystem = userSystemList.Last();
-        //            //var markBet = HPTServiceConnector.DownloadSystemOnlineByUniqueId(userSystem.UniqueId);
-
-        //            var wndDownloadOnlineSystem = new Window()
-        //            {
-        //                SizeToContent = SizeToContent.WidthAndHeight,
-        //                Title = "Ladda ner Online-system!",
-        //                ShowInTaskbar = false,
-        //                ResizeMode = ResizeMode.NoResize,
-        //                Owner = App.Current.MainWindow
-        //            };
-        //            wndDownloadOnlineSystem.Content = new UCOnlineSystemList(this)
-        //            {
-        //                DataContext = userSystemList
-        //            };
-        //            Cursor = Cursors.Arrow;
-        //            wndDownloadOnlineSystem.ShowDialog();
-        //        }
-        //    }
-        //    catch (Exception exc)
-        //    {
-        //        HPTConfig.Config.AddToErrorLog(exc);
-        //    }
-        //    Cursor = Cursors.Arrow;
-        //}
-
-        //private void miVeckansReducerade_Click(object sender, RoutedEventArgs e)
-        //{
-        //    AddTabItem(new UCVeckansReducerade(), "Veckans reducerade", "Facebook", "/ImagesSmall/Facebook.png", null);
-        //}
-
-        //private void miCollectDataFromOldMarkBets_Click(object sender, RoutedEventArgs e)
-        //{
-        //    CreateResultData(@"C:\Temp\GamlaSystem");
-        //    //CreateResultData(@"C:\Users\000-JoSo\OneDrive\GamlaSystem");
-        //}
-
-        //internal void CollectDataFromOldMarkBets(string filePath)
-        //{
-        //    var sbMarkBetStatistics = new StringBuilder();
-        //    var sbRaceStatistics = new StringBuilder();
-
-        //    Directory.GetFiles(filePath, "*V75*.hpt5")
-        //        .ToList()
-        //        .ForEach(f =>
-        //        {
-        //            var markBet = HPTSerializer.DeserializeHPTSystem(f);
-        //        });
-        //}
-
-        //private void miAnalyzeJackpotRows_Click(object sender, RoutedEventArgs e)
-        //{
-        //    CollectJackpotDataFromOldMarkBets(@"C:\Users\000-JoSo\OneDrive\GamlaSystem");
-        //}
-
-
-        #endregion
 
         #region Simulera olika speltyper
 
@@ -2550,6 +1886,10 @@ namespace HPTClient
 
         #endregion
 
+        private void miNews_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://www.hpt.nu");
+        }
     }
 
     public class HPTGUIMessage : Notifier
@@ -2584,9 +1924,9 @@ namespace HPTClient
 
         public string Message { get; set; }
 
-        public string Type { get; set; }
+        //public string Type { get; set; }
 
-        public string Command { get; set; }
+        //public string Command { get; set; }
 
         public string Key { get; set; }
 

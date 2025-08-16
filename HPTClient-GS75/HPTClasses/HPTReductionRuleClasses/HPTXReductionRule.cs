@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Xml.Serialization;
-using System.Collections.ObjectModel;
-using System.Runtime.Serialization;
 
 namespace HPTClient
 {
@@ -21,7 +19,7 @@ namespace HPTClient
             this.Prio = prio;
             InitializeLegSelectionList(numberOfRaces);
         }
-        
+
         public HPTXReductionRule Clone()
         {
             HPTXReductionRule rule = new HPTXReductionRule(this.Prio, this.NumberOfWinnersList.Count - 1, this.Use);
@@ -77,7 +75,7 @@ namespace HPTClient
                 {
                     return false;
                 }
-                return true; 
+                return true;
             }
             else
             {

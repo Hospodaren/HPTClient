@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Runtime.Serialization;
+using System.Text;
 
 namespace HPTClient
 {
@@ -22,7 +20,7 @@ namespace HPTClient
         public override bool IncludeRow(HPTMarkBet markBet, HPTHorse[] horseList, int numberOfRacesToTest)
         {
             int partialSum = horseList.Take(numberOfRacesToTest).Sum(h => h.VinnarOdds);
-            return this.MaxSum > partialSum;            
+            return this.MaxSum > partialSum;
         }
 
         public override bool GetRuleResultForCorrectRow(HPTMarkBet markBet)
@@ -55,7 +53,7 @@ namespace HPTClient
                 sb.Append(this.MinPercentSum);
                 sb.Append(" - ");
                 sb.Append(this.MaxPercentSum);
-                sb.AppendLine("%"); 
+                sb.AppendLine("%");
             }
 
             this.ClipboardString = this.ReductionTypeString + "\r\n" + sb.ToString();

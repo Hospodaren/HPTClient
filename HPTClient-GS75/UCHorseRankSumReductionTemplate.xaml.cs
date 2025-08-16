@@ -1,18 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Collections.ObjectModel;
 
 namespace HPTClient
 {
@@ -90,7 +81,7 @@ namespace HPTClient
                     horseRankReductionRule.Use = false;
                 }
                 rule.ReductionRuleList.Clear();
-            }            
+            }
             this.HorseRankSumReductionRuleCollection.RankSumReductionRuleList.Clear();
         }
 
@@ -172,7 +163,7 @@ namespace HPTClient
         {
             this.Config.RankSumReductionRuleCollection.Remove(this.HorseRankSumReductionRuleCollection);
         }
-        
+
         private void btnRemoveRankReductionRule_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -192,11 +183,11 @@ namespace HPTClient
         private void btnClone_Click(object sender, RoutedEventArgs e)
         {
             var clonedHorseRankSumReductionRuleCollection = new HPTHorseRankSumReductionRuleCollection()
-                {
-                    Name = this.HorseRankSumReductionRuleCollection.Name + " (kopia)",
-                    RankSumReductionRuleList = new ObservableCollection<HPTHorseRankSumReductionRule>(this.HorseRankSumReductionRuleCollection.RankSumReductionRuleList.Select(r => r.Clone())),
-                    TypeCategory = this.TypeCategory
-                };
+            {
+                Name = this.HorseRankSumReductionRuleCollection.Name + " (kopia)",
+                RankSumReductionRuleList = new ObservableCollection<HPTHorseRankSumReductionRule>(this.HorseRankSumReductionRuleCollection.RankSumReductionRuleList.Select(r => r.Clone())),
+                TypeCategory = this.TypeCategory
+            };
 
             var horseRankVariableList = HPTHorseRankVariable.CreateVariableList();
             foreach (var horseRankSumReductionRule in clonedHorseRankSumReductionRuleCollection.RankSumReductionRuleList)

@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Reflection;
-using System.Xml.Serialization;
-using System.Windows.Media;
 using System.Runtime.Serialization;
+using System.Windows.Media;
+using System.Xml.Serialization;
 
 namespace HPTClient
 {
@@ -399,10 +398,10 @@ namespace HPTClient
                 var raceHorseRank = this.RaceHorseRankList.FirstOrDefault(hr => hr.RaceNumber == legNr);
                 if (raceHorseRank == null)
                 {
-                    raceHorseRank = new RaceHorseRank() 
-                    { 
-                        RaceNumber = legNr, 
-                        HorseRankList = new ObservableCollection<HPTHorseRank>() 
+                    raceHorseRank = new RaceHorseRank()
+                    {
+                        RaceNumber = legNr,
+                        HorseRankList = new ObservableCollection<HPTHorseRank>()
                     };
                     this.RaceHorseRankList.Add(raceHorseRank);
                 }
@@ -529,7 +528,7 @@ namespace HPTClient
                 return 0;
             }
         }
-        
+
         internal PropertyInfo HorseProperty { get; set; }
 
         private HorseRankAttribute horseRankInfo;
@@ -537,7 +536,7 @@ namespace HPTClient
         public HorseRankAttribute HorseRankInfo
         {
             get
-            {              
+            {
                 return this.horseRankInfo;
             }
             set

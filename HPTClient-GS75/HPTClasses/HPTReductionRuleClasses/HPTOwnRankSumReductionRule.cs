@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Runtime.Serialization;
+using System.Text;
 
 namespace HPTClient
 {
@@ -55,7 +53,7 @@ namespace HPTClient
                 sb.Append(this.MinPercentSum);
                 sb.Append(" - ");
                 sb.Append(this.MaxPercentSum);
-                sb.AppendLine("%"); 
+                sb.AppendLine("%");
             }
 
             this.ClipboardString = this.ReductionTypeString + "\r\n" + sb.ToString();

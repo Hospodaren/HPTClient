@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace HPTClient
 {
@@ -59,7 +49,7 @@ namespace HPTClient
             // Återställ textinställningar
             this.txtCountdownTimer.FontWeight = FontWeights.Normal;
             this.txtCountdownTimer.Foreground = new SolidColorBrush(Colors.Black);
-            
+
             // Dra igång nedräknare om tävlingen är idag
             if (this.Race != null && this.Race.PostTime.Date == DateTime.Today)
             {
@@ -122,9 +112,9 @@ namespace HPTClient
                 ts(timeLeft);
                 dt.Start();
             }
-            catch (Exception exc)
+            catch (Exception)
             {
-                
+
             }
         }
 

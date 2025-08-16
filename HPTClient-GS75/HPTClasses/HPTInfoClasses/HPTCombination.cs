@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Xml.Serialization;
-using System.Windows.Media;
 using System.Runtime.Serialization;
+using System.Text;
+using System.Windows.Media;
+using System.Xml.Serialization;
 
 namespace HPTClient
 {
@@ -17,15 +16,15 @@ namespace HPTClient
             // TODO: Add constructor logic here
             //        
         }
-        
+
         public HPTRaceDayInfo ParentRaceDayInfo { get; set; }
-        
+
         public HPTRace ParentRace { get; set; }
-        
+
         public HPTHorse Horse1 { get; set; }
-        
+
         public HPTHorse Horse2 { get; set; }
-        
+
         public HPTHorse Horse3 { get; set; }
 
         [DataMember]
@@ -104,7 +103,7 @@ namespace HPTClient
                     this.CombinationOddsShare = this.ParentRaceDayInfo.BetType.PoolShare / this.CombinationOddsExact;
                 }
             }
-        }       
+        }
 
         private decimal calculatedOdds;
         [DataMember]
@@ -360,7 +359,7 @@ namespace HPTClient
                 }
             }
         }
-        
+
         private int profit;
         [DataMember]
         public int Profit
@@ -506,7 +505,7 @@ namespace HPTClient
                 // NYA MÅTT
                 if (this.CombinationOddsShare > 0M)
                 {
-                    this.VQuota =  (this.Horse1.VinnarOddsShare * this.Horse2.VinnarOddsShare) / this.CombinationOddsShare;
+                    this.VQuota = (this.Horse1.VinnarOddsShare * this.Horse2.VinnarOddsShare) / this.CombinationOddsShare;
                     this.PQuota = (this.Horse1.PlatsOddsShare * this.Horse2.PlatsOddsShare) / this.CombinationOddsShare;
                     this.TVQuota = (this.Horse1.TvillingShare * this.Horse2.TvillingShare) / this.CombinationOddsShare;
                     this.OPQuota = (Convert.ToDecimal(this.Horse1.OwnProbability) * Convert.ToDecimal(this.Horse2.OwnProbability)) / this.CombinationOddsShare;
@@ -566,7 +565,7 @@ namespace HPTClient
                 if (pShare > 0M)
                 {
                     this.PQuota = pShare / adjustedCombinationShare;
-                    this.POdds = this.CombinationOdds / this.PQuota; 
+                    this.POdds = this.CombinationOdds / this.PQuota;
                 }
 
                 this.OPQuota = (Convert.ToDecimal(this.Horse1.OwnProbability) * Convert.ToDecimal(this.Horse2.OwnProbability)) / adjustedCombinationShare;
@@ -769,7 +768,7 @@ namespace HPTClient
                             break;
                         default:
                             break;
-                    }                    
+                    }
                 }
                 return this.oddsQuotaColor;
             }

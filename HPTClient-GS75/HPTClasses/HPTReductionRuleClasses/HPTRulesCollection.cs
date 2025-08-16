@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Xml.Serialization;
+using System.Linq;
 using System.Runtime.Serialization;
+using System.Text;
+using System.Xml.Serialization;
 
 namespace HPTClient
 {
@@ -25,7 +24,7 @@ namespace HPTClient
         {
             this.Use = use;
             this.NumberOfRaces = numberOfRaces;
-            this.ReductionRuleList = new ObservableCollection<HPTNumberOfWinnersReductionRule>();            
+            this.ReductionRuleList = new ObservableCollection<HPTNumberOfWinnersReductionRule>();
             this.NumberOfWinnersList = new ObservableCollection<HPTNumberOfWinners>();
             Initialize();
         }
@@ -40,7 +39,7 @@ namespace HPTClient
             {
                 this.ReductionSpecificationString = this.NumberOfWinnersString + " villkor";
             }
-            
+
         }
 
         public void Initialize()

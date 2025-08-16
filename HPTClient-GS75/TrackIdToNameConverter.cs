@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Data;
 using System.Globalization;
+using System.Windows.Data;
 
 namespace HPTClient
 {
     public class TrackIdToNameConverter : IValueConverter
-    {        
+    {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             try
@@ -18,7 +14,7 @@ namespace HPTClient
                 return EnumHelper.GetTrackNameFromTrackId(trackId);
 
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 return string.Empty;
             }

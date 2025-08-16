@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
 
@@ -18,7 +14,7 @@ namespace HPTClient
                 string betType = (string)value;
                 return new BitmapImage(new Uri("/ATGImages/" + betType + "XSmall.png", UriKind.Relative));
             }
-            catch (Exception exc)
+            catch (Exception)
             {
             }
             return null;

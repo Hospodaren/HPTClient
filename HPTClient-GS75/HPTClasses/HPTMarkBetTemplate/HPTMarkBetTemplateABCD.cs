@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Xml.Serialization;
+using System.Linq;
 
 namespace HPTClient
 {
@@ -15,15 +12,15 @@ namespace HPTClient
             foreach (HPTPrio prio in HPTConfig.Config.PrioList.Keys)
             {
                 ABCDTemplateSettings settings = new ABCDTemplateSettings()
-                    {
-                        Prio = prio,
-                        Selected = priosToUse.Contains(prio)
-                    };
+                {
+                    Prio = prio,
+                    Selected = priosToUse.Contains(prio)
+                };
                 this.ABCDTemplateSettingsList.Add(settings);
             }
         }
 
-        public HPTMarkBetTemplateABCD Clone()
+        public new HPTMarkBetTemplateABCD Clone()
         {
             var template = new HPTMarkBetTemplateABCD()
             {
@@ -53,7 +50,7 @@ namespace HPTClient
                 OnPropertyChanged("ABCDTemplateSettingsList");
             }
         }
-        
+
         internal IEnumerable<HPTPrio> PriosToUse
         {
             get

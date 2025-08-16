@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml.Serialization;
-using System.Windows.Controls;
-using System.Runtime.Serialization;
 
 
 namespace HPTClient
@@ -38,10 +36,10 @@ namespace HPTClient
                 if (this.betTypeATGLogo == null)
                 {
                     this.betTypeATGLogo = new Image()
-                            {
-                                Height = 20,
-                                Source = new BitmapImage(new Uri("/ATGImages/" + this.BetTypeCode + "Small.png", UriKind.Relative))
-                            };
+                    {
+                        Height = 20,
+                        Source = new BitmapImage(new Uri("/ATGImages/" + this.BetTypeCode + "Small.png", UriKind.Relative))
+                    };
                 }
                 return this.betTypeATGLogo;
             }

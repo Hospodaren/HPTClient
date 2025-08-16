@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace HPTClient
@@ -85,7 +81,7 @@ namespace HPTClient
                     };
                 }
                 return this.horseTrioPlaceInfoList;
-            }            
+            }
         }
     }
 
@@ -125,7 +121,8 @@ namespace HPTClient
 
         private int percent;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
-        public int Percent        {
+        public int Percent
+        {
             get
             {
                 return this.percent;

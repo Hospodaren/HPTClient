@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace HPTClient
 {
@@ -44,7 +43,7 @@ namespace HPTClient
                 return string.Empty;
             }
         }
-        
+
         public static string GetTrackCodeFromTrackId(int trackId)
         {
             try
@@ -76,7 +75,7 @@ namespace HPTClient
                     default:
                         trackNameList.Add((TrackNameEnum)i);
                         break;
-                }                
+                }
             }
             return trackNameList;
         }

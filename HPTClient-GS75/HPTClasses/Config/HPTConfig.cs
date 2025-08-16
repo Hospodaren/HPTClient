@@ -1,24 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Net.Mail;
+using System.Reflection;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.IO;
-using System.IO.IsolatedStorage;
-using System.Xml;
-using System.Xml.Serialization;
-using System.Xml.Linq;
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Collections.ObjectModel;
-using System.Net.Mail;
-using System.Net.NetworkInformation;
-using System.Net.Security;
-using System.Net.Sockets;
-using System.Reflection;
-using System.Configuration;
-using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 namespace HPTClient
 {
@@ -101,7 +93,7 @@ namespace HPTClient
                     if (File.Exists(MyDocumentsPath + ConfigFileNameOld))
                     {
                         hptConfig = HPTSerializer.DeserializeHPTConfig(MyDocumentsPath + ConfigFileNameOld);
-                        
+
                         config = hptConfig;
                     }
                     else
@@ -158,7 +150,7 @@ namespace HPTClient
             hptConfig.HPTSystemDirectories = new ObservableCollection<HPTSystemDirectory>();
             hptConfig.RecentFileList = new ObservableCollection<HPTSystemFile>();
             hptConfig.MarkBetSystemList = new ObservableCollection<HPTRaceDayInfoLight>();
-            
+
             return hptConfig;
         }
 
@@ -513,7 +505,7 @@ namespace HPTClient
             // DD/LD, Trio och Tvilling
             this.CombinationDataToShowDouble.Usage = DataToShowUsage.Double;
             this.CombinationDataToShowTrio.Usage = DataToShowUsage.Trio;
-            this.CombinationDataToShowTvilling.Usage = DataToShowUsage.Tvilling;            
+            this.CombinationDataToShowTvilling.Usage = DataToShowUsage.Tvilling;
         }
 
         private void HandleGroupIntervalCollectionList()
@@ -695,10 +687,10 @@ namespace HPTClient
                         foreach (var rankTemplate in this.RankTemplateList.Where(rt => rt != this.defaultRankTemplate))
                         {
                             rankTemplate.IsDefault = false;
-                        }   
+                        }
                     }
                 }
-                
+
             }
         }
 
@@ -824,7 +816,7 @@ namespace HPTClient
 
         private ObservableCollection<HPTRankTemplate> rankTemplateList;
         [DataMember]
-        public ObservableCollection<HPTRankTemplate> RankTemplateList 
+        public ObservableCollection<HPTRankTemplate> RankTemplateList
         {
             get
             {
@@ -845,7 +837,7 @@ namespace HPTClient
 
         [DataMember]
         public ObservableCollection<HPTGroupIntervalRulesCollection> GroupIntervalRulesCollectionList { get; set; }
-        
+
         [XmlIgnore]
         public List<HPTHorseRankVariable> RankVariableListMarksAndOdds { get; set; }
 
@@ -860,7 +852,7 @@ namespace HPTClient
 
         [XmlIgnore]
         public List<HPTHorseRankVariable> RankVariableListTop3 { get; set; }
-        
+
         [XmlIgnore]
         public List<HPTHorseRankVariable> RankVariableListRest { get; set; }
 
@@ -994,7 +986,7 @@ namespace HPTClient
             {
                 if (this.beginnerSizesToShow == null || this.beginnerSizesToShow.Count == 0)
                 {
-                    this.beginnerSizesToShow = new ObservableCollection<int>(new int[] { 100,  200, 300, 500, 700, 1000, 2500, 5000, 10000 });
+                    this.beginnerSizesToShow = new ObservableCollection<int>(new int[] { 100, 200, 300, 500, 700, 1000, 2500, 5000, 10000 });
                 }
                 return this.beginnerSizesToShow;
             }
@@ -1005,7 +997,7 @@ namespace HPTClient
             }
         }
 
-        
+
         private ObservableCollection<HPTSystemDirectory> hptSystemDirectories;
         [XmlIgnore]
         public ObservableCollection<HPTSystemDirectory> HPTSystemDirectories
@@ -1104,7 +1096,7 @@ namespace HPTClient
 
         private SortedList<HPTPrio, bool> prioList;
         [XmlIgnore]
-        public SortedList<HPTPrio, bool> PrioList 
+        public SortedList<HPTPrio, bool> PrioList
         {
             get
             {
@@ -1234,7 +1226,7 @@ namespace HPTClient
         {
             var betList = this.AvailableBets
                 .Where(b => b.RaceDayInfo.RaceDayDateString == bet.RaceDayInfo.RaceDayDateString && b.RaceDayInfo.TrackId == bet.RaceDayInfo.TrackId)
-                .Except(new HPTBet[]{bet});
+                .Except(new HPTBet[] { bet });
 
             return betList;
         }
@@ -1319,7 +1311,7 @@ namespace HPTClient
 
             return displayName;
         }
-        
+
         #region Hantering av default-värden
 
         private void SetDefaultValues()
@@ -1433,7 +1425,7 @@ namespace HPTClient
             //    ShowVinnarOdds = true,
             //    ShowLegNrText = true
             //};
-            
+
             //this.DataToShowDriverPopup = new HPTHorseDataToShow()
             //{
             //    Usage = DataToShowUsage.None,
@@ -1582,8 +1574,8 @@ namespace HPTClient
 
             this.ColorIntervalMarksPercent = new HPTColorInterval()
             {
-            LowerBoundary = 10M,
-            UpperBoundary = 30M
+                LowerBoundary = 10M,
+                UpperBoundary = 30M
             };
 
             this.ColorIntervalPlayability = new HPTColorInterval()
@@ -1874,7 +1866,7 @@ namespace HPTClient
         //            this.RankTemplateList.Add(rankTemplate);
         //        }
         //    }
-            
+
         //    if (this.MarkBetTemplateABCDList == null)
         //    {
         //        this.MarkBetTemplateABCDList = new ObservableCollection<HPTMarkBetTemplateABCD>();
@@ -2143,8 +2135,8 @@ namespace HPTClient
             }
         }
 
-        internal static string PaysonURL =              "https://www.payson.se/SendMoney/?De=Ett+%e5rs+%27Hj%e4lp+p%e5+traven+PRO%27&amp;Se=hjalp.pa.traven%40gmail.com&amp;Cost=299%2c00&amp;Currency=SEK&amp;Sp=1";
-        internal static string PaysonURLThreeMonths =   "https://www.payson.se/SendMoney/?De=Tre+m%e5naders+%27Hj%e4lp+p%e5+traven+PRO%27&amp;Se=hjalp.pa.traven%40gmail.com&amp;Cost=99%2c00&amp;Currency=SEK&amp;Sp=1";
+        internal static string PaysonURL = "https://www.payson.se/SendMoney/?De=Ett+%e5rs+%27Hj%e4lp+p%e5+traven+PRO%27&amp;Se=hjalp.pa.traven%40gmail.com&amp;Cost=299%2c00&amp;Currency=SEK&amp;Sp=1";
+        internal static string PaysonURLThreeMonths = "https://www.payson.se/SendMoney/?De=Tre+m%e5naders+%27Hj%e4lp+p%e5+traven+PRO%27&amp;Se=hjalp.pa.traven%40gmail.com&amp;Cost=99%2c00&amp;Currency=SEK&amp;Sp=1";
 
         #region Gratis/PRO
 
@@ -2172,7 +2164,7 @@ namespace HPTClient
                     //this.MarkBetTabsToShow.ShowCompanyGambling = false;
                     //this.MarkBetTabsToShow.ShowV6BetMultiplier = false;
                     //this.MarkBetTabsToShow.ShowMultiABCD = false;
-                    
+
                     //// DEF ska bara finnas i PRO-versionen
                     //this.UseD = false;
                     //this.UseE = false;
@@ -2189,7 +2181,7 @@ namespace HPTClient
                     //this.ThreadedRecalculation = false;
                     //this.UseDefaultRankTemplate = false;
                     //this.WarnIfNoReserv = false;                    
-                }                
+                }
                 this.isPayingCustomer = value;
                 OnPropertyChanged("IsPayingCustomer");
             }
@@ -2303,7 +2295,7 @@ namespace HPTClient
         // KOMMANDE
         private ObservableCollection<HPTHorseRankSumReductionRuleCollection> rankSumReductionRuleCollection;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
-        public ObservableCollection<HPTHorseRankSumReductionRuleCollection> RankSumReductionRuleCollection 
+        public ObservableCollection<HPTHorseRankSumReductionRuleCollection> RankSumReductionRuleCollection
         {
             get
             {
@@ -2387,7 +2379,8 @@ namespace HPTClient
         public bool WarnIfNoReserv { get; set; }
 
         [DataMember]
-        public bool WarnIfUncoveredHorses {
+        public bool WarnIfUncoveredHorses
+        {
             get
             {
                 return true;
@@ -2616,7 +2609,7 @@ namespace HPTClient
                 case DataToShowUsage.Trio:
                     dataToShow.ShowTrio = true;
                     dataToShow.ShowPlatsOdds = true;
-                        dataToShow.ShowDriver = true;
+                    dataToShow.ShowDriver = true;
                     if (profile == GUIProfile.Normal || profile == GUIProfile.Advanced)
                     {
                         dataToShow.ShowDoubleShare = true;
@@ -2683,7 +2676,7 @@ namespace HPTClient
                 case DataToShowUsage.Double:
                     dataToShow.ShowStakeDistributionPercent = true;
                     dataToShow.ShowPrio = true;
-                        dataToShow.ShowDriver = true;
+                    dataToShow.ShowDriver = true;
                     if (profile == GUIProfile.Normal || profile == GUIProfile.Advanced)
                     {
                         dataToShow.ShowComments = true;
@@ -2726,7 +2719,7 @@ namespace HPTClient
                     dataToShow.ShowStakeDistributionPercent = true;
                     dataToShow.ShowPrio = true;
                     dataToShow.ShowSystemCoverage = true;
-                        dataToShow.ShowDriver = true;
+                    dataToShow.ShowDriver = true;
                     if (profile == GUIProfile.Normal || profile == GUIProfile.Advanced)
                     {
                         dataToShow.ShowComments = true;
@@ -2780,7 +2773,7 @@ namespace HPTClient
                     dataToShow.ShowStakeDistributionPercent = true;
                     dataToShow.ShowPrio = true;
                     dataToShow.ShowSystemCoverage = true;
-                        dataToShow.ShowDriver = true;
+                    dataToShow.ShowDriver = true;
                     if (profile == GUIProfile.Normal || profile == GUIProfile.Advanced)
                     {
                         dataToShow.ShowComments = true;
@@ -2923,7 +2916,7 @@ namespace HPTClient
                         break;
                 }
             }
-            catch (NullReferenceException exc)
+            catch (NullReferenceException)
             {
                 return CreateDataToShow(usage, profile);
             }
@@ -3392,7 +3385,7 @@ namespace HPTClient
         //[DataMember(IsRequired = false, EmitDefaultValue = false)]
         //public HPTHorseDataToShow DataToShowDriverPopupList { get; set; }
         private HPTHorseDataToShow dataToShowDriverPopup;
-        public HPTHorseDataToShow DataToShowDriverPopup 
+        public HPTHorseDataToShow DataToShowDriverPopup
         {
             get
             {
@@ -3498,9 +3491,9 @@ namespace HPTClient
                 GUIProfile = profile,
                 ShowCorrection = true,
                 ShowOverview = true,
-                ShowRaces = true                
+                ShowRaces = true
             };
-            if (profile == GUIProfile.Normal ||profile == GUIProfile.Advanced)
+            if (profile == GUIProfile.Normal || profile == GUIProfile.Advanced)
             {
                 markBetTabsToShow.ShowComplimentaryRules = true;
                 markBetTabsToShow.ShowDriverReduction = true;
@@ -3631,7 +3624,7 @@ namespace HPTClient
 
         private List<HPTHorseRankVariableBase> horseRankVariablesToShow;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
-        public List<HPTHorseRankVariableBase> HorseRankVariablesToShow 
+        public List<HPTHorseRankVariableBase> HorseRankVariablesToShow
         {
             get
             {
@@ -3770,13 +3763,13 @@ namespace HPTClient
         [DataMember]
         public bool? CopyStakeShare
         {
-            get 
+            get
             {
                 if (this.copyStakeShare == null)
                 {
                     this.copyStakeShare = true;
                 }
-                return copyStakeShare; 
+                return copyStakeShare;
             }
             set
             {
@@ -3835,8 +3828,8 @@ namespace HPTClient
                 }
                 return copyAlternateRank;
             }
-            set 
-            { 
+            set
+            {
                 copyAlternateRank = value;
                 OnPropertyChanged("CopyAlternateRank");
             }
@@ -3852,7 +3845,8 @@ namespace HPTClient
 
         private ObservableCollection<HPTStartNumberRankCollection> startNumberRankCollectionList;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
-        public ObservableCollection<HPTStartNumberRankCollection> StartNumberRankCollectionList {
+        public ObservableCollection<HPTStartNumberRankCollection> StartNumberRankCollectionList
+        {
             get
             {
                 if (this.startNumberRankCollectionList == null)
@@ -4334,7 +4328,7 @@ namespace HPTClient
 
         //    if (firstOtherBet != null && firstOtherBet.TimeStamp > bet.TimeStamp)
         //    {
-                
+
         //    }
         //}
 
@@ -4373,7 +4367,7 @@ namespace HPTClient
                 //string s = names.ToString();
                 return asm.GetManifestResourceStream(resourceName);
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 return null;
             }
@@ -4428,5 +4422,5 @@ namespace HPTClient
         }
 
         #endregion
-    }    
+    }
 }

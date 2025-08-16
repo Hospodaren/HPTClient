@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Collections.ObjectModel;
-using System.Xml.Serialization;
 using System.Runtime.Serialization;
+using System.Text;
+using System.Xml.Serialization;
 
 namespace HPTClient
 {
@@ -28,21 +26,21 @@ namespace HPTClient
 
             this.RaceList = markBet.RaceDayInfo.RaceList
                 .Select(r => new HPTRaceLight()
-                        {
-                            LegNr = r.LegNr,
-                            LegNrString = this.MarkBet.BetType.Code + "-" + r.LegNr.ToString(),
-                            HorseList = r.HorseList
+                {
+                    LegNr = r.LegNr,
+                    LegNrString = this.MarkBet.BetType.Code + "-" + r.LegNr.ToString(),
+                    HorseList = r.HorseList
                             .Select(h => new HPTHorseLightSelectable()
-                                    {
-                                        LegNr = r.LegNr,
-                                        LegNrString = this.MarkBet.BetType.Code + "-" + r.LegNr.ToString(),
-                                        Name = h.HorseName,
-                                        Selectable = h.Selected,
-                                        StartNr = h.StartNr,
-                                        GroupCode = ruleNumber.ToString() + r.LegNr.ToString(),
-                                        Horse = h
-                                    }).ToList()
-                        }).ToList();
+                            {
+                                LegNr = r.LegNr,
+                                LegNrString = this.MarkBet.BetType.Code + "-" + r.LegNr.ToString(),
+                                Name = h.HorseName,
+                                Selectable = h.Selected,
+                                StartNr = h.StartNr,
+                                GroupCode = ruleNumber.ToString() + r.LegNr.ToString(),
+                                Horse = h
+                            }).ToList()
+                }).ToList();
 
             InitializeEventHandlers();
         }
@@ -92,7 +90,8 @@ namespace HPTClient
                         this.HorseList.Remove(horse);
                     }
                 }
-            };
+            }
+            ;
         }
 
         [DataMember]

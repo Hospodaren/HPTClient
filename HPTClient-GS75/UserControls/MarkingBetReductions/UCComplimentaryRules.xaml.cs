@@ -1,17 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Collections.ObjectModel;
 
 namespace HPTClient
 {
@@ -28,14 +20,14 @@ namespace HPTClient
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
                 this.ParentRaceDayInfo = new HPTRaceDayInfo()
-                                             {
-                                                 DataToShow = HPTConfig.Config.DataToShowComplementaryRules
-                                             };
+                {
+                    DataToShow = HPTConfig.Config.DataToShowComplementaryRules
+                };
                 this.HorseList = new ObservableCollection<HPTHorse>();
             }
             InitializeComponent();
         }
-        
+
         private void btnNewRule_Click(object sender, RoutedEventArgs e)
         {
             CreateNewRule();
@@ -48,7 +40,7 @@ namespace HPTClient
 
             this.MarkBet.ComplementaryRulesCollection.ReductionRuleList.Add(newRule);
             this.CurrentComplimentaryReductionRule = newRule;
-            
+
             if (oldRule != null)
             {
                 //oldRule.PropertyChanged -= new System.ComponentModel.PropertyChangedEventHandler(newRule_PropertyChanged);
@@ -76,7 +68,7 @@ namespace HPTClient
                 this.MarkBet.RecalculateReduction(RecalculateReason.All);
             }
         }
-        
+
         public HPTComplementaryReductionRule CurrentComplimentaryReductionRule
         {
             get { return (HPTComplementaryReductionRule)GetValue(CurrentComplimentaryReductionRuleProperty); }
@@ -122,8 +114,8 @@ namespace HPTClient
             try
             {
                 this.MarkBet.pauseRecalculation = true;
-                Button btn = (Button) sender;
-                HPTComplementaryReductionRule rule = (HPTComplementaryReductionRule) btn.DataContext;
+                Button btn = (Button)sender;
+                HPTComplementaryReductionRule rule = (HPTComplementaryReductionRule)btn.DataContext;
 
                 HPTComplementaryReductionRule oldRule = this.CurrentComplimentaryReductionRule;
                 this.CurrentComplimentaryReductionRule = rule;
@@ -187,7 +179,7 @@ namespace HPTClient
             }
             try
             {
-                CheckBox chk = (CheckBox)e.OriginalSource;                
+                CheckBox chk = (CheckBox)e.OriginalSource;
                 if (chk.Name == "chkComplimentarySelect")
                 {
                     HPTHorse horse = (HPTHorse)chk.DataContext;
@@ -221,7 +213,7 @@ namespace HPTClient
                     if (this.CurrentComplimentaryReductionRule.NumberOfSelected > 0 && this.MarkBet.ComplementaryRulesCollection.Use && !this.MarkBet.pauseRecalculation)
                     {
                         this.MarkBet.RecalculateReduction(RecalculateReason.Other);
-                    } 
+                    }
                 }
             }
             catch (Exception exc)
@@ -245,7 +237,7 @@ namespace HPTClient
                 string s = exc.Message;
             }
         }
-        
+
         private void ItemsControl_Checked(object sender, RoutedEventArgs e)
         {
             if (!this.IsLoaded)

@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Globalization;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Runtime.Serialization;
+using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace HPTClient
 {
@@ -189,7 +185,7 @@ namespace HPTClient
         public static void ConvertCalendarRaceDayInfo(HPTService.HPTRaceDayInfo rdi, HPTRaceDayInfo hptRdi)
         {
             // Info som behövs för visning i kalendern
-            hptRdi.RaceDayDate = rdi.SharedInfo.FirstRaceStartTime; 
+            hptRdi.RaceDayDate = rdi.SharedInfo.FirstRaceStartTime;
             hptRdi.TrackId = rdi.SharedInfo.TrackId;
             hptRdi.Trackcode = rdi.SharedInfo.Trackcode;
             hptRdi.Trackname = rdi.SharedInfo.Trackname;
@@ -257,16 +253,16 @@ namespace HPTClient
         {
             // Typ av spel
             hptRdi.BetType = new HPTBetType()
-                {
-                    Code = rdi.BetType.Code,
-                    Name = rdi.BetType.Name
-                };
+            {
+                Code = rdi.BetType.Code,
+                Name = rdi.BetType.Name
+            };
 
             // Jackpottsumma och antal streck
             hptRdi.Jackpot = rdi.Jackpot;
             hptRdi.MarksQuantity = rdi.MarksQuantity;
             //hptRdi.NumberOfUploadedSystems = rdi.NumberOfUploadedSystems;         
-            
+
             hptRdi.RaceDayDate = rdi.SharedInfo.FirstRaceStartTime;
             if (rdi.SharedInfo.RaceNumberList != null)
             {
@@ -324,7 +320,7 @@ namespace HPTClient
                         hptRace.LegNr = i + 1;
                         hptRdi.RaceList.Add(hptRace);
                         //hptRdi.MarksQuantity += race.MarksQuantity;
-                    }                    
+                    }
                 }
             }
 
@@ -344,10 +340,10 @@ namespace HPTClient
             if (hptRdi.BetType.Code == "DD" || hptRdi.BetType.Code == "LD")
             {
                 hptRdi.CombinationListInfoDouble = new HPTCombinationListInfo()
-                    {
-                        CombinationList = new List<HPTCombination>(),
-                        BetType = hptRdi.BetType.Code
-                    };
+                {
+                    CombinationList = new List<HPTCombination>(),
+                    BetType = hptRdi.BetType.Code
+                };
                 if (rdi.CombinationList != null && rdi.CombinationList.Length > 0)
                 {
                     hptRdi.CombinationListInfoDouble.CombinationList = new List<HPTCombination>();
@@ -407,7 +403,7 @@ namespace HPTClient
 
             // Sätt avstånd till hemmabanan (i km) för alla hästar
             SetDistanceToHomeTrack(hptRdi);
-            
+
             // DEBUG
             //TimeSpan ts = DateTime.Now - dtStart;
             //double d = ts.TotalMilliseconds;
@@ -461,7 +457,7 @@ namespace HPTClient
             hptRace.Distance = race.SharedInfo.Distance;
             hptRace.StartMethodCode = race.SharedInfo.StartMethodCode;
             hptRace.PostTime = race.SharedInfo.PostTime;
-            
+
             Regex rexExtractNumber = new Regex("\\d+");
             if (!string.IsNullOrEmpty(hptRace.Distance) && rexExtractNumber.IsMatch(hptRace.Distance))
             {
@@ -661,7 +657,7 @@ namespace HPTClient
             {
                 hptHorse.IsHomeTrack = hptHorse.ParentRace.TrackCode == hptHorse.HomeTrack;
             }
-            
+
             hptHorse.PostPosition = horse.StartInfo.PostPosition;
             hptHorse.DriverName = horse.StartInfo.DriverName;
             hptHorse.DriverNameShort = horse.StartInfo.DriverNameShort;
@@ -732,17 +728,17 @@ namespace HPTClient
 
                 // Records
                 hptHorse.RecordList = horse.StartInfo.RecordList.Select(r => new HPTHorseRecord()
-                    {
-                        Date = r.Date.ToString("yyyy-MM-dd"),
-                        Distance = r.Distance,
-                        Place = r.Place,
-                        RaceNr = r.RaceNr,
-                        RecordType = r.RecordType,
-                        Time = FormatRecordTime(r.Time),
-                        TrackCode = r.TrackCode,
-                        Winner = r.Winner,
-                        TimeWeighed = SetWeighedRecord(r, hptHorse.ParentRace)
-                    }).ToList();
+                {
+                    Date = r.Date.ToString("yyyy-MM-dd"),
+                    Distance = r.Distance,
+                    Place = r.Place,
+                    RaceNr = r.RaceNr,
+                    RecordType = r.RecordType,
+                    Time = FormatRecordTime(r.Time),
+                    TrackCode = r.TrackCode,
+                    Winner = r.Winner,
+                    TimeWeighed = SetWeighedRecord(r, hptHorse.ParentRace)
+                }).ToList();
 
                 // Hitta rekordet
                 SetRecord(hptHorse);
@@ -1073,7 +1069,7 @@ namespace HPTClient
             if (yearStatistics.NumberOfStarts > 0)
             {
                 hptYearStatistics.EarningMean = hptYearStatistics.Earning / yearStatistics.NumberOfStarts;
-            }            
+            }
             hptYearStatistics.FirstPlace = yearStatistics.FirstPlace;
             hptYearStatistics.NumberOfStarts = yearStatistics.NumberOfStarts;
             hptYearStatistics.Percent123 = yearStatistics.Percent123;
@@ -1107,7 +1103,7 @@ namespace HPTClient
                     horse.HorseHistoryInfoGroupedList = Enumerable.Range(1, 10)
                         .Select(i => new HPTHorseHistoryInfoGrouped()
                         {
-                            StakeHistoryMain = new HPTStakeHistory()                            
+                            StakeHistoryMain = new HPTStakeHistory()
                         })
                         .ToArray();
 
@@ -1166,7 +1162,7 @@ namespace HPTClient
 
         //    // Skapa lista med de tidsstämplar vi har plockat ut
         //    hptRaceDayInfo.TimestampListMarkBetHistory = new DateTime[positionsToSelect.Length];
-            
+
         //    var raceHistoryMarkingBetList = raceDayInfoHistory.LegList
         //        .First()
         //        .RaceHistoryMarkingBetList
@@ -1223,7 +1219,7 @@ namespace HPTClient
         //                        //var foreColor = new System.Windows.Media.SolidColorBrush();
         //                        var fontWeight = System.Windows.FontWeights.Normal;
         //                        var backColor = new System.Windows.Media.SolidColorBrush();
-                                
+
         //                        // Om det finns äldre historieobjekt
         //                        if (previousMarkingBetHistoryRace != null)
         //                        {
@@ -1287,7 +1283,7 @@ namespace HPTClient
         //        }
         //    }
         //}
-        
+
         //public static void SetPeriodStakeShare()
         //{
         //}
@@ -1364,7 +1360,7 @@ namespace HPTClient
         //    //        hptHorseHistoryInfoGrouped.VinnarOdds = Convert.ToInt32(horseHistoryVPList.Average(hh => hh.VinnarOdds));
         //    //    }
         //    //}
-            
+
         //    //return hptHorseHistoryInfoGrouped;
 
         //    return hptHorseHistoryInfoGroupedList;
@@ -1460,14 +1456,14 @@ namespace HPTClient
                 {
                     HPTRace hptRace = hptRaceDayInfo.RaceList.First(r => r.LegNr == legResult.LegNr);
                     hptRace.LegResult = new HPTLegResult()
-                        {
-                            LegNr = legResult.LegNr,
-                            SystemsLeft = setValues ? legResult.SystemsLeft : 0,
-                            Value = setValues ? legResult.Value : 0,
-                            HasResult = true,
-                            Winners = legResult.Winners.ToArray()
-                        };
-                    
+                    {
+                        LegNr = legResult.LegNr,
+                        SystemsLeft = setValues ? legResult.SystemsLeft : 0,
+                        Value = setValues ? legResult.Value : 0,
+                        HasResult = true,
+                        Winners = legResult.Winners.ToArray()
+                    };
+
                     hptRace.HasResult = true;
                 }
 
@@ -1700,7 +1696,7 @@ namespace HPTClient
                     if (horseOwnInformationShows)
                     {
                         HPTConfig.Config.HorseOwnInformationCollection.MergeHorseOwnInformation(hptHorse);
-                    }  
+                    }
                 }
                 if (hcb.BetType.Code == "TV")   // Tvilling
                 {
@@ -1827,12 +1823,12 @@ namespace HPTClient
                     {
                         hptHorse.ShoeInfoCurrent.SetChangedFlags(hptHorse.ShoeInfoPrevious);
                     }
-                    
+
                     // Own information
                     if (horseOwnInformationShows)
                     {
                         HPTConfig.Config.HorseOwnInformationCollection.MergeHorseOwnInformation(hptHorse);
-                    }                    
+                    }
                 }
 
                 // Sätt justerad insatsfördelning
@@ -1862,14 +1858,14 @@ namespace HPTClient
                 hptRace.Reserv2GroupName = hptRace.LegNr.ToString() + "-" + "2";
             }
             SetTrainerAndDriver(hmb);
-                            
+
             // ABCDEF-regel
             var aRule = hmb.ABCDEFReductionRule.XReductionRuleList.First(r => r.Prio == HPTPrio.A);
             aRule.Use = !aRule.Use ? HPTConfig.Config.UseA : true;
             var bRule = hmb.ABCDEFReductionRule.XReductionRuleList.First(r => r.Prio == HPTPrio.B);
             bRule.Use = !bRule.Use ? HPTConfig.Config.UseB : true;
             var cRule = hmb.ABCDEFReductionRule.XReductionRuleList.First(r => r.Prio == HPTPrio.C);
-            cRule.Use = !cRule.Use ? HPTConfig.Config.UseC: true;
+            cRule.Use = !cRule.Use ? HPTConfig.Config.UseC : true;
             var dRule = hmb.ABCDEFReductionRule.XReductionRuleList.First(r => r.Prio == HPTPrio.D);
             dRule.Use = !dRule.Use ? HPTConfig.Config.UseD : true;
             var eRule = hmb.ABCDEFReductionRule.XReductionRuleList.First(r => r.Prio == HPTPrio.E);
@@ -2373,36 +2369,36 @@ namespace HPTClient
         }
 
         #region Konvertera Reducto/HPT Online till och från HPTMarkBet
-        
+
         public static HPTService.HPTRaceDayInfoReduction CreateHPTOnlineFromHPTMarkBet(HPTMarkBet markBet)
         {
             var raceDayInfoReduction = new HPTService.HPTRaceDayInfoReduction()
+            {
+                BetTypeCode = markBet.BetType.Code,
+                Comment = markBet.SystemComment == null ? string.Empty : markBet.SystemComment,
+                EMail = HPTConfig.Config.EMailAddress,
+                LastUpdate = markBet.LastSaveTime,
+                NumberOfAllowedErrors = markBet.NumberOfToleratedErrors,
+                RaceDayDate = markBet.RaceDayInfo.RaceDayDate,
+                RaceDayDateString = markBet.RaceDayInfo.RaceDayDateString,
+                SystemName = markBet.SystemName,
+                TrackId = markBet.RaceDayInfo.TrackId,
+                RaceList = markBet.RaceDayInfo.RaceList.Select(r => new HPTService.HPTRaceReduction()
                 {
-                    BetTypeCode = markBet.BetType.Code,
-                    Comment = markBet.SystemComment == null ? string.Empty : markBet.SystemComment,
-                    EMail = HPTConfig.Config.EMailAddress,
-                    LastUpdate = markBet.LastSaveTime,
-                    NumberOfAllowedErrors = markBet.NumberOfToleratedErrors,
-                    RaceDayDate = markBet.RaceDayInfo.RaceDayDate,
-                    RaceDayDateString = markBet.RaceDayInfo.RaceDayDateString,
-                    SystemName = markBet.SystemName,
-                    TrackId = markBet.RaceDayInfo.TrackId,
-                    RaceList = markBet.RaceDayInfo.RaceList.Select(r => new HPTService.HPTRaceReduction()
+                    LegNr = r.LegNr,
+                    R1 = r.Reserv1Nr,
+                    R2 = r.Reserv2Nr,
+                    HorseList = r.HorseListSelected.Select(h => new HPTService.HPTHorseReduction()
                     {
-                        LegNr = r.LegNr,
-                        R1 = r.Reserv1Nr,
-                        R2 = r.Reserv2Nr,
-                        HorseList = r.HorseListSelected.Select(h => new HPTService.HPTHorseReduction()
-                        {
-                            GroupCodeList = null,
-                            OwnRank = h.RankOwn,
-                            Points = h.RankAlternate,
-                            Prio = h.PrioString,
-                            Selected = h.Selected,
-                            StartNr = h.StartNr
-                        }).ToArray()
+                        GroupCodeList = null,
+                        OwnRank = h.RankOwn,
+                        Points = h.RankAlternate,
+                        Prio = h.PrioString,
+                        Selected = h.Selected,
+                        StartNr = h.StartNr
                     }).ToArray()
-                };
+                }).ToArray()
+            };
 
             // ABCD-regel
             raceDayInfoReduction.ReductionABCD = new HPTService.HPTReductionABCD()
@@ -2445,7 +2441,7 @@ namespace HPTClient
                                 .RaceList
                                 .First(r => r.LegNr == hl.LegNr)
                                 .HorseList
-                                .First(h => h.StartNr == hl.StartNr);                            
+                                .First(h => h.StartNr == hl.StartNr);
 
                             if (horseReduction.GroupCodeList == null || horseReduction.GroupCodeList.Length == 0)
                             {
@@ -2454,7 +2450,7 @@ namespace HPTClient
                             else
                             {
                                 horseReduction.GroupCodeList = horseReduction.GroupCodeList
-                                    .Concat(new string[] {reductionGroup.GroupCode})
+                                    .Concat(new string[] { reductionGroup.GroupCode })
                                     .ToArray();
                             }
                         });
@@ -2466,7 +2462,7 @@ namespace HPTClient
                 Use = markBet.ComplementaryRulesCollection.Use,
                 ReductionGroupArray = onlineReductionGroupList.ToArray()
             };
-            
+
             // Radvärdesregel
             raceDayInfoReduction.ReductionRowValue = new HPTService.HPTReductionRowValue()
             {
@@ -2474,7 +2470,7 @@ namespace HPTClient
                 Max = markBet.RowValueReductionRule.MaxSum,
                 Use = markBet.RowValueReductionRule.Use
             };
-            
+
             // Egen ranksumma
             raceDayInfoReduction.ReductionOwnRank = new HPTService.HPTReductionOwnRank()
             {
@@ -2523,7 +2519,7 @@ namespace HPTClient
             {
                 markBet.pauseRecalculation = true;
                 var horsesWithGroupCode = new List<Tuple<HPTHorse, HPTService.HPTHorseReduction>>();
-                
+
                 foreach (var raceReduction in raceDayInfoReduction.RaceList)
                 {
                     var race = markBet.RaceDayInfo.RaceList.First(r => r.LegNr == raceReduction.LegNr);
@@ -2544,7 +2540,7 @@ namespace HPTClient
                         // Utgångar
                         if (horseReduction.GroupCodeList != null && horseReduction.GroupCodeList.Any())
                         {
-                            horsesWithGroupCode.Add(new Tuple<HPTHorse,HPTService.HPTHorseReduction>(horse, horseReduction));
+                            horsesWithGroupCode.Add(new Tuple<HPTHorse, HPTService.HPTHorseReduction>(horse, horseReduction));
                         }
                     }
                 }
@@ -2568,10 +2564,10 @@ namespace HPTClient
 
                 // Utgångar
                 if (raceDayInfoReduction.ReductionGroupList != null
-                    && raceDayInfoReduction.ReductionGroupList.ReductionGroupArray != null 
+                    && raceDayInfoReduction.ReductionGroupList.ReductionGroupArray != null
                     && raceDayInfoReduction.ReductionGroupList.ReductionGroupArray.Length > 0)
                 {
-                    
+
                     foreach (var reductionGroup in raceDayInfoReduction.ReductionGroupList.ReductionGroupArray)
                     {
                         var horsesInGroup = horsesWithGroupCode
@@ -2580,15 +2576,15 @@ namespace HPTClient
                             .ToList();
 
                         var complementaryReductionRule = new HPTComplementaryReductionRule(markBet.NumberOfRaces, true)
+                        {
+                            Use = (bool)reductionGroup.Use,
+                            HorseLightList = horsesInGroup.Select(h => new HPTHorseLight()
                             {
-                                Use = (bool)reductionGroup.Use,
-                                HorseLightList = horsesInGroup.Select(h => new HPTHorseLight()
-                                                    {
-                                                        LegNr = h.ParentRace.LegNr,
-                                                        StartNr = h.StartNr
-                                                    }).ToList()
-                                //HorseList = new ObservableCollection<HPTHorse>(horsesInGroup)
-                            };
+                                LegNr = h.ParentRace.LegNr,
+                                StartNr = h.StartNr
+                            }).ToList()
+                            //HorseList = new ObservableCollection<HPTHorse>(horsesInGroup)
+                        };
 
                         int numberOfDifferentRaces = horsesInGroup.Select(h => h.ParentRace.LegNr).Distinct().Count();
                         complementaryReductionRule.SetSelectable(numberOfDifferentRaces);
@@ -2696,7 +2692,7 @@ namespace HPTClient
                     });
 
                 hptCalendar.RaceDayInfoList = new ObservableCollection<HPTRaceDayInfo>(hptRaceDayInfoList.OrderBy(hptRdi => hptRdi.RaceDayDate));
-                
+
                 // Skapa lista med de tävlingar man ska kunna ladda ner systemförslag för
                 var raceDayInfoLightList = new List<HPTRaceDayInfoLight>();
                 hptCalendar.RaceDayInfoList
@@ -2706,13 +2702,13 @@ namespace HPTClient
                         {
                             var tempList = hptRdi.BetTypeList.Where(bt => bt.Code.StartsWith("V"))
                                 .Select(bt => new HPTRaceDayInfoLight()
-                                    {
-                                        BetTypeCode = bt.Code,
-                                        RaceDayDate = hptRdi.RaceDayDate,
-                                        TrackId = hptRdi.TrackId,
-                                        TrackName = hptRdi.Trackname,
-                                        NumberOfUploadedSystems = bt.NumberOfUploadedSystems
-                                    });
+                                {
+                                    BetTypeCode = bt.Code,
+                                    RaceDayDate = hptRdi.RaceDayDate,
+                                    TrackId = hptRdi.TrackId,
+                                    TrackName = hptRdi.Trackname,
+                                    NumberOfUploadedSystems = bt.NumberOfUploadedSystems
+                                });
 
                             lock (raceDayInfoLightList)
                             {
@@ -2721,7 +2717,7 @@ namespace HPTClient
                         });
 
                 raceDayInfoLightList.ForEach(rl => HPTConfig.Config.MarkBetSystemList.Add(rl));
-                
+
                 // Sätt sökväg och spara ner kalender på disk
                 string calendarPath = HPTConfig.MyDocumentsPath + "\\HPTCalendar.hptcal";
 

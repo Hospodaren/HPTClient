@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Collections.ObjectModel;
+﻿using System.Linq;
 using System.Runtime.Serialization;
 
 namespace HPTClient
@@ -25,7 +21,7 @@ namespace HPTClient
             {
                 if (this.ReductionRuleList.Count(r => r.Use) > 1)
                 {
-                    return "UTGÅNGAR: " + this.NumberOfWinnersString + " av " + this.ReductionRuleList.Count(r => r.Use).ToString(); 
+                    return "UTGÅNGAR: " + this.NumberOfWinnersString + " av " + this.ReductionRuleList.Count(r => r.Use).ToString();
                 }
                 return string.Empty;
             }

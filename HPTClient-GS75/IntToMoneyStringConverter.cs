@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Data;
 
 namespace HPTClient
@@ -16,7 +13,7 @@ namespace HPTClient
             {
                 culture = new System.Globalization.CultureInfo("sv-SE");
             }
-            
+
 
             if (intValue < 10000)
             {

@@ -1,19 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Collections.ObjectModel;
-using Microsoft.Win32;
+using System.Linq;
+using System.Windows;
+using System.Windows.Media;
 
 namespace HPTClient
 {
@@ -24,7 +13,8 @@ namespace HPTClient
     {
         //public HPTRace Race1 { get; set; }
         //public HPTRace Race2 { get; set; }
-        public UCDoubleGame(){
+        public UCDoubleGame()
+        {
 
             InitializeComponent();
         }
@@ -48,7 +38,7 @@ namespace HPTClient
                     r.HorseList
                         .Where(h => h.Scratched == null || h.Scratched == false)
                         .ToList()
-                        .ForEach(h => h.Selected = true);   
+                        .ForEach(h => h.Selected = true);
 
                     r.NumberOfSelectedChanged += race_NumberOfSelectedChanged;
                 });
@@ -73,7 +63,7 @@ namespace HPTClient
             //    this.btnUpdate.IsEnabled = false;
             //}
         }
-        
+
         public ObservableCollection<HPTRace> RaceList { get; set; }
 
         public HPTRace Race1
@@ -109,7 +99,7 @@ namespace HPTClient
             this.CombBet.RaceDayInfo.CombinationListInfoDouble.UpdateCombinationsToShow();
         }
 
-       private bool firstLoad = true;
+        private bool firstLoad = true;
         private void ucDoubleGame_Loaded(object sender, RoutedEventArgs e)
         {
             SetCountDown();
@@ -164,7 +154,7 @@ namespace HPTClient
                 }
                 else
                 {
-                    TimeSpan tsTemp = this.upcomingRace.PostTime - DateTime.Now;                
+                    TimeSpan tsTemp = this.upcomingRace.PostTime - DateTime.Now;
                     ts(tsTemp);
                 }
             };

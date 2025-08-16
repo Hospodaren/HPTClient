@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace HPTClient
 {
@@ -24,7 +13,7 @@ namespace HPTClient
         {
             InitializeComponent();
         }
-        
+
         private void btnNewRule_Click(object sender, RoutedEventArgs e)
         {
             object o = this.icRules.DataContext;
@@ -62,8 +51,8 @@ namespace HPTClient
 
         private void btnRemove_Click(object sender, RoutedEventArgs e)
         {
-            Button btn = (Button) sender;
-            HPTABCDEFReductionRule rule = (HPTABCDEFReductionRule) btn.DataContext;
+            Button btn = (Button)sender;
+            HPTABCDEFReductionRule rule = (HPTABCDEFReductionRule)btn.DataContext;
             this.MarkBet.MultiABCDEFReductionRule.ABCDEFReductionRuleList.Remove(rule);
             this.MarkBet.RecalculateReduction(RecalculateReason.XReduction);
         }

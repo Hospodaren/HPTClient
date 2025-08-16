@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Xml.Serialization;
-using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 
 namespace HPTClient
@@ -35,7 +31,7 @@ namespace HPTClient
         }
 
         public void SetNameAndNumberOfHorse()
-        {            
+        {
             this.NameAndNumberOfHorses = this.Name + " (" + this.NumberOfSelectedHorse.ToString() + "/" + this.HorseList.Count.ToString() + ")";
         }
 
@@ -58,7 +54,7 @@ namespace HPTClient
         }
 
         public string ShortName { get; set; }
-        
+
         public HPTRaceDayInfo ParentRaceDayInfo { get; set; }
 
         public ICollection<HPTHorse> HorseList { get; set; }

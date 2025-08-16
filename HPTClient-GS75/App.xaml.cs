@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Text.RegularExpressions;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
-using System.Security.Permissions;
 
 namespace HPTClient
 {
@@ -38,7 +34,7 @@ namespace HPTClient
                     }
                 }
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 // Vetefan hur args funkar här... :-(
             }

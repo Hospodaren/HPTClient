@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml.Serialization;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Runtime.Serialization;
+using System.Text;
 using System.Threading;
 
 namespace HPTClient
@@ -20,7 +18,7 @@ namespace HPTClient
             string fileName = HPTConfig.MyDocumentsPath + "HorseOwnInformationList.hptinfo";
             HPTSerializer.SerializeHPTHorseOwnInformation(fileName, this);
         }
-        
+
         internal HPTHorseOwnInformation MergeHorseOwnInformation(HPTHorse horse)
         {
             try
@@ -72,7 +70,7 @@ namespace HPTClient
 
                 return savedHorseInformation;
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 return horse.OwnInformation;
             }
@@ -100,7 +98,7 @@ namespace HPTClient
             var ownInformation = this.HorseOwnInformationList.FirstOrDefault(oi => oi != null && oi.Name != null && oi.Name == name);
             if (ownInformation != null)
             {
-                if (string.IsNullOrEmpty(ownInformation.Comment) 
+                if (string.IsNullOrEmpty(ownInformation.Comment)
                     && (ownInformation.HorseOwnInformationCommentList == null || ownInformation.HorseOwnInformationCommentList.Count == 0)
                     && (ownInformation.NextTimer == null || ownInformation.NextTimer == false))
                 {
@@ -414,7 +412,7 @@ namespace HPTClient
         {
             get
             {
-                if (this.HorseOwnInformationCommentList == null ||this.HorseOwnInformationCommentList.Count == 0)
+                if (this.HorseOwnInformationCommentList == null || this.HorseOwnInformationCommentList.Count == 0)
                 {
                     return this.CreationDate;
                 }

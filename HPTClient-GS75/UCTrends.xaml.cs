@@ -1,18 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.ComponentModel;
-using System.Collections.ObjectModel;
 
 namespace HPTClient
 {
@@ -34,7 +27,7 @@ namespace HPTClient
                 //this.TimeList = new ObservableCollection<DateTime>();
             }
         }
-        
+
         public ObservableCollection<DateTime> TimeList
         {
             get { return (ObservableCollection<DateTime>)GetValue(TimeListProperty); }
@@ -48,7 +41,7 @@ namespace HPTClient
 
 
         private GridViewColumn[] staticColumns;
-        
+
         private void btnGetRaceDayInfoHistory_Click(object sender, RoutedEventArgs e)
         {
             //this.btnGetRaceDayInfoHistory.IsEnabled = false;
@@ -78,7 +71,7 @@ namespace HPTClient
                 var connector = new HPTServiceConnector();
                 connector.GetRaceDayInfoHistoryGrouped(this.MarkBet.RaceDayInfo.BetType.Code, this.MarkBet.RaceDayInfo.TrackId, this.MarkBet.RaceDayInfo.RaceDayDate, GetRaceDayInfoHistory);
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 this.btnGetRaceDayInfoHistory.IsEnabled = true;
             }
@@ -91,7 +84,7 @@ namespace HPTClient
             {
                 Dispatcher.Invoke(new Action<HPTService.HPTRaceDayInfoHistoryInfoGrouped>(GetRaceDayInfoHistoryInvoke), raceDayInfoHistory);
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 this.btnGetRaceDayInfoHistory.IsEnabled = true;
             }
@@ -287,13 +280,13 @@ namespace HPTClient
                             .ToList()
                             .ForEach(h => h.SetHistoryRelativeDifferenceUnadjusted(this.SelectedIndex))  // Valt index på ComboBox med tider...
                             );
-                
+
                 this.gvwVxxSpel.Columns.Clear();
 
                 this.staticColumns
                     .ToList()
                     .ForEach(sc => this.gvwVxxSpel.Columns.Add(sc));
-                
+
                 if (string.IsNullOrEmpty(this.GroupDescriptionName))
                 {
                     // Aldrig sortering på mer än två variabler
@@ -318,7 +311,7 @@ namespace HPTClient
                 {
                     this.MarkBet.RecalculateRank();
                 }
-
+                //this.MarkBet.HorseList.Clear();
                 this.lvwLopp.Items.Refresh();
             }
         }

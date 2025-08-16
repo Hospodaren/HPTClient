@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -17,7 +14,7 @@ namespace HPTClient
 
         public HPTMarkBet MarkBet
         {
-            get 
+            get
             {
                 object o = GetValue(MarkBetProperty);
                 if (o == null || o.GetType() != typeof(HPTMarkBet))
@@ -25,18 +22,18 @@ namespace HPTClient
                     try
                     {
                         HPTMarkBet markBet = (HPTMarkBet)this.DataContext;
-                        SetValue(MarkBetProperty, markBet); 
+                        SetValue(MarkBetProperty, markBet);
                     }
-                    catch (Exception exc)
+                    catch (Exception)
                     {
                         return null;
                     }
                 }
-                return (HPTMarkBet)GetValue(MarkBetProperty); 
+                return (HPTMarkBet)GetValue(MarkBetProperty);
             }
-            set 
-            { 
-                SetValue(MarkBetProperty, value); 
+            set
+            {
+                SetValue(MarkBetProperty, value);
             }
         }
 
@@ -55,7 +52,7 @@ namespace HPTClient
         public static readonly DependencyProperty ConfigProperty =
             DependencyProperty.Register("Config", typeof(HPTConfig), typeof(UCMarkBetControl), new UIPropertyMetadata(HPTConfig.Config));
 
-        
+
 
     }
 }

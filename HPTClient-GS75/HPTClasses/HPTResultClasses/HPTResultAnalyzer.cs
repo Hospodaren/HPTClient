@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Xml.Serialization;
-using System.Collections.ObjectModel;
 using System.Windows.Media;
-using System.IO;
-using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 namespace HPTClient
 {
@@ -15,7 +15,7 @@ namespace HPTClient
     public class HPTResultAnalyzer : Notifier
     {
         #region egna events
-        
+
         public static event Action<IEnumerable<HPTHorse>, HPTMarkBet> ResultAnalyzerAdded;
 
         #endregion
@@ -45,16 +45,16 @@ namespace HPTClient
             }
 
             this.HorseList = new ObservableCollection<HPTHorseLightAnalyzed>(horseList.Select(h => new HPTHorseLightAnalyzed()
-                {
-                    Horse = h,
-                    LegNr = h.ParentRace.LegNr,
-                    LegNrString = h.ParentRace.LegNrString,
-                    Name = h.HorseName,
-                    StartNr = h.StartNr,
-                    RankvariableMean = Convert.ToDecimal(h.RankList.Where(r => r.Name != "RankOwn" && r.Name != "RankTip" && r.Name != "RankABC" && r.Name != "RankAlternate").Average(r => r.Rank)),
-                    RankvariableSum = Convert.ToDecimal(h.RankList.Where(r => r.Name != "RankOwn" && r.Name != "RankTip" && r.Name != "RankABC" && r.Name != "RankAlternate").Sum(r => r.Rank))
+            {
+                Horse = h,
+                LegNr = h.ParentRace.LegNr,
+                LegNrString = h.ParentRace.LegNrString,
+                Name = h.HorseName,
+                StartNr = h.StartNr,
+                RankvariableMean = Convert.ToDecimal(h.RankList.Where(r => r.Name != "RankOwn" && r.Name != "RankTip" && r.Name != "RankABC" && r.Name != "RankAlternate").Average(r => r.Rank)),
+                RankvariableSum = Convert.ToDecimal(h.RankList.Where(r => r.Name != "RankOwn" && r.Name != "RankTip" && r.Name != "RankABC" && r.Name != "RankAlternate").Sum(r => r.Rank))
 
-                }));
+            }));
 
             var rankVariableList = HPTHorseRankVariable.CreateVariableList();
             this.RankVariableHorseRankList = new ObservableCollection<HPTRankVariableHorseRankList>(
@@ -124,7 +124,7 @@ namespace HPTClient
             }
             return textToShow;
         }
-        
+
         [OnDeserialized]
         public void SetNonSerializedValues(StreamingContext sc)
         {
@@ -141,7 +141,7 @@ namespace HPTClient
             }
             foreach (var rvhr in this.RankVariableHorseRankList)
             {
-                
+
                 rvhr.BackColor = new SolidColorBrush(Colors.LightGray);
             }
             CalculateMeanAndStDev();
@@ -304,7 +304,7 @@ namespace HPTClient
             orderedList.First().BackColor = new SolidColorBrush(Colors.LightGreen);
             orderedList.Last().BackColor = new SolidColorBrush(Colors.LightCoral);
         }
-        
+
         #endregion
 
         #region Hantering av historik
@@ -314,8 +314,8 @@ namespace HPTClient
             HPTSerializer.SerializeHPTResultAnalyzerList(ResultAnalyzerFileName, resultAnalyzerList);
         }
 
-        private static ObservableCollection<HPTResultAnalyzer> resultAnalyzerList; 
-        public static ObservableCollection<HPTResultAnalyzer> ResultAnalyzerList 
+        private static ObservableCollection<HPTResultAnalyzer> resultAnalyzerList;
+        public static ObservableCollection<HPTResultAnalyzer> ResultAnalyzerList
         {
             get
             {
@@ -415,12 +415,12 @@ namespace HPTClient
                         sbValues.Append(horseRank.RankValueString);
                         sbValues.Append("\t");
                     }
-                }                
+                }
                 sb.Append(rv.Sum);
                 sb.Append("\t\t");
                 sb.Append(sbValues.ToString());
                 sb.Append("\r\n");
-            }            
+            }
             return sb.ToString();
         }
 

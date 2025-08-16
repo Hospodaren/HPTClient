@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Net.Mail;
-using System.Net.NetworkInformation;
-using System.Net.Security;
-using System.Net.Sockets;
 using System.IO;
+using System.Net.Mail;
 using System.Runtime.Serialization;
 
 namespace HPTClient
@@ -154,7 +149,7 @@ namespace HPTClient
                 Attachment a2 = new Attachment(fs2, GetFilenameAndRemoveSwedishChars(this.ATGSystemFileName), System.Net.Mime.MediaTypeNames.Text.Xml);
                 a2.ContentType.Name = Path.GetFileName(this.ATGSystemFileName);
                 mail.Attachments.Add(a2);
-            }  
+            }
 
             SmtpClient smtp = new System.Net.Mail.SmtpClient("smtp.gmail.com");
             smtp.UseDefaultCredentials = false;
@@ -205,7 +200,7 @@ namespace HPTClient
             if (atgSystemFileName != string.Empty)
             {
                 mail.Attachments.Add(new Attachment(atgSystemFileName));
-            }            
+            }
 
             SmtpClient smtp = new System.Net.Mail.SmtpClient("smtp.gmail.com");
             smtp.UseDefaultCredentials = false;
@@ -251,8 +246,8 @@ namespace HPTClient
         //   }
         //    catch (Exception ex)
         //   {
-                
+
         //    }
         //}
-   }
+    }
 }

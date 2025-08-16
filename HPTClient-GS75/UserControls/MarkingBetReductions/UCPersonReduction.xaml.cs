@@ -1,17 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Collections.ObjectModel;
 
 namespace HPTClient
 {
@@ -25,12 +17,12 @@ namespace HPTClient
         public HPTRaceDayInfo ParentRaceDayInfo { get; set; }
 
         public UCPersonReduction()
-        {            
+        {
             //this.HorseList = new ObservableCollection<HPTHorse>();
             this.HorseList = new ObservableCollection<HPTHorse>();
             this.PersonList = new ObservableCollection<HPTPerson>();
             InitializeComponent();
-            SetRaceDayInfo();            
+            SetRaceDayInfo();
         }
 
         private HPTPersonRulesCollection personRulesCollection;
@@ -45,7 +37,7 @@ namespace HPTClient
                 return this.personRulesCollection;
             }
         }
-        
+
         public HPTPersonReductionRule CurrentReductionRule
         {
             get { return (HPTPersonReductionRule)GetValue(CurrentReductionRuleProperty); }
@@ -108,14 +100,14 @@ namespace HPTClient
             {
                 if (this.CurrentReductionRule == null)
                 {
-                    this.CurrentReductionRule = this.PersonRulesCollection.ReductionRuleFactory();                    
+                    this.CurrentReductionRule = this.PersonRulesCollection.ReductionRuleFactory();
                 }
                 foreach (HPTHorse horse in person.HorseList)
                 {
                     if (!this.HorseList.Contains(horse))
                     {
                         this.HorseList.Add(horse);
-                    }                    
+                    }
                 }
                 if (!this.CurrentReductionRule.PersonList.Contains(person))
                 {
@@ -124,7 +116,7 @@ namespace HPTClient
                 if (!this.PersonRulesCollection.ReductionRuleList.Contains(this.CurrentReductionRule))
                 {
                     this.PersonRulesCollection.ReductionRuleList.Add(this.CurrentReductionRule);
-                }                
+                }
             }
             else
             {
@@ -141,7 +133,7 @@ namespace HPTClient
             this.MarkBet.pauseRecalculation = recalculationPaused;
             this.MarkBet.RecalculateReduction(RecalculateReason.Other);
         }
-        
+
         private void btnAddRule_Click(object sender, RoutedEventArgs e)
         {
             if (this.PersonRulesCollection.ReductionRuleList.Contains(this.CurrentReductionRule))

@@ -2,17 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Reflection;
 using Xceed.Wpf.Toolkit;
 
 namespace HPTClient
@@ -115,13 +109,13 @@ namespace HPTClient
                 }
                 if (this.DataContext.GetType() == typeof(HPTRace))
                 {
-                    var race = (HPTRace) this.DataContext;
+                    var race = (HPTRace)this.DataContext;
                     return race.ParentRaceDayInfo.BetType;
                 }
                 return new HPTBetType()
-                           {
-                               Code = string.Empty
-                           };
+                {
+                    Code = string.Empty
+                };
             }
         }
 
@@ -236,10 +230,10 @@ namespace HPTClient
                 if (dud != null)
                 {
                     dud.Focus();
-                } 
+                }
             }
 
-            
+
             e.Handled = true;
         }
 
@@ -258,7 +252,7 @@ namespace HPTClient
                 if (iud != null)
                 {
                     iud.Focus();
-                } 
+                }
             }
             e.Handled = true;
         }
@@ -391,7 +385,7 @@ namespace HPTClient
             {
                 return;
             }
-            
+
             ListSortDirection newDir = ListSortDirection.Ascending;
 
             if (this.lvwLopp.Items.SortDescriptions.Count > 0)
@@ -473,23 +467,23 @@ namespace HPTClient
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
                 // TEMPORÄRT BORTTAGET!
-            //    // Ta bort eventhandlers för ändringar i konfigurationen (programmet läcker minne annars)
-            //    try
-            //    {
-            //        HPTConfig.Config.PropertyChanged -= new PropertyChangedEventHandler(Config_PropertyChanged);
-            //        if (this.HorseListContainer != null)
-            //        {
-            //            this.HorseListContainer.ParentRaceDayInfo.DataToShow.PropertyChanged -= new PropertyChangedEventHandler(DataToShow_PropertyChanged);
-            //        }
-            //        if (this.gvwVxxSpel != null)
-            //        {
-            //            this.gvwVxxSpel.Columns.CollectionChanged -= new System.Collections.Specialized.NotifyCollectionChangedEventHandler(Columns_CollectionChanged);
-            //        }
-            //    }
-            //    catch (Exception exc)
-            //    {
-            //        string s = exc.Message;
-            //    }
+                //    // Ta bort eventhandlers för ändringar i konfigurationen (programmet läcker minne annars)
+                //    try
+                //    {
+                //        HPTConfig.Config.PropertyChanged -= new PropertyChangedEventHandler(Config_PropertyChanged);
+                //        if (this.HorseListContainer != null)
+                //        {
+                //            this.HorseListContainer.ParentRaceDayInfo.DataToShow.PropertyChanged -= new PropertyChangedEventHandler(DataToShow_PropertyChanged);
+                //        }
+                //        if (this.gvwVxxSpel != null)
+                //        {
+                //            this.gvwVxxSpel.Columns.CollectionChanged -= new System.Collections.Specialized.NotifyCollectionChangedEventHandler(Columns_CollectionChanged);
+                //        }
+                //    }
+                //    catch (Exception exc)
+                //    {
+                //        string s = exc.Message;
+                //    }
             }
         }
 
@@ -501,7 +495,7 @@ namespace HPTClient
             {
                 return;
             }
-            
+
             //this.gvwVxxSpel.Columns.Clear();
 
             for (int i = 0; i < this.HorseListContainer.ParentRaceDayInfo.DataToShow.ColumnsInOrder.Count; i++)
@@ -522,7 +516,7 @@ namespace HPTClient
                     }
                     //this.gvwVxxSpel.Columns.Add(columnHandler.Column);
                 }
-            }          
+            }
         }
 
         void Columns_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -582,29 +576,29 @@ namespace HPTClient
                         }
                     }
 
-                // Skapa en lista med alla kolumner i listvyn
-                if (this.ColumnHandlerList == null || this.ColumnHandlerList.Count == 0)
-                {
-                    CreateColumnHandlerList();
-
-                    List<string> propertyNamesList = this.ColumnHandlerList.Select(ch => ch.BindingField).ToList();
-
-                    foreach (string propertyName in propertyNamesList)
+                    // Skapa en lista med alla kolumner i listvyn
+                    if (this.ColumnHandlerList == null || this.ColumnHandlerList.Count == 0)
                     {
-                        // Ta bort de kolumner man inte vill visa
-                        bool show = (bool)this.HorseListContainer.ParentRaceDayInfo
-                            .DataToShow.GetType().GetProperty(propertyName)
-                            .GetValue(this.HorseListContainer.ParentRaceDayInfo.DataToShow, null);
+                        CreateColumnHandlerList();
 
-                        HandleColumn(propertyName, show);
+                        List<string> propertyNamesList = this.ColumnHandlerList.Select(ch => ch.BindingField).ToList();
+
+                        foreach (string propertyName in propertyNamesList)
+                        {
+                            // Ta bort de kolumner man inte vill visa
+                            bool show = (bool)this.HorseListContainer.ParentRaceDayInfo
+                                .DataToShow.GetType().GetProperty(propertyName)
+                                .GetValue(this.HorseListContainer.ParentRaceDayInfo.DataToShow, null);
+
+                            HandleColumn(propertyName, show);
+                        }
+                        SortColumns();
                     }
-                    SortColumns();
-                }
 
-                // Lägg till eventhandler för om kolumner ändrar ordning eller tas bort
-                this.gvwVxxSpel.Columns.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(Columns_CollectionChanged);
-                HPTConfig.Config.PropertyChanged += new PropertyChangedEventHandler(Config_PropertyChanged);
-                this.HorseListContainer.ParentRaceDayInfo.DataToShow.PropertyChanged += new PropertyChangedEventHandler(DataToShow_PropertyChanged);
+                    // Lägg till eventhandler för om kolumner ändrar ordning eller tas bort
+                    this.gvwVxxSpel.Columns.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(Columns_CollectionChanged);
+                    HPTConfig.Config.PropertyChanged += new PropertyChangedEventHandler(Config_PropertyChanged);
+                    this.HorseListContainer.ParentRaceDayInfo.DataToShow.PropertyChanged += new PropertyChangedEventHandler(DataToShow_PropertyChanged);
                 }
             }
         }
@@ -666,7 +660,7 @@ namespace HPTClient
             // Rank
             this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcRankMean, Name = "gvcRankMean", Position = 0, BindingField = "ShowRankMean" });
             this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcRankTip, Name = "gvcRankTip", Position = 0, BindingField = "ShowRankTip" });
-            
+
             // Egna inställningar
             this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcLocked, Name = "gvcLocked", Position = 0, BindingField = "ShowLocked" });
             this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcNextTimer, Name = "gvcNextTimer", Position = 0, BindingField = "ShowOwnInformation" });
@@ -676,8 +670,8 @@ namespace HPTClient
             this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcOwnProbability, Name = "gvcOwnProbability", Position = 0, BindingField = "ShowOwnProbability" });
 
             // Historisk information
-            this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcEarnings, Name = "gvcEarnings", Position = 0, BindingField = "ShowEarnings"});
-            this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcEarningsMeanLast5, Name = "gvcEarningsMeanLast5", Position = 0, BindingField = "ShowEarningsMeanLast5"});
+            this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcEarnings, Name = "gvcEarnings", Position = 0, BindingField = "ShowEarnings" });
+            this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcEarningsMeanLast5, Name = "gvcEarningsMeanLast5", Position = 0, BindingField = "ShowEarningsMeanLast5" });
             this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcLastStartDate, Name = "gvcLastStartDate", Position = 0, BindingField = "ShowLastStartDate" });
             this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcRecord, Name = "gvcRecord", Position = 0, BindingField = "ShowRecord" });
             this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcResultRow, Name = "gvcResultRow", Position = 0, BindingField = "ShowResultRow" });
@@ -691,26 +685,26 @@ namespace HPTClient
             this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcShape, Name = "gvcShape", Position = 0, BindingField = "ShowShape" });
 
             // Systeminformation
-            this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcSystemCoverage, Name = "gvcSystemCoverage", Position = 0, BindingField = "ShowSystemCoverage"});
+            this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcSystemCoverage, Name = "gvcSystemCoverage", Position = 0, BindingField = "ShowSystemCoverage" });
 
             // Vinnarspel
             this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcVinnarOdds, Name = "gvcVinnarOdds", Position = 0, BindingField = "ShowVinnarOdds" });
             this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcRelativeDifferenceVinnare, Name = "gvcRelativeDifferenceVinnare", Position = 0, BindingField = "ShowRelativeDifferenceVinnare" });
             this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcVinnarOddsRelative, Name = "gvcVinnarOddsRelative", Position = 0, BindingField = "ShowVinnarOddsRelative" });
             this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcVinnarOddsShare, Name = "gvcVinnarOddsShare", Position = 0, BindingField = "ShowVinnarOddsShare" });
-            
+
             // Platsodds
             this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcPlatsOdds, Name = "gvcPlatsOdds", Position = 0, BindingField = "ShowPlatsOdds" });
             this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcPlatsoddsShare, Name = "gvcPlatsoddsShare", Position = 0, BindingField = "ShowPlatsShare" });
             this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcRelativeDifferencePlats, Name = "gvcRelativeDifferencePlats", Position = 0, BindingField = "ShowRelativeDifferencePlats" });
-            
+
             // Alternativa insatsfördelningar
             this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcStakeShareAlternate, Name = "gvcStakeShareAlternate", Position = 0, BindingField = "ShowStakeShare" });
             this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcStakeShareAlternate2, Name = "gvcStakeShareAlternate2", Position = 0, BindingField = "ShowStakeShare" });
             this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcDoubleShare, Name = "gvcDoubleShare", Position = 0, BindingField = "ShowDoubleShare" });
-            this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcTrioShare, Name = "gvcTrioShare", Position = 0, BindingField = "ShowTrioShare"});
-            this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcTvillingShare, Name = "gvcTvillingShare", Position = 0, BindingField = "ShowTvillingShare"});
-            
+            this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcTrioShare, Name = "gvcTrioShare", Position = 0, BindingField = "ShowTrioShare" });
+            this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcTvillingShare, Name = "gvcTvillingShare", Position = 0, BindingField = "ShowTvillingShare" });
+
             this.gvwVxxSpel.Columns.Clear();
         }
 
@@ -1030,7 +1024,7 @@ namespace HPTClient
             }
 
             // Specialhantering för snittrank
-            if (field == "RankMean" ||field == "RankWeighted")
+            if (field == "RankMean" || field == "RankWeighted")
             {
                 if (rankTemplateMenuItem == null)
                 {
@@ -1062,7 +1056,7 @@ namespace HPTClient
 
         void rankTemplateMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            MenuItem mi = (MenuItem) e.OriginalSource;
+            MenuItem mi = (MenuItem)e.OriginalSource;
             var rankTemplate = (HPTRankTemplate)mi.DataContext;
             this.horseListContainer.ParentRaceDayInfo.SetRankTemplateChanged(rankTemplate);
         }
@@ -1254,12 +1248,12 @@ namespace HPTClient
             }
 
             this.MarkBet.MarkBetTemplateABCD = new HPTMarkBetTemplateABCD()
-                                                   {
-                                                       DesiredSystemSize = this.MarkBet.SystemSize * (100 - reductionPercentage) / 100,
-                                                       ReductionPercentage = reductionPercentage,
-                                                       Use = true
-                                                   };
-            this.MarkBet.MarkBetTemplateABCD.InitializeTemplate(new HPTPrio[]{HPTPrio.A, HPTPrio.B, HPTPrio.C, });
+            {
+                DesiredSystemSize = this.MarkBet.SystemSize * (100 - reductionPercentage) / 100,
+                ReductionPercentage = reductionPercentage,
+                Use = true
+            };
+            this.MarkBet.MarkBetTemplateABCD.InitializeTemplate(new HPTPrio[] { HPTPrio.A, HPTPrio.B, HPTPrio.C, });
             this.MarkBet.CreateSystemsFromTemplateABCD();
             this.MarkBet.pauseRecalculation = recalculationPaused;
         }
@@ -1333,7 +1327,7 @@ namespace HPTClient
         private List<MenuItem> reservMenuItems;
         private void gvcReservHeader_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton != MouseButton.Right 
+            if (e.ChangedButton != MouseButton.Right
                 || this.HorseListContainer.ParentRaceDayInfo.DataToShow.Usage != DataToShowUsage.Vxx)
             {
                 //e.Handled = true;
@@ -1436,7 +1430,7 @@ namespace HPTClient
                 return this.pu;
             }
         }
-            
+
         private void txtHorseName_MouseUp(object sender, MouseButtonEventArgs e)
         {
             //if (e.ChangedButton == MouseButton.Left && HPTConfig.Config.IsPayingCustomer)
@@ -1459,13 +1453,13 @@ namespace HPTClient
 
         private void txtDriverName_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton != MouseButton.Left 
+            if (e.ChangedButton != MouseButton.Left
                 || this.HorseListContainer.ParentRaceDayInfo.DataToShow.Usage != DataToShowUsage.Vxx)
             {
                 return;
             }
             TextBlock tb = (TextBlock)sender;
-            HPTHorse horse = (HPTHorse) tb.DataContext;
+            HPTHorse horse = (HPTHorse)tb.DataContext;
 
             Border b = new Border()
             {
@@ -1485,7 +1479,7 @@ namespace HPTClient
 
         private void txtTrainerName_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton != MouseButton.Left 
+            if (e.ChangedButton != MouseButton.Left
                 || this.HorseListContainer.ParentRaceDayInfo.DataToShow.Usage != DataToShowUsage.Vxx)
             {
                 return;
@@ -1532,7 +1526,7 @@ namespace HPTClient
         private List<MenuItem> selectAllMenuItems;
         private void GridViewColumnHeader_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton != MouseButton.Right 
+            if (e.ChangedButton != MouseButton.Right
                 || this.HorseListContainer.ParentRaceDayInfo.DataToShow.Usage != DataToShowUsage.Vxx)
             {
                 return;
@@ -1626,7 +1620,7 @@ namespace HPTClient
         private List<MenuItem> abcdMenuItems;
         private void gvcABCD_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton != MouseButton.Right 
+            if (e.ChangedButton != MouseButton.Right
                 || this.HorseListContainer.ParentRaceDayInfo.DataToShow.Usage != DataToShowUsage.Vxx)
             {
                 return;
@@ -1658,7 +1652,7 @@ namespace HPTClient
 
         private void MiClearAbcdOnClick(object sender, RoutedEventArgs routedEventArgs)
         {
-            HPTRace race = (HPTRace) this.DataContext;
+            HPTRace race = (HPTRace)this.DataContext;
             race.ClearABCDRace();
         }
 
@@ -1879,7 +1873,7 @@ namespace HPTClient
                 MenuItem miV6BetMultiplier = new MenuItem()
                 {
                     Header = bm.ToString(),
-                    Tag = "V6-" +  bm.ToString()
+                    Tag = "V6-" + bm.ToString()
                 };
                 miV6BetMultiplier.Click += new RoutedEventHandler(miV6Betmultiplier_Click);
                 miV6AndBetMultiplierHeader.Items.Add(miV6BetMultiplier);
@@ -1938,7 +1932,7 @@ namespace HPTClient
         {
             var mi = (MenuItem)sender;
             var selectedHorse = (HPTHorse)mi.DataContext;
-            foreach (var horse in selectedHorse.ParentRace.HorseList.Except(new HPTHorse[]{ selectedHorse }).ToList())
+            foreach (var horse in selectedHorse.ParentRace.HorseList.Except(new HPTHorse[] { selectedHorse }).ToList())
             {
                 horse.Selected = false;
             }
@@ -2220,9 +2214,9 @@ namespace HPTClient
 
                 var rankVariableList = HPTHorseRankVariable.CreateVariableList();
                 var lstRanks = new ListBox()
-                    {
-                        Padding = new Thickness(2)
-                    };
+                {
+                    Padding = new Thickness(2)
+                };
                 foreach (var rankVariable in rankVariableList)
                 {
                     // Hästens rank
@@ -2264,7 +2258,7 @@ namespace HPTClient
                     }
                     decimal propertyValue = 0M;
                     bool isNumber = decimal.TryParse(displayValue, out propertyValue);
-                    
+
                     // Lägg i strängvariabel och formatera om det behövs
                     string textToShow = displayValue;
                     if (!isNumber)
@@ -2324,7 +2318,7 @@ namespace HPTClient
             }
             e.Handled = true;
         }
-        
+
         private void gvchABCD_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             var fe = (FrameworkElement)sender;
@@ -2334,7 +2328,7 @@ namespace HPTClient
             foreach (var o in horseListSorted)
             {
                 var horseToSelect = (HPTHorse)o;
-                if (horseToSelect.Prio == HPTPrio.M ||xReduction.Horse == horseToSelect)
+                if (horseToSelect.Prio == HPTPrio.M || xReduction.Horse == horseToSelect)
                 {
                     var xReductionToSelect = horseToSelect.HorseXReductionList.FirstOrDefault(xr => xr.Prio == xReduction.Prio);
                     if (xReductionToSelect != null)
@@ -2372,7 +2366,7 @@ namespace HPTClient
         {
             try
             {
-                if (this.MarkBet != null && (this.MarkBet.OwnProbabilityReductionRule.Use ||this.MarkBet.OwnProbabilityCost))
+                if (this.MarkBet != null && (this.MarkBet.OwnProbabilityReductionRule.Use || this.MarkBet.OwnProbabilityCost))
                 {
                     this.MarkBet.RecalculateReduction(RecalculateReason.All);
                 }

@@ -1,19 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Collections.ObjectModel;
-using Microsoft.Win32;
 
 namespace HPTClient
 {
@@ -109,7 +99,7 @@ namespace HPTClient
                     horse.Selected = true;
                 }
             }
-            if (horse.Selected && !horse.TrioInfo.PlaceInfo1.Selected && !horse.TrioInfo.PlaceInfo2.Selected  && !horse.TrioInfo.PlaceInfo3.Selected)
+            if (horse.Selected && !horse.TrioInfo.PlaceInfo1.Selected && !horse.TrioInfo.PlaceInfo2.Selected && !horse.TrioInfo.PlaceInfo3.Selected)
             {
                 horse.Selected = false;
             }
@@ -136,9 +126,9 @@ namespace HPTClient
                 horse.TrioInfo.PlaceInfo3.Selected = horse.Selected;
                 UpdateSelectedCombinations(race);
                 race.TrioSelectionChanged += race_TrioSelectionChanged;
-            }            
+            }
         }
-        
+
         private void tcTrioGame_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //try
@@ -161,7 +151,7 @@ namespace HPTClient
         {
             try
             {
-                var chk = (CheckBox) e.OriginalSource;
+                var chk = (CheckBox)e.OriginalSource;
                 //if (chk.Name == "chkNrSelect" || chk.Name == "chkTrio1" || chk.Name == "chkTrio2" || chk.Name == "chkTrio3")
                 if (chk.Name == "chkNrSelect" || chk.Name == "chkTrioPlace")
                 {
@@ -170,7 +160,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;   
+                string s = exc.Message;
                 throw;
             }
         }

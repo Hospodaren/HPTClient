@@ -1,17 +1,9 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Microsoft.Win32;
 
 namespace HPTClient
 {
@@ -40,11 +32,11 @@ namespace HPTClient
         private void btnImportRankVariableTemplates_Click(object sender, RoutedEventArgs e)
         {
             var ofd = new OpenFileDialog()
-                {
-                    InitialDirectory = HPTConfig.MyDocumentsPath,
-                    Filter = "HPT 5-mallar|*.hpt5m;*.hptam;*.hptrm;*.hptrvm;*.hptrsm;*.hptgim",
-                    Multiselect = true                    
-                };
+            {
+                InitialDirectory = HPTConfig.MyDocumentsPath,
+                Filter = "HPT 5-mallar|*.hpt5m;*.hptam;*.hptrm;*.hptrvm;*.hptrsm;*.hptgim",
+                Multiselect = true
+            };
 
             ofd.FileOk += (sOk, eOk) =>
                 {
@@ -72,17 +64,10 @@ namespace HPTClient
                     System.Diagnostics.Process.Start(result);
                 }
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 MessageBox.Show("Något gick snett vid export av mallar. Se fellogg för detaljer.", "Fel vid export", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
-            //SaveFileDialog sfd = new SaveFileDialog();
-            //sfd.InitialDirectory = HPTConfig.MyDocumentsPath;
-            //sfd.FileName = "Rankvariabelmallar.hpt5m";
-            //sfd.Filter = "HPT-mallar (*.hpt5m)|*.hpt5m";
-            //sfd.FileOk += new System.ComponentModel.CancelEventHandler(sfd_FileOk);
-            //sfd.ShowDialog();
         }
 
         void ofd_FileOk(object sender, System.ComponentModel.CancelEventArgs e)

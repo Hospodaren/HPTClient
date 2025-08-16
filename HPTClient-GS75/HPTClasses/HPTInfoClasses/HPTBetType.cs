@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
+using System.Runtime.Serialization;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml.Serialization;
-using System.Runtime.Serialization;
-using System.Collections.ObjectModel;
 
 namespace HPTClient
 {
@@ -62,7 +60,7 @@ namespace HPTClient
                 }
                 else if (this.EndTime < DateTime.Now)
                 {
-                        c = Colors.IndianRed;
+                    c = Colors.IndianRed;
                 }
                 else
                 {
@@ -100,7 +98,7 @@ namespace HPTClient
 
         private ImageSource betTypeATGLogo;
         [XmlIgnore]
-        public ImageSource BetTypeATGLogo 
+        public ImageSource BetTypeATGLogo
         {
             get
             {
@@ -128,7 +126,7 @@ namespace HPTClient
         public bool IsEnabled { get; set; }
 
         [DataMember]
-        public int[] RaceNumberList { get; set; }   
+        public int[] RaceNumberList { get; set; }
 
         public bool IsMarksGame
         {
@@ -359,141 +357,141 @@ namespace HPTClient
                         case "GS75":
                         case "V86":
                             this.rowValueIntervalList = new ObservableCollection<HPTRowValueInterval>
-                            {  
+                            {
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = null,
-                                    UpperLimit = 1000                                    
+                                    UpperLimit = 1000
                                 },
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = 1000,
-                                    UpperLimit = 5000                                    
+                                    UpperLimit = 5000
                                 },
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = 5000,
-                                    UpperLimit = 10000                                    
+                                    UpperLimit = 10000
                                 },
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = 10000,
-                                    UpperLimit = 50000                                    
+                                    UpperLimit = 50000
                                 },
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = 50000,
-                                    UpperLimit = 100000                                    
+                                    UpperLimit = 100000
                                 },
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = 100000,
-                                    UpperLimit = 500000                                    
+                                    UpperLimit = 500000
                                 },
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = 500000,
-                                    UpperLimit = 1000000                                    
+                                    UpperLimit = 1000000
                                 },
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = 1000000,
-                                    UpperLimit = null                                    
+                                    UpperLimit = null
                                 }
                             };
                             break;
                         case "V4":
                         case "V5":
                             this.rowValueIntervalList = new ObservableCollection<HPTRowValueInterval>
-                            {  
+                            {
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = null,
-                                    UpperLimit = 300                                    
+                                    UpperLimit = 300
                                 },
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = 300,
-                                    UpperLimit = 1500                                    
+                                    UpperLimit = 1500
                                 },
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = 1500,
-                                    UpperLimit = 3000                                    
+                                    UpperLimit = 3000
                                 },
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = 3000,
-                                    UpperLimit = 15000                                    
+                                    UpperLimit = 15000
                                 },
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = 15000,
-                                    UpperLimit = 30000                                    
+                                    UpperLimit = 30000
                                 },
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = 30000,
-                                    UpperLimit = 150000                                    
+                                    UpperLimit = 150000
                                 },
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = 150000,
-                                    UpperLimit = 300000                                    
+                                    UpperLimit = 300000
                                 },
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = 300000,
-                                    UpperLimit = null                                    
+                                    UpperLimit = null
                                 }
                             };
                             break;
                         case "V64":
                         case "V65":
                             this.rowValueIntervalList = new ObservableCollection<HPTRowValueInterval>
-                            {  
+                            {
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = null,
-                                    UpperLimit = 500                                    
+                                    UpperLimit = 500
                                 },
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = 500,
-                                    UpperLimit = 2500                                    
+                                    UpperLimit = 2500
                                 },
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = 2500,
-                                    UpperLimit = 5000                                    
+                                    UpperLimit = 5000
                                 },
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = 5000,
-                                    UpperLimit = 25000                                    
+                                    UpperLimit = 25000
                                 },
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = 25000,
-                                    UpperLimit = 50000                                    
+                                    UpperLimit = 50000
                                 },
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = 50000,
-                                    UpperLimit = 250000                                    
+                                    UpperLimit = 250000
                                 },
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = 250000,
-                                    UpperLimit = 500000                                    
+                                    UpperLimit = 500000
                                 },
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = 500000,
-                                    UpperLimit = null                                    
+                                    UpperLimit = null
                                 }
                             };
-                                break;
+                            break;
                         default:
                             break;
                     }
@@ -501,8 +499,8 @@ namespace HPTClient
                 return this.rowValueIntervalList;
             }
         }
-        
-        
+
+
         private HPTRowValuePercentile[] rowValuePercentileList;
         [XmlIgnore]
         public HPTRowValuePercentile[] RowValuePercentileList
@@ -511,8 +509,8 @@ namespace HPTClient
             {
                 if (this.rowValuePercentileList == null)
                 {
-                    this.rowValuePercentileList = new HPTRowValuePercentile[] 
-                            {  
+                    this.rowValuePercentileList = new HPTRowValuePercentile[]
+                            {
                                 new HPTRowValuePercentile()
                                 {
                                     Percentile = 0.00M,
@@ -521,22 +519,22 @@ namespace HPTClient
                                 new HPTRowValuePercentile()
                                 {
                                     Percentile = 0.25M,
-                                    Description = "Undre kvartil"                                   
+                                    Description = "Undre kvartil"
                                 },
                                 new HPTRowValuePercentile()
                                 {
                                     Percentile = 0.50M,
-                                    Description = "Median"                                   
+                                    Description = "Median"
                                 },
                                 new HPTRowValuePercentile()
                                 {
                                     Percentile = 0.75M,
-                                    Description = "Övre kvartil"                                   
+                                    Description = "Övre kvartil"
                                 },
                                 new HPTRowValuePercentile()
                                 {
                                     Percentile = 1.00M,
-                                    Description = "Max"                                   
+                                    Description = "Max"
                                 }
                             };
                 }
@@ -556,8 +554,8 @@ namespace HPTClient
                     {
                         case "V75":
                         case "GS75":
-                            this.payOutDummyList = new HPTPayOut[] 
-                            {  
+                            this.payOutDummyList = new HPTPayOut[]
+                            {
                                 new HPTPayOut()
                                 {
                                     NumberOfCorrect = 7
@@ -573,8 +571,8 @@ namespace HPTClient
                             };
                             break;
                         case "V86":
-                            this.payOutDummyList = new HPTPayOut[] 
-                            {  
+                            this.payOutDummyList = new HPTPayOut[]
+                            {
                                 new HPTPayOut()
                                 {
                                     NumberOfCorrect = 8
@@ -590,8 +588,8 @@ namespace HPTClient
                             };
                             break;
                         case "V5":
-                            this.payOutDummyList = new HPTPayOut[] 
-                            {  
+                            this.payOutDummyList = new HPTPayOut[]
+                            {
                                 new HPTPayOut()
                                 {
                                     NumberOfCorrect = 5
@@ -599,8 +597,8 @@ namespace HPTClient
                             };
                             break;
                         case "V4":
-                            this.payOutDummyList = new HPTPayOut[] 
-                            {  
+                            this.payOutDummyList = new HPTPayOut[]
+                            {
                                 new HPTPayOut()
                                 {
                                     NumberOfCorrect = 4
@@ -608,8 +606,8 @@ namespace HPTClient
                             };
                             break;
                         case "V64":
-                            this.payOutDummyList = new HPTPayOut[] 
-                            {  
+                            this.payOutDummyList = new HPTPayOut[]
+                            {
                                 new HPTPayOut()
                                 {
                                     NumberOfCorrect = 6
@@ -625,8 +623,8 @@ namespace HPTClient
                             };
                             break;
                         case "V65":
-                            this.payOutDummyList = new HPTPayOut[] 
-                            {  
+                            this.payOutDummyList = new HPTPayOut[]
+                            {
                                 new HPTPayOut()
                                 {
                                     NumberOfCorrect = 6
@@ -654,7 +652,7 @@ namespace HPTClient
                 if (this.betMultiplierList == null || this.betMultiplierList.Count() == 0)
                 {
                     switch (this.Code)
-                    {                        
+                    {
                         case "V75":
                         case "GS75":
                         case "V86":
@@ -667,14 +665,14 @@ namespace HPTClient
                             this.betMultiplierList = new int[] { 1, 2, 3, 4, 5, 10, 50, 100 };
                             break;
                         default:
-                            this.betMultiplierList = new int[]{1};
+                            this.betMultiplierList = new int[] { 1 };
                             break;
                     }
                 }
                 return this.betMultiplierList;
             }
         }
-        
+
         private int lowestStake;
         [XmlIgnore]
         public int LowestStake
@@ -750,7 +748,7 @@ namespace HPTClient
                         case "V65":
                         case "GS75":
                             this.rowCost = 1m;
-                            break;                        
+                            break;
                         case "V75":
                             this.rowCost = 0.5m;
                             break;
@@ -937,24 +935,24 @@ namespace HPTClient
         {
             get
             {
-                    switch (this.Code)
-                    {
-                        case "V4":
-                            this.maxBetForNotPayingCustomer = 50;
-                            break;
-                        case "V65":
-                        case "V64":
-                            this.maxBetForNotPayingCustomer = 150;
-                            break;
-                        //case "V75":
-                        //    this.maxBetForNotPayingCustomer = 7;
-                        //    break;
-                        case "V86":
-                            this.maxBetForNotPayingCustomer = 300;
-                            break;
-                        default:
-                            this.maxBetForNotPayingCustomer = 0;
-                            return 0;
+                switch (this.Code)
+                {
+                    case "V4":
+                        this.maxBetForNotPayingCustomer = 50;
+                        break;
+                    case "V65":
+                    case "V64":
+                        this.maxBetForNotPayingCustomer = 150;
+                        break;
+                    //case "V75":
+                    //    this.maxBetForNotPayingCustomer = 7;
+                    //    break;
+                    case "V86":
+                        this.maxBetForNotPayingCustomer = 300;
+                        break;
+                    default:
+                        this.maxBetForNotPayingCustomer = 0;
+                        return 0;
                 }
                 return this.maxBetForNotPayingCustomer;
             }

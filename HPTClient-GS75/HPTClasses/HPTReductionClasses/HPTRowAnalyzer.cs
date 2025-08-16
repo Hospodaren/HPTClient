@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace HPTClient
 {
@@ -13,7 +12,7 @@ namespace HPTClient
         internal int NumberOfRaces;
 
         public bool StopCalculation { get; set; }
-        
+
         public Action<HPTMarkBetSingleRow> AnalyzeRow;
 
         public Func<int, HPTRowAnalyzer, bool> AnalyzeRowInAdvance;

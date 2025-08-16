@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Xml.Serialization;
 using System.Runtime.Serialization;
 using System.Windows.Media;
+using System.Xml.Serialization;
 
 namespace HPTClient
 {

@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml.Serialization;
-using System.Windows.Media;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 namespace HPTClient
 {
@@ -13,11 +11,11 @@ namespace HPTClient
     public class HPTRaceDayInfo : Notifier, IHorseListContainer
     {
         #region Egna events
-        
+
         public event Action<object, EventArgs> ABCDChanged;
-        
+
         public event Action ClearABCD;
-        
+
         public event Action<HPTRankTemplate> RankTemplateChanged;
 
         #endregion
@@ -95,11 +93,11 @@ namespace HPTClient
                         default:
                             break;
                     }
-                    
+
                     if (hptRace != null)
                     {
                         hptRace.Merge(race);
-                    }                    
+                    }
                 }
 
                 // Hantera potterna för olika antal rätt
@@ -130,7 +128,7 @@ namespace HPTClient
                     {
                         if (this.PayOutListATG.First().TotalAmount == 0)
                         {
-                            this.PayOutListATG.First().TotalAmount += Convert.ToInt32(Convert.ToDecimal(this.Turnover) * this.BetType.PoolShare); 
+                            this.PayOutListATG.First().TotalAmount += Convert.ToInt32(Convert.ToDecimal(this.Turnover) * this.BetType.PoolShare);
                         }
                     }
 
@@ -156,9 +154,9 @@ namespace HPTClient
                             {
                                 hptComb.CombinationOdds = comb.CombinationOdds;
                                 hptComb.CombinationOddsExact = comb.CombinationOddsExact;
-                                hptComb.CalculateQuotas(this.BetType.Code); 
+                                hptComb.CalculateQuotas(this.BetType.Code);
                             }
-                        }                        
+                        }
                     }
                     SortCombinationValues();
                 }
@@ -194,12 +192,12 @@ namespace HPTClient
                     this.V6Factor = 1M;
                 }
             }
-            catch (Exception exc)
+            catch (Exception)
             {
-                this.V6Factor = 1M;         
+                this.V6Factor = 1M;
             }
         }
-        
+
         #region Combinations
 
         //public void SortTvillingCombinationValues()
@@ -680,7 +678,7 @@ namespace HPTClient
 
         internal bool AllResultsComplete
         {
-           get
+            get
             {
                 // Inte ens utdelning är inte klar
                 if (this.PayOutList.Count == 0 || this.PayOutList.Sum(po => po.PayOutAmount) == 0)
@@ -731,7 +729,7 @@ namespace HPTClient
 
         internal void CalculateSimulatedRaceValues(HPTMarkBet markBet)
         {
-            decimal tempValue = 0M;
+            //decimal tempValue = 0M;
             decimal numberOfWinningSystems = this.MarksQuantity;
             var horseList = new HPTHorse[this.RaceList.Count];
 
@@ -772,7 +770,7 @@ namespace HPTClient
 
         private int maxPayOut;
         [XmlIgnore]
-        public int MaxPayOut 
+        public int MaxPayOut
         {
             get
             {
@@ -813,9 +811,9 @@ namespace HPTClient
         {
             get
             {
-                if (this.PayOutList == null 
-                    || this.PayOutList.Count == 0 
-                    || this.PayOutList.Max(po => po.PayOutAmount) == 0 
+                if (this.PayOutList == null
+                    || this.PayOutList.Count == 0
+                    || this.PayOutList.Max(po => po.PayOutAmount) == 0
                     || this.PayOutList.Max(po => po.NumberOfWinningRows) == 0)
                 {
                     return false;

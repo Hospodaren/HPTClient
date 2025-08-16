@@ -1,17 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace HPTClient
 {
@@ -65,7 +57,7 @@ namespace HPTClient
             }
             ComboBoxItem cbi = (ComboBoxItem)this.cmbSort.SelectedItem;
             string sortVariable = (string)cbi.Tag;
-            this.RaceList.ForEach(r => 
+            this.RaceList.ForEach(r =>
                 {
                     r.Sort(sortVariable);
                     r.DragDropEnabled = sortVariable == "RankOwn";
@@ -164,7 +156,7 @@ namespace HPTClient
             //                        horse.RankOwn = rankToSet;
             //                        rankToSet++;
             //                    }
-                                
+
             //                }
             //                catch (NullReferenceException exc)
             //                {
@@ -173,7 +165,7 @@ namespace HPTClient
             //            }
             //        }
             //    }
-                
+
             //    this.cmbSort.SelectedIndex = 0;
             //    this.dragDropEnabled = true;
             //}
@@ -337,7 +329,7 @@ namespace HPTClient
         //}
 
         #endregion
-        
+
         private void icHorseOverview_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             e.Handled = true;
@@ -475,7 +467,7 @@ namespace HPTClient
                 }
             }
         }
-        
+
         private void IntegerUpDown_ValueChanged_1(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             if (this.MarkBet != null)

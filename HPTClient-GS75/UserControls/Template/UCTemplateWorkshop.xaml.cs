@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Xceed.Wpf.Toolkit;
 
 namespace HPTClient
@@ -26,10 +16,10 @@ namespace HPTClient
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
                 this.CurrentMarkBetTemplateABCD = new HPTMarkBetTemplateABCD()
-                                                      {
-                                                          DesiredSystemSize = 1000,
-                                                          NumberOfSpikes = 1
-                                                      };
+                {
+                    DesiredSystemSize = 1000,
+                    NumberOfSpikes = 1
+                };
                 this.CurrentMarkBetTemplateABCD.InitializeTemplate(new HPTPrio[] { HPTPrio.A, HPTPrio.B, HPTPrio.C });
                 this.CurrentMarkBetTemplateRank = new HPTMarkBetTemplateRank();
             }
@@ -146,7 +136,7 @@ namespace HPTClient
                 this.MarkBet.ApplyConfigRankVariables(this.CurrentRankTemplate);
                 this.MarkBet.MarkBetTemplateABCD = this.CurrentMarkBetTemplateABCD;
                 this.MarkBet.SelectFromTemplateABCD();
-                
+
                 this.ucRaceView.FilterSelected();
             }
             catch (Exception exc)

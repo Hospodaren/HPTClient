@@ -1,18 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Collections.ObjectModel;
 
 namespace HPTClient
 {
@@ -25,7 +17,7 @@ namespace HPTClient
         {
             InitializeComponent();
         }
-        
+
         #region Dependency properties
 
         public HPTRace Race
@@ -38,7 +30,7 @@ namespace HPTClient
         public static readonly DependencyProperty RaceProperty =
             DependencyProperty.Register("Race", typeof(HPTRace), typeof(UCRaceForOverview), new PropertyMetadata(null));
 
-        
+
 
         public List<UCCompactHorse> HorseList
         {
@@ -84,7 +76,7 @@ namespace HPTClient
                             h.DragOver += UCCompactHorse_DragOver;
                             h.Drop += UCCompactHorse_Drop;
                             h.MouseRightButtonUp += icHorseOverview_MouseRightButtonUp;
-                        }); 
+                        });
                 }
                 return true;
             }
@@ -108,7 +100,7 @@ namespace HPTClient
                             rankToSet++;
                         }
                     }
-                    catch (NullReferenceException exc)
+                    catch (NullReferenceException)
                     {
                         // NumericUpDowns som inte finns... :-(
                     }
@@ -121,7 +113,7 @@ namespace HPTClient
             e.Handled = true;
 
             var uc = (UCCompactHorse)sender;
-            
+
             var fe = (FrameworkElement)e.OriginalSource;
             if (fe.GetType() == typeof(TextBlock))
             {
@@ -191,7 +183,7 @@ namespace HPTClient
                     this.MarkBet.pauseRecalculation = recalculationPaused;
                     this.MarkBet.RecalculateReduction(RecalculateReason.All);
                 }
-                catch (Exception exc)
+                catch (Exception)
                 {
                     this.MarkBet.pauseRecalculation = recalculationPaused;
                 }
@@ -226,7 +218,7 @@ namespace HPTClient
                         .ToList()
                         .ForEach(h => h.Visibility = System.Windows.Visibility.Collapsed);
                 }
-            }   
+            }
         }
 
         public bool FilterHorses(object obj)
@@ -337,7 +329,7 @@ namespace HPTClient
             }
         }
 
-        public bool DragDropEnabled { get; set; } 
+        public bool DragDropEnabled { get; set; }
 
         #endregion
 
@@ -378,7 +370,7 @@ namespace HPTClient
 
         #region Sortering
 
-		public void Sort(string sortVariable)
+        public void Sort(string sortVariable)
         {
             this.DragDropEnabled = false;
             switch (sortVariable)
@@ -444,9 +436,9 @@ namespace HPTClient
                 {
                     return -1;
                 }
-                return 0;                
+                return 0;
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 return 0;
             }
@@ -480,7 +472,7 @@ namespace HPTClient
                 }
                 return 0;
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 return 0;
             }
@@ -514,7 +506,7 @@ namespace HPTClient
                 }
                 return 0;
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 return 0;
             }
@@ -548,7 +540,7 @@ namespace HPTClient
                 }
                 return 0;
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 return 0;
             }
@@ -582,7 +574,7 @@ namespace HPTClient
                 }
                 return 0;
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 return 0;
             }
@@ -616,7 +608,7 @@ namespace HPTClient
                 }
                 return 0;
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 return 0;
             }
@@ -628,12 +620,12 @@ namespace HPTClient
             {
                 return h1.Horse.HorseName.CompareTo(h2.Horse.HorseName);
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 return 0;
             }
-        }        
+        }
 
-	#endregion    
+        #endregion
     }
 }

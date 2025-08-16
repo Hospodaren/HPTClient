@@ -1,19 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.IO;
+using System.Text;
 
 namespace HPTClient
 {
     public class Crc16
     {
-       //Name   : "CRC-16"
-       //Poly   : 8005
-       //Init   : 0000
-       //RefIn  : True
-       //RefOut : True
-       //XorOut : 0000
-       //Check  : BB3D
+        //Name   : "CRC-16"
+        //Poly   : 8005
+        //Init   : 0000
+        //RefIn  : True
+        //RefOut : True
+        //XorOut : 0000
+        //Check  : BB3D
         const ushort polynomial = 0xA001;
         ushort[] table = new ushort[256];
 

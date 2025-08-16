@@ -2,17 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace HPTClient
 {
@@ -116,7 +111,7 @@ namespace HPTClient
                 default:
                     break;
             }
-            
+
             // Aldrig sortering på mer än två variabler
             if (this.lvwOwnInformationList.Items.SortDescriptions.Count > 1)
             {
@@ -229,12 +224,12 @@ namespace HPTClient
                     this.RaceDayInfoSelected(ownInformation.NextStart.TrackId, ownInformation.NextStart.StartDate, betType.Code, ownInformation.NextStart.RaceNumber);
                 }
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 // Fulläsning, alla klick verkar hamna här...
             }
         }
-        
+
         private void Label_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -243,9 +238,9 @@ namespace HPTClient
                 System.Diagnostics.Process.Start(hl.NavigateUri.ToString());
                 e.Handled = true;
             }
-            catch (Exception exc)
+            catch (Exception)
             {
-                
+
             }
         }
 

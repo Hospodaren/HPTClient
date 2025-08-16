@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml.Serialization;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Runtime.Serialization;
+using System.Text;
 
 namespace HPTClient
 {
@@ -26,7 +24,7 @@ namespace HPTClient
                 new HPTXReductionRule(HPTPrio.E, markBet.RaceDayInfo.RaceList.Count, HPTConfig.Config.UseE),
                 new HPTXReductionRule(HPTPrio.F, markBet.RaceDayInfo.RaceList.Count, HPTConfig.Config.UseF)
             };
-            
+
         }
 
         private ObservableCollection<HPTXReductionRule> xReductionRuleList;

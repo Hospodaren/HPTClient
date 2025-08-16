@@ -1,18 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Xceed.Wpf.Toolkit;
 
 namespace HPTClient
 {
@@ -74,9 +64,9 @@ namespace HPTClient
         {
             // TODO: Antal beroende på speltyp
             HPTGroupIntervalReductionRule rule = new HPTGroupIntervalReductionRule(this.NumberOfRaces, false)
-                {
-                    Use = true
-                };
+            {
+                Use = true
+            };
             this.GroupIntervalRulesCollection.ReductionRuleList.Add(rule);
             string s = this.DataContext.ToString();
         }

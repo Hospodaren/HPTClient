@@ -1,18 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.Win32;
+using System;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Microsoft.Win32;
-using System.IO;
 
 namespace HPTClient
 {
@@ -35,7 +26,7 @@ namespace HPTClient
                 this.btnUpdate.IsEnabled = false;
             }
         }
-        
+
         #region Button clicks
 
         private void btnCreateCoupons_Click(object sender, RoutedEventArgs e)
@@ -176,9 +167,9 @@ namespace HPTClient
                 this.btnUpdate.IsEnabled = false;
 
                 var serviceConnector = new HPTServiceConnector();
-                serviceConnector.GetRaceDayInfoUpdate(this.CombBet.RaceDayInfo.BetType.Code, this.CombBet.RaceDayInfo.TrackId, this.CombBet.RaceDayInfo.RaceDayDate, UpdateFromATG);                
+                serviceConnector.GetRaceDayInfoUpdate(this.CombBet.RaceDayInfo.BetType.Code, this.CombBet.RaceDayInfo.TrackId, this.CombBet.RaceDayInfo.RaceDayDate, UpdateFromATG);
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 this.btnUpdate.IsEnabled = true;
             }
@@ -190,7 +181,7 @@ namespace HPTClient
             {
                 Dispatcher.Invoke(new Action<HPTService.HPTRaceDayInfo>(UpdateFromATGInvoke), rdi);
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 this.btnUpdate.IsEnabled = true;
             }
@@ -230,7 +221,7 @@ namespace HPTClient
                         h.TrioInfo.PlaceInfo2.Selected = false;
                         h.TrioInfo.PlaceInfo3.Selected = false;
                     }
-                    });
+                });
         }
 
         #endregion

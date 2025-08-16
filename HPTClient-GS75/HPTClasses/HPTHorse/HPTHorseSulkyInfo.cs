@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Runtime.Serialization;
 using System.Xml.Serialization;
-using System.Runtime.Serialization;
 
 namespace HPTClient
 {
@@ -44,6 +40,6 @@ namespace HPTClient
                 this.text = value;
                 OnPropertyChanged("Text");
             }
-        }        
+        }
     }
 }

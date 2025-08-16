@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace HPTClient
 {
@@ -35,7 +25,7 @@ namespace HPTClient
             add { AddHandler(CloseEvent, value); }
             remove { RemoveHandler(CloseEvent, value); }
         }
-        
+
         private void StackPanel_MouseUp(object sender, MouseButtonEventArgs e)
         {
             RoutedEventArgs newEventArgs = new RoutedEventArgs(UCBetTabItemHeader.CloseEvent, this.Tag);

@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Xml;
-using System.Xml.Serialization;
-using System.IO;
-using System.Runtime.Serialization;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
+using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Threading;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace HPTClient
 {
@@ -35,7 +33,7 @@ namespace HPTClient
             ms.Position = 0;
             return ms;
         }
-        
+
         internal static object DeserializeHPTServiceObject(Type typeOfObject, byte[] binaryZip)
         {
             var serializer = new DataContractSerializer(typeOfObject);
@@ -135,7 +133,7 @@ namespace HPTClient
                 outputStream.Position = 0;
                 return outputStream;
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 var fs = new FileStream(fileName, FileMode.Open);
                 return fs;
@@ -147,15 +145,15 @@ namespace HPTClient
             try
             {
                 Ionic.Zip.ZipFile zf = new Ionic.Zip.ZipFile()
-                    {
-                        CompressionLevel = Ionic.Zlib.CompressionLevel.BestCompression,
-                        Password = ZipKey
-                    };
+                {
+                    CompressionLevel = Ionic.Zlib.CompressionLevel.BestCompression,
+                    Password = ZipKey
+                };
 
                 zf.AddEntry("System", stream);
                 zf.Save(fileName);
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 return false;
             }
@@ -294,11 +292,11 @@ namespace HPTClient
             {
                 var serializer = new XmlSerializer(typeof(HPTMarkBet));
                 var xtr = new XmlTextReader(stream);
-                hmb = (HPTMarkBet)serializer.Deserialize(xtr); 
+                hmb = (HPTMarkBet)serializer.Deserialize(xtr);
                 xtr.Close();
                 xtr = null;
             }
-            
+
             hmb.Config = HPTConfig.Config;
 
             DateTime dt = DateTime.Now;
@@ -367,8 +365,8 @@ namespace HPTClient
                 var hptCalendar = (HPTCalendar)o;
                 return hptCalendar;
             }
-            catch (Exception exc)
-            {                
+            catch (Exception)
+            {
             }
             return new HPTCalendar();
         }
@@ -379,7 +377,7 @@ namespace HPTClient
         }
 
         internal static HPTHorseOwnInformationCollection DeserializeHPTHorseOwnInformation(string fileName)
-        {  
+        {
             try
             {
                 var stream = UnzipAndCreateStream(fileName);
@@ -393,7 +391,7 @@ namespace HPTClient
 
                 return horseOwnInformationCollection;
             }
-            catch (InvalidOperationException ioExc)
+            catch (InvalidOperationException)
             {
                 var stream = UnzipAndCreateStream(fileName);
                 XmlSerializer serializer = new XmlSerializer(typeof(HPTHorseOwnInformationCollection));
@@ -403,7 +401,7 @@ namespace HPTClient
                 xtr = null;
                 return hptHorseOwnInformation;
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 if (File.Exists(fileName))
                 {
@@ -413,13 +411,13 @@ namespace HPTClient
                     }
                     catch (Exception)
                     {
-                        
+
                     }
                 }
                 return new HPTHorseOwnInformationCollection()
-                    {
-                        HorseOwnInformationList = new System.Collections.ObjectModel.ObservableCollection<HPTHorseOwnInformation>()
-                    };
+                {
+                    HorseOwnInformationList = new System.Collections.ObjectModel.ObservableCollection<HPTHorseOwnInformation>()
+                };
             }
         }
 
@@ -474,7 +472,7 @@ namespace HPTClient
         }
 
         #endregion
-        
+
         internal static HPTCalendar GetCalendarFromFile()
         {
             try
@@ -634,7 +632,7 @@ namespace HPTClient
             sw.Flush();
             ms.Position = 0;
             object o = jsonSerializer.ReadObject(ms);
-            
+
             return o;
         }
 

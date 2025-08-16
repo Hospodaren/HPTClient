@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace HPTClient
 {
@@ -22,7 +15,7 @@ namespace HPTClient
         public UCABCDReductionSettings()
         {
             InitializeComponent();
-            
+
         }
 
         public Visibility ShowLegList
@@ -44,12 +37,12 @@ namespace HPTClient
             {
                 if (this.abcdefreductionRule == null)
                 {
-                    this.abcdefreductionRule = (HPTABCDEFReductionRule) this.DataContext;
+                    this.abcdefreductionRule = (HPTABCDEFReductionRule)this.DataContext;
                 }
                 return this.abcdefreductionRule;
             }
         }
-        
+
         private void ItemsControl_Checked(object sender, RoutedEventArgs e)
         {
             if (this.IsLoaded && this.MarkBet != null)

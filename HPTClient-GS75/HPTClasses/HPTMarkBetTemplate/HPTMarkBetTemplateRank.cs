@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Collections.ObjectModel;
-using System.Xml.Serialization;
-
-namespace HPTClient
+﻿namespace HPTClient
 {
     public class HPTMarkBetTemplateRank : HPTMarkBetTemplate
     {
-        public HPTMarkBetTemplateRank Clone()
+        public new HPTMarkBetTemplateRank Clone()
         {
             var template = new HPTMarkBetTemplateRank()
             {
@@ -26,7 +19,7 @@ namespace HPTClient
 
             return template;
         }
-        
+
         public int LowerPercentageLimit { get; set; }
 
         public int UpperPercentageLimit { get; set; }

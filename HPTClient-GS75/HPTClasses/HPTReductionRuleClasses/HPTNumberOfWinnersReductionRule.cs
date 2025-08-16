@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Xml.Serialization;
-using System.Collections.ObjectModel;
-using System.Runtime.Serialization;
 
 namespace HPTClient
 {
@@ -42,7 +40,7 @@ namespace HPTClient
         {
             int numberOfSelected = this.NumberOfWinnersList.Count(now => now.Selected);
             this.SkipRule = numberOfSelected == 0 || numberOfSelected == this.NumberOfWinnersList.Count;
-            if (this.LegSelectionList == null ||this.LegSelectionList.Count == 0)
+            if (this.LegSelectionList == null || this.LegSelectionList.Count == 0)
             {
                 this.OnlyInSpecifiedLegs = false;
                 return;

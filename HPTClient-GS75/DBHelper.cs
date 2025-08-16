@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace HPTClient
 {
@@ -12,7 +9,7 @@ namespace HPTClient
     {
         internal DataTable raceTable = new DataTable();
         internal DataTable markBetTable = new DataTable();
-        
+
         internal void AddDataRow(HPTMarkBet markBet)
         {
 
@@ -39,7 +36,7 @@ namespace HPTClient
         internal static void InsertLogMessage(string logMessage, string logType)
         {
             var bulkCopy = new SqlBulkCopy(HPTSqlConnection);
-            var columnMapping = new SqlBulkCopyColumnMapping();            
+            var columnMapping = new SqlBulkCopyColumnMapping();
 
             var command = HPTSqlCommand;
             try

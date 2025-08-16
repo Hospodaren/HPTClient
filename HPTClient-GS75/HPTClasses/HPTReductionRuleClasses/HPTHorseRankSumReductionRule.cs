@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Xml.Serialization;
-using System.Collections.ObjectModel;
-using System.Runtime.Serialization;
 
 namespace HPTClient
 {
@@ -77,7 +75,7 @@ namespace HPTClient
                         if (!rule.NumberOfWinnersList.First(now => now.NumberOfWinners == numberInInterval).Selected)
                         {
                             return false;
-                        } 
+                        }
                     }
                     else
                     {

@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.ServiceModel;
 using System.Threading;
-using System.Net;
-using System.IO;
-using System.Xml;
-using System.Xml.Serialization;
-using System.Globalization;
 
 namespace HPTClient
 {
@@ -41,7 +36,7 @@ namespace HPTClient
         Action<HPTService.HPTRaceDayInfo> updateDelegate;
         Action<HPTService.HPTResultMarkingBet> resultDelegate;
         Action<HPTService.HPTRaceDayInfoHistoryInfoGrouped> historyDelegate;
-        
+
         #endregion
 
         #region Hantering av nyheter på siten
@@ -469,10 +464,10 @@ namespace HPTClient
             get
             {
                 return new WebClient()
-                           {
-                               BaseAddress = webserviceURLList.First() + "/HPTRestService/",
-                               Encoding = Encoding.UTF8                                                            
-                           };
+                {
+                    BaseAddress = webserviceURLList.First() + "/HPTRestService/",
+                    Encoding = Encoding.UTF8
+                };
             }
         }
 
@@ -705,7 +700,7 @@ namespace HPTClient
             request.Password = HPTConfig.Config.Password == null ? string.Empty : HPTConfig.Config.Password;
             request.UserName = HPTConfig.Config.UserName == null ? string.Empty : HPTConfig.Config.UserName;
             request.EMailAddress = HPTConfig.Config.EMailAddress == null ? string.Empty : HPTConfig.Config.EMailAddress;
-            
+
             return request;
         }
 
@@ -757,7 +752,7 @@ namespace HPTClient
         //        //{
         //        //    ipAddress = rexIPAddress.Match(requestHtml).Value;
         //        //}
-                
+
         //    }
         //    catch (WebException we)
         //    {
@@ -770,7 +765,7 @@ namespace HPTClient
         //    return IPAddress;
 
         //}
-        
+
         #region GetRaceDayInfoByTrackAndDate
 
         internal void GetRaceDayInfoByTrackAndDate()
@@ -794,12 +789,14 @@ namespace HPTClient
                     this.rdiDelegate(hptRdi);
                     rdi = null;
                     GC.Collect();
+
+                    return;
                 }
                 catch (Exception exc)
                 {
                     HPTConfig.AddToErrorLogStatic(exc);
-                } 
-            }
+                }
+            } 
 
             hptRdi = new HPTRaceDayInfo()
             {
@@ -809,7 +806,7 @@ namespace HPTClient
             };
             this.rdiDelegate(hptRdi);
         }
-        
+
         internal void GetRaceDayInfoByTrackAndDate(HPTBetType betType, int trackId, DateTime raceDate, Action<HPTRaceDayInfo> rdiDelegate)
         {
             this.betType = betType;
@@ -834,7 +831,7 @@ namespace HPTClient
                                                                   raceDate);
 
                 HPTService.HPTRaceDayInfo rdi = HPTSerializer.DeserializeHPTRaceDayInfo(baRaceDayInfo);
-                
+
                 HPTServiceToHPTHelper.ConvertRaceDayInfo(rdi, hptRdi);
                 hptRdi.BetTypeString = betType;
                 hptRdi.BetType = new HPTBetType()
@@ -879,10 +876,12 @@ namespace HPTClient
 
                     HPTService.HPTRaceDayInfo rdi = HPTSerializer.DeserializeHPTRaceDayInfo(baRaceDayInfo);
                     this.updateDelegate(rdi);
+
+                    return;
                 }
-                catch (Exception exc)
+                catch (Exception)
                 {
-                } 
+                }
             }
             this.updateDelegate(null);
         }
@@ -904,9 +903,9 @@ namespace HPTClient
                     GC.Collect();
                     return;
                 }
-                catch (Exception exc)
+                catch (Exception)
                 {
-                } 
+                }
             }
         }
 
@@ -954,9 +953,9 @@ namespace HPTClient
 
                     return rdi;
                 }
-                catch (Exception exc)
+                catch (Exception)
                 {
-                } 
+                }
             }
             return null;
         }
@@ -971,11 +970,11 @@ namespace HPTClient
                                                                       hptRdi.RaceDayDate.ToString("yyyy-MM-dd"));
 
                 var rdi = HPTSerializer.DeserializeHPTRaceDayInfo(baRaceDayInfo);
-                return rdi; 
+                return rdi;
             }
             return null;
         }
-        
+
         // /RaceDayInfoHistoryGrouped?betType={betType}&trackId={trackid}&raceDate={raceDate}
         internal bool GetRaceDayInfoHistoryGrouped(HPTRaceDayInfo hptRdi)
         {
@@ -993,9 +992,9 @@ namespace HPTClient
 
                     return true;
                 }
-                catch (Exception exc)
+                catch (Exception)
                 {
-                } 
+                }
             }
             return false;
         }
@@ -1031,10 +1030,12 @@ namespace HPTClient
 
                     var rdiHistory = (HPTService.HPTRaceDayInfoHistoryInfoGrouped)HPTSerializer.DeserializeHPTServiceObject(typeof(HPTService.HPTRaceDayInfoHistoryInfoGrouped), baRaceDayInfo);
                     this.historyDelegate(rdiHistory);
+
+                    return;
                 }
-                catch (Exception exc)
+                catch (Exception)
                 {
-                } 
+                }
             }
             this.historyDelegate(null);
         }
@@ -1064,7 +1065,7 @@ namespace HPTClient
                     GC.Collect();
                     return;
                 }
-                catch (Exception exc)
+                catch (Exception)
                 {
                 }
             }
@@ -1092,9 +1093,9 @@ namespace HPTClient
 
                     return;
                 }
-                catch (Exception exc)
+                catch (Exception)
                 {
-                } 
+                }
             }
         }
 
@@ -1136,8 +1137,8 @@ namespace HPTClient
 
         internal HPTService.HPTResultMarkingBet GetResultFromDisk(HPTRaceDayInfo raceDayInfo)
         {
-            string filename = HPTConfig.MyDocumentsPath 
-                + "Resultat\\" + raceDayInfo.RaceDayDate.ToString("yyyy-MM-dd") + "_" + raceDayInfo.Trackcode 
+            string filename = HPTConfig.MyDocumentsPath
+                + "Resultat\\" + raceDayInfo.RaceDayDate.ToString("yyyy-MM-dd") + "_" + raceDayInfo.Trackcode
                 + "\\" + raceDayInfo.BetType.Code + ".hptresult";
 
             if (File.Exists(filename))
@@ -1172,7 +1173,7 @@ namespace HPTClient
                 catch (Exception exc)
                 {
                     HPTConfig.Config.AddToErrorLog(exc);
-                } 
+                }
             }
             this.resultDelegate(rmb);
         }
@@ -1385,7 +1386,7 @@ namespace HPTClient
                     IsPublic = isPublic,
                     Timestamp = markBet.LastSaveTime,
                     EMail = HPTConfig.Config.EMailAddress,
-                    UserName = HPTConfig.Config.UserNameForUploads                    
+                    UserName = HPTConfig.Config.UserNameForUploads
                 };
 
                 // Fyll på med reduceringsresutatet
@@ -1411,7 +1412,7 @@ namespace HPTClient
                     ReducedSize = markBet.ReducedSize,
                     ReductionPercentage = markBet.ReductionQuota,
                     SystemGUID = string.Empty,
-                    SystemCost = markBet.SystemCost,                   
+                    SystemCost = markBet.SystemCost,
                     SystemSize = markBet.SystemSize,
                     LastUpdated = markBet.LastSaveTime,
                     LegList = markBet.RaceDayInfo.RaceList.Select(r => new HPTService.HPTRaceReductionResponse()
@@ -1426,7 +1427,7 @@ namespace HPTClient
                     }).ToArray()
                 };
 
-                string json = HPTSerializer.CreateJson(userSystem);                
+                string json = HPTSerializer.CreateJson(userSystem);
 
                 var userSystemStream = HPTSerializer.SerializeHPTServiceObject(typeof(HPTService.HPTUserSystemComplete), userSystem);
                 var request = CreateWebRequestForPOST("UploadCompleteSystem", userSystemStream);
@@ -1866,7 +1867,7 @@ namespace HPTClient
                     //BaseAddress = "https://www.atg.se/services/v1/races/",
                     BaseAddress = "https://www.atg.se/services/racinginfo/v1/api/races/",
                     Encoding = Encoding.UTF8,
-                    
+
                 };
                 //WCATG.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36");
                 System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;

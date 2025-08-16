@@ -1,11 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Xml;
-using System.Xml.Serialization;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 namespace HPTClient
 {
@@ -78,7 +75,7 @@ namespace HPTClient
         internal HPTHorse Reserv2Horse;
 
         public int NumberOfChosen { get; set; }
-        
+
         public bool ReplaceScratchedHorses(HPTRace race)
         {
             try

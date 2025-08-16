@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml.Serialization;
-using System.Windows.Media;
 using System.Runtime.Serialization;
+using System.Windows.Media;
+using System.Xml.Serialization;
 
 namespace HPTClient
 {
@@ -31,10 +29,10 @@ namespace HPTClient
 
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public string TrackCode { get; set; }
-        
+
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public decimal? Earning { get; set; }
-        
+
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public decimal? FirstPrize { get; set; }
 
@@ -55,7 +53,7 @@ namespace HPTClient
 
         private decimal timeWeighed;
         [XmlIgnore]
-        public decimal TimeWeighed 
+        public decimal TimeWeighed
         {
             get
             {
@@ -76,7 +74,7 @@ namespace HPTClient
 
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public HPTHorseShoeInfo Shoeinfo { get; set; }
-        
+
         public List<HPTHorseResult> HeadToHeadResultList { get; set; }
 
         public string ATGResultLink

@@ -1,12 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Xml;
-using System.Xml.Serialization;
 using System.Collections.ObjectModel;
 
 namespace HPTClient
@@ -34,8 +26,8 @@ namespace HPTClient
 
         public string DisplayName { get; set; }
 
-        public DateTime CreationTime { get; set; }  
-        
+        public DateTime CreationTime { get; set; }
+
         public System.Windows.Controls.Image FileTypeImage { get; set; }
 
         public string IconPath { get; set; }

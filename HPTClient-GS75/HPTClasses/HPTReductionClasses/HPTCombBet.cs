@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Xml.Serialization;
-using System.Runtime.Serialization;
 
 namespace HPTClient
 {
@@ -69,9 +68,9 @@ namespace HPTClient
                 default:
                     break;
             }
-            
+
             this.NumberOfSelected = numberOfSelected;
-            this.TotalStake = totalStake;   
+            this.TotalStake = totalStake;
         }
 
         internal void CalculateStake()
@@ -107,7 +106,7 @@ namespace HPTClient
                     }
                 }
                 SetStakeAndNumberOfSelected();
-            }            
+            }
         }
 
         internal void CalculateStake(HPTCombination comb)
@@ -170,7 +169,7 @@ namespace HPTClient
         private static SortedList<int, int> stakeIndexList;
         internal static SortedList<int, int> StakeIndexList
         {
-            get 
+            get
             {
                 if (stakeIndexList == null)
                 {
@@ -189,7 +188,7 @@ namespace HPTClient
                 return stakeIndexList;
             }
         }
-        
+
         #region ToString-versions
 
         public string ToFileNameString()

@@ -1,19 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.ComponentModel;
 using Xceed.Wpf.Toolkit;
-using System.Collections.ObjectModel;
 
 namespace HPTClient
 {
@@ -111,7 +104,7 @@ namespace HPTClient
                                 {
                                     sr.V6 = true;
                                     sr.Edited = true;
-                                }); 
+                                });
                             this.MarkBet.UpdateV6BetMultiplierSingleRows();
                             this.isSettingV6BetMultiplier = false;
                             this.MarkBet.UpdateCoupons();
@@ -126,7 +119,7 @@ namespace HPTClient
                     {
                         this.SingleRowsObservable
                             .ToList()
-                            .ForEach(sr => 
+                            .ForEach(sr =>
                                 {
                                     sr.V6 = false;
                                     sr.Edited = true;
@@ -284,8 +277,8 @@ namespace HPTClient
                 //this.MarkBet.UpdateCoupons();
                 this.MarkBet.UpdateV6BetMultiplierSingleRows();
             }
-            catch (Exception exc)
-            {                
+            catch (Exception)
+            {
             }
             isSettingV6BetMultiplier = false;
         }
@@ -358,7 +351,7 @@ namespace HPTClient
         public static readonly DependencyProperty CMSingleRowProperty =
             DependencyProperty.Register("CMSingleRow", typeof(ContextMenu), typeof(UCSingleRowCollectionView), new UIPropertyMetadata(null));
 
-        
+
         private void CreateHorseContextMenuVxx()
         {
             // Markera flera enkelrader

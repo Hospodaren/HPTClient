@@ -1,19 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Threading;
-using System.Collections.ObjectModel;
 
 namespace HPTClient
 {
@@ -94,7 +88,7 @@ namespace HPTClient
                 {
                     Dispatcher.Invoke(new Action(UpdateBindings), null);
                 }
-                catch (Exception exc)
+                catch (Exception)
                 {
                     try
                     {
@@ -114,7 +108,7 @@ namespace HPTClient
             catch (Exception exc)
             {
                 string s = exc.Message;
-            }            
+            }
         }
 
         private void GridViewColumnHeader_Click(object sender, RoutedEventArgs e)
@@ -172,7 +166,7 @@ namespace HPTClient
                 sb.Append("\r\n\r\n");
                 sb.Append(firstResultAnalyzer.ExportToExcel(true));
                 sb.Append("\r\n");
-                foreach (var resultAnalyzer in resultAnalyzerList.Except(new HPTResultAnalyzer[]{firstResultAnalyzer}))
+                foreach (var resultAnalyzer in resultAnalyzerList.Except(new HPTResultAnalyzer[] { firstResultAnalyzer }))
                 {
                     sb.Append(resultAnalyzer.ExportToExcel(false));
                     sb.Append("\r\n");

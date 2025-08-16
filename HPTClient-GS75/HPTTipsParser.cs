@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace HPTClient
@@ -77,7 +75,7 @@ namespace HPTClient
                     }
                 }
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 return false;
             }
@@ -182,11 +180,11 @@ namespace HPTClient
                             var prio = EnumHelper.GetHPTPrioFromShortString(mXPrioHorses.Groups[1].Value);
                             string horseNumbersString = mXPrioHorses.Groups[2].Value;
                             SelectFromString(race, prio, horseNumbersString);
-                        }                                                
+                        }
                     }
                 }
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 return false;
             }
@@ -216,7 +214,7 @@ namespace HPTClient
                         if (prio != HPTPrio.M)
                         {
                             horse.HorseXReductionList.First(xr => xr.Prio == prio).Selected = true;
-                        }                        
+                        }
                     }
                 }
             }
