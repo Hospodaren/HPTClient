@@ -115,7 +115,7 @@ namespace HPTClient
                     {
                         this.Config = HPTConfig.CreateHPTConfig();
                     }
-                    this.Config.PROVersionExpirationDate = DateTime.Today.AddMonths(3);
+                    //this.Config.PROVersionExpirationDate = DateTime.Today.AddMonths(3);
 
                     if (this.CalendarZip == null)  // Hämta kalender separat
                     {
@@ -155,7 +155,7 @@ namespace HPTClient
 
                 // Hantering av Gratis/PRO
                 //this.Config.VersionText = "Hjälp på Traven! 5.34";'
-                this.Config.VersionText = "Hjälp på Traven läggs ner, mer info på www.hpt.nu";
+                this.Config.VersionText = $"Hjälp på Traven läggs ner, mer info på www.hpt.nu ({this.Config.PROVersionExpirationDate:yyyy-MM-dd})";
                 this.VersionText = this.Config.VersionText;
             }
             catch (System.ServiceModel.EndpointNotFoundException)
@@ -1050,7 +1050,8 @@ namespace HPTClient
                 {
                     this.hptCalendar.RaceDayInfoList.Clear();
                 }
-                serviceConnector.GetCalendar(this.hptCalendar);
+                ThreadPool.QueueUserWorkItem(new WaitCallback(GetCalendar), ThreadPriority.Normal);
+                //serviceConnector.GetCalendar(this.hptCalendar);
             }
             catch (Exception exc)
             {
