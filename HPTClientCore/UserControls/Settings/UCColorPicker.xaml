@@ -1,0 +1,98 @@
+﻿<UserControl x:Class="HPTClient.UCColorPicker"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:MS="clr-namespace:Microsoft.Win32;assembly=mscorlib"
+    xmlns:HPT="clr-namespace:HPTClient"
+    xmlns:EXT="http://schemas.xceed.com/wpf/xaml/toolkit"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    x:Name="ucColorPicker">
+    <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
+        <GroupBox x:Name="gbSettings" Background="{StaticResource BackgroundBrush}" BorderBrush="Black" HeaderTemplate="{StaticResource GroupBoxHeaderTemplate}" Header="Färgintervall" Grid.Column="1" HorizontalAlignment="Left" Margin="2,2,6,2">
+            <StackPanel Orientation="Vertical">
+                <Grid Margin="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="62"/>
+                        <ColumnDefinition/>
+                        <!--<ColumnDefinition Width="Auto"/>-->
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    
+                    <Grid.Resources>
+                        <Style TargetType="{x:Type Rectangle}">
+                            <Setter Property="RadiusX" Value="2"/>
+                            <Setter Property="RadiusY" Value="2"/>
+                            <Setter Property="Stroke" Value="Black"/>
+                            <Setter Property="Margin" Value="1"/>
+                        </Style>
+                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource tbStyle}">
+                            <Setter Property="Padding" Value="2"/>
+                            <Setter Property="FontSize" Value="13"/>
+                        </Style>
+                    </Grid.Resources>
+                    
+                    <TextBlock Text="Bra" Grid.Column="0" Grid.Row="0" Padding="2"/>
+                    <Rectangle x:Name="rctColorGood" MouseUp="rctColorGood_MouseUp" Fill="{Binding BrushGood}" Grid.Column="1" Grid.Row="0"/>
+                    <EXT:ColorPicker x:Name="cpGood" Visibility="Collapsed" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" SelectedColorChanged="cpGood_SelectedColorChanged"/>
+                    
+                    <TextBlock Text="Medel" Grid.Column="0" Grid.Row="2" Padding="2"/>
+                    <Rectangle x:Name="rctColorMedium" MouseUp="rctColorMedium_MouseUp" Fill="{Binding BrushMedium}" Grid.Column="1" Grid.Row="2" Width="282"/>
+                    <EXT:ColorPicker x:Name="cpMedium" Visibility="Collapsed" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" SelectedColorChanged="cpMedium_SelectedColorChanged"/>
+                    
+                    <TextBlock Text="Dåligt" Grid.Column="0" Grid.Row="4" Padding="2"/>
+                    <Rectangle x:Name="rctColorBad" MouseUp="rctColorBad_MouseUp" Fill="{Binding BrushBad}" Grid.Column="1" Grid.Row="4"/>
+                    <EXT:ColorPicker x:Name="cpBad" Visibility="Collapsed" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" SelectedColorChanged="cpBad_SelectedColorChanged"/>
+
+                    <Button x:Name="btnResetColors" Click="btnResetColors_Click" Content="Återställ färger"  HorizontalAlignment="Right" Height="25" Grid.Column="1" Grid.Row="5"/>
+                    
+                </Grid>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Column="1" Text="Undre gräns"/>
+                    <TextBlock Grid.Column="2" Text="Övre gräns"/>
+                    
+                    <CheckBox x:Name="chkUseVinnarOdds" IsChecked="{Binding SetColorFromVinnarOdds}" Content="Vinnarodds" Grid.Row="1"/>
+                    <EXT:IntegerUpDown x:Name="iudVinnarOddsLower" Padding="2" Minimum="10" Maximum="1000" Increment="2" Grid.Row="1" Grid.Column="1" Margin="1"
+                                     Value="{Binding Path=ColorIntervalVinnarOdds.LowerBoundary,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" DefaultValue="10" />
+                    <EXT:IntegerUpDown x:Name="iudVinnarOddsUpper" Padding="2" Minimum="10" Maximum="1000" Increment="2" Grid.Row="1" Grid.Column="2" Margin="1"
+                                     Value="{Binding Path=ColorIntervalVinnarOdds.UpperBoundary,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" DefaultValue="10" />
+
+                    <!--<CheckBox x:Name="chkUseMarksPercent" IsChecked="{Binding SetColorFromMarksPercent}" Content="Streckprocent" Grid.Row="2"/>
+                    <EXT:IntegerUpDown x:Name="iudMarksPercentLower" Padding="2" Minimum="10" Maximum="1000" Increment="2" Grid.Row="2" Grid.Column="1" Margin="1"
+                                     Value="{Binding Path=ColorIntervalMarksPercent.LowerBoundary,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" DefaultValue="10" />
+                    <EXT:IntegerUpDown x:Name="iudMarksPercentUpper" Padding="2" Minimum="10" Maximum="1000" Increment="2" Grid.Row="2" Grid.Column="2" Margin="1"
+                                     Value="{Binding Path=ColorIntervalMarksPercent.UpperBoundary,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" DefaultValue="10" />-->
+
+                    <CheckBox x:Name="chkUseStakePercent" IsChecked="{Binding SetColorFromStakePercent}" Content="Insatsfördelning" Grid.Row="3"/>
+                    <EXT:IntegerUpDown x:Name="iudStakePercentLower" Padding="2" Minimum="0" Maximum="100" Increment="2" Grid.Row="3" Grid.Column="1" Margin="1"
+                                     Value="{Binding Path=ColorIntervalStakePercent.LowerBoundary,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" DefaultValue="10" />
+                    <EXT:IntegerUpDown x:Name="iudStakePercentUpper" Padding="2" Minimum="0" Maximum="100" Increment="2" Grid.Row="3" Grid.Column="2" Margin="1"
+                                     Value="{Binding Path=ColorIntervalStakePercent.UpperBoundary,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" DefaultValue="10" />
+
+                </Grid>
+
+                <Button x:Name="btnResetIntervals" Click="btnResetIntervals_Click" Content="Återställ intervall"  HorizontalAlignment="Right" Height="25"/>
+                
+            </StackPanel>
+        </GroupBox>
+    </Grid>
+</UserControl>

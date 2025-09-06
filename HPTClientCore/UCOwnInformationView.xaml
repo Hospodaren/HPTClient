@@ -1,0 +1,225 @@
+﻿<UserControl x:Class="HPTClient.UCOwnInformationView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:HPTClient"
+             x:Name="ucOwnInformationView"
+             xmlns:HPT="clr-namespace:HPTClient"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="1200">
+    <UserControl.Resources>
+
+        <HPT:BetTypeToImageConverter x:Key="betTypeConverter"/>
+
+        <HPT:TrackIdToNameConverter x:Key="trackIdConverter"/>
+
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.Resources>
+            <Style TargetType="Button">
+                <Setter Property="Margin" Value="2"/>
+                <Setter Property="Padding" Value="2,1"/>
+            </Style>
+        </Grid.Resources>
+
+        <StackPanel Orientation="Horizontal">
+            
+            <Button x:Name="btnGetNextStart" Click="btnGetNextStart_Click" Content="Hämta nästa start"/>
+            
+            <CheckBox x:Name="chkShowOnlyWithNextStart" Checked="chkShowOnlyWithNextStart_Checked" Unchecked="chkShowOnlyWithNextStart_Checked" Content="Visa bara hästar med kommande starter" Margin="10,4,10,1"/>
+
+            <CheckBox x:Name="chkShowOnlyNextTimer" Checked="chkShowOnlyNextTimer_Checked" Unchecked="chkShowOnlyNextTimer_Checked" Content="Visa bara nästagångare" Margin="10,4,10,1"/>
+
+            <Button x:Name="btnRemoveWithoutNextStart" Click="btnRemoveWithoutNextStart_Click" Content="Ta bort utan kommande start"/>
+
+            <Button x:Name="btnRemoveOldNextTimers" Click="btnRemoveOldNextTimers_Click" Content="Ta bort gamla nästagångare"/>
+
+        </StackPanel>
+
+        <ListView x:Name="lvwOwnInformationList" Grid.Row="1"
+                  ItemsSource="{Binding Path=HorseOwnInformationCollection.HorseOwnInformationList}"
+                  GridViewColumnHeader.Click="GridViewColumnHeader_Click">
+
+            <ListView.View>
+                <GridView x:Name="gvwOwnInformation">
+
+                    <!--Namn-->
+                    <GridViewColumn x:Name="gvcNamn">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock x:Name="txtHorseName" Text="{Binding Path=Name}" FontWeight="Bold" 
+                                           MouseUp="txtHorseName_MouseUp">
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                        <GridViewColumnHeader Tag="Name" Content="Namn"
+                                    ToolTipService.ToolTip="Hästens namn och nationalitet"/>
+                    </GridViewColumn>
+
+                    <!--Nästa start, datum-->
+                    <GridViewColumn x:Name="gvcNextStart">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+
+                                    <TextBlock x:Name="txtStartDate" Text="{Binding Path=NextStart.StartDate,StringFormat=yyyy-MM-dd}" FontWeight="Bold" Width="70"/>
+
+                                    <TextBlock x:Name="txtStartTime" Text="{Binding Path=NextStart.StartDate,StringFormat=HH:mm}" Width="35"/>
+    
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                        <GridViewColumnHeader Tag="NextStart.StartDate" Content="Nästa start" 
+                                    ToolTipService.ToolTip="Information om hästens nästa start"/>
+                    </GridViewColumn>
+
+                    <!--Nästa start, bana och lopp-->
+                    <GridViewColumn x:Name="gvcNextStartTrackAndRace">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+
+                                <Label Margin="1,1,10,0" Padding="1,0"  ButtonBase.Click="Label_Click">
+                                    <!--<Hyperlink x:Name="hlVPOnAtgSe" NavigateUri="{Binding Path=ATGLink}" RequestNavigate="hlVPOnAtgSe_RequestNavigate">-->
+                                    <Hyperlink x:Name="hlVPOnAtgSe" NavigateUri="{Binding Path=NextStart.ATGLink}">
+                                        <TextBlock>
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0} lopp {1}">
+                                                    <Binding Path="NextStart.TrackId" Converter="{StaticResource trackIdConverter}"/>
+                                                    <Binding Path="NextStart.RaceNumber"/>
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </Hyperlink>
+                                </Label>
+
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                        <GridViewColumnHeader Tag="NextStart.StartDate" Content="Bana och lopp" 
+                                    ToolTipService.ToolTip="Information om hästens nästa start"/>
+                    </GridViewColumn>
+
+                    <!--Nästa start, spelformer-->
+                    <GridViewColumn x:Name="gvcNextStartBetTypes">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" ButtonBase.Click="StackPanel_Click">
+
+                                    <ItemsControl ItemsSource="{Binding Path=NextStart.BetTypeList}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Button>
+                                                    <Image Source="{Binding Path=BetTypeATGLogo}" Height="16" Width="36"/>
+                                                    <!--<Image Source="{Binding Converter={StaticResource betTypeConverter}}"/>-->
+                                                </Button>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                        <GridViewColumnHeader Tag="NextStart.StartDate" Content="Spelformer" 
+                                    ToolTipService.ToolTip="Information om hästens nästa start"/>
+                    </GridViewColumn>
+
+                    <!--Nästagångare-->
+                    <GridViewColumn x:Name="gvcNextTimer">
+                        <GridViewColumnHeader Tag="NextTimer" Content="Nästagångare"
+                                    ToolTipService.ToolTip="Bocka för om du anser att hästen är en nästagångare"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox x:Name="chkNextTimer" IsChecked="{Binding Path=NextTimer}" 
+                                            Checked="chkNextTimer_Checked" Unchecked="chkNextTimer_Checked"
+                                            Padding="0,-1,0,-1" Margin="0,-1,1,-1"
+                                            Template="{StaticResource CheckBoxControlTemplate}">
+                                    <TextBlock Text="NG" FontSize="10" Padding="2" Foreground="Black" FontWeight="Bold"/>
+                                </CheckBox>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Länk till hästinfo på svensktravsport.se-->
+                    <GridViewColumn x:Name="gvcSTHorseLink">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Margin="1,0" Padding="1,0">
+                                        <Hyperlink x:Name="hlSTHorseLink" NavigateUri="{Binding Path=STLink}">HPT</Hyperlink>
+                                    </Label>
+                                    <Label Margin="1,0" Padding="1,0">
+                                        <Hyperlink x:Name="hlSTHorseLinkExternal" NavigateUri="{Binding Path=STLink}" RequestNavigate="hlSTHorseLinkExternal_RequestNavigate">Webbläsare</Hyperlink>
+                                    </Label>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                        <GridViewColumnHeader Tag="ParentRace.LegResult.SystemsLeft" Content="Svensk travsport"                                              
+                                    ToolTipService.ToolTip="Hästinformation på ST" MinWidth="100"/>
+                    </GridViewColumn>
+
+                    <!--Senaste uppdatering-->
+                    <GridViewColumn x:Name="gvcLastUpdate">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+
+                                    <TextBlock x:Name="txtLastUpdatedDate" Text="{Binding Path=LastUpdate,StringFormat=yyyy-MM-dd}" FontWeight="Bold" Width="80"/>
+
+                                    <TextBlock x:Name="txtLastUpdatedTime" Text="{Binding Path=LastUpdate,StringFormat=HH:mm}" Width="40"/>
+
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                        <GridViewColumnHeader Tag="LastUpdate" Content="Senaste uppdatering" 
+                                    ToolTipService.ToolTip="När uppdaterades egen info senast"/>
+                    </GridViewColumn>
+
+                    <!--Välj-->
+                    <GridViewColumn x:Name="gvcSelectHorse">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button x:Name="btnSelectHorse" Click="btnSelectHorse_Click" Content="Välj"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                        <GridViewColumnHeader Tag="Remove"/>
+                    </GridViewColumn>
+
+                    <!--Ta bort-->
+                    <GridViewColumn x:Name="gvcRemoveOwnInformation">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button x:Name="btnRemoveOwnInformation" Click="btnRemoveOwnInformation_Click" Content="Ta bort"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                        <GridViewColumnHeader Tag="Remove"/>
+                    </GridViewColumn>
+
+                </GridView>
+
+            </ListView.View>
+        </ListView>
+
+        <HPT:UCHorseCommentList x:Name="ucHorseCommentList" DataContext="{Binding Path=SelectedOwnInformation,ElementName=ucOwnInformationView}" Grid.Column="1" Grid.Row="1" Loaded="ucHorseCommentList_Loaded"/>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="2">
+
+        </StackPanel>
+
+    </Grid>
+</UserControl>

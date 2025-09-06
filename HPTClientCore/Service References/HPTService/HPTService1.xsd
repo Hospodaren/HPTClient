@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://kubin.se/hptservice" elementFormDefault="qualified" targetNamespace="http://kubin.se/hptservice" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://jes/HPTService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/HPTServiceLibrary" />
+  <xs:element name="Authenticate">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/HPTServiceLibrary" minOccurs="0" name="request" nillable="true" type="q1:AuthenticationRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AuthenticateResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/HPTServiceLibrary" minOccurs="0" name="AuthenticateResult" nillable="true" type="q2:AuthenticationResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LogOut">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/HPTServiceLibrary" minOccurs="0" name="request" nillable="true" type="q3:AuthenticationRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LogOutResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RegisterUser">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="emailaddress" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="newsletter" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RegisterUserResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/HPTServiceLibrary" minOccurs="0" name="RegisterUserResult" nillable="true" type="q4:HPTRegistration" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveSystem">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="atgXml" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="emailaddress" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="betType" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="raceDayDate" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="trackID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveSystemResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/HPTServiceLibrary" minOccurs="0" name="SaveSystemResult" nillable="true" type="q5:HPTSaveSystem" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UploadSystem">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="hptXml" nillable="true" type="xs:base64Binary" />
+        <xs:element minOccurs="0" name="emailaddress" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="betType" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="raceDayDate" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="trackID" type="xs:int" />
+        <xs:element minOccurs="0" name="reducedSize" type="xs:int" />
+        <xs:element minOccurs="0" name="originalSize" type="xs:int" />
+        <xs:element minOccurs="0" name="reductionNames" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="comment" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="systeminfo" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="timestamp" type="xs:dateTime" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UploadSystemResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/HPTServiceLibrary" minOccurs="0" name="UploadSystemResult" nillable="true" type="q6:HPTSaveSystem" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UploadTemplates">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="templateXml" nillable="true" type="xs:base64Binary" />
+        <xs:element minOccurs="0" name="emailaddress" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="comment" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="templateNames" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UploadTemplatesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/HPTServiceLibrary" minOccurs="0" name="UploadTemplatesResult" nillable="true" type="q7:HPTSaveSystem" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UploadComments">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="commentXml" nillable="true" type="xs:base64Binary" />
+        <xs:element minOccurs="0" name="emailaddress" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="comment" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UploadCommentsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/HPTServiceLibrary" minOccurs="0" name="UploadCommentsResult" nillable="true" type="q8:HPTSaveSystem" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UploadRaceDayInfoComments">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="commentXml" nillable="true" type="xs:base64Binary" />
+        <xs:element minOccurs="0" name="emailaddress" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="comment" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="betType" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="raceDayDate" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="trackID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UploadRaceDayInfoCommentsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/HPTServiceLibrary" minOccurs="0" name="UploadRaceDayInfoCommentsResult" nillable="true" type="q9:HPTSaveSystem" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveKey">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="emailaddress" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveKeyResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="RetrieveKeyResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCalendarZip">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCalendarZipResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetCalendarZipResult" nillable="true" type="xs:base64Binary" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRaceDayInfoByTrackAndDateZip">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="betType" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="trackId" type="xs:int" />
+        <xs:element minOccurs="0" name="raceDate" type="xs:dateTime" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRaceDayInfoByTrackAndDateZipResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetRaceDayInfoByTrackAndDateZipResult" nillable="true" type="xs:base64Binary" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRaceDayInfoListByTrackAndDateZip">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="trackId" type="xs:int" />
+        <xs:element minOccurs="0" name="raceDate" type="xs:dateTime" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRaceDayInfoListByTrackAndDateZipResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/HPTServiceLibrary" minOccurs="0" name="GetRaceDayInfoListByTrackAndDateZipResult" nillable="true" type="q10:ArrayOfHPTRaceKey" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetResultMarkingBetZip">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="betType" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="trackId" type="xs:int" />
+        <xs:element minOccurs="0" name="raceDate" type="xs:dateTime" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetResultMarkingBetZipResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetResultMarkingBetZipResult" nillable="true" type="xs:base64Binary" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCalendarDummy">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCalendarDummyResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/HPTServiceLibrary" minOccurs="0" name="GetCalendarDummyResult" nillable="true" type="q11:HPTCalendar" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRaceDayInfoDummy">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRaceDayInfoDummyResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/HPTServiceLibrary" minOccurs="0" name="GetRaceDayInfoDummyResult" nillable="true" type="q12:HPTRaceDayInfo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRaceDayInfoHistoryGroupedByTrackAndDateDummy">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRaceDayInfoHistoryGroupedByTrackAndDateDummyResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/HPTServiceLibrary" minOccurs="0" name="GetRaceDayInfoHistoryGroupedByTrackAndDateDummyResult" nillable="true" type="q13:HPTRaceDayInfoHistoryInfoGrouped" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetResultMarkingBetDummy">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetResultMarkingBetDummyResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/HPTServiceLibrary" minOccurs="0" name="GetResultMarkingBetDummyResult" nillable="true" type="q14:HPTResultMarkingBet" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRaceDayInfoReductionDummy">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRaceDayInfoReductionDummyResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/HPTServiceLibrary" minOccurs="0" name="GetRaceDayInfoReductionDummyResult" nillable="true" type="q15:HPTRaceDayInfoReduction" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetNextStartDummy">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetNextStartDummyResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/HPTServiceLibrary" minOccurs="0" name="GetNextStartDummyResult" nillable="true" type="q16:HPTHorseNextStart" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetUserRaceDayInfoCommentsCollectionDummy">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetUserRaceDayInfoCommentsCollectionDummyResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/HPTServiceLibrary" minOccurs="0" name="GetUserRaceDayInfoCommentsCollectionDummyResult" nillable="true" type="q17:HPTUserRaceDayInfoCommentsCollection" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetUserSystemCollectionDummy">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetUserSystemCollectionDummyResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/HPTServiceLibrary" minOccurs="0" name="GetUserSystemCollectionDummyResult" nillable="true" type="q18:HPTUserSystemCollection" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSaveSystemDummy">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSaveSystemDummyResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/HPTServiceLibrary" minOccurs="0" name="GetSaveSystemDummyResult" nillable="true" type="q19:HPTATGSystem" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendMailDummy">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendMailDummyResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/HPTServiceLibrary" minOccurs="0" name="SendMailDummyResult" nillable="true" type="q20:HPTUserSystemToMail" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UploadCompleteSystemDummy">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UploadCompleteSystemDummyResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/HPTServiceLibrary" minOccurs="0" name="UploadCompleteSystemDummyResult" nillable="true" type="q21:HPTUserSystemComplete" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UploadConfigurationDummy">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/HPTServiceLibrary" minOccurs="0" name="userConfiguration" nillable="true" type="q22:HPTUserConfiguration" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UploadConfigurationDummyResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="UploadConfigurationDummyResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

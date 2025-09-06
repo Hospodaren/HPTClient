@@ -1,0 +1,84 @@
+﻿<UserControl x:Class="HPTClient.UCBetTabItemHeader"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <UserControl.Resources>
+
+        <BooleanToVisibilityConverter x:Key="hptVisibilityConverter"/>
+
+    </UserControl.Resources>
+    
+    <Grid>
+
+        <Grid.Resources>
+            <Style x:Key="txtHeaderStyle" TargetType="{x:Type TextBlock}">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="Foreground" Value="Black"/>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type TabItem}},Path=IsSelected}" Value="True">
+                        <Setter Property="FontWeight" Value="Bold"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Resources>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Image Source="{Binding Path=BetType.BetTypeATGLogo}" Height="28" Grid.RowSpan="2"/>
+
+        <TextBlock Style="{StaticResource txtHeaderStyle}" Grid.Column="1" VerticalAlignment="Center" Margin="3,1,1,1" FontSize="13" Foreground="Black">
+            <TextBlock.Text>
+                <MultiBinding StringFormat="{}{0} ({1})">
+                    <Binding Path="RaceDayInfo.Trackname"/>
+                    <Binding Path="RaceDayInfo.RaceDayDateShortString"/>
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
+
+        <TextBlock Style="{StaticResource txtHeaderStyle}" VerticalAlignment="Center" Visibility="{Binding HasNoSystemName,Converter={StaticResource hptVisibilityConverter}}"
+                   Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Margin="3,1,1,1"
+                   FontSize="9" Foreground="Black">
+            <TextBlock.Text>
+                <MultiBinding StringFormat="{}{0:N0} - {1:N0} ({2})" ConverterCulture="sv-SE">
+                    <Binding Path="ReducedSize"/>
+                    <Binding Path="SystemSize"/>
+                    <Binding Path="LastSaveString"/>
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
+
+        <TextBlock Style="{StaticResource txtHeaderStyle}" VerticalAlignment="Center" Visibility="{Binding HasSystemName,Converter={StaticResource hptVisibilityConverter}}"
+                   Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"  Margin="3,1,1,1" FontSize="9" Foreground="Black">
+            <TextBlock.Text>
+                <MultiBinding StringFormat="{}{0} ({1})">
+                    <Binding Path="SystemName"/>
+                    <Binding Path="LastSaveString"/>
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
+
+        <Border x:Name="bdrClose" BorderThickness="1" CornerRadius="1" MouseUp="StackPanel_MouseUp" Grid.Column="2" Margin="5,0,0,0">
+            <Border.Style>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="BorderBrush" Value="Transparent" />
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush" Value="Black" />
+                            <Setter Property="Background" Value="IndianRed" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+            <TextBlock x:Name="tbClose" Text="X" TextAlignment="Center" Padding="2" FontFamily="Verdana" FontStretch="UltraExpanded"/>
+        </Border>
+        
+    </Grid>
+</UserControl>

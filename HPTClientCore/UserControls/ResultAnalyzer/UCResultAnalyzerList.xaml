@@ -1,0 +1,89 @@
+﻿<UserControl x:Class="HPTClient.UCResultAnalyzerList"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" DataContextChanged="UserControl_DataContextChanged"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+            xmlns:HPT="clr-namespace:HPTClient" x:Name="ucResultAnalyzerList">
+    <UserControl.Resources>
+
+        <Style x:Key="ColumnHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
+            <Style.Setters>
+                <Setter Property="BorderBrush" Value="Black"/>
+                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                <Setter Property="Background" Value="{StaticResource HeaderGrayBrush}"/>
+            </Style.Setters>
+        </Style>
+
+        <DataTemplate x:Key="raceDayInfoTemplate">
+            <TextBlock Text="{Binding ResultMonth}" Style="{StaticResource tbStyle}"/>
+        </DataTemplate>
+
+        <HierarchicalDataTemplate x:Key="dayTemplate" ItemTemplate="{StaticResource raceDayInfoTemplate}">
+            <TextBlock Text="{Binding ResultMonth}" Style="{StaticResource tbStyle}"/>
+        </HierarchicalDataTemplate>
+
+        <HierarchicalDataTemplate x:Key="monthTemplate" ItemTemplate="{StaticResource dayTemplate}">
+            <TextBlock Text="{Binding ResultMonth}" Style="{StaticResource tbStyle}"/>
+        </HierarchicalDataTemplate>
+
+        <HierarchicalDataTemplate x:Key="yearTemplate" ItemsSource="{Binding ResultMonthList}" ItemTemplate="{StaticResource monthTemplate}">
+            <TextBlock Text="{Binding ResultYear}" Style="{StaticResource tbStyle}"/>
+        </HierarchicalDataTemplate>
+
+    </UserControl.Resources>
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <!--<ListView Name="lvwResultAnalyzerList" ItemsSource="{Binding Path=ResultAnalyzerList,ElementName=ucResultAnalyzerList}" ScrollViewer.VerticalScrollBarVisibility="Auto">-->
+            <ListView Name="lvwResultAnalyzerList" ItemsSource="{Binding}" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <ListView.View>
+                    <GridView x:Name="gvwSingleRows">
+
+                        <!--Datum-->
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=RaceDate,StringFormat=yyyy-MM-dd}">
+                            <GridViewColumnHeader Style="{StaticResource ColumnHeaderStyle}" Tag="RaceDate" Content="Datum" Click="GridViewColumnHeader_Click"/>
+                        </GridViewColumn>
+
+                        <!--Bana-->
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=TrackName}">
+                            <GridViewColumnHeader Style="{StaticResource ColumnHeaderStyle}" Tag="TrackName" Content="Bana" Click="GridViewColumnHeader_Click"/>
+                        </GridViewColumn>
+
+                        <!--Spelform-->
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=BetTypeCode}">
+                            <GridViewColumnHeader Style="{StaticResource ColumnHeaderStyle}" Tag="BetTypeCode" Content="Spelform" Click="GridViewColumnHeader_Click"/>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <HPT:UCResultAnalyzer DataContext="{Binding SelectedItem,ElementName=lvwResultAnalyzerList}" Grid.Column="1"/>
+            
+            <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="1">
+                
+                <Button x:Name="btnImportResults" Content="Ladda resultat" Click="btnImportResults_Click"/>
+
+                <xctk:SplitButton x:Name="btnExportToClipboard" Content="Exportera lista till klippbordet" Click="btnExportToClipboard_Click" Margin="1">
+                    <xctk:SplitButton.DropDownContent>
+                        <StackPanel Orientation="Vertical">
+                            <MenuItem x:Name="miCompleteResults" Header="Komplett resultat" Click="miCompleteResults_Click"/>
+                            <!--<MenuItem x:Name="miOverviewWithoutHeaders" Header="Översikt utan rubriker" Click="miOverviewWithoutHeaders_Click"/>-->
+                        </StackPanel>
+                    </xctk:SplitButton.DropDownContent>
+                </xctk:SplitButton>
+                
+            </StackPanel>            
+
+        </Grid>
+    </Grid>
+</UserControl>

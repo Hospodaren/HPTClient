@@ -1,0 +1,399 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:HPT="clr-namespace:HPTClient">
+
+    <DataTemplate x:Key="textABCDHeaderTemplate">
+        <StackPanel Height="18" Margin="0,0,0,0" Name="spABCDHeader" VerticalAlignment="Bottom" Orientation="Horizontal" HorizontalAlignment="Left" Width="65">
+            <TextBlock Height="16" Width="16" Text="A" TextAlignment="Center"></TextBlock>
+            <TextBlock Height="16" Width="16" Text="B" TextAlignment="Center"></TextBlock>
+            <TextBlock Height="16" Width="16" Text="C" TextAlignment="Center"></TextBlock>
+            <TextBlock Height="16" Width="16" Text="D" TextAlignment="Center"></TextBlock>
+        </StackPanel>
+    </DataTemplate>
+
+    <!--<DataTemplate x:Key="GroupBoxHeaderTemplate">
+        <Grid>
+            <Rectangle Stroke="Blue" StrokeThickness="1" RadiusX="2" RadiusY="2" Fill="{StaticResource SelectedBrush}">
+            </Rectangle>
+            <TextBlock Margin="4" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial" FontSize="12" FontWeight="Bold" Foreground="Black" Text="{Binding}">
+            </TextBlock>
+        </Grid>
+    </DataTemplate>-->
+    
+    <DataTemplate x:Key="GroupBoxHeaderTemplate">
+        <Grid>
+            <Rectangle Stroke="Black" StrokeThickness="1" RadiusX="0" RadiusY="0" Fill="LightGray">
+            </Rectangle>
+            <TextBlock Margin="4" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial" FontSize="12" FontWeight="Bold" Text="{Binding}">
+            </TextBlock>
+        </Grid>
+    </DataTemplate>
+    
+    <DataTemplate x:Key="GroupBoxHeaderCheckBoxTemplate">
+        <Grid>
+            <Rectangle Stroke="Black" StrokeThickness="1" RadiusX="0" RadiusY="0" Fill="LightGray"/>
+            <ContentPresenter Content="{Binding}"/>
+            <!--<CheckBox x:Name="chkABCDReduction" Margin="3">
+                <TextBlock  HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial" FontSize="12" FontWeight="Bold" Foreground="Black" Text="{Binding}" />
+            </CheckBox>-->
+        </Grid>
+    </DataTemplate>
+    
+    <!--<DataTemplate x:Key="GroupBoxHeaderCheckBoxTemplate">
+        <Grid>
+            <Rectangle Stroke="Blue" StrokeThickness="1" RadiusX="2" RadiusY="2" Fill="{StaticResource SelectedBrush}"/>
+            <CheckBox x:Name="chkABCDReduction" Margin="3">
+                <TextBlock  HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial" FontSize="12" FontWeight="Bold" Foreground="Black" Text="{Binding}" />
+            </CheckBox>
+        </Grid>
+    </DataTemplate>-->
+    
+    <DataTemplate x:Key="TextBlockWithBorder">
+        <Border BorderBrush="DarkGray" BorderThickness="1">
+            <TextBlock Style="{StaticResource tbStyle}" Text="{Binding}"/>
+        </Border>
+    </DataTemplate>
+    
+    <DataTemplate x:Key="BetTabItemHeader">
+        <Grid>
+            <!--<Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>-->
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <!--<TextBlock Text="V65" FontSize="24" FontWeight="Bold" Grid.Column="0" Grid.RowSpan="2"/>-->
+            <Image Source="{Binding Path=BetType.BetTypeATGLogo}" Grid.Row="0" />
+            <TextBlock Text="{Binding Path=RaceDayInfo.Trackname}" Grid.Row="1" Margin="1" FontSize="14" Foreground="Black"/>
+            <TextBlock Text="{Binding Path=RaceDayInfo.RaceDayDateString}" Grid.Row="2" Margin="1" FontSize="11" Foreground="Black"/>
+        </Grid>
+    </DataTemplate>
+
+    <ControlTemplate x:Key="TabItemHeaderControlTemplate" TargetType="{x:Type TabItem}">
+        <Grid>
+            <Rectangle x:Name="rectNrSelected" Stroke="Blue" Width="24" Height="24" StrokeThickness="1" RadiusX="3" RadiusY="3" Fill="{StaticResource StandardBrush}"/>
+            <TextBlock x:Name="txtContent" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial" FontSize="16" FontWeight="Bold" Foreground="Black" Text="{Binding RaceNr}">
+                    <!--<ContentPresenter />-->
+            </TextBlock>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Fill" TargetName="rectNrSelected" Value="{StaticResource SelectedBrush}"/>
+                <Setter Property="Stroke" TargetName="rectNrSelected" Value="Red"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="CheckBoxControlTemplate" TargetType="{x:Type CheckBox}">
+        <Grid>
+            <Rectangle x:Name="rectNrCheck" Stroke="Blue" Width="24" Height="16" StrokeThickness="1" RadiusX="3" RadiusY="3" Fill="{StaticResource StandardBrush}">
+            </Rectangle>
+            <TextBlock x:Name="txtContent" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial" FontSize="12" FontWeight="Bold" Foreground="Black">
+                    <ContentPresenter />
+            </TextBlock>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter Property="Fill" TargetName="rectNrCheck" Value="{StaticResource SelectedBrush}">
+                </Setter>
+                <Setter Property="Stroke" TargetName="rectNrCheck" Value="Red"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Fill" TargetName="rectNrCheck" Value="{StaticResource DisabledBrush}">
+                </Setter>
+                <Setter Property="Stroke" TargetName="rectNrCheck" Value="DarkGray"/>
+                <Setter Property="Foreground" TargetName="txtContent" Value="WhiteSmoke"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="RadioButtonV6BetMultiplierControlTemplate" TargetType="{x:Type RadioButton}">
+        <Grid>
+            <Rectangle x:Name="rectNrCheck" Stroke="Blue" Width="24" Height="16" StrokeThickness="1" RadiusX="3" RadiusY="3" Fill="{StaticResource StandardBrush}">
+            </Rectangle>
+            <ContentPresenter />
+            <!--<TextBlock x:Name="txtContent" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial" FontSize="12" FontWeight="Bold" Foreground="Black">
+                    <ContentPresenter />
+            </TextBlock>-->
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter Property="Fill" TargetName="rectNrCheck" Value="{StaticResource SelectedBrush}">
+                </Setter>
+                <Setter Property="Stroke" TargetName="rectNrCheck" Value="Red"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Fill" TargetName="rectNrCheck" Value="{StaticResource DisabledBrush}">
+                </Setter>
+                <Setter Property="Stroke" TargetName="rectNrCheck" Value="DarkGray"/>
+                <!--<Setter Property="Foreground" TargetName="txtContent" Value="WhiteSmoke"/>-->
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="CheckBoxControlTemplateSmall" TargetType="{x:Type CheckBox}">
+        <Grid>
+            <Rectangle x:Name="rectNrCheck" Stroke="DarkBlue" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" StrokeThickness="1" RadiusX="2" RadiusY="2" Fill="{StaticResource StandardBrush}">
+            </Rectangle>
+            <ContentPresenter/>
+            <!--<TextBlock x:Name="txtContent" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial" FontSize="12" FontWeight="Bold" Foreground="Black">
+                    <ContentPresenter />
+            </TextBlock>-->
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter Property="Fill" TargetName="rectNrCheck" Value="{StaticResource SelectedBrush}"/>
+                <Setter Property="Stroke" TargetName="rectNrCheck" Value="Red"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Fill" TargetName="rectNrCheck" Value="{StaticResource DisabledBrush}">
+                </Setter>
+                <Setter Property="Stroke" TargetName="rectNrCheck" Value="DarkGray"/>
+                <!--<Setter Property="Foreground" TargetName="txtContent" Value="WhiteSmoke"/>-->
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+    
+    <ControlTemplate x:Key="CheckBoxTemplate" TargetType="{x:Type CheckBox}">
+        <Grid>
+            <Rectangle x:Name="rectNrCheck" Stroke="Blue" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" StrokeThickness="1" RadiusX="1" RadiusY="1" Fill="{StaticResource StandardBrush}">
+            </Rectangle>
+            <TextBlock x:Name="txtContent" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial" FontSize="{TemplateBinding FontSize}" FontWeight="Bold" Foreground="Black">
+                    <ContentPresenter />
+            </TextBlock>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter Property="Fill" TargetName="rectNrCheck" Value="{StaticResource SelectedBrush}"/>
+                <Setter Property="Stroke" TargetName="rectNrCheck" Value="Red"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Fill" TargetName="rectNrCheck" Value="{StaticResource DisabledBrush}"/>
+                <Setter Property="Stroke" TargetName="rectNrCheck" Value="DarkGray"/>
+                <Setter Property="Foreground" TargetName="txtContent" Value="WhiteSmoke"/>
+            </Trigger>
+            <DataTrigger Binding="{Binding IsSuperfluous}" Value="True">
+                <Setter Property="Foreground" TargetName="txtContent" Value="WhiteSmoke"/>
+                <Setter Property="FontStyle" TargetName="txtContent" Value="Italic"/>
+            </DataTrigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <DataTemplate x:Key="CheckBoxNrTemplate">
+        <CheckBox Name="chkNrSelect" IsEnabled="{Binding NotScratched}" IsChecked="{Binding Selected}" Template="{StaticResource CheckBoxControlTemplate}" Content="{Binding StartNr}"/>
+    </DataTemplate>
+
+    <ControlTemplate x:Key="DisabledCheckBoxControlTemplate" TargetType="{x:Type CheckBox}">
+        <Grid ToolTip="{Binding Name}">
+            <Rectangle x:Name="rectNrCheck" Stroke="Blue" MinWidth="24" MinHeight="16" StrokeThickness="1" RadiusX="3" RadiusY="3" Fill="{StaticResource StandardBrush}">
+            </Rectangle>
+            <!--<ContentPresenter />-->
+            <TextBlock x:Name="txtContent" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial" FontSize="12" FontWeight="Bold" Foreground="Black">
+                    <ContentPresenter />
+            </TextBlock>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter Property="Fill" TargetName="rectNrCheck" Value="{StaticResource SelectedBrush}"/>
+                <Setter Property="Stroke" TargetName="rectNrCheck" Value="Red"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Fill" TargetName="rectNrCheck" Value="{StaticResource DisabledBrush}"/>
+                <Setter Property="Stroke" TargetName="rectNrCheck" Value="DarkGray"/>
+            </Trigger>
+            <DataTrigger Binding="{Binding Scratched}" Value="true">
+                <Setter Property="Fill" TargetName="rectNrCheck" Value="{StaticResource DisabledBrush}"/>
+                <Setter Property="Stroke" TargetName="rectNrCheck" Value="DarkGray"/>
+                <Setter Property="IsEnabled" Value="false"/>
+            </DataTrigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+    
+    <DataTemplate x:Key="CheckBoxSystemTemplate">
+        <DataTemplate.Resources>
+            <Style TargetType="{x:Type TextBlock}">
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="FontFamily" Value="Arial"/>
+                <Setter Property="FontSize" Value="11"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Foreground" Value="Black"/>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Scratched}" Value="true">
+                        <Setter Property="Foreground" Value="WhiteSmoke"/>
+                        <Setter Property="IsEnabled" Value="false"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </DataTemplate.Resources>
+        <CheckBox Name="chkNrAndPrio" IsChecked="{Binding Selected}" Template="{StaticResource DisabledCheckBoxControlTemplate}" ContextMenu="{x:Null}">
+            <CheckBox.Content>
+                <StackPanel Orientation="Horizontal">
+                    <!--<TextBlock x:Name="txtStartNr" Text="{Binding StartNr}" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial" FontSize="11" FontWeight="Bold" Foreground="Black">-->
+                    <TextBlock x:Name="txtStartNr" Text="{Binding StartNr}">
+                        
+                        <!--<Popup HorizontalOffset="-10" VerticalOffset="-10" Placement="MousePoint" IsOpen="{Binding ElementName=txtStartNr,Path=IsMouseCaptured,Mode=OneWay}">
+                            <Popup.Child>
+                                <HPT:UCCompactHorseWide/>
+                            </Popup.Child>
+                        </Popup>-->
+                    </TextBlock>
+                    <TextBlock Text="{Binding PrioString}" FontWeight="Medium"/>                    
+                </StackPanel>
+            </CheckBox.Content>
+        </CheckBox>
+    </DataTemplate>
+
+    <DataTemplate x:Key="CheckBoxRowValueTemplate">
+        <DataTemplate.Resources>
+            <Style TargetType="{x:Type TextBlock}">
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="FontFamily" Value="Arial"/>
+                <Setter Property="FontSize" Value="11"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Foreground" Value="Black"/>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Scratched}" Value="true">
+                        <Setter Property="Foreground" Value="WhiteSmoke"/>
+                        <Setter Property="IsEnabled" Value="false"/>
+                    </DataTrigger>
+                    <!--<DataTrigger Binding="{Binding Selected}" Value="false">
+                        <Setter Property="Foreground" Value="WhiteSmoke"/>
+                        <Setter Property="IsEnabled" Value="false"/>
+                    </DataTrigger>-->
+                </Style.Triggers>
+            </Style>
+        </DataTemplate.Resources>
+        <CheckBox Name="chkNrAndPrio" IsChecked="{Binding SelectedForRowValueCalculation}" IsEnabled="{Binding Selected}"
+                  Template="{StaticResource DisabledCheckBoxControlTemplate}" ContextMenu="{x:Null}">
+            <CheckBox.Content>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="txtStartNr" Text="{Binding StartNr}">
+                    </TextBlock>
+                    <TextBlock Text="{Binding PrioString}" FontWeight="Medium"/>
+                </StackPanel>
+            </CheckBox.Content>
+        </CheckBox>
+    </DataTemplate>
+
+    <ControlTemplate x:Key="CheckBoxHorsePositionTemplate" TargetType="{x:Type CheckBox}">
+        <Grid>
+            <Rectangle x:Name="rectBackground" Stroke="Black" Width="96" Height="16" StrokeThickness="1" RadiusX="1" RadiusY="1" Fill="{StaticResource StandardBrush}">
+            </Rectangle>
+            <TextBlock x:Name="txtContent" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial" FontSize="10" FontWeight="Bold" Foreground="{TemplateBinding Foreground}">
+                    <ContentPresenter />
+            </TextBlock>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter Property="Fill" TargetName="rectBackground"  Value="{StaticResource SelectedBrush}">
+                </Setter>
+                <Setter Property="Stroke" TargetName="rectBackground" Value="Red"/>
+                <Setter Property="Foreground" TargetName="txtContent" Value="Black"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+    
+    <ControlTemplate x:Key="RadioButtonControlTemplate" TargetType="{x:Type RadioButton}">
+        <Grid>
+            <Rectangle x:Name="rectBackground" Stroke="Black" Width="16" Height="16" StrokeThickness="1" RadiusX="1" RadiusY="1" Fill="{StaticResource StandardBrush}">
+            </Rectangle>
+            <TextBlock x:Name="txtContent" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial" FontSize="12" FontWeight="Bold" Foreground="{TemplateBinding Foreground}">
+                    <ContentPresenter />
+            </TextBlock>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter Property="Fill" TargetName="rectBackground"  Value="OrangeRed"/>
+                <Setter Property="Stroke" TargetName="rectBackground" Value="Red"/>
+                <Setter Property="Foreground" TargetName="txtContent" Value="Black"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Fill" TargetName="rectBackground" Value="LightGray"/>
+                <Setter Property="Stroke" TargetName="rectBackground" Value="DarkGray"/>
+                <Setter Property="Foreground" TargetName="txtContent" Value="WhiteSmoke"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="CheckBoxABCDControlTemplate" TargetType="{x:Type CheckBox}">
+        <Grid>
+            <Rectangle x:Name="rectBackground" Stroke="Black" Width="16" Height="16" StrokeThickness="1" RadiusX="1" RadiusY="1" Fill="{StaticResource StandardBrush}">
+            </Rectangle>
+            <TextBlock x:Name="txtContent" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial" FontSize="12" FontWeight="Bold" Foreground="{TemplateBinding Foreground}">
+                    <ContentPresenter />
+            </TextBlock>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter Property="Fill" TargetName="rectBackground"  Value="OrangeRed"/>
+                <Setter Property="Stroke" TargetName="rectBackground" Value="Red"/>
+                <Setter Property="Foreground" TargetName="txtContent" Value="Black"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Fill" TargetName="rectBackground" Value="LightGray"/>
+                <Setter Property="Stroke" TargetName="rectBackground" Value="DarkGray"/>
+                <Setter Property="Foreground" TargetName="txtContent" Value="WhiteSmoke"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <DataTemplate x:Key="rbABCDTemplate">
+        <StackPanel Margin="0,0,0,0" Name="spABCD" VerticalAlignment="Bottom" Orientation="Horizontal" HorizontalAlignment="Left" Width="72">
+            <RadioButton Template="{StaticResource RadioButtonControlTemplate}" Content="A" IsChecked="{Binding RankedA}" IsEnabled="{Binding NotScratched}" Foreground="WhiteSmoke"></RadioButton>
+            <RadioButton Template="{StaticResource RadioButtonControlTemplate}" Content="B" IsChecked="{Binding RankedB}" IsEnabled="{Binding NotScratched}" Foreground="WhiteSmoke"></RadioButton>
+            <RadioButton Template="{StaticResource RadioButtonControlTemplate}" Content="C" IsChecked="{Binding RankedC}" IsEnabled="{Binding NotScratched}" Foreground="WhiteSmoke"></RadioButton>
+            <RadioButton Template="{StaticResource RadioButtonControlTemplate}" Content="D" IsChecked="{Binding RankedD}" IsEnabled="{Binding NotScratched}" Foreground="WhiteSmoke"></RadioButton>
+        </StackPanel>
+    </DataTemplate>
+
+    <!--<ControlTemplate TargetType="Button">
+        <BulletDecorator Background="Transparent">
+            <BulletDecorator.Bullet>
+                <Border x:Name="Border"  
+                                Width="16" 
+                                Height="16" 
+                                CornerRadius="0" 
+                                Background="{StaticResource StandardBrush}"
+                                BorderThickness="1"
+                                BorderBrush="Gray">
+                    <Border x:Name="InnerBorder"  
+                                    Width="12" 
+                                    Height="12" 
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    CornerRadius="0" 
+                                    Background="WhiteSmoke"
+                                    BorderThickness="1"
+                                    BorderBrush="Gray">
+                        <Path 
+                                          Width="7" Height="7" 
+                                          x:Name="CheckMark"
+                                          SnapsToDevicePixels="False" 
+                                          Stroke="Black"
+                                          StrokeThickness="2"
+                                          Data="M 0 0 L 7 7 M 0 7 L 7 0" />
+                    </Border>
+                </Border>
+            </BulletDecorator.Bullet>
+            <ContentPresenter x:Name="cpCheckBox"
+                            Margin="2,0,0,0"
+                          VerticalAlignment="Center"
+                          HorizontalAlignment="Left"
+                          RecognizesAccessKey="True"/>
+        </BulletDecorator>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsChecked" Value="false">
+                <Setter TargetName="CheckMark" Property="Visibility" Value="Collapsed"/>
+            </Trigger>
+            <Trigger Property="IsChecked" Value="{x:Null}">
+                <Setter TargetName="CheckMark" Property="Data" Value="M 0 7 L 7 0" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>-->
+    
+</ResourceDictionary>

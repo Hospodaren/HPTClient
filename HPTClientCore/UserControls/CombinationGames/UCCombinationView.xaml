@@ -1,0 +1,274 @@
+﻿<HPT:UCCombBetControl x:Class="HPTClient.UCCombinationView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:EXT="http://schemas.xceed.com/wpf/xaml/toolkit"
+            xmlns:HPT="clr-namespace:HPTClient"
+             mc:Ignorable="d" 
+             x:Name="ucCombinationView"
+             Loaded="ucCombinationView_Loaded" Unloaded="ucCombinationView_Unloaded">
+    
+    <UserControl.Resources>
+
+        <DataTemplate x:Key="SelectedTemplate">
+            <CheckBox x:Name="chkSelected" IsChecked="{Binding Selected}" Checked="chkSelected_Checked" Unchecked="chkSelected_Checked" />
+        </DataTemplate>
+
+        <Style x:Key="ColumnHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
+            <Style.Setters>
+                <Setter Property="BorderBrush" Value="Black"/>
+                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                <Setter Property="Background" Value="{StaticResource HeaderGrayBrush}"/>
+            </Style.Setters>
+        </Style>
+
+        <Style x:Key="ListViewItemStyle" TargetType="{x:Type ListViewItem}">
+            <Setter Property="Background" Value="{Binding OddsQuotaColor}"/>
+            <Setter Property="BorderBrush" Value="Black"></Setter>
+            <Setter Property="BorderThickness" Value="0.5"></Setter>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="IsSelected" Value="True"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+    </UserControl.Resources>
+    
+    <Grid>
+
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!--Combination Odds-->
+            <GroupBox Background="{StaticResource BackgroundBrush}" HeaderTemplate="{StaticResource GroupBoxHeaderTemplate}" Header="Kombinationer" Grid.Row="0"
+                      EXT:IntegerUpDown.ValueChanged="GroupBox_ValueChanged" BorderBrush="Black">
+
+                <ListView Name="lvwCombinations" ItemsSource="{Binding Path=CombinationsToShowList}" ItemContainerStyle="{StaticResource ListViewItemStyle}" 
+                      Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"
+                      SelectionChanged="lvwCombinationOdds_SelectionChanged" ContextMenu="{Binding Path=CMColumnsToShow,ElementName=ucCombinationView}">
+                    <ListView.View>
+                        <GridView x:Name="gvwCombinations">
+
+                            <!--Vald-->
+                            <GridViewColumn CellTemplate="{StaticResource SelectedTemplate}" x:Name="gvcSelected">
+                                <GridViewColumnHeader Style="{StaticResource ColumnHeaderStyle}" Click="GridViewColumnHeader_Click" Tag="Selected" Content=""                                              
+                                    ToolTipService.ToolTip="Välj att spela kombination">
+                                    <GridViewColumnHeader.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem x:Name="miSelectAll" Click="miSelectAll_Click" Header="Välj alla"/>
+                                            <MenuItem x:Name="miRemoveAll" Click="miRemoveAll_Click" Header="Ta bort alla"/>
+                                        </ContextMenu>
+                                    </GridViewColumnHeader.ContextMenu>
+                                </GridViewColumnHeader>
+                            </GridViewColumn>
+
+                            <!--Kombinationsrank-->
+                            <GridViewColumn DisplayMemberBinding="{Binding CombinationOddsRank}" x:Name="gvcCombinationRank">
+                                <GridViewColumnHeader Style="{StaticResource ColumnHeaderStyle}" Click="GridViewColumnHeader_Click" Tag="CombinationOddsRank" Content="DORank"                                              
+                                    ToolTipService.ToolTip="Kombinationsoddsrank."/>
+                            </GridViewColumn>
+
+                            <!--Multiplicerad oddsrank-->
+                            <GridViewColumn DisplayMemberBinding="{Binding MultipliedOddsRank}" x:Name="gvcOddsRank">
+                                <GridViewColumnHeader Style="{StaticResource ColumnHeaderStyle}" Click="GridViewColumnHeader_Click" Tag="MultipliedOddsRank" Content="MVRank"                                              
+                                    ToolTipService.ToolTip="Rank för multiplicerat odds."/>
+                            </GridViewColumn>
+
+                            <!--Häst 1-->
+                            <GridViewColumn x:Name="gvcStartNr1">
+                                <GridViewColumnHeader Style="{StaticResource ColumnHeaderStyle}" Click="GridViewColumnHeader_Click" Tag="Horse1Nr" Content="Häst 1"
+                                    ToolTipService.ToolTip="Startnummer för 1:a häst i kombinationen"/>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock FontWeight="Bold" Text="{Binding Path=Horse1.HorseNumberAndName}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <!--Häst 2-->
+                            <GridViewColumn x:Name="gvcStartNr2">
+                                <GridViewColumnHeader Style="{StaticResource ColumnHeaderStyle}" Click="GridViewColumnHeader_Click" Tag="Horse2Nr" Content="Häst 2" HorizontalContentAlignment="Left"
+                                    ToolTipService.ToolTip="Startnummer för 2:a häst i kombinationen"/>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock FontWeight="Bold" Text="{Binding Path=Horse2.HorseNumberAndName}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <!--Häst 3-->
+                            <GridViewColumn x:Name="gvcStartNr3">
+                                <GridViewColumnHeader Style="{StaticResource ColumnHeaderStyle}" Click="GridViewColumnHeader_Click" Tag="Horse3Nr" Content="Häst 3" HorizontalContentAlignment="Left"
+                                    ToolTipService.ToolTip="Startnummer för 3:e häst i kombinationen"/>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock FontWeight="Bold" Text="{Binding Path=Horse3.HorseNumberAndName}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <!--Kombinationsodds-->
+                            <GridViewColumn x:Name="gvcCombinationOdds"
+                                    Width="{Binding Path=combBet.RaceDayInfo.DataToShow.ShowCombinationOdds}">
+                                <GridViewColumnHeader Style="{StaticResource ColumnHeaderStyle}" Click="GridViewColumnHeader_Click" Tag="CombinationOddsExact" Content="Odds"
+                                    ToolTipService.ToolTip="Kombinationsodds"/>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock TextAlignment="Right" FontWeight="Bold" Text="{Binding Path=CombinationOddsExact,StringFormat=F2,ConverterCulture=sv-SE}" HorizontalAlignment="Right"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <!--Multiplicerat vinnarodds-->
+                            <GridViewColumn x:Name="gvcMultipliedOdds" DisplayMemberBinding="{Binding MultipliedOdds,StringFormat=F2}"
+                                    Width="{Binding Path=combBet.RaceDayInfo.DataToShow.ShowMultipliedOdds}">
+                                <GridViewColumnHeader Style="{StaticResource ColumnHeaderStyle}" Click="GridViewColumnHeader_Click" Tag="MultipliedOdds" Content="MVOdds"
+                                    ToolTipService.ToolTip="Multiplicerat vinnarodds"/>
+                            </GridViewColumn>
+
+                            <!--VP-Kvot-->
+                            <!--<GridViewColumn x:Name="gvcVPQuota" DisplayMemberBinding="{Binding Path=VPQuota,StringFormat=F2}">-->
+                            <GridViewColumn x:Name="gvcVPQuota">
+                                <GridViewColumnHeader x:Name="chVPQuota" Style="{StaticResource ColumnHeaderStyle}" Click="GridViewColumnHeader_Click" 
+                                                      Tag="VPQuota" Content="VP-Kvot" ContextMenu="{Binding Path=CMBet,ElementName=ucCombinationView}"
+                                                      ToolTipService.ToolTip="Kvot mellan kombinationsandel och VP-andel (V för placering 1, P för placering 2-3)"/>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock>
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0:F2} ({1:N0})">
+                                                    <Binding Path="VPQuota"/>
+                                                    <Binding Path="VPOdds"/>
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <!--V-Kvot-->
+                            <GridViewColumn x:Name="gvcVQuota">
+                                <GridViewColumnHeader x:Name="chVQuota" Style="{StaticResource ColumnHeaderStyle}" Click="GridViewColumnHeader_Click" 
+                                                      Tag="VQuota" Content="V-Kvot" ContextMenu="{Binding Path=CMBet,ElementName=ucCombinationView}"
+                                                      ToolTipService.ToolTip="Kvot mellan kombinationsandel och vinnaroddsandel"/>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock>
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0:F2} ({1:N0})">
+                                                    <Binding Path="VQuota"/>
+                                                    <Binding Path="VOdds"/>
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <!--P-Kvot-->
+                            <GridViewColumn x:Name="gvcPQuota">
+                                <GridViewColumnHeader x:Name="chPQuota" Style="{StaticResource ColumnHeaderStyle}" Click="GridViewColumnHeader_Click" 
+                                                      Tag="PQuota" Content="P-Kvot" ContextMenu="{Binding Path=CMBet,ElementName=ucCombinationView}"
+                                                      ToolTipService.ToolTip="Kvot mellan kombinationsandel och platsoddsandel"/>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock>
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0:F2} ({1:N0})">
+                                                    <Binding Path="PQuota"/>
+                                                    <Binding Path="POdds"/>
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <!--TV-Kvot-->
+                            <GridViewColumn x:Name="gvcTVQuota" DisplayMemberBinding="{Binding Path=TVQuota,StringFormat=F2}">
+                                <GridViewColumnHeader x:Name="chTVQuota" Style="{StaticResource ColumnHeaderStyle}" Click="GridViewColumnHeader_Click" 
+                                                      Tag="TVQuota" Content="TV-Kvot" ContextMenu="{Binding Path=CMBet,ElementName=ucCombinationView}"
+                                                      ToolTipService.ToolTip="Kvot mellan kombinationsandel och tvillingoddsandel"/>
+                            </GridViewColumn>
+
+                            <!--D-Kvot-->
+                            <GridViewColumn x:Name="gvcDQuota" DisplayMemberBinding="{Binding Path=DQuota,StringFormat=F2}">
+                                <GridViewColumnHeader x:Name="chDQuota" Style="{StaticResource ColumnHeaderStyle}" Click="GridViewColumnHeader_Click" 
+                                                      Tag="DQuota" Content="DD/LD-Kvot" ContextMenu="{Binding Path=CMBet,ElementName=ucCombinationView}"
+                                                      ToolTipService.ToolTip="Kvot mellan kombinationsandel och dubbelandel"/>
+                            </GridViewColumn>
+
+                            <!--Vxx-Kvot-->
+                            <GridViewColumn x:Name="gvcVxxQuota" DisplayMemberBinding="{Binding Path=StakeQuota,StringFormat=F2}">
+                                <GridViewColumnHeader x:Name="chVxxQuota" Style="{StaticResource ColumnHeaderStyle}" Click="GridViewColumnHeader_Click" 
+                                                      Tag="StakeQuota" Content="Vxx-Kvot" ContextMenu="{Binding Path=CMBet,ElementName=ucCombinationView}"
+                                                      ToolTipService.ToolTip="Kvot mellan kombinationsandel och streckspelsandel"/>
+                            </GridViewColumn>
+
+                            <!--Chansvärderings-Kvot-->
+                            <GridViewColumn x:Name="gvcOPQuota" DisplayMemberBinding="{Binding Path=OPQuota,StringFormat=F2}">
+                                <GridViewColumnHeader x:Name="chOPQuota" Style="{StaticResource ColumnHeaderStyle}" Click="GridViewColumnHeader_Click" 
+                                                      Tag="OPQuota" Content="CV-Kvot" ContextMenu="{Binding Path=CMBet,ElementName=ucCombinationView}"
+                                                      ToolTipService.ToolTip="Kvot mellan kombinationsandel och chansvärderingsandel"/>
+                            </GridViewColumn>
+
+                            <!--Kvot-->
+                            <!--<GridViewColumn x:Name="gvcQuota" DisplayMemberBinding="{Binding Path=OddsQuota,StringFormat=F2}"
+                                    Width="{Binding Path=combBet.RaceDayInfo.DataToShow.ShowOddsQuota}">
+                                <GridViewColumnHeader x:Name="chQuota" Style="{StaticResource ColumnHeaderStyle}" Click="GridViewColumnHeader_Click" 
+                                                      Tag="OddsQuota" Content="Kvot" ContextMenu="{Binding Path=CMBet,ElementName=ucCombinationView}"
+                                                      MouseDown="chQuota_MouseDown"
+                                                      ToolTipService.ToolTip="Kvot mellan dubbelodds och multiplicerat vinnarodds"/>
+                            </GridViewColumn>-->
+
+                            <!--Spelbarhet-->
+                            <GridViewColumn x:Name="gvcPlayability" DisplayMemberBinding="{Binding Path=Playability,StringFormat=F2}"
+                                    Width="{Binding Path=combBet.RaceDayInfo.DataToShow.ShowPlayability}">
+                                <GridViewColumnHeader x:Name="chPlayability" Style="{StaticResource ColumnHeaderStyle}" Click="GridViewColumnHeader_Click" 
+                                                       ContextMenu="{Binding Path=CMBet,ElementName=ucCombinationView}"
+                                                      MouseDown="chPlayability_MouseDown"
+                                                      Tag="Playability" Content="Spelbarhet" ToolTipService.ToolTip="Beräknad spelbarhet"/>
+                            </GridViewColumn>
+
+                            <!--Insats-->
+                            <GridViewColumn x:Name="gvcStake">
+                                <GridViewColumnHeader Style="{StaticResource ColumnHeaderStyle}" Click="GridViewColumnHeader_Click" Tag="Stake" Content="Insats"
+                                    ToolTipService.ToolTip="Vald insats"/>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <EXT:IntegerUpDown x:Name="iudStake" Value="{Binding Stake}" Margin="0" Padding="0"
+                                                           Minimum="{Binding Path=CombBet.BetType.LowestStake,ElementName=ucCombinationView}"
+                                                           Maximum="{Binding Path=CombBet.BetType.HighestStake,ElementName=ucCombinationView}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <!--Vinst-->
+                            <GridViewColumn x:Name="gvcProfit">
+                                <GridViewColumnHeader Style="{StaticResource ColumnHeaderStyle}" Click="GridViewColumnHeader_Click" Tag="Profit" Content="Vinst"
+                                    ToolTipService.ToolTip="Potentiell utbetalning för kombination"/>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock TextAlignment="Right" FontWeight="Bold" Text="{Binding ProfitString}" HorizontalAlignment="Right" Width="40"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+
+            </GroupBox>
+
+            <Label Grid.Row="1">
+                <Hyperlink x:Name="hlResetToRecommended" NavigateUri="http://www.hpt.nu" RequestNavigate="hlResetToRecommended_RequestNavigate">Visa rekommenderade kolumner</Hyperlink>
+            </Label>
+        </Grid>
+    </Grid>
+</HPT:UCCombBetControl>

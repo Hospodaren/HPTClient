@@ -1,0 +1,114 @@
+﻿<HPT:UCMarkBetControl x:Class="HPTClient.UCRankRaceOverview"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:HPT="clr-namespace:HPTClient" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="900">
+    <Grid>
+
+        <TabControl x:Name="tcRaces" TabStripPlacement="Left" ItemsSource="{Binding Path=RaceDayInfo.RaceList}" Grid.Row="0">
+
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <HPT:UCTabItemHeader Text="{Binding LegNrString}"/>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+
+            <TabControl.ContentTemplate>
+                <DataTemplate>
+                    <Grid Width="Auto" Height="Auto">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="300"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border Grid.ColumnSpan="2" BorderThickness="1,1,1,0" BorderBrush="Black">
+                            <WrapPanel Orientation="Horizontal" Background="Orange">
+
+                                <TextBlock Text="{Binding RaceInfoShort}" Margin="2,2,10,2" FontWeight="Bold" Background="Orange">
+                                    <TextBlock.ToolTip>
+                                        <ToolTip Background="{StaticResource BackgroundBrush}" ToolTipService.ShowDuration="20000" DataContext="{Binding Path=PlacementTarget.DataContext, RelativeSource={x:Static RelativeSource.Self}}">
+                                            <Border BorderBrush="Black" BorderThickness="1" Margin="2">
+                                                <TextBlock Text="{Binding RaceInfoLong}" Style="{StaticResource tbStyle}" Margin="2"/>
+                                            </Border>
+                                        </ToolTip>
+                                    </TextBlock.ToolTip>
+                                </TextBlock>
+
+                                <TextBlock Text="{Binding RaceName}" Margin="2" Background="Orange">
+                                    <TextBlock.ToolTip>
+                                        <ToolTip Background="{StaticResource BackgroundBrush}" ToolTipService.ShowDuration="20000" DataContext="{Binding Path=PlacementTarget.DataContext, RelativeSource={x:Static RelativeSource.Self}}">
+                                            <Border BorderBrush="Black" BorderThickness="1" Margin="2">
+                                                <TextBlock Text="{Binding RaceInfoLong}" Style="{StaticResource tbStyle}" Margin="2"/>
+                                            </Border>
+                                        </ToolTip>
+                                    </TextBlock.ToolTip>
+                                </TextBlock>
+
+                                <TextBlock Margin="10,2,2,2" Background="Orange" Text="Omsättning:" FontWeight="Bold"/>
+                                <TextBlock Margin="2" Background="Orange">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}V:{0:N0} kr, P:{1:N0} kr" ConverterCulture="sv-SE">
+                                            <Binding Path="TurnoverVinnare"/>
+                                            <Binding Path="TurnoverPlats"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+
+                                <TextBlock Margin="10,2,2,2" Background="Orange" Text="Antal streck:" FontWeight="Bold"/>
+                                <TextBlock Margin="2" Text="{Binding Path=MarksQuantity,StringFormat={}{0N0},ConverterCulture=sv-SE}" Background="Orange"/>
+
+                                <TextBlock Margin="10,2,2,2" Background="Orange" Text="Starttid:" FontWeight="Bold"/>
+                                <TextBlock Margin="2" Text="{Binding Path=PostTime,StringFormat={}{0:HH:mm}}" Background="Orange"/>
+
+                            </WrapPanel>
+                        </Border>
+                        
+                        <StackPanel Orientation="Horizontal" Grid.Row="1">
+                            <TextBlock Width="200"/>
+                            <ListBox ItemsSource="{Binding HorseList}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <CheckBox Name="chkNrSelect" IsChecked="{Binding Selected}" IsEnabled="{Binding NotScratched}" Tag="S" Template="{StaticResource CheckBoxControlTemplate}" Content="{Binding StartNr}"/>
+                                            
+                                            <ItemsControl ItemsSource="{Binding HorseXReductionList}">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <StackPanel Orientation="Horizontal"/>
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <RadioButton Template="{StaticResource RadioButtonControlTemplate}" Content="{Binding Prio}" Tag="{Binding Prio}" 
+                                                                     GroupName="{Binding Path=Horse.HorseUniqueCode}" IsChecked="{Binding Selected}" IsEnabled="{Binding Path=Horse.NotScratched}" 
+                                                                     Visibility="{Binding Path=Selectable,Converter={StaticResource hptVisibilityConverter}}" Foreground="WhiteSmoke"/>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                            
+                                            <TextBlock Margin="3" x:Name="txtHorseName" Text="{Binding HorseName}"
+                                                       FontSize="11" FontWeight="Bold" HorizontalAlignment="Stretch"  TextAlignment="Left"/>
+                                            
+                                            <ItemsControl ItemsSource="{Binding }"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </StackPanel>
+
+                        <!--<HPT:UCRaceView MarkBet="{Binding Path=MarkBet,ElementName=ucRacesTabControl}" Grid.Row="1"/>-->
+                    </Grid>
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+        </TabControl>
+
+    </Grid>
+</HPT:UCMarkBetControl>

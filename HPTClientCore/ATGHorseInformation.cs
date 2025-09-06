@@ -1,0 +1,6 @@
+﻿namespace HPTClient
+{
+    class ATGHorseInformation
+    {
+    }
+}

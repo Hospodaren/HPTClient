@@ -1,0 +1,60 @@
+﻿<UserControl x:Class="HPTClient.UCTvillingTrioRace"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:HPTClient"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             mc:Ignorable="d" 
+             Loaded="uc_Loaded"
+             DataContextChanged="UserControl_DataContextChanged"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+
+        <!--Race-->
+        <GroupBox Background="{StaticResource BackgroundBrush}" BorderBrush="Black" HeaderTemplate="{StaticResource GroupBoxHeaderTemplate}" Header="{Binding LegNrString}" Grid.Column="0" >
+            <Grid Width="Auto">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal" Grid.Row="0">
+
+                    <xctk:WatermarkTextBox x:Name="mtbSystemName" Watermark="Ange eget namn på systemet..." 
+                                       Text="{Binding Path=CombBet.SystemName,UpdateSourceTrigger=PropertyChanged}" MinWidth="200" BorderBrush="Black" BorderThickness="1"/>
+
+                    <TextBlock x:Name="txtCountdownInfo" Margin="8,2,2,2" FontWeight="Bold"/>
+                    <TextBlock x:Name="txtCountdownTimer" Margin="2"/>
+
+                    <TextBlock Margin="12,2,2,2" Text="Omsättning: " FontWeight="Bold"/>
+                    <TextBlock Margin="2" Text="{Binding Path=TurnoverCombination,StringFormat={}{0:N0} kr,ConverterCulture=sv-SE}"/>
+
+                    <TextBlock Text="{Binding RaceInfoShort}" Margin="2,2,10,2" FontWeight="Bold">
+                        <TextBlock.ToolTip>
+                            <ToolTip Background="{StaticResource BackgroundBrush}" ToolTipService.ShowDuration="20000" DataContext="{Binding Path=PlacementTarget.DataContext, RelativeSource={x:Static RelativeSource.Self}}">
+                                <Border BorderBrush="Black" BorderThickness="1" Margin="2">
+                                    <TextBlock Text="{Binding RaceInfoLong}" Style="{StaticResource tbStyle}"  Margin="2"/>
+                                </Border>
+                            </ToolTip>
+                        </TextBlock.ToolTip>
+                                    </TextBlock>
+                    <TextBlock Text="{Binding RaceName}" Margin="10,2,2,2">
+                        <TextBlock.ToolTip>
+                            <ToolTip Background="{StaticResource BackgroundBrush}" ToolTipService.ShowDuration="20000" DataContext="{Binding Path=PlacementTarget.DataContext, RelativeSource={x:Static RelativeSource.Self}}">
+                                <Border BorderBrush="Black" BorderThickness="1" Margin="2">
+                                    <TextBlock Text="{Binding RaceInfoLong}" Style="{StaticResource tbStyle}" Margin="2"/>
+                                </Border>
+                            </ToolTip>
+                        </TextBlock.ToolTip>
+                                    </TextBlock>
+
+                    <TextBlock Margin="10,2,2,2" Text="Starttid:" FontWeight="Bold"/>
+                    <TextBlock Margin="2" Text="{Binding Path=PostTime,StringFormat={}{0:HH:mm}}"/>
+
+                </StackPanel>
+                <local:UCRaceView Grid.Row="1" Height="Auto" />
+            </Grid>
+        </GroupBox>
+
+    </Grid>
+</UserControl>

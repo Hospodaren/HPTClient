@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="HPTClient.UCCalendarRaceDayInfoButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             x:Name="ucCalendarRaceDayInfoButton"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <Style x:Key="ButtonStyleJackpot" TargetType="{x:Type Button}">
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid Visibility="{Binding TargetNullValue=Hidden}">
+        <Button Style="{StaticResource ButtonStyleJackpot}"
+                IsEnabled="{Binding Path=IsEnabled}"
+                Visibility="{Binding TargetNullValue=Hidden}"
+                BorderBrush="{Binding CalendarRacaDayInfoBorder}"
+                BorderThickness="2">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Image Source="{Binding Path=BetTypeATGLogo}" Height="48" Width="110" Grid.ColumnSpan="2"/>
+                <TextBlock Text="{Binding Path=StartTime,StringFormat=HH:mm}" FontWeight="Bold" Grid.Row="1" Background="{Binding CalendarRacaDayInfoBrush}"/>
+                <TextBlock Text="{Binding Path=InfoText}" FontWeight="Bold" FontSize="9" Padding="2" Background="LightGreen"
+                           Visibility="{Binding Path=InfoText,TargetNullValue=Hidden}"
+                           Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" TextAlignment="Right"/>
+            </Grid>
+        </Button>
+    </Grid>
+</UserControl>

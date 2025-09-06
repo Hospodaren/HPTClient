@@ -1,0 +1,109 @@
+﻿<UserControl x:Class="HPTClient.UCSettings"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:HPT="clr-namespace:HPTClient" 
+    DataContextChanged="UserControl_DataContextChanged"
+    x:Name="ucSettings">
+    <Grid>
+        <TabControl x:Name="tcSetttings">
+
+            <TabItem HorizontalContentAlignment="Left">
+                <TabItem.Header>
+                    <HPT:UCTabItemHeader Text="Data" ToolTip="Styr vilket data som ska visas för respektive speltyp"/>
+                </TabItem.Header>
+                <Grid HorizontalAlignment="Left" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <HPT:UCDataToShowSettings DataContext="{Binding Path=DataToShowVxx}" x:Name="ucDataToShowVxx" Text="Avdelningar" Grid.Column="0" Grid.Row="1"/>
+                    <HPT:UCDataToShowSettings DataContext="{Binding Path=DataToShowComplementaryRules}" x:Name="ucDataToShowComplementaryRules" Text="Utgångar" Grid.Column="1" Grid.Row="1"/>
+                    <HPT:UCDataToShowSettings DataContext="{Binding Path=DataToShowCorrection}" x:Name="ucDataToShowCorrection" Text="Rättning" Grid.Column="2" Grid.Row="1"/>
+                    <HPT:UCMarkBetTabsToShow DataContext="{Binding Path=MarkBetTabsToShow}" x:Name="ucMarkBetTabsToShow" Grid.Column="3" Grid.Row="1"/>
+                    <HPT:UCDataToShowSettings DataContext="{Binding Path=SingleRowDataToShow}" x:Name="ucDataToShowSingleRows" Text="Enkelrader" Grid.Column="4" Grid.Row="1" ProfileSelectVisibility="Collapsed"/>
+                    <!--<HPT:UCGUISettings DataContext="{Binding Path=GUIElementsToShow}" x:Name="ucGUISettings" Grid.Column="4" Grid.Row="1"/>-->
+                    <!--<HPT:UCDataToShowSettings DataContext="{Binding Path=DataToShowPersonReduction}" x:Name="ucDataToShowPerson" Text="Kusk/Tränare" Grid.Column="3" Grid.Row="1"/>-->
+                    <!--<StackPanel Orientation="Vertical" Grid.Column="5" Grid.Row="1">
+                        <HPT:UCMarkBetXToShow DataContext="{Binding}"/>
+                        <HPT:UCGeneralSettings x:Name="ucGeneralSetting"/>
+                        <GroupBox x:Name="gbSettings" Background="{StaticResource BackgroundBrush}" BorderBrush="Black" Header="Systemstorlekar i meny" HeaderTemplate="{StaticResource GroupBoxHeaderTemplate}" Grid.Column="1" HorizontalAlignment="Stretch" Margin="2,2,6,2">
+                            <TextBox x:Name="txtSizesToShowInMenu" MaxLines="50" AcceptsReturn="True" MinHeight="200" Padding="5" Text="{Binding Path=SystemSizesToShowString}"/>
+                        </GroupBox>
+                    </StackPanel>-->
+                </Grid>
+            </TabItem>
+
+            <TabItem HorizontalContentAlignment="Left">
+                <TabItem.Header>
+                    <HPT:UCTabItemHeader Text="Gränssnitt" ToolTip="Styr vilket data som ska visas för respektive speltyp"/>
+                </TabItem.Header>
+                <Grid HorizontalAlignment="Left" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <HPT:UCGUISettings DataContext="{Binding Path=GUIElementsToShow}" x:Name="ucGUISettings" Grid.Column="0" Grid.Row="1"/>
+                    <!--<HPT:UCDataToShowSettings DataContext="{Binding Path=DataToShowPersonReduction}" x:Name="ucDataToShowPerson" Text="Kusk/Tränare" Grid.Column="3" Grid.Row="1"/>-->
+                    <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="1">
+                        <HPT:UCMarkBetXToShow DataContext="{Binding}"/>
+                        <HPT:UCGeneralSettings x:Name="ucGeneralSetting"/>
+                        <HPT:UCPrintAndCopySettings x:Name="ucPrintAndCopySettings"/>
+                        <!--<GroupBox x:Name="gbSettings" Background="{StaticResource BackgroundBrush}" BorderBrush="Black" Header="Systemstorlekar i meny" HeaderTemplate="{StaticResource GroupBoxHeaderTemplate}" Grid.Column="1" HorizontalAlignment="Stretch" Margin="2,2,6,2">
+                            <TextBox x:Name="txtSizesToShowInMenu" MaxLines="50" AcceptsReturn="True" MinHeight="200" Padding="5" Text="{Binding Path=SystemSizesToShowString}"/>
+                        </GroupBox>-->
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical" Grid.Column="2" Grid.Row="1">
+                        <GroupBox x:Name="gbSettings" Background="{StaticResource BackgroundBrush}" BorderBrush="Black" Header="Systemstorlekar i meny" HeaderTemplate="{StaticResource GroupBoxHeaderTemplate}" Grid.Column="1" HorizontalAlignment="Stretch" Margin="2,2,6,2">
+                            <TextBox x:Name="txtSizesToShowInMenu" MaxLines="50" AcceptsReturn="True" MinHeight="200" Padding="5" Text="{Binding Path=SystemSizesToShowString}"/>
+                        </GroupBox>
+                        <GroupBox x:Name="gbBeginnerSizesToShowInMenu" Background="{StaticResource BackgroundBrush}" BorderBrush="Black" Header="Expressystemsbelopp" HeaderTemplate="{StaticResource GroupBoxHeaderTemplate}" Grid.Column="1" HorizontalAlignment="Stretch" Margin="2,2,6,2">
+                            <TextBox x:Name="txtBeginnerSizesToShowInMenu" MaxLines="50" AcceptsReturn="True" MinHeight="200" Padding="5" Text="{Binding Path=BeginnerSizesToShowString}"/>
+                        </GroupBox>
+                    </StackPanel>
+                    <HPT:UCRankVariableReductionsToShow Grid.Column="3" Grid.Row="1" DataContext="{Binding}"/>
+                </Grid>
+            </TabItem>
+
+            <TabItem HorizontalContentAlignment="Left">
+                <TabItem.Header>
+                    <HPT:UCTabItemHeader Text="Färger" ToolTip="Styr vilket data som ska visas för respektive speltyp"/>
+                </TabItem.Header>
+                <HPT:UCColorPicker Width="Auto" Height="Auto" HorizontalAlignment="Left"/>
+            </TabItem>
+
+            <!--<TabItem HorizontalContentAlignment="Left">
+                <TabItem.Header>
+                    <HPT:UCTabItemHeader Text="Mallar" ToolTip="Styr vilket data som ska visas för respektive speltyp"/>
+                </TabItem.Header>
+                <HPT:UCTemplateMain HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            </TabItem>-->
+
+            <!--<TabItem x:Name="tiMailLists">
+                <TabItem.Header>
+                    <HPT:UCTabItemHeader Text="Maillistor" ToolTip="Skapa och redigera maillistor"/>
+                </TabItem.Header>
+                <HPT:UCMailLists/>
+            </TabItem>-->
+
+        </TabControl>
+
+    </Grid>
+</UserControl>

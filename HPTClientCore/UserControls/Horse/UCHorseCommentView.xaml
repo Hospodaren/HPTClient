@@ -1,0 +1,62 @@
+﻿<HPT:UCMarkBetControl x:Class="HPTClient.UCHorseCommentView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:HPT="clr-namespace:HPTClient"
+             mc:Ignorable="d" Keyboard.KeyUp="UserControl_KeyUp">
+
+    <Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="480"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Horizontal">
+                <!--<Button x:Name="btnDownloadComments" Content="Ladda ner kommentarer"  Click="btnDownloadComments_Click" Margin="1"/>
+                <Button x:Name="btnUploadComments" Content="Ladda upp kommentarer" Click="btnUploadComments_Click" Margin="1"/>-->
+                <Button x:Name="btnCopyComments" Content="Kopiera kommentarer" Click="btnCopyComments_Click" Margin="1"/>
+            </StackPanel>
+
+            <TreeView x:Name="tvwHorseComments" ItemsSource="{Binding Path=RaceDayInfo.RaceList}" Grid.Row="1">
+                <TreeView.ItemTemplate>
+
+                    <HierarchicalDataTemplate ItemsSource="{Binding HorseList}">
+                        <HierarchicalDataTemplate.ItemTemplate>
+                            <DataTemplate>
+                                <HPT:UCCompactHorseWide/>
+                            </DataTemplate>
+                        </HierarchicalDataTemplate.ItemTemplate>
+                        <Border Grid.Row="0" BorderThickness="1,1,1,0" BorderBrush="Black">
+                            <StackPanel Orientation="Horizontal" Background="Orange">
+
+                                <TextBlock Text="{Binding LegNrString}" FontWeight="Bold" FontSize="12" Margin="2"/>
+
+                                <TextBlock Text="{Binding RaceInfoShort}" Margin="2,2,10,2" FontSize="12" >
+                                    <TextBlock.ToolTip>
+                                        <ToolTip Background="{StaticResource BackgroundBrush}" ToolTipService.ShowDuration="20000" DataContext="{Binding Path=PlacementTarget.DataContext, RelativeSource={x:Static RelativeSource.Self}}">
+                                            <Border BorderBrush="Black" BorderThickness="1" Margin="2">
+                                                <TextBlock Text="{Binding RaceInfoLong}" Style="{StaticResource tbStyle}" Margin="2"/>
+                                            </Border>
+                                        </ToolTip>
+                                    </TextBlock.ToolTip>
+                                </TextBlock>
+
+                            </StackPanel>
+                        </Border>
+
+                    </HierarchicalDataTemplate>
+
+                </TreeView.ItemTemplate>
+            </TreeView>
+
+            <HPT:UCHorseCommentList x:Name="ucHorseCommentList" DataContext="{Binding Path=SelectedItem,ElementName=tvwHorseComments}" Grid.Column="1" Grid.RowSpan="2" Loaded="ucHorseCommentList_Loaded"/>
+
+        </Grid>
+    </Grid>
+</HPT:UCMarkBetControl>

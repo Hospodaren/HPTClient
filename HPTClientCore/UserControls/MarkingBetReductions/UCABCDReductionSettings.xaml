@@ -1,0 +1,87 @@
+﻿<HPT:UCMarkBetControl x:Class="HPTClient.UCABCDReductionSettings"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:HPT="clr-namespace:HPTClient"
+    x:Name="ucABCDReductionSettings">
+    <UserControl.Resources>
+
+        <BooleanToVisibilityConverter x:Key="hptValueConverter"/>
+
+    </UserControl.Resources>
+    
+    <Grid>
+
+            <ItemsControl ItemsSource="{Binding Path=XReductionRuleList}" ToggleButton.Checked="ItemsControl_Checked" ToggleButton.Unchecked="ItemsControl_Checked">
+            
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Visibility="{Binding Path=Use,Converter={StaticResource hptValueConverter}}">
+                            <!--<TextBlock Style="{StaticResource tbMediumStyle}" Padding="1,0,1,2" Width="110" MouseUp="TextBlock_MouseUp">-->
+                        <TextBlock Style="{StaticResource tbMediumStyle}" Padding="1,0,1,2" Width="150" MouseUp="TextBlock_MouseUp">
+                            <TextBlock.Text>
+                                    <!--<MultiBinding StringFormat="{}{2}-Hästar ({0}/{1}/{3:P1})">
+                                        <Binding Path="NumberOfRacesWithX"/>
+                                        <Binding Path="NumberOfX"/>
+                                    <Binding Path="Prio"/>  
+                                    <Binding Path="Probability"/>
+                                </MultiBinding>-->
+                                <MultiBinding StringFormat="{}{2}-Hästar ({0}/{1})">
+                                        <Binding Path="NumberOfRacesWithX"/>
+                                        <Binding Path="NumberOfX"/>
+                                        <Binding Path="Prio"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                            <ItemsControl ItemsSource="{Binding NumberOfWinnersList}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Template="{StaticResource CheckBoxTemplate}" 
+                                                  Content="{Binding NumberOfWinners}" 
+                                                  IsChecked="{Binding Selected}" 
+                                                  IsEnabled="{Binding Selectable}"
+                                                  FontSize="12"
+                                                  Width="13"
+                                                  Height="16"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <TextBlock Text="Lopp" Style="{StaticResource tbMediumStyle}" Padding="16,0,5,4" Visibility="{Binding Path=ShowLegList,ElementName=ucABCDReductionSettings}"/>
+
+                        <ItemsControl ItemsSource="{Binding LegSelectionList}" Visibility="{Binding Path=ShowLegList,ElementName=ucABCDReductionSettings}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <CheckBox Template="{StaticResource CheckBoxTemplate}" 
+                                                  Content="{Binding LegNumber}" 
+                                                  IsChecked="{Binding Selected}" 
+                                                  FontSize="12"
+                                                  Width="13"
+                                                  Height="16"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            
+        <!--</GroupBox>-->
+
+    </Grid>
+</HPT:UCMarkBetControl>

@@ -1,0 +1,1961 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/HPTServiceLibrary" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/HPTServiceLibrary" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://jes/HPTService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="http://jes/HPTService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="AuthenticationRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ClientBeta" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ClientBetaVersion" type="xs:int" />
+      <xs:element minOccurs="0" name="ClientGUID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ClientName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ClientVersionNumber" type="xs:decimal" />
+      <xs:element minOccurs="0" name="EMailAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IPAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AuthenticationRequest" nillable="true" type="tns:AuthenticationRequest" />
+  <xs:complexType name="AuthenticationResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CalendarZip" nillable="true" type="xs:base64Binary">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="DownloadURL" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="HasInvalidVersion" type="xs:boolean" />
+      <xs:element minOccurs="0" name="HasOldVersion" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsPayingCustomer" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PROVersionExpirationDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="WarningMessage" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AuthenticationResponse" nillable="true" type="tns:AuthenticationResponse" />
+  <xs:complexType name="HPTRegistration">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AlreadyRegistered" type="xs:boolean" />
+      <xs:element minOccurs="0" name="EndDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTRegistration" nillable="true" type="tns:HPTRegistration" />
+  <xs:complexType name="HPTSaveSystem">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SystemSaved" type="xs:boolean" />
+      <xs:element minOccurs="0" name="SystemUniqueIdentifier" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UrlForMobile" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTSaveSystem" nillable="true" type="tns:HPTSaveSystem" />
+  <xs:complexType name="ArrayOfHPTRaceKey">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTRaceKey" nillable="true" type="tns:HPTRaceKey" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTRaceKey" nillable="true" type="tns:ArrayOfHPTRaceKey" />
+  <xs:complexType name="HPTRaceKey">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BetType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LastBettingPoolInfoUpdate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="LastResultUpdate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="LastVPPoolInfoUpdate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="RaceDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="RaceDayInfo" nillable="true" type="tns:HPTRaceDayInfo" />
+      <xs:element minOccurs="0" name="RaceDayInfoHistoryInfoGrouped" nillable="true" type="tns:HPTRaceDayInfoHistoryInfoGrouped" />
+      <xs:element minOccurs="0" name="RaceDayInfoLight" nillable="true" type="tns:HPTRaceDayInfoLight" />
+      <xs:element minOccurs="0" name="RaceDayInfoLightDouble" nillable="true" type="tns:HPTRaceDayInfoLightDouble" />
+      <xs:element minOccurs="0" name="RaceDayInfoLightDoubleUpdate" nillable="true" type="tns:HPTRaceDayInfoLightDoubleUpdate" />
+      <xs:element minOccurs="0" name="RaceDayInfoLightTvilling" nillable="true" type="tns:HPTRaceDayInfoLightTvilling" />
+      <xs:element minOccurs="0" name="RaceDayInfoLightTvillingUpdate" nillable="true" type="tns:HPTRaceDayInfoLightTvillingUpdate" />
+      <xs:element minOccurs="0" name="RaceDayInfoLightUpdate" nillable="true" type="tns:HPTRaceDayInfoLightUpdate" />
+      <xs:element minOccurs="0" name="RaceDayInfoZip" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="RaceNr" type="xs:int" />
+      <xs:element minOccurs="0" name="ResultMarkingBet" nillable="true" type="tns:HPTResultMarkingBet" />
+      <xs:element minOccurs="0" name="SavedToDb" type="xs:boolean" />
+      <xs:element minOccurs="0" name="TrackCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TrackId" type="xs:int" />
+      <xs:element minOccurs="0" name="UniqueCode" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTRaceKey" nillable="true" type="tns:HPTRaceKey" />
+  <xs:complexType name="HPTRaceDayInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BetType" nillable="true" type="tns:HPTBetType">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CombinationList" nillable="true" type="tns:ArrayOfHPTCombination">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CombinationListHistoryDouble" nillable="true" type="tns:ArrayOfHPTCombinationListHistory">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="HostTrackIdList" nillable="true" type="q1:ArrayOfint">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="IsMultipleTrackPool" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsPartOfMultipleTrackPool" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Jackpot" type="xs:int" />
+      <xs:element minOccurs="0" name="LegList" nillable="true" type="tns:ArrayOfHPTRace">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="MarksQuantity" type="xs:int" />
+      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="PayoutList" nillable="true" type="tns:ArrayOfHPTPayOut">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="PoolClosed" type="xs:boolean" />
+      <xs:element minOccurs="0" name="PoolOpen" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ResultDoubleList" nillable="true" type="tns:ArrayOfHPTResultCombination">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="SharedInfo" nillable="true" type="tns:HPTRaceDaySharedInfo">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Turnover" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTRaceDayInfo" nillable="true" type="tns:HPTRaceDayInfo" />
+  <xs:complexType name="HPTBetType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EndTime" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Jackpot" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NumberOfUploadedSystems" type="xs:int" />
+      <xs:element minOccurs="0" name="StartTime" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTBetType" nillable="true" type="tns:HPTBetType" />
+  <xs:complexType name="ArrayOfHPTCombination">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTCombination" nillable="true" type="tns:HPTCombination" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTCombination" nillable="true" type="tns:ArrayOfHPTCombination" />
+  <xs:complexType name="HPTCombination">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CombinationOdds" type="xs:int" />
+      <xs:element minOccurs="0" name="CombinationOddsExact" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Horse1Nr" type="xs:int" />
+      <xs:element minOccurs="0" name="Horse2Nr" type="xs:int" />
+      <xs:element minOccurs="0" name="Horse3Nr" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTCombination" nillable="true" type="tns:HPTCombination" />
+  <xs:complexType name="ArrayOfHPTCombinationListHistory">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTCombinationListHistory" nillable="true" type="tns:HPTCombinationListHistory" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTCombinationListHistory" nillable="true" type="tns:ArrayOfHPTCombinationListHistory" />
+  <xs:complexType name="HPTCombinationListHistory">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:HPTRaceHistory">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CombinationHistoryList" nillable="true" type="tns:ArrayOfHPTCombinationHistory" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="HPTCombinationListHistory" nillable="true" type="tns:HPTCombinationListHistory" />
+  <xs:complexType name="HPTRaceHistory">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Timestamp" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTRaceHistory" nillable="true" type="tns:HPTRaceHistory" />
+  <xs:complexType name="ArrayOfHPTCombinationHistory">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTCombinationHistory" nillable="true" type="tns:HPTCombinationHistory" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTCombinationHistory" nillable="true" type="tns:ArrayOfHPTCombinationHistory" />
+  <xs:complexType name="HPTCombinationHistory">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Odds" type="xs:int" />
+      <xs:element minOccurs="0" name="StartNr1" type="xs:int" />
+      <xs:element minOccurs="0" name="StartNr2" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTCombinationHistory" nillable="true" type="tns:HPTCombinationHistory" />
+  <xs:complexType name="ArrayOfHPTRace">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTRace" nillable="true" type="tns:HPTRace" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTRace" nillable="true" type="tns:ArrayOfHPTRace" />
+  <xs:complexType name="HPTRace">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="HorseList" nillable="true" type="tns:ArrayOfHPTHorse">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="LegNr" type="xs:int" />
+      <xs:element minOccurs="0" name="MarksQuantity" nillable="true" type="xs:int">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="RaceHistoryMarkingBetList" nillable="true" type="tns:ArrayOfHPTRaceHistoryMarkingBet">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="RaceHistoryVPList" nillable="true" type="tns:ArrayOfHPTRaceHistoryVP">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ReservOrder" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ResultTrioList" nillable="true" type="tns:ArrayOfHPTResultTrio">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ResultTvillingList" nillable="true" type="tns:ArrayOfHPTResultCombination">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="SharedInfo" nillable="true" type="tns:HPTRaceSharedInfo">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="TrackId" nillable="true" type="xs:int">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTRace" nillable="true" type="tns:HPTRace" />
+  <xs:complexType name="ArrayOfHPTHorse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTHorse" nillable="true" type="tns:HPTHorse" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTHorse" nillable="true" type="tns:ArrayOfHPTHorse" />
+  <xs:complexType name="HPTHorse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="MarksPercent" type="xs:int" />
+      <xs:element minOccurs="0" name="MarksPossibleValue" type="xs:int" />
+      <xs:element minOccurs="0" name="MarksQuantity" type="xs:int" />
+      <xs:element minOccurs="0" name="NewDriverName" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="NewDriverNameShort" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Scratched" nillable="true" type="xs:boolean">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ShareInfo" nillable="true" type="tns:HPTHorseShareInfo">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ShoeInfoCurrent" nillable="true" type="tns:HPTHorseShoeInfo">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ShoeInfoPrevious" nillable="true" type="tns:HPTHorseShoeInfo">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="StakeDistribution" type="xs:int" />
+      <xs:element minOccurs="0" name="StakeDistributionPercent" type="xs:int" />
+      <xs:element minOccurs="0" name="StartInfo" nillable="true" type="tns:HPTHorseStartInfo">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="StartNr" nillable="true" type="xs:int">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="TrioInfo" nillable="true" type="tns:HPTHorseTrioInfo">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="VPInfo" nillable="true" type="tns:HPTHorseVPInfo">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTHorse" nillable="true" type="tns:HPTHorse" />
+  <xs:complexType name="HPTHorseShareInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DoubleShare" type="xs:decimal">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="StakeShareV4" type="xs:decimal">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="StakeShareV5" type="xs:decimal">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="StakeShareVx" type="xs:decimal">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="StakeShareVxx" type="xs:decimal">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="TrioShare" type="xs:decimal">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="TvillingShare" type="xs:decimal">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTHorseShareInfo" nillable="true" type="tns:HPTHorseShareInfo" />
+  <xs:complexType name="HPTHorseShoeInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Foreshoes" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Hindshoes" nillable="true" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTHorseShoeInfo" nillable="true" type="tns:HPTHorseShoeInfo" />
+  <xs:complexType name="HPTHorseStartInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ATGId" type="xs:int" />
+      <xs:element minOccurs="0" name="Age" type="xs:int" />
+      <xs:element minOccurs="0" name="Breeder" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CurrentYearStatistics" nillable="true" type="tns:HPTHorseYearStatistics">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Distance" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DriverChanged" type="xs:boolean" />
+      <xs:element minOccurs="0" name="DriverId" type="xs:int" />
+      <xs:element minOccurs="0" name="DriverName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DriverNameShort" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="HomeTrack" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="HorseName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NewDriverName" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="NewDriverNameShort" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Owner" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PostPosition" type="xs:int" />
+      <xs:element minOccurs="0" name="PreviousYearStatistics" nillable="true" type="tns:HPTHorseYearStatistics">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="RecordList" nillable="true" type="tns:ArrayOfHPTHorseRecord">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ResultList" nillable="true" type="tns:ArrayOfHPTHorseResult">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Scratched" nillable="true" type="xs:boolean">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Sex" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ShoeInfoCurrent" nillable="true" type="tns:HPTHorseShoeInfo">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ShoeInfoPrevious" nillable="true" type="tns:HPTHorseShoeInfo">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="StartNr" type="xs:int" />
+      <xs:element minOccurs="0" name="StartPoint" type="xs:int" />
+      <xs:element minOccurs="0" name="SulkyInfoCurrent" nillable="true" type="tns:HPTHorseSulkyInfo">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="SulkyInfoPrevious" nillable="true" type="tns:HPTHorseSulkyInfo">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="TotalStatistics" nillable="true" type="tns:HPTHorseYearStatistics">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="TrainerId" type="xs:int" />
+      <xs:element minOccurs="0" name="TrainerName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TrainerNameShort" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTHorseStartInfo" nillable="true" type="tns:HPTHorseStartInfo" />
+  <xs:complexType name="HPTHorseYearStatistics">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Earning" type="xs:int" />
+      <xs:element minOccurs="0" name="FirstPlace" type="xs:int" />
+      <xs:element minOccurs="0" name="NumberOfStarts" type="xs:int" />
+      <xs:element minOccurs="0" name="Percent123" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PercentFirstPlace" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SecondPlace" type="xs:int" />
+      <xs:element minOccurs="0" name="ThirdPlace" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTHorseYearStatistics" nillable="true" type="tns:HPTHorseYearStatistics" />
+  <xs:complexType name="ArrayOfHPTHorseRecord">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTHorseRecord" nillable="true" type="tns:HPTHorseRecord" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTHorseRecord" nillable="true" type="tns:ArrayOfHPTHorseRecord" />
+  <xs:complexType name="HPTHorseRecord">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Date" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Distance" type="xs:int" />
+      <xs:element minOccurs="0" name="Place" type="xs:int" />
+      <xs:element minOccurs="0" name="RaceNr" type="xs:int" />
+      <xs:element minOccurs="0" name="RecordType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Time" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TrackCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Winner" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTHorseRecord" nillable="true" type="tns:HPTHorseRecord" />
+  <xs:complexType name="ArrayOfHPTHorseResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTHorseResult" nillable="true" type="tns:HPTHorseResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTHorseResult" nillable="true" type="tns:ArrayOfHPTHorseResult" />
+  <xs:complexType name="HPTHorseResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Date" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Distance" type="xs:int" />
+      <xs:element minOccurs="0" name="Driver" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Earning" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="FirstPrize" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Odds" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Place" type="xs:int" />
+      <xs:element minOccurs="0" name="PlaceString" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Position" type="xs:int" />
+      <xs:element minOccurs="0" name="RaceNr" type="xs:int" />
+      <xs:element minOccurs="0" name="RaceType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ShoeInfo" nillable="true" type="tns:HPTHorseShoeInfo">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="StartNr" type="xs:int" />
+      <xs:element minOccurs="0" name="Time" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TrackCode" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTHorseResult" nillable="true" type="tns:HPTHorseResult" />
+  <xs:complexType name="HPTHorseSulkyInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EnglishText" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Text" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTHorseSulkyInfo" nillable="true" type="tns:HPTHorseSulkyInfo" />
+  <xs:complexType name="HPTHorseTrioInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="InvestmentFirst" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="InvestmentSecond" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="InvestmentThird" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PercentFirst" type="xs:int" />
+      <xs:element minOccurs="0" name="PercentSecond" type="xs:int" />
+      <xs:element minOccurs="0" name="PercentThird" type="xs:int" />
+      <xs:element minOccurs="0" name="TrioIndex" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTHorseTrioInfo" nillable="true" type="tns:HPTHorseTrioInfo" />
+  <xs:complexType name="HPTHorseVPInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="HorseResultInfo" nillable="true" type="tns:HPTHorseResultInfo">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="InvestmentPlats" type="xs:int" />
+      <xs:element minOccurs="0" name="InvestmentVinnare" type="xs:int" />
+      <xs:element minOccurs="0" name="MaxPlatsOdds" type="xs:int" />
+      <xs:element minOccurs="0" name="MaxPlatsOddsExact" type="xs:decimal" />
+      <xs:element minOccurs="0" name="MinPlatsOdds" type="xs:int" />
+      <xs:element minOccurs="0" name="MinPlatsOddsExact" type="xs:decimal" />
+      <xs:element minOccurs="0" name="VinnarOdds" type="xs:int" />
+      <xs:element minOccurs="0" name="VinnarOddsExact" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTHorseVPInfo" nillable="true" type="tns:HPTHorseVPInfo" />
+  <xs:complexType name="HPTHorseResultInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Disqualified" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Earning" type="xs:int" />
+      <xs:element minOccurs="0" name="FinishingPosition" type="xs:int" />
+      <xs:element minOccurs="0" name="KmTime" type="ser:duration" />
+      <xs:element minOccurs="0" name="Place" type="xs:int" />
+      <xs:element minOccurs="0" name="TotalTime" type="ser:duration" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTHorseResultInfo" nillable="true" type="tns:HPTHorseResultInfo" />
+  <xs:complexType name="ArrayOfHPTRaceHistoryMarkingBet">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTRaceHistoryMarkingBet" nillable="true" type="tns:HPTRaceHistoryMarkingBet" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTRaceHistoryMarkingBet" nillable="true" type="tns:ArrayOfHPTRaceHistoryMarkingBet" />
+  <xs:complexType name="HPTRaceHistoryMarkingBet">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:HPTRaceHistory">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="HorseHistoryList" nillable="true" type="tns:ArrayOfHPTHorseHistoryMarkingBet" />
+          <xs:element minOccurs="0" name="Turnover" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="HPTRaceHistoryMarkingBet" nillable="true" type="tns:HPTRaceHistoryMarkingBet" />
+  <xs:complexType name="ArrayOfHPTHorseHistoryMarkingBet">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTHorseHistoryMarkingBet" nillable="true" type="tns:HPTHorseHistoryMarkingBet" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTHorseHistoryMarkingBet" nillable="true" type="tns:ArrayOfHPTHorseHistoryMarkingBet" />
+  <xs:complexType name="HPTHorseHistoryMarkingBet">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:HPTHorseHistory">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="StakeDistribution" type="xs:int" />
+          <xs:element minOccurs="0" name="StakeShare" type="xs:decimal" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="HPTHorseHistoryMarkingBet" nillable="true" type="tns:HPTHorseHistoryMarkingBet" />
+  <xs:complexType name="HPTHorseHistory">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="StartNr" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTHorseHistory" nillable="true" type="tns:HPTHorseHistory" />
+  <xs:complexType name="ArrayOfHPTRaceHistoryVP">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTRaceHistoryVP" nillable="true" type="tns:HPTRaceHistoryVP" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTRaceHistoryVP" nillable="true" type="tns:ArrayOfHPTRaceHistoryVP" />
+  <xs:complexType name="HPTRaceHistoryVP">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:HPTRaceHistory">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="HorseHistoryList" nillable="true" type="tns:ArrayOfHPTHorseHistoryVP" />
+          <xs:element minOccurs="0" name="TurnoverPlats" type="xs:int" />
+          <xs:element minOccurs="0" name="TurnoverVinnare" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="HPTRaceHistoryVP" nillable="true" type="tns:HPTRaceHistoryVP" />
+  <xs:complexType name="ArrayOfHPTHorseHistoryVP">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTHorseHistoryVP" nillable="true" type="tns:HPTHorseHistoryVP" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTHorseHistoryVP" nillable="true" type="tns:ArrayOfHPTHorseHistoryVP" />
+  <xs:complexType name="HPTHorseHistoryVP">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:HPTHorseHistory">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="InvestmentPlats" type="xs:int" />
+          <xs:element minOccurs="0" name="InvestmentVinnare" type="xs:int" />
+          <xs:element minOccurs="0" name="MaxPlatsOdds" type="xs:int" />
+          <xs:element minOccurs="0" name="VinnarOdds" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="HPTHorseHistoryVP" nillable="true" type="tns:HPTHorseHistoryVP" />
+  <xs:complexType name="ArrayOfHPTResultTrio">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTResultTrio" nillable="true" type="tns:HPTResultTrio" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTResultTrio" nillable="true" type="tns:ArrayOfHPTResultTrio" />
+  <xs:complexType name="HPTResultTrio">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:HPTResultCombination">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="StartNr3" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="HPTResultTrio" nillable="true" type="tns:HPTResultTrio" />
+  <xs:complexType name="HPTResultCombination">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Odds" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="StartNr1" type="xs:int" />
+      <xs:element minOccurs="0" name="StartNr2" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTResultCombination" nillable="true" type="tns:HPTResultCombination" />
+  <xs:complexType name="ArrayOfHPTResultCombination">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTResultCombination" nillable="true" type="tns:HPTResultCombination" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTResultCombination" nillable="true" type="tns:ArrayOfHPTResultCombination" />
+  <xs:complexType name="HPTRaceSharedInfo">
+    <xs:sequence>
+      <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="BetTypes" nillable="true" type="q2:ArrayOfstring" />
+      <xs:element minOccurs="0" name="CombinationListHistoryTvilling" nillable="true" type="tns:ArrayOfHPTCombinationListHistory">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Distance" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PoolClosedTrio" type="xs:boolean" />
+      <xs:element minOccurs="0" name="PoolClosedTvilling" type="xs:boolean" />
+      <xs:element minOccurs="0" name="PoolClosedVP" type="xs:boolean" />
+      <xs:element minOccurs="0" name="PostTime" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="RaceHistoryVPList" nillable="true" type="tns:ArrayOfHPTRaceHistoryVP">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="RaceInfoLong" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RaceInfoShort" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RaceName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RaceNr" type="xs:int" />
+      <xs:element minOccurs="0" name="StartMethod" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StartMethodCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TrioCombinationList" nillable="true" type="tns:ArrayOfHPTCombination">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="TurnoverPlats" type="xs:int" />
+      <xs:element minOccurs="0" name="TurnoverTrio" type="xs:int" />
+      <xs:element minOccurs="0" name="TurnoverTvilling" type="xs:int" />
+      <xs:element minOccurs="0" name="TurnoverVinnare" type="xs:int" />
+      <xs:element minOccurs="0" name="TvillingCombinationList" nillable="true" type="tns:ArrayOfHPTCombination">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTRaceSharedInfo" nillable="true" type="tns:HPTRaceSharedInfo" />
+  <xs:complexType name="ArrayOfHPTPayOut">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTPayOut" nillable="true" type="tns:HPTPayOut" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTPayOut" nillable="true" type="tns:ArrayOfHPTPayOut" />
+  <xs:complexType name="HPTPayOut">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="NumberOfCorrect" type="xs:int" />
+      <xs:element minOccurs="0" name="NumberOfSystems" type="xs:int" />
+      <xs:element minOccurs="0" name="PayOutAmount" type="xs:int" />
+      <xs:element minOccurs="0" name="TotalAmount" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTPayOut" nillable="true" type="tns:HPTPayOut" />
+  <xs:complexType name="HPTRaceDaySharedInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BetTypeList" nillable="true" type="tns:ArrayOfHPTBetType" />
+      <xs:element minOccurs="0" name="FirstRaceStartTime" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NextRace" type="xs:int" />
+      <xs:element minOccurs="0" name="NextRaceStartTime" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="RaceCardAvailable" type="xs:boolean" />
+      <xs:element minOccurs="0" name="RaceDayDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="RaceHistoryVPList" nillable="true" type="tns:ArrayOfHPTRaceHistoryVP">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="RaceNumberInfoList" nillable="true" type="tns:ArrayOfHPTRaceNumberInfo" />
+      <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="RaceNumberList" nillable="true" type="q3:ArrayOfint" />
+      <xs:element minOccurs="0" name="TrackCondition" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TrackId" type="xs:int" />
+      <xs:element minOccurs="0" name="Trackcode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Trackname" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTRaceDaySharedInfo" nillable="true" type="tns:HPTRaceDaySharedInfo" />
+  <xs:complexType name="ArrayOfHPTBetType">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTBetType" nillable="true" type="tns:HPTBetType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTBetType" nillable="true" type="tns:ArrayOfHPTBetType" />
+  <xs:complexType name="ArrayOfHPTRaceNumberInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTRaceNumberInfo" nillable="true" type="tns:HPTRaceNumberInfo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTRaceNumberInfo" nillable="true" type="tns:ArrayOfHPTRaceNumberInfo" />
+  <xs:complexType name="HPTRaceNumberInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="HostTrackId" type="xs:int" />
+      <xs:element minOccurs="0" name="LegNumber" type="xs:int" />
+      <xs:element minOccurs="0" name="RaceNumber" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTRaceNumberInfo" nillable="true" type="tns:HPTRaceNumberInfo" />
+  <xs:complexType name="HPTRaceDayInfoHistoryInfoGrouped">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="RaceList" nillable="true" type="tns:ArrayOfHPTRaceHistoryGrouped" />
+      <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="SSHTL" nillable="true" type="q4:ArrayOfdateTime" />
+      <xs:element minOccurs="0" name="TOHL" nillable="true" type="tns:ArrayOfHPTTurnoverHistory" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTRaceDayInfoHistoryInfoGrouped" nillable="true" type="tns:HPTRaceDayInfoHistoryInfoGrouped" />
+  <xs:complexType name="ArrayOfHPTRaceHistoryGrouped">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTRaceHistoryGrouped" nillable="true" type="tns:HPTRaceHistoryGrouped" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTRaceHistoryGrouped" nillable="true" type="tns:ArrayOfHPTRaceHistoryGrouped" />
+  <xs:complexType name="HPTRaceHistoryGrouped">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="HorseList" nillable="true" type="tns:ArrayOfHPTHorseHistoryInfoGrouped" />
+      <xs:element minOccurs="0" name="LegNr" type="xs:int" />
+      <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="VPHTL" nillable="true" type="q5:ArrayOfdateTime" />
+      <xs:element minOccurs="0" name="VPHTOL" nillable="true" type="tns:ArrayOfHPTTurnoverHistory" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTRaceHistoryGrouped" nillable="true" type="tns:HPTRaceHistoryGrouped" />
+  <xs:complexType name="ArrayOfHPTHorseHistoryInfoGrouped">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTHorseHistoryInfoGrouped" nillable="true" type="tns:HPTHorseHistoryInfoGrouped" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTHorseHistoryInfoGrouped" nillable="true" type="tns:ArrayOfHPTHorseHistoryInfoGrouped" />
+  <xs:complexType name="HPTHorseHistoryInfoGrouped">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="SHL" nillable="true" type="tns:ArrayOfHPTStakeHistory" />
+      <xs:element minOccurs="0" name="SHLA1" nillable="true" type="tns:ArrayOfHPTStakeHistory" />
+      <xs:element minOccurs="0" name="SHLA2" nillable="true" type="tns:ArrayOfHPTStakeHistory" />
+      <xs:element minOccurs="0" name="StartNr" type="xs:int" />
+      <xs:element minOccurs="0" name="VPHL" nillable="true" type="tns:ArrayOfHPTVPHistory" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTHorseHistoryInfoGrouped" nillable="true" type="tns:HPTHorseHistoryInfoGrouped" />
+  <xs:complexType name="ArrayOfHPTStakeHistory">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTStakeHistory" nillable="true" type="tns:HPTStakeHistory" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTStakeHistory" nillable="true" type="tns:ArrayOfHPTStakeHistory" />
+  <xs:complexType name="HPTStakeHistory">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="SD" type="xs:int" />
+      <xs:element minOccurs="0" name="SDP" type="xs:int" />
+      <xs:element minOccurs="0" name="SS" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SSP" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTStakeHistory" nillable="true" type="tns:HPTStakeHistory" />
+  <xs:complexType name="ArrayOfHPTVPHistory">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTVPHistory" nillable="true" type="tns:HPTVPHistory" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTVPHistory" nillable="true" type="tns:ArrayOfHPTVPHistory" />
+  <xs:complexType name="HPTVPHistory">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IP" type="xs:int" />
+      <xs:element minOccurs="0" name="IPP" type="xs:int" />
+      <xs:element minOccurs="0" name="IV" type="xs:int" />
+      <xs:element minOccurs="0" name="IVP" type="xs:int" />
+      <xs:element minOccurs="0" name="MPO" type="xs:int" />
+      <xs:element minOccurs="0" name="POS" type="xs:decimal" />
+      <xs:element minOccurs="0" name="POSP" type="xs:decimal" />
+      <xs:element minOccurs="0" name="VO" type="xs:int" />
+      <xs:element minOccurs="0" name="VOS" type="xs:decimal" />
+      <xs:element minOccurs="0" name="VOSP" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTVPHistory" nillable="true" type="tns:HPTVPHistory" />
+  <xs:complexType name="ArrayOfHPTTurnoverHistory">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTTurnoverHistory" nillable="true" type="tns:HPTTurnoverHistory" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTTurnoverHistory" nillable="true" type="tns:ArrayOfHPTTurnoverHistory" />
+  <xs:complexType name="HPTTurnoverHistory">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Percentage" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Timestamp" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Turnover" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTTurnoverHistory" nillable="true" type="tns:HPTTurnoverHistory" />
+  <xs:complexType name="HPTRaceDayInfoLight">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:HPTRaceDayInfoLightBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="BetType" nillable="true" type="tns:HPTBetTypeLight" />
+          <xs:element minOccurs="0" name="LastUpdate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="RaceList" nillable="true" type="tns:ArrayOfHPTRaceLight" />
+          <xs:element minOccurs="0" name="RaceNr" type="xs:int" />
+          <xs:element minOccurs="0" name="Turnover" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="HPTRaceDayInfoLight" nillable="true" type="tns:HPTRaceDayInfoLight" />
+  <xs:complexType name="HPTRaceDayInfoLightBase">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BetTypeList" nillable="true" type="tns:ArrayOfHPTBetTypeLight" />
+      <xs:element minOccurs="0" name="RaceDayDateString" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TrackId" type="xs:int" />
+      <xs:element minOccurs="0" name="TrackName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTRaceDayInfoLightBase" nillable="true" type="tns:HPTRaceDayInfoLightBase" />
+  <xs:complexType name="ArrayOfHPTBetTypeLight">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTBetTypeLight" nillable="true" type="tns:HPTBetTypeLight" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTBetTypeLight" nillable="true" type="tns:ArrayOfHPTBetTypeLight" />
+  <xs:complexType name="HPTBetTypeLight">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StartTime" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Url" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTBetTypeLight" nillable="true" type="tns:HPTBetTypeLight" />
+  <xs:complexType name="ArrayOfHPTRaceLight">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTRaceLight" nillable="true" type="tns:HPTRaceLight" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTRaceLight" nillable="true" type="tns:ArrayOfHPTRaceLight" />
+  <xs:complexType name="HPTRaceLight">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:HPTRaceLightBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Distance" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="HorseList" nillable="true" type="tns:ArrayOfHPTHorseLight" />
+          <xs:element minOccurs="0" name="PostTime" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="RaceInfoLong" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="RaceInfoShort" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="RaceName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ReservOrder" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="StartMethodCode" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="HPTRaceLight" nillable="true" type="tns:HPTRaceLight" />
+  <xs:complexType name="HPTRaceLightBase">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="LegNr" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTRaceLightBase" nillable="true" type="tns:HPTRaceLightBase" />
+  <xs:complexType name="ArrayOfHPTHorseLight">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTHorseLight" nillable="true" type="tns:HPTHorseLight" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTHorseLight" nillable="true" type="tns:ArrayOfHPTHorseLight" />
+  <xs:complexType name="HPTHorseLight">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:HPTHorseLightUpdate">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Distance" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Driver" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="DriverName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="HPTHorseLight" nillable="true" type="tns:HPTHorseLight" />
+  <xs:complexType name="HPTHorseLightUpdate">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:HPTHorseLightBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="NewDriver" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="NewDriverName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Scratched" nillable="true" type="xs:boolean" />
+          <xs:element minOccurs="0" name="ShoeInfoChanged" nillable="true" type="tns:HPTHorseShoeInfoChanged" />
+          <xs:element minOccurs="0" name="ShoeInfoCurrent" nillable="true" type="tns:HPTHorseShoeInfo" />
+          <xs:element minOccurs="0" name="ShoeInfoPrevious" nillable="true" type="tns:HPTHorseShoeInfo" />
+          <xs:element minOccurs="0" name="StakeDistributionShare" type="xs:decimal" />
+          <xs:element minOccurs="0" name="VinnarOdds" type="xs:decimal" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="HPTHorseLightUpdate" nillable="true" type="tns:HPTHorseLightUpdate" />
+  <xs:complexType name="HPTHorseLightBase">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="StartNr" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTHorseLightBase" nillable="true" type="tns:HPTHorseLightBase" />
+  <xs:complexType name="HPTHorseShoeInfoChanged">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ForeshoesChanged" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="HindshoesChanged" nillable="true" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTHorseShoeInfoChanged" nillable="true" type="tns:HPTHorseShoeInfoChanged" />
+  <xs:complexType name="HPTRaceDayInfoLightDouble">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:HPTRaceDayInfoLightBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CombinationList" nillable="true" type="tns:ArrayOfHPTCombinationOnline" />
+          <xs:element minOccurs="0" name="LastUpdate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="RaceList" nillable="true" type="tns:ArrayOfHPTRaceLight" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="HPTRaceDayInfoLightDouble" nillable="true" type="tns:HPTRaceDayInfoLightDouble" />
+  <xs:complexType name="ArrayOfHPTCombinationOnline">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTCombinationOnline" nillable="true" type="tns:HPTCombinationOnline" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTCombinationOnline" nillable="true" type="tns:ArrayOfHPTCombinationOnline" />
+  <xs:complexType name="HPTCombinationOnline">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CO" type="xs:int" />
+      <xs:element minOccurs="0" name="H1" type="xs:int" />
+      <xs:element minOccurs="0" name="H2" type="xs:int" />
+      <xs:element minOccurs="0" name="POQ" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SSQ" type="xs:decimal" />
+      <xs:element minOccurs="0" name="VOQ" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTCombinationOnline" nillable="true" type="tns:HPTCombinationOnline" />
+  <xs:complexType name="HPTRaceDayInfoLightDoubleUpdate">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:HPTRaceDayInfoLightBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CombinationList" nillable="true" type="tns:ArrayOfHPTCombinationOnline" />
+          <xs:element minOccurs="0" name="LastUpdate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="RaceList" nillable="true" type="tns:ArrayOfHPTRaceLightUpdate" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="HPTRaceDayInfoLightDoubleUpdate" nillable="true" type="tns:HPTRaceDayInfoLightDoubleUpdate" />
+  <xs:complexType name="ArrayOfHPTRaceLightUpdate">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTRaceLightUpdate" nillable="true" type="tns:HPTRaceLightUpdate" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTRaceLightUpdate" nillable="true" type="tns:ArrayOfHPTRaceLightUpdate" />
+  <xs:complexType name="HPTRaceLightUpdate">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:HPTRaceLightBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="HorseList" nillable="true" type="tns:ArrayOfHPTHorseLightUpdate" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="HPTRaceLightUpdate" nillable="true" type="tns:HPTRaceLightUpdate" />
+  <xs:complexType name="ArrayOfHPTHorseLightUpdate">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTHorseLightUpdate" nillable="true" type="tns:HPTHorseLightUpdate" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTHorseLightUpdate" nillable="true" type="tns:ArrayOfHPTHorseLightUpdate" />
+  <xs:complexType name="HPTRaceDayInfoLightTvilling">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:HPTRaceDayInfoLightBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="RaceList" nillable="true" type="tns:ArrayOfHPTRaceLightTvilling" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="HPTRaceDayInfoLightTvilling" nillable="true" type="tns:HPTRaceDayInfoLightTvilling" />
+  <xs:complexType name="ArrayOfHPTRaceLightTvilling">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTRaceLightTvilling" nillable="true" type="tns:HPTRaceLightTvilling" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTRaceLightTvilling" nillable="true" type="tns:ArrayOfHPTRaceLightTvilling" />
+  <xs:complexType name="HPTRaceLightTvilling">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:HPTRaceLight">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CombinationList" nillable="true" type="tns:ArrayOfHPTCombinationOnline" />
+          <xs:element minOccurs="0" name="LastUpdate" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="HPTRaceLightTvilling" nillable="true" type="tns:HPTRaceLightTvilling" />
+  <xs:complexType name="HPTRaceDayInfoLightTvillingUpdate">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:HPTRaceDayInfoLightBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="RaceList" nillable="true" type="tns:ArrayOfHPTRaceLightTvillingUpdate" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="HPTRaceDayInfoLightTvillingUpdate" nillable="true" type="tns:HPTRaceDayInfoLightTvillingUpdate" />
+  <xs:complexType name="ArrayOfHPTRaceLightTvillingUpdate">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTRaceLightTvillingUpdate" nillable="true" type="tns:HPTRaceLightTvillingUpdate" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTRaceLightTvillingUpdate" nillable="true" type="tns:ArrayOfHPTRaceLightTvillingUpdate" />
+  <xs:complexType name="HPTRaceLightTvillingUpdate">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:HPTRaceLightUpdate">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CombinationList" nillable="true" type="tns:ArrayOfHPTCombinationOnline" />
+          <xs:element minOccurs="0" name="LastUpdate" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="HPTRaceLightTvillingUpdate" nillable="true" type="tns:HPTRaceLightTvillingUpdate" />
+  <xs:complexType name="HPTRaceDayInfoLightUpdate">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="LastUpdate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="RaceList" nillable="true" type="tns:ArrayOfHPTRaceLightUpdate" />
+      <xs:element minOccurs="0" name="Turnover" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTRaceDayInfoLightUpdate" nillable="true" type="tns:HPTRaceDayInfoLightUpdate" />
+  <xs:complexType name="HPTResultMarkingBet">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:HPTResult">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="HasResult" type="xs:boolean" />
+          <xs:element minOccurs="0" name="LegResultList" nillable="true" type="tns:ArrayOfHPTLegResult" />
+          <xs:element minOccurs="0" name="PayOutList" nillable="true" type="tns:ArrayOfHPTPayOut" />
+          <xs:element minOccurs="0" name="ResultComplete" type="xs:boolean" />
+          <xs:element minOccurs="0" name="WinnerList" nillable="true" type="tns:HPTVinstlista" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="HPTResultMarkingBet" nillable="true" type="tns:HPTResultMarkingBet" />
+  <xs:complexType name="HPTResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BetType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PoolClosed" type="xs:boolean" />
+      <xs:element minOccurs="0" name="RaceDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="TrackCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TrackId" type="xs:int" />
+      <xs:element minOccurs="0" name="Turnover" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTResult" nillable="true" type="tns:HPTResult" />
+  <xs:complexType name="ArrayOfHPTLegResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTLegResult" nillable="true" type="tns:HPTLegResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTLegResult" nillable="true" type="tns:ArrayOfHPTLegResult" />
+  <xs:complexType name="HPTLegResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="LegNr" type="xs:int" />
+      <xs:element minOccurs="0" name="SystemsLeft" type="xs:int" />
+      <xs:element minOccurs="0" name="Value" type="xs:int" />
+      <xs:element xmlns:q6="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Winners" nillable="true" type="q6:ArrayOfint" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTLegResult" nillable="true" type="tns:HPTLegResult" />
+  <xs:complexType name="HPTVinstlista">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Summering" nillable="true" type="tns:HPTSummering" />
+      <xs:element minOccurs="0" name="VinstLista" nillable="true" type="tns:ArrayOfHPTVinst" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTVinstlista" nillable="true" type="tns:HPTVinstlista" />
+  <xs:complexType name="HPTSummering">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DelsummeringList" nillable="true" type="tns:ArrayOfHPTDelsummering" />
+      <xs:element minOccurs="0" name="Over2000" nillable="true" type="tns:HPTKupongsummering" />
+      <xs:element minOccurs="0" name="Under2000" nillable="true" type="tns:HPTKupongsummering" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTSummering" nillable="true" type="tns:HPTSummering" />
+  <xs:complexType name="ArrayOfHPTDelsummering">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTDelsummering" nillable="true" type="tns:HPTDelsummering" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTDelsummering" nillable="true" type="tns:ArrayOfHPTDelsummering" />
+  <xs:complexType name="HPTDelsummering">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:HPTKupongsummering">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="DisplayName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="NumberOfSystems" type="xs:decimal" />
+          <xs:element minOccurs="0" name="ShareOfSystems" type="xs:decimal" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="HPTDelsummering" nillable="true" type="tns:HPTDelsummering" />
+  <xs:complexType name="HPTKupongsummering">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="NumberOfCoupons" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ShareOfCoupons" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTKupongsummering" nillable="true" type="tns:HPTKupongsummering" />
+  <xs:complexType name="ArrayOfHPTVinst">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTVinst" nillable="true" type="tns:HPTVinst" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTVinst" nillable="true" type="tns:ArrayOfHPTVinst" />
+  <xs:complexType name="HPTVinst">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Andelar" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Filspel" type="xs:boolean" />
+      <xs:element minOccurs="0" name="HarryBoy" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Insats" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PlatsText" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PlatsTyp" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Spikar" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Vinst" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Vinstklass1" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Vinstklass2" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Vinstklass3" nillable="true" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTVinst" nillable="true" type="tns:HPTVinst" />
+  <xs:complexType name="HPTCalendar">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FromDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="HPTRaceDayInfoList" nillable="true" type="tns:ArrayOfHPTRaceDayInfo" />
+      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ToDate" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTCalendar" nillable="true" type="tns:HPTCalendar" />
+  <xs:complexType name="ArrayOfHPTRaceDayInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTRaceDayInfo" nillable="true" type="tns:HPTRaceDayInfo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTRaceDayInfo" nillable="true" type="tns:ArrayOfHPTRaceDayInfo" />
+  <xs:complexType name="HPTRaceDayInfoReduction">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:HPTSystemGUIDBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="BetTypeCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="EMail" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="LastUpdate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="Locked" type="xs:boolean" />
+          <xs:element minOccurs="0" name="NumberOfAllowedErrors" type="xs:int" />
+          <xs:element minOccurs="0" name="OnlineCorrectionResult" nillable="true" type="tns:HPTOnlineCorrectionResult" />
+          <xs:element minOccurs="0" name="RaceDayDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="RaceDayDateString" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="RaceList" nillable="true" type="tns:ArrayOfHPTRaceReduction" />
+          <xs:element minOccurs="0" name="ReductionABCD" nillable="true" type="tns:HPTReductionABCD" />
+          <xs:element minOccurs="0" name="ReductionGroupList" nillable="true" type="tns:HPTReductionGroupList" />
+          <xs:element minOccurs="0" name="ReductionOwnRank" nillable="true" type="tns:HPTReductionOwnRank" />
+          <xs:element minOccurs="0" name="ReductionPoints" nillable="true" type="tns:HPTReductionPoints" />
+          <xs:element minOccurs="0" name="ReductionResultFile" nillable="true" type="tns:HPTReductionResultFile" />
+          <xs:element minOccurs="0" name="ReductionRowValue" nillable="true" type="tns:HPTReductionRowValue" />
+          <xs:element minOccurs="0" name="ReductionStartnumberSum" nillable="true" type="tns:HPTReductionStartnumberSum" />
+          <xs:element minOccurs="0" name="ReservHandling" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SelectedHorsesAsReserv" type="xs:boolean" />
+          <xs:element minOccurs="0" name="SystemName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="TrackId" type="xs:int" />
+          <xs:element minOccurs="0" name="V6BetMultiplierSettings" nillable="true" type="tns:HPTV6BetMultiplierSettings" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="HPTRaceDayInfoReduction" nillable="true" type="tns:HPTRaceDayInfoReduction" />
+  <xs:complexType name="HPTSystemGUIDBase">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="SystemGUID" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTSystemGUIDBase" nillable="true" type="tns:HPTSystemGUIDBase" />
+  <xs:complexType name="HPTOnlineCorrectionResult">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:HPTSystemGUIDBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Error" nillable="true" type="xs:string" />
+          <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="NumberOfWinningRows" nillable="true" type="q7:ArrayOfint" />
+          <xs:element minOccurs="0" name="PayOutList" nillable="true" type="tns:ArrayOfHPTPayOut" />
+          <xs:element minOccurs="0" name="RaceList" nillable="true" type="tns:ArrayOfHPTOnlineCorrectionRace" />
+          <xs:element minOccurs="0" name="ResultComplete" type="xs:boolean" />
+          <xs:element minOccurs="0" name="TotalWinnings" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="HPTOnlineCorrectionResult" nillable="true" type="tns:HPTOnlineCorrectionResult" />
+  <xs:complexType name="ArrayOfHPTOnlineCorrectionRace">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTOnlineCorrectionRace" nillable="true" type="tns:HPTOnlineCorrectionRace" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTOnlineCorrectionRace" nillable="true" type="tns:ArrayOfHPTOnlineCorrectionRace" />
+  <xs:complexType name="HPTOnlineCorrectionRace">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="HorseList" nillable="true" type="tns:ArrayOfHPTOnlineCorrectionHorse" />
+      <xs:element minOccurs="0" name="LegNr" type="xs:int" />
+      <xs:element xmlns:q8="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="NOR" nillable="true" type="q8:ArrayOfint" />
+      <xs:element minOccurs="0" name="ReservsExchanged" type="xs:boolean" />
+      <xs:element minOccurs="0" name="SystemsLeft" type="xs:int" />
+      <xs:element minOccurs="0" name="Value" type="xs:int" />
+      <xs:element xmlns:q9="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Winners" nillable="true" type="q9:ArrayOfint" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTOnlineCorrectionRace" nillable="true" type="tns:HPTOnlineCorrectionRace" />
+  <xs:complexType name="ArrayOfHPTOnlineCorrectionHorse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTOnlineCorrectionHorse" nillable="true" type="tns:HPTOnlineCorrectionHorse" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTOnlineCorrectionHorse" nillable="true" type="tns:ArrayOfHPTOnlineCorrectionHorse" />
+  <xs:complexType name="HPTOnlineCorrectionHorse">
+    <xs:sequence>
+      <xs:element xmlns:q10="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="NOR" nillable="true" type="q10:ArrayOfint" />
+      <xs:element minOccurs="0" name="SN" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTOnlineCorrectionHorse" nillable="true" type="tns:HPTOnlineCorrectionHorse" />
+  <xs:complexType name="ArrayOfHPTRaceReduction">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTRaceReduction" nillable="true" type="tns:HPTRaceReduction" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTRaceReduction" nillable="true" type="tns:ArrayOfHPTRaceReduction" />
+  <xs:complexType name="HPTRaceReduction">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="HorseList" nillable="true" type="tns:ArrayOfHPTHorseReduction" />
+      <xs:element minOccurs="0" name="LegNr" type="xs:int" />
+      <xs:element minOccurs="0" name="R1" type="xs:int" />
+      <xs:element minOccurs="0" name="R2" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTRaceReduction" nillable="true" type="tns:HPTRaceReduction" />
+  <xs:complexType name="ArrayOfHPTHorseReduction">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTHorseReduction" nillable="true" type="tns:HPTHorseReduction" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTHorseReduction" nillable="true" type="tns:ArrayOfHPTHorseReduction" />
+  <xs:complexType name="HPTHorseReduction">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:HPTHorseLightBase">
+        <xs:sequence>
+          <xs:element xmlns:q11="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GroupCodeList" nillable="true" type="q11:ArrayOfstring" />
+          <xs:element minOccurs="0" name="OwnRank" type="xs:int" />
+          <xs:element minOccurs="0" name="Points" type="xs:int" />
+          <xs:element minOccurs="0" name="Prio" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Selected" type="xs:boolean" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="HPTHorseReduction" nillable="true" type="tns:HPTHorseReduction" />
+  <xs:complexType name="HPTReductionABCD">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:HPTReductionBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ReductionXArray" nillable="true" type="tns:ArrayOfHPTReductionX" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="HPTReductionABCD" nillable="true" type="tns:HPTReductionABCD" />
+  <xs:complexType name="HPTReductionBase">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Use" nillable="true" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTReductionBase" nillable="true" type="tns:HPTReductionBase" />
+  <xs:complexType name="ArrayOfHPTReductionX">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTReductionX" nillable="true" type="tns:HPTReductionX" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTReductionX" nillable="true" type="tns:ArrayOfHPTReductionX" />
+  <xs:complexType name="HPTReductionX">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:HPTReductionGroup">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="HPTReductionX" nillable="true" type="tns:HPTReductionX" />
+  <xs:complexType name="HPTReductionGroup">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:HPTIntervalReduction">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="GroupCode" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="HPTReductionGroup" nillable="true" type="tns:HPTReductionGroup" />
+  <xs:complexType name="HPTIntervalReduction">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:HPTReductionBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Max" type="xs:int" />
+          <xs:element minOccurs="0" name="Min" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="HPTIntervalReduction" nillable="true" type="tns:HPTIntervalReduction" />
+  <xs:complexType name="HPTReductionGroupList">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:HPTReductionBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ReductionGroupArray" nillable="true" type="tns:ArrayOfHPTReductionGroup" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="HPTReductionGroupList" nillable="true" type="tns:HPTReductionGroupList" />
+  <xs:complexType name="ArrayOfHPTReductionGroup">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTReductionGroup" nillable="true" type="tns:HPTReductionGroup" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTReductionGroup" nillable="true" type="tns:ArrayOfHPTReductionGroup" />
+  <xs:complexType name="HPTReductionOwnRank">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:HPTIntervalReduction">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="HPTReductionOwnRank" nillable="true" type="tns:HPTReductionOwnRank" />
+  <xs:complexType name="HPTReductionPoints">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:HPTIntervalReduction">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="HPTReductionPoints" nillable="true" type="tns:HPTReductionPoints" />
+  <xs:complexType name="HPTReductionResultFile">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:HPTReductionResult">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ATGSystemCount" type="xs:decimal" />
+          <xs:element minOccurs="0" name="CorrectionUrl" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CouponFile" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CouponList" nillable="true" type="tns:ArrayOfHPTMarkBetSingleRowCombination" />
+          <xs:element minOccurs="0" name="FileName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="HasTooManyATGSystems" type="xs:boolean" />
+          <xs:element minOccurs="0" name="LastUpdated" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="HPTReductionResultFile" nillable="true" type="tns:HPTReductionResultFile" />
+  <xs:complexType name="HPTReductionResult">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:HPTSystemGUIDBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Error" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="LegList" nillable="true" type="tns:ArrayOfHPTRaceReductionResponse" />
+          <xs:element minOccurs="0" name="MaxRowValue" type="xs:int" />
+          <xs:element minOccurs="0" name="MinRowValue" type="xs:int" />
+          <xs:element minOccurs="0" name="ReducedSize" type="xs:int" />
+          <xs:element minOccurs="0" name="ReductionPercentage" type="xs:decimal" />
+          <xs:element minOccurs="0" name="SystemCost" type="xs:decimal" />
+          <xs:element minOccurs="0" name="SystemSize" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="HPTReductionResult" nillable="true" type="tns:HPTReductionResult" />
+  <xs:complexType name="ArrayOfHPTRaceReductionResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTRaceReductionResponse" nillable="true" type="tns:HPTRaceReductionResponse" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTRaceReductionResponse" nillable="true" type="tns:ArrayOfHPTRaceReductionResponse" />
+  <xs:complexType name="HPTRaceReductionResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:HPTRaceLightBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="HorseList" nillable="true" type="tns:ArrayOfHPTHorseReductionResponse" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="HPTRaceReductionResponse" nillable="true" type="tns:HPTRaceReductionResponse" />
+  <xs:complexType name="ArrayOfHPTHorseReductionResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTHorseReductionResponse" nillable="true" type="tns:HPTHorseReductionResponse" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTHorseReductionResponse" nillable="true" type="tns:ArrayOfHPTHorseReductionResponse" />
+  <xs:complexType name="HPTHorseReductionResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:HPTHorseLightBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="NumberOfRows" type="xs:int" />
+          <xs:element minOccurs="0" name="PercentageOfRows" type="xs:decimal" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="HPTHorseReductionResponse" nillable="true" type="tns:HPTHorseReductionResponse" />
+  <xs:complexType name="ArrayOfHPTMarkBetSingleRowCombination">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTMarkBetSingleRowCombination" nillable="true" type="tns:HPTMarkBetSingleRowCombination" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTMarkBetSingleRowCombination" nillable="true" type="tns:ArrayOfHPTMarkBetSingleRowCombination" />
+  <xs:complexType name="HPTMarkBetSingleRowCombination">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BM" type="xs:int" />
+      <xs:element minOccurs="0" name="CN" type="xs:int" />
+      <xs:element minOccurs="0" name="CRL" nillable="true" type="tns:ArrayOfHPTMarkBetSingleRowCombinationRace" />
+      <xs:element minOccurs="0" name="S" type="xs:int" />
+      <xs:element minOccurs="0" name="V6" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTMarkBetSingleRowCombination" nillable="true" type="tns:HPTMarkBetSingleRowCombination" />
+  <xs:complexType name="ArrayOfHPTMarkBetSingleRowCombinationRace">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTMarkBetSingleRowCombinationRace" nillable="true" type="tns:HPTMarkBetSingleRowCombinationRace" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTMarkBetSingleRowCombinationRace" nillable="true" type="tns:ArrayOfHPTMarkBetSingleRowCombinationRace" />
+  <xs:complexType name="HPTMarkBetSingleRowCombinationRace">
+    <xs:sequence>
+      <xs:element xmlns:q12="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="CR" nillable="true" type="q12:ArrayOfint" />
+      <xs:element minOccurs="0" name="LN" type="xs:int" />
+      <xs:element minOccurs="0" name="R1" type="xs:int" />
+      <xs:element minOccurs="0" name="R2" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTMarkBetSingleRowCombinationRace" nillable="true" type="tns:HPTMarkBetSingleRowCombinationRace" />
+  <xs:complexType name="HPTReductionRowValue">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:HPTIntervalReduction">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="HPTReductionRowValue" nillable="true" type="tns:HPTReductionRowValue" />
+  <xs:complexType name="HPTReductionStartnumberSum">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:HPTIntervalReduction">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="HPTReductionStartnumberSum" nillable="true" type="tns:HPTReductionStartnumberSum" />
+  <xs:complexType name="HPTV6BetMultiplierSettings">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BetMultiplier" type="xs:int" />
+      <xs:element minOccurs="0" name="RowValueTarget" type="xs:int" />
+      <xs:element minOccurs="0" name="V6" type="xs:boolean" />
+      <xs:element minOccurs="0" name="V6LimitOwnRankSum" type="xs:int" />
+      <xs:element minOccurs="0" name="V6LimitPointsSum" type="xs:int" />
+      <xs:element minOccurs="0" name="V6LimitRowValue" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTV6BetMultiplierSettings" nillable="true" type="tns:HPTV6BetMultiplierSettings" />
+  <xs:complexType name="HPTHorseNextStart">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ATGId" type="xs:int" />
+      <xs:element xmlns:q13="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="BetTypeList" nillable="true" type="q13:ArrayOfstring" />
+      <xs:element minOccurs="0" name="HorseName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RaceDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="RaceNumber" type="xs:int" />
+      <xs:element minOccurs="0" name="TrackId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTHorseNextStart" nillable="true" type="tns:HPTHorseNextStart" />
+  <xs:complexType name="HPTUserRaceDayInfoCommentsCollection">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BetType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RaceDayDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="TrackId" type="xs:int" />
+      <xs:element minOccurs="0" name="UserCommentsList" nillable="true" type="tns:ArrayOfHPTUserComments" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTUserRaceDayInfoCommentsCollection" nillable="true" type="tns:HPTUserRaceDayInfoCommentsCollection" />
+  <xs:complexType name="ArrayOfHPTUserComments">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTUserComments" nillable="true" type="tns:HPTUserComments" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTUserComments" nillable="true" type="tns:ArrayOfHPTUserComments" />
+  <xs:complexType name="HPTUserComments">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BetType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CommentXml" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="EMail" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RaceDayDateDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="TrackId" type="xs:int" />
+      <xs:element minOccurs="0" name="UploadDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTUserComments" nillable="true" type="tns:HPTUserComments" />
+  <xs:complexType name="HPTUserSystemCollection">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BetType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RaceDayDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="TrackId" type="xs:int" />
+      <xs:element minOccurs="0" name="UserSystemList" nillable="true" type="tns:ArrayOfHPTUserSystem" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTUserSystemCollection" nillable="true" type="tns:HPTUserSystemCollection" />
+  <xs:complexType name="ArrayOfHPTUserSystem">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTUserSystem" nillable="true" type="tns:HPTUserSystem" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTUserSystem" nillable="true" type="tns:ArrayOfHPTUserSystem" />
+  <xs:complexType name="HPTUserSystem">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BetType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EMail" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="HPTSystem" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="OriginalSize" type="xs:int" />
+      <xs:element minOccurs="0" name="RaceDayDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="RaceDayDateString" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReducedSize" type="xs:int" />
+      <xs:element minOccurs="0" name="ReductionNames" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SystemName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Timestamp" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="TrackId" type="xs:int" />
+      <xs:element minOccurs="0" name="UniqueId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTUserSystem" nillable="true" type="tns:HPTUserSystem" />
+  <xs:complexType name="HPTATGSystem">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ATGXml" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="BetType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EMail" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RaceDayDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="TrackId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTATGSystem" nillable="true" type="tns:HPTATGSystem" />
+  <xs:complexType name="HPTUserSystemToMail">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:HPTUserSystemBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ATGXml" nillable="true" type="xs:base64Binary" />
+          <xs:element minOccurs="0" name="ATGXmlFileName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Body" nillable="true" type="xs:string" />
+          <xs:element xmlns:q14="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="EMailAddressList" nillable="true" type="q14:ArrayOfstring" />
+          <xs:element minOccurs="0" name="HPT5FileName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Subject" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="HPTUserSystemToMail" nillable="true" type="tns:HPTUserSystemToMail" />
+  <xs:complexType name="HPTUserSystemBase">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="EMail" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="HPTSystem" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="Timestamp" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTUserSystemBase" nillable="true" type="tns:HPTUserSystemBase" />
+  <xs:complexType name="HPTUserSystemComplete">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:HPTUserSystemBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="IsPublic" type="xs:boolean" />
+          <xs:element minOccurs="0" name="RaceDayInfoReduction" nillable="true" type="tns:HPTRaceDayInfoReduction" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="HPTUserSystemComplete" nillable="true" type="tns:HPTUserSystemComplete" />
+  <xs:complexType name="HPTUserConfiguration">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="EMail" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Timestamp" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="UserConfiguration" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTUserConfiguration" nillable="true" type="tns:HPTUserConfiguration" />
+  <xs:complexType name="HPTCalendarLight">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="RaceDayInfoList" nillable="true" type="tns:ArrayOfHPTRaceDayInfoLightBase" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTCalendarLight" nillable="true" type="tns:HPTCalendarLight" />
+  <xs:complexType name="ArrayOfHPTRaceDayInfoLightBase">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTRaceDayInfoLightBase" nillable="true" type="tns:HPTRaceDayInfoLightBase" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTRaceDayInfoLightBase" nillable="true" type="tns:ArrayOfHPTRaceDayInfoLightBase" />
+  <xs:complexType name="HPTCorrectionSystemResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CorrectionResult" nillable="true" type="tns:HPTCorrectionResult" />
+      <xs:element minOccurs="0" name="CorrectionStatusList" nillable="true" type="tns:ArrayOfHPTCorrectionSystemStatus" />
+      <xs:element minOccurs="0" name="OwnWinnings" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTCorrectionSystemResult" nillable="true" type="tns:HPTCorrectionSystemResult" />
+  <xs:complexType name="HPTCorrectionResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BetType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Date" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="PayoutList" nillable="true" type="tns:ArrayOfHPTCorrectionPayout" />
+      <xs:element minOccurs="0" name="RaceResultList" nillable="true" type="tns:ArrayOfHPTCorrectionRaceResult" />
+      <xs:element minOccurs="0" name="TrackName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTCorrectionResult" nillable="true" type="tns:HPTCorrectionResult" />
+  <xs:complexType name="ArrayOfHPTCorrectionPayout">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTCorrectionPayout" nillable="true" type="tns:HPTCorrectionPayout" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTCorrectionPayout" nillable="true" type="tns:ArrayOfHPTCorrectionPayout" />
+  <xs:complexType name="HPTCorrectionPayout">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="NumberOfCorrect" type="xs:int" />
+      <xs:element minOccurs="0" name="NumberOfSystems" type="xs:int" />
+      <xs:element minOccurs="0" name="Payout" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTCorrectionPayout" nillable="true" type="tns:HPTCorrectionPayout" />
+  <xs:complexType name="ArrayOfHPTCorrectionRaceResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTCorrectionRaceResult" nillable="true" type="tns:HPTCorrectionRaceResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTCorrectionRaceResult" nillable="true" type="tns:ArrayOfHPTCorrectionRaceResult" />
+  <xs:complexType name="HPTCorrectionRaceResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="LegNr" type="xs:int" />
+      <xs:element minOccurs="0" name="SystemValue" type="xs:int" />
+      <xs:element minOccurs="0" name="SystemsLeft" type="xs:int" />
+      <xs:element minOccurs="0" name="WinnerList" nillable="true" type="tns:ArrayOfHPTCorrectionHorse" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTCorrectionRaceResult" nillable="true" type="tns:HPTCorrectionRaceResult" />
+  <xs:complexType name="ArrayOfHPTCorrectionHorse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTCorrectionHorse" nillable="true" type="tns:HPTCorrectionHorse" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTCorrectionHorse" nillable="true" type="tns:ArrayOfHPTCorrectionHorse" />
+  <xs:complexType name="HPTCorrectionHorse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Odds" type="xs:int" />
+      <xs:element minOccurs="0" name="StartNr" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTCorrectionHorse" nillable="true" type="tns:HPTCorrectionHorse" />
+  <xs:complexType name="ArrayOfHPTCorrectionSystemStatus">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTCorrectionSystemStatus" nillable="true" type="tns:HPTCorrectionSystemStatus" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTCorrectionSystemStatus" nillable="true" type="tns:ArrayOfHPTCorrectionSystemStatus" />
+  <xs:complexType name="HPTCorrectionSystemStatus">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="NumberOfErrors" type="xs:int" />
+      <xs:element minOccurs="0" name="NumberOfRows" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTCorrectionSystemStatus" nillable="true" type="tns:HPTCorrectionSystemStatus" />
+  <xs:complexType name="ArrayOfHPTCoupon">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTCoupon" nillable="true" type="tns:HPTCoupon" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTCoupon" nillable="true" type="tns:ArrayOfHPTCoupon" />
+  <xs:complexType name="HPTCoupon">
+    <xs:sequence>
+      <xs:element xmlns:q15="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ARow" nillable="true" type="q15:ArrayOfint" />
+      <xs:element minOccurs="0" name="BetMultiplier" type="xs:int" />
+      <xs:element minOccurs="0" name="BetType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CouponId" type="xs:int" />
+      <xs:element minOccurs="0" name="CouponRaceList" nillable="true" type="tns:ArrayOfHPTCouponRace" />
+      <xs:element minOccurs="0" name="Date" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="NumberOfAllCorrect" type="xs:int" />
+      <xs:element minOccurs="0" name="NumberOfCorrect" type="xs:int" />
+      <xs:element minOccurs="0" name="NumberOfFinishedLegs" type="xs:int" />
+      <xs:element minOccurs="0" name="NumberOfOneError" type="xs:int" />
+      <xs:element minOccurs="0" name="NumberOfTwoErrors" type="xs:int" />
+      <xs:element minOccurs="0" name="PayOutAmount" type="xs:int" />
+      <xs:element minOccurs="0" name="RaceNumber" type="xs:int" />
+      <xs:element minOccurs="0" name="Stake" type="xs:int" />
+      <xs:element minOccurs="0" name="SystemSize" type="xs:int" />
+      <xs:element minOccurs="0" name="TrackCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="V6" type="xs:boolean" />
+      <xs:element minOccurs="0" name="raceDayInfo" nillable="true" type="tns:HPTRaceDayInfo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTCoupon" nillable="true" type="tns:HPTCoupon" />
+  <xs:complexType name="ArrayOfHPTCouponRace">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTCouponRace" nillable="true" type="tns:HPTCouponRace" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTCouponRace" nillable="true" type="tns:ArrayOfHPTCouponRace" />
+  <xs:complexType name="HPTCouponRace">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="HorseList" nillable="true" type="tns:ArrayOfHPTHorse" />
+      <xs:element minOccurs="0" name="LegNr" type="xs:int" />
+      <xs:element minOccurs="0" name="NumberOfChosen" type="xs:int" />
+      <xs:element minOccurs="0" name="Reserv1" type="xs:int" />
+      <xs:element minOccurs="0" name="Reserv2" type="xs:int" />
+      <xs:element xmlns:q16="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="StartNrList" nillable="true" type="q16:ArrayOfint" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTCouponRace" nillable="true" type="tns:HPTCouponRace" />
+  <xs:complexType name="HPTUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AlreadyRegistered" type="xs:boolean" />
+      <xs:element minOccurs="0" name="EMailAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EndDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="EndDateOnline" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FirstLoginTime" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="IPAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LastUpdated" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="LastVisit" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="LoggedIn" type="xs:boolean" />
+      <xs:element minOccurs="0" name="LoggedOut" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PasswordOnline" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StartDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="StartDateOnline" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTUser" nillable="true" type="tns:HPTUser" />
+  <xs:complexType name="ArrayOfHPTLogMessage">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTLogMessage" nillable="true" type="tns:HPTLogMessage" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTLogMessage" nillable="true" type="tns:ArrayOfHPTLogMessage" />
+  <xs:complexType name="HPTLogMessage">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="LogTime" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="LogType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HPTLogMessage" nillable="true" type="tns:HPTLogMessage" />
+  <xs:complexType name="ArrayOfHPTUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HPTUser" nillable="true" type="tns:HPTUser" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHPTUser" nillable="true" type="tns:ArrayOfHPTUser" />
+</xs:schema>

@@ -1,0 +1,87 @@
+﻿<HPT:UCMarkBetControl x:Class="HPTClient.UCBeginnerWizard"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:HPT="clr-namespace:HPTClient"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        x:Name="ucBeginnerWizard">
+    <UserControl.Resources>
+        
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="DemiBold"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="2"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+        
+        <HPT:ReductionRiskToIntConverter x:Key="reductionRiskConverter"/>
+
+        <HPT:DesiredProfitToIntConverter x:Key="desiredProfitConverter"/>
+
+    </UserControl.Resources>
+    <Grid>
+        <Grid.LayoutTransform>
+            <ScaleTransform ScaleX="1.3" ScaleY="1.3"/>
+        </Grid.LayoutTransform>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="24"/>
+                <RowDefinition Height="24"/>
+                <RowDefinition Height="24"/>
+                <RowDefinition Height="24"/>
+                <RowDefinition Height="24"/>
+                <RowDefinition Height="24"/>
+                <RowDefinition Height="24"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="200"/>
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock Text="1. Hur mycket vill du spela för?" Grid.Row="0"/>
+            <xctk:IntegerUpDown x:Name="iudStake" Grid.Column="1" FormatString="C0"
+                                Value="{Binding Stake}" Minimum="0" Increment="100"
+                                Margin="1"/>
+
+            <TextBlock Text="2. Hur många spikar vill du ha?" Grid.Row="1"/>
+            <xctk:IntegerUpDown x:Name="iudNumberOfSpikes" Grid.Row="1" Grid.Column="1"
+                                Value="{Binding NumberOfSpikes}" Minimum="0" Maximum="3" Increment="1"
+                                Margin="1"/>
+
+            <TextBlock Text="3. Vad förutsäger bäst en hästs vinstchanser (välj minst 1)?" Grid.Row="2"/>
+            <xctk:CheckComboBox x:Name="chkRankVariables" ItemsSource="{Binding HorseRankVariableList}" Delimiter=", "
+                                SelectedMemberPath="Use" DisplayMemberPath="HorseRankInfo.NameBeginner" Text="Välj..."
+                                Grid.Row="2" Grid.Column="1" Margin="1"/>
+
+            <TextBlock Text="4. Hur mycket vill du vinna?" Grid.Row="3"/>
+            <ComboBox x:Name="cmbDesiredProfit" SelectedIndex="{Binding DesiredProfit,Converter={StaticResource desiredProfitConverter}}" 
+                      Grid.Row="3" Grid.Column="1" Margin="1">
+                <ComboBoxItem Tag="0" Content="Lagom (avvägning mellan favoriter och överraskningar)"/>
+                <ComboBoxItem Tag="1" Content="Lite (du tror på favoritbetonad omgång)"/>
+                <ComboBoxItem Tag="2" Content="Mycket (få favoritsegrar och flera överraskningar)"/>
+            </ComboBox>
+
+            <TextBlock Text="5. Hur stor reducering vill du ha?" Grid.Row="4"/>
+            <ComboBox x:Name="cmbReductionRisk" SelectedIndex="{Binding ReductionRisk,Converter={StaticResource reductionRiskConverter}}" 
+                      Grid.Row="4" Grid.Column="1" Margin="1">
+                <ComboBoxItem Tag="0" Content="Lagom (avvägning mellan antal hästar och tuffa villkor)"/>
+                <ComboBoxItem Tag="1" Content="Liten (färre hästar, men lättare att få in villkoren)"/>
+                <ComboBoxItem Tag="2" Content="Stor (många hästar, men tuffare att få in villkoren)"/>
+            </ComboBox>
+            
+            <TextBlock Text="6. Tryck på knappen när du är nöjd med dina val" Grid.Row="5"/>
+            <Grid Grid.Row="5" Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Button x:Name="btnClearSystem" Content="Rensa val" Click="btnClearSystem_Click" Margin="1"/>
+                <Button x:Name="btnCreateSystem" Content="Skapa system!" Click="btnCreateSystem_Click" Grid.Column="1" Margin="1"/>
+            </Grid>
+
+            <TextBlock x:Name="tbSaveAndClose" Grid.Row="6" Text="{Binding Path=MarkBet.SystemCost,ElementName=ucBeginnerWizard,StringFormat='System för {0:N0} kr skapat',ConverterCulture=sv-SE}"/>
+            <Button x:Name="btnSaveAndClose" Content="Spara och stäng" IsEnabled="False"  Click="btnSaveAndClose_Click" Grid.Row="6" Grid.Column="1" Margin="1"/>
+
+        </Grid>
+    </Grid>
+</HPT:UCMarkBetControl>

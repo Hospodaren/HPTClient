@@ -1,0 +1,99 @@
+﻿<HPT:UCMarkBetControl x:Class="HPTClient.UCHorseRankSumReductionRule"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:HPT="clr-namespace:HPTClient"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Expander ExpandDirection="Down" IsExpanded="True" BorderBrush="Black" BorderThickness="1" Margin="1">
+            <Expander.Header>
+                <StackPanel Orientation="Horizontal">
+
+                    <CheckBox x:Name="chkUseSumReductionRule" IsChecked="{Binding Use}" Content="{Binding Path=HorseRankVariable.CategoryText}" Width="150"
+                                              Checked="chkUseSumReductionRule_Checked" Unchecked="chkUseSumReductionRule_Checked" VerticalAlignment="Center" Margin="2"/>
+
+                    <TextBlock Text="{Binding Path=HorseRankVariable.Text}" Width="150" Margin="2" VerticalAlignment="Center"/>
+
+                    <TextBlock Text="Min (summa)" VerticalAlignment="Center"/>
+
+                    <xctk:IntegerUpDown x:Name="iudMinSum" Value="{Binding MinSum}" ValueChanged="iudMinSum_ValueChanged"
+                                                        Minimum="0" Maximum="120" Margin="2"/>
+                    <!--Minimum="{Binding NumberOfRaces}" Maximum="120" Margin="2"/>-->
+
+                    <TextBlock Text="Max (summa)" Margin="2" VerticalAlignment="Center"/>
+
+                    <xctk:IntegerUpDown x:Name="iudMaxSum" Value="{Binding MaxSum}" ValueChanged="iudMinSum_ValueChanged"
+                                                    Minimum="{Binding NumberOfRaces}" Maximum="120" Margin="2"/>
+
+                    <Button x:Name="btnNewGroupRule" Content="Ny gruppregel" Click="btnNewGroupRule_Click" Margin="2"/>
+
+                    <Button x:Name="btnClearGroupRules" Content="Rensa gruppregler" Click="btnClearGroupRules_Click" Margin="2"/>
+
+                </StackPanel>
+            </Expander.Header>
+
+            <ListBox ItemsSource="{Binding ReductionRuleList}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Antal vinnare" Margin="2"/>
+                            <ItemsControl x:Name="icGroupRule" ItemsSource="{Binding NumberOfWinnersList}" Margin="2" ToggleButton.Checked="icGroupRule_Checked" ToggleButton.Unchecked="icGroupRule_Checked">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Template="{DynamicResource CheckBoxTemplate}"
+                                                              Content="{Binding NumberOfWinners}" 
+                                                              IsChecked="{Binding Selected}" 
+                                                              IsEnabled="{Binding Selectable}"
+                                                              FontSize="12"
+                                                              Width="13"
+                                                              Height="16">
+                                        </CheckBox>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
+                            <TextBlock Text="Min (rank)" Margin="2"/>
+                            <xctk:IntegerUpDown x:Name="iudMinNumberOfWinners" Value="{Binding LowerBoundary}" Minimum="1" Maximum="15" ValueChanged="iudMinNumberOfWinners_ValueChanged"/>
+
+                            <TextBlock Text="Max (rank)" Margin="2"/>
+                            <xctk:IntegerUpDown x:Name="iudMaxNumberOfWinners" Value="{Binding UpperBoundary}" Minimum="1" Maximum="15" ValueChanged="iudMinNumberOfWinners_ValueChanged"/>
+
+                            <TextBlock Text="Lopp" Style="{StaticResource tbMediumStyle}" Padding="16,0,5,4" Visibility="{Binding Path=ShowLegList,ElementName=ucABCDReductionSettings}"/>
+
+                            <ItemsControl ItemsSource="{Binding LegSelectionList}" ToggleButton.Checked="icGroupRule_Checked" ToggleButton.Unchecked="icGroupRule_Checked">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Template="{StaticResource CheckBoxTemplate}" 
+                                                  Content="{Binding LegNumber}" 
+                                                  IsChecked="{Binding Selected}" 
+                                                  FontSize="12"
+                                                  Width="13"
+                                                  Height="16"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            <Button x:Name="btnShowGroupRuleHorses" Content="Visa hästar" Click="btnShowGroupRuleHorses_Click" Margin="2"/>
+
+                            <Button x:Name="btnRemoveRule" Content="Ta bort" Click="btnRemoveRule_Click" Margin="2"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <!--</Border>-->
+        </Expander>
+    </Grid>
+</HPT:UCMarkBetControl>

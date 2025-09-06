@@ -1,0 +1,4863 @@
+{
+  "date": "2025-05-31",
+  "tracks": [
+    {
+      "id": 22,
+      "name": "Mantorp",
+      "startTime": "2025-05-31T14:45:00",
+      "nextRace": "2025-05-31_22_1",
+      "races": [
+        {
+          "id": "2025-05-31_22_1",
+          "number": 1,
+          "status": "upcoming",
+          "startTime": "2025-05-31T14:45:00",
+          "mergedPools": [
+            {
+              "name": "A",
+              "betTypes": [ "vinnare", "plats", "komb", "tvilling", "trio" ]
+            }
+          ]
+        },
+        {
+          "id": "2025-05-31_22_2",
+          "number": 2,
+          "status": "upcoming",
+          "startTime": "2025-05-31T15:08:00",
+          "mergedPools": [
+            {
+              "name": "A",
+              "betTypes": [ "vinnare", "plats", "komb", "tvilling", "trio" ]
+            }
+          ]
+        },
+        {
+          "id": "2025-05-31_22_3",
+          "number": 3,
+          "status": "upcoming",
+          "startTime": "2025-05-31T15:31:00",
+          "mergedPools": [
+            {
+              "name": "A",
+              "betTypes": [ "vinnare", "plats", "komb", "tvilling", "trio" ]
+            }
+          ]
+        },
+        {
+          "id": "2025-05-31_22_4",
+          "number": 4,
+          "status": "upcoming",
+          "startTime": "2025-05-31T15:53:00",
+          "mergedPools": [
+            {
+              "name": "A",
+              "betTypes": [ "vinnare", "plats", "komb", "tvilling", "trio" ]
+            }
+          ]
+        },
+        {
+          "id": "2025-05-31_22_5",
+          "number": 5,
+          "status": "upcoming",
+          "startTime": "2025-05-31T16:20:00",
+          "mergedPools": [
+            {
+              "name": "A",
+              "betTypes": [ "vinnare", "plats", "komb", "tvilling", "trio" ]
+            }
+          ]
+        },
+        {
+          "id": "2025-05-31_22_6",
+          "number": 6,
+          "status": "upcoming",
+          "startTime": "2025-05-31T16:42:00",
+          "mergedPools": [
+            {
+              "name": "A",
+              "betTypes": [ "vinnare", "plats", "komb", "tvilling", "trio" ]
+            }
+          ]
+        },
+        {
+          "id": "2025-05-31_22_7",
+          "number": 7,
+          "status": "upcoming",
+          "startTime": "2025-05-31T17:05:00",
+          "mergedPools": [
+            {
+              "name": "A",
+              "betTypes": [ "vinnare", "plats", "komb", "tvilling", "trio" ]
+            }
+          ]
+        },
+        {
+          "id": "2025-05-31_22_8",
+          "number": 8,
+          "status": "upcoming",
+          "startTime": "2025-05-31T17:27:00",
+          "mergedPools": [
+            {
+              "name": "A",
+              "betTypes": [ "vinnare", "plats", "komb", "tvilling", "trio" ]
+            }
+          ]
+        },
+        {
+          "id": "2025-05-31_22_9",
+          "number": 9,
+          "status": "upcoming",
+          "startTime": "2025-05-31T17:50:00",
+          "mergedPools": [
+            {
+              "name": "A",
+              "betTypes": [ "vinnare", "plats", "komb", "tvilling", "trio" ]
+            }
+          ]
+        },
+        {
+          "id": "2025-05-31_22_10",
+          "number": 10,
+          "status": "upcoming",
+          "startTime": "2025-05-31T18:20:00",
+          "mergedPools": [
+            {
+              "name": "A",
+              "betTypes": [ "vinnare", "plats", "komb", "tvilling", "trio" ]
+            }
+          ]
+        },
+        {
+          "id": "2025-05-31_22_11",
+          "number": 11,
+          "status": "upcoming",
+          "startTime": "2025-05-31T18:43:00",
+          "mergedPools": [
+            {
+              "name": "A",
+              "betTypes": [ "vinnare", "plats", "komb", "tvilling", "trio" ]
+            }
+          ]
+        },
+        {
+          "id": "2025-05-31_22_12",
+          "number": 12,
+          "status": "upcoming",
+          "startTime": "2025-05-31T19:02:00",
+          "mergedPools": [
+            {
+              "name": "A",
+              "betTypes": [ "vinnare", "plats", "komb", "tvilling", "trio" ]
+            }
+          ]
+        }
+      ],
+      "biggestGameType": "V75",
+      "sport": "trot",
+      "countryCode": "SE",
+      "trackChanged": false
+    },
+    {
+      "id": 54,
+      "name": "Skive",
+      "startTime": "2025-05-31T18:55:00",
+      "nextRace": "2025-05-31_54_1",
+      "races": [
+        {
+          "id": "2025-05-31_54_1",
+          "number": 1,
+          "status": "upcoming",
+          "startTime": "2025-05-31T18:55:00",
+          "mergedPools": [
+            {
+              "name": "A",
+              "betTypes": [ "vinnare", "plats", "komb", "tvilling", "trio" ]
+            }
+          ]
+        },
+        {
+          "id": "2025-05-31_54_2",
+          "number": 2,
+          "status": "upcoming",
+          "startTime": "2025-05-31T19:15:00",
+          "mergedPools": [
+            {
+              "name": "A",
+              "betTypes": [ "vinnare", "plats", "komb", "tvilling", "trio" ]
+            }
+          ]
+        },
+        {
+          "id": "2025-05-31_54_3",
+          "number": 3,
+          "status": "upcoming",
+          "startTime": "2025-05-31T19:40:00",
+          "mergedPools": [
+            {
+              "name": "A",
+              "betTypes": [ "vinnare", "plats", "komb", "tvilling", "trio" ]
+            }
+          ]
+        },
+        {
+          "id": "2025-05-31_54_4",
+          "number": 4,
+          "status": "upcoming",
+          "startTime": "2025-05-31T20:00:00",
+          "mergedPools": [
+            {
+              "name": "A",
+              "betTypes": [ "vinnare", "plats", "komb", "tvilling", "trio" ]
+            }
+          ]
+        },
+        {
+          "id": "2025-05-31_54_5",
+          "number": 5,
+          "status": "upcoming",
+          "startTime": "2025-05-31T20:20:00",
+          "mergedPools": [
+            {
+              "name": "A",
+              "betTypes": [ "vinnare", "plats", "komb", "tvilling", "trio" ]
+            }
+          ]
+        },
+        {
+          "id": "2025-05-31_54_6",
+          "number": 6,
+          "status": "upcoming",
+          "startTime": "2025-05-31T20:40:00",
+          "mergedPools": [
+            {
+              "name": "A",
+              "betTypes": [ "vinnare", "plats", "komb", "tvilling", "trio" ]
+            }
+          ]
+        },
+        {
+          "id": "2025-05-31_54_7",
+          "number": 7,
+          "status": "upcoming",
+          "startTime": "2025-05-31T21:00:00",
+          "mergedPools": [
+            {
+              "name": "A",
+              "betTypes": [ "vinnare", "plats", "komb", "tvilling", "trio" ]
+            }
+          ]
+        },
+        {
+          "id": "2025-05-31_54_8",
+          "number": 8,
+          "status": "upcoming",
+          "startTime": "2025-05-31T21:18:00",
+          "mergedPools": [
+            {
+              "name": "A",
+              "betTypes": [ "vinnare", "plats", "komb", "tvilling", "trio" ]
+            }
+          ]
+        },
+        {
+          "id": "2025-05-31_54_9",
+          "number": 9,
+          "status": "upcoming",
+          "startTime": "2025-05-31T21:36:00",
+          "mergedPools": [
+            {
+              "name": "A",
+              "betTypes": [ "vinnare", "plats", "komb", "tvilling", "trio" ]
+            }
+          ]
+        }
+      ],
+      "biggestGameType": "V65",
+      "sport": "trot",
+      "countryCode": "DK",
+      "trackChanged": false
+    },
+    {
+      "id": 17,
+      "name": "Hagmyren",
+      "startTime": "2025-05-31T11:00:00",
+      "nextRace": "2025-05-31_17_4",
+      "races": [
+        {
+          "id": "2025-05-31_17_1",
+          "number": 1,
+          "status": "results",
+          "startTime": "2025-05-31T11:00:09",
+          "mergedPools": [
+            {
+              "name": "A",
+              "betTypes": [ "vinnare", "plats", "komb", "tvilling", "trio" ]
+            }
+          ]
+        },
+        {
+          "id": "2025-05-31_17_2",
+          "number": 2,
+          "status": "results",
+          "startTime": "2025-05-31T11:24:43",
+          "mergedPools": [
+            {
+              "name": "A",
+              "betTypes": [ "vinnare", "plats", "komb", "tvilling", "trio" ]
+            }
+          ]
+        },
+        {
+          "id": "2025-05-31_17_3",
+          "number": 3,
+          "status": "results",
+          "startTime": "2025-05-31T11:46:49",
+          "mergedPools": [
+            {
+              "name": "A",
+              "betTypes": [ "vinnare", "plats", "komb", "tvilling", "trio" ]
+            }
+          ]
+        },
+        {
+          "id": "2025-05-31_17_4",
+          "number": 4,
+          "status": "upcoming",
+          "startTime": "2025-05-31T12:05:55",
+          "mergedPools": [
+            {
+              "name": "A",
+              "betTypes": [ "vinnare", "plats", "komb", "tvilling", "trio" ]
+            }
+          ]
+        },
+        {
+          "id": "2025-05-31_17_5",
+          "number": 5,
+          "status": "upcoming",
+          "startTime": "2025-05-31T12:30:00",
+          "mergedPools": [
+            {
+              "name": "A",
+              "betTypes": [ "vinnare", "plats", "komb", "tvilling", "trio" ]
+            }
+          ]
+        },
+        {
+          "id": "2025-05-31_17_6",
+          "number": 6,
+          "status": "upcoming",
+          "startTime": "2025-05-31T12:52:00",
+          "mergedPools": [
+            {
+              "name": "A",
+              "betTypes": [ "vinnare", "plats", "komb", "tvilling", "trio" ]
+            }
+          ]
+        },
+        {
+          "id": "2025-05-31_17_7",
+          "number": 7,
+          "status": "upcoming",
+          "startTime": "2025-05-31T13:12:00",
+          "mergedPools": [
+            {
+              "name": "A",
+              "betTypes": [ "vinnare", "plats", "komb", "tvilling", "trio" ]
+            }
+          ]
+        },
+        {
+          "id": "2025-05-31_17_8",
+          "number": 8,
+          "status": "upcoming",
+          "startTime": "2025-05-31T13:32:00",
+          "mergedPools": [
+            {
+              "name": "A",
+              "betTypes": [ "vinnare", "plats", "komb", "tvilling", "trio" ]
+            }
+          ]
+        },
+        {
+          "id": "2025-05-31_17_9",
+          "number": 9,
+          "status": "upcoming",
+          "startTime": "2025-05-31T13:51:00",
+          "mergedPools": [
+            {
+              "name": "A",
+              "betTypes": [ "vinnare", "plats", "komb", "tvilling", "trio" ]
+            }
+          ]
+        }
+      ],
+      "biggestGameType": "V5",
+      "sport": "trot",
+      "countryCode": "SE",
+      "trackChanged": false
+    },
+    {
+      "id": 31,
+      "name": "Årjäng",
+      "startTime": "2025-05-31T11:32:00",
+      "nextRace": "2025-05-31_31_4",
+      "races": [
+        {
+          "id": "2025-05-31_31_2",
+          "number": 2,
+          "status": "results",
+          "startTime": "2025-05-31T11:36:56",
+          "mergedPools": [
+            {
+              "name": "A",
+              "betTypes": [ "vinnare", "plats", "komb", "tvilling", "trio" ]
+            }
+          ]
+        },
+        {
+          "id": "2025-05-31_31_3",
+          "number": 3,
+          "status": "ongoing",
+          "startTime": "2025-05-31T11:57:55",
+          "mergedPools": [
+            {
+              "name": "A",
+              "betTypes": [ "vinnare", "plats", "komb", "tvilling", "trio" ]
+            }
+          ]
+        },
+        {
+          "id": "2025-05-31_31_4",
+          "number": 4,
+          "status": "upcoming",
+          "startTime": "2025-05-31T12:16:40",
+          "mergedPools": [
+            {
+              "name": "A",
+              "betTypes": [ "vinnare", "plats", "komb", "tvilling", "trio" ]
+            }
+          ]
+        },
+        {
+          "id": "2025-05-31_31_5",
+          "number": 5,
+          "status": "upcoming",
+          "startTime": "2025-05-31T13:02:00",
+          "mergedPools": [
+            {
+              "name": "A",
+              "betTypes": [ "vinnare", "plats", "komb", "tvilling", "trio" ]
+            }
+          ]
+        },
+        {
+          "id": "2025-05-31_31_6",
+          "number": 6,
+          "status": "upcoming",
+          "startTime": "2025-05-31T13:22:00",
+          "mergedPools": [
+            {
+              "name": "A",
+              "betTypes": [ "vinnare", "plats", "komb", "tvilling", "trio" ]
+            }
+          ]
+        },
+        {
+          "id": "2025-05-31_31_7",
+          "number": 7,
+          "status": "upcoming",
+          "startTime": "2025-05-31T13:42:00",
+          "mergedPools": [
+            {
+              "name": "A",
+              "betTypes": [ "vinnare", "plats", "komb", "tvilling", "trio" ]
+            }
+          ]
+        },
+        {
+          "id": "2025-05-31_31_8",
+          "number": 8,
+          "status": "upcoming",
+          "startTime": "2025-05-31T14:01:00",
+          "mergedPools": [
+            {
+              "name": "A",
+              "betTypes": [ "vinnare", "plats", "komb", "tvilling", "trio" ]
+            }
+          ]
+        },
+        {
+          "id": "2025-05-31_31_9",
+          "number": 9,
+          "status": "upcoming",
+          "startTime": "2025-05-31T14:20:00",
+          "mergedPools": [
+            {
+              "name": "A",
+              "betTypes": [ "vinnare", "plats", "komb", "tvilling", "trio" ]
+            }
+          ]
+        }
+      ],
+      "biggestGameType": "V5",
+      "sport": "trot",
+      "countryCode": "SE",
+      "trackChanged": false
+    },
+    {
+      "id": 66,
+      "name": "Bodö",
+      "startTime": "2025-05-31T19:25:00",
+      "nextRace": "2025-05-31_66_1",
+      "races": [
+        {
+          "id": "2025-05-31_66_1",
+          "number": 1,
+          "status": "upcoming",
+          "startTime": "2025-05-31T19:25:00"
+        },
+        {
+          "id": "2025-05-31_66_2",
+          "number": 2,
+          "status": "upcoming",
+          "startTime": "2025-05-31T19:46:00"
+        },
+        {
+          "id": "2025-05-31_66_3",
+          "number": 3,
+          "status": "upcoming",
+          "startTime": "2025-05-31T20:10:00"
+        },
+        {
+          "id": "2025-05-31_66_4",
+          "number": 4,
+          "status": "upcoming",
+          "startTime": "2025-05-31T20:31:00"
+        },
+        {
+          "id": "2025-05-31_66_5",
+          "number": 5,
+          "status": "upcoming",
+          "startTime": "2025-05-31T20:52:00"
+        },
+        {
+          "id": "2025-05-31_66_6",
+          "number": 6,
+          "status": "upcoming",
+          "startTime": "2025-05-31T21:13:00"
+        }
+      ],
+      "biggestGameType": "V5",
+      "sport": "trot",
+      "countryCode": "NO",
+      "trackChanged": false
+    },
+    {
+      "id": 77,
+      "name": "Bergen",
+      "startTime": "2025-05-31T14:10:00",
+      "nextRace": "2025-05-31_77_1",
+      "races": [
+        {
+          "id": "2025-05-31_77_1",
+          "number": 1,
+          "status": "upcoming",
+          "startTime": "2025-05-31T14:10:03"
+        },
+        {
+          "id": "2025-05-31_77_2",
+          "number": 2,
+          "status": "upcoming",
+          "startTime": "2025-05-31T14:30:00"
+        },
+        {
+          "id": "2025-05-31_77_3",
+          "number": 3,
+          "status": "upcoming",
+          "startTime": "2025-05-31T15:00:00"
+        },
+        {
+          "id": "2025-05-31_77_4",
+          "number": 4,
+          "status": "upcoming",
+          "startTime": "2025-05-31T15:23:00"
+        },
+        {
+          "id": "2025-05-31_77_5",
+          "number": 5,
+          "status": "upcoming",
+          "startTime": "2025-05-31T15:46:00"
+        },
+        {
+          "id": "2025-05-31_77_6",
+          "number": 6,
+          "status": "upcoming",
+          "startTime": "2025-05-31T16:10:00"
+        },
+        {
+          "id": "2025-05-31_77_7",
+          "number": 7,
+          "status": "upcoming",
+          "startTime": "2025-05-31T16:33:00"
+        },
+        {
+          "id": "2025-05-31_77_8",
+          "number": 8,
+          "status": "upcoming",
+          "startTime": "2025-05-31T16:55:00"
+        },
+        {
+          "id": "2025-05-31_77_9",
+          "number": 9,
+          "status": "upcoming",
+          "startTime": "2025-05-31T17:15:00"
+        },
+        {
+          "id": "2025-05-31_77_10",
+          "number": 10,
+          "status": "upcoming",
+          "startTime": "2025-05-31T17:37:00"
+        }
+      ],
+      "biggestGameType": "V5",
+      "sport": "trot",
+      "countryCode": "NO",
+      "trackChanged": false
+    },
+    {
+      "id": 68,
+      "name": "Sha Tin",
+      "startTime": "2025-05-31T06:30:00",
+      "nextRace": "2025-05-31_68_11",
+      "races": [
+        {
+          "id": "2025-05-31_68_1",
+          "number": 1,
+          "status": "results",
+          "startTime": "2025-05-31T06:30:29"
+        },
+        {
+          "id": "2025-05-31_68_2",
+          "number": 2,
+          "status": "results",
+          "startTime": "2025-05-31T07:00:59"
+        },
+        {
+          "id": "2025-05-31_68_3",
+          "number": 3,
+          "status": "results",
+          "startTime": "2025-05-31T07:31:20"
+        },
+        {
+          "id": "2025-05-31_68_4",
+          "number": 4,
+          "status": "results",
+          "startTime": "2025-05-31T08:01:15"
+        },
+        {
+          "id": "2025-05-31_68_5",
+          "number": 5,
+          "status": "results",
+          "startTime": "2025-05-31T08:30:42"
+        },
+        {
+          "id": "2025-05-31_68_6",
+          "number": 6,
+          "status": "results",
+          "startTime": "2025-05-31T09:02:24"
+        },
+        {
+          "id": "2025-05-31_68_7",
+          "number": 7,
+          "status": "results",
+          "startTime": "2025-05-31T09:35:38"
+        },
+        {
+          "id": "2025-05-31_68_8",
+          "number": 8,
+          "status": "results",
+          "startTime": "2025-05-31T10:07:33"
+        },
+        {
+          "id": "2025-05-31_68_9",
+          "number": 9,
+          "status": "results",
+          "startTime": "2025-05-31T10:43:50"
+        },
+        {
+          "id": "2025-05-31_68_10",
+          "number": 10,
+          "status": "results",
+          "startTime": "2025-05-31T11:17:37"
+        },
+        {
+          "id": "2025-05-31_68_11",
+          "number": 11,
+          "status": "ongoing",
+          "startTime": "2025-05-31T11:52:48"
+        }
+      ],
+      "biggestGameType": "V4",
+      "sport": "gallop",
+      "countryCode": "HK",
+      "trackChanged": false
+    },
+    {
+      "id": 97,
+      "name": "Churchill Downs",
+      "startTime": "2025-05-31T18:45:00",
+      "nextRace": "2025-05-31_97_1",
+      "races": [
+        {
+          "id": "2025-05-31_97_1",
+          "number": 1,
+          "status": "upcoming",
+          "startTime": "2025-05-31T18:45:00"
+        },
+        {
+          "id": "2025-05-31_97_2",
+          "number": 2,
+          "status": "upcoming",
+          "startTime": "2025-05-31T19:14:00"
+        },
+        {
+          "id": "2025-05-31_97_3",
+          "number": 3,
+          "status": "upcoming",
+          "startTime": "2025-05-31T19:43:00"
+        },
+        {
+          "id": "2025-05-31_97_4",
+          "number": 4,
+          "status": "upcoming",
+          "startTime": "2025-05-31T20:14:00"
+        },
+        {
+          "id": "2025-05-31_97_5",
+          "number": 5,
+          "status": "upcoming",
+          "startTime": "2025-05-31T20:46:00"
+        },
+        {
+          "id": "2025-05-31_97_6",
+          "number": 6,
+          "status": "upcoming",
+          "startTime": "2025-05-31T21:18:00"
+        },
+        {
+          "id": "2025-05-31_97_7",
+          "number": 7,
+          "status": "upcoming",
+          "startTime": "2025-05-31T21:51:00"
+        },
+        {
+          "id": "2025-05-31_97_8",
+          "number": 8,
+          "status": "upcoming",
+          "startTime": "2025-05-31T22:23:00"
+        },
+        {
+          "id": "2025-05-31_97_9",
+          "number": 9,
+          "status": "upcoming",
+          "startTime": "2025-05-31T22:55:00"
+        }
+      ],
+      "biggestGameType": "V4",
+      "sport": "gallop",
+      "countryCode": "US",
+      "trackChanged": false
+    }
+  ],
+  "games": {
+    "V75": [
+      {
+        "id": "V75_2025-05-31_22_5",
+        "status": "bettable",
+        "startTime": "2025-05-31T16:20:00",
+        "scheduledStartTime": "2025-05-31T16:20:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_5", "2025-05-31_22_6", "2025-05-31_22_7", "2025-05-31_22_8", "2025-05-31_22_9", "2025-05-31_22_10", "2025-05-31_22_11" ],
+        "addOns": [ "boost" ],
+        "returnToPlayer": 65,
+        "newBettingSystem": true
+      }
+    ],
+    "V65": [
+      {
+        "id": "V65_2025-05-31_54_3",
+        "status": "bettable",
+        "startTime": "2025-05-31T19:40:00",
+        "scheduledStartTime": "2025-05-31T19:40:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_3", "2025-05-31_54_4", "2025-05-31_54_5", "2025-05-31_54_6", "2025-05-31_54_7", "2025-05-31_54_8" ],
+        "returnToPlayer": 65,
+        "newBettingSystem": true
+      }
+    ],
+    "V5": [
+      {
+        "id": "V5_2025-05-31_17_5",
+        "status": "bettable",
+        "startTime": "2025-05-31T12:30:00",
+        "scheduledStartTime": "2025-05-31T12:30:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_5", "2025-05-31_17_6", "2025-05-31_17_7", "2025-05-31_17_8", "2025-05-31_17_9" ],
+        "returnToPlayer": 65,
+        "newBettingSystem": true
+      },
+      {
+        "id": "V5_2025-05-31_22_7",
+        "status": "bettable",
+        "startTime": "2025-05-31T17:05:00",
+        "scheduledStartTime": "2025-05-31T17:05:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_7", "2025-05-31_22_8", "2025-05-31_22_9", "2025-05-31_22_10", "2025-05-31_22_11" ],
+        "returnToPlayer": 65,
+        "newBettingSystem": true
+      },
+      {
+        "id": "V5_2025-05-31_31_5",
+        "status": "bettable",
+        "startTime": "2025-05-31T13:02:00",
+        "scheduledStartTime": "2025-05-31T13:02:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_5", "2025-05-31_31_6", "2025-05-31_31_7", "2025-05-31_31_8", "2025-05-31_31_9" ],
+        "returnToPlayer": 65,
+        "newBettingSystem": true
+      },
+      {
+        "id": "V5_2025-05-31_66_1",
+        "status": "bettable",
+        "startTime": "2025-05-31T19:25:00",
+        "scheduledStartTime": "2025-05-31T19:25:00",
+        "tracks": [ 66 ],
+        "races": [ "2025-05-31_66_1", "2025-05-31_66_2", "2025-05-31_66_3", "2025-05-31_66_4", "2025-05-31_66_5" ],
+        "returnToPlayer": 65,
+        "newBettingSystem": true
+      },
+      {
+        "id": "V5_2025-05-31_77_1",
+        "status": "bettable",
+        "startTime": "2025-05-31T14:10:03",
+        "scheduledStartTime": "2025-05-31T14:10:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_1", "2025-05-31_77_2", "2025-05-31_77_3", "2025-05-31_77_4", "2025-05-31_77_5" ],
+        "returnToPlayer": 65,
+        "newBettingSystem": true
+      }
+    ],
+    "V4": [
+      {
+        "id": "V4_2025-05-31_17_3",
+        "status": "ongoing",
+        "startTime": "2025-05-31T11:46:49",
+        "scheduledStartTime": "2025-05-31T11:44:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_3", "2025-05-31_17_4", "2025-05-31_17_5", "2025-05-31_17_6" ],
+        "returnToPlayer": 75,
+        "newBettingSystem": true
+      },
+      {
+        "id": "V4_2025-05-31_22_1",
+        "status": "bettable",
+        "startTime": "2025-05-31T14:45:00",
+        "scheduledStartTime": "2025-05-31T14:45:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_1", "2025-05-31_22_2", "2025-05-31_22_3", "2025-05-31_22_4" ],
+        "returnToPlayer": 75,
+        "newBettingSystem": true
+      },
+      {
+        "id": "V4_2025-05-31_31_3",
+        "status": "starting",
+        "startTime": "2025-05-31T11:57:55",
+        "scheduledStartTime": "2025-05-31T11:54:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_3", "2025-05-31_31_4", "2025-05-31_31_5", "2025-05-31_31_6" ],
+        "returnToPlayer": 75,
+        "newBettingSystem": true
+      },
+      {
+        "id": "V4_2025-05-31_54_5",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:20:00",
+        "scheduledStartTime": "2025-05-31T20:20:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_5", "2025-05-31_54_6", "2025-05-31_54_7", "2025-05-31_54_8" ],
+        "returnToPlayer": 75,
+        "newBettingSystem": true
+      },
+      {
+        "id": "V4_2025-05-31_66_3",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:10:00",
+        "scheduledStartTime": "2025-05-31T20:10:00",
+        "tracks": [ 66 ],
+        "races": [ "2025-05-31_66_3", "2025-05-31_66_4", "2025-05-31_66_5", "2025-05-31_66_6" ],
+        "returnToPlayer": 75,
+        "newBettingSystem": true
+      },
+      {
+        "id": "V4_2025-05-31_68_8",
+        "status": "ongoing",
+        "startTime": "2025-05-31T10:07:33",
+        "scheduledStartTime": "2025-05-31T10:05:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_8", "2025-05-31_68_9", "2025-05-31_68_10", "2025-05-31_68_11" ],
+        "returnToPlayer": 75,
+        "newBettingSystem": true
+      },
+      {
+        "id": "V4_2025-05-31_77_6",
+        "status": "bettable",
+        "startTime": "2025-05-31T16:10:00",
+        "scheduledStartTime": "2025-05-31T16:10:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_6", "2025-05-31_77_7", "2025-05-31_77_8", "2025-05-31_77_9" ],
+        "returnToPlayer": 75,
+        "newBettingSystem": true
+      },
+      {
+        "id": "V4_2025-05-31_97_6",
+        "status": "bettable",
+        "startTime": "2025-05-31T21:18:00",
+        "scheduledStartTime": "2025-05-31T21:18:00",
+        "tracks": [ 97 ],
+        "races": [ "2025-05-31_97_6", "2025-05-31_97_7", "2025-05-31_97_8", "2025-05-31_97_9" ],
+        "returnToPlayer": 75,
+        "newBettingSystem": true
+      }
+    ],
+    "V3": [
+      {
+        "id": "V3_2025-05-31_17_7",
+        "status": "bettable",
+        "startTime": "2025-05-31T13:12:00",
+        "scheduledStartTime": "2025-05-31T13:12:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_7", "2025-05-31_17_8", "2025-05-31_17_9" ],
+        "returnToPlayer": 75,
+        "newBettingSystem": true
+      },
+      {
+        "id": "V3_2025-05-31_22_10",
+        "status": "bettable",
+        "startTime": "2025-05-31T18:20:00",
+        "scheduledStartTime": "2025-05-31T18:20:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_10", "2025-05-31_22_11", "2025-05-31_22_12" ],
+        "returnToPlayer": 75,
+        "newBettingSystem": true
+      },
+      {
+        "id": "V3_2025-05-31_31_7",
+        "status": "bettable",
+        "startTime": "2025-05-31T13:42:00",
+        "scheduledStartTime": "2025-05-31T13:42:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_7", "2025-05-31_31_8", "2025-05-31_31_9" ],
+        "returnToPlayer": 75,
+        "newBettingSystem": true
+      }
+    ],
+    "dd": [
+      {
+        "id": "dd_2025-05-31_22_10",
+        "status": "bettable",
+        "startTime": "2025-05-31T18:20:00",
+        "scheduledStartTime": "2025-05-31T18:20:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_10", "2025-05-31_22_11" ],
+        "returnToPlayer": 75
+      }
+    ],
+    "ld": [
+      {
+        "id": "ld_2025-05-31_22_3",
+        "status": "bettable",
+        "startTime": "2025-05-31T15:31:00",
+        "scheduledStartTime": "2025-05-31T15:31:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_3", "2025-05-31_22_4" ],
+        "returnToPlayer": 75
+      }
+    ],
+    "trio": [
+      {
+        "id": "trio_2025-05-31_17_1",
+        "status": "results",
+        "startTime": "2025-05-31T11:00:09",
+        "scheduledStartTime": "2025-05-31T11:00:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_1" ],
+        "returnToPlayer": 75,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_17_2",
+        "status": "results",
+        "startTime": "2025-05-31T11:24:43",
+        "scheduledStartTime": "2025-05-31T11:22:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_2" ],
+        "returnToPlayer": 75,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_17_3",
+        "status": "results",
+        "startTime": "2025-05-31T11:46:49",
+        "scheduledStartTime": "2025-05-31T11:44:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_3" ],
+        "returnToPlayer": 75,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_17_4",
+        "status": "bettable",
+        "startTime": "2025-05-31T12:05:55",
+        "scheduledStartTime": "2025-05-31T12:06:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_4" ],
+        "returnToPlayer": 75,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_17_5",
+        "status": "bettable",
+        "startTime": "2025-05-31T12:30:00",
+        "scheduledStartTime": "2025-05-31T12:30:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_5" ],
+        "returnToPlayer": 75,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_17_6",
+        "status": "bettable",
+        "startTime": "2025-05-31T12:52:00",
+        "scheduledStartTime": "2025-05-31T12:52:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_6" ],
+        "returnToPlayer": 75,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_17_7",
+        "status": "bettable",
+        "startTime": "2025-05-31T13:12:00",
+        "scheduledStartTime": "2025-05-31T13:12:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_7" ],
+        "returnToPlayer": 75,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_17_8",
+        "status": "bettable",
+        "startTime": "2025-05-31T13:32:00",
+        "scheduledStartTime": "2025-05-31T13:32:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_8" ],
+        "returnToPlayer": 75,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_17_9",
+        "status": "bettable",
+        "startTime": "2025-05-31T13:51:00",
+        "scheduledStartTime": "2025-05-31T13:51:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_9" ],
+        "returnToPlayer": 75,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_22_1",
+        "status": "bettable",
+        "startTime": "2025-05-31T14:45:00",
+        "scheduledStartTime": "2025-05-31T14:45:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_1" ],
+        "returnToPlayer": 75,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_22_2",
+        "status": "bettable",
+        "startTime": "2025-05-31T15:08:00",
+        "scheduledStartTime": "2025-05-31T15:08:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_2" ],
+        "returnToPlayer": 75,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_22_3",
+        "status": "bettable",
+        "startTime": "2025-05-31T15:31:00",
+        "scheduledStartTime": "2025-05-31T15:31:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_3" ],
+        "returnToPlayer": 75,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_22_4",
+        "status": "bettable",
+        "startTime": "2025-05-31T15:53:00",
+        "scheduledStartTime": "2025-05-31T15:53:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_4" ],
+        "returnToPlayer": 75,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_22_5",
+        "status": "bettable",
+        "startTime": "2025-05-31T16:20:00",
+        "scheduledStartTime": "2025-05-31T16:20:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_5" ],
+        "returnToPlayer": 75,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_22_6",
+        "status": "bettable",
+        "startTime": "2025-05-31T16:42:00",
+        "scheduledStartTime": "2025-05-31T16:42:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_6" ],
+        "returnToPlayer": 75,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_22_7",
+        "status": "bettable",
+        "startTime": "2025-05-31T17:05:00",
+        "scheduledStartTime": "2025-05-31T17:05:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_7" ],
+        "returnToPlayer": 75,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_22_8",
+        "status": "bettable",
+        "startTime": "2025-05-31T17:27:00",
+        "scheduledStartTime": "2025-05-31T17:27:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_8" ],
+        "returnToPlayer": 75,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_22_9",
+        "status": "bettable",
+        "startTime": "2025-05-31T17:50:00",
+        "scheduledStartTime": "2025-05-31T17:50:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_9" ],
+        "returnToPlayer": 75,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_22_10",
+        "status": "bettable",
+        "startTime": "2025-05-31T18:20:00",
+        "scheduledStartTime": "2025-05-31T18:20:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_10" ],
+        "returnToPlayer": 75,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_22_11",
+        "status": "bettable",
+        "startTime": "2025-05-31T18:43:00",
+        "scheduledStartTime": "2025-05-31T18:43:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_11" ],
+        "returnToPlayer": 75,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_22_12",
+        "status": "bettable",
+        "startTime": "2025-05-31T19:02:00",
+        "scheduledStartTime": "2025-05-31T19:02:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_12" ],
+        "returnToPlayer": 75,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_31_2",
+        "status": "results",
+        "startTime": "2025-05-31T11:36:56",
+        "scheduledStartTime": "2025-05-31T11:32:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_2" ],
+        "returnToPlayer": 75,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_31_3",
+        "status": "ongoing",
+        "startTime": "2025-05-31T11:57:55",
+        "scheduledStartTime": "2025-05-31T11:54:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_3" ],
+        "returnToPlayer": 75,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_31_4",
+        "status": "bettable",
+        "startTime": "2025-05-31T12:16:40",
+        "scheduledStartTime": "2025-05-31T12:16:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_4" ],
+        "returnToPlayer": 75,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_31_5",
+        "status": "bettable",
+        "startTime": "2025-05-31T13:02:00",
+        "scheduledStartTime": "2025-05-31T13:02:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_5" ],
+        "returnToPlayer": 75,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_31_6",
+        "status": "bettable",
+        "startTime": "2025-05-31T13:22:00",
+        "scheduledStartTime": "2025-05-31T13:22:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_6" ],
+        "returnToPlayer": 75,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_31_7",
+        "status": "bettable",
+        "startTime": "2025-05-31T13:42:00",
+        "scheduledStartTime": "2025-05-31T13:42:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_7" ],
+        "returnToPlayer": 75,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_31_8",
+        "status": "bettable",
+        "startTime": "2025-05-31T14:01:00",
+        "scheduledStartTime": "2025-05-31T14:01:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_8" ],
+        "returnToPlayer": 75,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_31_9",
+        "status": "bettable",
+        "startTime": "2025-05-31T14:20:00",
+        "scheduledStartTime": "2025-05-31T14:20:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_9" ],
+        "returnToPlayer": 75,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_54_1",
+        "status": "bettable",
+        "startTime": "2025-05-31T18:55:00",
+        "scheduledStartTime": "2025-05-31T18:55:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_1" ],
+        "returnToPlayer": 70,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_54_2",
+        "status": "bettable",
+        "startTime": "2025-05-31T19:15:00",
+        "scheduledStartTime": "2025-05-31T19:15:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_2" ],
+        "returnToPlayer": 70,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_54_3",
+        "status": "bettable",
+        "startTime": "2025-05-31T19:40:00",
+        "scheduledStartTime": "2025-05-31T19:40:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_3" ],
+        "returnToPlayer": 70,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_54_4",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:00:00",
+        "scheduledStartTime": "2025-05-31T20:00:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_4" ],
+        "returnToPlayer": 70,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_54_5",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:20:00",
+        "scheduledStartTime": "2025-05-31T20:20:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_5" ],
+        "returnToPlayer": 70,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_54_6",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:40:00",
+        "scheduledStartTime": "2025-05-31T20:40:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_6" ],
+        "returnToPlayer": 70,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_54_7",
+        "status": "bettable",
+        "startTime": "2025-05-31T21:00:00",
+        "scheduledStartTime": "2025-05-31T21:00:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_7" ],
+        "returnToPlayer": 70,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_54_8",
+        "status": "bettable",
+        "startTime": "2025-05-31T21:18:00",
+        "scheduledStartTime": "2025-05-31T21:18:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_8" ],
+        "returnToPlayer": 70,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_54_9",
+        "status": "bettable",
+        "startTime": "2025-05-31T21:36:00",
+        "scheduledStartTime": "2025-05-31T21:36:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_9" ],
+        "returnToPlayer": 70,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_66_1",
+        "status": "bettable",
+        "startTime": "2025-05-31T19:25:00",
+        "scheduledStartTime": "2025-05-31T19:25:00",
+        "tracks": [ 66 ],
+        "races": [ "2025-05-31_66_1" ],
+        "returnToPlayer": 70,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_66_2",
+        "status": "bettable",
+        "startTime": "2025-05-31T19:46:00",
+        "scheduledStartTime": "2025-05-31T19:46:00",
+        "tracks": [ 66 ],
+        "races": [ "2025-05-31_66_2" ],
+        "returnToPlayer": 70,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_66_3",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:10:00",
+        "scheduledStartTime": "2025-05-31T20:10:00",
+        "tracks": [ 66 ],
+        "races": [ "2025-05-31_66_3" ],
+        "returnToPlayer": 70,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_66_4",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:31:00",
+        "scheduledStartTime": "2025-05-31T20:31:00",
+        "tracks": [ 66 ],
+        "races": [ "2025-05-31_66_4" ],
+        "returnToPlayer": 70,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_66_5",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:52:00",
+        "scheduledStartTime": "2025-05-31T20:52:00",
+        "tracks": [ 66 ],
+        "races": [ "2025-05-31_66_5" ],
+        "returnToPlayer": 70,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_66_6",
+        "status": "bettable",
+        "startTime": "2025-05-31T21:13:00",
+        "scheduledStartTime": "2025-05-31T21:13:00",
+        "tracks": [ 66 ],
+        "races": [ "2025-05-31_66_6" ],
+        "returnToPlayer": 70,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_68_1",
+        "status": "results",
+        "startTime": "2025-05-31T06:30:29",
+        "scheduledStartTime": "2025-05-31T06:30:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_1" ],
+        "returnToPlayer": 75,
+        "allowFlex": false,
+        "newBettingSystem": true
+      },
+      {
+        "id": "trio_2025-05-31_68_2",
+        "status": "results",
+        "startTime": "2025-05-31T07:00:59",
+        "scheduledStartTime": "2025-05-31T07:00:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_2" ],
+        "returnToPlayer": 75,
+        "allowFlex": false,
+        "newBettingSystem": true
+      },
+      {
+        "id": "trio_2025-05-31_68_3",
+        "status": "results",
+        "startTime": "2025-05-31T07:31:20",
+        "scheduledStartTime": "2025-05-31T07:30:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_3" ],
+        "returnToPlayer": 75,
+        "allowFlex": false,
+        "newBettingSystem": true
+      },
+      {
+        "id": "trio_2025-05-31_68_4",
+        "status": "results",
+        "startTime": "2025-05-31T08:01:15",
+        "scheduledStartTime": "2025-05-31T08:00:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_4" ],
+        "returnToPlayer": 75,
+        "allowFlex": false,
+        "newBettingSystem": true
+      },
+      {
+        "id": "trio_2025-05-31_68_5",
+        "status": "results",
+        "startTime": "2025-05-31T08:30:42",
+        "scheduledStartTime": "2025-05-31T08:30:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_5" ],
+        "returnToPlayer": 75,
+        "allowFlex": false,
+        "newBettingSystem": true
+      },
+      {
+        "id": "trio_2025-05-31_68_6",
+        "status": "results",
+        "startTime": "2025-05-31T09:02:24",
+        "scheduledStartTime": "2025-05-31T09:00:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_6" ],
+        "returnToPlayer": 75,
+        "allowFlex": false,
+        "newBettingSystem": true
+      },
+      {
+        "id": "trio_2025-05-31_68_7",
+        "status": "results",
+        "startTime": "2025-05-31T09:35:38",
+        "scheduledStartTime": "2025-05-31T09:35:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_7" ],
+        "returnToPlayer": 75,
+        "allowFlex": false,
+        "newBettingSystem": true
+      },
+      {
+        "id": "trio_2025-05-31_68_8",
+        "status": "results",
+        "startTime": "2025-05-31T10:07:33",
+        "scheduledStartTime": "2025-05-31T10:05:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_8" ],
+        "returnToPlayer": 75,
+        "allowFlex": false,
+        "newBettingSystem": true
+      },
+      {
+        "id": "trio_2025-05-31_68_9",
+        "status": "results",
+        "startTime": "2025-05-31T10:43:50",
+        "scheduledStartTime": "2025-05-31T10:40:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_9" ],
+        "returnToPlayer": 75,
+        "allowFlex": false,
+        "newBettingSystem": true
+      },
+      {
+        "id": "trio_2025-05-31_68_10",
+        "status": "results",
+        "startTime": "2025-05-31T11:17:37",
+        "scheduledStartTime": "2025-05-31T11:15:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_10" ],
+        "returnToPlayer": 75,
+        "allowFlex": false,
+        "newBettingSystem": true
+      },
+      {
+        "id": "trio_2025-05-31_68_11",
+        "status": "starting",
+        "startTime": "2025-05-31T11:52:48",
+        "scheduledStartTime": "2025-05-31T11:50:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_11" ],
+        "returnToPlayer": 75,
+        "allowFlex": false,
+        "newBettingSystem": true
+      },
+      {
+        "id": "trio_2025-05-31_77_1",
+        "status": "bettable",
+        "startTime": "2025-05-31T14:10:03",
+        "scheduledStartTime": "2025-05-31T14:10:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_1" ],
+        "returnToPlayer": 70,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_77_2",
+        "status": "bettable",
+        "startTime": "2025-05-31T14:30:00",
+        "scheduledStartTime": "2025-05-31T14:30:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_2" ],
+        "returnToPlayer": 70,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_77_3",
+        "status": "bettable",
+        "startTime": "2025-05-31T15:00:00",
+        "scheduledStartTime": "2025-05-31T15:00:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_3" ],
+        "returnToPlayer": 70,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_77_4",
+        "status": "bettable",
+        "startTime": "2025-05-31T15:23:00",
+        "scheduledStartTime": "2025-05-31T15:23:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_4" ],
+        "returnToPlayer": 70,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_77_5",
+        "status": "bettable",
+        "startTime": "2025-05-31T15:46:00",
+        "scheduledStartTime": "2025-05-31T15:46:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_5" ],
+        "returnToPlayer": 70,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_77_6",
+        "status": "bettable",
+        "startTime": "2025-05-31T16:10:00",
+        "scheduledStartTime": "2025-05-31T16:10:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_6" ],
+        "returnToPlayer": 70,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_77_7",
+        "status": "bettable",
+        "startTime": "2025-05-31T16:33:00",
+        "scheduledStartTime": "2025-05-31T16:33:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_7" ],
+        "returnToPlayer": 70,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_77_8",
+        "status": "bettable",
+        "startTime": "2025-05-31T16:55:00",
+        "scheduledStartTime": "2025-05-31T16:55:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_8" ],
+        "returnToPlayer": 70,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_77_9",
+        "status": "bettable",
+        "startTime": "2025-05-31T17:15:00",
+        "scheduledStartTime": "2025-05-31T17:15:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_9" ],
+        "returnToPlayer": 70,
+        "allowFlex": false
+      },
+      {
+        "id": "trio_2025-05-31_77_10",
+        "status": "bettable",
+        "startTime": "2025-05-31T17:37:00",
+        "scheduledStartTime": "2025-05-31T17:37:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_10" ],
+        "returnToPlayer": 70,
+        "allowFlex": false
+      }
+    ],
+    "komb": [
+      {
+        "id": "komb_2025-05-31_17_1",
+        "status": "results",
+        "startTime": "2025-05-31T11:00:09",
+        "scheduledStartTime": "2025-05-31T11:00:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_1" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "komb_2025-05-31_17_2",
+        "status": "results",
+        "startTime": "2025-05-31T11:24:43",
+        "scheduledStartTime": "2025-05-31T11:22:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_2" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "komb_2025-05-31_17_3",
+        "status": "results",
+        "startTime": "2025-05-31T11:46:49",
+        "scheduledStartTime": "2025-05-31T11:44:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_3" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "komb_2025-05-31_17_4",
+        "status": "bettable",
+        "startTime": "2025-05-31T12:05:55",
+        "scheduledStartTime": "2025-05-31T12:06:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_4" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "komb_2025-05-31_17_5",
+        "status": "bettable",
+        "startTime": "2025-05-31T12:30:00",
+        "scheduledStartTime": "2025-05-31T12:30:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_5" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "komb_2025-05-31_17_6",
+        "status": "bettable",
+        "startTime": "2025-05-31T12:52:00",
+        "scheduledStartTime": "2025-05-31T12:52:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_6" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "komb_2025-05-31_17_7",
+        "status": "bettable",
+        "startTime": "2025-05-31T13:12:00",
+        "scheduledStartTime": "2025-05-31T13:12:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_7" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "komb_2025-05-31_17_8",
+        "status": "bettable",
+        "startTime": "2025-05-31T13:32:00",
+        "scheduledStartTime": "2025-05-31T13:32:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_8" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "komb_2025-05-31_17_9",
+        "status": "bettable",
+        "startTime": "2025-05-31T13:51:00",
+        "scheduledStartTime": "2025-05-31T13:51:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_9" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "komb_2025-05-31_22_1",
+        "status": "bettable",
+        "startTime": "2025-05-31T14:45:00",
+        "scheduledStartTime": "2025-05-31T14:45:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_1" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "komb_2025-05-31_22_2",
+        "status": "bettable",
+        "startTime": "2025-05-31T15:08:00",
+        "scheduledStartTime": "2025-05-31T15:08:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_2" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "komb_2025-05-31_22_3",
+        "status": "bettable",
+        "startTime": "2025-05-31T15:31:00",
+        "scheduledStartTime": "2025-05-31T15:31:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_3" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "komb_2025-05-31_22_4",
+        "status": "bettable",
+        "startTime": "2025-05-31T15:53:00",
+        "scheduledStartTime": "2025-05-31T15:53:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_4" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "komb_2025-05-31_22_5",
+        "status": "bettable",
+        "startTime": "2025-05-31T16:20:00",
+        "scheduledStartTime": "2025-05-31T16:20:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_5" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "komb_2025-05-31_22_6",
+        "status": "bettable",
+        "startTime": "2025-05-31T16:42:00",
+        "scheduledStartTime": "2025-05-31T16:42:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_6" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "komb_2025-05-31_22_7",
+        "status": "bettable",
+        "startTime": "2025-05-31T17:05:00",
+        "scheduledStartTime": "2025-05-31T17:05:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_7" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "komb_2025-05-31_22_8",
+        "status": "bettable",
+        "startTime": "2025-05-31T17:27:00",
+        "scheduledStartTime": "2025-05-31T17:27:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_8" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "komb_2025-05-31_22_9",
+        "status": "bettable",
+        "startTime": "2025-05-31T17:50:00",
+        "scheduledStartTime": "2025-05-31T17:50:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_9" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "komb_2025-05-31_22_10",
+        "status": "bettable",
+        "startTime": "2025-05-31T18:20:00",
+        "scheduledStartTime": "2025-05-31T18:20:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_10" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "komb_2025-05-31_22_11",
+        "status": "bettable",
+        "startTime": "2025-05-31T18:43:00",
+        "scheduledStartTime": "2025-05-31T18:43:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_11" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "komb_2025-05-31_22_12",
+        "status": "bettable",
+        "startTime": "2025-05-31T19:02:00",
+        "scheduledStartTime": "2025-05-31T19:02:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_12" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "komb_2025-05-31_31_2",
+        "status": "results",
+        "startTime": "2025-05-31T11:36:56",
+        "scheduledStartTime": "2025-05-31T11:32:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_2" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "komb_2025-05-31_31_3",
+        "status": "ongoing",
+        "startTime": "2025-05-31T11:57:55",
+        "scheduledStartTime": "2025-05-31T11:54:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_3" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "komb_2025-05-31_31_4",
+        "status": "bettable",
+        "startTime": "2025-05-31T12:16:40",
+        "scheduledStartTime": "2025-05-31T12:16:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_4" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "komb_2025-05-31_31_5",
+        "status": "bettable",
+        "startTime": "2025-05-31T13:02:00",
+        "scheduledStartTime": "2025-05-31T13:02:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_5" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "komb_2025-05-31_31_6",
+        "status": "bettable",
+        "startTime": "2025-05-31T13:22:00",
+        "scheduledStartTime": "2025-05-31T13:22:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_6" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "komb_2025-05-31_31_7",
+        "status": "bettable",
+        "startTime": "2025-05-31T13:42:00",
+        "scheduledStartTime": "2025-05-31T13:42:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_7" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "komb_2025-05-31_31_8",
+        "status": "bettable",
+        "startTime": "2025-05-31T14:01:00",
+        "scheduledStartTime": "2025-05-31T14:01:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_8" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "komb_2025-05-31_31_9",
+        "status": "bettable",
+        "startTime": "2025-05-31T14:20:00",
+        "scheduledStartTime": "2025-05-31T14:20:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_9" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "komb_2025-05-31_54_1",
+        "status": "bettable",
+        "startTime": "2025-05-31T18:55:00",
+        "scheduledStartTime": "2025-05-31T18:55:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_1" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "komb_2025-05-31_54_2",
+        "status": "bettable",
+        "startTime": "2025-05-31T19:15:00",
+        "scheduledStartTime": "2025-05-31T19:15:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_2" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "komb_2025-05-31_54_3",
+        "status": "bettable",
+        "startTime": "2025-05-31T19:40:00",
+        "scheduledStartTime": "2025-05-31T19:40:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_3" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "komb_2025-05-31_54_4",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:00:00",
+        "scheduledStartTime": "2025-05-31T20:00:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_4" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "komb_2025-05-31_54_5",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:20:00",
+        "scheduledStartTime": "2025-05-31T20:20:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_5" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "komb_2025-05-31_54_6",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:40:00",
+        "scheduledStartTime": "2025-05-31T20:40:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_6" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "komb_2025-05-31_54_7",
+        "status": "bettable",
+        "startTime": "2025-05-31T21:00:00",
+        "scheduledStartTime": "2025-05-31T21:00:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_7" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "komb_2025-05-31_54_8",
+        "status": "bettable",
+        "startTime": "2025-05-31T21:18:00",
+        "scheduledStartTime": "2025-05-31T21:18:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_8" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "komb_2025-05-31_54_9",
+        "status": "bettable",
+        "startTime": "2025-05-31T21:36:00",
+        "scheduledStartTime": "2025-05-31T21:36:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_9" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "komb_2025-05-31_68_1",
+        "status": "results",
+        "startTime": "2025-05-31T06:30:29",
+        "scheduledStartTime": "2025-05-31T06:30:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_1" ],
+        "returnToPlayer": 81,
+        "newBettingSystem": true
+      },
+      {
+        "id": "komb_2025-05-31_68_2",
+        "status": "results",
+        "startTime": "2025-05-31T07:00:59",
+        "scheduledStartTime": "2025-05-31T07:00:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_2" ],
+        "returnToPlayer": 81,
+        "newBettingSystem": true
+      },
+      {
+        "id": "komb_2025-05-31_68_3",
+        "status": "results",
+        "startTime": "2025-05-31T07:31:20",
+        "scheduledStartTime": "2025-05-31T07:30:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_3" ],
+        "returnToPlayer": 81,
+        "newBettingSystem": true
+      },
+      {
+        "id": "komb_2025-05-31_68_4",
+        "status": "results",
+        "startTime": "2025-05-31T08:01:15",
+        "scheduledStartTime": "2025-05-31T08:00:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_4" ],
+        "returnToPlayer": 81,
+        "newBettingSystem": true
+      },
+      {
+        "id": "komb_2025-05-31_68_5",
+        "status": "results",
+        "startTime": "2025-05-31T08:30:42",
+        "scheduledStartTime": "2025-05-31T08:30:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_5" ],
+        "returnToPlayer": 81,
+        "newBettingSystem": true
+      },
+      {
+        "id": "komb_2025-05-31_68_6",
+        "status": "results",
+        "startTime": "2025-05-31T09:02:24",
+        "scheduledStartTime": "2025-05-31T09:00:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_6" ],
+        "returnToPlayer": 81,
+        "newBettingSystem": true
+      },
+      {
+        "id": "komb_2025-05-31_68_7",
+        "status": "results",
+        "startTime": "2025-05-31T09:35:38",
+        "scheduledStartTime": "2025-05-31T09:35:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_7" ],
+        "returnToPlayer": 81,
+        "newBettingSystem": true
+      },
+      {
+        "id": "komb_2025-05-31_68_8",
+        "status": "results",
+        "startTime": "2025-05-31T10:07:33",
+        "scheduledStartTime": "2025-05-31T10:05:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_8" ],
+        "returnToPlayer": 81,
+        "newBettingSystem": true
+      },
+      {
+        "id": "komb_2025-05-31_68_9",
+        "status": "results",
+        "startTime": "2025-05-31T10:43:50",
+        "scheduledStartTime": "2025-05-31T10:40:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_9" ],
+        "returnToPlayer": 81,
+        "newBettingSystem": true
+      },
+      {
+        "id": "komb_2025-05-31_68_10",
+        "status": "results",
+        "startTime": "2025-05-31T11:17:37",
+        "scheduledStartTime": "2025-05-31T11:15:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_10" ],
+        "returnToPlayer": 81,
+        "newBettingSystem": true
+      },
+      {
+        "id": "komb_2025-05-31_68_11",
+        "status": "starting",
+        "startTime": "2025-05-31T11:52:48",
+        "scheduledStartTime": "2025-05-31T11:50:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_11" ],
+        "returnToPlayer": 81,
+        "newBettingSystem": true
+      },
+      {
+        "id": "komb_2025-05-31_97_1",
+        "status": "bettable",
+        "startTime": "2025-05-31T18:45:00",
+        "scheduledStartTime": "2025-05-31T18:45:00",
+        "tracks": [ 97 ],
+        "races": [ "2025-05-31_97_1" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "komb_2025-05-31_97_2",
+        "status": "bettable",
+        "startTime": "2025-05-31T19:14:00",
+        "scheduledStartTime": "2025-05-31T19:14:00",
+        "tracks": [ 97 ],
+        "races": [ "2025-05-31_97_2" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "komb_2025-05-31_97_3",
+        "status": "bettable",
+        "startTime": "2025-05-31T19:43:00",
+        "scheduledStartTime": "2025-05-31T19:43:00",
+        "tracks": [ 97 ],
+        "races": [ "2025-05-31_97_3" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "komb_2025-05-31_97_4",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:14:00",
+        "scheduledStartTime": "2025-05-31T20:14:00",
+        "tracks": [ 97 ],
+        "races": [ "2025-05-31_97_4" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "komb_2025-05-31_97_5",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:46:00",
+        "scheduledStartTime": "2025-05-31T20:46:00",
+        "tracks": [ 97 ],
+        "races": [ "2025-05-31_97_5" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "komb_2025-05-31_97_6",
+        "status": "bettable",
+        "startTime": "2025-05-31T21:18:00",
+        "scheduledStartTime": "2025-05-31T21:18:00",
+        "tracks": [ 97 ],
+        "races": [ "2025-05-31_97_6" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "komb_2025-05-31_97_7",
+        "status": "bettable",
+        "startTime": "2025-05-31T21:51:00",
+        "scheduledStartTime": "2025-05-31T21:51:00",
+        "tracks": [ 97 ],
+        "races": [ "2025-05-31_97_7" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "komb_2025-05-31_97_8",
+        "status": "bettable",
+        "startTime": "2025-05-31T22:23:00",
+        "scheduledStartTime": "2025-05-31T22:23:00",
+        "tracks": [ 97 ],
+        "races": [ "2025-05-31_97_8" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "komb_2025-05-31_97_9",
+        "status": "bettable",
+        "startTime": "2025-05-31T22:55:00",
+        "scheduledStartTime": "2025-05-31T22:55:00",
+        "tracks": [ 97 ],
+        "races": [ "2025-05-31_97_9" ],
+        "returnToPlayer": 85
+      }
+    ],
+    "tvilling": [
+      {
+        "id": "tvilling_2025-05-31_17_1",
+        "status": "results",
+        "startTime": "2025-05-31T11:00:09",
+        "scheduledStartTime": "2025-05-31T11:00:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_1" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "tvilling_2025-05-31_17_2",
+        "status": "results",
+        "startTime": "2025-05-31T11:24:43",
+        "scheduledStartTime": "2025-05-31T11:22:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_2" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "tvilling_2025-05-31_17_3",
+        "status": "results",
+        "startTime": "2025-05-31T11:46:49",
+        "scheduledStartTime": "2025-05-31T11:44:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_3" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "tvilling_2025-05-31_17_4",
+        "status": "bettable",
+        "startTime": "2025-05-31T12:05:55",
+        "scheduledStartTime": "2025-05-31T12:06:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_4" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "tvilling_2025-05-31_17_5",
+        "status": "bettable",
+        "startTime": "2025-05-31T12:30:00",
+        "scheduledStartTime": "2025-05-31T12:30:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_5" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "tvilling_2025-05-31_17_6",
+        "status": "bettable",
+        "startTime": "2025-05-31T12:52:00",
+        "scheduledStartTime": "2025-05-31T12:52:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_6" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "tvilling_2025-05-31_17_7",
+        "status": "bettable",
+        "startTime": "2025-05-31T13:12:00",
+        "scheduledStartTime": "2025-05-31T13:12:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_7" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "tvilling_2025-05-31_17_8",
+        "status": "bettable",
+        "startTime": "2025-05-31T13:32:00",
+        "scheduledStartTime": "2025-05-31T13:32:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_8" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "tvilling_2025-05-31_17_9",
+        "status": "bettable",
+        "startTime": "2025-05-31T13:51:00",
+        "scheduledStartTime": "2025-05-31T13:51:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_9" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "tvilling_2025-05-31_22_1",
+        "status": "bettable",
+        "startTime": "2025-05-31T14:45:00",
+        "scheduledStartTime": "2025-05-31T14:45:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_1" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "tvilling_2025-05-31_22_2",
+        "status": "bettable",
+        "startTime": "2025-05-31T15:08:00",
+        "scheduledStartTime": "2025-05-31T15:08:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_2" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "tvilling_2025-05-31_22_3",
+        "status": "bettable",
+        "startTime": "2025-05-31T15:31:00",
+        "scheduledStartTime": "2025-05-31T15:31:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_3" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "tvilling_2025-05-31_22_4",
+        "status": "bettable",
+        "startTime": "2025-05-31T15:53:00",
+        "scheduledStartTime": "2025-05-31T15:53:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_4" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "tvilling_2025-05-31_22_5",
+        "status": "bettable",
+        "startTime": "2025-05-31T16:20:00",
+        "scheduledStartTime": "2025-05-31T16:20:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_5" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "tvilling_2025-05-31_22_6",
+        "status": "bettable",
+        "startTime": "2025-05-31T16:42:00",
+        "scheduledStartTime": "2025-05-31T16:42:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_6" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "tvilling_2025-05-31_22_7",
+        "status": "bettable",
+        "startTime": "2025-05-31T17:05:00",
+        "scheduledStartTime": "2025-05-31T17:05:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_7" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "tvilling_2025-05-31_22_8",
+        "status": "bettable",
+        "startTime": "2025-05-31T17:27:00",
+        "scheduledStartTime": "2025-05-31T17:27:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_8" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "tvilling_2025-05-31_22_9",
+        "status": "bettable",
+        "startTime": "2025-05-31T17:50:00",
+        "scheduledStartTime": "2025-05-31T17:50:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_9" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "tvilling_2025-05-31_22_10",
+        "status": "bettable",
+        "startTime": "2025-05-31T18:20:00",
+        "scheduledStartTime": "2025-05-31T18:20:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_10" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "tvilling_2025-05-31_22_11",
+        "status": "bettable",
+        "startTime": "2025-05-31T18:43:00",
+        "scheduledStartTime": "2025-05-31T18:43:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_11" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "tvilling_2025-05-31_22_12",
+        "status": "bettable",
+        "startTime": "2025-05-31T19:02:00",
+        "scheduledStartTime": "2025-05-31T19:02:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_12" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "tvilling_2025-05-31_31_2",
+        "status": "results",
+        "startTime": "2025-05-31T11:36:56",
+        "scheduledStartTime": "2025-05-31T11:32:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_2" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "tvilling_2025-05-31_31_3",
+        "status": "ongoing",
+        "startTime": "2025-05-31T11:57:55",
+        "scheduledStartTime": "2025-05-31T11:54:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_3" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "tvilling_2025-05-31_31_4",
+        "status": "bettable",
+        "startTime": "2025-05-31T12:16:40",
+        "scheduledStartTime": "2025-05-31T12:16:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_4" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "tvilling_2025-05-31_31_5",
+        "status": "bettable",
+        "startTime": "2025-05-31T13:02:00",
+        "scheduledStartTime": "2025-05-31T13:02:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_5" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "tvilling_2025-05-31_31_6",
+        "status": "bettable",
+        "startTime": "2025-05-31T13:22:00",
+        "scheduledStartTime": "2025-05-31T13:22:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_6" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "tvilling_2025-05-31_31_7",
+        "status": "bettable",
+        "startTime": "2025-05-31T13:42:00",
+        "scheduledStartTime": "2025-05-31T13:42:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_7" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "tvilling_2025-05-31_31_8",
+        "status": "bettable",
+        "startTime": "2025-05-31T14:01:00",
+        "scheduledStartTime": "2025-05-31T14:01:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_8" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "tvilling_2025-05-31_31_9",
+        "status": "bettable",
+        "startTime": "2025-05-31T14:20:00",
+        "scheduledStartTime": "2025-05-31T14:20:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_9" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "tvilling_2025-05-31_54_1",
+        "status": "bettable",
+        "startTime": "2025-05-31T18:55:00",
+        "scheduledStartTime": "2025-05-31T18:55:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_1" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "tvilling_2025-05-31_54_2",
+        "status": "bettable",
+        "startTime": "2025-05-31T19:15:00",
+        "scheduledStartTime": "2025-05-31T19:15:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_2" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "tvilling_2025-05-31_54_3",
+        "status": "bettable",
+        "startTime": "2025-05-31T19:40:00",
+        "scheduledStartTime": "2025-05-31T19:40:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_3" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "tvilling_2025-05-31_54_4",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:00:00",
+        "scheduledStartTime": "2025-05-31T20:00:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_4" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "tvilling_2025-05-31_54_5",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:20:00",
+        "scheduledStartTime": "2025-05-31T20:20:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_5" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "tvilling_2025-05-31_54_6",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:40:00",
+        "scheduledStartTime": "2025-05-31T20:40:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_6" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "tvilling_2025-05-31_54_7",
+        "status": "bettable",
+        "startTime": "2025-05-31T21:00:00",
+        "scheduledStartTime": "2025-05-31T21:00:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_7" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "tvilling_2025-05-31_54_8",
+        "status": "bettable",
+        "startTime": "2025-05-31T21:18:00",
+        "scheduledStartTime": "2025-05-31T21:18:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_8" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "tvilling_2025-05-31_54_9",
+        "status": "bettable",
+        "startTime": "2025-05-31T21:36:00",
+        "scheduledStartTime": "2025-05-31T21:36:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_9" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "tvilling_2025-05-31_66_1",
+        "status": "bettable",
+        "startTime": "2025-05-31T19:25:00",
+        "scheduledStartTime": "2025-05-31T19:25:00",
+        "tracks": [ 66 ],
+        "races": [ "2025-05-31_66_1" ],
+        "returnToPlayer": 75
+      },
+      {
+        "id": "tvilling_2025-05-31_66_2",
+        "status": "bettable",
+        "startTime": "2025-05-31T19:46:00",
+        "scheduledStartTime": "2025-05-31T19:46:00",
+        "tracks": [ 66 ],
+        "races": [ "2025-05-31_66_2" ],
+        "returnToPlayer": 75
+      },
+      {
+        "id": "tvilling_2025-05-31_66_3",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:10:00",
+        "scheduledStartTime": "2025-05-31T20:10:00",
+        "tracks": [ 66 ],
+        "races": [ "2025-05-31_66_3" ],
+        "returnToPlayer": 75
+      },
+      {
+        "id": "tvilling_2025-05-31_66_4",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:31:00",
+        "scheduledStartTime": "2025-05-31T20:31:00",
+        "tracks": [ 66 ],
+        "races": [ "2025-05-31_66_4" ],
+        "returnToPlayer": 75
+      },
+      {
+        "id": "tvilling_2025-05-31_66_5",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:52:00",
+        "scheduledStartTime": "2025-05-31T20:52:00",
+        "tracks": [ 66 ],
+        "races": [ "2025-05-31_66_5" ],
+        "returnToPlayer": 75
+      },
+      {
+        "id": "tvilling_2025-05-31_66_6",
+        "status": "bettable",
+        "startTime": "2025-05-31T21:13:00",
+        "scheduledStartTime": "2025-05-31T21:13:00",
+        "tracks": [ 66 ],
+        "races": [ "2025-05-31_66_6" ],
+        "returnToPlayer": 75
+      },
+      {
+        "id": "tvilling_2025-05-31_68_1",
+        "status": "results",
+        "startTime": "2025-05-31T06:30:29",
+        "scheduledStartTime": "2025-05-31T06:30:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_1" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "tvilling_2025-05-31_68_2",
+        "status": "results",
+        "startTime": "2025-05-31T07:00:59",
+        "scheduledStartTime": "2025-05-31T07:00:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_2" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "tvilling_2025-05-31_68_3",
+        "status": "results",
+        "startTime": "2025-05-31T07:31:20",
+        "scheduledStartTime": "2025-05-31T07:30:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_3" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "tvilling_2025-05-31_68_4",
+        "status": "results",
+        "startTime": "2025-05-31T08:01:15",
+        "scheduledStartTime": "2025-05-31T08:00:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_4" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "tvilling_2025-05-31_68_5",
+        "status": "results",
+        "startTime": "2025-05-31T08:30:42",
+        "scheduledStartTime": "2025-05-31T08:30:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_5" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "tvilling_2025-05-31_68_6",
+        "status": "results",
+        "startTime": "2025-05-31T09:02:24",
+        "scheduledStartTime": "2025-05-31T09:00:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_6" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "tvilling_2025-05-31_68_7",
+        "status": "results",
+        "startTime": "2025-05-31T09:35:38",
+        "scheduledStartTime": "2025-05-31T09:35:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_7" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "tvilling_2025-05-31_68_8",
+        "status": "results",
+        "startTime": "2025-05-31T10:07:33",
+        "scheduledStartTime": "2025-05-31T10:05:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_8" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "tvilling_2025-05-31_68_9",
+        "status": "results",
+        "startTime": "2025-05-31T10:43:50",
+        "scheduledStartTime": "2025-05-31T10:40:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_9" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "tvilling_2025-05-31_68_10",
+        "status": "results",
+        "startTime": "2025-05-31T11:17:37",
+        "scheduledStartTime": "2025-05-31T11:15:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_10" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "tvilling_2025-05-31_68_11",
+        "status": "starting",
+        "startTime": "2025-05-31T11:52:48",
+        "scheduledStartTime": "2025-05-31T11:50:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_11" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "tvilling_2025-05-31_77_1",
+        "status": "bettable",
+        "startTime": "2025-05-31T14:10:03",
+        "scheduledStartTime": "2025-05-31T14:10:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_1" ],
+        "returnToPlayer": 75
+      },
+      {
+        "id": "tvilling_2025-05-31_77_2",
+        "status": "bettable",
+        "startTime": "2025-05-31T14:30:00",
+        "scheduledStartTime": "2025-05-31T14:30:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_2" ],
+        "returnToPlayer": 75
+      },
+      {
+        "id": "tvilling_2025-05-31_77_3",
+        "status": "bettable",
+        "startTime": "2025-05-31T15:00:00",
+        "scheduledStartTime": "2025-05-31T15:00:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_3" ],
+        "returnToPlayer": 75
+      },
+      {
+        "id": "tvilling_2025-05-31_77_4",
+        "status": "bettable",
+        "startTime": "2025-05-31T15:23:00",
+        "scheduledStartTime": "2025-05-31T15:23:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_4" ],
+        "returnToPlayer": 75
+      },
+      {
+        "id": "tvilling_2025-05-31_77_5",
+        "status": "bettable",
+        "startTime": "2025-05-31T15:46:00",
+        "scheduledStartTime": "2025-05-31T15:46:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_5" ],
+        "returnToPlayer": 75
+      },
+      {
+        "id": "tvilling_2025-05-31_77_6",
+        "status": "bettable",
+        "startTime": "2025-05-31T16:10:00",
+        "scheduledStartTime": "2025-05-31T16:10:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_6" ],
+        "returnToPlayer": 75
+      },
+      {
+        "id": "tvilling_2025-05-31_77_7",
+        "status": "bettable",
+        "startTime": "2025-05-31T16:33:00",
+        "scheduledStartTime": "2025-05-31T16:33:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_7" ],
+        "returnToPlayer": 75
+      },
+      {
+        "id": "tvilling_2025-05-31_77_8",
+        "status": "bettable",
+        "startTime": "2025-05-31T16:55:00",
+        "scheduledStartTime": "2025-05-31T16:55:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_8" ],
+        "returnToPlayer": 75
+      },
+      {
+        "id": "tvilling_2025-05-31_77_9",
+        "status": "bettable",
+        "startTime": "2025-05-31T17:15:00",
+        "scheduledStartTime": "2025-05-31T17:15:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_9" ],
+        "returnToPlayer": 75
+      },
+      {
+        "id": "tvilling_2025-05-31_77_10",
+        "status": "bettable",
+        "startTime": "2025-05-31T17:37:00",
+        "scheduledStartTime": "2025-05-31T17:37:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_10" ],
+        "returnToPlayer": 75
+      }
+    ],
+    "vp": [
+      {
+        "id": "vp_2025-05-31_17_1",
+        "status": "results",
+        "startTime": "2025-05-31T11:00:09",
+        "scheduledStartTime": "2025-05-31T11:00:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_1" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vp_2025-05-31_17_2",
+        "status": "results",
+        "startTime": "2025-05-31T11:24:43",
+        "scheduledStartTime": "2025-05-31T11:22:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_2" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vp_2025-05-31_17_3",
+        "status": "results",
+        "startTime": "2025-05-31T11:46:49",
+        "scheduledStartTime": "2025-05-31T11:44:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_3" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vp_2025-05-31_17_4",
+        "status": "bettable",
+        "startTime": "2025-05-31T12:05:55",
+        "scheduledStartTime": "2025-05-31T12:06:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_4" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vp_2025-05-31_17_5",
+        "status": "bettable",
+        "startTime": "2025-05-31T12:30:00",
+        "scheduledStartTime": "2025-05-31T12:30:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_5" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vp_2025-05-31_17_6",
+        "status": "bettable",
+        "startTime": "2025-05-31T12:52:00",
+        "scheduledStartTime": "2025-05-31T12:52:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_6" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vp_2025-05-31_17_7",
+        "status": "bettable",
+        "startTime": "2025-05-31T13:12:00",
+        "scheduledStartTime": "2025-05-31T13:12:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_7" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vp_2025-05-31_17_8",
+        "status": "bettable",
+        "startTime": "2025-05-31T13:32:00",
+        "scheduledStartTime": "2025-05-31T13:32:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_8" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vp_2025-05-31_17_9",
+        "status": "bettable",
+        "startTime": "2025-05-31T13:51:00",
+        "scheduledStartTime": "2025-05-31T13:51:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_9" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vp_2025-05-31_22_1",
+        "status": "bettable",
+        "startTime": "2025-05-31T14:45:00",
+        "scheduledStartTime": "2025-05-31T14:45:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_1" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vp_2025-05-31_22_2",
+        "status": "bettable",
+        "startTime": "2025-05-31T15:08:00",
+        "scheduledStartTime": "2025-05-31T15:08:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_2" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vp_2025-05-31_22_3",
+        "status": "bettable",
+        "startTime": "2025-05-31T15:31:00",
+        "scheduledStartTime": "2025-05-31T15:31:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_3" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vp_2025-05-31_22_4",
+        "status": "bettable",
+        "startTime": "2025-05-31T15:53:00",
+        "scheduledStartTime": "2025-05-31T15:53:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_4" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vp_2025-05-31_22_5",
+        "status": "bettable",
+        "startTime": "2025-05-31T16:20:00",
+        "scheduledStartTime": "2025-05-31T16:20:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_5" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vp_2025-05-31_22_6",
+        "status": "bettable",
+        "startTime": "2025-05-31T16:42:00",
+        "scheduledStartTime": "2025-05-31T16:42:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_6" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vp_2025-05-31_22_7",
+        "status": "bettable",
+        "startTime": "2025-05-31T17:05:00",
+        "scheduledStartTime": "2025-05-31T17:05:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_7" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vp_2025-05-31_22_8",
+        "status": "bettable",
+        "startTime": "2025-05-31T17:27:00",
+        "scheduledStartTime": "2025-05-31T17:27:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_8" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vp_2025-05-31_22_9",
+        "status": "bettable",
+        "startTime": "2025-05-31T17:50:00",
+        "scheduledStartTime": "2025-05-31T17:50:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_9" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vp_2025-05-31_22_10",
+        "status": "bettable",
+        "startTime": "2025-05-31T18:20:00",
+        "scheduledStartTime": "2025-05-31T18:20:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_10" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vp_2025-05-31_22_11",
+        "status": "bettable",
+        "startTime": "2025-05-31T18:43:00",
+        "scheduledStartTime": "2025-05-31T18:43:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_11" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vp_2025-05-31_22_12",
+        "status": "bettable",
+        "startTime": "2025-05-31T19:02:00",
+        "scheduledStartTime": "2025-05-31T19:02:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_12" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vp_2025-05-31_31_2",
+        "status": "results",
+        "startTime": "2025-05-31T11:36:56",
+        "scheduledStartTime": "2025-05-31T11:32:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_2" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vp_2025-05-31_31_3",
+        "status": "ongoing",
+        "startTime": "2025-05-31T11:57:55",
+        "scheduledStartTime": "2025-05-31T11:54:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_3" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vp_2025-05-31_31_4",
+        "status": "bettable",
+        "startTime": "2025-05-31T12:16:40",
+        "scheduledStartTime": "2025-05-31T12:16:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_4" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vp_2025-05-31_31_5",
+        "status": "bettable",
+        "startTime": "2025-05-31T13:02:00",
+        "scheduledStartTime": "2025-05-31T13:02:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_5" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vp_2025-05-31_31_6",
+        "status": "bettable",
+        "startTime": "2025-05-31T13:22:00",
+        "scheduledStartTime": "2025-05-31T13:22:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_6" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vp_2025-05-31_31_7",
+        "status": "bettable",
+        "startTime": "2025-05-31T13:42:00",
+        "scheduledStartTime": "2025-05-31T13:42:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_7" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vp_2025-05-31_31_8",
+        "status": "bettable",
+        "startTime": "2025-05-31T14:01:00",
+        "scheduledStartTime": "2025-05-31T14:01:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_8" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vp_2025-05-31_31_9",
+        "status": "bettable",
+        "startTime": "2025-05-31T14:20:00",
+        "scheduledStartTime": "2025-05-31T14:20:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_9" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vp_2025-05-31_54_1",
+        "status": "bettable",
+        "startTime": "2025-05-31T18:55:00",
+        "scheduledStartTime": "2025-05-31T18:55:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_1" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vp_2025-05-31_54_2",
+        "status": "bettable",
+        "startTime": "2025-05-31T19:15:00",
+        "scheduledStartTime": "2025-05-31T19:15:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_2" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vp_2025-05-31_54_3",
+        "status": "bettable",
+        "startTime": "2025-05-31T19:40:00",
+        "scheduledStartTime": "2025-05-31T19:40:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_3" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vp_2025-05-31_54_4",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:00:00",
+        "scheduledStartTime": "2025-05-31T20:00:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_4" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vp_2025-05-31_54_5",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:20:00",
+        "scheduledStartTime": "2025-05-31T20:20:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_5" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vp_2025-05-31_54_6",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:40:00",
+        "scheduledStartTime": "2025-05-31T20:40:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_6" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vp_2025-05-31_54_7",
+        "status": "bettable",
+        "startTime": "2025-05-31T21:00:00",
+        "scheduledStartTime": "2025-05-31T21:00:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_7" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vp_2025-05-31_54_8",
+        "status": "bettable",
+        "startTime": "2025-05-31T21:18:00",
+        "scheduledStartTime": "2025-05-31T21:18:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_8" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vp_2025-05-31_54_9",
+        "status": "bettable",
+        "startTime": "2025-05-31T21:36:00",
+        "scheduledStartTime": "2025-05-31T21:36:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_9" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vp_2025-05-31_66_1",
+        "status": "bettable",
+        "startTime": "2025-05-31T19:25:00",
+        "scheduledStartTime": "2025-05-31T19:25:00",
+        "tracks": [ 66 ],
+        "races": [ "2025-05-31_66_1" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vp_2025-05-31_66_2",
+        "status": "bettable",
+        "startTime": "2025-05-31T19:46:00",
+        "scheduledStartTime": "2025-05-31T19:46:00",
+        "tracks": [ 66 ],
+        "races": [ "2025-05-31_66_2" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vp_2025-05-31_66_3",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:10:00",
+        "scheduledStartTime": "2025-05-31T20:10:00",
+        "tracks": [ 66 ],
+        "races": [ "2025-05-31_66_3" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vp_2025-05-31_66_4",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:31:00",
+        "scheduledStartTime": "2025-05-31T20:31:00",
+        "tracks": [ 66 ],
+        "races": [ "2025-05-31_66_4" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vp_2025-05-31_66_5",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:52:00",
+        "scheduledStartTime": "2025-05-31T20:52:00",
+        "tracks": [ 66 ],
+        "races": [ "2025-05-31_66_5" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vp_2025-05-31_66_6",
+        "status": "bettable",
+        "startTime": "2025-05-31T21:13:00",
+        "scheduledStartTime": "2025-05-31T21:13:00",
+        "tracks": [ 66 ],
+        "races": [ "2025-05-31_66_6" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vp_2025-05-31_68_1",
+        "status": "results",
+        "startTime": "2025-05-31T06:30:29",
+        "scheduledStartTime": "2025-05-31T06:30:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_1" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "vp_2025-05-31_68_2",
+        "status": "results",
+        "startTime": "2025-05-31T07:00:59",
+        "scheduledStartTime": "2025-05-31T07:00:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_2" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "vp_2025-05-31_68_3",
+        "status": "results",
+        "startTime": "2025-05-31T07:31:20",
+        "scheduledStartTime": "2025-05-31T07:30:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_3" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "vp_2025-05-31_68_4",
+        "status": "results",
+        "startTime": "2025-05-31T08:01:15",
+        "scheduledStartTime": "2025-05-31T08:00:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_4" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "vp_2025-05-31_68_5",
+        "status": "results",
+        "startTime": "2025-05-31T08:30:42",
+        "scheduledStartTime": "2025-05-31T08:30:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_5" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "vp_2025-05-31_68_6",
+        "status": "results",
+        "startTime": "2025-05-31T09:02:24",
+        "scheduledStartTime": "2025-05-31T09:00:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_6" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "vp_2025-05-31_68_7",
+        "status": "results",
+        "startTime": "2025-05-31T09:35:38",
+        "scheduledStartTime": "2025-05-31T09:35:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_7" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "vp_2025-05-31_68_8",
+        "status": "results",
+        "startTime": "2025-05-31T10:07:33",
+        "scheduledStartTime": "2025-05-31T10:05:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_8" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "vp_2025-05-31_68_9",
+        "status": "results",
+        "startTime": "2025-05-31T10:43:50",
+        "scheduledStartTime": "2025-05-31T10:40:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_9" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "vp_2025-05-31_68_10",
+        "status": "results",
+        "startTime": "2025-05-31T11:17:37",
+        "scheduledStartTime": "2025-05-31T11:15:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_10" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "vp_2025-05-31_68_11",
+        "status": "starting",
+        "startTime": "2025-05-31T11:52:48",
+        "scheduledStartTime": "2025-05-31T11:50:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_11" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "vp_2025-05-31_77_1",
+        "status": "bettable",
+        "startTime": "2025-05-31T14:10:03",
+        "scheduledStartTime": "2025-05-31T14:10:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_1" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vp_2025-05-31_77_2",
+        "status": "bettable",
+        "startTime": "2025-05-31T14:30:00",
+        "scheduledStartTime": "2025-05-31T14:30:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_2" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vp_2025-05-31_77_3",
+        "status": "bettable",
+        "startTime": "2025-05-31T15:00:00",
+        "scheduledStartTime": "2025-05-31T15:00:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_3" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vp_2025-05-31_77_4",
+        "status": "bettable",
+        "startTime": "2025-05-31T15:23:00",
+        "scheduledStartTime": "2025-05-31T15:23:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_4" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vp_2025-05-31_77_5",
+        "status": "bettable",
+        "startTime": "2025-05-31T15:46:00",
+        "scheduledStartTime": "2025-05-31T15:46:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_5" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vp_2025-05-31_77_6",
+        "status": "bettable",
+        "startTime": "2025-05-31T16:10:00",
+        "scheduledStartTime": "2025-05-31T16:10:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_6" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vp_2025-05-31_77_7",
+        "status": "bettable",
+        "startTime": "2025-05-31T16:33:00",
+        "scheduledStartTime": "2025-05-31T16:33:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_7" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vp_2025-05-31_77_8",
+        "status": "bettable",
+        "startTime": "2025-05-31T16:55:00",
+        "scheduledStartTime": "2025-05-31T16:55:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_8" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vp_2025-05-31_77_9",
+        "status": "bettable",
+        "startTime": "2025-05-31T17:15:00",
+        "scheduledStartTime": "2025-05-31T17:15:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_9" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vp_2025-05-31_77_10",
+        "status": "bettable",
+        "startTime": "2025-05-31T17:37:00",
+        "scheduledStartTime": "2025-05-31T17:37:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_10" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vp_2025-05-31_97_1",
+        "status": "bettable",
+        "startTime": "2025-05-31T18:45:00",
+        "scheduledStartTime": "2025-05-31T18:45:00",
+        "tracks": [ 97 ],
+        "races": [ "2025-05-31_97_1" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vp_2025-05-31_97_2",
+        "status": "bettable",
+        "startTime": "2025-05-31T19:14:00",
+        "scheduledStartTime": "2025-05-31T19:14:00",
+        "tracks": [ 97 ],
+        "races": [ "2025-05-31_97_2" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vp_2025-05-31_97_3",
+        "status": "bettable",
+        "startTime": "2025-05-31T19:43:00",
+        "scheduledStartTime": "2025-05-31T19:43:00",
+        "tracks": [ 97 ],
+        "races": [ "2025-05-31_97_3" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vp_2025-05-31_97_4",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:14:00",
+        "scheduledStartTime": "2025-05-31T20:14:00",
+        "tracks": [ 97 ],
+        "races": [ "2025-05-31_97_4" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vp_2025-05-31_97_5",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:46:00",
+        "scheduledStartTime": "2025-05-31T20:46:00",
+        "tracks": [ 97 ],
+        "races": [ "2025-05-31_97_5" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vp_2025-05-31_97_6",
+        "status": "bettable",
+        "startTime": "2025-05-31T21:18:00",
+        "scheduledStartTime": "2025-05-31T21:18:00",
+        "tracks": [ 97 ],
+        "races": [ "2025-05-31_97_6" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vp_2025-05-31_97_7",
+        "status": "bettable",
+        "startTime": "2025-05-31T21:51:00",
+        "scheduledStartTime": "2025-05-31T21:51:00",
+        "tracks": [ 97 ],
+        "races": [ "2025-05-31_97_7" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vp_2025-05-31_97_8",
+        "status": "bettable",
+        "startTime": "2025-05-31T22:23:00",
+        "scheduledStartTime": "2025-05-31T22:23:00",
+        "tracks": [ 97 ],
+        "races": [ "2025-05-31_97_8" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vp_2025-05-31_97_9",
+        "status": "bettable",
+        "startTime": "2025-05-31T22:55:00",
+        "scheduledStartTime": "2025-05-31T22:55:00",
+        "tracks": [ 97 ],
+        "races": [ "2025-05-31_97_9" ],
+        "returnToPlayer": 85
+      }
+    ],
+    "vinnare": [
+      {
+        "id": "vinnare_2025-05-31_17_1",
+        "status": "results",
+        "startTime": "2025-05-31T11:00:09",
+        "scheduledStartTime": "2025-05-31T11:00:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_1" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vinnare_2025-05-31_17_2",
+        "status": "results",
+        "startTime": "2025-05-31T11:24:43",
+        "scheduledStartTime": "2025-05-31T11:22:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_2" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vinnare_2025-05-31_17_3",
+        "status": "results",
+        "startTime": "2025-05-31T11:46:49",
+        "scheduledStartTime": "2025-05-31T11:44:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_3" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vinnare_2025-05-31_17_4",
+        "status": "bettable",
+        "startTime": "2025-05-31T12:05:55",
+        "scheduledStartTime": "2025-05-31T12:06:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_4" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vinnare_2025-05-31_17_5",
+        "status": "bettable",
+        "startTime": "2025-05-31T12:30:00",
+        "scheduledStartTime": "2025-05-31T12:30:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_5" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vinnare_2025-05-31_17_6",
+        "status": "bettable",
+        "startTime": "2025-05-31T12:52:00",
+        "scheduledStartTime": "2025-05-31T12:52:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_6" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vinnare_2025-05-31_17_7",
+        "status": "bettable",
+        "startTime": "2025-05-31T13:12:00",
+        "scheduledStartTime": "2025-05-31T13:12:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_7" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vinnare_2025-05-31_17_8",
+        "status": "bettable",
+        "startTime": "2025-05-31T13:32:00",
+        "scheduledStartTime": "2025-05-31T13:32:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_8" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vinnare_2025-05-31_17_9",
+        "status": "bettable",
+        "startTime": "2025-05-31T13:51:00",
+        "scheduledStartTime": "2025-05-31T13:51:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_9" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vinnare_2025-05-31_22_1",
+        "status": "bettable",
+        "startTime": "2025-05-31T14:45:00",
+        "scheduledStartTime": "2025-05-31T14:45:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_1" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vinnare_2025-05-31_22_2",
+        "status": "bettable",
+        "startTime": "2025-05-31T15:08:00",
+        "scheduledStartTime": "2025-05-31T15:08:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_2" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vinnare_2025-05-31_22_3",
+        "status": "bettable",
+        "startTime": "2025-05-31T15:31:00",
+        "scheduledStartTime": "2025-05-31T15:31:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_3" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vinnare_2025-05-31_22_4",
+        "status": "bettable",
+        "startTime": "2025-05-31T15:53:00",
+        "scheduledStartTime": "2025-05-31T15:53:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_4" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vinnare_2025-05-31_22_5",
+        "status": "bettable",
+        "startTime": "2025-05-31T16:20:00",
+        "scheduledStartTime": "2025-05-31T16:20:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_5" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vinnare_2025-05-31_22_6",
+        "status": "bettable",
+        "startTime": "2025-05-31T16:42:00",
+        "scheduledStartTime": "2025-05-31T16:42:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_6" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vinnare_2025-05-31_22_7",
+        "status": "bettable",
+        "startTime": "2025-05-31T17:05:00",
+        "scheduledStartTime": "2025-05-31T17:05:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_7" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vinnare_2025-05-31_22_8",
+        "status": "bettable",
+        "startTime": "2025-05-31T17:27:00",
+        "scheduledStartTime": "2025-05-31T17:27:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_8" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vinnare_2025-05-31_22_9",
+        "status": "bettable",
+        "startTime": "2025-05-31T17:50:00",
+        "scheduledStartTime": "2025-05-31T17:50:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_9" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vinnare_2025-05-31_22_10",
+        "status": "bettable",
+        "startTime": "2025-05-31T18:20:00",
+        "scheduledStartTime": "2025-05-31T18:20:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_10" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vinnare_2025-05-31_22_11",
+        "status": "bettable",
+        "startTime": "2025-05-31T18:43:00",
+        "scheduledStartTime": "2025-05-31T18:43:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_11" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vinnare_2025-05-31_22_12",
+        "status": "bettable",
+        "startTime": "2025-05-31T19:02:00",
+        "scheduledStartTime": "2025-05-31T19:02:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_12" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vinnare_2025-05-31_31_2",
+        "status": "results",
+        "startTime": "2025-05-31T11:36:56",
+        "scheduledStartTime": "2025-05-31T11:32:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_2" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vinnare_2025-05-31_31_3",
+        "status": "ongoing",
+        "startTime": "2025-05-31T11:57:55",
+        "scheduledStartTime": "2025-05-31T11:54:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_3" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vinnare_2025-05-31_31_4",
+        "status": "bettable",
+        "startTime": "2025-05-31T12:16:40",
+        "scheduledStartTime": "2025-05-31T12:16:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_4" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vinnare_2025-05-31_31_5",
+        "status": "bettable",
+        "startTime": "2025-05-31T13:02:00",
+        "scheduledStartTime": "2025-05-31T13:02:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_5" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vinnare_2025-05-31_31_6",
+        "status": "bettable",
+        "startTime": "2025-05-31T13:22:00",
+        "scheduledStartTime": "2025-05-31T13:22:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_6" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vinnare_2025-05-31_31_7",
+        "status": "bettable",
+        "startTime": "2025-05-31T13:42:00",
+        "scheduledStartTime": "2025-05-31T13:42:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_7" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vinnare_2025-05-31_31_8",
+        "status": "bettable",
+        "startTime": "2025-05-31T14:01:00",
+        "scheduledStartTime": "2025-05-31T14:01:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_8" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vinnare_2025-05-31_31_9",
+        "status": "bettable",
+        "startTime": "2025-05-31T14:20:00",
+        "scheduledStartTime": "2025-05-31T14:20:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_9" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vinnare_2025-05-31_54_1",
+        "status": "bettable",
+        "startTime": "2025-05-31T18:55:00",
+        "scheduledStartTime": "2025-05-31T18:55:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_1" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vinnare_2025-05-31_54_2",
+        "status": "bettable",
+        "startTime": "2025-05-31T19:15:00",
+        "scheduledStartTime": "2025-05-31T19:15:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_2" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vinnare_2025-05-31_54_3",
+        "status": "bettable",
+        "startTime": "2025-05-31T19:40:00",
+        "scheduledStartTime": "2025-05-31T19:40:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_3" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vinnare_2025-05-31_54_4",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:00:00",
+        "scheduledStartTime": "2025-05-31T20:00:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_4" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vinnare_2025-05-31_54_5",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:20:00",
+        "scheduledStartTime": "2025-05-31T20:20:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_5" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vinnare_2025-05-31_54_6",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:40:00",
+        "scheduledStartTime": "2025-05-31T20:40:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_6" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vinnare_2025-05-31_54_7",
+        "status": "bettable",
+        "startTime": "2025-05-31T21:00:00",
+        "scheduledStartTime": "2025-05-31T21:00:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_7" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vinnare_2025-05-31_54_8",
+        "status": "bettable",
+        "startTime": "2025-05-31T21:18:00",
+        "scheduledStartTime": "2025-05-31T21:18:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_8" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vinnare_2025-05-31_54_9",
+        "status": "bettable",
+        "startTime": "2025-05-31T21:36:00",
+        "scheduledStartTime": "2025-05-31T21:36:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_9" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vinnare_2025-05-31_66_1",
+        "status": "bettable",
+        "startTime": "2025-05-31T19:25:00",
+        "scheduledStartTime": "2025-05-31T19:25:00",
+        "tracks": [ 66 ],
+        "races": [ "2025-05-31_66_1" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vinnare_2025-05-31_66_2",
+        "status": "bettable",
+        "startTime": "2025-05-31T19:46:00",
+        "scheduledStartTime": "2025-05-31T19:46:00",
+        "tracks": [ 66 ],
+        "races": [ "2025-05-31_66_2" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vinnare_2025-05-31_66_3",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:10:00",
+        "scheduledStartTime": "2025-05-31T20:10:00",
+        "tracks": [ 66 ],
+        "races": [ "2025-05-31_66_3" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vinnare_2025-05-31_66_4",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:31:00",
+        "scheduledStartTime": "2025-05-31T20:31:00",
+        "tracks": [ 66 ],
+        "races": [ "2025-05-31_66_4" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vinnare_2025-05-31_66_5",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:52:00",
+        "scheduledStartTime": "2025-05-31T20:52:00",
+        "tracks": [ 66 ],
+        "races": [ "2025-05-31_66_5" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vinnare_2025-05-31_66_6",
+        "status": "bettable",
+        "startTime": "2025-05-31T21:13:00",
+        "scheduledStartTime": "2025-05-31T21:13:00",
+        "tracks": [ 66 ],
+        "races": [ "2025-05-31_66_6" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vinnare_2025-05-31_68_1",
+        "status": "results",
+        "startTime": "2025-05-31T06:30:29",
+        "scheduledStartTime": "2025-05-31T06:30:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_1" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "vinnare_2025-05-31_68_2",
+        "status": "results",
+        "startTime": "2025-05-31T07:00:59",
+        "scheduledStartTime": "2025-05-31T07:00:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_2" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "vinnare_2025-05-31_68_3",
+        "status": "results",
+        "startTime": "2025-05-31T07:31:20",
+        "scheduledStartTime": "2025-05-31T07:30:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_3" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "vinnare_2025-05-31_68_4",
+        "status": "results",
+        "startTime": "2025-05-31T08:01:15",
+        "scheduledStartTime": "2025-05-31T08:00:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_4" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "vinnare_2025-05-31_68_5",
+        "status": "results",
+        "startTime": "2025-05-31T08:30:42",
+        "scheduledStartTime": "2025-05-31T08:30:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_5" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "vinnare_2025-05-31_68_6",
+        "status": "results",
+        "startTime": "2025-05-31T09:02:24",
+        "scheduledStartTime": "2025-05-31T09:00:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_6" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "vinnare_2025-05-31_68_7",
+        "status": "results",
+        "startTime": "2025-05-31T09:35:38",
+        "scheduledStartTime": "2025-05-31T09:35:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_7" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "vinnare_2025-05-31_68_8",
+        "status": "results",
+        "startTime": "2025-05-31T10:07:33",
+        "scheduledStartTime": "2025-05-31T10:05:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_8" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "vinnare_2025-05-31_68_9",
+        "status": "results",
+        "startTime": "2025-05-31T10:43:50",
+        "scheduledStartTime": "2025-05-31T10:40:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_9" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "vinnare_2025-05-31_68_10",
+        "status": "results",
+        "startTime": "2025-05-31T11:17:37",
+        "scheduledStartTime": "2025-05-31T11:15:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_10" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "vinnare_2025-05-31_68_11",
+        "status": "starting",
+        "startTime": "2025-05-31T11:52:48",
+        "scheduledStartTime": "2025-05-31T11:50:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_11" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "vinnare_2025-05-31_77_1",
+        "status": "bettable",
+        "startTime": "2025-05-31T14:10:03",
+        "scheduledStartTime": "2025-05-31T14:10:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_1" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vinnare_2025-05-31_77_2",
+        "status": "bettable",
+        "startTime": "2025-05-31T14:30:00",
+        "scheduledStartTime": "2025-05-31T14:30:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_2" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vinnare_2025-05-31_77_3",
+        "status": "bettable",
+        "startTime": "2025-05-31T15:00:00",
+        "scheduledStartTime": "2025-05-31T15:00:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_3" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vinnare_2025-05-31_77_4",
+        "status": "bettable",
+        "startTime": "2025-05-31T15:23:00",
+        "scheduledStartTime": "2025-05-31T15:23:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_4" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vinnare_2025-05-31_77_5",
+        "status": "bettable",
+        "startTime": "2025-05-31T15:46:00",
+        "scheduledStartTime": "2025-05-31T15:46:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_5" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vinnare_2025-05-31_77_6",
+        "status": "bettable",
+        "startTime": "2025-05-31T16:10:00",
+        "scheduledStartTime": "2025-05-31T16:10:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_6" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vinnare_2025-05-31_77_7",
+        "status": "bettable",
+        "startTime": "2025-05-31T16:33:00",
+        "scheduledStartTime": "2025-05-31T16:33:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_7" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vinnare_2025-05-31_77_8",
+        "status": "bettable",
+        "startTime": "2025-05-31T16:55:00",
+        "scheduledStartTime": "2025-05-31T16:55:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_8" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vinnare_2025-05-31_77_9",
+        "status": "bettable",
+        "startTime": "2025-05-31T17:15:00",
+        "scheduledStartTime": "2025-05-31T17:15:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_9" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vinnare_2025-05-31_77_10",
+        "status": "bettable",
+        "startTime": "2025-05-31T17:37:00",
+        "scheduledStartTime": "2025-05-31T17:37:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_10" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "vinnare_2025-05-31_97_1",
+        "status": "bettable",
+        "startTime": "2025-05-31T18:45:00",
+        "scheduledStartTime": "2025-05-31T18:45:00",
+        "tracks": [ 97 ],
+        "races": [ "2025-05-31_97_1" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vinnare_2025-05-31_97_2",
+        "status": "bettable",
+        "startTime": "2025-05-31T19:14:00",
+        "scheduledStartTime": "2025-05-31T19:14:00",
+        "tracks": [ 97 ],
+        "races": [ "2025-05-31_97_2" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vinnare_2025-05-31_97_3",
+        "status": "bettable",
+        "startTime": "2025-05-31T19:43:00",
+        "scheduledStartTime": "2025-05-31T19:43:00",
+        "tracks": [ 97 ],
+        "races": [ "2025-05-31_97_3" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vinnare_2025-05-31_97_4",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:14:00",
+        "scheduledStartTime": "2025-05-31T20:14:00",
+        "tracks": [ 97 ],
+        "races": [ "2025-05-31_97_4" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vinnare_2025-05-31_97_5",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:46:00",
+        "scheduledStartTime": "2025-05-31T20:46:00",
+        "tracks": [ 97 ],
+        "races": [ "2025-05-31_97_5" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vinnare_2025-05-31_97_6",
+        "status": "bettable",
+        "startTime": "2025-05-31T21:18:00",
+        "scheduledStartTime": "2025-05-31T21:18:00",
+        "tracks": [ 97 ],
+        "races": [ "2025-05-31_97_6" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vinnare_2025-05-31_97_7",
+        "status": "bettable",
+        "startTime": "2025-05-31T21:51:00",
+        "scheduledStartTime": "2025-05-31T21:51:00",
+        "tracks": [ 97 ],
+        "races": [ "2025-05-31_97_7" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vinnare_2025-05-31_97_8",
+        "status": "bettable",
+        "startTime": "2025-05-31T22:23:00",
+        "scheduledStartTime": "2025-05-31T22:23:00",
+        "tracks": [ 97 ],
+        "races": [ "2025-05-31_97_8" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "vinnare_2025-05-31_97_9",
+        "status": "bettable",
+        "startTime": "2025-05-31T22:55:00",
+        "scheduledStartTime": "2025-05-31T22:55:00",
+        "tracks": [ 97 ],
+        "races": [ "2025-05-31_97_9" ],
+        "returnToPlayer": 85
+      }
+    ],
+    "plats": [
+      {
+        "id": "plats_2025-05-31_17_1",
+        "status": "results",
+        "startTime": "2025-05-31T11:00:09",
+        "scheduledStartTime": "2025-05-31T11:00:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_1" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "plats_2025-05-31_17_2",
+        "status": "results",
+        "startTime": "2025-05-31T11:24:43",
+        "scheduledStartTime": "2025-05-31T11:22:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_2" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "plats_2025-05-31_17_3",
+        "status": "results",
+        "startTime": "2025-05-31T11:46:49",
+        "scheduledStartTime": "2025-05-31T11:44:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_3" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "plats_2025-05-31_17_4",
+        "status": "bettable",
+        "startTime": "2025-05-31T12:05:55",
+        "scheduledStartTime": "2025-05-31T12:06:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_4" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "plats_2025-05-31_17_5",
+        "status": "bettable",
+        "startTime": "2025-05-31T12:30:00",
+        "scheduledStartTime": "2025-05-31T12:30:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_5" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "plats_2025-05-31_17_6",
+        "status": "bettable",
+        "startTime": "2025-05-31T12:52:00",
+        "scheduledStartTime": "2025-05-31T12:52:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_6" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "plats_2025-05-31_17_7",
+        "status": "bettable",
+        "startTime": "2025-05-31T13:12:00",
+        "scheduledStartTime": "2025-05-31T13:12:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_7" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "plats_2025-05-31_17_8",
+        "status": "bettable",
+        "startTime": "2025-05-31T13:32:00",
+        "scheduledStartTime": "2025-05-31T13:32:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_8" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "plats_2025-05-31_17_9",
+        "status": "bettable",
+        "startTime": "2025-05-31T13:51:00",
+        "scheduledStartTime": "2025-05-31T13:51:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_9" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "plats_2025-05-31_22_1",
+        "status": "bettable",
+        "startTime": "2025-05-31T14:45:00",
+        "scheduledStartTime": "2025-05-31T14:45:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_1" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "plats_2025-05-31_22_2",
+        "status": "bettable",
+        "startTime": "2025-05-31T15:08:00",
+        "scheduledStartTime": "2025-05-31T15:08:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_2" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "plats_2025-05-31_22_3",
+        "status": "bettable",
+        "startTime": "2025-05-31T15:31:00",
+        "scheduledStartTime": "2025-05-31T15:31:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_3" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "plats_2025-05-31_22_4",
+        "status": "bettable",
+        "startTime": "2025-05-31T15:53:00",
+        "scheduledStartTime": "2025-05-31T15:53:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_4" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "plats_2025-05-31_22_5",
+        "status": "bettable",
+        "startTime": "2025-05-31T16:20:00",
+        "scheduledStartTime": "2025-05-31T16:20:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_5" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "plats_2025-05-31_22_6",
+        "status": "bettable",
+        "startTime": "2025-05-31T16:42:00",
+        "scheduledStartTime": "2025-05-31T16:42:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_6" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "plats_2025-05-31_22_7",
+        "status": "bettable",
+        "startTime": "2025-05-31T17:05:00",
+        "scheduledStartTime": "2025-05-31T17:05:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_7" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "plats_2025-05-31_22_8",
+        "status": "bettable",
+        "startTime": "2025-05-31T17:27:00",
+        "scheduledStartTime": "2025-05-31T17:27:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_8" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "plats_2025-05-31_22_9",
+        "status": "bettable",
+        "startTime": "2025-05-31T17:50:00",
+        "scheduledStartTime": "2025-05-31T17:50:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_9" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "plats_2025-05-31_22_10",
+        "status": "bettable",
+        "startTime": "2025-05-31T18:20:00",
+        "scheduledStartTime": "2025-05-31T18:20:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_10" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "plats_2025-05-31_22_11",
+        "status": "bettable",
+        "startTime": "2025-05-31T18:43:00",
+        "scheduledStartTime": "2025-05-31T18:43:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_11" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "plats_2025-05-31_22_12",
+        "status": "bettable",
+        "startTime": "2025-05-31T19:02:00",
+        "scheduledStartTime": "2025-05-31T19:02:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_12" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "plats_2025-05-31_31_2",
+        "status": "results",
+        "startTime": "2025-05-31T11:36:56",
+        "scheduledStartTime": "2025-05-31T11:32:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_2" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "plats_2025-05-31_31_3",
+        "status": "ongoing",
+        "startTime": "2025-05-31T11:57:55",
+        "scheduledStartTime": "2025-05-31T11:54:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_3" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "plats_2025-05-31_31_4",
+        "status": "bettable",
+        "startTime": "2025-05-31T12:16:40",
+        "scheduledStartTime": "2025-05-31T12:16:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_4" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "plats_2025-05-31_31_5",
+        "status": "bettable",
+        "startTime": "2025-05-31T13:02:00",
+        "scheduledStartTime": "2025-05-31T13:02:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_5" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "plats_2025-05-31_31_6",
+        "status": "bettable",
+        "startTime": "2025-05-31T13:22:00",
+        "scheduledStartTime": "2025-05-31T13:22:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_6" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "plats_2025-05-31_31_7",
+        "status": "bettable",
+        "startTime": "2025-05-31T13:42:00",
+        "scheduledStartTime": "2025-05-31T13:42:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_7" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "plats_2025-05-31_31_8",
+        "status": "bettable",
+        "startTime": "2025-05-31T14:01:00",
+        "scheduledStartTime": "2025-05-31T14:01:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_8" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "plats_2025-05-31_31_9",
+        "status": "bettable",
+        "startTime": "2025-05-31T14:20:00",
+        "scheduledStartTime": "2025-05-31T14:20:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_9" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "plats_2025-05-31_54_1",
+        "status": "bettable",
+        "startTime": "2025-05-31T18:55:00",
+        "scheduledStartTime": "2025-05-31T18:55:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_1" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "plats_2025-05-31_54_2",
+        "status": "bettable",
+        "startTime": "2025-05-31T19:15:00",
+        "scheduledStartTime": "2025-05-31T19:15:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_2" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "plats_2025-05-31_54_3",
+        "status": "bettable",
+        "startTime": "2025-05-31T19:40:00",
+        "scheduledStartTime": "2025-05-31T19:40:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_3" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "plats_2025-05-31_54_4",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:00:00",
+        "scheduledStartTime": "2025-05-31T20:00:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_4" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "plats_2025-05-31_54_5",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:20:00",
+        "scheduledStartTime": "2025-05-31T20:20:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_5" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "plats_2025-05-31_54_6",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:40:00",
+        "scheduledStartTime": "2025-05-31T20:40:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_6" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "plats_2025-05-31_54_7",
+        "status": "bettable",
+        "startTime": "2025-05-31T21:00:00",
+        "scheduledStartTime": "2025-05-31T21:00:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_7" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "plats_2025-05-31_54_8",
+        "status": "bettable",
+        "startTime": "2025-05-31T21:18:00",
+        "scheduledStartTime": "2025-05-31T21:18:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_8" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "plats_2025-05-31_54_9",
+        "status": "bettable",
+        "startTime": "2025-05-31T21:36:00",
+        "scheduledStartTime": "2025-05-31T21:36:00",
+        "tracks": [ 54 ],
+        "races": [ "2025-05-31_54_9" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "plats_2025-05-31_66_1",
+        "status": "bettable",
+        "startTime": "2025-05-31T19:25:00",
+        "scheduledStartTime": "2025-05-31T19:25:00",
+        "tracks": [ 66 ],
+        "races": [ "2025-05-31_66_1" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "plats_2025-05-31_66_2",
+        "status": "bettable",
+        "startTime": "2025-05-31T19:46:00",
+        "scheduledStartTime": "2025-05-31T19:46:00",
+        "tracks": [ 66 ],
+        "races": [ "2025-05-31_66_2" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "plats_2025-05-31_66_3",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:10:00",
+        "scheduledStartTime": "2025-05-31T20:10:00",
+        "tracks": [ 66 ],
+        "races": [ "2025-05-31_66_3" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "plats_2025-05-31_66_4",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:31:00",
+        "scheduledStartTime": "2025-05-31T20:31:00",
+        "tracks": [ 66 ],
+        "races": [ "2025-05-31_66_4" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "plats_2025-05-31_66_5",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:52:00",
+        "scheduledStartTime": "2025-05-31T20:52:00",
+        "tracks": [ 66 ],
+        "races": [ "2025-05-31_66_5" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "plats_2025-05-31_66_6",
+        "status": "bettable",
+        "startTime": "2025-05-31T21:13:00",
+        "scheduledStartTime": "2025-05-31T21:13:00",
+        "tracks": [ 66 ],
+        "races": [ "2025-05-31_66_6" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "plats_2025-05-31_68_1",
+        "status": "results",
+        "startTime": "2025-05-31T06:30:29",
+        "scheduledStartTime": "2025-05-31T06:30:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_1" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "plats_2025-05-31_68_2",
+        "status": "results",
+        "startTime": "2025-05-31T07:00:59",
+        "scheduledStartTime": "2025-05-31T07:00:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_2" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "plats_2025-05-31_68_3",
+        "status": "results",
+        "startTime": "2025-05-31T07:31:20",
+        "scheduledStartTime": "2025-05-31T07:30:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_3" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "plats_2025-05-31_68_4",
+        "status": "results",
+        "startTime": "2025-05-31T08:01:15",
+        "scheduledStartTime": "2025-05-31T08:00:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_4" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "plats_2025-05-31_68_5",
+        "status": "results",
+        "startTime": "2025-05-31T08:30:42",
+        "scheduledStartTime": "2025-05-31T08:30:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_5" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "plats_2025-05-31_68_6",
+        "status": "results",
+        "startTime": "2025-05-31T09:02:24",
+        "scheduledStartTime": "2025-05-31T09:00:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_6" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "plats_2025-05-31_68_7",
+        "status": "results",
+        "startTime": "2025-05-31T09:35:38",
+        "scheduledStartTime": "2025-05-31T09:35:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_7" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "plats_2025-05-31_68_8",
+        "status": "results",
+        "startTime": "2025-05-31T10:07:33",
+        "scheduledStartTime": "2025-05-31T10:05:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_8" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "plats_2025-05-31_68_9",
+        "status": "results",
+        "startTime": "2025-05-31T10:43:50",
+        "scheduledStartTime": "2025-05-31T10:40:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_9" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "plats_2025-05-31_68_10",
+        "status": "results",
+        "startTime": "2025-05-31T11:17:37",
+        "scheduledStartTime": "2025-05-31T11:15:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_10" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "plats_2025-05-31_68_11",
+        "status": "starting",
+        "startTime": "2025-05-31T11:52:48",
+        "scheduledStartTime": "2025-05-31T11:50:00",
+        "tracks": [ 68 ],
+        "races": [ "2025-05-31_68_11" ],
+        "returnToPlayer": 83,
+        "newBettingSystem": true
+      },
+      {
+        "id": "plats_2025-05-31_77_1",
+        "status": "bettable",
+        "startTime": "2025-05-31T14:10:03",
+        "scheduledStartTime": "2025-05-31T14:10:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_1" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "plats_2025-05-31_77_2",
+        "status": "bettable",
+        "startTime": "2025-05-31T14:30:00",
+        "scheduledStartTime": "2025-05-31T14:30:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_2" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "plats_2025-05-31_77_3",
+        "status": "bettable",
+        "startTime": "2025-05-31T15:00:00",
+        "scheduledStartTime": "2025-05-31T15:00:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_3" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "plats_2025-05-31_77_4",
+        "status": "bettable",
+        "startTime": "2025-05-31T15:23:00",
+        "scheduledStartTime": "2025-05-31T15:23:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_4" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "plats_2025-05-31_77_5",
+        "status": "bettable",
+        "startTime": "2025-05-31T15:46:00",
+        "scheduledStartTime": "2025-05-31T15:46:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_5" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "plats_2025-05-31_77_6",
+        "status": "bettable",
+        "startTime": "2025-05-31T16:10:00",
+        "scheduledStartTime": "2025-05-31T16:10:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_6" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "plats_2025-05-31_77_7",
+        "status": "bettable",
+        "startTime": "2025-05-31T16:33:00",
+        "scheduledStartTime": "2025-05-31T16:33:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_7" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "plats_2025-05-31_77_8",
+        "status": "bettable",
+        "startTime": "2025-05-31T16:55:00",
+        "scheduledStartTime": "2025-05-31T16:55:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_8" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "plats_2025-05-31_77_9",
+        "status": "bettable",
+        "startTime": "2025-05-31T17:15:00",
+        "scheduledStartTime": "2025-05-31T17:15:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_9" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "plats_2025-05-31_77_10",
+        "status": "bettable",
+        "startTime": "2025-05-31T17:37:00",
+        "scheduledStartTime": "2025-05-31T17:37:00",
+        "tracks": [ 77 ],
+        "races": [ "2025-05-31_77_10" ],
+        "returnToPlayer": 80
+      },
+      {
+        "id": "plats_2025-05-31_97_1",
+        "status": "bettable",
+        "startTime": "2025-05-31T18:45:00",
+        "scheduledStartTime": "2025-05-31T18:45:00",
+        "tracks": [ 97 ],
+        "races": [ "2025-05-31_97_1" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "plats_2025-05-31_97_2",
+        "status": "bettable",
+        "startTime": "2025-05-31T19:14:00",
+        "scheduledStartTime": "2025-05-31T19:14:00",
+        "tracks": [ 97 ],
+        "races": [ "2025-05-31_97_2" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "plats_2025-05-31_97_3",
+        "status": "bettable",
+        "startTime": "2025-05-31T19:43:00",
+        "scheduledStartTime": "2025-05-31T19:43:00",
+        "tracks": [ 97 ],
+        "races": [ "2025-05-31_97_3" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "plats_2025-05-31_97_4",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:14:00",
+        "scheduledStartTime": "2025-05-31T20:14:00",
+        "tracks": [ 97 ],
+        "races": [ "2025-05-31_97_4" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "plats_2025-05-31_97_5",
+        "status": "bettable",
+        "startTime": "2025-05-31T20:46:00",
+        "scheduledStartTime": "2025-05-31T20:46:00",
+        "tracks": [ 97 ],
+        "races": [ "2025-05-31_97_5" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "plats_2025-05-31_97_6",
+        "status": "bettable",
+        "startTime": "2025-05-31T21:18:00",
+        "scheduledStartTime": "2025-05-31T21:18:00",
+        "tracks": [ 97 ],
+        "races": [ "2025-05-31_97_6" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "plats_2025-05-31_97_7",
+        "status": "bettable",
+        "startTime": "2025-05-31T21:51:00",
+        "scheduledStartTime": "2025-05-31T21:51:00",
+        "tracks": [ 97 ],
+        "races": [ "2025-05-31_97_7" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "plats_2025-05-31_97_8",
+        "status": "bettable",
+        "startTime": "2025-05-31T22:23:00",
+        "scheduledStartTime": "2025-05-31T22:23:00",
+        "tracks": [ 97 ],
+        "races": [ "2025-05-31_97_8" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "plats_2025-05-31_97_9",
+        "status": "bettable",
+        "startTime": "2025-05-31T22:55:00",
+        "scheduledStartTime": "2025-05-31T22:55:00",
+        "tracks": [ 97 ],
+        "races": [ "2025-05-31_97_9" ],
+        "returnToPlayer": 85
+      }
+    ],
+    "raket": [
+      {
+        "id": "raket_2025-05-31_17_1",
+        "status": "bettable",
+        "startTime": "2025-05-31T11:00:09",
+        "scheduledStartTime": "2025-05-31T11:00:00",
+        "tracks": [ 17 ],
+        "races": [ "2025-05-31_17_1", "2025-05-31_17_2", "2025-05-31_17_3", "2025-05-31_17_4", "2025-05-31_17_5", "2025-05-31_17_6", "2025-05-31_17_7", "2025-05-31_17_8", "2025-05-31_17_9" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "raket_2025-05-31_22_1",
+        "status": "bettable",
+        "startTime": "2025-05-31T14:45:00",
+        "scheduledStartTime": "2025-05-31T14:45:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_1", "2025-05-31_22_2", "2025-05-31_22_3", "2025-05-31_22_4", "2025-05-31_22_5", "2025-05-31_22_6", "2025-05-31_22_7", "2025-05-31_22_8", "2025-05-31_22_9", "2025-05-31_22_10", "2025-05-31_22_11", "2025-05-31_22_12" ],
+        "returnToPlayer": 85
+      },
+      {
+        "id": "raket_2025-05-31_31_2",
+        "status": "bettable",
+        "startTime": "2025-05-31T11:36:56",
+        "scheduledStartTime": "2025-05-31T11:32:00",
+        "tracks": [ 31 ],
+        "races": [ "2025-05-31_31_2", "2025-05-31_31_3", "2025-05-31_31_4", "2025-05-31_31_5", "2025-05-31_31_6", "2025-05-31_31_7", "2025-05-31_31_8", "2025-05-31_31_9" ],
+        "returnToPlayer": 85
+      }
+    ],
+    "top7": [
+      {
+        "id": "top7_2025-05-31_22_9",
+        "status": "bettable",
+        "startTime": "2025-05-31T17:50:00",
+        "scheduledStartTime": "2025-05-31T17:50:00",
+        "tracks": [ 22 ],
+        "races": [ "2025-05-31_22_9" ],
+        "returnToPlayer": 65,
+        "newBettingSystem": true
+      }
+    ]
+  },
+  "version": 1748685718488
+}

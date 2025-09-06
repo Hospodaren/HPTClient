@@ -1,0 +1,925 @@
+﻿<HPT:UCMarkBetControl xmlns:my="clr-namespace:HPTClient"  x:Class="HPTClient.UCMarksGame"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:HPT="clr-namespace:HPTClient"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
+    x:Name="ucMarksGame"
+    Background="WhiteSmoke"
+    Loaded="ucMarksGame_Loaded"
+    KeyUp="ucMarksGame_KeyUp">
+    <UserControl.Resources>
+
+        <BooleanToVisibilityConverter x:Key="hptVisibilityConverter"/>
+
+        <Style x:Key="tooExpensiveStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource tbStyle}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=MarkBet.TooExpensive}" Value="true">
+                    <Setter Property="Foreground" Value="Red"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Border BorderThickness="1" BorderBrush="Black">
+            <StackPanel Orientation="Horizontal">
+
+                <xctk:WatermarkTextBox x:Name="mtbSystemName" Watermark="Ange eget namn på systemet..." 
+                                       Text="{Binding Path=MarkBet.SystemName,UpdateSourceTrigger=PropertyChanged}" MinWidth="200"/>
+
+                <TextBlock x:Name="txtCountdownInfo" Margin="8,2,2,2" FontWeight="Bold"/>
+                <TextBlock x:Name="txtCountdownTimer" Margin="2"/>
+
+                <TextBlock Margin="12,2,2,2" Text="Omsättning: " FontWeight="Bold"/>
+                <TextBlock Margin="2">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0:N0} kr ({1:N0} system, {2:N2} kr per kupong)" ConverterCulture="sv-SE">
+                            <Binding Path="MarkBet.RaceDayInfo.Turnover"/>
+                            <Binding Path="MarkBet.RaceDayInfo.MarksQuantity"/>
+                            <Binding Path="MarkBet.RaceDayInfo.MeanSystemCost"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+
+                <TextBlock Margin="10,2,2,2" Text="Att dela ut: " FontWeight="Bold"/>
+                <ItemsControl x:Name="icPayOutATG" ItemsSource="{Binding Path=MarkBet.RaceDayInfo.PayOutListATG}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Grid.Row="3" Grid.Column="1" Margin="6,2" HorizontalAlignment="Right">
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0} rätt: {1:N0} kr" ConverterCulture="sv-SE">
+                                        <Binding Path="NumberOfCorrect"/>
+                                        <Binding Path="TotalAmount"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+            </StackPanel>
+
+        </Border>
+
+        <TabControl x:Name="tcMarksGame" SelectionChanged="tcMarksGame_SelectionChanged" Grid.Row="1" BorderThickness="1" 
+                    ContextMenu="{Binding Path=CMMarkBetTabsToShow,ElementName=ucMarksGame}" Hyperlink.RequestNavigate="tcMarksGame_RequestNavigate">
+
+            <TabControl.Resources>
+                <Style TargetType="TabItem">
+                    <Setter Property="AllowDrop" Value="True"/>
+                    <EventSetter Event="PreviewMouseMove" Handler="TabItem_PreviewMouseMove"/>
+                    <EventSetter Event="Drop" Handler="TabItem_Drop"/>
+                </Style>
+            </TabControl.Resources>
+
+            <!--Avdelningar-->
+            <!--<TabItem x:Name="tiRaces"
+                     Visibility="{Binding Path=MarkBet.Config.MarkBetTabsToShow.ShowRaces,Converter={StaticResource hptVisibilityConverter}}"
+                     ToolTip="Visar vy med detaljinformation om samtliga avdelningar">
+                <TabItem.Header>
+                    <HPT:UCTabItemHeader Text="Avdelningar"/>
+                </TabItem.Header>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <HPT:UCRacesTabControl MarkBet="{Binding Path=MarkBet}"/>
+
+                    <HPT:UCMarkBetWarnings MarkBet="{Binding Path=MarkBet}" Grid.Row="1"/>
+
+                </Grid>
+            </TabItem>-->
+
+            <!--Avdelningar (grupperat)-->
+            <!--<TabItem x:Name="tiRacesGrouped"
+                     Visibility="{Binding Path=MarkBet.Config.MarkBetTabsToShow.ShowRacesGrouped,Converter={StaticResource hptVisibilityConverter}}"
+                     ToolTip="Visar grupperad vy med detaljinformation om samtliga avdelningar">
+                <TabItem.Header>
+                    <HPT:UCTabItemHeader Text="Avdelningar (grupperat)"/>
+                </TabItem.Header>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <HPT:UCRacesGrouped MarkBet="{Binding Path=MarkBet}"/>
+
+                    <HPT:UCMarkBetWarnings MarkBet="{Binding Path=MarkBet}" Grid.Row="1"/>
+
+                </Grid>
+            </TabItem>-->
+
+            <!--Översikt-->
+            <!--<TabItem x:Name="tiOverview" 
+                     Visibility="{Binding Path=MarkBet.Config.MarkBetTabsToShow.ShowOverview,Converter={StaticResource hptVisibilityConverter}}"                     
+                     ToolTip="Visar vy med översiktlig information om samtliga startande hästar på en skärmbild">
+                <TabItem.Header>
+                    <HPT:UCTabItemHeader Text="Översikt"/>
+                </TabItem.Header>
+
+                <HPT:UCRacesOverview MarkBet="{Binding Path=MarkBet}"/>
+
+            </TabItem>-->
+
+            <!--Trender-->
+            <!--<TabItem x:Name="tiTrends" 
+                     Visibility="{Binding Path=MarkBet.Config.MarkBetTabsToShow.ShowTrends,Converter={StaticResource hptVisibilityConverter}}"                     
+                     ToolTip="Visar vy med trender för varje häst gällande insatsfördelning, vinnarodds osv.">
+                <TabItem.Header>
+                    <HPT:UCTabItemHeader Text="Trender"/>
+                </TabItem.Header>
+
+                <HPT:UCTrends MarkBet="{Binding Path=MarkBet}"/>
+
+            </TabItem>-->
+
+            <!--Kommentarer-->
+            <!--<TabItem x:Name="tiComments" 
+                     Visibility="{Binding Path=MarkBet.Config.MarkBetTabsToShow.ShowComments,Converter={StaticResource hptVisibilityConverter}}"                     
+                     ToolTip="Visar vy där man kan se och läga till kommentarer på hästarna">
+                <TabItem.Header>
+                    <HPT:UCTabItemHeader Text="Kommentarer"/>
+                </TabItem.Header>
+
+                <HPT:UCHorseCommentView MarkBet="{Binding Path=MarkBet}" DataContext="{Binding Path=MarkBet}"/>
+
+            </TabItem>-->
+
+            <!--Ranköversikt-->
+            <!--<TabItem x:Name="tiRankOverview" Visibility="{Binding Path=MarkBet.Config.MarkBetTabsToShow.ShowRankOverview,Converter={StaticResource hptVisibilityConverter}}"
+                     ToolTip="Visar rank för alla hästar och alla rankvariabler">
+                <TabItem.Header>
+                    <HPT:UCTabItemHeader Text="Ranköversikt"/>
+                </TabItem.Header>
+                <HPT:UCRankOverview DataContext="{Binding MarkBet}" MarkBet="{Binding MarkBet}"/>
+            </TabItem>-->
+
+            <!--Rankreducering-->
+            <!--<TabItem x:Name="tiRankReduction" Visibility="{Binding Path=MarkBet.Config.MarkBetTabsToShow.ShowRankOverview,Converter={StaticResource hptVisibilityConverter}}"
+                     ToolTip="Rankreducering för alla rankvariabler">
+                <TabItem.Header>
+                    <HPT:UCTabItemHeader Text="Rankreducering"/>
+                </TabItem.Header>
+                <HPT:UCHorseRankSumReduction DataContext="{Binding MarkBet}" MarkBet="{Binding MarkBet}"/>
+            </TabItem>-->
+
+            <!--Enkelrader-->
+            <!--<TabItem x:Name="tiSingleRows" Visibility="{Binding Path=MarkBet.Config.MarkBetTabsToShow.ShowSingleRows,Converter={StaticResource hptVisibilityConverter}}"
+                     ToolTip="Visar alla enkelrader i reducerat system utifrån gjorda val">
+                <TabItem.Header>
+                    <HPT:UCTabItemHeader Text="Enkelrader"/>
+                </TabItem.Header>
+                <HPT:UCSingleRowCollectionView MarkBet="{Binding Path=MarkBet}" DataContext="{Binding Path=MarkBet}"/>
+            </TabItem>-->
+
+            <!--Utgångar-->
+            <!--<TabItem x:Name="tiComplimentaryRules" IsEnabled="True" Visibility="{Binding Path=MarkBet.Config.MarkBetTabsToShow.ShowComplimentaryRules,Converter={StaticResource hptVisibilityConverter}}"
+                     ToolTip="Visar alla valda hästar i samma lista och har funktionalitet för att skapa utgångsvillkor.">
+                <TabItem.Header>
+                    <HPT:UCTabItemHeader Text="Utgångar/Valda hästar"/>
+                </TabItem.Header>
+                <HPT:UCComplimentaryRules DataContext="{Binding MarkBet}"/>
+            </TabItem>-->
+
+            <!--Intervall-->
+            <!--<TabItem x:Name="tiIntervalReduction" IsEnabled="True" Visibility="{Binding Path=MarkBet.Config.MarkBetTabsToShow.ShowIntervalReduction,Converter={StaticResource hptVisibilityConverter}}"
+                     ToolTip="Reducera utifrån radvärde, spårsumma mm">
+                <TabItem.Header>
+                    <HPT:UCTabItemHeader Text="Intervall"/>
+                </TabItem.Header>
+                <HPT:UCIntervalReductionNew DataContext="{Binding MarkBet}" />
+            </TabItem>-->
+
+            <!--Kuskar-->
+            <!--<TabItem x:Name="tiDrivers" IsEnabled="True" Visibility="{Binding Path=MarkBet.Config.MarkBetTabsToShow.ShowDriverReduction,Converter={StaticResource hptVisibilityConverter}}"
+                     ToolTip="Flik för att skapa reduceringsregler utifrån kuskar">
+                <TabItem.Header>
+                    <HPT:UCTabItemHeader Text="Kuskar"/>
+                </TabItem.Header>
+                <HPT:UCPersonReduction MarkBet="{Binding Path=MarkBet}" DataContext="{Binding Path=MarkBet.DriverRulesCollection}"/>
+            </TabItem>-->
+
+            <!--Tränare-->
+            <!--<TabItem x:Name="tiTrainers" IsEnabled="True" Visibility="{Binding Path=MarkBet.Config.MarkBetTabsToShow.ShowTrainerReduction,Converter={StaticResource hptVisibilityConverter}}"
+                     ToolTip="Flik för att skapa reduceringsregler utifrån tränare">
+                <TabItem.Header>
+                    <HPT:UCTabItemHeader Text="Tränare"/>
+                </TabItem.Header>
+                <HPT:UCPersonReduction MarkBet="{Binding Path=MarkBet}" DataContext="{Binding Path=MarkBet.TrainerRulesCollection}"/>
+            </TabItem>-->
+
+            <!--Gruppintervall-->
+            <!--<TabItem x:Name="tiGroupInterval" Visibility="{Binding Path=MarkBet.Config.MarkBetTabsToShow.ShowGroupIntervalReduction,Converter={StaticResource hptVisibilityConverter}}"
+                     ToolTip="Flik för att skapa reduceringsregler utifrån vinnarfördelning av exempelvis streckprocent">
+                <TabItem.Header>
+                    <HPT:UCTabItemHeader Text="Gruppintervall"/>
+                </TabItem.Header>
+                <HPT:UCGroupIntervalReduction DataContext="{Binding Path=MarkBet}"/>
+            </TabItem>-->
+
+            <!--Multi-ABCD-->
+            <!--<TabItem x:Name="tiMultiABCD" Visibility="{Binding Path=MarkBet.Config.MarkBetTabsToShow.ShowMultiABCD,Converter={StaticResource hptVisibilityConverter}}"
+                     ToolTip="Flik för att skapa ELLER-villkor med flera olika ABCD-reduceringar">
+                <TabItem.Header>
+                    <HPT:UCTabItemHeader Text="Multi-ABCD"/>
+                </TabItem.Header>
+                <HPT:UCMultiABCD DataContext="{Binding Path=MarkBet}"/>
+            </TabItem>-->
+
+            <!--V6/V7/V8/Flerbong-->
+            <!--<TabItem x:Name="tiV6BetMultiplier" Visibility="{Binding Path=MarkBet.Config.MarkBetTabsToShow.ShowV6BetMultiplier,Converter={StaticResource hptVisibilityConverter}}"
+                     ToolTip="Flik för att spela V6/V7/V8/Flerbong utifrån en eller flera hästar">
+                <TabItem.Header>
+                    <HPT:UCTabItemHeader Text="V6/V7/V8/Flerbong"/>
+                </TabItem.Header>
+                <HPT:UCV6BetMultiplier DataContext="{Binding Path=MarkBet}" MarkBet="{Binding Path=MarkBet}"/>
+            </TabItem>-->
+
+            <!--Kuponger/Rättning-->
+            <!--<TabItem x:Name="tiCorrection" Visibility="{Binding Path=MarkBet.Config.MarkBetTabsToShow.ShowCorrection,Converter={StaticResource hptVisibilityConverter}}"
+                     ToolTip="Flik där man kan se och rätta kupongerna som skapats utifrån gjorda reduceringsval">
+                <TabItem.Header>
+                    <HPT:UCTabItemHeader Text="Kuponger/Rättning"/>
+                </TabItem.Header>
+                <HPT:UCCorrectionMarkingBet x:Name="ucCorrection" MarkBet="{Binding Path=MarkBet}" DataContext="{Binding Path=MarkBet.CouponCorrector}"/>
+            </TabItem>-->
+
+            <!--Bolagsspel-->
+            <!--<TabItem x:Name="tiCompanyGambling" Visibility="{Binding Path=MarkBet.Config.MarkBetTabsToShow.ShowCompanyGambling,Converter={StaticResource hptVisibilityConverter}}"
+                     ToolTip="Flik med funktionalitet för att skicka mail och ladda upp system till HPTs server.">
+                <TabItem.Header>
+                    <HPT:UCTabItemHeader Text="Bolagsspel"/>
+                </TabItem.Header>
+                <HPT:UCSendMail x:Name="ucSendMail" DataContext="{Binding Path=MarkBet}"/>
+            </TabItem>-->
+
+            <!--XML-fil-->
+            <!--<TabItem x:Name="tiXmlFile" Visibility="{Binding Path=MarkBet.Config.MarkBetTabsToShow.ShowATGXmlFile,Converter={StaticResource hptVisibilityConverter}}"
+                     ToolTip="Flik där du kan titta på den råa XML-filen som laddas upp till ATG.">
+                <TabItem.Header>
+                    <HPT:UCTabItemHeader Text="XML-fil till ATG"/>
+                </TabItem.Header>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBox Text="{Binding Path=MarkBet.SystemFilename}" Height="Auto"/>
+                    <WebBrowser x:Name="wbXmlFile" Grid.Row="1"/>
+                </Grid>
+
+            </TabItem>-->
+
+            <!--Mallverkstad-->
+            <!--<TabItem x:Name="tiTemplateWorkshop" Visibility="{Binding Path=MarkBet.Config.MarkBetTabsToShow.ShowTemplateWorkshop,Converter={StaticResource hptVisibilityConverter}}"
+                     ToolTip="Flik där man kan tweaka rankvariabelmallar och direkt se hur det slår igenom på valda hästar">
+                <TabItem.Header>
+                    <HPT:UCTabItemHeader Text="Mallverkstad"/>
+                </TabItem.Header>
+                <HPT:UCTemplateWorkshop DataContext="{Binding Path=MarkBet}" MarkBet="{Binding Path=MarkBet}"/>
+            </TabItem>-->
+
+        </TabControl>
+
+        <HPT:UCMarkBetWarnings MarkBet="{Binding Path=MarkBet}" Grid.Row="3"/>
+
+        <Expander x:Name="expanderMarksgame" Collapsed="Expander_Collapsed" IsExpanded="True" ExpandDirection="Up" 
+                  Background="{StaticResource BackgroundBrush}" Grid.Row="4" BorderBrush="Black" BorderThickness="1"
+                  ToolTip="Klicka för att öka eller minska utrymmet för de olika flikarna längst upp på skärmen" Height="Auto">
+
+            <Expander.Header>
+                <Grid HorizontalAlignment="Stretch" Height="Auto">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!--Systeminformation-->
+                    <GroupBox Width="400" Background="{StaticResource BackgroundBrush}" Grid.RowSpan="2" HeaderTemplate="{StaticResource GroupBoxHeaderTemplate}" Header="Systeminformation" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="Black">
+
+                        <WrapPanel Orientation="Horizontal">
+
+                            <Grid Width="192" x:Name="grdSystemSize">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <!--Systemstorlek-->
+                                <TextBlock x:Name="txtSystemSizeHeader" Text="Systemstorlek:" Style="{StaticResource tbStyle}" FontSize="12" Margin="2" HorizontalAlignment="Left"
+                                       ToolTip="Visar hur många rader ramsystemet består av."/>
+                                <TextBlock x:Name="txtSystemSize" Text="{Binding Path=MarkBet.SystemSize,StringFormat={}{0:N0},ConverterCulture=sv-SE}" Style="{StaticResource tbStyle}" FontSize="12" Grid.Column="1" Margin="2,2,10,2" FontWeight="Bold" HorizontalAlignment="Right"/>
+
+                            </Grid>
+
+                            <Grid Width="192" x:Name="grdReducedSize">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <!--Reducerad storlek-->
+                                <TextBlock x:Name="txtReducedSizeHeader" Text="Reducerad storlek:" Style="{StaticResource tbStyle}" FontSize="12" Margin="2" HorizontalAlignment="Left"
+                                       ToolTip="Visar hur många rader det reducerade systemet består av."/>
+                                <TextBlock x:Name="txtReducedSize" Text="{Binding Path=MarkBet.ReducedSize,StringFormat={}{0:N0},ConverterCulture=sv-SE}" Style="{StaticResource tbStyle}" FontSize="12" Grid.Column="1" Margin="2,2,10,2" FontWeight="Bold" HorizontalAlignment="Right"/>
+                            </Grid>
+
+                            <Grid Width="192" x:Name="grdReductionPercentage">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <!--Reduceringsgrad-->
+                                <TextBlock x:Name="txtReductionQuotaHeader" Text="Reduceringsgrad:" Style="{StaticResource tbStyle}" FontSize="12" Margin="2" HorizontalAlignment="Left"
+                                       ToolTip="Visar i procent hur många procent av ramsystemet man reducerat bort i det slutliga systemet."/>
+                                <TextBlock x:Name="txtReductionQuota" Text="{Binding Path=MarkBet.ReductionQuota,StringFormat={}{0:P1}}" Style="{StaticResource tbStyle}" FontSize="12" Grid.Column="1" Margin="2,2,10,2" FontWeight="Bold" HorizontalAlignment="Right"/>
+                            </Grid>
+
+                            <Grid Width="192" x:Name="grdCouponInfo">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <!--Antal kuponger-->
+                                <TextBlock x:Name="txtCouponCountHeader" Text="Antal kuponger:" Style="{StaticResource tbStyle}" FontSize="12" Margin="2" HorizontalAlignment="Left"
+                                       ToolTip="Visar antal kuponger som systemet komprimerats till."/>
+                                <TextBlock x:Name="txtCouponCount" Text="{Binding Path=MarkBet.CouponCorrector.CouponHelper.CouponList.Count,StringFormat={}{0:N0},ConverterCulture=sv-SE}" Style="{StaticResource tbStyle}" FontSize="12" Grid.Column="1" Margin="2,2,10,2" FontWeight="Bold" HorizontalAlignment="Right"/>
+                            </Grid>
+
+                            <Grid Width="192" x:Name="grdNumberOfSystems">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <!--Antal system-->
+                                <TextBlock x:Name="txtNumberOfSystemsHeader" Text="Antal system:" Style="{StaticResource tbStyle}" FontSize="12" Margin="2" HorizontalAlignment="Left"
+                                       ToolTip="Visar antal system med hänsyn taget till flerbong."/>
+                                <TextBlock x:Name="txtNumberOfSystems" Text="{Binding Path=MarkBet.NumberOfSystems,StringFormat={}{0:N0},ConverterCulture=sv-SE}" Style="{StaticResource tbStyle}" FontSize="12" Grid.Column="1" Margin="2,2,10,2" FontWeight="Bold" HorizontalAlignment="Right"/>
+                            </Grid>
+
+                            <Grid Width="192" x:Name="grdSystemCost">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <!--Kostnad-->
+                                <TextBlock x:Name="txtSystemCostHeader" Text="Kostnad:" Style="{StaticResource tooExpensiveStyle}" FontSize="12" Margin="2" HorizontalAlignment="Left"
+                                       ToolTip="Total kostnad i kronor för det reducerade systemet, med hänsyn taget till flerbong.&#xa;&#xa;OBS! I gratisversionen kan man inte spara kuponger för system över 50 kr (V4), 150 kr (V64/V65) respektive 300 kr (V86)."/>
+                                <TextBlock x:Name="txtSystemCost" Text="{Binding Path=MarkBet.SystemCost,StringFormat={}{0:N2} kr,ConverterCulture=sv-SE}" Style="{StaticResource tooExpensiveStyle}" FontSize="12" FontWeight="Bold" Grid.Column="1" Margin="2,2,10,2" HorizontalAlignment="Right"
+                                       ToolTip="Total kostnad i kronor för det reducerade systemet, med hänsyn taget till flerbong.&#xa;&#xa;OBS! I gratisversionen kan man inte spara kuponger för system över 50 kr (V4), 150 kr (V64/V65) respektive 300 kr (V86)."/>
+                            </Grid>
+
+                            <Grid Width="192" x:Name="grdSystemCostChange">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <!--Kostnadsändring-->
+                                <TextBlock x:Name="txtSystemCostChangeHeader" Text="Differens:" Style="{StaticResource tbStyle}" FontSize="12" Margin="2" HorizontalAlignment="Left"
+                                       ToolTip="Kostnadsändring i kronor och procent för senaste ändring i det reducerade systemet"/>
+                                <TextBlock x:Name="txtSystemCostChange" Style="{StaticResource tbStyle}" FontSize="12" FontWeight="Bold" Grid.Column="1" Margin="2,2,10,2" HorizontalAlignment="Right"
+                                       ToolTip="Kostnadsändring i kronor och procent för senaste ändring i det reducerade systemet">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0:# ### ##0 kr} ({1:P0})">
+                                            <Binding Path="MarkBet.SystemCostChange"/>
+                                            <Binding Path="MarkBet.SystemCostChangeRelative"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+
+                            </Grid>
+
+                            <Grid Width="192" x:Name="grdNumberOfGambledRows">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <!--Inlämnade rader-->
+                                <TextBlock x:Name="txtTotalCouponSizeHeader" Text="Inlämnade rader:" Style="{StaticResource tbStyle}" FontSize="12" Margin="2" HorizontalAlignment="Left"
+                                       ToolTip="Totalt antal inlämnade rader, med hänsyn taget till flerbong."/>
+                                <TextBlock x:Name="txtTotalCouponSize" Text="{Binding Path=MarkBet.TotalCouponSize,StringFormat={}{0:N0},ConverterCulture=sv-SE}" Style="{StaticResource tbStyle}" FontSize="12" FontWeight="Bold" Grid.Column="1" Margin="2,2,10,2" HorizontalAlignment="Right"/>
+                            </Grid>
+
+                            <!--Utdelningsintervall-->
+                            <StackPanel x:Name="spRowValueInterval" Orientation="Horizontal" Grid.ColumnSpan="2" Grid.Row="3" HorizontalAlignment="Left" Width="384">
+                                <TextBlock Text="Utdelningsintervall:" Style="{StaticResource tbStyle}" FontSize="12" Margin="2" HorizontalAlignment="Left"
+                                           ToolTip="Utdelningsintervall för reducerat system (ramsystem)"/>
+                                <TextBlock Style="{StaticResource tbStyle}" FontSize="12" FontWeight="Bold"  Grid.Row="3" Grid.Column="1" Margin="2,2,10,2" HorizontalAlignment="Right">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0:N0} - {1:N0} ({2:N0} - {3:N0})" ConverterCulture="sv-SE">
+                                            <Binding Path="MarkBet.RowValueReductionRule.LowestIncludedSum"/>
+                                            <Binding Path="MarkBet.RowValueReductionRule.HighestIncludedSum"/>
+                                            <Binding Path="MarkBet.RowValueReductionRule.LowestSum"/>
+                                            <Binding Path="MarkBet.RowValueReductionRule.HighestSum"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </StackPanel>
+
+                            <!--Live-beräkning-->
+                            <Grid Width="384" x:Name="grdLiveCalculation">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <ProgressBar Maximum="1" SmallChange="0.01" Value="{Binding Path=MarkBet.SingleRowCollection.AnalyzedRowsShare}"
+                                         ToolTip="Visar hur analysen av enkelrader fortskrider."/>
+                                <TextBlock FontWeight="SemiBold">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0:N0}/{1:N0} rader analyserade ({2:P1})" ConverterCulture="sv-SE">
+                                            <Binding Path="MarkBet.SingleRowCollection.NumberOfAnalyzedRows"/>
+                                            <Binding Path="MarkBet.SystemSize"/>
+                                            <Binding Path="MarkBet.SingleRowCollection.AnalyzedRowsShare"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+
+                                <ProgressBar Grid.Row="1" Maximum="1" SmallChange="0.01" Value="{Binding Path=MarkBet.SingleRowCollection.CoveredRowsShare}"
+                                         ToolTip="Visar hur komprimeringen till kuponger fortskrider."/>
+                                <TextBlock Grid.Row="1" FontWeight="SemiBold">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0:N0} kuponger skapade,{1:N0}/{2:N0} rader täckta ({3:P1})" ConverterCulture="sv-SE">
+                                            <Binding Path="MarkBet.SingleRowCollection.CurrentCouponNumber"/>
+                                            <Binding Path="MarkBet.SingleRowCollection.NumberOfCoveredRows"/>
+                                            <Binding Path="MarkBet.ReducedSize"/>
+                                            <Binding Path="MarkBet.SingleRowCollection.CoveredRowsShare"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+
+                            </Grid>
+                            <!--</Grid>-->
+
+                        </WrapPanel>
+
+                    </GroupBox>
+
+                    <!--ABCD-reducering-->
+                    <GroupBox Name="gbReduction" HeaderTemplate="{StaticResource GroupBoxHeaderCheckBoxTemplate}" 
+                              Mouse.MouseUp="gbReduction_MouseUp" Mouse.MouseDown="gbReduction_MouseUp"
+                              ToolTip="Klicka i hur många hästar inom varje ABCD-grupp som ska vinna"
+                               Grid.Column="1" Grid.RowSpan="2" BorderBrush="Black">
+                        <GroupBox.Header>
+                            <CheckBox x:Name="chkUseABCD" Margin="3" IsChecked="{Binding Path=MarkBet.ABCDEFReductionRule.Use}">
+                                <TextBlock  HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                                FontFamily="Arial" FontSize="12" FontWeight="Bold" Text="ABCD-reducering" />
+                            </CheckBox>
+                        </GroupBox.Header>
+
+                        <!--<GroupBox.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem x:Name="miCalculateProbabilities" Header="Beräkna sannolikheter" Click="miCalculateProbabilities_Click"/>
+                            </ContextMenu>
+                        </GroupBox.ContextMenu>-->
+
+                        <HPT:UCABCDReductionSettings MarkBet="{Binding MarkBet}" DataContext="{Binding Path=MarkBet.ABCDEFReductionRule}" VerticalAlignment="Stretch"/>
+
+                    </GroupBox>
+
+                    <!--Lista med reduceringsvarianter-->
+                    <GroupBox Name="gbReductionList" Background="{StaticResource BackgroundBrush}" Grid.Column="2" Grid.RowSpan="2" HeaderTemplate="{StaticResource GroupBoxHeaderTemplate}" Header="Reducering" 
+                              HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="Black"
+                              ToolTip="Lägg till eller ta bort vilka reduceringstyper som ska användas">
+
+                        <!--<ListBox ItemsSource="{Binding Path=ReductionCheckBoxList}" CheckBox.Checked="ListBox_Checked" CheckBox.Unchecked="ListBox_Checked"-->
+                        <ListBox ItemsSource="{Binding Path=ReductionCheckBoxList}" MaxHeight="108" VerticalAlignment="Bottom" BorderThickness="0" Background="WhiteSmoke">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Vertical" MaxHeight="104"/>
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                        </ListBox>
+
+                    </GroupBox>
+
+                    <!--Fil-->
+                    <GroupBox x:Name="gbFile" Background="{StaticResource BackgroundBrush}" Grid.Column="3" Grid.RowSpan="2" HeaderTemplate="{StaticResource GroupBoxHeaderTemplate}" Header="Fil" 
+                              HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="Black" IsEnabled="{Binding Path=Config.IsPayingCustomer}"
+                              MouseUp="gbReduction_MouseUp">
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition/>
+                                <!--<RowDefinition/>-->
+                            </Grid.RowDefinitions>
+                            <!--<Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>-->
+                            <Grid.Resources>
+                                <Style TargetType="{x:Type Button}">
+                                    <Setter Property="Padding" Value="2"/>
+                                    <Setter Property="Margin" Value="2"/>
+                                    <Setter Property="MinWidth" Value="60"/>
+                                    <Setter Property="Height" Value="24"/>
+                                </Style>
+                            </Grid.Resources>
+
+                            <xctk:SplitButton x:Name="btnBeginnerWizard" Grid.ColumnSpan="3" Content="Skapa ett expressystem" TextElement.FontWeight="Bold" Click="btnBeginnerWizard_Click"/>
+
+                            <WrapPanel Orientation="Horizontal" Grid.Row="1" MaxWidth="300">
+
+                                <xctk:SplitButton x:Name="btnCreateCoupons" Click="btnCreateCoupons_Click" Content="Spara" Margin="2"
+                                                ToolTip="Sparar HPT5-fil med systemet samt XML-fil för inlämning till ATG under 'Mina dokument\HPT Travsystem'.&#xa;&#xa;Kortkommando: Ctrl + S&#xa;&#xa;OBS! I gratisversionen kan man inte spara ATG-fil för system över 50 kr (V4), 150 kr (V64/V65) respektive 300 kr (V86).">
+                                    <xctk:SplitButton.DropDownContent>
+                                        <StackPanel Orientation="Vertical">
+                                            <MenuItem x:Name="miSaveAndGoToATG" Header="Spara och lämna in" Click="miSaveAndGoToATG_Click"/>
+                                            <MenuItem x:Name="miSaveHPT4File" Header="HPT5-fil" Click="miSaveHPT4File_Click"/>
+                                            <MenuItem x:Name="miSaveATGFile" Header="ATG-fil" Click="miSaveATGFile_Click"/>
+                                            <MenuItem x:Name="miSavePicture" Header="Bild för ATG Tillsammans" Click="miSavePicture_Click"/>
+                                        </StackPanel>
+                                    </xctk:SplitButton.DropDownContent>
+                                </xctk:SplitButton>
+
+                                <xctk:SplitButton x:Name="btnCreateCouponsAs" Click="btnCreateCouponsAs_Click" Content="Spara som" Margin="2" 
+                                            ToolTip="Sparar HPT5-fil med systemet samt XML-fil för inlämning till ATG med valfritt namn&#xa;&#xa;OBS! I gratisversionen kan man inte spara ATG-fil för system över 50 kr (V4), 150 kr (V64/V65) respektive 300 kr (V86).">
+                                    <xctk:SplitButton.DropDownContent>
+                                        <StackPanel Orientation="Vertical">
+                                            <MenuItem x:Name="miSaveHPT4FileAs" Header="HPT5-fil" Click="miSaveHPT4FileAs_Click"/>
+                                            <MenuItem x:Name="miSaveATGFileAs" Header="ATG-fil" Click="miSaveATGFileAs_Click"/>
+                                        </StackPanel>
+                                    </xctk:SplitButton.DropDownContent>
+                                </xctk:SplitButton>
+
+                                <xctk:SplitButton x:Name="btnCopy" Click="btnCopy_Click" Content="Kopiera" Margin="2"
+                                ToolTip="Kopierar information om systemet till klippbordet, använd Ctrl-V för att klistra in i mail eller dokument.&#xa;&#xa;Kortkommando: Ctrl + C">
+                                    <xctk:SplitButton.DropDownContent>
+                                        <StackPanel Orientation="Vertical">
+                                            <MenuItem x:Name="miCopySystem" Header="Systeminformation" Click="miCopySystem_Click"/>
+                                            <MenuItem x:Name="miCopySingleRows" Header="Enkelrader" Click="miCopySingleRows_Click"/>
+                                            <MenuItem x:Name="miCopyCoupons" Header="Kuponger" Click="miCopyCoupons_Click"/>
+                                            <MenuItem x:Name="miCopyHorseRank" Header="Snittrankordning" Click="miCopyHorseRank_Click"/>
+                                            <MenuItem x:Name="miCopyOwnRank" Header="Egen rankordning" Click="miCopyOwnRank_Click"/>
+                                            <MenuItem x:Name="miCopyCompactSystemInfo" Header="Kompakt ABC-info" Click="miCopyCompactSystemInfo_Click"/>
+                                        </StackPanel>
+                                    </xctk:SplitButton.DropDownContent>
+                                </xctk:SplitButton>
+
+                                <xctk:SplitButton x:Name="btnPrint" Click="btnPrint_Click" Content="Skriv ut" Margin="2"
+                                            ToolTip="Skriver ut all information om systemet.&#xa;&#xa;Kortkommando: Ctrl + P">
+                                    <xctk:SplitButton.DropDownContent>
+                                        <StackPanel Orientation="Vertical">
+                                            <MenuItem x:Name="miPrintXPS" Header="XPS" Click="miPrintXPS_Click"/>
+                                            <MenuItem x:Name="miPrintText" Header="Enbart text" Click="miPrintText_Click"/>
+                                        </StackPanel>
+                                    </xctk:SplitButton.DropDownContent>
+                                </xctk:SplitButton>
+
+                                <xctk:SplitButton x:Name="btnClearAll" Click="btnClearAll_Click" Content="Rensa" Margin="2"
+                            ToolTip="Rensar alla valda hästar och reduceringar.&#xa;&#xa;Kortkommando: Ctrl + R">
+                                    <xctk:SplitButton.DropDownContent>
+                                        <StackPanel Orientation="Vertical">
+                                            <MenuItem x:Name="miClearReductions" Header="Reduceringar" Click="miClearReductions_Click"/>
+                                            <MenuItem x:Name="miClearABCD" Header="ABCD-val" Click="miClearABCD_Click"/>
+                                        </StackPanel>
+                                    </xctk:SplitButton.DropDownContent>
+                                </xctk:SplitButton>
+
+                                <xctk:SplitButton x:Name="btnUploadSystem" Content="Ladda upp" Margin="2" Click="miUploadCompleteSystem_Click"
+                            ToolTip="Laddar upp system till HPTs server så man kan rätta systemet i mobilen">
+                                    <xctk:SplitButton.DropDownContent>
+                                        <StackPanel Orientation="Vertical">
+                                            <MenuItem x:Name="miCopySystemGUIDToClipboard" Header="Kopiera rättningslänk till klippbordet" Click="miCopySystemGUIDToClipboard_Click"/>
+                                            <!--<MenuItem x:Name="miMailSystemInfoToOwnMail" Header="Maila adress och system till dig själv" Click="miMailSystemInfoToOwnMail_Click"/>-->
+                                            <MenuItem x:Name="miOpenCorrectionURL" Header="Öppna rättningssida i webbläsaren" Click="miOpenCorrectionURL_Click"/>
+                                            <!--<MenuItem x:Name="miUploadCompleteSystem" Header="Ladda upp komplett system" Click="miUploadCompleteSystem_Click"/>-->
+                                            <!--<MenuItem x:Name="miUploadOnlineSystem" Header="Ladda upp system till HPT Online" Click="miUploadOnlineSystem_Click"/>-->
+                                            <!--<MenuItem x:Name="miUploadCompleteSystem" Header="Skapa rättningslänk" Click="btnUploadSystem_Click"/>-->
+                                        </StackPanel>
+                                    </xctk:SplitButton.DropDownContent>
+                                </xctk:SplitButton>
+
+                            </WrapPanel>
+                        </Grid>
+
+                    </GroupBox>
+
+                </Grid>
+            </Expander.Header>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <GroupBox x:Name="gbOverview" Background="{StaticResource BackgroundBrush}"  HeaderTemplate="{StaticResource GroupBoxHeaderTemplate}" Header="Översikt" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="Black">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <ListBox x:Name="lst" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" ItemsSource="{Binding RaceList}" ContextMenu="{x:Null}"
+                                  Background="{StaticResource BackgroundBrush}" Grid.ColumnSpan="3" MouseRightButtonUp="lst_MouseRightButtonUp">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid HorizontalAlignment="Stretch">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="24"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        
+                                        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="14" FontWeight="SemiBold" Foreground="Black" Text="{Binding LegNrString}" Grid.Column="0" Padding="2,0,3,0"/>
+
+                                        <ItemsControl x:Name="icHorseList" ItemsSource="{Binding HorseList}" ItemTemplate="{StaticResource CheckBoxSystemTemplate}"                                                 
+                                                      Grid.Column="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" MinWidth="{Binding Path=OverviewMinWidth,ElementName=ucMarksGame}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch"/>
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                        </ItemsControl>
+                                        
+                                        <!--<ItemsControl x:Name="icHorseList" ItemsSource="{Binding HorseList}" ItemTemplate="{StaticResource CheckBoxSystemTemplate}"                                                 
+                                                      Grid.Column="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" MinWidth="360">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch"/>
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                        </ItemsControl>-->
+
+                                        <TextBlock HorizontalAlignment="Stretch" VerticalAlignment="Center" TextAlignment="Right" FontFamily="Arial" FontSize="14" FontWeight="SemiBold" Foreground="Black" 
+                                                   Text="{Binding NumberOfSelectedHorses}" Grid.Column="2" Padding="5,0,1,0"/>
+
+                                        <CheckBox x:Name="chkLocked" Grid.Column="3" Margin="5,0,1,0" Padding="0" Width="Auto"
+                                                  Template="{StaticResource CheckBoxControlTemplate}" IsChecked="{Binding Locked}"
+                                                  Visibility="{Binding RaceLockVisibility,ElementName=ucMarksGame}">
+                                            <TextBlock Text="Lås" FontSize="10" Padding="2" Foreground="Black" FontWeight="Bold"/>
+                                        </CheckBox>
+
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+                </GroupBox>
+
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                </Grid>
+
+                <Grid Grid.Column="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                </Grid>
+
+                <GroupBox x:Name="gbSettings" Background="{StaticResource BackgroundBrush}" Grid.Column="3"
+                          HeaderTemplate="{StaticResource GroupBoxHeaderTemplate}" Header="Inställningar" BorderBrush="Black">
+                    <!--Header="Inställningar" BorderBrush="Black" Width="380">-->
+
+                    <Grid>
+                        <!--<Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="1.6*"/>
+                        </Grid.ColumnDefinitions>-->
+
+                        <StackPanel Orientation="Vertical">
+
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Text="{Binding MarkBet.TimeStampString}" VerticalAlignment="Center" Style="{StaticResource tbStyle}"/>
+
+                                <ComboBox x:Name="cmbUpdateInterval" Text="Uppdateringsintervall" HorizontalAlignment="Stretch" 
+                                        Margin="2" SelectionChanged="cmbUpdateInterval_SelectionChanged" Grid.Column="1">
+                                    <ComboBoxItem Content="Aldrig" Tag="0"/>
+                                    <ComboBoxItem Content="Var 3:e minut" Tag="3"/>
+                                    <ComboBoxItem Content="Var 5:e minut" Tag="5"/>
+                                    <ComboBoxItem Content="Var 10:e minut" Tag="10"/>
+                                    <ComboBoxItem Content="Var 15:e minut" Tag="15"/>
+                                    <ComboBoxItem Content="Var 20:e minut" Tag="20"/>
+                                    <ComboBoxItem Content="En gång i halvtimmen" Tag="30"/>
+                                    <ComboBoxItem Content="En gång i timmen" Tag="60"/>
+                                </ComboBox>
+
+                                <Button x:Name="btnUpdate" ToolTip="Hämtar senaste odds- och streckinformationen från ATG" Click="btnUpdate_Click" 
+                                        Content="Uppdatera" Width="Auto" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="2" Grid.Column="2"/>
+                            </Grid>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock x:Name="txtReservHandling" Text="Reserver" Style="{StaticResource tbStyle}" VerticalAlignment="Center"
+                                       ToolTip="Välj hur du vill att reservhanteringen ska fungera"/>
+
+                                <ComboBox x:Name="cmbReservHandling" Margin="2" MinWidth="100" IsEditable="False" 
+                                      IsReadOnly="False" SelectionChanged="cmbReservHandling_SelectionChanged" HorizontalAlignment="Stretch" Grid.Column="1">
+                                    <ComboBoxItem Content="Ingen (ATGs turordning)" Tag="1"/>
+                                    <ComboBoxItem Content="Mest spelade (valda hästar)" Tag="2"/>
+                                    <ComboBoxItem Content="Mest spelade (icke valda hästar)" Tag="3"/>
+                                    <ComboBoxItem Content="Egen rank (valda hästar)" Tag="4"/>
+                                    <ComboBoxItem Content="Egen rank (icke valda hästar)" Tag="5"/>
+                                    <ComboBoxItem Content="Snittrank (valda hästar)" Tag="6"/>
+                                    <ComboBoxItem Content="Snittrank (icke valda hästar)" Tag="7"/>
+                                    <ComboBoxItem Content="Vinnarodds (valda hästar)" Tag="8"/>
+                                    <ComboBoxItem Content="Vinnarodds (icke valda hästar)" Tag="9"/>
+                                    <ComboBoxItem Content="Nästa rank (valda hästar)" Tag="10"/>
+                                    <ComboBoxItem Content="Nästa rank (icke valda hästar)" Tag="11"/>
+                                </ComboBox>
+                            </Grid>
+                            <!--<Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                        <CheckBox x:Name="chkCouponCompression" Grid.Row="2" Margin="2,2,10,2"
+                                      IsChecked="{Binding Path=MarkBet.CompressCoupons}"
+                                      VerticalAlignment="Center" HorizontalAlignment="Left">
+                            <TextBlock Text="Kupongkomprimering" Style="{StaticResource tbStyle}" VerticalAlignment="Center"
+                                       ToolTip="Välj hur kuponger för inlämning till ATG ska skapas"/>
+                        </CheckBox>
+
+                        <ComboBox x:Name="cmbCouponCompression" Margin="2" MinWidth="100" IsEditable="False" 
+                                      IsReadOnly="False" SelectionChanged="cmbCouponCompression_SelectionChanged" HorizontalAlignment="Stretch" Grid.Column="1">
+                            <ComboBoxItem Content="Standard" Tag="0" 
+                                              ToolTip="Programmet väljer hur kupongerna skapas utifrån valda reduceringsvillkor och systemstorlek"/>
+                            <ComboBoxItem Content="Snabbast" Tag="1"
+                                              ToolTip="Programmet väljer snabbaste sätt att skapa kupongerna utifrån valda reduceringsvillkor och systemstorlek"/>
+                            <ComboBoxItem Content="Minst antal kuponger" Tag="2"
+                                              ToolTip="Programmet skapar så få och stora kuponger som möjligt (kan vara långsamt vid stora system)."/>
+                            <ComboBoxItem Content="Ingen (enkelrader)" Tag="3"
+                                              ToolTip="Ingen komprimering till kuponger sker. Varje enkelrad blir en egen kupong."/>
+                            <ComboBoxItem Content="Flertrådad (V6/flerbong)" Tag="4"
+                                              ToolTip="Komprimering sker i flera parallella trådar. Ger snabbare komprimering om man använder V6/flerbong för enkelrader, eller om man har väldigt stora system (större än 20 000 rader)."/>
+                        </ComboBox>
+</Grid>-->
+
+                            <CheckBox x:Name="chkV6" Grid.Row="3" Margin="2" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                  Visibility="{Binding Path=MarkBet.V6Visibility}" IsChecked="{Binding Path=MarkBet.V6}"
+                                  ToolTip="Kryssa för om du enbart vill delta i potten för alla rätt">
+                                <!--<TextBlock Text="Spela bara V6/V7/V8" Style="{StaticResource tbStyle}"/>-->
+                                <TextBlock Text="Spela bara V6/V7" Style="{StaticResource tbStyle}"/>
+                            </CheckBox>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock x:Name="txtBetMultiplier" Text="Flerbong" Style="{StaticResource tbStyle}" VerticalAlignment="Center"
+                                       ToolTip="Välj om du vill lämna in systemet flera gånger" Grid.Column="0"/>
+
+                                <xctk:IntegerUpDown x:Name="iudBetMultiplier" Margin="2" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" TextBlock.TextAlignment="Right" Grid.Column="1"
+                                                Increment="1" Minimum="1" Maximum="1000" Value="{Binding Path=MarkBet.BetMultiplier}">
+                                </xctk:IntegerUpDown>
+
+                            </Grid>
+
+                            <CheckBox x:Name="chkAutomaticRecalculation" Grid.Row="4" Margin="2" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2"
+                                  IsChecked="True" Checked="chkAutomaticRecalculation_Checked" Unchecked="chkAutomaticRecalculation_Checked"
+                                  ToolTip="Bocka ur om du inte vill att beräkningar ska ske automatiskt">
+                                <TextBlock Text="Automatisk beräkning" Style="{StaticResource tbStyle}"/>
+                            </CheckBox>
+
+                        </StackPanel>
+                    </Grid>
+
+                </GroupBox>
+
+                <!--Mallar-->
+                <GroupBox x:Name="gbTemplates" Grid.Column="4" Background="{StaticResource BackgroundBrush}" HeaderTemplate="{StaticResource GroupBoxHeaderTemplate}" Header="Mallar" BorderBrush="Black" MinWidth="200" MaxWidth="300">
+                    <StackPanel Orientation="Vertical">
+
+                        <!--<TextBlock Text="Välj mall" Style="{StaticResource tbMediumStyle}" Margin="2" FontSize="12"/>-->
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Välj mall" Style="{StaticResource tbMediumStyle}" Margin="2" FontSize="12"/>
+                            <ComboBox x:Name="cmbTemplates" Grid.Column="1" ItemsSource="{Binding Path=MarkBet.MarkBetTemplateList}" HorizontalAlignment="Stretch" SelectedIndex="0"  SelectionChanged="cmbTemplates_SelectionChanged" Margin="2"/>
+                            <Button Grid.Column="2" x:Name="btnApplyTemplate" Content="Beräkna" Click="btnApplyTemplate_Click" Margin="1" HorizontalAlignment="Stretch" />
+                        </Grid>
+
+                        <!--<TextBlock Text="Förslag" Style="{StaticResource tbMediumStyle}" Margin="2" FontSize="12"/>
+                        <ComboBox x:Name="cmbTemplateResults" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Path=MarkBet.TemplateResultList}" HorizontalAlignment="Stretch" SelectedIndex="0"  SelectionChanged="cmbTemplateResults_SelectionChanged" Margin="2"/>-->
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Förslag" Style="{StaticResource tbMediumStyle}" Margin="2" FontSize="12"/>
+                            <ComboBox x:Name="cmbTemplateResults" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Path=MarkBet.TemplateResultList}" HorizontalAlignment="Stretch" SelectedIndex="0"  SelectionChanged="cmbTemplateResults_SelectionChanged" Margin="2"/>
+                        </Grid>
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="{Binding Path=MarkBet.NumberOfTestedTemplates,StringFormat={}Testade: {0:N0},ConverterCulture=sv-SE}"/>
+
+                            <TextBlock Text="{Binding Path=MarkBet.NumberOfAddedTemplates,StringFormat={}Tillagda: {0:N0},ConverterCulture=sv-SE}" Grid.Row="1"/>
+
+                            <Button Grid.Column="1" Grid.RowSpan="2" x:Name="btnInterruptTemplateCalculation" Content="Avbryt" 
+                                    Click="btnInterruptTemplateCalculation_Click" Margin="1,3" HorizontalAlignment="Stretch"
+                                    IsEnabled="{Binding Path=MarkBet.IsCalculatingTemplates}"/>
+                        </Grid>
+
+                    </StackPanel>
+                </GroupBox>
+
+            </Grid>
+        </Expander>
+
+        <!--Inställning för profil-->
+        <!--<Border x:Name="bdrGUIProfile"  BorderBrush="Red" BorderThickness="1" Background="{StaticResource BackgroundBrush}" Grid.Row="5" Visibility="Collapsed">
+            <StackPanel Orientation="Horizontal" Margin="3">
+                <TextBlock Style="{StaticResource ResourceKey=tbMediumStyle}" Foreground="{StaticResource SelectedBrush}" Text="Just nu visas förenklat gränssnitt, vill du ändra?"/>
+                <ComboBox x:Name="cmbGUIProfile" Text="Gränssnitt" Width="100" HorizontalAlignment="Stretch" Margin="2" SelectionChanged="cmbGUIProfile_SelectionChanged">
+                    <ComboBoxItem Content="Förenklat" Tag="0"/>
+                    <ComboBoxItem Content="Standard" Tag="1"/>
+                    <ComboBoxItem Content="Komplett" Tag="2"/>
+                </ComboBox>
+                <Button x:Name="btnSelectGUIProfile" Content="Välj" Margin="1" Padding="3,1" Click="btnSelectGUIProfile_Click"/>
+                <Button x:Name="btnIgnoreGUIProfileSelection" Content="Ignorera" Margin="1" Padding="3,1" Click="btnIgnoreGUIProfileSelection_Click"/>
+            </StackPanel>
+        </Border>-->
+
+    </Grid>
+</HPT:UCMarkBetControl>

@@ -1,0 +1,62 @@
+﻿<Window x:Class="HPTClient.HPTAboutBox"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Hjälp på traven 5!" Height="340" Width="500" WindowStyle="None">
+    <Window.Resources>
+        <LinearGradientBrush x:Key="StandardBrush" EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="AliceBlue" Offset="0"/>
+            <GradientStop Color="LightBlue" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Resources>
+    <Grid Background="{StaticResource StandardBrush}">
+        <Border BorderBrush="Black" BorderThickness="3">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="3*" />
+                </Grid.ColumnDefinitions>
+                <Image Source="HptLogoSmall.png" Grid.Row="0" Grid.Column="0" Height="96" Width="96"/>
+                <TextBlock Name="tbHPT" Text="Hjälp på Traven!" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Black" FontSize="32" FontWeight="Bold" />
+                
+                <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="2" HorizontalAlignment="Center">
+                    <Hyperlink x:Name="hlHomePage" NavigateUri="http://www.hpt.nu" Click="hlHomePage_Click">
+                        <TextBlock Text="Hemsida: http://www.hpt.nu" FontSize="16"/>
+                    </Hyperlink>
+                </TextBlock>
+                
+                <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="2" HorizontalAlignment="Center">
+                    <Hyperlink x:Name="hlMail" NavigateUri="mailto:hjalp.pa.traven@gmail.com" Click="hlHomePage_Click">
+                        <TextBlock Text="Mail: hjalp.pa.traven@gmail.com" FontSize="16"/>
+                    </Hyperlink>
+                </TextBlock>
+                
+                <Button x:Name="btnClose" Content="Stäng" TextBlock.FontWeight="Black"  Margin="5" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Click="btnClose_Click" HorizontalAlignment="Right" Width="50" Height="25"/>
+
+                <TextBlock Text="Version 5.33" Grid.Row="3" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                <TextBlock Name="tbATGInfo" FontStyle="Italic"
+                           Text="All information i Hjälp på traven tillhandahålls enligt samarbetsavtal med ATG. Samtliga rättigheter i materialet (upphovsrätt och databasrätt) tillhör ATG och får användas av annan endast efter avtal med ATG." 
+                           Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkBlue" FontSize="13" TextWrapping="Wrap" />
+
+                <!--<TextBlock Name="tbATGSpelAnsvar" FontStyle="Italic"
+                           Text="Hjälp på traven delar ATGs grundläggande inställning till spelansvarsfrågor som den framgår på" 
+                           Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkBlue" FontSize="13" TextWrapping="Wrap" />-->
+
+                <TextBlock Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Margin="2" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Hyperlink x:Name="hlATGSpelAnsvar" NavigateUri="https://www.atg.se/spelansvar/om-spelansvar" Click="hlATGSpelAnsvar_Click">
+                        <TextBlock Text="Hjälp på traven delar ATGs grundläggande inställning till spelansvarsfrågor som den framgår på atg.se/spelansvar/om-spelansvar" FontSize="13" TextWrapping="Wrap" FontStyle="Italic"/>
+                    </Hyperlink>
+                </TextBlock>
+
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
