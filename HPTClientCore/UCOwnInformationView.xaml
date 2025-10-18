@@ -160,9 +160,9 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <Label Margin="1,0" Padding="1,0">
+                                    <!--<Label Margin="1,0" Padding="1,0">
                                         <Hyperlink x:Name="hlSTHorseLink" NavigateUri="{Binding Path=STLink}">HPT</Hyperlink>
-                                    </Label>
+                                    </Label>-->
                                     <Label Margin="1,0" Padding="1,0">
                                         <Hyperlink x:Name="hlSTHorseLinkExternal" NavigateUri="{Binding Path=STLink}" RequestNavigate="hlSTHorseLinkExternal_RequestNavigate">Webbläsare</Hyperlink>
                                     </Label>

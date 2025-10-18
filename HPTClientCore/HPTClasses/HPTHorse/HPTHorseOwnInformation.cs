@@ -400,7 +400,7 @@ namespace HPTClient
             }
         }
 
-        public string STLink   // För Saxade banor
+        public string STLink
         {
             get
             {
@@ -408,7 +408,7 @@ namespace HPTClient
             }
         }
 
-        public DateTime LastUpdate   // För Saxade banor
+        public DateTime LastUpdate
         {
             get
             {

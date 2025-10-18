@@ -1926,7 +1926,7 @@ namespace HPTClient
 
                 // Uppdatera tränarinformationen
                 horse.TrainerInfo = startInfo.horse.trainer;
-                horse.TrainerInfo.statistics.years
+                horse.TrainerInfo?.statistics?.years
                     .ToList()
                     .ForEach(y =>
                     {

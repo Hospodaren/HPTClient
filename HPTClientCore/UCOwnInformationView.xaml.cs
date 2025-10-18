@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -54,8 +55,20 @@ namespace HPTClient
 
         private void hlSTHorseLinkExternal_RequestNavigate(object sender, RequestNavigateEventArgs e)
         {
+            //https://sportapp.travsport.se/sportinfo/horse/ts771078/pedigree
             var hl = (Hyperlink)e.OriginalSource;
-            System.Diagnostics.Process.Start(hl.NavigateUri.AbsoluteUri);
+            GoToUrl(hl.NavigateUri.AbsoluteUri);
+            //System.Diagnostics.Process.Start(hl.NavigateUri.AbsoluteUri);
+        }
+
+        private void GoToUrl(string url)
+        {
+            var psi = new ProcessStartInfo
+            {
+                FileName = url,
+                UseShellExecute = true
+            };
+            Process.Start(psi);
         }
 
         private void GridViewColumnHeader_Click(object sender, RoutedEventArgs e)

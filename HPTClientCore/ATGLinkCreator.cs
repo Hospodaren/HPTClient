@@ -5,16 +5,20 @@ namespace HPTClient
     class ATGLinkCreator
     {
         internal const string ATGBaseUrl = "https://www.atg.se/spel/";
-        internal const string STBaseUrl = "https://www.travsport.se/hast/visa/";
+        //internal const string STBaseUrl = "https://www.travsport.se/hast/visa/";
+        //internal string STBaseUrl = $"https://sportapp.travsport.se/sportinfo/horse/ts{}/pedigree";
+        //https://sportapp.travsport.se/sportinfo/horse/ts771078/pedigree
 
         internal static string CreateSTHorseLink(HPTHorse horse)
         {
-            return STBaseUrl + horse.ATGId;
+            return $"https://sportapp.travsport.se/sportinfo/horse/ts{horse.ATGId}/pedigree";
+            //return STBaseUrl + horse.ATGId;
         }
 
         internal static string CreateSTHorseLink(string atgId)
         {
-            return STBaseUrl + atgId;
+            return $"https://sportapp.travsport.se/sportinfo/horse/ts{atgId}/pedigree";
+            //return STBaseUrl + atgId;
         }
 
         // Resultat i Json-format: https://www.atg.se/services/v1/horses/693542/results?stopdate=2015-09-24
