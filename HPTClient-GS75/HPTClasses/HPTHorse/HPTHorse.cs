@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Media;
 using System.Xml.Serialization;
-using System.Collections.ObjectModel;
-using System.Reflection;
-using System.Runtime.Serialization;
-using System.Globalization;
 
 namespace HPTClient
 {
@@ -71,7 +70,7 @@ namespace HPTClient
                 this.Scratched = horse.Scratched;
                 //this.VinnaroddsColor = new SolidColorBrush(Colors.Gray);
             }
-            
+
             // Vinnare
             this.VinnarOdds = horse.VPInfo.VinnarOdds > 0 ? horse.VPInfo.VinnarOdds : this.VinnarOdds;  // Bakåtkompatibilitet
             this.VinnarOddsExact = horse.VPInfo.VinnarOddsExact > 0M ? horse.VPInfo.VinnarOddsExact : this.VinnarOddsExact;
@@ -201,7 +200,7 @@ namespace HPTClient
                     Text = horse.StartInfo.SulkyInfoCurrent.Text
                 };
             }
-            else if(horse.StartInfo != null && horse.StartInfo.SulkyInfoCurrent != null)
+            else if (horse.StartInfo != null && horse.StartInfo.SulkyInfoCurrent != null)
             {
                 this.SulkyInfoCurrent.Text = horse.StartInfo.SulkyInfoCurrent.Text;
             }
@@ -267,7 +266,7 @@ namespace HPTClient
             }
 
             // Resultat i loppet om det är klart
-            HandleHorseResultInfo(horse, this);          
+            HandleHorseResultInfo(horse, this);
 
             // Beräkna härledda variabler
             CalculateDerivedValues();
@@ -605,7 +604,7 @@ namespace HPTClient
                     decimal time = decimal.Parse(rexTime.Match(horseResult.Time).Value, swedishCulture);
                     return time + secondsToAdd;
                 }
-                
+
             }
             catch (Exception exc)
             {
@@ -750,7 +749,7 @@ namespace HPTClient
                 {
                     this.StakeDistributionShare = Convert.ToDecimal(this.StakeDistribution) / Convert.ToDecimal(this.ParentRace.ParentRaceDayInfo.Turnover);
                 }
-                
+
                 // Strukna hästar
                 if (this.scratched == true && this.Selected)
                 {
@@ -805,7 +804,7 @@ namespace HPTClient
                     if (yearStatistics.NumberOfStarts > 0)
                     {
                         yearStatistics.EarningMean = yearStatistics.Earning / yearStatistics.NumberOfStarts;
-                    }  
+                    }
                 }
 
                 // Hitta rekord
@@ -867,11 +866,11 @@ namespace HPTClient
                     this.EarningsMeanLast3 = Convert.ToInt32(last3Results.Average(r => Convert.ToInt32(r.Earning)));
                     this.RecordWeighedLast3 = last3Results.Average(r => r.TimeWeighed);
                     this.MeanPlaceLast3 = Convert.ToDecimal(last3Results.Average(r => r.Place));
-                }  
-              
+                }
+
             }
         }
-        
+
         internal void SetWeighedRecords()
         {
             foreach (var record in this.RecordList)
@@ -1006,9 +1005,9 @@ namespace HPTClient
 
         [DataMember]
         public string OwnerName { get; set; }
-        
+
         public int DistanceFromHomeTrack { get; set; }
-        
+
         public string HomeTrackInfo { get; set; }
 
         public string STLink
@@ -1104,7 +1103,7 @@ namespace HPTClient
         }
 
         private decimal historyRelativeDifferenceUnadjusted;
-        [HorseRank("Trend", 3, true, false, HPTRankCategory.MarksAndOdds,true)]
+        [HorseRank("Trend", 3, true, false, HPTRankCategory.MarksAndOdds, true)]
         [DataMember]
         public decimal HistoryRelativeDifferenceUnadjusted
         {
@@ -1160,7 +1159,7 @@ namespace HPTClient
                 return;
             }
 
-            decimal newestStakeShare = this.HorseHistoryInfoGroupedList.First().StakeHistoryMain.StakeShare;            
+            decimal newestStakeShare = this.HorseHistoryInfoGroupedList.First().StakeHistoryMain.StakeShare;
             if (newestStakeShare > 0M)
             {
                 decimal oldestStakeShare = this.HorseHistoryInfoGroupedList.Last(hh => hh.StakeHistoryMain.StakeShare > 0M).StakeHistoryMain.StakeShare;
@@ -1225,7 +1224,7 @@ namespace HPTClient
             //    this.HistoryRelativeDifferencePlatsUnadjusted = (newestPlatsShare / horseHistoryPlats.PlatsOddsShare) - 1M;
             //}
         }
-        
+
         public Brush HistoryRelativeDifferenceColour
         {
             get
@@ -1489,7 +1488,7 @@ namespace HPTClient
         //        OnPropertyChanged("PercentFirst");
         //    }
         //}
-        
+
         //private int? percentSecond;
         //[DataMember(IsRequired = false, EmitDefaultValue = false)]
         //public int? PercentSecond
@@ -1504,7 +1503,7 @@ namespace HPTClient
         //        OnPropertyChanged("PercentSecond");
         //    }
         //}
-        
+
         //private int? percentThird;
         //[DataMember(IsRequired = false, EmitDefaultValue = false)]
         //public int? PercentThird
@@ -1519,7 +1518,7 @@ namespace HPTClient
         //        OnPropertyChanged("PercentThird");
         //    }
         //}
-        
+
         //private decimal percentFirstRelative;
         //public decimal PercentFirstRelative
         //{
@@ -1840,9 +1839,9 @@ namespace HPTClient
                 OnPropertyChanged("StakeDistributionShareFinal");
             }
         }
-        
+
         public decimal StakeShareRounded { get; set; }
-        
+
         public decimal StakeShareWithoutScratchings { get; set; }
 
         private decimal stakeDistributionShareAccumulated;
@@ -1948,7 +1947,7 @@ namespace HPTClient
                 OnPropertyChanged("PlatsOddsString");
             }
         }
-        
+
         private bool notScratched;
         [XmlIgnore]
         public bool NotScratched
@@ -1963,7 +1962,7 @@ namespace HPTClient
                 OnPropertyChanged("NotScratched");
             }
         }
-        
+
         private bool? scratched;
         [DataMember]
         public bool? Scratched
@@ -1972,7 +1971,7 @@ namespace HPTClient
             {
                 return scratched;
             }
-            set 
+            set
             {
                 if (value == true)
                 {
@@ -2114,7 +2113,7 @@ namespace HPTClient
                 OnPropertyChanged("RankTip");
             }
         }
-        
+
         private bool selectedFromTip;
         [XmlIgnore]
         public bool SelectedFromTip
@@ -2180,7 +2179,7 @@ namespace HPTClient
         public string DriverId { get; set; }
 
         public HPTPerson Driver { get; set; }
-        
+
         public ATGDriverInformation DriverInfo { get; set; }
 
         public ATGTrainerInformation TrainerInfo { get; set; }
@@ -2197,7 +2196,7 @@ namespace HPTClient
         #endregion
 
         #region HPT properties
-        
+
         private bool? reserv1;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public bool? Reserv1
@@ -2222,7 +2221,7 @@ namespace HPTClient
                     this.Reserv2 = null;
             }
         }
-        
+
         private bool? reserv2;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public bool? Reserv2
@@ -2247,13 +2246,14 @@ namespace HPTClient
                     this.Reserv1 = null;
             }
         }
-        
+
         [XmlIgnore]
         public HPTRace ParentRace { get; set; }
 
         private bool selected;
         [DataMember]
-        public bool Selected {
+        public bool Selected
+        {
             get
             {
                 return selected;
@@ -2283,14 +2283,14 @@ namespace HPTClient
                 {
                     this.Driver.SetNameAndNumberOfHorse();
                     this.Trainer.SetNameAndNumberOfHorse();
-                }                
+                }
                 if (this.ParentRace != null)
                 {
                     this.ParentRace.SetNumberOfSelectedHorses(this.ParentRace.LegNr, this.StartNr, this.Selected);
                 }
             }
         }
-        
+
         private bool? locked;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public bool? Locked
@@ -2508,7 +2508,7 @@ namespace HPTClient
 
                 if (this.selected)
                 {
-                    ActivateABCDChanged(); 
+                    ActivateABCDChanged();
                 }
                 else
                 {
@@ -2695,8 +2695,8 @@ namespace HPTClient
                 {
                     c = HPTConfig.Config.ColorGood;
                 }
-            }            
-            
+            }
+
             if (this.Scratched == true)
             {
                 c = Colors.Gray;
@@ -2706,7 +2706,8 @@ namespace HPTClient
 
         private Brush platsoddsColor;
         [XmlIgnore]
-        public Brush PlatsoddsColor {
+        public Brush PlatsoddsColor
+        {
             get
             {
                 Color c = Colors.White;
@@ -2817,7 +2818,7 @@ namespace HPTClient
                 return marksPercentColor;
             }
         }
-        
+
         private bool? driverChanged;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public bool? DriverChanged
@@ -2882,7 +2883,7 @@ namespace HPTClient
         [HorseRank("ATG-rank", 51, false, false, HPTRankCategory.Rest, false, false, "", "StartPoint", "## ### ##0", 0D)]
         [GroupReduction("ATG-rank", 6, 1D, 15D, 1D, 1D, 16D)]
         [DataMember]
-        public int RankATG 
+        public int RankATG
         {
             get
             {
@@ -2974,7 +2975,7 @@ namespace HPTClient
                 }
             }
         }
-        
+
         private int rankAlternate;
         [HorseRank("Poäng", 53, false, false, HPTRankCategory.Rest, false, false, "", "", "", 0D)]
         [GroupReduction("Poäng", 7, 1D, 100D, 1D, 1D, 16D)]
@@ -3055,7 +3056,7 @@ namespace HPTClient
         #endregion
 
         #region Calculated properties
-        
+
         public string HexCode
         {
             get
@@ -3096,7 +3097,7 @@ namespace HPTClient
             {
                 return;
             }
-            var shareList = new List<decimal>(){this.VinnarOddsShare,this.PlatsOddsShare};
+            var shareList = new List<decimal>() { this.VinnarOddsShare, this.PlatsOddsShare };
             //shareList.Add(this.StakeDistributionShare);
             //shareList.Add(this.VinnarOddsShare);
             //shareList.Add(this.PlatsOddsShare);
@@ -3533,7 +3534,7 @@ namespace HPTClient
                 return daysBetweenStarts;
             }
         }
-        
+
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public decimal? Shape { get; set; }
 
@@ -3648,7 +3649,7 @@ namespace HPTClient
                 OnPropertyChanged("TvillingShare");
             }
         }
-        
+
         private decimal? doubleShare;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public decimal? DoubleShare
@@ -3663,7 +3664,7 @@ namespace HPTClient
                 OnPropertyChanged("DoubleShare");
             }
         }
-        
+
         private decimal? trioShare;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public decimal? TrioShare
@@ -3678,7 +3679,7 @@ namespace HPTClient
                 OnPropertyChanged("TrioShare");
             }
         }
-        
+
         private decimal? stakeShareAlternate;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public decimal? StakeShareAlternate
@@ -3715,7 +3716,7 @@ namespace HPTClient
             {
                 decimal stakeShareAlternate = Convert.ToDecimal(this.StakeShareAlternate);
                 decimal stakeShareAlternate2 = Convert.ToDecimal(this.StakeShareAlternate2);
-                
+
                 if (stakeShareAlternate > 0M && stakeShareAlternate2 > 0M)
                 {
                     return (stakeShareAlternate + stakeShareAlternate2) / 2M;
@@ -3740,7 +3741,7 @@ namespace HPTClient
         {
             this.RankMeanTotal = Convert.ToDecimal(this.RankList.Select(hr => hr.Rank).Average());
             decimal variance =
-                this.RankList.Select(hr => hr.Rank).Average(r => (r - this.RankMeanTotal)*(r - this.RankMeanTotal));
+                this.RankList.Select(hr => hr.Rank).Average(r => (r - this.RankMeanTotal) * (r - this.RankMeanTotal));
             this.RankStDev = Convert.ToDecimal(Math.Sqrt(Convert.ToDouble(variance)));
         }
 

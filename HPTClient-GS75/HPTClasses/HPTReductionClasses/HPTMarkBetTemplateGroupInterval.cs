@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Collections.ObjectModel;
-using System.Xml.Serialization;
+﻿using System.Collections.ObjectModel;
 
 namespace HPTClient
 {
@@ -47,8 +42,8 @@ namespace HPTClient
             {
                 if (this.groupIntervalRulesCollectionList == null)
                 {
-                    this.groupIntervalRulesCollectionList = new ObservableCollection<HPTGroupIntervalRulesCollection>() 
-                    { 
+                    this.groupIntervalRulesCollectionList = new ObservableCollection<HPTGroupIntervalRulesCollection>()
+                    {
                         this.GroupIntervalRulesCollectionV4,
                         this.GroupIntervalRulesCollectionV5,
                         this.GroupIntervalRulesCollectionV6X,

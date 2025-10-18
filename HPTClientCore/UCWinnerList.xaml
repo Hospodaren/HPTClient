@@ -1,0 +1,138 @@
+﻿<UserControl x:Class="HPTClient.UCWinnerList"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="600">
+
+    <UserControl.Resources>
+
+        <Style TargetType="{x:Type ListViewItem}">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="Margin" Value="0.5"/>
+            <Setter Property="Padding" Value="0.5"/>
+        </Style>
+
+    </UserControl.Resources>
+
+    <Grid>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="Summering" FontWeight="Bold" FontSize="16" Padding="2"/>
+
+            <ListView x:Name="lvwAggregatedData" ItemsSource="{Binding Path=Summering.DelsummeringList}" Grid.Row="1">
+                
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Inlämningsställe" DisplayMemberBinding="{Binding Path=DisplayName}" TextElement.FontWeight="Bold"/>
+                        <GridViewColumn Header="Kuponger">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock TextAlignment="Right" Text="{Binding Path=NumberOfCoupons,StringFormat=N0,ConverterCulture=sv-SE}" HorizontalAlignment="Right"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Kuponger (%)">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock TextAlignment="Right" Text="{Binding Path=ShareOfCoupons,StringFormat=P1}" HorizontalAlignment="Right"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="System">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock TextAlignment="Right" Text="{Binding Path=NumberOfSystems,StringFormat=F2}" HorizontalAlignment="Right"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="System (%)">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock TextAlignment="Right" Text="{Binding Path=ShareOfSystems,StringFormat=P1}" HorizontalAlignment="Right"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <TextBlock Grid.Row="2" Text="Vinstlista" FontWeight="Bold" FontSize="16" Padding="2,12,2,2"/>
+            
+            <ListView x:Name="lvwWinningsList" ItemsSource="{Binding Path=VinstLista}" Grid.Row="3">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Inlämningstyp" DisplayMemberBinding="{Binding Path=PlatsTyp}"/>
+                        <GridViewColumn Header="Inlämningsställe" DisplayMemberBinding="{Binding Path=PlatsText}"/>
+                        <GridViewColumn Header="Vinst">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock TextAlignment="Right" FontWeight="Bold" Text="{Binding Path=Vinst,StringFormat={}{0:N0},ConverterCulture=sv-SE}" HorizontalAlignment="Right"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Vinstklass 1">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock TextAlignment="Right" Text="{Binding Path=Vinstklass1,StringFormat=F2}" HorizontalAlignment="Right"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Vinstklass 2">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock TextAlignment="Right" Text="{Binding Path=Vinstklass2,StringFormat=N0,ConverterCulture=sv-SE}" HorizontalAlignment="Right"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Vinstklass 3">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock TextAlignment="Right" Text="{Binding Path=Vinstklass3,StringFormat=N0,ConverterCulture=sv-SE}" HorizontalAlignment="Right"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Insats">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock TextAlignment="Right" Text="{Binding Path=Insats,StringFormat=N0,ConverterCulture=sv-SE}" HorizontalAlignment="Right"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Antal spikar" DisplayMemberBinding="{Binding Path=Spikar}" TextBlock.TextAlignment="Right">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock TextAlignment="Right" Text="{Binding Path=Spikar}" HorizontalAlignment="Right"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Andelar">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock TextAlignment="Right" Text="{Binding Path=Andelar,StringFormat=N0,ConverterCulture=sv-SE}" HorizontalAlignment="Right"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Filspel">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox IsChecked="{Binding Path=Filspel}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+        </Grid>
+
+    </Grid>
+</UserControl>

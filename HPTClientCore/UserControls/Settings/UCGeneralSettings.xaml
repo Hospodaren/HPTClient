@@ -1,0 +1,97 @@
+﻿<UserControl x:Class="HPTClient.UCGeneralSettings"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             x:Name="ucGeneralSettings"
+             mc:Ignorable="d" Loaded="ucGeneralSettings_Loaded"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+
+        <GroupBox x:Name="gbSettings" Background="{StaticResource BackgroundBrush}" BorderBrush="Black" Header="Övriga inställningar"  HeaderTemplate="{StaticResource GroupBoxHeaderTemplate}" Grid.Column="1" HorizontalAlignment="Left" Margin="2,2,6,2">
+
+            <GroupBox.Resources>
+                <Style TargetType="{x:Type CheckBox}">
+                    <Style.Setters>
+                        <Setter Property="Margin" Value="2,2,12,2"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="FontSize" Value="11"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Setter Property="FontFamily" Value="Tahoma"/>
+                        <Setter Property="FontWeight" Value="Medium"/>
+                    </Style.Setters>
+                </Style>
+                <Style TargetType="{x:Type TextBlock}">
+                    <Style.Setters>
+                        <Setter Property="Margin" Value="2,2,12,2"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="FontSize" Value="11"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Setter Property="FontFamily" Value="Tahoma"/>
+                        <Setter Property="FontWeight" Value="Medium"/>
+                    </Style.Setters>
+                </Style>
+            </GroupBox.Resources>
+            
+            <StackPanel Orientation="Vertical">
+
+                <CheckBox x:Name="chkUseDefaultRankTemplate" Content="Använd rankvariabelmall"
+                          IsChecked="{Binding UseDefaultRankTemplate}"/>
+                <ComboBox x:Name="cmbRankTemplate" HorizontalAlignment="Stretch"
+                                              ItemsSource="{Binding Path=RankTemplateList}"
+                                              SelectedItem="{Binding DefaultRankTemplate}" Margin=" 1,1,1,10"/>
+
+                <TextBlock Text="Automatisk uppdatering"/>
+                <ComboBox x:Name="cmbUpdateInterval" Text="Uppdateringsintervall" HorizontalAlignment="Stretch" 
+                                        Margin="2,2,2,12" SelectionChanged="cmbUpdateInterval_SelectionChanged" Grid.Column="1">
+                    <ComboBoxItem Content="Aldrig" Tag="0"/>
+                    <ComboBoxItem Content="Var 3:e minut" Tag="3"/>
+                    <ComboBoxItem Content="Var 5:e minut" Tag="5"/>
+                    <ComboBoxItem Content="Var 10:e minut" Tag="10"/>
+                    <ComboBoxItem Content="Var 15:e minut" Tag="15"/>
+                    <ComboBoxItem Content="Var 20:e minut" Tag="20"/>
+                    <ComboBoxItem Content="En gång i halvtimmen" Tag="30"/>
+                    <ComboBoxItem Content="En gång i timmen" Tag="60"/>
+                </ComboBox>
+
+                <TextBlock Text="Reservhantering"/>
+                <ComboBox x:Name="cmbReservHandling" Margin="2,2,2,12" MinWidth="100" IsEditable="False" 
+                                      IsReadOnly="False" SelectionChanged="cmbReservHandling_SelectionChanged" HorizontalAlignment="Stretch" Grid.Column="1">
+                    <ComboBoxItem Content="Ingen (ATGs turordning)" Tag="1"/>
+                    <ComboBoxItem Content="Mest spelade (valda hästar)" Tag="2"/>
+                    <ComboBoxItem Content="Mest spelade (icke valda hästar)" Tag="3"/>
+                    <ComboBoxItem Content="Egen rank (valda hästar)" Tag="4"/>
+                    <ComboBoxItem Content="Egen rank (icke valda hästar)" Tag="5"/>
+                    <ComboBoxItem Content="Snittrank (valda hästar)" Tag="6"/>
+                    <ComboBoxItem Content="Snittrank (icke valda hästar)" Tag="7"/>
+                    <ComboBoxItem Content="Vinnarodds (valda hästar)" Tag="8"/>
+                    <ComboBoxItem Content="Vinnarodds (icke valda hästar)" Tag="9"/>
+                    <ComboBoxItem Content="Nästa rank (valda hästar)" Tag="10"/>
+                    <ComboBoxItem Content="Nästa rank (icke valda hästar)" Tag="11"/>
+                </ComboBox>
+                
+                <CheckBox x:Name="chkAlwaysCreateSingleRows" Content="Skapa alltid enkelrader"
+                          IsChecked="{Binding AlwaysCreateSingleRows}"/>
+                
+                <!--<CheckBox x:Name="chkCopyCouponsToClipboard" Content="Kopiera kuponger till klippbordet"
+                          IsChecked="{Binding CopyCouponsToClipboard}"/>
+
+                <CheckBox x:Name="chkCopySingleRowsToClipboard" Content="Kopiera enkelrader till klippbordet"
+                          IsChecked="{Binding CopySingleRowsToClipboard}"/>-->
+
+                <!--<CheckBox x:Name="chkWarnIfUncoveredHorses" Content="Varna vid bortreducering"
+                          IsChecked="{Binding WarnIfUncoveredHorses}"/>-->
+
+                <CheckBox x:Name="chkWarnIfOverlappingComplementaryRules" Content="Varna vid överlappande utgångar"
+                          IsChecked="{Binding WarnIfOverlappingComplementaryRules}"/>
+
+                <CheckBox x:Name="chkWarnIfNoReserv" Content="Varna om reservval inte gjorts"
+                          IsChecked="{Binding WarnIfNoReserv}"/>
+
+                <CheckBox x:Name="chkWarnIfSuperfluousXReduction" Content="Varna vid onödiga ABCD-villkor"
+                          IsChecked="{Binding WarnIfSuperfluousXReduction}"/>
+                
+            </StackPanel>
+        </GroupBox>
+    </Grid>
+</UserControl>

@@ -1,0 +1,82 @@
+﻿<UserControl x:Class="HPTClient.UCCompactHorseBig"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:HPT="clr-namespace:HPTClient">
+    <Border BorderBrush="Black" BorderThickness="1">
+        <Grid Width="100" Height="70" Background="{Binding VinnaroddsColor}">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <StackPanel Margin="1,1,1,1" Name="spABCD" VerticalAlignment="Top" Orientation="Horizontal" HorizontalAlignment="Left" Width="98" Grid.Row="0" ToggleButton.Checked="spABCD_Checked" ToggleButton.Unchecked="spABCD_Unchecked">
+                <CheckBox Name="chkNrSelect" IsChecked="{Binding Selected}" IsEnabled="{Binding NotScratched}" Tag="S" Template="{StaticResource CheckBoxControlTemplate}" Content="{Binding StartNr}"/>
+                <RadioButton Template="{StaticResource RadioButtonControlTemplate}" Content="A" Tag="A" IsChecked="{Binding RankedA}" IsEnabled="{Binding NotScratched}" Foreground="WhiteSmoke"></RadioButton>
+                <RadioButton Template="{StaticResource RadioButtonControlTemplate}" Content="B" Tag="B" IsChecked="{Binding RankedB}" IsEnabled="{Binding NotScratched}" Foreground="WhiteSmoke"></RadioButton>
+                <RadioButton Template="{StaticResource RadioButtonControlTemplate}" Content="C" Tag="C" IsChecked="{Binding RankedC}" IsEnabled="{Binding NotScratched}" Foreground="WhiteSmoke"></RadioButton>
+                <RadioButton Template="{StaticResource RadioButtonControlTemplate}" Content="D" Tag="D" IsChecked="{Binding RankedD}" IsEnabled="{Binding NotScratched}" Foreground="WhiteSmoke"></RadioButton>
+            </StackPanel>
+            <TextBlock Margin="1,1,1,1" x:Name="txtHorseName" Text="{Binding HorseName}" FontSize="10" FontWeight="Bold" Grid.Row="1">
+                <Popup HorizontalOffset="-10" VerticalOffset="-10" Placement="MousePoint" IsOpen="{Binding ElementName=txtHorseName,Path=IsMouseOver,Mode=OneWay}">
+                    <Popup.Child>
+                        <HPT:UCResultView></HPT:UCResultView>
+                    </Popup.Child>
+                </Popup>
+            </TextBlock>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Margin="1,1,1,1" x:Name="txtDriverNameShort" Text="{Binding DriverNameShort}" FontSize="10" Grid.Column="0">
+                <!--<Popup HorizontalOffset="-10" VerticalOffset="-10" Placement="MousePoint" IsOpen="{Binding ElementName=txtDriverNameShort,Path=IsMouseOver,Mode=OneWay}">
+                    <Popup.Child>
+                        <HPT:UCDriverHorse></HPT:UCDriverHorse>
+                    </Popup.Child>
+                </Popup>-->
+                </TextBlock>
+                <TextBlock Margin="1,1,1,1" x:Name="txtTrainerNameShort" Text="{Binding TrainerNameShort}" FontSize="10" Grid.Column="1">
+                <!--<Popup HorizontalOffset="-10" VerticalOffset="-10" Placement="MousePoint" IsOpen="{Binding ElementName=txtTrainerNameShort,Path=IsMouseOver,Mode=OneWay}">
+                    <Popup.Child>
+                        <HPT:UCTrainerHorse></HPT:UCTrainerHorse>
+                    </Popup.Child>
+                </Popup>-->
+                </TextBlock>
+            </Grid>
+            <Grid Grid.Row="3">
+                <Grid.Resources>
+                    <Style TargetType="{x:Type Label}">
+                        <Setter Property="BorderBrush" Value="Black"></Setter>
+                        <Setter Property="BorderThickness" Value="1"></Setter>
+                        <Setter Property="Margin" Value="1,1,1,1"></Setter>
+                        <Setter Property="Padding" Value="0"></Setter>
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                        <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+                        <Setter Property="Background" Value="WhiteSmoke"></Setter>
+                    </Style>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Setter Property="TextAlignment" Value="Right"/>
+                        <Setter Property="FontSize" Value="11"></Setter>
+                        <Setter Property="Margin" Value="1,1,1,1"></Setter>
+                        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                    </Style>
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="28"/>
+                    <ColumnDefinition Width="28"/>
+                    <ColumnDefinition Width="44"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">
+                    <TextBlock Text="{Binding VinnarOddsString}" />
+                </Label>
+                <Label Grid.Column="1">
+                    <TextBlock Text="{Binding MarksPercent}"/>
+                </Label>
+                <Label Grid.Column="2">
+                    <TextBlock Text="{Binding MarksQuantity}"/>
+                </Label>
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>

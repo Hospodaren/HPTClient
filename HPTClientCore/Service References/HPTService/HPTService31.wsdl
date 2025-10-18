@@ -1,0 +1,1812 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:i0="http://kubin.se/hptservice" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="HPTService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SymmetricBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:ProtectionToken>
+              <wsp:Policy>
+                <sp:SecureConversationToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+                  <wsp:Policy>
+                    <sp:RequireDerivedKeys />
+                    <sp:BootstrapPolicy>
+                      <wsp:Policy>
+                        <sp:SignedParts>
+                          <sp:Body />
+                          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+                          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+                          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+                          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+                          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+                          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+                          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+                        </sp:SignedParts>
+                        <sp:EncryptedParts>
+                          <sp:Body />
+                        </sp:EncryptedParts>
+                        <sp:SymmetricBinding>
+                          <wsp:Policy>
+                            <sp:ProtectionToken>
+                              <wsp:Policy>
+                                <sp:SpnegoContextToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+                                  <wsp:Policy>
+                                    <sp:RequireDerivedKeys />
+                                  </wsp:Policy>
+                                </sp:SpnegoContextToken>
+                              </wsp:Policy>
+                            </sp:ProtectionToken>
+                            <sp:AlgorithmSuite>
+                              <wsp:Policy>
+                                <sp:Basic256 />
+                              </wsp:Policy>
+                            </sp:AlgorithmSuite>
+                            <sp:Layout>
+                              <wsp:Policy>
+                                <sp:Strict />
+                              </wsp:Policy>
+                            </sp:Layout>
+                            <sp:IncludeTimestamp />
+                            <sp:EncryptSignature />
+                            <sp:OnlySignEntireHeadersAndBody />
+                          </wsp:Policy>
+                        </sp:SymmetricBinding>
+                        <sp:Wss11>
+                          <wsp:Policy />
+                        </sp:Wss11>
+                        <sp:Trust10>
+                          <wsp:Policy>
+                            <sp:MustSupportIssuedTokens />
+                            <sp:RequireClientEntropy />
+                            <sp:RequireServerEntropy />
+                          </wsp:Policy>
+                        </sp:Trust10>
+                      </wsp:Policy>
+                    </sp:BootstrapPolicy>
+                  </wsp:Policy>
+                </sp:SecureConversationToken>
+              </wsp:Policy>
+            </sp:ProtectionToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+            <sp:IncludeTimestamp />
+            <sp:EncryptSignature />
+            <sp:OnlySignEntireHeadersAndBody />
+          </wsp:Policy>
+        </sp:SymmetricBinding>
+        <sp:Wss11 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy />
+        </sp:Wss11>
+        <sp:Trust10 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:MustSupportIssuedTokens />
+            <sp:RequireClientEntropy />
+            <sp:RequireServerEntropy />
+          </wsp:Policy>
+        </sp:Trust10>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_Authenticate_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_Authenticate_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_LogOut_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_LogOut_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_RegisterUser_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_RegisterUser_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_SaveSystem_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_SaveSystem_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_UploadSystem_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_UploadSystem_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_UploadTemplates_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_UploadTemplates_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_UploadComments_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_UploadComments_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_UploadRaceDayInfoComments_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_UploadRaceDayInfoComments_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_RetrieveKey_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_RetrieveKey_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_GetCalendarZip_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_GetCalendarZip_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_GetRaceDayInfoByTrackAndDateZip_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_GetRaceDayInfoByTrackAndDateZip_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_GetRaceDayInfoListByTrackAndDateZip_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_GetRaceDayInfoListByTrackAndDateZip_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_GetResultMarkingBetZip_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_GetResultMarkingBetZip_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_GetCalendarDummy_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_GetCalendarDummy_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_GetRaceDayInfoDummy_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_GetRaceDayInfoDummy_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_GetRaceDayInfoHistoryGroupedByTrackAndDateDummy_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_GetRaceDayInfoHistoryGroupedByTrackAndDateDummy_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_GetResultMarkingBetDummy_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_GetResultMarkingBetDummy_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_GetRaceDayInfoReductionDummy_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_GetRaceDayInfoReductionDummy_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_GetNextStartDummy_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_GetNextStartDummy_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_GetUserRaceDayInfoCommentsCollectionDummy_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_GetUserRaceDayInfoCommentsCollectionDummy_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_GetUserSystemCollectionDummy_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_GetUserSystemCollectionDummy_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_GetSaveSystemDummy_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_GetSaveSystemDummy_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_SendMailDummy_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_SendMailDummy_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_UploadCompleteSystemDummy_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_UploadCompleteSystemDummy_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_UploadConfigurationDummy_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IHPTService_UploadConfigurationDummy_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:import namespace="http://kubin.se/hptservice" location="http://jes/HPTService.svc?wsdl=wsdl0" />
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://jes/HPTService.svc?xsd=xsd4" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://jes/HPTService.svc?xsd=xsd0" namespace="http://kubin.se/hptservice" />
+      <xsd:import schemaLocation="http://jes/HPTService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://jes/HPTService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/HPTServiceLibrary" />
+      <xsd:import schemaLocation="http://jes/HPTService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://jes/HPTService.svc?xsd=xsd5" namespace="http://schemas.microsoft.com/Message" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IHPTRestService_Authenticate_InputMessage">
+    <wsdl:part name="parameters" element="tns:Authenticate" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_Authenticate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AuthenticateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_AuthenticateAndGetCalendarZip_InputMessage">
+    <wsdl:part name="parameters" element="tns:AuthenticateAndGetCalendarZip" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_AuthenticateAndGetCalendarZip_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AuthenticateAndGetCalendarZipResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_LogOut_InputMessage">
+    <wsdl:part name="parameters" element="tns:LogOut" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_LogOut_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LogOutResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_RetrieveKey_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveKey" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_RetrieveKey_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveKeyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_RegisterUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegisterUser" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_RegisterUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegisterUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_UploadSystem_InputMessage">
+    <wsdl:part name="parameters" element="tns:UploadSystem" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_UploadSystem_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UploadSystemResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_UploadCompleteSystem_InputMessage">
+    <wsdl:part name="parameters" element="tns:UploadCompleteSystem" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_UploadCompleteSystem_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UploadCompleteSystemResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_UploadOnlineSystem_InputMessage">
+    <wsdl:part name="parameters" element="tns:UploadOnlineSystem" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_UploadOnlineSystem_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UploadOnlineSystemResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_UploadRaceDayInfoComments_InputMessage">
+    <wsdl:part name="parameters" element="tns:UploadRaceDayInfoComments" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_UploadRaceDayInfoComments_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UploadRaceDayInfoCommentsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_SaveSystem_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveSystem" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_SaveSystem_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveSystemResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_UploadConfiguration_InputMessage">
+    <wsdl:part name="parameters" element="tns:UploadConfiguration" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_UploadConfiguration_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UploadConfigurationResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_RetrieveConfiguration_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveConfiguration" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_RetrieveConfiguration_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveConfigurationResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_SendMail_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendMail" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_SendMail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendMailResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetCalendar_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCalendar" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetCalendar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCalendarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetCalendarLight_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCalendarLight" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetCalendarLight_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCalendarLightResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetCalendarZip_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCalendarZip" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetCalendarZip_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCalendarZipResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetRaceDayInfoByTrackAndDateZip_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRaceDayInfoByTrackAndDateZip" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetRaceDayInfoByTrackAndDateZip_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRaceDayInfoByTrackAndDateZipResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetRaceInfoByTrackAndDateZip_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRaceInfoByTrackAndDateZip" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetRaceInfoByTrackAndDateZip_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRaceInfoByTrackAndDateZipResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetRaceDayInfoHistoryGroupedByTrackAndDate_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRaceDayInfoHistoryGroupedByTrackAndDate" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetRaceDayInfoHistoryGroupedByTrackAndDate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRaceDayInfoHistoryGroupedByTrackAndDateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_UpdateRaceDayInfoByTrackAndDateZip_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateRaceDayInfoByTrackAndDateZip" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_UpdateRaceDayInfoByTrackAndDateZip_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateRaceDayInfoByTrackAndDateZipResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetNextStartForHorsesZip_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetNextStartForHorsesZip" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetNextStartForHorsesZip_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetNextStartForHorsesZipResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetRaceDayInfoLightByTrackAndDate_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRaceDayInfoLightByTrackAndDate" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetRaceDayInfoLightByTrackAndDate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRaceDayInfoLightByTrackAndDateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetResultMarkingBetZip_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetResultMarkingBetZip" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetResultMarkingBetZip_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetResultMarkingBetZipResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetResultTvillingZip_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetResultTvillingZip" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetResultTvillingZip_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetResultTvillingZipResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetResultDoubleZip_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetResultDoubleZip" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetResultDoubleZip_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetResultDoubleZipResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetRaceDayInfoHistoryZip_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRaceDayInfoHistoryZip" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetRaceDayInfoHistoryZip_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRaceDayInfoHistoryZipResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetUserCommentsByEMail_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserCommentsByEMail" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetUserCommentsByEMail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserCommentsByEMailResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetUserCommentsAll_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserCommentsAll" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetUserCommentsAll_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserCommentsAllResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetUserRaceDayInfoCommentsByEMail_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserRaceDayInfoCommentsByEMail" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetUserRaceDayInfoCommentsByEMail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserRaceDayInfoCommentsByEMailResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetUserRaceDayInfoCommentsAll_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserRaceDayInfoCommentsAll" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetUserRaceDayInfoCommentsAll_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserRaceDayInfoCommentsAllResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetUserSystems_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserSystems" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetUserSystems_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserSystemsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetUserSystemByEMail_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserSystemByEMail" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetUserSystemByEMail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserSystemByEMailResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetUserSystemByUniqueId_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserSystemByUniqueId" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetUserSystemByUniqueId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserSystemByUniqueIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_DeleteUserSystemByUniqueId_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteUserSystemByUniqueId" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_DeleteUserSystemByUniqueId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteUserSystemByUniqueIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetUserSystemOnlineByEMail_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserSystemOnlineByEMail" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetUserSystemOnlineByEMail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserSystemOnlineByEMailResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetUserSystemOnlineByUniqueId_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserSystemOnlineByUniqueId" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetUserSystemOnlineByUniqueId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserSystemOnlineByUniqueIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetUserTemplatesByEMail_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserTemplatesByEMail" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetUserTemplatesByEMail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserTemplatesByEMailResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetUserTemplatesAll_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserTemplatesAll" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetUserTemplatesAll_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserTemplatesAllResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetSystemResult_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSystemResult" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetSystemResult_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSystemResultResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetSystemCoupons_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSystemCoupons" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetSystemCoupons_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSystemCouponsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_UpdateUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateUser" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_UpdateUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_CancelUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:CancelUser" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_CancelUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CancelUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUser" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_RetrieveMessages_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveMessages" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_RetrieveMessages_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveMessagesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_ResetData_InputMessage">
+    <wsdl:part name="parameters" element="tns:ResetData" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_ResetData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ResetDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetUserList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserList" />
+  </wsdl:message>
+  <wsdl:message name="IHPTRestService_GetUserList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserListResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IHPTRestService">
+    <wsdl:operation name="Authenticate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/Authenticate" message="tns:IHPTRestService_Authenticate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/AuthenticateResponse" message="tns:IHPTRestService_Authenticate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AuthenticateAndGetCalendarZip">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/AuthenticateAndGetCalendarZip" message="tns:IHPTRestService_AuthenticateAndGetCalendarZip_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/AuthenticateAndGetCalendarZipResponse" message="tns:IHPTRestService_AuthenticateAndGetCalendarZip_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LogOut">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/LogOut" message="tns:IHPTRestService_LogOut_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/LogOutResponse" message="tns:IHPTRestService_LogOut_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveKey">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/RetrieveKey" message="tns:IHPTRestService_RetrieveKey_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/RetrieveKeyResponse" message="tns:IHPTRestService_RetrieveKey_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RegisterUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/RegisterUser" message="tns:IHPTRestService_RegisterUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/RegisterUserResponse" message="tns:IHPTRestService_RegisterUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadSystem">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/UploadSystem" message="tns:IHPTRestService_UploadSystem_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/UploadSystemResponse" message="tns:IHPTRestService_UploadSystem_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadCompleteSystem">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/UploadCompleteSystem" message="tns:IHPTRestService_UploadCompleteSystem_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/UploadCompleteSystemResponse" message="tns:IHPTRestService_UploadCompleteSystem_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadOnlineSystem">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/UploadOnlineSystem" message="tns:IHPTRestService_UploadOnlineSystem_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/UploadOnlineSystemResponse" message="tns:IHPTRestService_UploadOnlineSystem_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadRaceDayInfoComments">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/UploadRaceDayInfoComments" message="tns:IHPTRestService_UploadRaceDayInfoComments_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/UploadRaceDayInfoCommentsResponse" message="tns:IHPTRestService_UploadRaceDayInfoComments_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveSystem">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/SaveSystem" message="tns:IHPTRestService_SaveSystem_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/SaveSystemResponse" message="tns:IHPTRestService_SaveSystem_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadConfiguration">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/UploadConfiguration" message="tns:IHPTRestService_UploadConfiguration_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/UploadConfigurationResponse" message="tns:IHPTRestService_UploadConfiguration_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveConfiguration">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/RetrieveConfiguration" message="tns:IHPTRestService_RetrieveConfiguration_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/RetrieveConfigurationResponse" message="tns:IHPTRestService_RetrieveConfiguration_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendMail">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/SendMail" message="tns:IHPTRestService_SendMail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/SendMailResponse" message="tns:IHPTRestService_SendMail_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCalendar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/GetCalendar" message="tns:IHPTRestService_GetCalendar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/GetCalendarResponse" message="tns:IHPTRestService_GetCalendar_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCalendarLight">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/GetCalendarLight" message="tns:IHPTRestService_GetCalendarLight_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/GetCalendarLightResponse" message="tns:IHPTRestService_GetCalendarLight_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCalendarZip">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/GetCalendarZip" message="tns:IHPTRestService_GetCalendarZip_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/GetCalendarZipResponse" message="tns:IHPTRestService_GetCalendarZip_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRaceDayInfoByTrackAndDateZip">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/GetRaceDayInfoByTrackAndDateZip" message="tns:IHPTRestService_GetRaceDayInfoByTrackAndDateZip_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/GetRaceDayInfoByTrackAndDateZipResponse" message="tns:IHPTRestService_GetRaceDayInfoByTrackAndDateZip_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRaceInfoByTrackAndDateZip">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/GetRaceInfoByTrackAndDateZip" message="tns:IHPTRestService_GetRaceInfoByTrackAndDateZip_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/GetRaceInfoByTrackAndDateZipResponse" message="tns:IHPTRestService_GetRaceInfoByTrackAndDateZip_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRaceDayInfoHistoryGroupedByTrackAndDate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/GetRaceDayInfoHistoryGroupedByTrackAndDate" message="tns:IHPTRestService_GetRaceDayInfoHistoryGroupedByTrackAndDate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/GetRaceDayInfoHistoryGroupedByTrackAndDateResponse" message="tns:IHPTRestService_GetRaceDayInfoHistoryGroupedByTrackAndDate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateRaceDayInfoByTrackAndDateZip">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/UpdateRaceDayInfoByTrackAndDateZip" message="tns:IHPTRestService_UpdateRaceDayInfoByTrackAndDateZip_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/UpdateRaceDayInfoByTrackAndDateZipResponse" message="tns:IHPTRestService_UpdateRaceDayInfoByTrackAndDateZip_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetNextStartForHorsesZip">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/GetNextStartForHorsesZip" message="tns:IHPTRestService_GetNextStartForHorsesZip_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/GetNextStartForHorsesZipResponse" message="tns:IHPTRestService_GetNextStartForHorsesZip_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRaceDayInfoLightByTrackAndDate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/GetRaceDayInfoLightByTrackAndDate" message="tns:IHPTRestService_GetRaceDayInfoLightByTrackAndDate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/GetRaceDayInfoLightByTrackAndDateResponse" message="tns:IHPTRestService_GetRaceDayInfoLightByTrackAndDate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetResultMarkingBetZip">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/GetResultMarkingBetZip" message="tns:IHPTRestService_GetResultMarkingBetZip_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/GetResultMarkingBetZipResponse" message="tns:IHPTRestService_GetResultMarkingBetZip_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetResultTvillingZip">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/GetResultTvillingZip" message="tns:IHPTRestService_GetResultTvillingZip_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/GetResultTvillingZipResponse" message="tns:IHPTRestService_GetResultTvillingZip_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetResultDoubleZip">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/GetResultDoubleZip" message="tns:IHPTRestService_GetResultDoubleZip_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/GetResultDoubleZipResponse" message="tns:IHPTRestService_GetResultDoubleZip_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRaceDayInfoHistoryZip">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/GetRaceDayInfoHistoryZip" message="tns:IHPTRestService_GetRaceDayInfoHistoryZip_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/GetRaceDayInfoHistoryZipResponse" message="tns:IHPTRestService_GetRaceDayInfoHistoryZip_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserCommentsByEMail">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/GetUserCommentsByEMail" message="tns:IHPTRestService_GetUserCommentsByEMail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/GetUserCommentsByEMailResponse" message="tns:IHPTRestService_GetUserCommentsByEMail_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserCommentsAll">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/GetUserCommentsAll" message="tns:IHPTRestService_GetUserCommentsAll_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/GetUserCommentsAllResponse" message="tns:IHPTRestService_GetUserCommentsAll_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserRaceDayInfoCommentsByEMail">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/GetUserRaceDayInfoCommentsByEMail" message="tns:IHPTRestService_GetUserRaceDayInfoCommentsByEMail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/GetUserRaceDayInfoCommentsByEMailResponse" message="tns:IHPTRestService_GetUserRaceDayInfoCommentsByEMail_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserRaceDayInfoCommentsAll">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/GetUserRaceDayInfoCommentsAll" message="tns:IHPTRestService_GetUserRaceDayInfoCommentsAll_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/GetUserRaceDayInfoCommentsAllResponse" message="tns:IHPTRestService_GetUserRaceDayInfoCommentsAll_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserSystems">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/GetUserSystems" message="tns:IHPTRestService_GetUserSystems_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/GetUserSystemsResponse" message="tns:IHPTRestService_GetUserSystems_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserSystemByEMail">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/GetUserSystemByEMail" message="tns:IHPTRestService_GetUserSystemByEMail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/GetUserSystemByEMailResponse" message="tns:IHPTRestService_GetUserSystemByEMail_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserSystemByUniqueId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/GetUserSystemByUniqueId" message="tns:IHPTRestService_GetUserSystemByUniqueId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/GetUserSystemByUniqueIdResponse" message="tns:IHPTRestService_GetUserSystemByUniqueId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteUserSystemByUniqueId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/DeleteUserSystemByUniqueId" message="tns:IHPTRestService_DeleteUserSystemByUniqueId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/DeleteUserSystemByUniqueIdResponse" message="tns:IHPTRestService_DeleteUserSystemByUniqueId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserSystemOnlineByEMail">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/GetUserSystemOnlineByEMail" message="tns:IHPTRestService_GetUserSystemOnlineByEMail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/GetUserSystemOnlineByEMailResponse" message="tns:IHPTRestService_GetUserSystemOnlineByEMail_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserSystemOnlineByUniqueId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/GetUserSystemOnlineByUniqueId" message="tns:IHPTRestService_GetUserSystemOnlineByUniqueId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/GetUserSystemOnlineByUniqueIdResponse" message="tns:IHPTRestService_GetUserSystemOnlineByUniqueId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserTemplatesByEMail">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/GetUserTemplatesByEMail" message="tns:IHPTRestService_GetUserTemplatesByEMail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/GetUserTemplatesByEMailResponse" message="tns:IHPTRestService_GetUserTemplatesByEMail_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserTemplatesAll">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/GetUserTemplatesAll" message="tns:IHPTRestService_GetUserTemplatesAll_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/GetUserTemplatesAllResponse" message="tns:IHPTRestService_GetUserTemplatesAll_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSystemResult">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/GetSystemResult" message="tns:IHPTRestService_GetSystemResult_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/GetSystemResultResponse" message="tns:IHPTRestService_GetSystemResult_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSystemCoupons">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/GetSystemCoupons" message="tns:IHPTRestService_GetSystemCoupons_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/GetSystemCouponsResponse" message="tns:IHPTRestService_GetSystemCoupons_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/UpdateUser" message="tns:IHPTRestService_UpdateUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/UpdateUserResponse" message="tns:IHPTRestService_UpdateUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CancelUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/CancelUser" message="tns:IHPTRestService_CancelUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/CancelUserResponse" message="tns:IHPTRestService_CancelUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/GetUser" message="tns:IHPTRestService_GetUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/GetUserResponse" message="tns:IHPTRestService_GetUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveMessages">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/RetrieveMessages" message="tns:IHPTRestService_RetrieveMessages_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/RetrieveMessagesResponse" message="tns:IHPTRestService_RetrieveMessages_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ResetData">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/ResetData" message="tns:IHPTRestService_ResetData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/ResetDataResponse" message="tns:IHPTRestService_ResetData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHPTRestService/GetUserList" message="tns:IHPTRestService_GetUserList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHPTRestService/GetUserListResponse" message="tns:IHPTRestService_GetUserList_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WSHttpBinding_IHPTService" type="i0:IHPTService">
+    <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_policy" />
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Authenticate">
+      <soap12:operation soapAction="http://kubin.se/hptservice/IHPTService/Authenticate" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_Authenticate_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_Authenticate_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LogOut">
+      <soap12:operation soapAction="http://kubin.se/hptservice/IHPTService/LogOut" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_LogOut_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_LogOut_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegisterUser">
+      <soap12:operation soapAction="http://kubin.se/hptservice/IHPTService/RegisterUser" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_RegisterUser_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_RegisterUser_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveSystem">
+      <soap12:operation soapAction="http://kubin.se/hptservice/IHPTService/SaveSystem" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_SaveSystem_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_SaveSystem_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadSystem">
+      <soap12:operation soapAction="http://kubin.se/hptservice/IHPTService/UploadSystem" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_UploadSystem_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_UploadSystem_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadTemplates">
+      <soap12:operation soapAction="http://kubin.se/hptservice/IHPTService/UploadTemplates" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_UploadTemplates_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_UploadTemplates_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadComments">
+      <soap12:operation soapAction="http://kubin.se/hptservice/IHPTService/UploadComments" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_UploadComments_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_UploadComments_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadRaceDayInfoComments">
+      <soap12:operation soapAction="http://kubin.se/hptservice/IHPTService/UploadRaceDayInfoComments" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_UploadRaceDayInfoComments_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_UploadRaceDayInfoComments_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveKey">
+      <soap12:operation soapAction="http://kubin.se/hptservice/IHPTService/RetrieveKey" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_RetrieveKey_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_RetrieveKey_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCalendarZip">
+      <soap12:operation soapAction="http://kubin.se/hptservice/IHPTService/GetCalendarZip" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_GetCalendarZip_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_GetCalendarZip_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRaceDayInfoByTrackAndDateZip">
+      <soap12:operation soapAction="http://kubin.se/hptservice/IHPTService/GetRaceDayInfoByTrackAndDateZip" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_GetRaceDayInfoByTrackAndDateZip_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_GetRaceDayInfoByTrackAndDateZip_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRaceDayInfoListByTrackAndDateZip">
+      <soap12:operation soapAction="http://kubin.se/hptservice/IHPTService/GetRaceDayInfoListByTrackAndDateZip" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_GetRaceDayInfoListByTrackAndDateZip_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_GetRaceDayInfoListByTrackAndDateZip_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetResultMarkingBetZip">
+      <soap12:operation soapAction="http://kubin.se/hptservice/IHPTService/GetResultMarkingBetZip" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_GetResultMarkingBetZip_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_GetResultMarkingBetZip_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCalendarDummy">
+      <soap12:operation soapAction="http://kubin.se/hptservice/IHPTService/GetCalendarDummy" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_GetCalendarDummy_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_GetCalendarDummy_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRaceDayInfoDummy">
+      <soap12:operation soapAction="http://kubin.se/hptservice/IHPTService/GetRaceDayInfoDummy" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_GetRaceDayInfoDummy_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_GetRaceDayInfoDummy_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRaceDayInfoHistoryGroupedByTrackAndDateDummy">
+      <soap12:operation soapAction="http://kubin.se/hptservice/IHPTService/GetRaceDayInfoHistoryGroupedByTrackAndDateDummy" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_GetRaceDayInfoHistoryGroupedByTrackAndDateDummy_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_GetRaceDayInfoHistoryGroupedByTrackAndDateDummy_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetResultMarkingBetDummy">
+      <soap12:operation soapAction="http://kubin.se/hptservice/IHPTService/GetResultMarkingBetDummy" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_GetResultMarkingBetDummy_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_GetResultMarkingBetDummy_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRaceDayInfoReductionDummy">
+      <soap12:operation soapAction="http://kubin.se/hptservice/IHPTService/GetRaceDayInfoReductionDummy" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_GetRaceDayInfoReductionDummy_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_GetRaceDayInfoReductionDummy_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNextStartDummy">
+      <soap12:operation soapAction="http://kubin.se/hptservice/IHPTService/GetNextStartDummy" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_GetNextStartDummy_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_GetNextStartDummy_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserRaceDayInfoCommentsCollectionDummy">
+      <soap12:operation soapAction="http://kubin.se/hptservice/IHPTService/GetUserRaceDayInfoCommentsCollectionDummy" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_GetUserRaceDayInfoCommentsCollectionDummy_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_GetUserRaceDayInfoCommentsCollectionDummy_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserSystemCollectionDummy">
+      <soap12:operation soapAction="http://kubin.se/hptservice/IHPTService/GetUserSystemCollectionDummy" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_GetUserSystemCollectionDummy_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_GetUserSystemCollectionDummy_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSaveSystemDummy">
+      <soap12:operation soapAction="http://kubin.se/hptservice/IHPTService/GetSaveSystemDummy" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_GetSaveSystemDummy_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_GetSaveSystemDummy_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendMailDummy">
+      <soap12:operation soapAction="http://kubin.se/hptservice/IHPTService/SendMailDummy" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_SendMailDummy_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_SendMailDummy_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadCompleteSystemDummy">
+      <soap12:operation soapAction="http://kubin.se/hptservice/IHPTService/UploadCompleteSystemDummy" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_UploadCompleteSystemDummy_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_UploadCompleteSystemDummy_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadConfigurationDummy">
+      <soap12:operation soapAction="http://kubin.se/hptservice/IHPTService/UploadConfigurationDummy" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_UploadConfigurationDummy_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IHPTService_UploadConfigurationDummy_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="HPTService">
+    <wsdl:port name="WSHttpBinding_IHPTService" binding="tns:WSHttpBinding_IHPTService">
+      <soap12:address location="http://jes/HPTService.svc" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>http://jes/HPTService.svc</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

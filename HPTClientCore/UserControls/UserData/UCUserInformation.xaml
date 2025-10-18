@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="HPTClient.UCUserInformation"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d">
+    <UserControl.Resources>
+
+        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource tbStyle}">
+            <Setter Property="Margin" Value="2,0"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="Margin" Value="1"/>
+            <Setter Property="Padding" Value="1"/>
+        </Style>
+
+    </UserControl.Resources>
+    <Grid>
+        <!--<Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>-->
+
+        <Border BorderBrush="Black" BorderThickness="1" CornerRadius="4" Margin="2">
+            <StackPanel Orientation="Vertical" MinWidth="200">
+
+                <TextBlock Text="Namn"/>
+                <TextBox x:Name="txtUserName" Text="{Binding UserName}"/>
+
+                <TextBlock Text="E-Postadress"/>
+                <TextBox x:Name="txtEMailAddress" Text="{Binding EMailAddress}"/>
+
+                <TextBlock Text="Nyckel"/>
+                <TextBox x:Name="txtPassword" Text="{Binding Password}" MaxLength="32"/>
+
+            </StackPanel>
+
+        </Border>
+
+    </Grid>
+</UserControl>

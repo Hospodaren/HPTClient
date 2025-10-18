@@ -1,0 +1,138 @@
+﻿<HPT:UCMarkBetControl x:Class="HPTClient.UCV6BetMultiplierRule"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+            xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:HPT="clr-namespace:HPTClient"
+             mc:Ignorable="d"
+             x:Name="ucV6BetMultiplierRule"
+                      Loaded="ucV6BetMultiplierRule_Loaded">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type Border}">
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="CornerRadius" Value="1"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+
+        <GroupBox Background="{StaticResource BackgroundBrush}" Name="gbReduction" BorderBrush="Black" HeaderTemplate="{StaticResource GroupBoxHeaderCheckBoxTemplate}">
+            <GroupBox.Header>
+                <CheckBox x:Name="chkUseRule" Margin="3" IsChecked="{Binding Path=Use}">
+                    <TextBlock  HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                                FontFamily="Arial" FontSize="12" FontWeight="Bold" Foreground="Black" Text="Använd regel" />
+                </CheckBox>
+            </GroupBox.Header>
+            
+            <Grid Width="Auto">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+
+                <ListBox x:Name="lst" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" ItemsSource="{Binding RaceList}" 
+                         Background="{StaticResource BackgroundBrush}" Grid.ColumnSpan="3">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid HorizontalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="200"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="14" FontWeight="SemiBold" Foreground="Black" Text="{Binding LegNrString}" Grid.Column="0" Padding="2,0,3,0"/>
+
+                                <ItemsControl x:Name="icHorseList" ItemsSource="{Binding HorseList}"  Grid.Column="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" MinWidth="360">
+
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+
+                                    <ItemsControl.ItemTemplate>
+
+                                        <DataTemplate>
+                                            <DataTemplate.Resources>
+                                                <Style TargetType="{x:Type TextBlock}">
+                                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                                    <Setter Property="FontFamily" Value="Arial"/>
+                                                    <Setter Property="FontSize" Value="11"/>
+                                                    <Setter Property="FontWeight" Value="Bold"/>
+                                                    <Setter Property="Foreground" Value="Black"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Scratched}" Value="true">
+                                                            <Setter Property="Foreground" Value="WhiteSmoke"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Selectable}" Value="false">
+                                                            <Setter Property="Foreground" Value="WhiteSmoke"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </DataTemplate.Resources>
+
+                                            <RadioButton Name="rbNrAndPrio" Template="{StaticResource RadioButtonV6BetMultiplierControlTemplate}" 
+                                                     IsChecked="{Binding Selected}" IsEnabled="{Binding Selectable}" GroupName="{Binding Path=GroupCode}"
+                                                     ToolTip="{Binding Name}">
+                                                <RadioButton.Content>
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                        <TextBlock x:Name="txtStartNr" Text="{Binding StartNr}" FontWeight="Bold"/>
+                                                        <TextBlock x:Name="txtPrio" Text="{Binding Path=Horse.PrioString}"/>
+                                                    </StackPanel>
+                                                </RadioButton.Content>
+                                            </RadioButton>
+                                        </DataTemplate>
+
+                                    </ItemsControl.ItemTemplate>
+
+                                </ItemsControl>
+
+                                <Button x:Name="btnClearRace" Grid.Column="2" Content="Rensa" Click="btnClearRace_Click" Margin="4,0"/>
+                                
+                                <TextBlock Grid.Column="3" Text="{Binding Path=SelectedHorse.Name}" FontSize="12" Foreground="Black" FontWeight="Bold" Margin="4,1,1,1"/>
+
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Left">
+
+                    <Border>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Flerbong" VerticalAlignment="Center" Margin="2" FontSize="12" Foreground="Black"/>
+                            <!--<ComboBox x:Name="cmbBetMultiplier"  Margin="2" Width="50"
+                                ItemsSource="{Binding Path=BetMultiplierList}" 
+                                      SelectedItem="{Binding BetMultiplier}"/>-->
+                            <xctk:IntegerUpDown x:Name="iudBetMultiplier" Margin="2" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" TextBlock.TextAlignment="Right" Grid.Column="1"
+                                                Increment="1" Minimum="1" Maximum="1000" Value="{Binding Path=BetMultiplier}"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border x:Name="bdrV6" Visibility="{Binding Path=MarkBet.V6Visibility,ElementName=ucV6BetMultiplierRule}">
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox x:Name="chkV6" Content="V6" IsChecked="{Binding V6}" VerticalAlignment="Center" 
+                                  Margin="2" TextElement.FontSize="12" TextElement.Foreground="Black"/>
+                            <!--<CheckBox x:Name="chkV6" Content="V6/V7/V8" IsChecked="{Binding V6}" VerticalAlignment="Center" 
+                                  Margin="2" TextElement.FontSize="12" TextElement.Foreground="Black"/>-->
+                        </StackPanel>
+                    </Border>
+
+                    <Border>
+                        <StackPanel Orientation="Horizontal">
+                            <Button x:Name="btnClear" Content="Rensa" Click="btnClear_Click" Margin="2"/>
+                            <Button x:Name="btnRemove" Content="Ta bort" Click="btnRemove_Click" Margin="2"/>
+                        </StackPanel>
+                    </Border>
+
+                </StackPanel>
+
+            </Grid>
+        </GroupBox>
+    </Grid>
+</HPT:UCMarkBetControl>

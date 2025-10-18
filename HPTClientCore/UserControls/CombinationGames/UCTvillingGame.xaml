@@ -1,0 +1,132 @@
+﻿<HPT:UCCombBetControl x:Class="HPTClient.UCTvillingGame"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:HPT="clr-namespace:HPTClient"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
+    x:Name="ucTvillingGame"
+                      Loaded="ucTvillingGame_Loaded">
+    <Grid Background="{StaticResource BackgroundBrush}">
+
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!--Race-->
+        <TabControl x:Name="tcTvillingGame" Grid.Row="0" ItemsSource="{Binding RaceList}" SelectionChanged="tcTvillingGame_SelectionChanged">
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <HPT:UCTabItemHeader Text="{Binding LegNrString}"/>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+            <TabControl.ContentTemplate>
+                <DataTemplate>
+                    <Grid Margin="2" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <HPT:UCTvillingTrioRace Grid.Row="0" Height="Auto" />
+
+                        <!--<GroupBox Background="{StaticResource BackgroundBrush}" BorderBrush="Black" HeaderTemplate="{StaticResource GroupBoxHeaderTemplate}" Header="{Binding LegNrString}" Grid.Column="0" >
+                            <Grid Width="Auto">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="20" />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <StackPanel Orientation="Horizontal" Grid.Row="0">
+
+                                    <Border BorderThickness="1" BorderBrush="Black">
+                                        <StackPanel Orientation="Horizontal">
+
+                                            <xctk:WatermarkTextBox x:Name="mtbSystemName" Watermark="Ange eget namn på systemet..." 
+                                       Text="{Binding Path=CombBet.SystemName,UpdateSourceTrigger=PropertyChanged}" MinWidth="200"/>
+
+                                            <TextBlock x:Name="txtCountdownInfo" Margin="8,2,2,2" FontWeight="Bold"/>
+                                            <TextBlock x:Name="txtCountdownTimer" Margin="2"/>
+
+                                            <TextBlock Margin="12,2,2,2" Text="Omsättning: " FontWeight="Bold"/>
+                                            <TextBlock Margin="2" Text="{Binding Path=CombBet.RaceDayInfo.Turnover,StringFormat={}{0:N0} kr,ConverterCulture=sv-SE}"/>
+
+                                        </StackPanel>
+
+                                    </Border>
+
+                                    <TextBlock Text="{Binding RaceInfoShort}" Margin="2,2,10,2" FontWeight="Bold">
+                                        <TextBlock.ToolTip>
+                                            <ToolTip Background="{StaticResource BackgroundBrush}" ToolTipService.ShowDuration="20000" DataContext="{Binding Path=PlacementTarget.DataContext, RelativeSource={x:Static RelativeSource.Self}}">
+                                                <Border BorderBrush="Black" BorderThickness="1" Margin="2">
+                                                    <TextBlock Text="{Binding RaceInfoLong}" Style="{StaticResource tbStyle}"  Margin="2"/>
+                                                </Border>
+                                            </ToolTip>
+                                        </TextBlock.ToolTip>
+                                    </TextBlock>
+                                    <TextBlock Text="{Binding RaceName}" Margin="10,2,2,2">
+                                        <TextBlock.ToolTip>
+                                            <ToolTip Background="{StaticResource BackgroundBrush}" ToolTipService.ShowDuration="20000" DataContext="{Binding Path=PlacementTarget.DataContext, RelativeSource={x:Static RelativeSource.Self}}">
+                                                <Border BorderBrush="Black" BorderThickness="1" Margin="2">
+                                                    <TextBlock Text="{Binding RaceInfoLong}" Style="{StaticResource tbStyle}" Margin="2"/>
+                                                </Border>
+                                            </ToolTip>
+                                        </TextBlock.ToolTip>
+                                    </TextBlock>
+
+                                    <TextBlock Margin="10,2,2,2" Text="Starttid:" FontWeight="Bold"/>
+                                    <TextBlock Margin="2" Text="{Binding Path=PostTime,StringFormat={}{0:HH:mm}}"/>
+
+                                </StackPanel>
+                                <HPT:UCRaceView Grid.Row="1" Height="Auto" />
+                            </Grid>
+                        </GroupBox>-->
+
+                        <GridSplitter BorderBrush="Black" BorderThickness="1" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" ResizeBehavior="BasedOnAlignment" ResizeDirection="Columns" Background="{StaticResource SelectedBrush}" Width="4" Margin="1"/>
+
+                        <Grid Grid.Column="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <HPT:UCCombinationView CombBet="{Binding Path=CombBet,ElementName=ucTvillingGame}"
+                                                   DataContext="{Binding Path=CombinationListInfoTvilling}"/>
+
+                            <HPT:UCCombinationRaceHandling CombBet="{Binding Path=CombBet,ElementName=ucTvillingGame}" Grid.Row="1"
+                                                   DataContext="{Binding Path=CombinationListInfoTvilling}"/>
+
+                        </Grid>
+
+                    </Grid>
+
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+        </TabControl>
+
+        <!--Funktion för hela Tvilling-omgången-->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
+
+                <TextBlock x:Name="txtCountdownInfo" Margin="2" FontWeight="Bold"/>
+                <TextBlock x:Name="txtCountdownTimer" Margin="2"/>
+
+            </StackPanel>
+
+            <HPT:UCCombinationsGameHandling CombBet="{Binding CombBet,ElementName=ucTvillingGame}" 
+                                        DataContext="{Binding Path=CombBet,ElementName=ucTvillingGame}" 
+                                        Grid.Column="2" HorizontalAlignment="Right"/>
+        </Grid>
+        
+    </Grid>
+</HPT:UCCombBetControl>

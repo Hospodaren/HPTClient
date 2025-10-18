@@ -1,0 +1,36 @@
+﻿<HPT:UCMarkBetControl x:Class="HPTClient.UCV6BetMultiplier"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             x:Name="ucV6BetMultiplier"
+             mc:Ignorable="d" 
+            xmlns:HPT="clr-namespace:HPTClient"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Border BorderBrush="Black" BorderThickness="1" CornerRadius="1">
+            <StackPanel Orientation="Horizontal">
+                <CheckBox x:Name="chkUseRules" Content="Använd regler" IsChecked="{Binding ReductionV6BetMultiplierRule}" 
+                          VerticalAlignment="Center" Margin="2" TextElement.FontSize="12" TextElement.Foreground="Black"/>
+                <Button x:Name="btnNewRule" Content="Ny regel" Click="btnNewRule_Click" Margin="2"/>
+                <Button x:Name="btnRemoveAll" Content="Ta bort alla" Margin="2" Click="btnRemoveAll_Click" />
+            </StackPanel>
+        </Border>
+
+        <ListBox x:Name="icV6BetMultiplierRules" ItemsSource="{Binding V6BetMultiplierRuleList}" Grid.Row="1">
+
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <HPT:UCV6BetMultiplierRule MarkBet="{Binding Path=MarkBet,ElementName=ucV6BetMultiplier}" Width="Auto"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+
+        </ListBox>
+
+    </Grid>
+</HPT:UCMarkBetControl>

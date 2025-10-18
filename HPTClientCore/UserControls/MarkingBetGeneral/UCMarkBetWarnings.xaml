@@ -1,0 +1,79 @@
+﻿<HPT:UCMarkBetControl x:Class="HPTClient.UCMarkBetWarnings"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+            xmlns:HPT="clr-namespace:HPTClient"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+
+        <BooleanToVisibilityConverter x:Key="hptVisibilityConverter"/>
+
+    </UserControl.Resources>
+    <Grid>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+
+            <!--Strukna hästar-->
+            <Border BorderBrush="Red" BorderThickness="1" Background="{StaticResource BackgroundBrush}" Grid.Row="0" Visibility="{Binding Path=MarkBet.RaceDayInfo.ScratchedHorseInfo.HaveSelectedScratchedHorse,Converter={StaticResource hptVisibilityConverter}}">
+                <StackPanel Orientation="Horizontal" Margin="3">
+                    <TextBlock Style="{StaticResource ResourceKey=tbMediumStyle}" Foreground="{StaticResource SelectedBrush}" Text="En eller flera hästar har strukits."/>
+                    <Button x:Name="btnDeSelectScratchedHorses" Content="Ta bort" Click="btnDeSelectScratchedHorses_Click" Margin="1" Padding="3,1"/>
+                    <Button x:Name="btnIgnorScratchedHorses" Content="Ignorera" Click="btnIgnorScratchedHorses_Click" Margin="1" Padding="3,1"/>
+                </StackPanel>
+            </Border>
+
+            <!--Otäckta hästar-->
+            <Border BorderBrush="Red" BorderThickness="1" Background="{StaticResource BackgroundBrush}" Grid.Row="1" Visibility="{Binding Path=MarkBet.HasUncoveredHorses,Converter={StaticResource hptVisibilityConverter}}">
+                <StackPanel Orientation="Horizontal" Margin="3">
+                    <TextBlock Style="{StaticResource ResourceKey=tbMediumStyle}" Foreground="{StaticResource SelectedBrush}" Text="En eller flera hästar täcks inte på det reducerade systemet."/>
+                    <Button x:Name="btnDeselectUncoveredHorses" Content="Ta bort" Click="btnDeselectUncoveredHorses_Click"  Margin="5,1,1,1" Padding="3,1"/>
+                    <Button x:Name="btnIgnoreUncoveredHorses" Content="Ignorera" Click="btnIgnoreUncoveredHorses_Click" Margin="1" Padding="3,1"/>
+                    <Button x:Name="btnShowUncoveredHorses" Content="Visa hästar" Click="btnShowUncoveredHorses_Click" Margin="1" Padding="3,1"/>
+                </StackPanel>
+            </Border>
+
+            <!--Omöjliga ABCD-Villkor-->
+            <Border BorderBrush="Red" BorderThickness="1" Background="{StaticResource BackgroundBrush}" Grid.Row="2" Visibility="{Binding Path=MarkBet.HasSuperfluousXReduction,Converter={StaticResource hptVisibilityConverter}}">
+                <StackPanel Orientation="Horizontal" Margin="3">
+                    <TextBlock Style="{StaticResource ResourceKey=tbMediumStyle}" Foreground="{StaticResource SelectedBrush}" Text="Ett eller flera ABCD-villkor är överflödiga och kan inte gå in."/>
+                    <Button x:Name="btnCloseSuperfluousXReduction" Content="Stäng" Click="btnCloseSuperfluousXReduction_Click"  Margin="5,1,1,1" Padding="3,1"/>
+                </StackPanel>
+            </Border>
+
+            <!--Överlapppande hästar-->
+            <Border BorderBrush="Red" BorderThickness="1" Background="{StaticResource BackgroundBrush}" Grid.Row="4" Visibility="{Binding Path=MarkBet.HasOverlappingComplementaryRuleHorses,Converter={StaticResource hptVisibilityConverter}}">
+                <StackPanel Orientation="Horizontal" Margin="3">
+                    <TextBlock Style="{StaticResource ResourceKey=tbMediumStyle}" Foreground="{StaticResource SelectedBrush}" Text="En eller flera hästar finns med på flera utgångar."/>
+                    <Button x:Name="btnIgnoreOverlappingHorses" Content="Ignorera" Click="btnIgnoreOverlappingHorses_Click" Margin="1" Padding="3,1"/>
+                    <Button IsEnabled="False" x:Name="btnShowOverlappingHorses" Content="Visa hästar" Click="btnShowOverlappingHorses_Click" Margin="1" Padding="3,1"/>
+                </StackPanel>
+            </Border>
+
+            <!--Inget reservval gjort-->
+            <Border BorderBrush="Red" BorderThickness="1" Background="{StaticResource BackgroundBrush}" Grid.Row="4" Visibility="{Binding Path=MarkBet.NoReservChoiceMade,Converter={StaticResource hptVisibilityConverter}}">
+                <StackPanel Orientation="Horizontal" Margin="3">
+                    <TextBlock Style="{StaticResource ResourceKey=tbMediumStyle}" Foreground="{StaticResource SelectedBrush}" Text="Ingen reservhantering vald."/>
+                    <Button x:Name="btnIgnoreReservChoice" Content="Ignorera" Click="btnIgnoreReservChoice_Click" Margin="5,1,1,1" Padding="3,1"/>
+                </StackPanel>
+            </Border>
+
+            <!--För många kuponger-->
+            <Border BorderBrush="Red" BorderThickness="1" Background="{StaticResource BackgroundBrush}" Grid.Row="4" Visibility="{Binding Path=MarkBet.HasTooManySystems,Converter={StaticResource hptVisibilityConverter}}">
+                <StackPanel Orientation="Horizontal" Margin="3">
+                    <TextBlock Style="{StaticResource ResourceKey=tbMediumStyle}" Foreground="{StaticResource SelectedBrush}" Text="ATGs systembegränsning överskriden. Systemet delas upp och sparas i flera kupongfiler, men du kommer bara kunna lämna in en av dessa själv." TextWrapping="Wrap"/>
+                    <Button x:Name="btnIgnoreTooManyCoupons" Content="Ignorera" Click="btnIgnoreTooManyCoupons_Click" Margin="5,1,1,1" Padding="3,1"/>
+                </StackPanel>
+            </Border>
+
+        </Grid>
+    </Grid>
+</HPT:UCMarkBetControl>

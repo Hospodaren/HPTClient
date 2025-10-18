@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="HPTClient.UCSettingsCombination"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+    xmlns:HPT="clr-namespace:HPTClient">
+    <Grid>
+        <TabControl x:Name="tcSettingsCombination">
+
+            <TabItem>
+                <TabItem.Header>
+                    <HPT:UCTabItemHeader Text="DD/LD" ToolTip="Styr vilket data som ska visas för respektive speltyp"/>
+                </TabItem.Header>
+
+                <StackPanel Orientation="Horizontal">
+                    <HPT:UCDataToShowSettings DataContext="{Binding Path=DataToShowDD}" x:Name="ucDataToShowDouble" Text="Data DD/LD"/>
+                    <HPT:UCDataToShowSettings DataContext="{Binding Path=CombinationDataToShowDouble}" x:Name="ucColumnsToShowDouble" Text="Kolumner DD/LD" ProfileSelectVisibility="Collapsed"/>
+                </StackPanel>
+                
+            </TabItem>
+
+            <TabItem>
+                <TabItem.Header>
+                    <HPT:UCTabItemHeader Text="Tvilling" ToolTip="Styr vilket data som ska visas för respektive speltyp"/>
+                </TabItem.Header>
+                
+                <StackPanel Orientation="Horizontal">
+                    <HPT:UCDataToShowSettings DataContext="{Binding Path=DataToShowTvilling}" x:Name="ucDataToShowTvilling" Text="Data Tvilling"/>
+                    <HPT:UCDataToShowSettings DataContext="{Binding Path=CombinationDataToShowTvilling}" x:Name="ucColumnsToShowTvilling" Text="Kolumner Tvilling" ProfileSelectVisibility="Collapsed"/>
+                </StackPanel>
+            </TabItem>
+
+            <TabItem>
+                <TabItem.Header>
+                    <HPT:UCTabItemHeader Text="Trio" ToolTip="Styr vilket data som ska visas för respektive speltyp"/>
+                </TabItem.Header>
+
+                <StackPanel Orientation="Horizontal">
+                    <HPT:UCDataToShowSettings DataContext="{Binding Path=DataToShowTrio}" x:Name="ucDataToShowTrio" Text="Data Trio"/>
+                    <HPT:UCDataToShowSettings DataContext="{Binding Path=CombinationDataToShowTrio}" x:Name="ucColumnsToShowTrio" Text="Kolumner Trio" ProfileSelectVisibility="Collapsed"/>
+                </StackPanel>
+
+            </TabItem>
+
+        </TabControl>
+    </Grid>
+</UserControl>

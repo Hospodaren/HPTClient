@@ -1,12 +1,11 @@
 using System;
-using System.Linq;
 using System.Collections.Generic;
-using System.Text;
-using System.Xml;
-using System.Xml.Serialization;
-using System.Windows.Media;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Runtime.Serialization;
+using System.Text;
+using System.Windows.Media;
+using System.Xml.Serialization;
 
 namespace HPTClient
 {
@@ -113,7 +112,7 @@ namespace HPTClient
             SetNumberOfWinningRows();
             SetNumberOfCorrectsColor();
         }
-        
+
         public int[] ARow { get; set; }
 
         [DataMember]
@@ -335,7 +334,7 @@ namespace HPTClient
         public Brush NumberOfCorrectsColor
         {
             get
-            {                
+            {
                 return numberOfCorrectsColor;
             }
             set
@@ -398,7 +397,7 @@ namespace HPTClient
             }
         }
 
-        
+
         public void SetNumberOfWinningRows()
         {
             this.NumberOfAllCorrect = 0;
@@ -407,7 +406,7 @@ namespace HPTClient
             if (this.NumberOfFinishedLegs > 0)
             {
                 SetNumberOfWinningRows(1);
-            }            
+            }
         }
 
         private void SetNumberOfWinningRows(int legNr)
@@ -532,9 +531,9 @@ namespace HPTClient
                     .OrderBy(sn => sn)
                     .Select(sn => sn.ToString())
                     .Aggregate((s, next) => s + ", " + next);
-                
+
                 sb.Append(startNumberString);
-                
+
                 //foreach (var i in hptCouponRace.StartNrList)
                 //{
                 //    sb.Append(i);
@@ -545,7 +544,7 @@ namespace HPTClient
                 sb.Append(hptCouponRace.Reserv1);
                 sb.Append(", ");
                 sb.Append(hptCouponRace.Reserv2);
-                sb.AppendLine(")");                  
+                sb.AppendLine(")");
                 //sb.Append("R1: ");
                 //sb.Append(hptCouponRace.Reserv1);
                 //sb.Append(", R2: ");

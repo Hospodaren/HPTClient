@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Collections.ObjectModel;
-using System.Threading;
-using System.Xml.Serialization;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
+using System.Text;
+using System.Threading;
+using System.Xml.Serialization;
 
 namespace HPTClient
 {
@@ -69,7 +69,7 @@ namespace HPTClient
 
             // Hantering av rankvariabler
             this.HorseVariableList = new ObservableCollection<HPTHorseVariable>(HPTHorseVariable.CreateVariableList());
-            
+
             // Klassen som hanterar mailskickning av bolagssystem
             this.MailSender = new HPTMailSender();
 
@@ -244,7 +244,7 @@ namespace HPTClient
             {
                 this.HorseOwnRankSumReductionRuleList.Add(horseRankSumReductionRuleAlternate);
             }
-            
+
             #region Intervalreduction rules
 
             //this.PercentSumReductionRule = new HPTPercentSumReductionRule()
@@ -407,10 +407,10 @@ namespace HPTClient
         internal bool HasDynamicReductionRule()
         {
             // Fler varianter som ska inkluderas
-            if (this.RowValueReductionRule.Use 
-                || this.StakePercentSumReductionRule.Use 
+            if (this.RowValueReductionRule.Use
+                || this.StakePercentSumReductionRule.Use
                 //|| this.PercentSumReductionRule.Use 
-                || this.OddsSumReductionRule.Use 
+                || this.OddsSumReductionRule.Use
                 || this.GroupIntervalRulesCollection.Use
                 || this.ReductionRank)
             {
@@ -519,7 +519,7 @@ namespace HPTClient
             {
                 return true;
             }
-            
+
             // Intervall- och/eller gruppintervallregel med egen rank används
             if (this.ReductionHorseRank && this.HorseRankSumReductionRuleList != null && this.HorseRankSumReductionRuleList.Count > 0)
             {
@@ -568,7 +568,7 @@ namespace HPTClient
                 return;
             }
             // Beräkna varje hästs täckning
-            if (this.ReducedSize > 0 
+            if (this.ReducedSize > 0
                 && !this.SingleRowCollection.CalculationInProgress)
             {
                 var AllHorses = this.RaceDayInfo.RaceList
@@ -599,13 +599,13 @@ namespace HPTClient
             //this.SingleRowCollection.SingleRows.ForEach(sr => this.SingleRowsObservable.Add(sr));
 
             // Komprimera till kuponger
-            this.SingleRowCollection.CompressToCouponsThreaded();            
+            this.SingleRowCollection.CompressToCouponsThreaded();
 
             try
             {
                 this.RaceDayInfo.NumberOfFinishedRaces = 0;
                 this.RaceDayInfo.ResultComplete = false;
-                this.RaceDayInfo.PayOutList.Clear();
+                this.RaceDayInfo.PayOutList?.Clear();
             }
             catch (Exception exc)
             {
@@ -738,7 +738,7 @@ namespace HPTClient
         //}
 
         #endregion
-        
+
         void Config_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
@@ -873,7 +873,7 @@ namespace HPTClient
             }
             this.SingleRowEditedList = null;
         }
-        
+
         #region Methods
 
         public HPTMarkBet Clone()
@@ -953,7 +953,7 @@ namespace HPTClient
                     this.SingleRowCollection.HandleHighestAndLowestSums();
                     this.SingleRowCollection.HandleHighestAndLowestIncludedSums();
                     this.CouponCorrector.CouponHelper.CreateCoupons();
-                    
+
                     this.TotalCouponSize = this.SystemSize * this.BetMultiplier;
                     this.NumberOfCoupons = 1;
                     this.SingleRowCollection.CurrentCouponNumber = 1;
@@ -975,7 +975,7 @@ namespace HPTClient
 
             try
             {
-                ThreadPool.QueueUserWorkItem(new WaitCallback(RecalculateReductionThreaded), ThreadPriority.Lowest);            
+                ThreadPool.QueueUserWorkItem(new WaitCallback(RecalculateReductionThreaded), ThreadPriority.Lowest);
             }
             catch (Exception exc)
             {
@@ -1075,7 +1075,7 @@ namespace HPTClient
                             }
                         }
                         horseListToCalculate[i] = horseToExchange;
-                    }                    
+                    }
                 }
                 singleRow.RowValueOneErrorLower = payOutListOneError.Min();
                 singleRow.RowValueOneErrorUpper = payOutListOneError.Max();
@@ -1114,7 +1114,7 @@ namespace HPTClient
                 string s = exc.Message;
             }
         }
-        
+
         internal void SetGeneralValues()
         {
             this.MaxRankSum = this.numberOfRaces * 16;
@@ -1154,7 +1154,7 @@ namespace HPTClient
                 race.PropertyChanged -= race_PropertyChanged;
                 race.PropertyChanged += race_PropertyChanged;
             }
-            
+
             this.RaceDayInfo.ABCDChanged -= RaceDayInfo_ABCDChanged;
             this.RaceDayInfo.ABCDChanged += RaceDayInfo_ABCDChanged;
 
@@ -1270,7 +1270,7 @@ namespace HPTClient
                 race.Locked = false;
             }
         }
-        
+
         void RaceDayInfo_ABCDChanged(object sender, EventArgs e)
         {
             if (!this.pauseRecalculation)
@@ -1318,7 +1318,7 @@ namespace HPTClient
                         //    race.HorseListSelected.Clear();
                         //    race.HorseListSelected.AddRange(selectedHorses);
                         //}
-                        race.NumberOfSelectedHorses = race.HorseListSelected.Count; 
+                        race.NumberOfSelectedHorses = race.HorseListSelected.Count;
                     }
 
                     var horse = race.HorseList.FirstOrDefault(h => h.StartNr == startNr);
@@ -1454,13 +1454,13 @@ namespace HPTClient
             foreach (var abcdefReductionRule in this.MultiABCDEFReductionRule.ABCDEFReductionRuleList)
             {
                 SetSuperfluousFlag(abcdefReductionRule, numberOfRacesWithXReduction);
-            }         
+            }
         }
 
         internal void SetSuperfluousFlag(HPTABCDEFReductionRule rule, int numberOfRacesWithXReduction)
         {
             List<HPTXReductionRule> rulesToCheck = rule.XReductionRuleList.Where(r => r.NumberOfRacesWithX > 0).ToList();
-            
+
             foreach (var reductionRule in rulesToCheck)
             {
                 // För högt antal ABCD
@@ -1605,7 +1605,7 @@ namespace HPTClient
                     sb.Remove(sb.Length - 2, 2);
                 }
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 return string.Empty;
             }
@@ -1637,7 +1637,7 @@ namespace HPTClient
                     sb.Remove(sb.Length - 2, 2);
                 }
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 return string.Empty;
             }
@@ -1660,7 +1660,7 @@ namespace HPTClient
             {
                 string betMultiplierString = "OBS! Flerbong x " + this.BetMultiplier.ToString();
                 sb.AppendLine(betMultiplierString);
-                this.ReductionRuleInfoList.Add(new ReductionRuleInfo() {ReductionTypeString = betMultiplierString });
+                this.ReductionRuleInfoList.Add(new ReductionRuleInfo() { ReductionTypeString = betMultiplierString });
 
             }
             if (this.V6SingleRows)
@@ -1792,7 +1792,7 @@ namespace HPTClient
         public string ToClipboardString()
         {
             StringBuilder sb = new StringBuilder();
-            
+
             sb.Append(this.RaceInformationString);
 
             sb.AppendLine();
@@ -1808,7 +1808,7 @@ namespace HPTClient
 
             sb.Append("Reduceringsgrad: ");
             sb.AppendLine(string.Format("{0:P1}", this.ReductionQuota));
-            
+
             sb.AppendLine();
 
             SetReductionRuleString();
@@ -2453,7 +2453,7 @@ namespace HPTClient
         [HPTReduction("Gruppintervall", "GroupIntervalRulesCollection.Use", true, 6)]
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public HPTGroupIntervalRulesCollection GroupIntervalRulesCollection { get; set; }
-        
+
         [XmlIgnore]
         public ObservableCollection<HPTIntervalReductionRule> IntervalReductionRuleList { get; set; }
 
@@ -2482,9 +2482,9 @@ namespace HPTClient
         [HPTReduction("Multi-ABCD", "MultiABCDEFReductionRule.Use", true, 1)]
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public HPTMultiABCDEFReductionRule MultiABCDEFReductionRule { get; set; }
-                
+
         #endregion
-        
+
         #region General properties
 
         private string systemURL;
@@ -2584,12 +2584,12 @@ namespace HPTClient
             {
                 this.compressCoupons = value;
                 OnPropertyChanged("CompressCoupons");
-                if (value && this.SingleRowCollection != null 
+                if (value && this.SingleRowCollection != null
                     && !this.IsDeserializing)
                 {
                     try
                     {
-                        this.SingleRowCollection.CompressToCouponsThreaded();                       
+                        this.SingleRowCollection.CompressToCouponsThreaded();
                     }
                     catch (Exception exc)
                     {
@@ -2603,7 +2603,7 @@ namespace HPTClient
                 {
                     this.SingleRowCollection.ClearRowCombinations();
                     this.CouponCorrector.CouponHelper.CouponList.Clear();
-                }                
+                }
             }
         }
 
@@ -3048,7 +3048,7 @@ namespace HPTClient
             {
                 if (this.SystemSize > 0)
                 {
-                    RecalculateReduction(RecalculateReason.All); 
+                    RecalculateReduction(RecalculateReason.All);
                 }
                 return;
             }
@@ -3140,7 +3140,7 @@ namespace HPTClient
         }
 
         internal void UpdateSystemSize()
-        {            
+        {
             foreach (var race in this.RaceDayInfo.RaceList)
             {
                 race.HorseListSelected = race.HorseList.Where(h => h.Selected == true).ToList();
@@ -3237,7 +3237,7 @@ namespace HPTClient
                 OnPropertyChanged("JackpotRowsTwoErrors");
             }
         }
-        
+
         private decimal reducedSystemProbability;
         public decimal ReducedSystemProbability
         {
@@ -3563,7 +3563,7 @@ namespace HPTClient
         #endregion
 
         #region Singlerow calculations testing
-        
+
         #endregion
 
         public void ClearAll()
@@ -3631,7 +3631,7 @@ namespace HPTClient
                         horse.Reserv1 = null;
                         horse.Reserv2 = null;
                     }
-                    catch (Exception exc){}
+                    catch (Exception) { }
                 }
 
 
@@ -3859,7 +3859,7 @@ namespace HPTClient
         }
 
         internal void HandleTooManyCoupons()
-        {            
+        {
             //this.NumberOfSystems = Convert.ToInt32(this.CouponCorrector.CouponHelper.CouponList.Sum(c => c.BetMultiplier));
             this.NumberOfSystems = Convert.ToInt32(this.CouponCorrector.CouponHelper.CouponList.Sum(c => c.SystemSizeATG));
             if (this.NumberOfSystems > this.BetType.MaxNumberOfSystemsInFile)
@@ -3873,7 +3873,7 @@ namespace HPTClient
         }
 
         internal void HandleUncoveredHorses()
-        {            
+        {
             if (HPTConfig.Config.WarnIfUncoveredHorses && this.ReductionRulesToApply.Count > 0)
             {
                 // Hästar som inte täcks på det reducerade systemet
@@ -4017,7 +4017,7 @@ namespace HPTClient
             }
 
             RecalculateRank();
-            
+
             // Låsta lopp
             IEnumerable<HPTRace> lockedRaceList = this.RaceDayInfo.RaceList
                 .Where(r => r.Locked);
@@ -4048,7 +4048,7 @@ namespace HPTClient
             while (spikeNr < this.numberOfSpikes && listPosition < horseList.Count)
             {
                 HPTHorse spikeCandidate = horseList[listPosition];
-                bool selectAsSpike = (spikeCandidate.Selected && spikeCandidate.ParentRace.NumberOfSelectedHorses == 1) 
+                bool selectAsSpike = (spikeCandidate.Selected && spikeCandidate.ParentRace.NumberOfSelectedHorses == 1)
                     || spikeCandidate.ParentRace.NumberOfSelectedHorses == 0;
 
                 if (!selectAsSpike && spikeCandidate.ParentRace.NumberOfSelectedHorses == 0)
@@ -4114,7 +4114,7 @@ namespace HPTClient
             var rowsInOrder = this.SingleRowCollection.SingleRows
                 .OrderBy(sr => sr.RankSum)
                 .ToArray();
-            decimal factor = rowsInOrder.Length/100M;
+            decimal factor = rowsInOrder.Length / 100M;
             int lowerPosition = Convert.ToInt32(Convert.ToDecimal(this.MarkBetTemplateRank.LowerPercentageLimit) * factor);
             int upperPosition = Convert.ToInt32(Convert.ToDecimal(this.MarkBetTemplateRank.UpperPercentageLimit) * factor);
             this.MarkBetTemplateRank.MinRankValue = rowsInOrder[lowerPosition].RankSum;
@@ -4161,7 +4161,7 @@ namespace HPTClient
 
             this.MarkBetTemplateABCD = new HPTMarkBetTemplateABCD()
             {
-                DesiredSystemSize = desiredSystemSize,                
+                DesiredSystemSize = desiredSystemSize,
                 NumberOfSpikes = this.TemplateForBeginners.NumberOfSpikes,
                 Use = true,
                 ReductionPercentage = Convert.ToInt32(reductionPercentage * 100),
@@ -4285,7 +4285,7 @@ namespace HPTClient
                     }
                 }
                 numberOfPrioLeft--;
-                horseList = horseList.Where(h => h.Prio != templateSettings.Prio).ToList();                
+                horseList = horseList.Where(h => h.Prio != templateSettings.Prio).ToList();
             }
 
             foreach (HPTHorse horse in this.RaceDayInfo.HorseListSelected)
@@ -4335,7 +4335,7 @@ namespace HPTClient
             {
                 pauseRecalculation = true;
                 this.InterruptSystemsCreation = false;
-                
+
                 this.templateResultList = new ObservableCollection<HPTMarkBetTemplateResult>();
 
                 if (ABCDTemplateCombinations == null)
@@ -4525,40 +4525,40 @@ namespace HPTClient
 
         private bool IsSuperfluousXreduction(bool allRulesSet)
         {
-                List<HPTXReductionRule> rulesToCheck =
-                        this.ABCDEFReductionRule.XReductionRuleList.Where(rule => rule.NumberOfRacesWithX > 0).ToList();
+            List<HPTXReductionRule> rulesToCheck =
+                    this.ABCDEFReductionRule.XReductionRuleList.Where(rule => rule.NumberOfRacesWithX > 0).ToList();
 
-                int numberOfRacesWithXReduction =
-                    this.RaceDayInfo.RaceList
-                        .SelectMany(r => r.HorseListSelected)
-                        .Where(h => (int)h.Prio > 0).
-                        Select(h => h.ParentRace.LegNr)
-                        .Distinct()
-                        .Count();
+            int numberOfRacesWithXReduction =
+                this.RaceDayInfo.RaceList
+                    .SelectMany(r => r.HorseListSelected)
+                    .Where(h => (int)h.Prio > 0).
+                    Select(h => h.ParentRace.LegNr)
+                    .Distinct()
+                    .Count();
 
-                foreach (var reductionRule in rulesToCheck)
+            foreach (var reductionRule in rulesToCheck)
+            {
+                // För högt antal ABCD
+                int sumOfRestMin = rulesToCheck.Where(xr => xr != reductionRule).Sum(xr => xr.MinNumberOfX);
+                if (sumOfRestMin + reductionRule.MaxNumberOfX > numberOfRacesWithXReduction)
                 {
-                    // För högt antal ABCD
-                    int sumOfRestMin = rulesToCheck.Where(xr => xr != reductionRule).Sum(xr => xr.MinNumberOfX);
-                    if (sumOfRestMin + reductionRule.MaxNumberOfX > numberOfRacesWithXReduction)
+                    return true;
+                }
+
+                // För lågt antal ABCD
+                if (allRulesSet)
+                {
+                    int sumOfRestMax = rulesToCheck.Where(xr => xr != reductionRule).Sum(xr => xr.MaxNumberOfX);
+                    if (sumOfRestMax + reductionRule.MinNumberOfX < numberOfRacesWithXReduction)
                     {
                         return true;
                     }
-
-                    // För lågt antal ABCD
-                    if (allRulesSet)
-                    {
-                        int sumOfRestMax = rulesToCheck.Where(xr => xr != reductionRule).Sum(xr => xr.MaxNumberOfX);
-                        if (sumOfRestMax + reductionRule.MinNumberOfX < numberOfRacesWithXReduction)
-                        {
-                            return true;
-                        }
-                    }
                 }
-                return false;
-            
+            }
+            return false;
+
         }
-        
+
         internal void ChangeRankSize(HPTMarkBetTemplateRank markBetTemplateRank)
         {
             DateTime dtStart = DateTime.Now;
@@ -4739,7 +4739,7 @@ namespace HPTClient
             }
             return ba;
         }
-        
+
         #endregion
 
         internal void SaveFiles()
@@ -4768,12 +4768,12 @@ namespace HPTClient
         [DataMember]
         public DateTime LastSaveTime
         {
-            get 
+            get
             {
-                return lastSaveTime; 
+                return lastSaveTime;
             }
-            set 
-            { 
+            set
+            {
                 lastSaveTime = value;
                 OnPropertyChanged("LastSaveTime");
                 if (value == DateTime.MinValue)
@@ -4987,11 +4987,11 @@ namespace HPTClient
             foreach (var race in this.RaceDayInfo.RaceList)
             {
                 var horseListOrdered = race.HorseList.Where(h => h.Scratched == false || h.Scratched == null).OrderByDescending(h => h.StakeDistributionShare).ToArray();
-                
+
                 decimal lowestRankMeanToSelect = horseListOrdered.Length * 0.7M;
 
                 // Favoriten som A-Häst
-                horseListOrdered[0].HorseXReductionList.First(h => h.Prio == HPTPrio.A).Selected = true;                
+                horseListOrdered[0].HorseXReductionList.First(h => h.Prio == HPTPrio.A).Selected = true;
 
                 // Övriga som B- eller C-hästar
                 for (int i = 1; i < horseListOrdered.Length; i++)
@@ -5033,10 +5033,10 @@ namespace HPTClient
 
             ruleB = this.ABCDEFReductionRule.XReductionRuleList.First(rr => rr.Prio == HPTPrio.B);
             ruleB.NumberOfWinnersList.First(now => now.NumberOfWinners == 1).Selected = true;
-            ruleB.NumberOfWinnersList.First(now => now.NumberOfWinners == 2).Selected = true;            
+            ruleB.NumberOfWinnersList.First(now => now.NumberOfWinners == 2).Selected = true;
             if (ruleB.NumberOfRacesWithX == 4)
             {
-                ruleB.NumberOfWinnersList.First(now => now.NumberOfWinners == 3).Selected = true;                
+                ruleB.NumberOfWinnersList.First(now => now.NumberOfWinners == 3).Selected = true;
             }
             else
             {
@@ -5131,7 +5131,7 @@ namespace HPTClient
         {
             // Skapa grundsystemet
             CreateBaseSystem();
-            
+
             // Sätt rankreduceringsintervall för vinstandel totalt, intjänat i år och vinstandel totalt
             SetRankSum("PercentTop3ThisYear", 4, 18);
             //SetRankSum("PercentFirstPlaceThisYear", 4, 22);
@@ -5388,7 +5388,7 @@ namespace HPTClient
                 // var rank = this.RankList.FirstOrDefault(hr => hr.Name == "StakeDistributionShare");
                 var abHorses = allHorses
                     .Where(h => h.StakeDistributionShare > 0.2M || h.RankList.First(hr => hr.Name == "StakeDistributionShare").Rank == 1);
-                    //.Where(h => h.RankList.First(hr => hr.Name == "StakeDistributionShare").Rank == 1);
+                //.Where(h => h.RankList.First(hr => hr.Name == "StakeDistributionShare").Rank == 1);
 
                 var aHorses = abHorses.Where(h => h.StakeDistributionShare > 0.4M);
                 if (aHorses.Count() >= 2)   // Minst två storfavoriter
@@ -5408,7 +5408,7 @@ namespace HPTClient
                         {
                             if (!h.Selected)
                             {
-                                h.HorseXReductionList.First(hr => hr.Prio == HPTPrio.B).Selected = true; 
+                                h.HorseXReductionList.First(hr => hr.Prio == HPTPrio.B).Selected = true;
                             }
                         });
 
@@ -5494,12 +5494,12 @@ namespace HPTClient
                     rule = this.ABCDEFReductionRule.XReductionRuleList.First(rr => rr.Prio == HPTPrio.C);
                     if (numberOfC < 7)
                     {
-                        rule.NumberOfWinnersList.First(now => now.NumberOfWinners == 0).Selected = true; 
+                        rule.NumberOfWinnersList.First(now => now.NumberOfWinners == 0).Selected = true;
                     }
                     rule.NumberOfWinnersList.First(now => now.NumberOfWinners == 1).Selected = true;
                     if (numberOfC > 6)
                     {
-                        rule.NumberOfWinnersList.First(now => now.NumberOfWinners == 2).Selected = true; 
+                        rule.NumberOfWinnersList.First(now => now.NumberOfWinners == 2).Selected = true;
                     }
                 }
 
@@ -5752,7 +5752,7 @@ namespace HPTClient
                     }
                 });
         }
-        
+
         internal string CalculateJackpotRows()
         {
             try
@@ -5812,7 +5812,7 @@ namespace HPTClient
                 this.JackpotRowsOneError = this.numberOfRowsUnderRowValue[1];
                 if (this.numberOfRowsUnderRowValue.Count > 1)
                 {
-                    this.JackpotRowsTwoErrors = this.numberOfRowsUnderRowValue[2]; 
+                    this.JackpotRowsTwoErrors = this.numberOfRowsUnderRowValue[2];
                 }
 
                 return sb.ToString();
@@ -5845,11 +5845,11 @@ namespace HPTClient
                         int calculatedPayout = 0;
                         if (this.numberOfRowsUnderRowValue.Count == 1)  // V65
                         {
-                            calculatedPayout = this.CouponCorrector.CalculatePayOutOneError(singleRow.HorseList, this.RaceDayInfo.BetType.PoolShareOneError * this.RaceDayInfo.BetType.RowCost);                            
+                            calculatedPayout = this.CouponCorrector.CalculatePayOutOneError(singleRow.HorseList, this.RaceDayInfo.BetType.PoolShareOneError * this.RaceDayInfo.BetType.RowCost);
                         }
                         else
                         {
-                            calculatedPayout = this.CouponCorrector.CalculatePayOutTwoErrors(singleRow.HorseList, this.RaceDayInfo.BetType.PoolShareTwoErrors * this.RaceDayInfo.BetType.RowCost);                            
+                            calculatedPayout = this.CouponCorrector.CalculatePayOutTwoErrors(singleRow.HorseList, this.RaceDayInfo.BetType.PoolShareTwoErrors * this.RaceDayInfo.BetType.RowCost);
                         }
 
                         if (calculatedPayout > this.RaceDayInfo.BetType.JackpotLimit)
@@ -5871,7 +5871,7 @@ namespace HPTClient
                             this.numberOfRowsUnderRowValue[1] += 1;
                             if (this.numberOfRowsUnderRowValue.Count > 1)
                             {
-                                this.numberOfRowsUnderRowValue[2] += 1; 
+                                this.numberOfRowsUnderRowValue[2] += 1;
                             }
                             this.jackpotProbability += singleRow.RowShareStake;
                         }
@@ -5892,7 +5892,7 @@ namespace HPTClient
                     }
                 }
             }
-            catch (Exception exc)
+            catch (Exception)
             {
             }
             this.calculationHorseDictionary[legNr] = horsesInOrder.First();
@@ -5920,7 +5920,7 @@ namespace HPTClient
 
                 return this.numberOfSingleRows;
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 return -1;
             }
@@ -5961,7 +5961,7 @@ namespace HPTClient
                     }
                 }
             }
-            catch (Exception exc)
+            catch (Exception)
             {
             }
             this.calculationHorseDictionary[legNr] = horsesInOrder.First();
@@ -6068,7 +6068,7 @@ namespace HPTClient
                 if (this.GroupIntervalRulesCollection.ReductionRuleList.Count(rr => rr.Use) > 1)
                 {
                     SingleRowCollection.CalculateRuleStatistics(this.GroupIntervalRulesCollection);
-                    this.ReductionRuleStatisticsList.Add(this.GroupIntervalRulesCollection); 
+                    this.ReductionRuleStatisticsList.Add(this.GroupIntervalRulesCollection);
                 }
 
                 this.GroupIntervalRulesCollection
@@ -6087,7 +6087,7 @@ namespace HPTClient
                 if (this.TrainerRulesCollection.ReductionRuleList.Count(rr => rr.Use) > 1)
                 {
                     SingleRowCollection.CalculateRuleStatistics(this.TrainerRulesCollection);
-                    this.ReductionRuleStatisticsList.Add(this.TrainerRulesCollection); 
+                    this.ReductionRuleStatisticsList.Add(this.TrainerRulesCollection);
                 }
 
                 this.TrainerRulesCollection
@@ -6106,7 +6106,7 @@ namespace HPTClient
                 if (this.DriverRulesCollection.ReductionRuleList.Count(rr => rr.Use) > 1)
                 {
                     SingleRowCollection.CalculateRuleStatistics(this.DriverRulesCollection);
-                    this.ReductionRuleStatisticsList.Add(this.DriverRulesCollection); 
+                    this.ReductionRuleStatisticsList.Add(this.DriverRulesCollection);
                 }
 
                 this.DriverRulesCollection
@@ -6129,7 +6129,7 @@ namespace HPTClient
             }
 
             var singleRowsInOrder = this.SingleRowCollection.SingleRows.OrderBy(sr => sr.RowValueV6);
-            
+
             this.BetType.RowValueIntervalList
                 .ToList()
                 .ForEach(rwi =>
@@ -6180,7 +6180,7 @@ namespace HPTClient
         internal decimal[] probabilitySumArray;
         internal bool[] useStakeShareArray;
         internal decimal[] selectedStakeShareArray;
-        
+
         internal string CalculateBestABCDCombination()
         {
             try
@@ -6286,7 +6286,7 @@ namespace HPTClient
                                 {
                                     sb.Append(aString);
                                     sb.Append(bString);
-                                    sb.AppendLine(cString); 
+                                    sb.AppendLine(cString);
                                 }
                             });
                         });
@@ -6420,7 +6420,7 @@ namespace HPTClient
                     Enumerable.Range(0, probabilitySumArray.Length)
                         .ToList()
                         .ForEach(i => rule.NumberOfWinnersList.First(now => now.NumberOfWinners == i).Probability = probabilitySumArray[i]);
-                    
+
                     rule.Probability = rule.NumberOfWinnersList
                         .Where(now => now.Selected)
                         .Sum(now => now.Probability);
@@ -6691,7 +6691,7 @@ namespace HPTClient
                                                 }
 
                                                 HPTConfig.Config.HorseOwnInformationCollection.MergeHorseOwnInformation(h);
-                                                
+
                                                 if (h.OwnInformation.HorseOwnInformationCommentList.Any(hc => hc.CommentUser == "HPT"))
                                                 {
                                                     h.OwnInformation.HorseOwnInformationCommentList

@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Collections.ObjectModel;
-using System.Xml.Serialization;
-using System.Runtime.Serialization;
-using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace HPTClient
 {
@@ -18,13 +16,13 @@ namespace HPTClient
         internal HPTService.HPTRace race;
 
         #region egna events
-        
+
         public event Action<int, int, bool> NumberOfSelectedChanged;
-        
+
         public event Action<HPTHorse, EventArgs> TrioSelectionChanged;
 
         public event Action<HPTRace, bool> SetAllSelected;
-        
+
         public event Action<HPTRace> ClearABCD;
 
         #endregion
@@ -95,7 +93,7 @@ namespace HPTClient
                     {
                         // Hantera eventuellt strukna hästar
                         var selectedScratchedHorses = this.HorseList.Where(h => h.Selected && h.Scratched == true).ToList();
-                        selectedScratchedHorses.ForEach(h => 
+                        selectedScratchedHorses.ForEach(h =>
                             {
                                 h.Selected = false;
                                 this.CombinationListInfoTvilling.CombinationList
@@ -205,12 +203,12 @@ namespace HPTClient
                 {
                     var startNumberRankCollection = HPTConfig.Config.StartNumberRankCollectionList.FirstOrDefault(snr => snr.StartMethodCode == this.StartMethodCode);
                     var hptHorse = new HPTHorse()
-                        {
-                            ParentRace = this
-                        };
-                        hptHorse.ConvertHorse(horse);
-                        this.HorseList.Add(hptHorse);
-                        hptHorse.CreateXReductionRuleList();                    
+                    {
+                        ParentRace = this
+                    };
+                    hptHorse.ConvertHorse(horse);
+                    this.HorseList.Add(hptHorse);
+                    hptHorse.CreateXReductionRuleList();
 
                     // Sätt Spårrank utifrån Config
                     if (startNumberRankCollection != null)
@@ -357,7 +355,7 @@ namespace HPTClient
                         h.TrioInfo.PlaceInfo1.InvestmentShare = h.TrioInfo.PlaceInfo1.Investment / turnoverTrio1;
                         h.TrioInfo.PlaceInfo2.InvestmentShare = h.TrioInfo.PlaceInfo2.Investment / turnoverTrio2;
                         h.TrioInfo.PlaceInfo3.InvestmentShare = h.TrioInfo.PlaceInfo3.Investment / turnoverTrio3;
-                    }); 
+                    });
             }
 
             // Hantera eventuellt strukna hästar
@@ -373,7 +371,7 @@ namespace HPTClient
                         c.Stake = null;
                     });
             });
-            
+
             int maxOdds = combArray.Max(c => c.CombinationOdds) + 1;
             foreach (var horse1 in this.HorseList.Where(h => h.Scratched == false || h.Scratched == null))
             {
@@ -658,7 +656,7 @@ namespace HPTClient
                 OnPropertyChanged("Reserv2Nr");
             }
         }
-        
+
 
         //[DataMember(IsRequired = false, EmitDefaultValue = false)]
         //public int Reserv2Nr { get; set; }
@@ -667,8 +665,8 @@ namespace HPTClient
         public string ReservOrder { get; set; }
 
         private int[] reservOrderList;
-        public int[] ReservOrderList 
-        { 
+        public int[] ReservOrderList
+        {
             get
             {
                 //if (this.reservOrderList == null)
@@ -698,7 +696,7 @@ namespace HPTClient
 
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public ICollection<HPTHorse> HorseList { get; set; }
-        
+
         private List<HPTHorse> horseListSelected;
         [XmlIgnore]
         public List<HPTHorse> HorseListSelected
@@ -711,7 +709,7 @@ namespace HPTClient
                     this.horseListSelected = this.HorseList.Where(h => h.Selected == true).ToList();
                     //this.horseListSelected = this.HorseList.Where(h => h.Selected == true).ToList();
                     //this.NumberOfSelectedHorses = this.horseListSelected.Count;
-                }                
+                }
                 return this.horseListSelected;
             }
             set
@@ -737,7 +735,7 @@ namespace HPTClient
                 OnPropertyChanged("Locked");
             }
         }
-       
+
         #endregion
 
         #region Calculated properties
@@ -819,7 +817,7 @@ namespace HPTClient
         #endregion
 
         #region Methods
-        
+
         public int GetNumberOfX(HPTPrio prio)
         {
             int numberOfX = this.HorseListSelected.Count(h => h.Prio == prio);
@@ -986,7 +984,7 @@ namespace HPTClient
                 OnPropertyChanged("RankABCSum");
             }
         }
-        
+
         internal void SetCorrectStakeDistributionShare()
         {
             // Rätta till exakt insatsfördelning
@@ -1072,7 +1070,7 @@ namespace HPTClient
         }
 
         #endregion
-        
+
         #region Tvilling and Trio
 
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
@@ -1102,7 +1100,7 @@ namespace HPTClient
             foreach (var horse in this.HorseList)
             {
                 horse.NumberOfHeadToHeadRaces = horse.ResultList.Count(r => r.HeadToHeadResultList != null);    // Antal lopp där det finns jämförelser
-                
+
                 horse.NumberOfHeadToHeadResults = horse.ResultList  // Totalt antal jämförelseresultat
                     .Where(r => r.HeadToHeadResultList != null)
                     .SelectMany(r => r.HeadToHeadResultList)

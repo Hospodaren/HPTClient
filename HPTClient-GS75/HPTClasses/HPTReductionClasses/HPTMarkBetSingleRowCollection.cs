@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Collections.ObjectModel;
 
 namespace HPTClient
 {
@@ -10,7 +9,7 @@ namespace HPTClient
     {
         private HPTHorse[] horseList;
         private HPTMarkBet markBet;
-        
+
         public List<HPTMarkBetSingleRowCombination> CompressedCoupons { get; set; }
         private HPTMarkBetSingleRow[] AllRows;
         internal bool SaveAllRows;
@@ -25,7 +24,7 @@ namespace HPTClient
 
         public HPTMarkBetSingleRowCollection(HPTMarkBet markBet)
         {
-            this.markBet = markBet;            
+            this.markBet = markBet;
             this.horseList = new HPTHorse[markBet.NumberOfRaces];
             this.lastRequestedRecalculation = DateTime.Now;
             this.singleRows = new List<HPTMarkBetSingleRow>();
@@ -44,7 +43,7 @@ namespace HPTClient
                 OnPropertyChanged("SingleRowsObservable");
             }
         }
-        
+
         public void ClearAll()
         {
             if (this.SingleRows != null)
@@ -137,7 +136,7 @@ namespace HPTClient
             }
 
             int i = 0;
-            while ((this.CalculationInProgress || this.CompressionInProgress) 
+            while ((this.CalculationInProgress || this.CompressionInProgress)
                 && i < 50)
             {
                 if (dt < lastRequestedRecalculation)
@@ -225,7 +224,7 @@ namespace HPTClient
 
             this.rowNumber = 1;
             this.reductionRulesToApply = this.markBet.ReductionRulesToApply;
-            
+
             // Initiera variabel för totalt antal inlämnade rader med flerbong inkluderat
             this.totalCouponSize = 0;
 
@@ -278,14 +277,14 @@ namespace HPTClient
             RemoveOwnProbabilityRowsToReachTarget();
             RemoveRandomRowsToReachTarget();
             SetBetMultiplierToReachTarget();
-            
+
             HandleHighestAndLowestSums();
             HandleHighestAndLowestIncludedSums();
 
             //// Skapa kollektionen som visas i GUIt
             //this.SingleRowsObservable = new ObservableCollection<HPTMarkBetSingleRow>(this.SingleRows);
 
-            
+
             this.markBet.ReducedSize = this.SingleRows.Count;
             this.markBet.TotalCouponSize = this.totalCouponSize;
 
@@ -313,7 +312,7 @@ namespace HPTClient
             }
             this.SingleRows.Clear();
             //this.SingleRows = new List<HPTMarkBetSingleRow>();
-            
+
             this.NumberOfAnalyzedRows = 0;
             this.AnalyzedRowsShare = 0M;
 
@@ -329,7 +328,7 @@ namespace HPTClient
 
         private List<HPTReductionRule> reductionRulesToApply;
         private void MakeSingleRowCollection(int raceNumber)
-        {            
+        {
             if (raceNumber == this.markBet.NumberOfRaces)   // Sista loppet
             {
                 if (this.StopCalculation)
@@ -387,7 +386,7 @@ namespace HPTClient
         }
 
         #region Analysera enskild rad
-        
+
         // Summan av antal inlämnade rader med hänsyn till flerbong
         private int totalCouponSize;
         private void AnalyzeRow(HPTMarkBetSingleRow singleRow)
@@ -621,7 +620,7 @@ namespace HPTClient
                 if (this.markBet.RowValueReductionRule != null)
                 {
                     this.markBet.RowValueReductionRule.LowestIncludedSum = this.lowestEstimatedRowValue;
-                    this.markBet.RowValueReductionRule.HighestIncludedSum = this.highestEstimatedRowValue; 
+                    this.markBet.RowValueReductionRule.HighestIncludedSum = this.highestEstimatedRowValue;
                 }
                 return;
             }
@@ -892,7 +891,7 @@ namespace HPTClient
             try
             {
                 if (this.SingleRows == null
-                || this.SingleRows.Count == 0                
+                || this.SingleRows.Count == 0
                 || this.markBet.ReducedSize == 0)
                 {
                     return;
@@ -939,7 +938,7 @@ namespace HPTClient
                 this.StopCalculation = false;
                 CompressToCoupons();
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 this.StopCalculation = false;
             }
@@ -962,11 +961,11 @@ namespace HPTClient
             this.CompressionInProgress = true;
             if (this.CompressedCoupons == null)
             {
-                this.CompressedCoupons = new List<HPTMarkBetSingleRowCombination>(); 
+                this.CompressedCoupons = new List<HPTMarkBetSingleRowCombination>();
             }
             else
             {
-                this.CompressedCoupons.Clear(); ; 
+                this.CompressedCoupons.Clear(); ;
             }
             this.CurrentCouponNumber = 0;
 
@@ -987,8 +986,8 @@ namespace HPTClient
                 }
 
                 // Om man har valt V6 och/eller flerbong på enskilda enkelrader samt överskrider ATGs nya gränser
-                else if (this.markBet.V6SingleRows 
-                    || this.markBet.SingleRowBetMultiplier 
+                else if (this.markBet.V6SingleRows
+                    || this.markBet.SingleRowBetMultiplier
                     || this.markBet.ReductionV6BetMultiplierRule
                     || this.SingleRows.Any(sr => sr.Edited))
                 {
@@ -1026,7 +1025,7 @@ namespace HPTClient
         private void CompressCouponsBruteForce(Dictionary<string, HPTMarkBetSingleRow> rowsToCompress, int betMultiplier, bool v6)
         {
             var dt = DateTime.Now;  // DEBUG
-            
+
             while (rowsToCompress.Count > 0)
             {
                 if (this.StopCalculation || dt < this.lastRequestedRecalculation)
@@ -1123,7 +1122,7 @@ namespace HPTClient
                             this.numberOfCorrectDictionary.Add(po.NumberOfCorrect, 0);
                         });
                 }
-                
+
                 // Skapa alla enkelrader
                 CalculateRuleStatistics(1);
 
@@ -1205,7 +1204,7 @@ namespace HPTClient
         }
 
 
-#endregion
+        #endregion
 
         #region Intervallreduceringar
 
@@ -1359,7 +1358,7 @@ namespace HPTClient
         }
 
         #endregion
-        
+
         #region Plocka bort utifrån radskillnad
 
         internal void RemoveWithRowDifference()
@@ -1370,7 +1369,7 @@ namespace HPTClient
                 var dt = DateTime.Now;
 
                 //this.smallestRowDifferenceToSelect = this.markBet.NumberOfToleratedErrors + 1;
-                
+
                 // Hela uppsättninge rader
                 var selectedRows = this.SingleRows
                     .Where(sr => sr.Selected)
@@ -1378,7 +1377,7 @@ namespace HPTClient
                     .ToDictionary(sr => sr.UniqueCode);
 
                 this.rowsToSelectFrom = new Dictionary<string, HPTMarkBetSingleRow>(selectedRows);
-                
+
                 // Temporär lista för de rader som täcker upp övriga
                 var rowsToKeep = new List<HPTMarkBetSingleRow>();
 
@@ -1473,13 +1472,13 @@ namespace HPTClient
             {
                 // Håll koll på när beräkningen börjar
                 var dt = DateTime.Now;
-                
+
                 // Hela uppsättninge rader
                 var selectedRowsDictionary = this.SingleRows
                     .Where(sr => sr.Selected)
                     .OrderBy(sr => sr.UniqueCode)
                     .ToDictionary(sr => sr.UniqueCode);
-                
+
                 this.rowsToSelectFrom = new Dictionary<string, HPTMarkBetSingleRow>(selectedRowsDictionary);
 
                 // Temporär lista för de rader som täcker upp övriga
@@ -1558,7 +1557,7 @@ namespace HPTClient
                     {
                         singleRow = rowsToSelectFrom.Values.First();
                     }
-                    
+
                     //foreach (var sr in rowsToSelectFrom.Values)
                     //{
                     //    coveredRowsGuaranteeReductionTemp = 0;
@@ -1573,7 +1572,7 @@ namespace HPTClient
                     //        }
                     //    }
                     //}
-                    
+
                     // Ändra max antal täckta rader
                     if (mostCoveredRows < maxCoveredRows)
                     {
@@ -1605,7 +1604,7 @@ namespace HPTClient
                     singleRow.Selected = true;
                     rowsToKeep.Add(singleRow);
                     this.singleRows.Add(singleRow);
-                    this.markBet.ReducedSize++;                    
+                    this.markBet.ReducedSize++;
                 }
                 ResetNumberOfCoveredRows();
                 RecalculateTotalCouponSize();
@@ -1673,7 +1672,7 @@ namespace HPTClient
                         return;
                     }
                     singleRow.BetMultiplier = 2;
-                    singleRow.BetMultiplierList = new List<int>(){2};
+                    singleRow.BetMultiplierList = new List<int>() { 2 };
                     this.totalCouponSize++;
                 }
             }
@@ -1752,7 +1751,7 @@ namespace HPTClient
         #endregion
 
         #region OBSOLET KOD
-        
+
         //internal void RemoveWithRowDifferenceBruteForce()
         //{
         //    if (this.markBet.GuaranteeReduction && this.markBet.NumberOfToleratedErrors > 0)

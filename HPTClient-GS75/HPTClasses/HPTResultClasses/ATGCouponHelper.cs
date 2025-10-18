@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Web;
-using System.Xml;
-using System.Xml.Serialization;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace HPTClient
 {
@@ -40,7 +39,7 @@ namespace HPTClient
             {
                 this.CombBet = (HPTCombBet)bet;
             }
-            InitiateATGFile();            
+            InitiateATGFile();
         }
 
         private ObservableCollection<HPTCoupon> couponList;
@@ -56,7 +55,7 @@ namespace HPTClient
                 OnPropertyChanged("CouponList");
             }
         }
-        
+
         internal void InitiateATGFile()
         {
             this.ATGFile = new issuer()
@@ -122,7 +121,7 @@ namespace HPTClient
                                 this.numberOfMarksInLeg = 15;
                                 break;
                         }
-                    }                    
+                    }
                 }
                 return this.numberOfMarksInLeg;
             }
@@ -145,7 +144,7 @@ namespace HPTClient
                 //}
                 HandleReserverForCoupons(this.MarkBet.ReservHandling);
             }
-            
+
             if (!this.MarkBet.HasTooManySystems)
             {
                 CreateATGFile(this.CouponList, this.ATGFile);
@@ -193,7 +192,7 @@ namespace HPTClient
             couponListList.Add(couponList);
 
             return couponListList;
-        }         
+        }
 
         public string CreateATGFile(IEnumerable<HPTCoupon> couponList, issuer atgFile)//, int accumulatedNumberOfCoupons)
         {
@@ -393,8 +392,8 @@ namespace HPTClient
                         string s = exc.Message;
                     }
                 }
-            }           
-            
+            }
+
             #region Ordinarie lösning
 
             // Lägg till CRC-checken
@@ -497,7 +496,7 @@ namespace HPTClient
 
         internal string AddLeg(int startNr)
         {
-            int[] numbers = new int[]{startNr};
+            int[] numbers = new int[] { startNr };
 
             string marks = Enumerable.Range(1, this.NumberOfMarksInLeg)
                 .Select(h => numbers.Contains(h) ? "1" : "0")
@@ -505,7 +504,7 @@ namespace HPTClient
 
             return marks;
         }
-        
+
         internal List<int> GetMarkedHorse(string marks)
         {
             Regex rexMarks = new Regex("1");
@@ -590,9 +589,9 @@ namespace HPTClient
                     {
                         return string.Empty;
                     }
-                    if (this.MarkBet.ReductionRulesToApply.Count == 0 
-                        && !this.MarkBet.SingleRowBetMultiplier 
-                        && !this.MarkBet.V6SingleRows 
+                    if (this.MarkBet.ReductionRulesToApply.Count == 0
+                        && !this.MarkBet.SingleRowBetMultiplier
+                        && !this.MarkBet.V6SingleRows
                         && !this.MarkBet.ReductionV6BetMultiplierRule)
                     {
                         CreateSingleCoupon();
@@ -977,7 +976,7 @@ namespace HPTClient
         //public int TotalNumberOfOneError { get; set; }
 
         private int totalNumberOfTwoErrors;
-        public int TotalNumberOfTwoErrors 
+        public int TotalNumberOfTwoErrors
         {
             get
             {
@@ -1120,7 +1119,7 @@ namespace HPTClient
             }
             if (reservsToChooseFrom.Length == 1)
             {
-                reservsToChooseFrom = new int[]{reservsToChooseFrom[0], 0};
+                reservsToChooseFrom = new int[] { reservsToChooseFrom[0], 0 };
 
             }
 
@@ -1217,7 +1216,7 @@ namespace HPTClient
                     }
                     //reservsToChooseFrom = reservsToChooseFrom.Concat(new int[2] { race.Reserv1Nr, race.Reserv2Nr }).ToArray();
                     ExchangeReservArrayWithOwnChoices(reservsToChooseFrom, race);
-                    
+
                     if (reservsToChooseFrom.Length > 0)
                     {
                         couponRace.Reserv1 = reservsToChooseFrom[0];
@@ -1247,7 +1246,7 @@ namespace HPTClient
                     {
                         couponRace.Reserv2 = race.Reserv2Nr;
                     }
-                    
+
                     if (couponRace.Reserv1 == 0 && reservsToChooseFrom.Length > 0)
                     {
                         couponRace.Reserv1 = reservsToChooseFrom[0];
@@ -1259,7 +1258,7 @@ namespace HPTClient
                 }
             }
         }
-        
+
         internal void HandleReservNotSelectedRank(string rankVariableName)
         {
             foreach (HPTRace race in this.MarkBet.RaceDayInfo.RaceList)
@@ -1271,7 +1270,7 @@ namespace HPTClient
                     .ToArray();
 
                 reservsToChooseFrom = ExchangeReservArrayWithOwnChoices(reservsToChooseFrom, race);
-                if (reservsToChooseFrom[0] == 0 ||reservsToChooseFrom[1] == 0)
+                if (reservsToChooseFrom[0] == 0 || reservsToChooseFrom[1] == 0)
                 {
                     var selectedStartNumbers = race.HorseListSelected.Select(h => h.StartNr).ToArray();
                     reservsToChooseFrom = ExchangeReservArrayWithReservOrder(reservsToChooseFrom, selectedStartNumbers, race);
@@ -1289,7 +1288,7 @@ namespace HPTClient
                     else
                     {
                         couponRace.Reserv1 = reservsToChooseFrom[0];
-                        couponRace.Reserv2 = reservsToChooseFrom[1]; 
+                        couponRace.Reserv2 = reservsToChooseFrom[1];
                     }
                 }
             }
@@ -1353,7 +1352,7 @@ namespace HPTClient
         {
             foreach (HPTRace race in this.MarkBet.RaceDayInfo.RaceList)
             {
-                var orderedHorses= race.HorseList
+                var orderedHorses = race.HorseList
                     .Where(h => h.Scratched != true)
                     .OrderByDescending(h => h.StakeDistribution)
                     //.Select(h => h.StartNr)
@@ -1580,7 +1579,7 @@ namespace HPTClient
                 }
             }
         }
-        
+
         #endregion
 
         public string ToCouponsString()
@@ -1715,12 +1714,12 @@ namespace HPTClient
         internal HPTCouponRace ConvertLeg20ToCouponRace(legType20 leg)
         {
             var couponRace = new HPTCouponRace()
-                {
-                    LegNr = Convert.ToInt32(leg.legno),
-                    Reserv1 = string.IsNullOrEmpty(leg.r1) ? 0 : Convert.ToInt32(leg.r1),
-                    Reserv2 = string.IsNullOrEmpty(leg.r2) ? 0 : Convert.ToInt32(leg.r2),
-                    StartNrList = ConvertMarksToStartNrList(leg.marks)
-                };
+            {
+                LegNr = Convert.ToInt32(leg.legno),
+                Reserv1 = string.IsNullOrEmpty(leg.r1) ? 0 : Convert.ToInt32(leg.r1),
+                Reserv2 = string.IsNullOrEmpty(leg.r2) ? 0 : Convert.ToInt32(leg.r2),
+                StartNrList = ConvertMarksToStartNrList(leg.marks)
+            };
 
             return couponRace;
         }

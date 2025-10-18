@@ -122,11 +122,11 @@
                     <MenuItem x:Name="miOneYearSubscription" Header="Köp ett år" Click="miOneYearSubscription_Click"/>
                     <MenuItem x:Name="miThreeMonthsSubscription" Header="Köp tre månader" Click="miThreeMonthsSubscription_Click"/>
                 </MenuItem>-->
-                <!--<MenuItem Name="miNews" Header="Hemsidan" IsEnabled="True" Click="miNews_Click">
+                <MenuItem Name="miNews" Header="Gå till hemsidan" IsEnabled="True" Click="miNews_Click">
                     <MenuItem.Icon>
                         <Image Source="/HPTLogoSmall.png" MaxHeight="16" />
                     </MenuItem.Icon>
-                </MenuItem>-->
+                </MenuItem>
                 <MenuItem Name="miUpdateAndRestart" Header="Uppdatera och starta om" IsEnabled="True" Click="miUpdateAndRestart_Click">
                     <MenuItem.Icon>
                         <Image Source="/Icons/HPT.ico" MaxHeight="16"/>

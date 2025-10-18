@@ -1,0 +1,44 @@
+﻿<HPT:UCCombBetControl x:Class="HPTClient.UCCombinationRaceHandling"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+            xmlns:HPT="clr-namespace:HPTClient"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Height="60" Width="Auto" HorizontalAlignment="Right">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <GroupBox Background="{StaticResource BackgroundBrush}"  HeaderTemplate="{StaticResource GroupBoxHeaderTemplate}" Header="Fil" Grid.Column="0" HorizontalAlignment="Left" BorderBrush="Black" IsEnabled="{Binding Path=Config.IsPayingCustomer,ElementName=ucTvillingGame}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Name="btnCreateCoupons" ToolTip="Sparar XML-fil för inlämning till ATG under 'Mina dokument\HPT Travsystem'" Click="btnCreateCoupons_Click" Margin="1" IsEnabled="{Binding Path=Config.IsPayingCustomer,ElementName=ucTvillingGame}">Spara</Button>
+                    <Button Grid.Column="1" Name="btnCreateCouponsAs" ToolTip="Sparar XML-fil för inlämning till ATG med valfritt namn, 'Spara'-knappen rekommenderas för bästa funktion i programmet" Click="btnCreateCouponsAs_Click" Margin="1" IsEnabled="{Binding Path=Config.IsPayingCustomer,ElementName=ucTvillingGame}">Spara som</Button>
+                    <Button Grid.Column="2" Name="btnCopy" ToolTip="Kopierar information om systemet till klippbordet, använd Ctrl-V för att klistra in i mail eller dokument" Click="btnCopy_Click" Margin="1" IsEnabled="False">Kopiera</Button>
+                    <Button Grid.Column="3" Name="btnPrint" ToolTip="Skriver ut information om systemet" Click="btnPrint_Click" Margin="1" IsEnabled="False" >Skriv ut</Button>
+                </Grid>
+            </GroupBox>
+
+            <GroupBox Background="{StaticResource BackgroundBrush}" HeaderTemplate="{StaticResource GroupBoxHeaderTemplate}" Header="Kombinationer" Grid.Column="2" HorizontalAlignment="Stretch" BorderBrush="Black">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="{Binding NumberOfSelectedCombinations,StringFormat={}{0} valda kombinationer}" Name="tbNumberOfCombinations" ToolTip="Visar antalet valda kombinationer" Style="{StaticResource tbStyle}" Margin="1"></TextBlock>
+                    <TextBlock Grid.Row="1" Text="{Binding TotalStake,StringFormat={}{0} kronor satsade}" Name="tbTotalStake" ToolTip="Visar total insats" Style="{StaticResource tbStyle}" Margin="1"></TextBlock>
+                </Grid>
+            </GroupBox>
+        </Grid>
+    </Grid>
+</HPT:UCCombBetControl>

@@ -1,0 +1,245 @@
+﻿<UserControl x:Class="HPTClient.UCResultView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:HPT="clr-namespace:HPTClient"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        
+        <Style x:Key="BasicListviewItemStyle" TargetType="{x:Type ListViewItem}">
+            <Setter Property="Background" Value="{StaticResource BackgroundBrush}"/>
+            <Setter Property="BorderBrush" Value="Black"></Setter>
+            <Setter Property="BorderThickness" Value="0.5"></Setter>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        </Style>
+        
+        <Style x:Key="ResultListviewItemStyle" TargetType="{x:Type ListViewItem}">
+            <Setter Property="BorderThickness" Value="0.5"></Setter>
+            <Setter Property="BorderBrush" Value="Black"></Setter>
+            <Setter Property="Background" Value="{Binding BackColor}"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        </Style>
+
+        <DropShadowBitmapEffect x:Key="GridDropShadow" Color="DarkGray" Direction="320" ShadowDepth="10" Softness="1" Opacity="0.5"/>
+    </UserControl.Resources>
+    <Border BorderBrush="Black" BorderThickness="1">
+        <Grid Background="WhiteSmoke">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Border BorderBrush="Black" BorderThickness="1" CornerRadius="2" Background="{Binding VinnaroddsColor}" Grid.Row="0" Margin="2">
+                <StackPanel Orientation="Horizontal" Margin="2">
+                    <CheckBox Name="chkNrSelect" IsEnabled="{Binding NotScratched}" IsChecked="{Binding Selected}" Template="{StaticResource CheckBoxControlTemplate}" Content="{Binding StartNr}" Margin="5"/>
+                    <TextBlock Text="{Binding HorseName}" Style="{StaticResource tbMediumStyle}" Background="Transparent" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+
+            <TextBlock Style="{StaticResource tbMediumStyle}" Grid.Row="1" Text="Fem senaste" Margin="10,5,0,0" Background="WhiteSmoke"/>
+            
+            <ListView x:Name="lvwResults" ClipToBounds="False" Grid.Row="2" BorderBrush="WhiteSmoke" BorderThickness="6" MaxHeight="300"
+                      ItemsSource="{Binding ResultList}" ItemContainerStyle="{StaticResource ResultListviewItemStyle}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding TrackCode}" Header="Bana"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Date,StringFormat=yyyy-MM-dd}" Header="Datum"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Position}" Header="Spår"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Distance}" Header="Distans"/>
+                        <GridViewColumn Header="Skoinfo">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <HPT:UCShoeInfo DataContext="{Binding Shoeinfo}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Placering">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=PlaceString}" HorizontalAlignment="Right"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Time}" Header="Tid">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=Time}" HorizontalAlignment="Right"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate></GridViewColumn>
+                        <GridViewColumn Header="Odds">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=Odds}" HorizontalAlignment="Right"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Driver}" Header="Kusk"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Earning}" Header="Intjänat">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=FirstPrize,StringFormat={}{0:N0},ConverterCulture=sv-SE}" HorizontalAlignment="Right"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate></GridViewColumn>
+                        <GridViewColumn Header="Pris">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=FirstPrize,StringFormat={}{0:N0},ConverterCulture=sv-SE}" HorizontalAlignment="Right"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn x:Name="gvcATGResultLink" Header="Resultat ATG">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Margin="1,0" Padding="1,0">
+                                            <Hyperlink x:Name="hlATGResultLinkExternal" NavigateUri="{Binding Path=ATGResultLink}" RequestNavigate="hlSTHorseLinkExternal_RequestNavigate">Webbläsare</Hyperlink>
+                                        </Label>
+                                    </StackPanel>
+
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <Button x:Name="btnGetMoreResults" Content="Hämta fler resultat" HorizontalAlignment="Right" Click="btnGetMoreResults_Click" Grid.Row="3" Height="22" VerticalAlignment="Top"/>
+            
+            <TextBlock Style="{StaticResource tbMediumStyle}" Grid.Row="4" Text="Årsstatistik" Margin="10,5,0,0" Background="WhiteSmoke"/>
+
+            <ListView x:Name="lvwYearStatistics" ClipToBounds="False" Grid.Row="5" BorderBrush="WhiteSmoke" BorderThickness="6" ItemsSource="{Binding YearStatisticsList}" ItemContainerStyle="{StaticResource BasicListviewItemStyle}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="År">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock TextAlignment="Right" FontWeight="Bold" Text="{Binding YearString}" HorizontalAlignment="Stretch"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Vinstsumma">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock TextAlignment="Right" FontWeight="Bold" Text="{Binding Earning,StringFormat=' {0:N0}',ConverterCulture=sv-SE}" HorizontalAlignment="Stretch"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Starter">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock TextAlignment="Right" FontWeight="Bold" Text="{Binding NumberOfStarts}" HorizontalAlignment="Stretch"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="1:a">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock TextAlignment="Right" FontWeight="Bold" Text="{Binding FirstPlace}" HorizontalAlignment="Stretch"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="2:a">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock TextAlignment="Right" FontWeight="Bold" Text="{Binding SecondPlace}" HorizontalAlignment="Stretch"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="3:a">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock TextAlignment="Right" FontWeight="Bold" Text="{Binding ThirdPlace}" HorizontalAlignment="Stretch"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Vinst %">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock TextAlignment="Right" FontWeight="Bold" Text="{Binding Path=PercentFirstPlace,StringFormat=P0}" HorizontalAlignment="Stretch"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Plats %">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock TextAlignment="Right" FontWeight="Bold" Text="{Binding Path=Percent123,StringFormat=P0}" HorizontalAlignment="Stretch"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <TextBlock Style="{StaticResource tbMediumStyle}" Grid.Row="6" Text="Rekord" Margin="10,5,0,0" Background="WhiteSmoke"/>
+
+            <ListView x:Name="lvwRedords" ClipToBounds="False" Grid.Row="7" BorderBrush="WhiteSmoke" BorderThickness="6" ItemsSource="{Binding RecordList}" ItemContainerStyle="{StaticResource BasicListviewItemStyle}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Distans">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock TextAlignment="Right" FontWeight="Bold" Text="{Binding Distance}" HorizontalAlignment="Stretch"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Datum">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock TextAlignment="Right" FontWeight="Bold" Text="{Binding Date}" HorizontalAlignment="Stretch"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Placering">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock TextAlignment="Right" FontWeight="Bold" Text="{Binding Place}" HorizontalAlignment="Stretch"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Tid">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock TextAlignment="Right" FontWeight="Bold" Text="{Binding Time}" HorizontalAlignment="Stretch"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Typ">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock TextAlignment="Right" FontWeight="Bold" Text="{Binding RecordType}" HorizontalAlignment="Stretch"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Bana">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock FontWeight="Bold" Text="{Binding TrackCode}" HorizontalAlignment="Stretch"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <!--<GridViewColumn Header="Vinst %">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock TextAlignment="Right" FontWeight="Bold" Text="{Binding Path=PercentFirstPlace,StringFormat=P0}" HorizontalAlignment="Stretch"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Plats %">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock TextAlignment="Right" FontWeight="Bold" Text="{Binding Path=Percent123,StringFormat=P0}" HorizontalAlignment="Stretch"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>-->
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+        </Grid>
+        </Border>
+</UserControl>

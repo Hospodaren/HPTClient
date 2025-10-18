@@ -1,0 +1,69 @@
+﻿<HPT:UCMarkBetControl x:Class="HPTClient.UCMultiABCD"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+            xmlns:HPT="clr-namespace:HPTClient"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+             x:Name="ucMultiABCD">
+    <Grid>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Border BorderThickness="1" BorderBrush="Black" CornerRadius="2">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                    <CheckBox x:Name="chkUseMultiABCDReduction" Content="Använd Multi-ABCD" VerticalAlignment="Center"
+                          IsChecked="{Binding Path=MultiABCDEFReductionRule.Use}"
+                          Checked="chkUseMultiABCDReduction_Checked" Unchecked="chkUseMultiABCDReduction_Checked" Margin="2"/>
+                    <Button x:Name="btnNewRule" Click="btnNewRule_Click" Content="Ny regel" Margin="2"/>
+                    <Button x:Name="btnRemoveAll" Click="btnRemoveAll_Click" Content="Ta bort alla" Margin="2"/>
+                </StackPanel>
+            </Border>
+
+            <ListBox x:Name="icRules" ItemsSource="{Binding Path=MultiABCDEFReductionRule.ABCDEFReductionRuleList}" Grid.Row="1">
+
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <GroupBox Background="{StaticResource BackgroundBrush}" Name="gbReduction" BorderBrush="Black" HeaderTemplate="{StaticResource GroupBoxHeaderCheckBoxTemplate}"
+                                  Mouse.MouseUp="gbReduction_MouseUp" Mouse.MouseDown="gbReduction_MouseUp" ToolTip="Klicka i hur många hästar inom varje ABCD-grupp som ska vinna"
+                               Grid.Column="1" Grid.RowSpan="2">
+                            <GroupBox.Header>
+                                <CheckBox x:Name="chkUseABCDRule"  Margin="3" IsChecked="{Binding Path=Use}" Checked="chkUseMultiABCDReduction_Checked" Unchecked="chkUseMultiABCDReduction_Checked">
+                                    <TextBlock  HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial" FontSize="12" FontWeight="Bold" Foreground="Black" Text="ABCD-reducering" />
+                                </CheckBox>
+                            </GroupBox.Header>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <HPT:UCABCDReductionSettings MarkBet="{Binding Path=MarkBet,ElementName=ucMultiABCD}" DataContext="{Binding}" VerticalAlignment="Stretch" ShowLegList="Visible"/>
+
+                                <StackPanel Orientation="Horizontal" Grid.Row="1">
+                                    <Button x:Name="btnRemove" Content="Ta bort" Click="btnRemove_Click"/>
+                                    <Button x:Name="btnClearABCD" Content="Rensa" Click="btnClearABCD_Click"/>
+                                </StackPanel>
+
+                            </Grid>
+
+                        </GroupBox>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+
+            </ListBox>
+
+        </Grid>
+    </Grid>
+</HPT:UCMarkBetControl>

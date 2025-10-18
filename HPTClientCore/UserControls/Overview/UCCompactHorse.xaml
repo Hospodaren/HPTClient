@@ -1,0 +1,97 @@
+﻿<UserControl x:Class="HPTClient.UCCompactHorse"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:HPT="clr-namespace:HPTClient"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+    x:Name="ucCompactHorse" ClipToBounds="False"
+             DataContextChanged="ucCompactHorse_DataContextChanged">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="hptVisibilityConverter"/>
+    </UserControl.Resources>
+
+    <Border BorderBrush="Black" BorderThickness="1">
+        <Grid Background="{Binding VinnaroddsColor}" Width="110">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <StackPanel Margin="1" Name="spABCD" VerticalAlignment="Top" Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="0">
+                <CheckBox Name="chkNrSelect" IsChecked="{Binding Selected}" IsEnabled="{Binding NotScratched}" Tag="S" Template="{StaticResource CheckBoxControlTemplate}" Content="{Binding StartNr}"/>
+                <ItemsControl ItemsSource="{Binding HorseXReductionList}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <CheckBox Template="{StaticResource CheckBoxABCDControlTemplate}"
+                                                         Content="{Binding Prio}" Tag="{Binding Prio}"
+                                                         IsChecked="{Binding Selected}" IsEnabled="{Binding Path=Horse.NotScratched}" 
+                                                         Visibility="{Binding Path=Selectable,Converter={StaticResource hptVisibilityConverter}}" 
+                                                         Foreground="WhiteSmoke"></CheckBox>
+                            <!--<RadioButton Template="{StaticResource RadioButtonControlTemplate}" Content="{Binding Prio}" Tag="{Binding Prio}" GroupName="{Binding Path=Horse.HorseUniqueCode}" IsChecked="{Binding Selected}" IsEnabled="{Binding Path=Horse.NotScratched}" Visibility="{Binding Path=Selectable,Converter={StaticResource hptVisibilityConverter}}" Foreground="WhiteSmoke"></RadioButton>-->
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+
+            <TextBlock Margin="2,0" x:Name="txtHorseName" Text="{Binding HorseName}" MouseUp="txtHorseName_MouseUp"
+                       FontSize="11" FontWeight="Bold" FontStretch="Condensed" Grid.Row="1"/>
+
+            <TextBlock x:Name="txtDriverName" Margin="2,0" Text="{Binding DriverName}" MouseUp="txtDriverName_MouseUp" Grid.Row="2" FontSize="11">
+                <TextBlock.Style>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=DriverChangedSinceLastStart}" Value="true">
+                                <Setter Property="FontStyle" Value="Italic"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=DriverChange}" Value="true">
+                                <Setter Property="FontWeight" Value="Bold"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+
+            <Grid Margin="1" Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="5*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="BorderBrush" Value="Black"></Setter>
+                        <Setter Property="BorderThickness" Value="1"></Setter>
+                        <Setter Property="CornerRadius" Value="1"></Setter>
+                    </Style>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Setter Property="FontSize" Value="10"></Setter>
+                        <Setter Property="FontWeight" Value="Bold"></Setter>
+                        <Setter Property="Margin" Value="0"></Setter>
+                        <Setter Property="Padding" Value="1,0"></Setter>
+                        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                    </Style>
+            </Grid.Resources>
+                
+                <Border Background="LightBlue">
+                    <TextBlock Text="{Binding VinnarOddsExact,StringFormat=F2}" />
+                </Border>
+
+                <Border Background="LightBlue" Grid.Column="1">
+                    <TextBlock Text="{Binding Path=RankOwn}"/>
+                </Border>
+                              
+                
+                <Border Background="LightBlue" Grid.Column="2">
+                    <TextBlock Text="{Binding Path=StakeDistributionShare,StringFormat=P2}"/>
+                </Border>
+            </Grid>
+            
+        </Grid>
+    </Border>
+</UserControl>

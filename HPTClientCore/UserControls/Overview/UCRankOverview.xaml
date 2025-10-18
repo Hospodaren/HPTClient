@@ -1,0 +1,190 @@
+﻿<HPT:UCMarkBetControl x:Class="HPTClient.UCRankOverview"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             xmlns:HPT="clr-namespace:HPTClient" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+                      d:DesignHeight="400" d:DesignWidth="800"
+             Loaded="UserControl_Loaded"
+                      x:Name="ucRankOverview">
+
+
+    <UserControl.Resources>
+
+        <Style x:Key="tbRankStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="FontSize" Value="9"/>
+            <Setter Property="Width" Value="13"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="FontStretch" Value="ExtraCondensed"/>
+        </Style>
+
+    </UserControl.Resources>
+
+    <Grid Background="{StaticResource BackgroundBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <GroupBox Background="{StaticResource BackgroundBrush}" Name="gbReduction" BorderBrush="Black" HorizontalAlignment="Left" HeaderTemplate="{StaticResource GroupBoxHeaderCheckBoxTemplate}">
+            <GroupBox.Header>
+                <CheckBox x:Name="chkUseRule" Margin="3" IsChecked="{Binding Path=ReductionRank}">
+                    <TextBlock  HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial" FontSize="12" FontWeight="Bold" Foreground="Black" Text="Använd rankreducering" />
+                </CheckBox>
+            </GroupBox.Header>
+
+            <Grid Width="720">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!--<CheckBox x:Name="chkUseReduction" IsChecked="{Binding Path=ReductionRank}" Content="Använd rankreducering" TextElement.FontWeight="Bold" TextElement.Foreground="Black"/>-->
+
+                <TextBlock Text="Lägsta värde" TextAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" FontSize="12" FontWeight="Bold" Foreground="Black"/>
+                <TextBlock Text="{Binding Path=SingleRowCollection.MinRankSum,StringFormat=F1}" TextAlignment="Center" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1"/>
+
+                <TextBlock Text="Högsta värde" TextAlignment="Center" HorizontalAlignment="Center" Grid.Column="2" FontSize="12" FontWeight="Bold" Foreground="Black"/>
+                <TextBlock Text="{Binding Path=SingleRowCollection.MaxRankSum,StringFormat=F1}" TextAlignment="Center" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="1"/>
+
+                <TextBlock Text="Minimum" TextAlignment="Center" HorizontalAlignment="Center" Grid.Column="3" FontSize="12" FontWeight="Bold" Foreground="Black"/>
+                <xctk:DecimalUpDown x:Name="dudMinValue" Grid.Column="3" Grid.Row="1" FormatString="F1"
+                                                   Increment="0.1" Value="{Binding MinRankSum}" 
+                                                   Minimum="{Binding Path=SingleRowCollection.MinRankSum}" 
+                                                   Maximum="{Binding Path=SingleRowCollection.MaxRankSum}"
+                                                   ValueChanged="dudMinValue_ValueChanged"/>
+
+                <TextBlock Text="Maximum" TextAlignment="Center" HorizontalAlignment="Center" Grid.Column="4" FontSize="12" FontWeight="Bold" Foreground="Black"/>
+                <xctk:DecimalUpDown x:Name="dudMaxValue" Grid.Column="4" Grid.Row="1" FormatString="F1"
+                                                   Increment="0.1" Value="{Binding MaxRankSum}" 
+                                                   Minimum="{Binding Path=SingleRowCollection.MinRankSum}" 
+                                                   Maximum="{Binding Path=SingleRowCollection.MaxRankSum}"
+                                                   ValueChanged="dudMinValue_ValueChanged"/>
+
+
+                <TextBlock Text="Minimum (%)" TextAlignment="Center" HorizontalAlignment="Center" Grid.Column="5" FontSize="12" FontWeight="Bold" Foreground="Black"/>
+                <xctk:IntegerUpDown x:Name="iudMinValue" Grid.Column="5" Grid.Row="1"
+                                                   Increment="5" Value="{Binding MinRankSumPercent}" 
+                                                   Minimum="0" Maximum="100"
+                                                   ValueChanged="dudMinValue_ValueChanged"/>
+
+                <TextBlock Text="Maximum (%)" TextAlignment="Center" HorizontalAlignment="Center" Grid.Column="6" FontSize="12" FontWeight="Bold" Foreground="Black"/>
+                <xctk:IntegerUpDown x:Name="iudMaxValue" Grid.Column="6" Grid.Row="1"
+                                                   Increment="5" Value="{Binding MaxRankSumPercent}" 
+                                                   Minimum="0" Maximum="100"
+                                                   ValueChanged="dudMinValue_ValueChanged"/>
+                
+                <Button x:Name="btnExportToClipboard" Content="Exportera rank till klippbordet" Click="btnExportToClipboard_Click" Grid.Column="7" Grid.Row="1"/>
+            </Grid>
+        </GroupBox>
+
+        <ListBox Background="{StaticResource BackgroundBrush}" BorderThickness="0" Grid.Row="1"                 
+                 ToggleButton.Checked="ListBox_Checked" ToggleButton.Unchecked="ListBox_Checked" 
+                 ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+
+            <ListBoxItem VerticalContentAlignment="Top">
+
+                <StackPanel Orientation="Horizontal">
+
+                    <StackPanel Orientation="Vertical" Width="122">
+
+                        <Border Background="LightGray" BorderBrush="Black" BorderThickness="1" Padding="1" Margin="1" HorizontalAlignment="Left">
+                            <TextBlock FontSize="12" FontWeight="Bold" Text="Avdelningar"/>
+                        </Border>
+
+                        <CheckBox Template="{StaticResource CheckBoxControlTemplateSmall}" Height="14" IsChecked="False" HorizontalAlignment="Left">
+                            <TextBlock Style="{StaticResource tbStyle}" FontSize="9" FontStretch="Condensed" FontWeight="Bold" Text="Startnummer" TextAlignment="Center" Background="Transparent" Padding="1"/>
+                        </CheckBox>
+
+                        <Border BorderBrush="Black" BorderThickness="0.5" Background="WhiteSmoke" HorizontalAlignment="Left">
+                            <TextBlock Text="Snittrank" Style="{StaticResource tbRankStyle}" Width="Auto"/>
+                        </Border>
+
+                    </StackPanel>
+
+                    <ItemsControl ItemsSource="{Binding Path=RaceDayInfo.RaceList}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+
+                                <StackPanel Orientation="Vertical">
+
+                                    <Border Background="LightGray" BorderBrush="Black" BorderThickness="1" Padding="1" Margin="1">
+                                        <TextBlock FontSize="12" FontWeight="Bold" Text="{Binding LegNrString}"/>
+                                    </Border>
+
+                                    <ItemsControl ItemsSource="{Binding Path=HorseList}" Padding="2,0">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Vertical">
+
+                                                    <CheckBox Template="{StaticResource CheckBoxControlTemplateSmall}" Width="14" Height="14" IsEnabled="{Binding NotScratched}" IsChecked="{Binding Selected}">
+                                                        <TextBlock Style="{StaticResource tbStyle}" FontSize="9" FontStretch="Condensed" FontWeight="Bold" Text="{Binding StartNr}" TextAlignment="Center" Background="Transparent" Padding="1"/>
+                                                    </CheckBox>
+
+                                                    <Border BorderBrush="Black" BorderThickness="0.5" Background="WhiteSmoke">
+                                                        <TextBlock Text="{Binding Path=RankMean, StringFormat=F1}" Style="{StaticResource tbRankStyle}"/>
+                                                    </Border>
+
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+
+                                </StackPanel>
+
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                </StackPanel>
+            </ListBoxItem>
+
+            <ListBoxItem VerticalContentAlignment="Top">
+                <HPT:UCRankOverviewPart DataContext="{Binding Path=HorseRankVariableListMarksAndOdds}" Text="Spelarnas rank"/>
+            </ListBoxItem>
+
+            <ListBoxItem VerticalContentAlignment="Top">
+                <HPT:UCRankOverviewPart DataContext="{Binding Path=HorseRankVariableListWinning}" Text="Intjänade pengar"/>
+            </ListBoxItem>
+
+            <ListBoxItem VerticalContentAlignment="Top">
+                <HPT:UCRankOverviewPart DataContext="{Binding Path=HorseRankVariableListRecords}" Text="Rekord"/>
+            </ListBoxItem>
+
+            <ListBoxItem VerticalContentAlignment="Top">
+                <HPT:UCRankOverviewPart DataContext="{Binding Path=HorseRankVariableListPlace}" Text="Vinster"/>
+            </ListBoxItem>
+
+            <ListBoxItem VerticalContentAlignment="Top">
+                <HPT:UCRankOverviewPart DataContext="{Binding Path=HorseRankVariableListTop3}" Text="Plats"/>
+            </ListBoxItem>
+
+            <ListBoxItem VerticalContentAlignment="Top">
+                <HPT:UCRankOverviewPart DataContext="{Binding Path=HorseRankVariableListRest}" Text="Övrigt"/>
+            </ListBoxItem>
+
+        </ListBox>
+    </Grid>
+
+</HPT:UCMarkBetControl>

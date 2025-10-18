@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Collections.ObjectModel;
 
 namespace HPTClient
 {
@@ -11,7 +10,7 @@ namespace HPTClient
         public HPTHorse[] HorseList { get; set; }
 
         public int[] PrioList { get; set; }
-        
+
         public HPTMarkBetSingleRow(HPTHorse[] horseList)
         {
             this.HorseList = new HPTHorse[horseList.Length];
@@ -58,7 +57,7 @@ namespace HPTClient
         }
 
         #endregion
-        
+
         #region Row value
 
         public decimal RowShareStake { get; set; }
@@ -77,7 +76,7 @@ namespace HPTClient
         public decimal RowShareStakeWithoutScratchings { get; set; }
 
         public decimal RowShare { get; set; }
-        
+
         // NY LÖSNING MED INSATSFÖRDELNING
         public int EstimateRowValue(HPTMarkBet markBet)
         {
@@ -313,7 +312,7 @@ namespace HPTClient
                 this.RowShareOwnProbability = rowShareOwnProbability;
                 this.OwnProbabilityQuota = this.RowShareOwnProbability / this.RowShareStakeRounded;
             }
-            
+
             this.ValuesCalculated = true;
         }
 
@@ -399,13 +398,14 @@ namespace HPTClient
 
         private int? rowValueTwoErrorsLower;
         public int? RowValueTwoErrorsLower
-        {   get
+        {
+            get
             {
                 return this.rowValueTwoErrorsLower;
             }
             set
-        
-             {
+
+            {
                 this.rowValueTwoErrorsLower = value;
                 OnPropertyChanged("RowValueTwoErrorsLower");
             }
@@ -585,7 +585,7 @@ namespace HPTClient
                     sb.Append(" X Flerbong");
                 }
                 sb.Append(")");
-            }            
+            }
 
             return sb.ToString();
         }
@@ -606,7 +606,7 @@ namespace HPTClient
             set
             {
                 this.startNrList = value;
-            }            
+            }
         }
 
         internal bool HasRowDifference(HPTMarkBetSingleRow singleRow, int difference)
@@ -714,7 +714,7 @@ namespace HPTClient
                         BetMultiplier = bm,
                         RowNumber = this.RowNumber,
                         UniqueCode = this.UniqueCode,
-                        V6 = this.V6                
+                        V6 = this.V6
                     })
                 .ToList();
 

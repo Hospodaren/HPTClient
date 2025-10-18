@@ -1,0 +1,93 @@
+﻿<UserControl x:Class="HPTClient.UCGUISettings"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" Loaded="UserControl_Loaded" DataContextChanged="UserControl_DataContextChanged">
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <GroupBox x:Name="gbSettings" Header="Gränssnitt" Background="{StaticResource BackgroundBrush}" BorderBrush="Black" HeaderTemplate="{StaticResource GroupBoxHeaderTemplate}" Grid.Column="1" HorizontalAlignment="Left" Margin="2,2,6,2">
+
+                <GroupBox.Resources>
+                    <Style TargetType="{x:Type CheckBox}">
+                        <Style.Setters>
+                            <Setter Property="Margin" Value="2"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="FontSize" Value="11"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Setter Property="FontFamily" Value="Tahoma"/>
+                            <Setter Property="FontWeight" Value="Medium"/>
+                        </Style.Setters>
+                    </Style>
+                </GroupBox.Resources>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Profil" VerticalAlignment="Center" FontFamily="Tahoma" FontWeight="Medium" Padding="2"/>
+                        <ComboBox x:Name="cmbGUIProfile" Text="Gränssnitt" MinWidth="70" Grid.Column="1" HorizontalAlignment="Stretch" Margin="2" SelectionChanged="cmbGUIProfile_SelectionChanged">
+                            <ComboBoxItem Content="Enkel" Tag="0"/>
+                            <ComboBoxItem Content="Standard" Tag="1"/>
+                            <ComboBoxItem Content="Komplett" Tag="2"/>
+                        </ComboBox>
+                        <Button x:Name="btnResetProfile" Content="Återställ" Click="btnResetProfile_Click" Grid.Column="3"/>
+                    </Grid>
+
+                    
+                    <StackPanel x:Name="spGUISettings" Orientation="Vertical" Grid.Row="1">
+                        
+                        <CheckBox x:Name="chkOverview" Content="Översikt" TextBlock.FontWeight="Bold" IsChecked="{Binding ShowOverview}" Margin="2,10,2,2"/>
+                        <CheckBox x:Name="chkRaceLock" Content="Lopplås" IsChecked="{Binding ShowRaceLock}"/>
+
+                        <TextBlock Text="Inställningar" FontWeight="Bold" Margin="2,10,2,2"/>
+                        <CheckBox x:Name="chkReservHandling" Content="Reserver" IsChecked="{Binding ShowReservHandling}"/>
+                        <!--<CheckBox x:Name="chkCouponCompression" Content="Kupongkomprimering" IsChecked="{Binding ShowCouponCompression}"/>-->
+                        <!--<CheckBox x:Name="chkV6" Content="V6/V7/V8" IsChecked="{Binding ShowV6}"/>-->
+                        <CheckBox x:Name="chkV6" Content="V6" IsChecked="{Binding ShowV6}"/>
+                        <CheckBox x:Name="chkBetMultiplier" Content="Flerbong" IsChecked="{Binding ShowBetMultiplier}"/>
+                        <CheckBox x:Name="chkAutomaticCalculation" Content="Auto-beräkning" IsChecked="{Binding ShowAutomaticCalculation}"/>
+
+                        <CheckBox x:Name="chkTemplates" Content="Mallar" TextBlock.FontWeight="Bold" IsChecked="{Binding ShowTemplates}" Margin="2,10,2,2"/>
+
+                        <TextBlock Text="Systeminformation" FontWeight="Bold" Margin="2,10,2,2"/>
+                        <CheckBox x:Name="chkCouponInfo" Content="Antal kuponger" IsChecked="{Binding ShowCouponInfo}"/>
+                        <CheckBox x:Name="chkNumberOfSystems" Content="Antal system" IsChecked="{Binding ShowNumberOfSystems}"/>
+                        <CheckBox x:Name="chkNumberOfGambledRows" Content="Inlämnade rader" IsChecked="{Binding ShowNumberOfGambledRows}"/>
+                        <CheckBox x:Name="chkSystemCostChange" Content="Kostnadsdifferens" IsChecked="{Binding ShowSystemCostChange}"/>
+                        <CheckBox x:Name="chkRowValueInterval" Content="Radvärdesintervall" IsChecked="{Binding ShowRowValueInterval}"/>
+                        <CheckBox x:Name="chkLiveCalculation" Content="Live-beräkning" IsChecked="{Binding ShowLiveCalculation}"/>
+
+                        <CheckBox x:Name="chkShowReductionList" Content="Reduceringslista" TextBlock.FontWeight="Bold" IsChecked="{Binding ShowReductionList}" Margin="2,10,2,2"/>
+
+                        <TextBlock Text="Fil" FontWeight="Bold" Margin="2,10,2,2"/>
+                        <CheckBox x:Name="chkBeginner" Content="Expressystem" IsChecked="{Binding ShowBeginner}"/>
+                        <CheckBox x:Name="chkSaveAs" Content="Spara som" IsChecked="{Binding ShowSaveAs}"/>
+                        <CheckBox x:Name="chkCopy" Content="Kopiera" IsChecked="{Binding ShowCopy}"/>
+                        <CheckBox x:Name="chkPrint" Content="Skriv ut" IsChecked="{Binding ShowPrint}"/>
+                        <CheckBox x:Name="chkClear" Content="Rensa" IsChecked="{Binding ShowClear}"/>
+                        <!--<CheckBox x:Name="chkUpload" Content="Ladda upp" IsChecked="{Binding ShowUpload}"/>-->
+
+                    </StackPanel>
+                </Grid>
+
+
+            </GroupBox>
+        </Grid>
+    </Grid>
+</UserControl>

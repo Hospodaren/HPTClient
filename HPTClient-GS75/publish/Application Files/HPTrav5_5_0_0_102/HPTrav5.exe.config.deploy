@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<configuration>
+	<system.diagnostics>
+		<!--<sources>
+			<source name="System.ServiceModel.MessageLogging" switchValue="Verbose,ActivityTracing">
+				<listeners>
+					<add type="System.Diagnostics.DefaultTraceListener" name="Default">
+						<filter type="" />
+					</add>
+					<add name="ServiceModelMessageLoggingListener">
+						<filter type="" />
+					</add>
+				</listeners>
+			</source>
+		</sources>
+		<sharedListeners>
+			<add initializeData="C:\Temp\app_messages.svclog"
+                type="System.Diagnostics.XmlWriterTraceListener, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+                name="ServiceModelMessageLoggingListener" traceOutputOptions="Timestamp">
+				<filter type="" />
+			</add>
+		</sharedListeners>
+		<trace autoflush="true" />-->
+	</system.diagnostics>
+	<system.serviceModel>
+		<!--<diagnostics>
+			<messageLogging logEntireMessage="true" logMalformedMessages="true"
+                logMessagesAtServiceLevel="true" logMessagesAtTransportLevel="true" />
+		</diagnostics>-->
+		<bindings>
+   <basicHttpBinding>
+    <binding name="BasicHttpBinding_IHPTService" closeTimeout="00:05:00" openTimeout="00:05:00" receiveTimeout="00:30:00" sendTimeout="00:05:00" allowCookies="false" bypassProxyOnLocal="false" hostNameComparisonMode="StrongWildcard" maxBufferPoolSize="2147483647" maxBufferSize="2147483647" maxReceivedMessageSize="2147483647" textEncoding="utf-8" transferMode="Buffered" useDefaultWebProxy="true" messageEncoding="Text">
+     <readerQuotas maxDepth="32" maxStringContentLength="16384" maxArrayLength="16384" maxBytesPerRead="16384" maxNameTableCharCount="16384"/>
+     <security mode="None">
+      <transport clientCredentialType="None" proxyCredentialType="None" realm=""/>
+      <message clientCredentialType="UserName" algorithmSuite="Default"/>
+     </security>
+    </binding>
+   </basicHttpBinding>
+   <wsHttpBinding>
+    <binding name="WSHttpBinding_IHPTService"/>
+   </wsHttpBinding>
+  </bindings>
+		<behaviors>
+			<endpointBehaviors>
+				<behavior name="hptBehavior">
+					<dataContractSerializer maxItemsInObjectGraph="2147483647"/>
+				</behavior>
+			</endpointBehaviors>
+		</behaviors>
+		<client>
+   <endpoint address="http://jes/HPTService.svc" binding="wsHttpBinding" bindingConfiguration="WSHttpBinding_IHPTService" contract="HPTService.IHPTService" name="WSHttpBinding_IHPTService">
+    <identity>
+     <dns value="localhost"/>
+    </identity>
+   </endpoint>
+  </client>
+	</system.serviceModel>
+<startup><supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.8"/></startup></configuration>

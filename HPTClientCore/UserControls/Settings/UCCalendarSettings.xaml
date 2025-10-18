@@ -1,0 +1,83 @@
+﻿<UserControl x:Class="HPTClient.UCCalendarSettings"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid>
+        <GroupBox x:Name="gbSettings" Background="{StaticResource BackgroundBrush}" BorderBrush="Black" HeaderTemplate="{StaticResource GroupBoxHeaderTemplate}" Header="Kalender" Grid.Column="1" HorizontalAlignment="Left" Margin="2,2,6,2">
+            <Grid Margin="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <!--<CheckBox Margin="2" IsChecked="{Binding hptConfig.ShowPrio}" VerticalAlignment="Center" Grid.Row="0">
+                    <TextBlock Style="{StaticResource tbStyle}" Text="V86"/>
+                </CheckBox>-->
+                <CheckBox Margin="2" IsChecked="{Binding hptConfig.ShowPrio}" VerticalAlignment="Center" Grid.Row="0">
+                    <TextBlock Style="{StaticResource tbStyle}" Text="V75"/>
+                </CheckBox>
+                <CheckBox Margin="2" IsChecked="{Binding hptConfig.ShowPrio}" VerticalAlignment="Center" Grid.Row="1">
+                    <TextBlock Style="{StaticResource tbStyle}" Text="V64"/>
+                </CheckBox>
+                <CheckBox Margin="2" IsChecked="{Binding hptConfig.ShowPrio}" VerticalAlignment="Center" Grid.Row="2">
+                    <TextBlock Style="{StaticResource tbStyle}" Text="V65"/>
+                </CheckBox>
+                <CheckBox Margin="2" IsChecked="{Binding hptConfig.ShowPrio}" VerticalAlignment="Center" Grid.Row="3">
+                    <TextBlock Style="{StaticResource tbStyle}" Text="V5"/>
+                </CheckBox>
+                <CheckBox Margin="2" IsChecked="{Binding hptConfig.ShowPrio}" VerticalAlignment="Center" Grid.Row="4">
+                    <TextBlock Style="{StaticResource tbStyle}" Text="V4"/>
+                </CheckBox>
+                <CheckBox Margin="2" IsChecked="{Binding hptConfig.ShowPrio}" VerticalAlignment="Center" Grid.Row="5">
+                    <TextBlock Style="{StaticResource tbStyle}" Text="V3"/>
+                </CheckBox>
+                <CheckBox Margin="2" IsChecked="{Binding hptConfig.ShowPrio}" VerticalAlignment="Center" Grid.Row="6">
+                    <TextBlock Style="{StaticResource tbStyle}" Text="Dagens Dubbel"/>
+                </CheckBox>
+                <CheckBox Margin="2" IsChecked="{Binding hptConfig.ShowPrio}" VerticalAlignment="Center" Grid.Row="7">
+                    <TextBlock Style="{StaticResource tbStyle}" Text="Tvilling"/>
+                </CheckBox>
+                <CheckBox Margin="2" IsChecked="{Binding hptConfig.ShowPrio}" VerticalAlignment="Center" Grid.Row="8">
+                    <TextBlock Style="{StaticResource tbStyle}" Text="Trio"/>
+                </CheckBox>
+                <!--<CheckBox Margin="2" IsChecked="{Binding hptConfig.ShowPrio}" VerticalAlignment="Center" Grid.Row="11">
+                    <TextBlock Style="{StaticResource tbStyle}" Text="ATG-Turordning"/>
+                </CheckBox>
+                <CheckBox Margin="2" IsChecked="{Binding hptConfig.ShowPrio}" VerticalAlignment="Center" Grid.Row="12">
+                    <TextBlock Style="{StaticResource tbStyle}" Text="Streckantal"/>
+                </CheckBox>
+                <CheckBox Margin="2" IsChecked="{Binding hptConfig.ShowPrio}" VerticalAlignment="Center" Grid.Row="13">
+                    <TextBlock Style="{StaticResource tbStyle}" Text="Streckandel"/>
+                </CheckBox>
+                <CheckBox Margin="2" IsChecked="{Binding hptConfig.ShowPrio}" VerticalAlignment="Center" Grid.Row="14">
+                    <TextBlock Style="{StaticResource tbStyle}" Text="Oddsrank"/>
+                </CheckBox>
+                <CheckBox Margin="2" IsChecked="{Binding hptConfig.ShowPrio}" VerticalAlignment="Center" Grid.Row="15">
+                    <TextBlock Style="{StaticResource tbStyle}" Text="ATG-Turordning"/>
+                </CheckBox>-->
+            </Grid>
+        </GroupBox>
+    </Grid>
+</UserControl>

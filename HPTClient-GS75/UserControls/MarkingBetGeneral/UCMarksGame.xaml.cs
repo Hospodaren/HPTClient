@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -10,17 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Collections.ObjectModel;
-using Microsoft.Win32;
-using System.Xml;
-using System.Xml.Serialization;
-using System.ComponentModel;
-using System.Windows.Markup;
-using System.Windows.Xps;
 using System.Windows.Xps.Packaging;
-using System.Windows.Xps.Serialization;
-using xctk = Xceed.Wpf.Toolkit;
 
 namespace HPTClient
 {
@@ -46,58 +38,58 @@ namespace HPTClient
                 InitializeComponent();
 
                 // Hantering av gratisanvändare som öppnar fil med V3, V4 eller V5
-                if (!HPTConfig.Config.IsPayingCustomer)
-                {
-                    if (this.MarkBet.BetType.Code == "V3" || this.MarkBet.BetType.Code == "V75" || this.MarkBet.BetType.Code == "V5" || this.MarkBet.BetType.Code == "GS75")
-                    {
-                        this.btnCreateCoupons.IsEnabled = false;
-                    }
+                //if (!HPTConfig.Config.IsPayingCustomer)
+                //{
+                //    if (this.MarkBet.BetType.Code == "V3" || this.MarkBet.BetType.Code == "V75" || this.MarkBet.BetType.Code == "V5" || this.MarkBet.BetType.Code == "GS75")
+                //    {
+                //        this.btnCreateCoupons.IsEnabled = false;
+                //    }
 
-                    // Spara som
-                    this.btnCreateCouponsAs.IsEnabled = false;
-                    this.miSaveATGFileAs.IsEnabled = false;
-                    this.miSaveHPT4FileAs.IsEnabled = false;
+                //    // Spara som
+                //    this.btnCreateCouponsAs.IsEnabled = false;
+                //    this.miSaveATGFileAs.IsEnabled = false;
+                //    this.miSaveHPT4FileAs.IsEnabled = false;
 
-                    // Skriv ut
-                    this.btnPrint.IsEnabled = false;
-                    this.miPrintText.IsEnabled = false;
-                    this.miPrintXPS.IsEnabled = false;
+                //    // Skriv ut
+                //    this.btnPrint.IsEnabled = false;
+                //    this.miPrintText.IsEnabled = false;
+                //    this.miPrintXPS.IsEnabled = false;
 
-                    // Ladda upp
-                    this.btnUploadSystem.IsEnabled = false;
-                    this.miCopySystemGUIDToClipboard.IsEnabled = false;
-                    //this.miMailSystemInfoToOwnMail.IsEnabled = false;
-                    this.miOpenCorrectionURL.IsEnabled = false;
-                    //this.miUploadCompleteSystem.IsEnabled = false;
+                //    // Ladda upp
+                //    this.btnUploadSystem.IsEnabled = false;
+                //    this.miCopySystemGUIDToClipboard.IsEnabled = false;
+                //    //this.miMailSystemInfoToOwnMail.IsEnabled = false;
+                //    this.miOpenCorrectionURL.IsEnabled = false;
+                //    //this.miUploadCompleteSystem.IsEnabled = false;
 
-                    // Nybörjarwizard
-                    this.btnBeginnerWizard.IsEnabled = false;
+                //    // Nybörjarwizard
+                //    this.btnBeginnerWizard.IsEnabled = false;
 
-                    this.txtBetMultiplier.Foreground = new SolidColorBrush(Colors.Gray);
-                    this.iudBetMultiplier.IsEnabled = false;
-                    this.chkV6.IsEnabled = false;
-                    //this.chkCouponCompression.IsEnabled = false;
-                    //this.cmbCouponCompression.IsEnabled = false;
+                //    this.txtBetMultiplier.Foreground = new SolidColorBrush(Colors.Gray);
+                //    this.iudBetMultiplier.IsEnabled = false;
+                //    this.chkV6.IsEnabled = false;
+                //    //this.chkCouponCompression.IsEnabled = false;
+                //    //this.cmbCouponCompression.IsEnabled = false;
 
-                    // Kopiera
-                    this.btnCopy.IsEnabled = false;
-                    this.miCopyCoupons.IsEnabled = false;
-                    this.miCopyHorseRank.IsEnabled = false;
-                    this.miCopyOwnRank.IsEnabled = false;
-                    this.miCopySingleRows.IsEnabled = false;
-                    this.miCopySystem.IsEnabled = false;
+                //    // Kopiera
+                //    this.btnCopy.IsEnabled = false;
+                //    this.miCopyCoupons.IsEnabled = false;
+                //    this.miCopyHorseRank.IsEnabled = false;
+                //    this.miCopyOwnRank.IsEnabled = false;
+                //    this.miCopySingleRows.IsEnabled = false;
+                //    this.miCopySystem.IsEnabled = false;
 
-                    // Spara
-                    this.miSaveATGFile.IsEnabled = false;
-                    this.miSaveHPT4File.IsEnabled = false;
+                //    // Spara
+                //    this.miSaveATGFile.IsEnabled = false;
+                //    this.miSaveHPT4File.IsEnabled = false;
 
-                    //// Automatisk omberäkning
-                    //this.chkAutomaticRecalculation.IsEnabled = false;
+                //    //// Automatisk omberäkning
+                //    //this.chkAutomaticRecalculation.IsEnabled = false;
 
-                    //// Uppdatering
-                    //this.btnUpdate.IsEnabled = false;
-                    //this.cmbUpdateInterval.IsEnabled = false;
-                }
+                //    //// Uppdatering
+                //    //this.btnUpdate.IsEnabled = false;
+                //    //this.cmbUpdateInterval.IsEnabled = false;
+                //}
                 this.ReductionCheckBoxList = new ObservableCollection<CheckBox>();
                 this.CMMarkBetTabsToShow = new ContextMenu();
 
@@ -316,7 +308,7 @@ namespace HPTClient
             {
                 Dispatcher.Invoke(new Action<HPTService.HPTRaceDayInfo>(UpdateFromATGInvoke), rdi);
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 this.btnUpdate.IsEnabled = true;
             }
@@ -371,7 +363,7 @@ namespace HPTClient
             dt.Tick += (_, a) =>
             {
                 TimeSpan tsTemp = this.upcomingRace.PostTime - DateTime.Now;
-                
+
                 if (tsTemp.TotalSeconds < 1D)
                 {
                     dt.Stop();
@@ -401,7 +393,7 @@ namespace HPTClient
 
         private bool userSelection;
         private void cmbTemplates_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {   
+        {
             if (!this.userSelection)
             {
                 this.userSelection = true;
@@ -462,8 +454,8 @@ namespace HPTClient
                 else
                 {
                     this.atgUpdateTimer.Change(updatePeriod, updatePeriod);
-                }                
-            }            
+                }
+            }
         }
 
         private bool isLoaded;
@@ -515,7 +507,7 @@ namespace HPTClient
 
                         //// Skapa context menu för vilk flikar man vill visa
                         CreateMarkBetTabsToShowContextMenu();
-                        
+
                         // Ställ tillbaka flaggan så att reducering kan ske igen
                         this.MarkBet.pauseRecalculation = false;
                         this.MarkBet.IsDeserializing = false;
@@ -616,7 +608,7 @@ namespace HPTClient
                                     break;
                             }
                         }
-                        
+
 
                         SetCountDown();
 
@@ -694,7 +686,7 @@ namespace HPTClient
         {
             if (e.ChangedButton != MouseButton.Right)
             {
-                e.Handled = true; 
+                e.Handled = true;
             }
         }
 
@@ -708,7 +700,7 @@ namespace HPTClient
         public static readonly DependencyProperty ReductionCheckBoxListProperty =
             DependencyProperty.Register("ReductionCheckBoxList", typeof(ObservableCollection<CheckBox>), typeof(UCMarksGame), new UIPropertyMetadata(null));
 
-        
+
         private void btnApplyTemplate_Click(object sender, RoutedEventArgs e)
         {
             //bool couponsCompressed = this.MarkBet.CompressCoupons;
@@ -757,7 +749,7 @@ namespace HPTClient
 
                 var ti = (TabItem)e.AddedItems[0];
                 // Expandera/fäll ihop delen med inställningar
-                if (ti.Name == "tiRaces" || ti.Name == "tiRacesGrouped")                
+                if (ti.Name == "tiRaces" || ti.Name == "tiRacesGrouped")
                 {
                     this.expanderMarksgame.IsExpanded = true;
                 }
@@ -887,7 +879,7 @@ namespace HPTClient
                                 break;
                             default:
                                 break;
-                        } 
+                        }
                     }
                     break;
                 case ModifierKeys.None:
@@ -960,7 +952,7 @@ namespace HPTClient
         }
 
         #endregion
-        
+
         #region Spara filer
 
         internal void SaveFiles(bool saveHPT4File, bool saveXMLFile, bool setFileNames)
@@ -1402,9 +1394,9 @@ namespace HPTClient
             catch (Exception exc)
             {
                 string s = exc.Message;
-            } 
-        } 
-        
+            }
+        }
+
         #endregion
 
         private void btnInterruptTemplateCalculation_Click(object sender, RoutedEventArgs e)
@@ -1438,18 +1430,18 @@ namespace HPTClient
         {
             this.MarkBet.TemplateForBeginners = this.MarkBet.CreateTemplateForBeginners();
             var wndBeginnerWizard = new Window()
-                {
-                    SizeToContent = SizeToContent.WidthAndHeight,
-                    Title = "Skapa ett expressystem!",
-                    ShowInTaskbar = false,
-                    ResizeMode = ResizeMode.NoResize,
-                    Owner = App.Current.MainWindow 
-                };
+            {
+                SizeToContent = SizeToContent.WidthAndHeight,
+                Title = "Skapa ett expressystem!",
+                ShowInTaskbar = false,
+                ResizeMode = ResizeMode.NoResize,
+                Owner = App.Current.MainWindow
+            };
             wndBeginnerWizard.Content = new UCBeginnerWizard(wndBeginnerWizard)
-                {
-                    DataContext = this.MarkBet.TemplateForBeginners,
-                    MarkBet = this.MarkBet
-                };
+            {
+                DataContext = this.MarkBet.TemplateForBeginners,
+                MarkBet = this.MarkBet
+            };
             wndBeginnerWizard.ShowDialog();
         }
 
@@ -1497,13 +1489,13 @@ namespace HPTClient
             {
                 return;
             }
-            
+
             //this.txtBody.Text = sb.ToString();
         }
 
         private string GetSubject()
         {
-           return this.MarkBet.BetType.Code + " " + this.MarkBet.RaceDayInfo.RaceDayDate.ToString("yyyy-MM-dd") + ", " + this.MarkBet.ReducedSize.ToString() + " rader.";
+            return this.MarkBet.BetType.Code + " " + this.MarkBet.RaceDayInfo.RaceDayDate.ToString("yyyy-MM-dd") + ", " + this.MarkBet.ReducedSize.ToString() + " rader.";
         }
 
         private void miCopySystemGUIDToClipboard_Click(object sender, RoutedEventArgs e)
@@ -1583,7 +1575,7 @@ namespace HPTClient
                 DataContext = this.MarkBet,
                 MarkBet = this.MarkBet
             };
-            wndUploadSystem.ShowDialog();            
+            wndUploadSystem.ShowDialog();
         }
 
         #endregion
@@ -1808,7 +1800,7 @@ namespace HPTClient
             if (HPTConfig.Config.MarkBetTabsToShow.ShowRacesGrouped && (this.tiRacesGrouped == null || !this.tcMarksGame.Items.Contains(this.tiRacesGrouped)))
             {
                 CreateRacesGroupedTabItem();
-            } 
+            }
             else if (!HPTConfig.Config.MarkBetTabsToShow.ShowRacesGrouped && this.tiRacesGrouped != null)
             {
                 this.tcMarksGame.Items.Remove(this.tiRacesGrouped);
@@ -1886,7 +1878,7 @@ namespace HPTClient
                 this.tcMarksGame.Items.Remove(this.tiComments);
                 this.tiComments = null;
             }
-            HandleTabItemOrder(this.tiComments, "tiComments");    
+            HandleTabItemOrder(this.tiComments, "tiComments");
 
             // Rankreducering
             if (HPTConfig.Config.MarkBetTabsToShow.ShowRankReduction && (this.tiRankReduction == null || !this.tcMarksGame.Items.Contains(this.tiRankReduction)))
@@ -1973,7 +1965,7 @@ namespace HPTClient
             HandleTabItemOrder(this.tiV6BetMultiplier, "tiV6BetMultiplier");
 
             // Kuponger/Rättning
-            if (HPTConfig.Config.MarkBetTabsToShow.ShowCorrection && (this.tiCorrection== null || !this.tcMarksGame.Items.Contains(this.tiCorrection)))
+            if (HPTConfig.Config.MarkBetTabsToShow.ShowCorrection && (this.tiCorrection == null || !this.tcMarksGame.Items.Contains(this.tiCorrection)))
             {
                 CreateCorrectionTabItem();
             }
@@ -2019,7 +2011,7 @@ namespace HPTClient
                 this.tiTemplateWorkshop = null;
             }
             HandleTabItemOrder(this.tiTemplateWorkshop, "tiTemplateWorkshop");
- 
+
             // Sortera tabbarna
             foreach (var tabName in HPTConfig.Config.MarkBetTabsToShow.ColumnsInOrder)
             {
@@ -2561,7 +2553,7 @@ namespace HPTClient
                 string result = this.MarkBet.CalculateJackpotRows();
                 MessageBox.Show(result, "Jackpottrisk", MessageBoxButton.OK);
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 MessageBox.Show("Något gick fel vid beräkning!", "Fel vid beräkning", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -2576,7 +2568,7 @@ namespace HPTClient
                 int result = this.MarkBet.CalculateNumberOfSingleRows();
                 MessageBox.Show(result.ToString(), " ensamma rader", MessageBoxButton.OK);
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 MessageBox.Show("Något gick fel vid beräkning!", "Fel vid beräkning", MessageBoxButton.OK, MessageBoxImage.Error);
             }

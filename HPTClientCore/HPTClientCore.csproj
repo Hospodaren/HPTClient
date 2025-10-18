@@ -1,0 +1,358 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <AssemblyName>HPTrav5</AssemblyName>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <InstallUrl>http://download.hpt.nu/</InstallUrl>
+    <UpdateUrl>http://download.hpt.nu/</UpdateUrl>
+    <SupportUrl>http://www.hpt.nu</SupportUrl>
+    <ErrorReportUrl>http://www.hpt.nu</ErrorReportUrl>
+    <ProductName>Hjälp på traven 5.3</ProductName>
+    <PublisherName>HPT</PublisherName>
+    <SuiteName>Hjälp på...</SuiteName>
+    <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
+    <ApplicationRevision>103</ApplicationRevision>
+    <ApplicationVersion>5.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <UseWPF>true</UseWPF>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+    <UseWinFormsOutOfProcDesigner>True</UseWinFormsOutOfProcDesigner>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TargetFrameworks>net9.0-windows</TargetFrameworks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>3355D5589AEBC7D67C91BC34AD3394093046DB16</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <!--<PropertyGroup>
+    <ManifestKeyFile>HPTClient_3_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>-->
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icons\HPT.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>False</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <!--<AssemblyOriginatorKeyFile>HPTCert2025.pfx</AssemblyOriginatorKeyFile>-->
+    <StartupObject>HPTClient.App</StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="HelperClasses\ATGDownloaderToHPTHelper.cs" />
+    <Compile Remove="Program.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="ATGImages\V85Small.png" />
+    <None Remove="ATGImages\V85XSmall.png" />
+    <None Remove="GitHub.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Update="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Update="System.Runtime.Serialization">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Update="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Update="UIAutomationProvider">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="atg_filebetting_1_8_6.cs">
+      <DependentUpon>atg_filebetting_1_8_6.xsd</DependentUpon>
+    </Compile>
+    <Compile Update="Service References\HPTService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="atg_filebetting_1_8_2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Update="atg_filebetting_1_8_6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Update="HorseRecordList.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <AppDesigner Include="Properties\" />
+    <None Update="Service References\HPTService\HPTClient.HPTService.AuthenticationResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Update="Service References\HPTService\HPTClient.HPTService.HPTATGSystem.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Update="Service References\HPTService\HPTClient.HPTService.HPTCalendar.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Update="Service References\HPTService\HPTClient.HPTService.HPTCalendarLight.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Update="Service References\HPTService\HPTClient.HPTService.HPTCorrectionSystemResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Update="Service References\HPTService\HPTClient.HPTService.HPTCoupon.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Update="Service References\HPTService\HPTClient.HPTService.HPTHorseNextStart.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Update="Service References\HPTService\HPTClient.HPTService.HPTLogMessage.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Update="Service References\HPTService\HPTClient.HPTService.HPTRaceDayInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Update="Service References\HPTService\HPTClient.HPTService.HPTRaceDayInfoHistoryInfoGrouped.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Update="Service References\HPTService\HPTClient.HPTService.HPTRaceDayInfoLight.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Update="Service References\HPTService\HPTClient.HPTService.HPTRaceDayInfoReduction.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Update="Service References\HPTService\HPTClient.HPTService.HPTRaceKey.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Update="Service References\HPTService\HPTClient.HPTService.HPTRegistration.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Update="Service References\HPTService\HPTClient.HPTService.HPTResultMarkingBet.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Update="Service References\HPTService\HPTClient.HPTService.HPTSaveSystem.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Update="Service References\HPTService\HPTClient.HPTService.HPTUser.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Update="Service References\HPTService\HPTClient.HPTService.HPTUserRaceDayInfoCommentsCollection.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Update="Service References\HPTService\HPTClient.HPTService.HPTUserSystemCollection.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Update="Service References\HPTService\HPTClient.HPTService.HPTUserSystemComplete.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Update="Service References\HPTService\HPTClient.HPTService.HPTUserSystemToMail.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ATGImages\V85XSmall.png" />
+    <Resource Include="ATGLogga.gif" />
+    <Resource Include="GitHub.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\delete_16x.ico" />
+    <Resource Include="Icons\folderopen.ico" />
+    <Resource Include="Icons\help.ico" />
+    <Resource Include="Icons\INFO.ICO" />
+    <Resource Include="Icons\mail.ico" />
+    <Resource Include="Icons\printer.ico" />
+    <Resource Include="Icons\propertiesORoptions.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="HPTSplash.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\globe.ico" />
+    <Resource Include="Icons\otheroptions.ico" />
+    <Resource Include="Icons\save-32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ImagesSmall\hpt1024.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\ATG.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="hpt1024.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\error.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\rc_html.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client,KB2468871">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 and x64%29 and Update for .NET Framework 4 %28KB2468871%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.1 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.4.5">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 4.5</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ATGImages\V85Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ImagesSmall\Facebook.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\AOT.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ATGImagesBW\ATGSmall.png" />
+    <Resource Include="ATGImagesBW\DDSmall.png" />
+    <Resource Include="ATGImagesBW\LDSmall.png" />
+    <Resource Include="ATGImagesBW\TSmall.png" />
+    <Resource Include="ATGImagesBW\TVSmall.png" />
+    <Resource Include="ATGImagesBW\V4Small.png" />
+    <Resource Include="ATGImagesBW\V5Small.png" />
+    <Resource Include="ATGImagesBW\V64Small.png" />
+    <Resource Include="ATGImagesBW\V65Small.png" />
+    <Resource Include="ATGImagesBW\V75Small.png" />
+    <Resource Include="ATGImagesBW\V86Small.png" />
+    <Resource Include="ATGImages\ATGSmall.png" />
+    <Resource Include="ATGImages\DDSmall.png" />
+    <Resource Include="ATGImages\LDSmall.png" />
+    <Resource Include="ATGImages\TSmall.png" />
+    <Resource Include="ATGImages\TVSmall.png" />
+    <Resource Include="ATGImages\V4Small.png" />
+    <Resource Include="ATGImages\V5Small.png" />
+    <Resource Include="ATGImages\V64Small.png" />
+    <Resource Include="ATGImages\V65Small.png" />
+    <Resource Include="ATGImages\V75Small.png" />
+    <Resource Include="ATGImages\V86Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ImagesSmall\hpt128.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Service References\HPTService\HPTService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Update="Service References\HPTService\HPTService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Update="Service References\HPTService\HPTService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Update="Service References\HPTService\HPTService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Update="Service References\HPTService\HPTService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Update="Service References\HPTService\HPTService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Update="Service References\HPTService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Resource Include="HPTPublish.ico" />
+    <Resource Include="ATGImages\ATGXSmall.png" />
+    <Resource Include="ATGImages\DDXSmall.png" />
+    <Resource Include="ATGImages\LDXSmall.png" />
+    <Resource Include="ATGImages\TVXSmall.png" />
+    <Resource Include="ATGImages\TXSmall.png" />
+    <Resource Include="ATGImages\V4XSmall.png" />
+    <Resource Include="ATGImages\V5XSmall.png" />
+    <Resource Include="ATGImages\V64XSmall.png" />
+    <Resource Include="ATGImages\V65XSmall.png" />
+    <Resource Include="ATGImages\V75XSmall.png" />
+    <Resource Include="ATGImages\V86XSmall.png" />
+    <Resource Include="ATGImages\GS75Small.png" />
+    <Resource Include="ATGImages\GS75XSmall.png" />
+    <Resource Include="ATGImagesBW\GS75Small.png" />
+    <Content Include="HptLogo.ico" />
+    <Resource Include="Icons\HPT.ico" />
+    <SplashScreen Include="HPTSplash.png" />
+    <Resource Include="HptLogoSmall.png" />
+    <Content Include="Icons\HPTPublish.ico" />
+    <EmbeddedResource Include="Sounds\horse.wav" />
+    <Resource Include="Test.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <FileAssociation Include=".hpt5">
+      <Visible>False</Visible>
+      <Description>Hjälp på Traven 5-System</Description>
+      <Progid>hpt5.system</Progid>
+      <DefaultIcon>HptLogo.ico</DefaultIcon>
+    </FileAssociation>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\HPTService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Extended.Wpf.Toolkit" Version="4.7.25104.5739" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="SharpZipLib" Version="1.4.2" />
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+    <PackageReference Include="CoreWCF.Primitives" Version="1.8.0" />
+    <PackageReference Include="CoreWCF.ConfigurationManager" Version="1.8.0" />
+    <PackageReference Include="CoreWCF.Http" Version="1.8.0" />
+    <PackageReference Include="CoreWCF.WebHttp" Version="1.8.0" />
+    <PackageReference Include="CoreWCF.NetTcp" Version="1.8.0" />
+    <PackageReference Include="System.IO.Compression" Version="4.3.0" />
+    <PackageReference Include="System.IO.Compression.ZipFile" Version="4.3.0" />
+  </ItemGroup>
+</Project>

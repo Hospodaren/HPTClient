@@ -1,0 +1,111 @@
+﻿<UserControl x:Class="HPTClient.UCMarkBetTemplateRank"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" mc:Ignorable="d" 
+             x:Name="ucMarkBetTemplateRank"
+             d:DesignHeight="200" d:DesignWidth="600">
+    <UserControl.Resources>
+
+        <Style TargetType="{x:Type ListViewItem}">
+            <Setter Property="BorderBrush" Value="Black"></Setter>
+            <Setter Property="BorderThickness" Value="0.5"></Setter>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="Margin" Value="1"/>
+        </Style>
+
+    </UserControl.Resources>
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="btnNewTemplate" Click="btnNewTemplate_Click" Content="Ny rankmall" Margin="2"/>
+            </StackPanel>
+
+            <ListView Grid.Row="1" x:Name="lvwRankTemplates" ItemsSource="{Binding Path=Config.MarkBetTemplateRankList,ElementName=ucMarkBetTemplateRank}">
+                <ListView.View>
+                    <GridView x:Name="gvwRankTemplates">
+
+                        <GridViewColumn x:Name="gvcName" Header="Namn">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox x:Name="txtName" Text="{Binding Name}" HorizontalAlignment="Stretch"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                        <GridViewColumn x:Name="gvcBetType" Header="Spelform">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ComboBox x:Name="cmbBetType" HorizontalAlignment="Stretch" 
+                                              ItemsSource="{Binding Path=Config.BetTypeCategoryList,ElementName=ucMarkBetTemplateRank}"
+                                              SelectedItem="{Binding TypeCategory}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                        <GridViewColumn x:Name="gvcRankTemplate" Header="Rankvariabelmall">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ComboBox x:Name="cmbRankTemplate" HorizontalAlignment="Stretch"
+                                              ItemsSource="{Binding Path=Config.RankTemplateList,ElementName=ucMarkBetTemplateRank}"
+                                              SelectedItem="{Binding RankTemplate}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                        <GridViewColumn x:Name="gvcNumberOfSpikes" Header="Antal spikar">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <xctk:IntegerUpDown x:Name="iudNumberOfSpikes" DefaultValue="0" Increment="1" Minimum="0" Maximum="7" 
+                                                       Value="{Binding NumberOfSpikes}" HorizontalAlignment="Stretch"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                        <GridViewColumn x:Name="gvcDesiredSize" Header="Önskad storlek">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <xctk:IntegerUpDown x:Name="iudDesiredSize" DefaultValue="100" Increment="100" Minimum="0" Maximum="1000000" 
+                                                       Value="{Binding DesiredSystemSize}" HorizontalAlignment="Stretch"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                        <GridViewColumn x:Name="gvcLowerPercentageLimit" Header="Undre gräns (%)">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <xctk:IntegerUpDown x:Name="iudLowerPercentageLimit" DefaultValue="0" Minimum="0" Maximum="100" Increment="5" Value="{Binding LowerPercentageLimit}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                        <GridViewColumn x:Name="gvcUpperPercentageLimit" Header="Övre gräns (%)">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <xctk:IntegerUpDown x:Name="iudUpperPercentageLimit" DefaultValue="0" Minimum="0" Maximum="100" Increment="5" Value="{Binding UpperPercentageLimit}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                        <GridViewColumn x:Name="gvcRemove">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button x:Name="btnRemove" Content="Ta bort" Click="btnRemove_Click"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+        </Grid>
+
+    </Grid>
+</UserControl>
