@@ -1011,11 +1011,21 @@ namespace HPTClient
 
         public string HomeTrackInfo { get; set; }
 
+        private string stLink;
         public string STLink
         {
             get
             {
-                return ATGLinkCreator.CreateSTHorseLink(this);
+                if (string.IsNullOrEmpty(stLink))
+                {
+                    STLink = ATGLinkCreator.CreateSTHorseLink(this);
+                }
+                return stLink;
+            }
+            set
+            {
+                stLink = value;
+                OnPropertyChanged("STLink");
             }
         }
 
