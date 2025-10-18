@@ -127,11 +127,16 @@
                         <Image Source="/HPTLogoSmall.png" MaxHeight="16" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Name="miUpdateAndRestart" Header="Uppdatera och starta om" IsEnabled="True" Click="miUpdateAndRestart_Click">
+                <MenuItem Name="miGithub" Header="HPT på GitHub" IsEnabled="True" Click="miGithub_Click">
+                    <MenuItem.Icon>
+                        <Image Source="/GitHub.png" MaxHeight="16" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <!--<MenuItem Name="miUpdateAndRestart" Header="Uppdatera och starta om" IsEnabled="True" Click="miUpdateAndRestart_Click">
                     <MenuItem.Icon>
                         <Image Source="/Icons/HPT.ico" MaxHeight="16"/>
                     </MenuItem.Icon>
-                </MenuItem>
+                </MenuItem>-->
                 <!--<MenuItem Name="miATG" Header="ATGs hemsida" IsEnabled="True" Click="miATG_Click">
                     <MenuItem.Icon>
                         <Image Source="/ATGImages/ATGSmall.png" Height="16"/>
@@ -348,7 +353,7 @@
                                 
                                 <GridViewColumn CellTemplate="{StaticResource lstTrackAndDate}" Header="Tävlingsinfo"/>
 
-                                <GridViewColumn Header="V64/V75/V86/GS75">
+                                <GridViewColumn Header="V64/V75/V8X/GS75">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <HPT:UCCalendarRaceDayInfoButton DataContext="{Binding Path=BetTypeVxx}"

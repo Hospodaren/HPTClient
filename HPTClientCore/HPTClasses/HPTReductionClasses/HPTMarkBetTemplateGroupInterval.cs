@@ -19,6 +19,7 @@ namespace HPTClient
                 case "GS75":
                     return this.GroupIntervalRulesCollectionV75;
                 case "V86":
+                case "V85":
                     return this.GroupIntervalRulesCollectionV86;
                 default:
                     return null;

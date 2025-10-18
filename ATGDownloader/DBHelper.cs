@@ -8,6 +8,7 @@ namespace ATGDownloader
 {
     public class DBHelper
     {
+        // Server=localhost\SQLEXPRESS;Database=master;Trusted_Connection=True;
         private const string _connectionString = @"Server=.\SQLEXPRESS;Database=HPTLight;Trusted_Connection=True;TrustServerCertificate=true;";
 
         public static ATGGameBase SaveGame(ATGGameInfoBase gameInfo, string jsonData)

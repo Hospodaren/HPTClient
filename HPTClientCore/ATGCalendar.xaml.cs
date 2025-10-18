@@ -2,8 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading;
 using System.Windows;
@@ -157,7 +159,8 @@ namespace HPTClient
 
                 // Hantering av Gratis/PRO
                 //this.Config.VersionText = "Hjälp på Traven! 5.34";'
-                this.Config.VersionText = $"Hjälp på Traven läggs ner, mer info på www.hpt.nu ({this.Config.PROVersionExpirationDate:yyyy-MM-dd})";
+                //this.Config.VersionText = $"Hjälp på Traven läggs ner, mer info på www.hpt.nu ({this.Config.PROVersionExpirationDate:yyyy-MM-dd})";
+                this.Config.VersionText = $"Hjälp på Traven Open Source. Inga garantier, ingen support, ingen kostnad.";
                 this.VersionText = this.Config.VersionText;
             }
             //catch (System.ServiceModel.EndpointNotFoundException)
@@ -280,6 +283,7 @@ namespace HPTClient
                     case "V75":
                     case "V86":
                     case "GS75":
+                    case "V85":
                         hptRdi.DataToShow = this.Config.DataToShowVxx;
                         break;
                     case "DD":
@@ -352,6 +356,7 @@ namespace HPTClient
                 case "V65":
                 case "V64":
                 case "V75":
+                case "V85":
                 case "GS75":
                 case "V86":
                     hptRdi.DataToShow = HPTConfig.Config.DataToShowVxx;
@@ -539,24 +544,24 @@ namespace HPTClient
                 miClone.Click += new RoutedEventHandler(miClone_Click);
 
 
-                // Lägg till val för uppladdning av system
-                MenuItem miUploadCompleteSystem = new MenuItem()
-                {
-                    Header = "Ladda upp system",
-                    Tag = hmb
-                };
-                cm.Items.Add(miUploadCompleteSystem);
-                miUploadCompleteSystem.Click += miUploadCompleteSystem_Click;
+                //// Lägg till val för uppladdning av system
+                //MenuItem miUploadCompleteSystem = new MenuItem()
+                //{
+                //    Header = "Ladda upp system",
+                //    Tag = hmb
+                //};
+                //cm.Items.Add(miUploadCompleteSystem);
+                //miUploadCompleteSystem.Click += miUploadCompleteSystem_Click;
 
-                // Lägg till val för uppladdning av system
-                MenuItem miPasteTips = new MenuItem()
-                {
-                    Header = "Klistra in tips",
-                    Tag = ucMarksGame,
-                    DataContext = hmb
-                };
-                cm.Items.Add(miPasteTips);
-                miPasteTips.Click += new RoutedEventHandler(miPasteTips_Click);
+                //// Lägg till val för uppladdning av system
+                //MenuItem miPasteTips = new MenuItem()
+                //{
+                //    Header = "Klistra in tips",
+                //    Tag = ucMarksGame,
+                //    DataContext = hmb
+                //};
+                //cm.Items.Add(miPasteTips);
+                //miPasteTips.Click += new RoutedEventHandler(miPasteTips_Click);
 
 
                 // Lägg till val för borttag av rader från fil
@@ -881,12 +886,12 @@ namespace HPTClient
             Application.Current.Shutdown();
         }
 
-        private void miUpdateAndRestart_Click(object sender, RoutedEventArgs e)
-        {
-            System.Diagnostics.Process.Start("iexplore.exe", "http://download.hpt.nu");
-            //System.Diagnostics.Process.Start("iexplore.exe", "www.dn.se");
-            Application.Current.Shutdown();
-        }
+        //private void miUpdateAndRestart_Click(object sender, RoutedEventArgs e)
+        //{
+        //    System.Diagnostics.Process.Start("iexplore.exe", "http://download.hpt.nu");
+        //    //System.Diagnostics.Process.Start("iexplore.exe", "www.dn.se");
+        //    Application.Current.Shutdown();
+        //}
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -1632,7 +1637,8 @@ namespace HPTClient
             bool showOnlySwedish = (bool)this.chkShowOnlySwedishTracks.IsChecked;
             bool showOnlyWithMarksGame = (bool)this.chkShowOnlyWithMarksGame.IsChecked;
 
-            this.hptCalendar.RaceDayInfoList.ToList().ForEach(rdi =>
+            this.lvwCalenda.ItemsSource.Cast<HPTRaceDayInfo>().ToList().ForEach(rdi => 
+            //this.hptCalendar.RaceDayInfoList.ToList().ForEach(rdi =>
             {
                 bool showInUI = false;
                 if (showYesterday && !showOld)
@@ -1891,7 +1897,24 @@ namespace HPTClient
 
         private void miNews_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://www.hpt.nu");
+            GoToUrl("https://www.hpt.nu");
+            //System.Diagnostics.Process.Start("https://www.hpt.nu");
+        }
+
+        private void miGithub_Click(object sender, RoutedEventArgs e)
+        {
+            GoToUrl("https://github.com/Hospodaren/HPTClient");
+            //System.Diagnostics.Process.Start("https://github.com/Hospodaren/HPTClient");
+        }
+
+        private void GoToUrl(string url)
+        {
+            var psi = new ProcessStartInfo
+            {
+                FileName = url,
+                UseShellExecute = true
+            };
+            Process.Start(psi);
         }
     }
 

@@ -221,6 +221,24 @@ namespace HPTClient
             }
         }
 
+        private int numberOfThreeErrors;
+        public int NumberOfThreeErrors
+        {
+            get
+            {
+                return numberOfThreeErrors;
+            }
+            set
+            {
+                if (numberOfThreeErrors == value)
+                {
+                    return;
+                }
+                numberOfThreeErrors = value;
+                OnPropertyChanged("NumberOfThreeErrors");
+            }
+        }
+
         #endregion
 
         #region Förberett för villkor endast på valda lopp

@@ -237,6 +237,7 @@ namespace HPTClient
                         }
                         break;
                     case "V86":
+                    case "V85":
                         if (systemStake < 400)
                         {
                             numberOfSpikes = 2;
@@ -1724,7 +1725,7 @@ namespace HPTClient
             this.btnCopy.Visibility = GetVisibility(guiElementsToShow.ShowCopy);
             this.btnPrint.Visibility = GetVisibility(guiElementsToShow.ShowPrint);
             this.btnClearAll.Visibility = GetVisibility(guiElementsToShow.ShowClear);
-            this.btnUploadSystem.Visibility = GetVisibility(guiElementsToShow.ShowUpload);
+            //this.btnUploadSystem.Visibility = GetVisibility(guiElementsToShow.ShowUpload);
         }
 
         private Visibility GetVisibility(bool show)

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Navigation;
 
 namespace HPTClient
@@ -56,6 +58,17 @@ namespace HPTClient
         private void hlSystemURL_RequestNavigate(object sender, RequestNavigateEventArgs e)
         {
             System.Diagnostics.Process.Start(this.MarkBet.SystemURL);
+            GoToUrl(this.MarkBet.SystemURL);
+        }
+
+        private void GoToUrl(string url)
+        {
+            var psi = new ProcessStartInfo
+            {
+                FileName = url,
+                UseShellExecute = true
+            };
+            Process.Start(psi);
         }
     }
 }

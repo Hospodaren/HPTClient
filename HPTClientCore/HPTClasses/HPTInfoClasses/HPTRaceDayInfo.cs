@@ -537,7 +537,7 @@ namespace HPTClient
         {
             get
             {
-                return this.BetTypeList.FirstOrDefault(bt => bt.Code == "V64" || bt.Code == "V75" || bt.Code == "V86" || bt.Code == "GS75");
+                return this.BetTypeList.FirstOrDefault(bt => bt.Code == "V64" || bt.Code == "V85" || bt.Code == "V75" || bt.Code == "V86" || bt.Code == "GS75");
             }
         }
 

@@ -104,11 +104,11 @@ namespace ATGDownloader
                 case "V86":
                     Poolshares = new Dictionary<int, decimal> { [0] = 0.26m, [1] = 0.13m, [2] = 0.26m};
                     break;
+                case "V85":
+                    Poolshares = new Dictionary<int, decimal> { [0] = 0.2275m, [1] = 0.975m, [2] = 0.975m, [2] = 0.2275m };
+                    break;
                 case "V65":
                     Poolshares = new Dictionary<int, decimal> { [0] = 0.325m, [1] = 0.325m};
-                    break;
-                case "V85":
-                    Poolshares = new Dictionary<int, decimal> { [0] = 0.2275m, [1] = 0.0975m, [2] = 0.0975m, [3] = 0.2275m };
                     break;
                 default:
                     Poolshares = new Dictionary<int, decimal> { [0] = 1m };

@@ -288,6 +288,7 @@ namespace HPTClient
                         case "V64":
                         case "V65":
                         case "V75":
+                        case "V85":
                         case "GS75":
                         case "V86":
                             c = HPTConfig.Config.ColorMedium;
@@ -306,6 +307,7 @@ namespace HPTClient
                         case "V64":
                         case "V75":
                         case "GS75":
+                        case "V85":
                         case "V86":
                             c = HPTConfig.Config.ColorMedium;
                             this.CanWin = true;
@@ -315,7 +317,7 @@ namespace HPTClient
                             this.CanWin = false;
                             break;
                     }
-                }
+                }   // TODO
                 else
                 {
                     c = HPTConfig.Config.ColorBad;

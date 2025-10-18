@@ -62,7 +62,8 @@ namespace HPTClient
         Double,
         Trio,
         Twin,
-        GS75
+        GS75,
+        V85
     }
 
     public enum TrackNameEnum

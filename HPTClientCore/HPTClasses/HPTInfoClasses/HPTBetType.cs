@@ -132,7 +132,7 @@ namespace HPTClient
         {
             get
             {
-                return this.Code == "V4" || this.Code == "V5" || this.Code == "V64" || this.Code == "V65" || this.Code == "V75" || this.Code == "V86" || this.Code == "GS75";
+                return this.Code == "V4" || this.Code == "V5" || this.Code == "V64" || this.Code == "V65" || this.Code == "V75" || this.Code == "V86" || this.Code == "GS75" || this.Code == "V85";
             }
         }
 
@@ -140,7 +140,7 @@ namespace HPTClient
         {
             get
             {
-                return this.Code == "GS75" || this.Code == "V64" || this.Code == "V65" || this.Code == "V75" || this.Code == "V86";
+                return this.Code == "GS75" || this.Code == "V64" || this.Code == "V65" || this.Code == "V75" || this.Code == "V86" || this.Code == "V85";
             }
         }
 
@@ -168,6 +168,9 @@ namespace HPTClient
                         case "GS75":
                         case "V86":
                             this.poolShare = 0.26m;
+                            break;
+                        case "V85":
+                            this.poolShare = 0.2275m;
                             break;
                         case "V65":
                             this.poolShare = 0.325m;
@@ -208,6 +211,7 @@ namespace HPTClient
                         case "V5":
                         case "V64":
                         case "V75":
+                        case "V85":
                         case "GS75":
                         case "V86":
                         case "V65":
@@ -246,6 +250,9 @@ namespace HPTClient
                         case "V86":
                             this.poolShareOneError = 0.13m;
                             break;
+                        case "V85":
+                            this.poolShareOneError = 0.0975m;
+                            break;
                         case "V65":
                             this.poolShareOneError = 0.325m;
                             break;
@@ -274,12 +281,37 @@ namespace HPTClient
                         case "V86":
                             this.poolShareTwoErrors = 0.26m;
                             break;
+                        case "V85":
+                            this.poolShareTwoErrors = 0.0975m;
+                            break;
                         default:
                             this.poolShareTwoErrors = 0m;
                             break;
                     }
                 }
                 return this.poolShareTwoErrors;
+            }
+        }
+
+        private decimal poolShareThreeErrors;
+        [XmlIgnore]
+        public decimal PoolShareThreeErrors
+        {
+            get
+            {
+                if (this.poolShareTwoErrors == 0m)
+                {
+                    switch (this.Code)
+                    {
+                        case "V85":
+                            this.poolShareThreeErrors = 0.2275m;
+                            break;
+                        default:
+                            this.poolShareThreeErrors = 0m;
+                            break;
+                    }
+                }
+                return this.poolShareThreeErrors;
             }
         }
 
@@ -356,6 +388,7 @@ namespace HPTClient
                         case "V75":
                         case "GS75":
                         case "V86":
+                        case "V85":
                             this.rowValueIntervalList = new ObservableCollection<HPTRowValueInterval>
                             {
                                 new HPTRowValueInterval()
@@ -587,6 +620,27 @@ namespace HPTClient
                                 }
                             };
                             break;
+                        case "V85":
+                            this.payOutDummyList = new HPTPayOut[]
+                            {
+                                new HPTPayOut()
+                                {
+                                    NumberOfCorrect = 8
+                                },
+                                new HPTPayOut()
+                                {
+                                    NumberOfCorrect = 7
+                                },
+                                new HPTPayOut()
+                                {
+                                    NumberOfCorrect = 6
+                                },
+                                new HPTPayOut()
+                                {
+                                    NumberOfCorrect = 5
+                                }
+                            };
+                            break;
                         case "V5":
                             this.payOutDummyList = new HPTPayOut[]
                             {
@@ -656,6 +710,7 @@ namespace HPTClient
                         case "V75":
                         case "GS75":
                         case "V86":
+                        case "V85":
                         case "V5":
                             this.betMultiplierList = new int[] { 1, 2, 5, 10, 20, 50, 100 };
                             break;
@@ -750,6 +805,7 @@ namespace HPTClient
                             this.rowCost = 1m;
                             break;
                         case "V75":
+                        case "V85":
                             this.rowCost = 0.5m;
                             break;
                         case "V86":
@@ -787,6 +843,9 @@ namespace HPTClient
                         case "GS75":
                         case "V86":
                             this.jackpotLimit = 15;
+                            break;
+                        case "V85":
+                            this.jackpotLimit = 5;
                             break;
                         case "DD":
                         case "LD":
@@ -833,6 +892,7 @@ namespace HPTClient
                             this.numberOfRaces = 7;
                             break;
                         case "V86":
+                        case "V85":
                             this.numberOfRaces = 8;
                             break;
                         case "DD":
@@ -870,6 +930,7 @@ namespace HPTClient
                             this.maxNumberOfSystemsInFile = 2000;
                             break;
                         case "V75":
+                        case "V85":
                         case "GS75":
                         case "V86":
                             this.maxNumberOfSystemsInFile = 5000;
@@ -912,6 +973,9 @@ namespace HPTClient
                             break;
                         case "V86":
                             this.typeCategory = BetTypeCategory.V86;
+                            break;
+                        case "V85":
+                            this.typeCategory = BetTypeCategory.V85;
                             break;
                         case "DD":
                         case "LD":

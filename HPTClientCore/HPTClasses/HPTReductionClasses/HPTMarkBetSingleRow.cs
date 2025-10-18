@@ -229,6 +229,8 @@ namespace HPTClient
 
         public int RowValueTwoErrorsFinalStakeShare { get; set; }
 
+        public int RowValueThreeErrorsFinalStakeShare { get; set; }
+
         private int betMultiplier;
         public int BetMultiplier
         {
@@ -368,6 +370,20 @@ namespace HPTClient
             }
         }
 
+        private int rowValueThreeErrors;
+        public int RowValueThreeErrors
+        {
+            get
+            {
+                return this.rowValueThreeErrors;
+            }
+            set
+            {
+                this.rowValueThreeErrors = value;
+                OnPropertyChanged("RowValueThreeErrors");
+            }
+        }
+
         private int? rowValueOneErrorLower;
         public int? RowValueOneErrorLower
         {
@@ -422,6 +438,35 @@ namespace HPTClient
             {
                 this.rowValueTwoErrorsUpper = value;
                 OnPropertyChanged("RowValueTwoErrorsUpper");
+            }
+        }
+
+        private int? rowValueThreeErrorsLower;
+        public int? RowValueThreeErrorsLower
+        {
+            get
+            {
+                return this.rowValueThreeErrorsLower;
+            }
+            set
+
+            {
+                this.rowValueThreeErrorsLower = value;
+                OnPropertyChanged("RowValueThreeErrorsLower");
+            }
+        }
+
+        private int? rowValueThreeErrorsUpper;
+        public int? RowValueThreeErrorsUpper
+        {
+            get
+            {
+                return this.rowValueThreeErrorsUpper;
+            }
+            set
+            {
+                this.rowValueThreeErrorsUpper = value;
+                OnPropertyChanged("RowValueThreeErrorsUpper");
             }
         }
 

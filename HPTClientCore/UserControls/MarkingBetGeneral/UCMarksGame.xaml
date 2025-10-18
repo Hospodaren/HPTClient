@@ -612,19 +612,19 @@
                                     </xctk:SplitButton.DropDownContent>
                                 </xctk:SplitButton>
 
-                                <xctk:SplitButton x:Name="btnUploadSystem" Content="Ladda upp" Margin="2" Click="miUploadCompleteSystem_Click"
+                                <!--<xctk:SplitButton x:Name="btnUploadSystem" Content="Ladda upp" Margin="2" Click="miUploadCompleteSystem_Click"
                             ToolTip="Laddar upp system till HPTs server så man kan rätta systemet i mobilen">
                                     <xctk:SplitButton.DropDownContent>
                                         <StackPanel Orientation="Vertical">
                                             <MenuItem x:Name="miCopySystemGUIDToClipboard" Header="Kopiera rättningslänk till klippbordet" Click="miCopySystemGUIDToClipboard_Click"/>
-                                            <!--<MenuItem x:Name="miMailSystemInfoToOwnMail" Header="Maila adress och system till dig själv" Click="miMailSystemInfoToOwnMail_Click"/>-->
+                                            --><!--<MenuItem x:Name="miMailSystemInfoToOwnMail" Header="Maila adress och system till dig själv" Click="miMailSystemInfoToOwnMail_Click"/>--><!--
                                             <MenuItem x:Name="miOpenCorrectionURL" Header="Öppna rättningssida i webbläsaren" Click="miOpenCorrectionURL_Click"/>
-                                            <!--<MenuItem x:Name="miUploadCompleteSystem" Header="Ladda upp komplett system" Click="miUploadCompleteSystem_Click"/>-->
+                                            --><!--<MenuItem x:Name="miUploadCompleteSystem" Header="Ladda upp komplett system" Click="miUploadCompleteSystem_Click"/>-->
                                             <!--<MenuItem x:Name="miUploadOnlineSystem" Header="Ladda upp system till HPT Online" Click="miUploadOnlineSystem_Click"/>-->
-                                            <!--<MenuItem x:Name="miUploadCompleteSystem" Header="Skapa rättningslänk" Click="btnUploadSystem_Click"/>-->
+                                            <!--<MenuItem x:Name="miUploadCompleteSystem" Header="Skapa rättningslänk" Click="btnUploadSystem_Click"/>--><!--
                                         </StackPanel>
                                     </xctk:SplitButton.DropDownContent>
-                                </xctk:SplitButton>
+                                </xctk:SplitButton>-->
 
                             </WrapPanel>
                         </Grid>

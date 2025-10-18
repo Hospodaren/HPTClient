@@ -1032,11 +1032,63 @@ namespace HPTClient
 
         public void CalculateSingleRowsPotential()
         {
-            if (this.BetType.Code != "V64" && this.BetType.Code != "V75" && this.BetType.Code != "V86" && this.BetType.Code != "V65" && this.BetType.Code != "GS75")
+            if (this.BetType.Code != "V64" && this.BetType.Code != "V75" && this.BetType.Code != "V86" && this.BetType.Code != "V65" && this.BetType.Code != "GS75" && this.BetType.Code != "V85")
             {
                 return;
             }
             if (this.SingleRowCollection == null || this.SingleRowCollection.SingleRows == null)
+            {
+                return;
+            }
+
+            foreach (var singleRow in this.SingleRowCollection.SingleRows)
+            {
+                var payOutListOneError = new List<int>();
+                var payOutListTwoErrors = new List<int>();
+                var horseListToCalculate = singleRow.HorseList.ToArray();
+                for (int i = 0; i < singleRow.HorseList.Count(); i++)
+                {
+                    var horseToExchange = horseListToCalculate[i];
+                    var horseToCalculateOn = horseToExchange.ParentRace.HorseList
+                        .Except(horseToExchange.ParentRace.HorseListSelected)
+                        .OrderByDescending(h => h.StakeDistribution)
+                        .FirstOrDefault();
+                    if (horseToCalculateOn != null)
+                    {
+                        horseListToCalculate[i] = horseToCalculateOn;
+                        int payOut = this.CouponCorrector.CalculatePayOutOneError(horseListToCalculate, this.RaceDayInfo.BetType.PoolShareOneError * this.RaceDayInfo.BetType.RowCost);
+                        payOutListOneError.Add(payOut);
+
+                        for (int j = i + 1; j < singleRow.HorseList.Count(); j++)
+                        {
+                            var horseToExchange2 = horseListToCalculate[j];
+                            var horseToCalculateOn2 = horseToExchange2.ParentRace.HorseList
+                                .Except(horseToExchange2.ParentRace.HorseListSelected)
+                                .OrderByDescending(h => h.StakeDistribution)
+                                .FirstOrDefault();
+                            if (horseToCalculateOn2 != null)
+                            {
+                                horseListToCalculate[j] = horseToCalculateOn2;
+                                int payOut2 = this.CouponCorrector.CalculatePayOutTwoErrors(horseListToCalculate, this.RaceDayInfo.BetType.PoolShareTwoErrors * this.RaceDayInfo.BetType.RowCost);
+                                payOutListTwoErrors.Add(payOut2);
+                                horseListToCalculate[j] = horseToExchange2;
+                            }
+                        }
+                        horseListToCalculate[i] = horseToExchange;
+                    }
+                }
+                singleRow.RowValueOneErrorLower = payOutListOneError.Min();
+                singleRow.RowValueOneErrorUpper = payOutListOneError.Max();
+                singleRow.RowValueTwoErrorsLower = payOutListTwoErrors.Min();
+                singleRow.RowValueTwoErrorsUpper = payOutListTwoErrors.Max();
+                //singleRow.RowValueThreeErrorsLower = payOutListTwoErrors.Min();   // TODO
+                //singleRow.RowValueThreeErrorsUpper= payOutListTwoErrors.Max();
+            }
+        }
+
+        public void CalculateSingleRowsPotentialRecursive() // TODO: Vafan används den här till egentligen
+        {
+            if (!this.BetType.HasMultiplePools || this.SingleRowCollection == null || this.SingleRowCollection.SingleRows == null)
             {
                 return;
             }
@@ -5773,6 +5825,14 @@ namespace HPTClient
                             {
                                 {1, 0},
                                 {2, 0}
+                            };
+                        break;
+                    case "V85":
+                        this.numberOfRowsUnderRowValue = new Dictionary<int, int>()
+                            {
+                                {1, 0},
+                                {2, 0},
+                                {3, 0}
                             };
                         break;
                     default:

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -19,7 +20,18 @@ namespace HPTClient
         private void hlSTHorseLinkExternal_RequestNavigate(object sender, RequestNavigateEventArgs e)
         {
             var hl = (Hyperlink)e.OriginalSource;
-            System.Diagnostics.Process.Start(hl.NavigateUri.AbsoluteUri);
+            GoToUrl(hl.NavigateUri.AbsoluteUri);
+            //System.Diagnostics.Process.Start(hl.NavigateUri.AbsoluteUri);
+        }
+
+        private void GoToUrl(string url)
+        {
+            var psi = new ProcessStartInfo
+            {
+                FileName = url,
+                UseShellExecute = true
+            };
+            Process.Start(psi);
         }
 
         private void btnGetMoreResults_Click(object sender, RoutedEventArgs e)

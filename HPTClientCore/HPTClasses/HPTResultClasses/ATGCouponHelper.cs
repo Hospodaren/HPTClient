@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HPTClient.ATG;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -250,6 +251,16 @@ namespace HPTClient
                         couponid = hc.CouponIdFile.ToString(),
                         date = hc.Date,
                         v7 = hc.V6,
+                        leg = ConvertRaceListToLegArray(hc.CouponRaceList)
+                    }).ToArray();
+                    break;
+
+                case "V85":
+                    atgFile.betcoupons.v85Coupon = couponList.Select(hc => new v85CouponType()
+                    {
+                        betmultiplier = hc.BetMultiplier.ToString(),
+                        couponid = hc.CouponIdFile.ToString(),
+                        date = hc.Date,
                         leg = ConvertRaceListToLegArray(hc.CouponRaceList)
                     }).ToArray();
                     break;
@@ -567,6 +578,7 @@ namespace HPTClient
                 case "V64":
                 case "V65":
                 case "V75":
+                case "V85":
                 case "GS75":
                 case "V86":
                     // Returnera om systemet är tomt
@@ -1658,6 +1670,19 @@ namespace HPTClient
                     {
                         BetMultiplier = Convert.ToInt32(vc.betmultiplier),
                         BetType = "V75",
+                        CouponId = Convert.ToInt32(vc.couponid),
+                        CouponRaceList = ConvertLegListToCouponRaceList(vc.leg),
+                        Date = vc.date,
+                        V6 = vc.v7
+                    });
+            }
+            else if (atgFile.betcoupons.v85Coupon != null)    // TODO
+            {
+                couponInfo = atgFile.betcoupons.v75Coupon
+                    .Select(vc => new HPTCoupon()
+                    {
+                        BetMultiplier = Convert.ToInt32(vc.betmultiplier),
+                        BetType = "V85",
                         CouponId = Convert.ToInt32(vc.couponid),
                         CouponRaceList = ConvertLegListToCouponRaceList(vc.leg),
                         Date = vc.date,

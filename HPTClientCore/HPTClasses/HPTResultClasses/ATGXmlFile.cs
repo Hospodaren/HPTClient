@@ -188,6 +188,8 @@ public partial class betcouponsType
 
     private v86CouponType[] v86CouponField;
 
+    private v85CouponType[] v85CouponField;
+
     private v75CouponType[] v75CouponField;
 
     private v65CouponType[] v65CouponField;
@@ -225,6 +227,20 @@ public partial class betcouponsType
         set
         {
             this.v86CouponField = value;
+        }
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute("v85Coupon")]
+    public v85CouponType[] v85Coupon
+    {
+        get
+        {
+            return this.v85CouponField;
+        }
+        set
+        {
+            this.v85CouponField = value;
         }
     }
 
@@ -2095,6 +2111,102 @@ public partial class v75CouponType
         set
         {
             this.v7FieldSpecified = value;
+        }
+    }
+}
+
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+public partial class v85CouponType
+{
+
+    private legType[] legField;
+
+    private string couponidField;
+
+    private System.DateTime dateField;
+
+    private string trackcodeField;
+
+    private string betmultiplierField;
+
+    public v85CouponType()
+    {
+        this.betmultiplierField = "1";
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute("leg")]
+    public legType[] leg
+    {
+        get
+        {
+            return this.legField;
+        }
+        set
+        {
+            this.legField = value;
+        }
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute(DataType = "integer")]
+    public string couponid
+    {
+        get
+        {
+            return this.couponidField;
+        }
+        set
+        {
+            this.couponidField = value;
+        }
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute(DataType = "date")]
+    public System.DateTime date
+    {
+        get
+        {
+            return this.dateField;
+        }
+        set
+        {
+            this.dateField = value;
+        }
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute(DataType = "integer")]
+    public string trackcode
+    {
+        get
+        {
+            return this.trackcodeField;
+        }
+        set
+        {
+            this.trackcodeField = value;
+        }
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute(DataType = "integer")]
+    [System.ComponentModel.DefaultValueAttribute("1")]
+    public string betmultiplier
+    {
+        get
+        {
+            return this.betmultiplierField;
+        }
+        set
+        {
+            this.betmultiplierField = value;
         }
     }
 }

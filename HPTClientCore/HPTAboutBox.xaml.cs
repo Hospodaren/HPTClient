@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
 using System.Windows.Documents;
 
 namespace HPTClient
@@ -16,7 +17,8 @@ namespace HPTClient
         private void hlHomePage_Click(object sender, RoutedEventArgs e)
         {
             Hyperlink hl = (Hyperlink)sender;
-            System.Diagnostics.Process.Start(hl.NavigateUri.OriginalString);
+            GoToUrl(hl.NavigateUri.OriginalString);
+            //System.Diagnostics.Process.Start(hl.NavigateUri.OriginalString);
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
@@ -27,7 +29,18 @@ namespace HPTClient
         private void hlATGSpelAnsvar_Click(object sender, RoutedEventArgs e)
         {
             Hyperlink hl = (Hyperlink)sender;
-            System.Diagnostics.Process.Start(hl.NavigateUri.OriginalString);
+            GoToUrl(hl.NavigateUri.OriginalString);
+            //System.Diagnostics.Process.Start(hl.NavigateUri.OriginalString);
+        }
+
+        private void GoToUrl(string url)
+        {
+            var psi = new ProcessStartInfo
+            {
+                FileName = url,
+                UseShellExecute = true
+            };
+            Process.Start(psi);
         }
     }
 }

@@ -989,6 +989,24 @@ namespace HPTClient
                                     .ToList();
 
                                 totalPotentialWinnings += rowsWith2Errors.Sum(sr => sr.BetMultiplier) * bestRow.RowValueTwoErrorsFinalStakeShare;
+
+                                if (numberOfPools > 3)
+                                {
+                                    // Utdelning på två fel i bästa fall
+                                    bestRow.RowValueThreeErrors = this.MarkBet.CouponCorrector.CalculatePayOutTwoErrors(bestRow.HorseList, this.MarkBet.BetType.PoolShareTwoErrors * this.MarkBet.BetType.RowCost);
+
+                                    if (bestRow.RowValueTwoErrorsFinalStakeShare >= this.MarkBet.BetType.JackpotLimit)
+                                    {
+                                        // Alla rader som har två fel givet gynsammaste utfallet
+                                        //var rowsWith2Errors = this.MarkBet.SingleRowCollection.SingleRows
+                                        var rowsWith3Errors = this.SingleRowsAfterReservHandling
+                                            .Where(sr => !sr.V6)
+                                            .Where(sr => sr.HorseList.Intersect(bestRow.HorseList).Count() == this.MarkBet.RaceDayInfo.RaceList.Count - 2)
+                                            .ToList();
+
+                                        totalPotentialWinnings += rowsWith2Errors.Sum(sr => sr.BetMultiplier) * bestRow.RowValueThreeErrorsFinalStakeShare;
+                                    }
+                                }
                             }
                         }
                     }

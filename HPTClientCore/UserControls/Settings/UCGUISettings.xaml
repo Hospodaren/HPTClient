@@ -81,7 +81,7 @@
                         <CheckBox x:Name="chkCopy" Content="Kopiera" IsChecked="{Binding ShowCopy}"/>
                         <CheckBox x:Name="chkPrint" Content="Skriv ut" IsChecked="{Binding ShowPrint}"/>
                         <CheckBox x:Name="chkClear" Content="Rensa" IsChecked="{Binding ShowClear}"/>
-                        <CheckBox x:Name="chkUpload" Content="Ladda upp" IsChecked="{Binding ShowUpload}"/>
+                        <!--<CheckBox x:Name="chkUpload" Content="Ladda upp" IsChecked="{Binding ShowUpload}"/>-->
 
                     </StackPanel>
                 </Grid>

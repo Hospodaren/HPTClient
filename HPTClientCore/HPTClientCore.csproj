@@ -45,9 +45,9 @@
   <PropertyGroup>
     <ManifestCertificateThumbprint>3355D5589AEBC7D67C91BC34AD3394093046DB16</ManifestCertificateThumbprint>
   </PropertyGroup>
-  <PropertyGroup>
+  <!--<PropertyGroup>
     <ManifestKeyFile>HPTClient_3_TemporaryKey.pfx</ManifestKeyFile>
-  </PropertyGroup>
+  </PropertyGroup>-->
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
@@ -58,14 +58,20 @@
     <ApplicationIcon>Icons\HPT.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>False</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>HPTCert2025.pfx</AssemblyOriginatorKeyFile>
+    <!--<AssemblyOriginatorKeyFile>HPTCert2025.pfx</AssemblyOriginatorKeyFile>-->
     <StartupObject>HPTClient.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="HelperClasses\ATGDownloaderToHPTHelper.cs" />
     <Compile Remove="Program.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="ATGImages\V85Small.png" />
+    <None Remove="ATGImages\V85XSmall.png" />
+    <None Remove="GitHub.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Update="System.Core">
@@ -170,7 +176,9 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="ATGImages\V85XSmall.png" />
     <Resource Include="ATGLogga.gif" />
+    <Resource Include="GitHub.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\delete_16x.ico" />
@@ -240,6 +248,9 @@
       <ProductName>Windows Installer 4.5</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ATGImages\V85Small.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="ImagesSmall\Facebook.png" />
@@ -343,8 +354,5 @@
     <PackageReference Include="CoreWCF.NetTcp" Version="1.8.0" />
     <PackageReference Include="System.IO.Compression" Version="4.3.0" />
     <PackageReference Include="System.IO.Compression.ZipFile" Version="4.3.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\ATGHelper\ATGDownloader\ATGDownloader.csproj" />
   </ItemGroup>
 </Project>

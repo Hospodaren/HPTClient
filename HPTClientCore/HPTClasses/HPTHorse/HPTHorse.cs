@@ -92,6 +92,7 @@ namespace HPTClient
             {
                 case "V65":
                 case "V75":
+                case "V85":
                 case "GS75":
                 case "V86":
                 case "V64":

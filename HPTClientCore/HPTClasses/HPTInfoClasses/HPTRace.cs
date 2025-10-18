@@ -63,6 +63,7 @@ namespace HPTClient
                         case "V64":
                         case "V65":
                         case "V75":
+                        case "V85":
                         case "GS75":
                         case "V86":
                             break;
@@ -994,6 +995,7 @@ namespace HPTClient
                 case "V65":
                 case "V75":
                 case "GS75":
+                case "V85":
                 case "V86":
                     decimal shareSum = this.HorseList.Sum(h => h.StakeDistributionShare);
                     decimal shareSumWithoutScratchings = this.HorseList.Where(h => h.Scratched != true).Sum(h => h.StakeDistributionShare);

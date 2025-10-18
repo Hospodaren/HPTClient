@@ -1142,7 +1142,13 @@ namespace HPTClient
                         this.reductionRuleToTest.NumberOfOneError = this.numberOfCorrectDictionary.Values.ElementAt(1);
                         if (this.numberOfCorrectDictionary.Count > 2)
                         {
+                            // TODO: V85
                             this.reductionRuleToTest.NumberOfTwoErrors = this.numberOfCorrectDictionary.Values.ElementAt(2);
+                            if (this.numberOfCorrectDictionary.Count > 3)
+                            {
+                                // TODO: V85
+                                this.reductionRuleToTest.NumberOfThreeErrors = this.numberOfCorrectDictionary.Values.ElementAt(3);
+                            }
                         }
                     }
                 }

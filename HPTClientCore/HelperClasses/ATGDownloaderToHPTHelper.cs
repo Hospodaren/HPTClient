@@ -124,9 +124,9 @@ namespace HPTClient
 
             // Info som behövs för visning i kalendern
             hptRdi.RaceDayDate = gameInfoBase.ScheduledStartTime;
-            hptRdi.TrackId = gameInfoBase.BetTrack.TrackId;
+            //hptRdi.TrackId = gameInfoBase.BetTrack.TrackId;
             //hptRdi.Trackcode = gameInfoBase.SharedInfo.Trackcode;
-            hptRdi.Trackname = gameInfoBase.BetTrack.TrackName;
+            //hptRdi.Trackname = gameInfoBase.BetTrack.TrackName;
             //hptRdi.TrackCondition = gameInfoBase.SharedInfo.TrackCondition;
             hptRdi.Turnover = Convert.ToInt32(gameInfo.Turnover / 10M);
 

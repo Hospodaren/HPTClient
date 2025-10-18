@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Diagnostics;
+using System.Linq;
 using System.Windows.Documents;
 using System.Windows.Navigation;
 
@@ -22,8 +23,19 @@ namespace HPTClient
         private void hlVPOnAtgSe_RequestNavigate(object sender, RequestNavigateEventArgs e)
         {
             var hl = (Hyperlink)e.OriginalSource;
-            System.Diagnostics.Process.Start(hl.NavigateUri.ToString());
+            GoToUrl(hl.NavigateUri.OriginalString);
+            //System.Diagnostics.Process.Start(hl.NavigateUri.ToString());
             e.Handled = true;
+        }
+
+        private void GoToUrl(string url)
+        {
+            var psi = new ProcessStartInfo
+            {
+                FileName = url,
+                UseShellExecute = true
+            };
+            Process.Start(psi);
         }
     }
 }
