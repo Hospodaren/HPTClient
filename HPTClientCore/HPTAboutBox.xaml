@@ -27,8 +27,8 @@
                 <TextBlock Name="tbHPT" Text="Hjälp på Traven!" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Black" FontSize="32" FontWeight="Bold" />
                 
                 <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="2" HorizontalAlignment="Center">
-                    <Hyperlink x:Name="hlHomePage" NavigateUri="http://www.hpt.nu" Click="hlHomePage_Click">
-                        <TextBlock Text="Hemsida: http://www.hpt.nu" FontSize="16"/>
+                    <Hyperlink x:Name="hlHomePage" NavigateUri="https://www.hpt.nu" Click="hlHomePage_Click">
+                        <TextBlock Text="Hemsida: https://www.hpt.nu" FontSize="16"/>
                     </Hyperlink>
                 </TextBlock>
                 
@@ -40,7 +40,7 @@
                 
                 <Button x:Name="btnClose" Content="Stäng" TextBlock.FontWeight="Black"  Margin="5" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Click="btnClose_Click" HorizontalAlignment="Right" Width="50" Height="25"/>
 
-                <TextBlock Text="Version 5.33" Grid.Row="3" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Text="Version 6.0.rc1" Grid.Row="3" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
                 <TextBlock Name="tbATGInfo" FontStyle="Italic"
                            Text="All information i Hjälp på traven tillhandahålls enligt samarbetsavtal med ATG. Samtliga rättigheter i materialet (upphovsrätt och databasrätt) tillhör ATG och får användas av annan endast efter avtal med ATG." 

@@ -892,7 +892,7 @@ namespace HPTClient
                     }
                 }
                 this.icWorstCaseScenario.ItemsSource = this.MarkBet.BetType.PayOutDummyList;
-                BindingOperations.GetBindingExpression(this.icWorstCaseScenario, ItemsControl.ItemsSourceProperty).UpdateTarget();
+                BindingOperations.GetBindingExpression(this.icWorstCaseScenario, ItemsControl.ItemsSourceProperty)?.UpdateTarget();
             }
             catch (Exception)
             {
