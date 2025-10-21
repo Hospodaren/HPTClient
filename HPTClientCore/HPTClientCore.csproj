@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <AssemblyName>HPTrav5</AssemblyName>
+    <AssemblyName>HPTrav6</AssemblyName>
     <IsWebBootstrapper>true</IsWebBootstrapper>
     <SccProjectName>
     </SccProjectName>
