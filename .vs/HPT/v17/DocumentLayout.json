@@ -3,8 +3,27 @@
   "WorkspaceRootPath": "C:\\Users\\johan\\source\\repos\\HPTClient\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{00000000-0000-0000-0000-000000000000}|\u003CSolution\u003E|HPTClient||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A694C247-97CF-3243-9EA1-098F13D9C818}|HPTClientCore\\HPTClientCore.csproj|c:\\users\\johan\\source\\repos\\hptclient\\hptclientcore\\atg_filebetting_1_8_6.xsd||{DEE6CEF9-3BCA-449A-82A6-FC757D6956FB}|",
+      "RelativeMoniker": "D:0:0:{A694C247-97CF-3243-9EA1-098F13D9C818}|HPTClientCore\\HPTClientCore.csproj|solutionrelative:hptclientcore\\atg_filebetting_1_8_6.xsd||{DEE6CEF9-3BCA-449A-82A6-FC757D6956FB}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A694C247-97CF-3243-9EA1-098F13D9C818}|HPTClientCore\\HPTClientCore.csproj|c:\\users\\johan\\source\\repos\\hptclient\\hptclientcore\\hptclasses\\hptresultclasses\\atgcouponhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A694C247-97CF-3243-9EA1-098F13D9C818}|HPTClientCore\\HPTClientCore.csproj|solutionrelative:hptclientcore\\hptclasses\\hptresultclasses\\atgcouponhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A694C247-97CF-3243-9EA1-098F13D9C818}|HPTClientCore\\HPTClientCore.csproj|c:\\users\\johan\\source\\repos\\hptclient\\hptclientcore\\atg_filebetting_1_8_6.xsd||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{A694C247-97CF-3243-9EA1-098F13D9C818}|HPTClientCore\\HPTClientCore.csproj|solutionrelative:hptclientcore\\atg_filebetting_1_8_6.xsd||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A694C247-97CF-3243-9EA1-098F13D9C818}|HPTClientCore\\HPTClientCore.csproj|c:\\users\\johan\\source\\repos\\hptclient\\hptclientcore\\helperclasses\\hptserviceconnector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A694C247-97CF-3243-9EA1-098F13D9C818}|HPTClientCore\\HPTClientCore.csproj|solutionrelative:hptclientcore\\helperclasses\\hptserviceconnector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A694C247-97CF-3243-9EA1-098F13D9C818}|HPTClientCore\\HPTClientCore.csproj|c:\\users\\johan\\source\\repos\\hptclient\\hptclientcore\\hptclientcore.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{A694C247-97CF-3243-9EA1-098F13D9C818}|HPTClientCore\\HPTClientCore.csproj|solutionrelative:hptclientcore\\hptclientcore.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A694C247-97CF-3243-9EA1-098F13D9C818}|HPTClientCore\\HPTClientCore.csproj|c:\\users\\johan\\source\\repos\\hptclient\\hptclientcore\\atgimages\\v85small.png||{177559E0-D141-11D0-92DF-00A0C9138C45}",
@@ -13,13 +32,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{A694C247-97CF-3243-9EA1-098F13D9C818}|HPTClientCore\\HPTClientCore.csproj|c:\\users\\johan\\source\\repos\\hptclient\\hptclientcore\\atgcalendar.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A694C247-97CF-3243-9EA1-098F13D9C818}|HPTClientCore\\HPTClientCore.csproj|solutionrelative:hptclientcore\\atgcalendar.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{00000000-0000-0000-0000-000000000000}|\u003CSolution\u003E|HPTClient||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A694C247-97CF-3243-9EA1-098F13D9C818}|HPTClientCore\\HPTClientCore.csproj|c:\\users\\johan\\source\\repos\\hptclient\\hptclientcore\\hptclientcore.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{A694C247-97CF-3243-9EA1-098F13D9C818}|HPTClientCore\\HPTClientCore.csproj|solutionrelative:hptclientcore\\hptclientcore.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A694C247-97CF-3243-9EA1-098F13D9C818}|HPTClientCore\\HPTClientCore.csproj|c:\\users\\johan\\source\\repos\\hptclient\\hptclientcore\\hptclasses\\hpthorse\\hpthorse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -116,10 +128,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{A694C247-97CF-3243-9EA1-098F13D9C818}|HPTClientCore\\HPTClientCore.csproj|c:\\users\\johan\\source\\repos\\hptclient\\hptclientcore\\obj\\debug\\net9.0-windows\\atgcalendar.g.i.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A694C247-97CF-3243-9EA1-098F13D9C818}|HPTClientCore\\HPTClientCore.csproj|solutionrelative:hptclientcore\\obj\\debug\\net9.0-windows\\atgcalendar.g.i.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A694C247-97CF-3243-9EA1-098F13D9C818}|HPTClientCore\\HPTClientCore.csproj|c:\\users\\johan\\source\\repos\\hptclient\\hptclientcore\\hptclasses\\hptresultclasses\\atgcouponhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A694C247-97CF-3243-9EA1-098F13D9C818}|HPTClientCore\\HPTClientCore.csproj|solutionrelative:hptclientcore\\hptclasses\\hptresultclasses\\atgcouponhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A694C247-97CF-3243-9EA1-098F13D9C818}|HPTClientCore\\HPTClientCore.csproj|c:\\users\\johan\\source\\repos\\hptclient\\hptclientcore\\hptclasses\\hptresultclasses\\hptcouponcorrector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -219,11 +227,27 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 3,
           "Children": [
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 6,
+              "Title": "V85Small.png -  [English (United States)] - PNG [85x48, 32 bit, PNG]",
+              "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\ATGImages\\V85Small.png",
+              "RelativeDocumentMoniker": "HPTClientCore\\ATGImages\\V85Small.png",
+              "ToolTip": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\ATGImages\\V85Small.png -  [English (United States)] - PNG [85x48, 32 bit, PNG]",
+              "RelativeToolTip": "HPTClientCore\\ATGImages\\V85Small.png -  [English (United States)] - PNG [85x48, 32 bit, PNG]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2025-10-04T07:47:44.28Z",
+              "EditorCaption": " -  [English (United States)] - PNG [85x48, 32 bit, PNG]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
               "Title": "UCOwnInformationView.xaml",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UCOwnInformationView.xaml",
               "RelativeDocumentMoniker": "HPTClientCore\\UCOwnInformationView.xaml",
@@ -234,7 +258,31 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 0,
+              "Title": "HPTClient",
+              "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClient-GS75\\HPTClient.csproj",
+              "RelativeDocumentMoniker": "HPTClient-GS75\\HPTClient.csproj",
+              "ToolTip": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClient-GS75\\HPTClient.csproj",
+              "RelativeToolTip": "HPTClient-GS75\\HPTClient.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-10-05T14:18:31.271Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "ATGLinkCreator.cs",
+              "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\ATGLinkCreator.cs",
+              "RelativeDocumentMoniker": "HPTClientCore\\ATGLinkCreator.cs",
+              "ToolTip": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\ATGLinkCreator.cs",
+              "RelativeToolTip": "HPTClientCore\\ATGLinkCreator.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-18T12:49:06.35Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "HPTClientCore.csproj",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClientCore.csproj",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTClientCore.csproj",
@@ -247,43 +295,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "HPTClient",
-              "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClient-GS75\\HPTClient.csproj",
-              "RelativeDocumentMoniker": "HPTClient-GS75\\HPTClient.csproj",
-              "ToolTip": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClient-GS75\\HPTClient.csproj",
-              "RelativeToolTip": "HPTClient-GS75\\HPTClient.csproj",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2025-10-05T14:18:31.271Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "ATGLinkCreator.cs",
-              "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\ATGLinkCreator.cs",
-              "RelativeDocumentMoniker": "HPTClientCore\\ATGLinkCreator.cs",
-              "ToolTip": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\ATGLinkCreator.cs",
-              "RelativeToolTip": "HPTClientCore\\ATGLinkCreator.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-18T12:49:06.35Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "V85Small.png -  [English (United States)] - PNG [85x48, 32 bit, PNG]",
-              "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\ATGImages\\V85Small.png",
-              "RelativeDocumentMoniker": "HPTClientCore\\ATGImages\\V85Small.png",
-              "ToolTip": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\ATGImages\\V85Small.png -  [English (United States)] - PNG [85x48, 32 bit, PNG]",
-              "RelativeToolTip": "HPTClientCore\\ATGImages\\V85Small.png -  [English (United States)] - PNG [85x48, 32 bit, PNG]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
-              "WhenOpened": "2025-10-04T07:47:44.28Z",
-              "EditorCaption": " -  [English (United States)] - PNG [85x48, 32 bit, PNG]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 9,
               "Title": "UCCorrectionMarkingBet.xaml.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UserControls\\Correction\\UCCorrectionMarkingBet.xaml.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\UserControls\\Correction\\UCCorrectionMarkingBet.xaml.cs",
@@ -291,16 +303,11 @@
               "RelativeToolTip": "HPTClientCore\\UserControls\\Correction\\UCCorrectionMarkingBet.xaml.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAH4DAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-05T13:17:27.046Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+              "WhenOpened": "2025-10-05T13:17:27.046Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 10,
               "Title": "HPTAboutBox.xaml",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTAboutBox.xaml",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTAboutBox.xaml",
@@ -311,7 +318,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 12,
               "Title": "UCRaceView.xaml.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UserControls\\Races\\UCRaceView.xaml.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\UserControls\\Races\\UCRaceView.xaml.cs",
@@ -324,7 +331,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 11,
               "Title": "HPTClientCore",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClientCore.csproj",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTClientCore.csproj",
@@ -336,7 +343,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 15,
               "Title": "HPTHorseOwnInformation.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\HPTHorse\\HPTHorseOwnInformation.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTClasses\\HPTHorse\\HPTHorseOwnInformation.cs",
@@ -348,7 +355,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 25,
               "Title": "UCUserSystemUpload.g.i.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\obj\\Debug\\net9.0-windows\\UserControls\\UserData\\UCUserSystemUpload.g.i.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\obj\\Debug\\net9.0-windows\\UserControls\\UserData\\UCUserSystemUpload.g.i.cs",
@@ -360,7 +367,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 22,
               "Title": "UCUserSystemUpload.xaml.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UserControls\\UserData\\UCUserSystemUpload.xaml.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\UserControls\\UserData\\UCUserSystemUpload.xaml.cs",
@@ -372,7 +379,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 19,
               "Title": "UCMarksGame.xaml.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UserControls\\MarkingBetGeneral\\UCMarksGame.xaml.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\UserControls\\MarkingBetGeneral\\UCMarksGame.xaml.cs",
@@ -384,7 +391,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 21,
               "Title": "UCMarksGame.g.i.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\obj\\Debug\\net9.0-windows\\UserControls\\MarkingBetGeneral\\UCMarksGame.g.i.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\obj\\Debug\\net9.0-windows\\UserControls\\MarkingBetGeneral\\UCMarksGame.g.i.cs",
@@ -396,7 +403,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 26,
               "Title": "UCGUISettings.xaml",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UserControls\\Settings\\UCGUISettings.xaml",
               "RelativeDocumentMoniker": "HPTClientCore\\UserControls\\Settings\\UCGUISettings.xaml",
@@ -407,7 +414,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 28,
               "Title": "UCRacesTabControl.xaml.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UserControls\\Races\\UCRacesTabControl.xaml.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\UserControls\\Races\\UCRacesTabControl.xaml.cs",
@@ -419,7 +426,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 27,
               "Title": "UCResultView.xaml.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UserControls\\Races\\UCResultView.xaml.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\UserControls\\Races\\UCResultView.xaml.cs",
@@ -431,7 +438,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 38,
               "Title": "UCCalendarRaceDayInfoButton.xaml",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UCCalendarRaceDayInfoButton.xaml",
               "RelativeDocumentMoniker": "HPTClientCore\\UCCalendarRaceDayInfoButton.xaml",
@@ -442,7 +449,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 30,
               "Title": "ATGCalendar.xaml",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\ATGCalendar.xaml",
               "RelativeDocumentMoniker": "HPTClientCore\\ATGCalendar.xaml",
@@ -453,7 +460,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 34,
               "Title": "HPTReductionRule.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\HPTReductionRuleClasses\\HPTReductionRule.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTClasses\\HPTReductionRuleClasses\\HPTReductionRule.cs",
@@ -465,7 +472,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 32,
               "Title": "HPTCouponCorrector.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\HPTResultClasses\\HPTCouponCorrector.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTClasses\\HPTResultClasses\\HPTCouponCorrector.cs",
@@ -477,7 +484,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 33,
               "Title": "HPTMarkBetSingleRowCollection.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\HPTReductionClasses\\HPTMarkBetSingleRowCollection.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTClasses\\HPTReductionClasses\\HPTMarkBetSingleRowCollection.cs",
@@ -489,7 +496,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 35,
               "Title": "HPTCoupon.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\HPTResultClasses\\HPTCoupon.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTClasses\\HPTResultClasses\\HPTCoupon.cs",
@@ -501,7 +508,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 41,
               "Title": "V86XSmall.png -  [English (United States)] - PNG [37x16, 24 bit, PNG]",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\ATGImages\\V86XSmall.png",
               "RelativeDocumentMoniker": "HPTClientCore\\ATGImages\\V86XSmall.png",
@@ -513,7 +520,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 42,
               "Title": "V75Small.png -  [English (United States)] - PNG [110x48, 24 bit, PNG]",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\ATGImages\\V75Small.png",
               "RelativeDocumentMoniker": "HPTClientCore\\ATGImages\\V75Small.png",
@@ -525,7 +532,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 43,
               "Title": "V75XSmall.png -  [English (United States)] - PNG [37x16, 24 bit, PNG]",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\ATGImages\\V75XSmall.png",
               "RelativeDocumentMoniker": "HPTClientCore\\ATGImages\\V75XSmall.png",
@@ -537,7 +544,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 46,
               "Title": "atg_filebetting_1_8_6.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\atg_filebetting_1_8_6.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\atg_filebetting_1_8_6.cs",
@@ -549,7 +556,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 45,
               "Title": "ATGXmlFile.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\HPTResultClasses\\ATGXmlFile.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTClasses\\HPTResultClasses\\ATGXmlFile.cs",
@@ -561,7 +568,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 45,
+              "DocumentIndex": 47,
               "Title": "Microsoft.Common.CurrentVersion.targets",
               "DocumentMoniker": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
@@ -575,36 +582,36 @@
         },
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "HPTSplash.png -  [English (United States)] - PNG [488x244, 32 bit, PNG]",
-              "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTSplash.png",
-              "RelativeDocumentMoniker": "HPTClientCore\\HPTSplash.png",
-              "ToolTip": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTSplash.png -  [English (United States)] - PNG [488x244, 32 bit, PNG]",
-              "RelativeToolTip": "HPTClientCore\\HPTSplash.png -  [English (United States)] - PNG [488x244, 32 bit, PNG]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
-              "WhenOpened": "2025-10-18T13:32:23.602Z",
-              "EditorCaption": " -  [English (United States)] - PNG [488x244, 32 bit, PNG]"
+              "DocumentIndex": 1,
+              "Title": "atg_filebetting_1_8_6.xsd [Design]",
+              "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\atg_filebetting_1_8_6.xsd",
+              "RelativeDocumentMoniker": "HPTClientCore\\atg_filebetting_1_8_6.xsd",
+              "ToolTip": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\atg_filebetting_1_8_6.xsd [Design]",
+              "RelativeToolTip": "HPTClientCore\\atg_filebetting_1_8_6.xsd [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003579|",
+              "WhenOpened": "2025-10-25T12:42:41.931Z",
+              "EditorCaption": " [Design]"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
               "Title": "HPTServiceConnector.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HelperClasses\\HPTServiceConnector.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HelperClasses\\HPTServiceConnector.cs",
               "ToolTip": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HelperClasses\\HPTServiceConnector.cs",
               "RelativeToolTip": "HPTClientCore\\HelperClasses\\HPTServiceConnector.cs",
-              "ViewState": "AgIAAIsBAAAAAAAAAAAgwJABAAAfAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGkAAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-18T11:48:49.599Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 7,
               "Title": "ATGCalendar.xaml.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\ATGCalendar.xaml.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\ATGCalendar.xaml.cs",
@@ -617,7 +624,45 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 2,
+              "Title": "ATGCouponHelper.cs",
+              "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\HPTResultClasses\\ATGCouponHelper.cs",
+              "RelativeDocumentMoniker": "HPTClientCore\\HPTClasses\\HPTResultClasses\\ATGCouponHelper.cs",
+              "ToolTip": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\HPTResultClasses\\ATGCouponHelper.cs",
+              "RelativeToolTip": "HPTClientCore\\HPTClasses\\HPTResultClasses\\ATGCouponHelper.cs",
+              "ViewState": "AgIAAOQAAAAAAAAAAAAAAAYBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-30T17:13:09.468Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "atg_filebetting_1_8_6.xsd",
+              "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\atg_filebetting_1_8_6.xsd",
+              "RelativeDocumentMoniker": "HPTClientCore\\atg_filebetting_1_8_6.xsd",
+              "ToolTip": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\atg_filebetting_1_8_6.xsd",
+              "RelativeToolTip": "HPTClientCore\\atg_filebetting_1_8_6.xsd",
+              "ViewState": "AgIAABAAAAAAAAAAAAAnwCsAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003579|",
+              "WhenOpened": "2025-10-25T12:45:37.82Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "HPTSplash.png -  [English (United States)] - PNG [488x244, 32 bit, PNG]",
+              "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTSplash.png",
+              "RelativeDocumentMoniker": "HPTClientCore\\HPTSplash.png",
+              "ToolTip": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTSplash.png -  [English (United States)] - PNG [488x244, 32 bit, PNG]",
+              "RelativeToolTip": "HPTClientCore\\HPTSplash.png -  [English (United States)] - PNG [488x244, 32 bit, PNG]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2025-10-18T13:32:23.602Z",
+              "EditorCaption": " -  [English (United States)] - PNG [488x244, 32 bit, PNG]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "HPTHorse.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\HPTHorse\\HPTHorse.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTClasses\\HPTHorse\\HPTHorse.cs",
@@ -625,12 +670,11 @@
               "RelativeToolTip": "HPTClientCore\\HPTClasses\\HPTHorse\\HPTHorse.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAALEDAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-30T17:01:02.829Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-30T17:01:02.829Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 14,
               "Title": "UCRaceView.xaml",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UserControls\\Races\\UCRaceView.xaml",
               "RelativeDocumentMoniker": "HPTClientCore\\UserControls\\Races\\UCRaceView.xaml",
@@ -641,7 +685,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 17,
               "Title": "UCOwnInformationView.xaml.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UCOwnInformationView.xaml.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\UCOwnInformationView.xaml.cs",
@@ -653,7 +697,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 20,
               "Title": "UCMarksGame.xaml",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UserControls\\MarkingBetGeneral\\UCMarksGame.xaml",
               "RelativeDocumentMoniker": "HPTClientCore\\UserControls\\MarkingBetGeneral\\UCMarksGame.xaml",
@@ -664,7 +708,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 23,
               "Title": "UCUserSystemUpload.xaml",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UserControls\\UserData\\UCUserSystemUpload.xaml",
               "RelativeDocumentMoniker": "HPTClientCore\\UserControls\\UserData\\UCUserSystemUpload.xaml",
@@ -675,7 +719,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 24,
               "Title": "UCHorseCommentView.xaml",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UserControls\\Horse\\UCHorseCommentView.xaml",
               "RelativeDocumentMoniker": "HPTClientCore\\UserControls\\Horse\\UCHorseCommentView.xaml",
@@ -686,7 +730,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 36,
               "Title": "HPTCombination.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\HPTInfoClasses\\HPTCombination.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTClasses\\HPTInfoClasses\\HPTCombination.cs",
@@ -698,7 +742,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 40,
               "Title": "V86Small.png -  [English (United States)] - PNG [110x48, 24 bit, PNG]",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\ATGImages\\V86Small.png",
               "RelativeDocumentMoniker": "HPTClientCore\\ATGImages\\V86Small.png",
@@ -711,18 +755,6 @@
             {
               "$type": "Document",
               "DocumentIndex": 29,
-              "Title": "ATGCouponHelper.cs",
-              "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\HPTResultClasses\\ATGCouponHelper.cs",
-              "RelativeDocumentMoniker": "HPTClientCore\\HPTClasses\\HPTResultClasses\\ATGCouponHelper.cs",
-              "ToolTip": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\HPTResultClasses\\ATGCouponHelper.cs",
-              "RelativeToolTip": "HPTClientCore\\HPTClasses\\HPTResultClasses\\ATGCouponHelper.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAwAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-30T17:13:09.468Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 26,
               "Title": "HPTAboutBox.xaml.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTAboutBox.xaml.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTAboutBox.xaml.cs",
@@ -734,7 +766,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 31,
               "Title": "ATGCalendar.g.i.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\obj\\Debug\\net9.0-windows\\ATGCalendar.g.i.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\obj\\Debug\\net9.0-windows\\ATGCalendar.g.i.cs",
@@ -746,7 +778,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 37,
               "Title": "HPTBetType.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\HPTInfoClasses\\HPTBetType.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTClasses\\HPTInfoClasses\\HPTBetType.cs",
@@ -758,7 +790,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 39,
               "Title": "HPTRaceDayInfo.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\HPTInfoClasses\\HPTRaceDayInfo.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTClasses\\HPTInfoClasses\\HPTRaceDayInfo.cs",
@@ -770,7 +802,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 48,
               "Title": "UCCalendarSettings.xaml",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UserControls\\Settings\\UCCalendarSettings.xaml",
               "RelativeDocumentMoniker": "HPTClientCore\\UserControls\\Settings\\UCCalendarSettings.xaml",
@@ -781,7 +813,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 44,
               "Title": "HPTMarkBetTemplateGroupInterval.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\HPTReductionClasses\\HPTMarkBetTemplateGroupInterval.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTClasses\\HPTReductionClasses\\HPTMarkBetTemplateGroupInterval.cs",
@@ -793,7 +825,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 48,
+              "DocumentIndex": 50,
               "Title": "HPTMarkBet.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\HPTReductionClasses\\HPTMarkBet.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTClasses\\HPTReductionClasses\\HPTMarkBet.cs",
@@ -805,7 +837,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 47,
+              "DocumentIndex": 49,
               "Title": "ATGDriverInformation.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\ATGDriverInformation.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\ATGDriverInformation.cs",
@@ -817,7 +849,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 49,
+              "DocumentIndex": 51,
               "Title": "HPTRace.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\HPTInfoClasses\\HPTRace.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTClasses\\HPTInfoClasses\\HPTRace.cs",
@@ -829,7 +861,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 50,
+              "DocumentIndex": 52,
               "Title": "PublicEnums.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HelperClasses\\PublicEnums.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HelperClasses\\PublicEnums.cs",
@@ -841,7 +873,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 51,
+              "DocumentIndex": 53,
               "Title": "HPTServiceToHPTHelper.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HelperClasses\\HPTServiceToHPTHelper.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HelperClasses\\HPTServiceToHPTHelper.cs",

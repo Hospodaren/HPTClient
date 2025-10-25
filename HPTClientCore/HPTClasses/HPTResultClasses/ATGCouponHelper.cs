@@ -261,6 +261,7 @@ namespace HPTClient
                         betmultiplier = hc.BetMultiplier.ToString(),
                         couponid = hc.CouponIdFile.ToString(),
                         date = hc.Date,
+                        trackcode = hc.TrackCode,
                         leg = ConvertRaceListToLegArray(hc.CouponRaceList)
                     }).ToArray();
                     break;
