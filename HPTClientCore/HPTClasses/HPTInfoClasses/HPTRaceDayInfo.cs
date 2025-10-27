@@ -83,6 +83,7 @@ namespace HPTClient
                         case BetTypeCategory.V6X:
                         case BetTypeCategory.V75:
                         case BetTypeCategory.V86:
+                        case BetTypeCategory.V85:
                         case BetTypeCategory.Double:
                             hptRace = this.RaceList.Where(hr => hr.LegNr == race.LegNr).FirstOrDefault();
                             break;

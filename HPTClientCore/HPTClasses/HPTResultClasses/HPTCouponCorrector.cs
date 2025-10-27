@@ -87,6 +87,7 @@ namespace HPTClient
                 this.CouponHelper.TotalNumberOfAllCorrect += coupon.NumberOfAllCorrect * coupon.BetMultiplier;
                 this.CouponHelper.TotalNumberOfOneError += coupon.NumberOfOneError * coupon.BetMultiplier;
                 this.CouponHelper.TotalNumberOfTwoErrors += coupon.NumberOfTwoErrors * coupon.BetMultiplier;
+                this.CouponHelper.TotalNumberOfThreeErrors += coupon.NumberOfThreeErrors * coupon.BetMultiplier;
                 if (this.RaceDayInfo.ResultComplete && racesToCorrect == this.RaceDayInfo.RaceList.Count)
                 {
                     this.CouponHelper.TotalWinnings += this.RaceDayInfo.PayOutList[0].PayOutAmount * coupon.NumberOfAllCorrect * coupon.BetMultiplier;
@@ -120,7 +121,7 @@ namespace HPTClient
 
                             this.CouponHelper.TotalWinnings += this.RaceDayInfo.PayOutList[1].PayOutAmount * coupon.NumberOfOneError * coupon.BetMultiplier;
                             this.CouponHelper.TotalWinnings += this.RaceDayInfo.PayOutList[2].PayOutAmount * coupon.NumberOfTwoErrors * coupon.BetMultiplier;
-                            //this.CouponHelper.TotalWinnings += this.RaceDayInfo.PayOutList[3].PayOutAmount * coupon.NumberOfTh * coupon.BetMultiplier;    // TODO
+                            this.CouponHelper.TotalWinnings += this.RaceDayInfo.PayOutList[3].PayOutAmount * coupon.NumberOfThreeErrors * coupon.BetMultiplier;
                             break;
                         case "V4":
                         case "V5":
@@ -175,7 +176,7 @@ namespace HPTClient
                     case "V85":
                         this.RaceDayInfo.PayOutList[1].NumberOfWinningRows = this.CouponHelper.TotalNumberOfOneError;
                         this.RaceDayInfo.PayOutList[2].NumberOfWinningRows = this.CouponHelper.TotalNumberOfTwoErrors;
-                        //this.RaceDayInfo.PayOutList[3].NumberOfWinningRows = this.CouponHelper.TotalNumberOfth; // TODO
+                        this.RaceDayInfo.PayOutList[3].NumberOfWinningRows = this.CouponHelper.TotalNumberOfThreeErrors; // TODO
                         break;
                     case "V4":
                     case "V5":

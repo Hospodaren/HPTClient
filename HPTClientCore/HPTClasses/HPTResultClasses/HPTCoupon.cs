@@ -169,6 +169,21 @@ namespace HPTClient
             }
         }
 
+        private int numberOfThreeErrors;
+        [DataMember]
+        public int NumberOfThreeErrors
+        {
+            get
+            {
+                return this.numberOfThreeErrors;
+            }
+            set
+            {
+                this.numberOfThreeErrors = value;
+                OnPropertyChanged("NumberOfThreeErrors");
+            }
+        }
+
         private int couponId;
         [DataMember]
         public int CouponId
@@ -318,6 +333,20 @@ namespace HPTClient
                             break;
                     }
                 }   // TODO
+                else if (this.NumberOfThreeErrors > 0 && !this.V6)
+                {
+                    switch (this.BetType)
+                    {
+                        case "V85":
+                            c = HPTConfig.Config.ColorMedium;
+                            this.CanWin = true;
+                            break;
+                        default:
+                            c = HPTConfig.Config.ColorBad;
+                            this.CanWin = false;
+                            break;
+                    }
+                }
                 else
                 {
                     c = HPTConfig.Config.ColorBad;
@@ -440,6 +469,7 @@ namespace HPTClient
                     this.NumberOfAllCorrect += numberOfErrors == 0 ? 1 : 0;
                     this.NumberOfOneError += numberOfErrors == 1 ? 1 : 0;
                     this.NumberOfTwoErrors += numberOfErrors == 2 ? 1 : 0;
+                    this.NumberOfThreeErrors += numberOfErrors == 3 ? 1 : 0;
                 }
                 else
                 {
