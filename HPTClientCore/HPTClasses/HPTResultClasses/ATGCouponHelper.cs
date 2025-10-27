@@ -1002,7 +1002,21 @@ namespace HPTClient
             }
         }
 
-        //public int TotalNumberOfTwoErrors { get; set; }
+        //public int totalNumberOfThreeErrors { get; set; }
+
+        private int totalNumberOfThreeErrors;
+        public int TotalNumberOfThreeErrors
+        {
+            get
+            {
+                return this.totalNumberOfThreeErrors;
+            }
+            set 
+            { 
+                this.totalNumberOfThreeErrors = value;
+                OnPropertyChanged("TotalNumberOfThreeErrors ");
+            }
+        }
 
         private int totalWinnings;
         public int TotalWinnings

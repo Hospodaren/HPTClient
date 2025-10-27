@@ -109,6 +109,7 @@ namespace HPTClient
                         this.NumberOfRaces = 7;
                         break;
                     case BetTypeCategory.V86:
+                    case BetTypeCategory.V85:
                         this.NumberOfRaces = 8;
                         break;
                     case BetTypeCategory.Double:

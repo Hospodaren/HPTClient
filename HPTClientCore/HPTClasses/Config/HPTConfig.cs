@@ -2309,7 +2309,7 @@ namespace HPTClient
             {
                 if (this.betTypeCategoryList == null)
                 {
-                    this.betTypeCategoryList = new BetTypeCategory[] { BetTypeCategory.V4, BetTypeCategory.V5, BetTypeCategory.V6X, BetTypeCategory.V75, BetTypeCategory.V75, BetTypeCategory.V86 };
+                    this.betTypeCategoryList = new BetTypeCategory[] { BetTypeCategory.V4, BetTypeCategory.V5, BetTypeCategory.V6X, BetTypeCategory.V75, BetTypeCategory.V75, BetTypeCategory.V86, BetTypeCategory.V85 };
                 }
                 return this.betTypeCategoryList;
             }
