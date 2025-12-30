@@ -50,7 +50,7 @@ namespace HPTClient
             string fileName = this.CombBet.SaveDirectory + this.CombBet.ToFileNameString();
             this.CombBet.SystemFilename = fileName + ".xml";
 
-            HPTSerializer.SerializeHPTCombinationSystem(this.CombBet.SaveDirectory + this.CombBet.ToFileNameString(race, this.CombinationListInfo) + ".hpt5", this.CombBet);
+            HPTSerializer.SerializeHPTCombinationSystem(this.CombBet.SaveDirectory + this.CombBet.ToFileNameString(race, this.CombinationListInfo) + ".hpt7", this.CombBet);
             ATGCouponHelper couponHelper = new ATGCouponHelper(this.CombBet);
             couponHelper.CreateCombinationCoupons(this.CombinationListInfo);
         }
@@ -96,7 +96,7 @@ namespace HPTClient
                     this.CombBet.SystemFilename = fileName;
                     ATGCouponHelper couponHelper = new ATGCouponHelper(this.CombBet);
                     couponHelper.CreateCombinationCoupons(this.CombinationListInfo);
-                    HPTSerializer.SerializeHPTCombinationSystem(fileName.Replace(".xml", ".hpt5"), this.CombBet);
+                    HPTSerializer.SerializeHPTCombinationSystem(fileName.Replace(".xml", ".hpt7"), this.CombBet);
                 }
                 catch (Exception exc)
                 {

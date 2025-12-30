@@ -571,7 +571,7 @@ namespace HPTClient
                         hptCalendar.RaceDayInfoList = new System.Collections.ObjectModel.ObservableCollection<HPTRaceDayInfo>(finalRaceDayInfoList);
 
                         hptCalendar.FromDate = DateTime.Now;
-                        hptCalendar.FromDateString = hptCalendar.FromDate.ToString("yyyy-MM-dd");
+                        //hptCalendar.FromDateString = hptCalendar.FromDate.ToString("yyyy-MM-dd");
                         if (hptCalendar.RaceDayInfoList.Count == 0)
                         {
                             return null;

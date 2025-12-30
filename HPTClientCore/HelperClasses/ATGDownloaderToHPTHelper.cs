@@ -1,107 +1,54 @@
 ﻿using ATGDownloader;
+using HPTClient.HPTService;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Text.RegularExpressions;
+using Xceed.Wpf.Toolkit.Core.Converters;
+using AD = ATGDownloader.ATG;
 
 namespace HPTClient
 {
     public class ATGDownloaderToHPTHelper
     {
-        public static void CreateCalendar(byte[] baCalendar, HPTCalendar hptCalendar)
+        public static void UpdateCalendar(HPTCalendar hptCalendar)
         {
-            DateTime dtStart = DateTime.Now;
             try
             {
-                HPTService.HPTCalendar calendar = HPTSerializer.DeserializeHPTCalendar(baCalendar);
-                HPTServiceToHPTHelper.ConvertCalendar(calendar, hptCalendar);
-
-                if (hptCalendar.RaceDayInfoList == null)
+                DateTime startDate = DateTime.Today.AddDays(-6);
+                DateTime endDate = DateTime.Today.AddDays(6);
+                if (hptCalendar.RaceDayInfoList.Any())
                 {
-                    hptCalendar.RaceDayInfoList = new ObservableCollection<HPTRaceDayInfo>();
+                    startDate = hptCalendar.RaceDayInfoList.Max(rdi => rdi.RaceDayDate.Date);
                 }
-                else if (hptCalendar.RaceDayInfoList.Count > 0)
-                {
-                    hptCalendar.RaceDayInfoList = new ObservableCollection<HPTRaceDayInfo>();
-                }
+                var availableRaceDayDates = hptCalendar.RaceDayInfoList
+                    .Select(rdi => rdi.RaceDayDate.Date)
+                    .Distinct();
 
-                // Kommande tävlingar
-                var orderedList = calendar.HPTRaceDayInfoList
-                    .Where(rdi => rdi.SharedInfo.RaceDayDate.Date >= DateTime.Today)
-                    .OrderBy(rdi => rdi.SharedInfo.FirstRaceStartTime);
-
-                foreach (HPTService.HPTRaceDayInfo rdi in orderedList)
+                while (startDate < endDate)
                 {
-                    try
+                    if (!availableRaceDayDates.Contains(startDate))
                     {
-                        HPTRaceDayInfo hptRdi = new HPTRaceDayInfo();
-                        HPTServiceToHPTHelper.ConvertCalendarRaceDayInfo(rdi, hptRdi);
-                        if (hptRdi.BetTypeList.Count > 0)
+                        var atgCalendar = ATGObjectGetter.GetCalendar(startDate);
+                        atgCalendar.RaceDayList.ToList().ForEach(rd =>
                         {
-                            hptRdi.ShowInUI = true;
-                            hptCalendar.RaceDayInfoList.Add(hptRdi);
-                        }
+                            var raceDayInfo = CreateCalendarRaceDayInfo(rd);
+                            if (raceDayInfo.BetTypeList.Any())
+                            {
+                                raceDayInfo.ShowInUI = true;
+                                hptCalendar.RaceDayInfoList.Add(raceDayInfo);
+                            }
+                        });
                     }
-                    catch (Exception exc)
-                    {
-                        string s = exc.Message;
-                    }
+                    startDate = startDate.AddDays(1);
                 }
-
-                // Tidigare tävlingar
-                var orderedListOld = calendar.HPTRaceDayInfoList
-                    .Where(rdi => rdi.SharedInfo.RaceDayDate.Date < DateTime.Today)
-                    .OrderByDescending(rdi => rdi.SharedInfo.FirstRaceStartTime);
-
-                foreach (HPTService.HPTRaceDayInfo rdi in orderedListOld)
-                {
-                    try
-                    {
-                        HPTRaceDayInfo hptRdi = new HPTRaceDayInfo();
-                        HPTServiceToHPTHelper.ConvertCalendarRaceDayInfo(rdi, hptRdi);
-                        if (hptRdi.BetTypeList.Count > 0)
-                        {
-                            hptCalendar.RaceDayInfoList.Insert(0, hptRdi);
-                        }
-                    }
-                    catch (Exception exc)
-                    {
-                        string s = exc.Message;
-                    }
-                }
-
-                // Skapa lista med de tävlingar man ska kunna ladda ner systemförslag för
-                var markBetSystemList = hptCalendar.RaceDayInfoList
-                    .Where(hptRdi => hptRdi.RaceDayDate < DateTime.Now.AddDays(6D) && hptRdi.RaceDayDate > DateTime.Now.AddDays(-3D));
-
-                foreach (var markBet in markBetSystemList)
-                {
-                    var betTypeList = markBet.BetTypeList
-                        .Where(bt => bt.Code.StartsWith("V"))
-                        .Select(bt => new HPTRaceDayInfoLight()
-                        {
-                            BetTypeCode = bt.Code,
-                            RaceDayDate = markBet.RaceDayDate,
-                            TrackId = markBet.TrackId,
-                            TrackName = markBet.Trackname,
-                            NumberOfUploadedSystems = bt.NumberOfUploadedSystems
-                        }).OrderBy(hptRdi => hptRdi.RaceDayDate);
-
-                    foreach (var raceDayInfoLight in betTypeList)
-                    {
-                        HPTConfig.Config.MarkBetSystemList.Add(raceDayInfoLight);
-                    }
-                }
-
-                // Sätt sökväg och spara ner kalender på disk
-                string calendarPath = HPTConfig.MyDocumentsPath + "\\HPTCalendar.hptcal";
-
-                TimeSpan ts = DateTime.Now - dtStart;
-                string time = ts.TotalMilliseconds.ToString();
+                hptCalendar.FromDate = startDate;
+                hptCalendar.ToDate = endDate;
             }
             catch (Exception exc)
             {
@@ -110,124 +57,99 @@ namespace HPTClient
             }
         }
 
-        public static void ConvertCalendar(HPTService.HPTCalendar calendar, HPTCalendar hptCalendar)
+        public static HPTRaceDayInfo CreateCalendarRaceDayInfo(AD.ATGRaceDay raceDay)
         {
-            hptCalendar.FromDate = calendar.FromDate;
-            hptCalendar.FromDateString = hptCalendar.FromDate.ToString("yyyy-MM-dd");
-            hptCalendar.ToDate = calendar.ToDate;
-            hptCalendar.ToDateString = hptCalendar.ToDate.ToString("yyyy-MM-dd");
-        }
-
-        public static void ConvertCalendarRaceDayInfo(ATGGameBase gameInfo, HPTRaceDayInfo hptRdi)
-        {
-            var gameInfoBase = gameInfo.GameInfo;
-
-            // Info som behövs för visning i kalendern
-            hptRdi.RaceDayDate = gameInfoBase.ScheduledStartTime;
-            //hptRdi.TrackId = gameInfoBase.BetTrack.TrackId;
-            //hptRdi.Trackcode = gameInfoBase.SharedInfo.Trackcode;
-            //hptRdi.Trackname = gameInfoBase.BetTrack.TrackName;
-            //hptRdi.TrackCondition = gameInfoBase.SharedInfo.TrackCondition;
-            hptRdi.Turnover = Convert.ToInt32(gameInfo.Turnover / 10M);
-
-            // Lista med alla tillgägnliga speltyper
-            hptRdi.BetTypeList = new List<HPTBetType>();
-            //if (gameInfoBase.SharedInfo.BetTypeList != null)
-            //{
-            //    foreach (HPTService.HPTBetType bt in gameInfoBase.SharedInfo.BetTypeList)
-            //    {
-            //        var hptBt = new HPTBetType()
-            //        {
-            //            Code = bt.Code,
-            //            Name = bt.Name,
-            //            NumberOfUploadedSystems = bt.NumberOfUploadedSystems,
-            //            Jackpot = bt.Jackpot,
-            //            StartTime = bt.StartTime,
-            //            EndTime = bt.EndTime,
-            //            IsEnabled = true,
-            //            TrackId = hptRdi.TrackId,
-            //            CalendarRaceDayInfo = hptRdi
-            //        };
-            //        hptRdi.BetTypeList.Add(hptBt);
-            //    }
-            //}
-        }
-
-        public static void ConvertRaceDayInfo(ATGGameBase gameInfo, HPTRaceDayInfo hptRdi)
-        {
-            // Typ av spel
-            hptRdi.BetType = new HPTBetType()
+            var hptRdi = new HPTRaceDayInfo()
             {
-                Code = gameInfo.GameInfo.Code,
-                Name = gameInfo.GameInfo.Code   // Ska vara långt namn (Dagens Dubbel osv)
+                // Info som behövs för visning i kalendern
+                RaceDayDate = raceDay.StartTime.Date,
+                TrackId = raceDay.Track.TrackId,
+                //Trackcode = gameInfoBase.BetTrack.Trackcode;   // TODO: Ta bort TrackCode?
+                Trackname = raceDay.Track.TrackName,
+                //TrackCondition = gameInfoBase.Races.First().c; // TODO: Skita i det här på annat än loppnivå?
+                BetTypeList = raceDay.GameList.Select(bt => new HPTBetType()
+                {
+                    Code = bt.Code,
+                    Name = bt.Code, // TODO: Ska vara det långa namnet, t ex "Dagens Dubbel"
+                    Jackpot = bt.JackpotAmount > 0, // TODO: Finns detta=
+                    StartTime = bt.StartTime,
+                    //EndTime = bt.EndTime, // TODO: Beräkna utifrån sista loppet?
+                    IsEnabled = true,
+                    TrackId = raceDay.Track.TrackId,
+                }).ToList()
+            };
+            hptRdi.BetTypeList.ForEach(bt => bt.CalendarRaceDayInfo = hptRdi);
+
+            return hptRdi;
+        }
+
+        public static HPTRaceDayInfo CreateRaceDayInfo(ATGGameBase gameBase)
+        {
+            var gameInfoBase = gameBase.GameInfo;
+            HPTRaceDayInfo hptRdi = new()
+            {
+                // Info som behövs för visning i kalendern
+                RaceDayDate = gameInfoBase.ScheduledStartTime,
+                TrackId = gameInfoBase.BetTrack.TrackId,
+                //hptRdi.Trackcode = gameInfoBase.BetTrack.Trackcode;   // TODO: Ta bort TrackCode?
+                Trackname = gameInfoBase.BetTrack.TrackName,
+                //hptRdi.TrackCondition = gameInfoBase.Races.First().c; // TODO: Skita i det här på annat än loppnivå?
+                Turnover = Convert.ToInt32(gameBase.Turnover / 10M),
+                Jackpot = gameInfoBase.JackpotAmount,
+                BetType = new HPTBetType()
+                {
+                    Code = gameBase.GameInfo.Code,
+                    Name = gameBase.GameInfo.Code   // Ska vara långt namn (Dagens Dubbel osv)
+                },
+                //MarksQuantity = rdi.MarksQuantity; // TODO: Finns inte, så ta bort?
+                RaceNumberList = gameBase.Races.Select(r => r.Number).ToList(),
+                RaceList = gameBase.Races.Select(r => CreateRace(r)).ToList(),
+
             };
 
-            // Jackpottsumma och antal streck
-            hptRdi.Jackpot = gameInfo.JackpotAmount;
-            //hptRdi.MarksQuantity = rdi.MarksQuantity; // Finns inte
+            //hptRdi.RaceList = new List<HPTRace>();
 
-            hptRdi.RaceDayDate = gameInfo.GameInfo.ScheduledStartTime;
-            if (gameInfo.Races!= null)
-            {
-                hptRdi.RaceNumberList = gameInfo.Races.Select(r => r.Number).ToList();
-            }
-            //else if (rdi.SharedInfo.RaceNumberInfoList != null)
+            //if (gameBase.Races != null)
             //{
-            //    hptRdi.RaceNumberList = rdi.SharedInfo.RaceNumberInfoList.Select(rni => rni.LegNumber).ToList();
+            //    try
+            //    {
+            //        foreach (HPTService.HPTRace race in rdi.LegList)
+            //        {
+            //            var hptRace = new HPTRace();
+            //            hptRace.ParentRaceDayInfo = hptRdi;
+            //            ConvertRace(race, hptRace);
+            //            hptRdi.RaceList.Add(hptRace);
+            //        }
+            //    }
+            //    catch (ArgumentException exc)   // Something wrong with legNr
+            //    {
+            //        string s = exc.Message;
+            //        hptRdi.RaceList = new List<HPTRace>();
+
+            //        for (int i = 0; i < rdi.LegList.Length; i++)
+            //        {
+            //            HPTService.HPTRace race = rdi.LegList[i];
+            //            HPTRace hptRace = new HPTRace();
+            //            hptRace.ParentRaceDayInfo = hptRdi;
+            //            ConvertRace(race, hptRace);
+            //            hptRace.LegNr = i + 1;
+            //            hptRdi.RaceList.Add(hptRace);
+            //            //hptRdi.MarksQuantity += race.MarksQuantity;
+            //        }
+            //    }
             //}
 
-            hptRdi.TrackId = gameInfo.GameInfo.BetTrack.TrackId;
-            //hptRdi.Trackcode = gameInfoBase.SharedInfo.Trackcode;
-            hptRdi.Trackname = gameInfo.GameInfo.BetTrack.TrackName;
-            hptRdi.Turnover = Convert.ToInt32(gameInfo.Turnover / 10M);
+            //// Hantera potterna för olika antal rätt
+            //CreatePayOutLists(rdi, hptRdi);
+            //if (hptRdi.PayOutListATG != null && hptRdi.PayOutListATG.Count > 0)
+            //{
+            //    hptRdi.MaxPayOut = hptRdi.PayOutListATG
+            //        .OrderByDescending(po => po.NumberOfCorrect)
+            //        .First()
+            //        .TotalAmount;
 
-            hptRdi.RaceList = new List<HPTRace>();
-
-            if (rdi.LegList != null)
-            {
-                try
-                {
-                    // TEST
-                    DateTime dt = DateTime.Now;
-                    foreach (HPTService.HPTRace race in rdi.LegList)
-                    {
-                        var hptRace = new HPTRace();
-                        hptRace.ParentRaceDayInfo = hptRdi;
-                        ConvertRace(race, hptRace);
-                        hptRdi.RaceList.Add(hptRace);
-                    }
-                    var ts = DateTime.Now - dt;
-                    string time = ts.TotalMilliseconds.ToString();
-                }
-                catch (ArgumentException exc)   // Something wrong with legNr
-                {
-                    string s = exc.Message;
-                    hptRdi.RaceList = new List<HPTRace>();
-
-                    for (int i = 0; i < rdi.LegList.Length; i++)
-                    {
-                        HPTService.HPTRace race = rdi.LegList[i];
-                        HPTRace hptRace = new HPTRace();
-                        hptRace.ParentRaceDayInfo = hptRdi;
-                        ConvertRace(race, hptRace);
-                        hptRace.LegNr = i + 1;
-                        hptRdi.RaceList.Add(hptRace);
-                        //hptRdi.MarksQuantity += race.MarksQuantity;
-                    }
-                }
-            }
-
-            // Hantera potterna för olika antal rätt
-            CreatePayOutLists(rdi, hptRdi);
-            if (hptRdi.PayOutListATG != null && hptRdi.PayOutListATG.Count > 0)
-            {
-                hptRdi.MaxPayOut = hptRdi.PayOutListATG
-                    .OrderByDescending(po => po.NumberOfCorrect)
-                    .First()
-                    .TotalAmount;
-
-                hptRdi.SetV6Factor();
-            }
+            //    hptRdi.SetV6Factor();
+            //}
 
             // TODO: Stöd för hämtning av kombinationsspel
             //// Combinationbet (Dagens Dubbel, LunchDubbel)
@@ -297,6 +219,8 @@ namespace HPTClient
 
             // Sätt avstånd till hemmabanan (i km) för alla hästar
             SetDistanceToHomeTrack(hptRdi);
+
+            return hptRdi;
         }
 
         internal static void CreatePayOutLists(HPTService.HPTRaceDayInfo rdi, HPTRaceDayInfo hptRdi)
@@ -337,371 +261,422 @@ namespace HPTClient
             }
         }
 
-        public static void ConvertRace(ATGRaceBase race, HPTRace hptRace)
+        public static HPTRace CreateRace(ATGRaceBase race)
         {
-            hptRace.Distance = race.Distance.ToString();
-            //hptRace.PostTime = race.SharedInfo.PostTime;  // Saknas?
-
-            hptRace.DistanceCode = race.Distance switch
+            HPTRace hptRace = new()
             {
-                < 1800 => "K",
-                > 2500 => "L",
-                _ => "M"
+                PostTime = race.StartTime,  // TODO: Saknas?
+                Distance = race.Distance.ToString(),    // TODO: Byta till int?
+                StartMethod = race.StartMethod,
+                StartMethodCode = race.StartMethod switch
+                {
+                    "auto" => "A",
+                    "volte" => "V",
+                    _ => string.Empty,
+                },
+                DistanceCode = race.Distance switch
+                {
+                    < 1800 => "K",
+                    > 2500 => "L",
+                    _ => "M"
+                },
+                RaceNr = race.Number,
+                LegNr = race.Number,    // TODO: Måste räknas fram senare
+                RaceName = race.Name,
+                //MarksQuantity = Convert.ToInt32(race.MarksQuantity);  // TODO: Skita i det här?            
+                RaceShortText = $"Lopp {race.Number}",
+                //RaceInfoShort = race.SharedInfo.RaceInfoShort.Replace("\n", string.Empty);    // TODO: Finns i annan json hos ATG?
+                //RaceInfoLong = race.SharedInfo.RaceInfoLong;    // TODO: Finns i annan json hos ATG?
+
             };
 
-            // TODO
-            //if (hptRace.StartMethodCode == "A")
-            //{
-            //    hptRace.StartMethodAndDistanceCode = hptRace.StartMethodCode + hptRace.DistanceCode;
-            //}
-            //else
-            //{
-            //    hptRace.StartMethodAndDistanceCode = hptRace.DistanceCode;
-            //}
 
-            //hptRace.MarksQuantity = Convert.ToInt32(race.MarksQuantity);
-            hptRace.RaceNr = race.Number;   // Fel?
-            hptRace.LegNr = race.Number;
-            hptRace.RaceName = race.Name;
-            //hptRace.RaceInfoShort = race.SharedInfo.RaceInfoShort.Replace("\n", string.Empty);
-            //hptRace.RaceInfoLong = race.SharedInfo.RaceInfoLong;
-            hptRace.RaceShortText = $"Lopp {hptRace.RaceNr}";
+            hptRace.StartMethodAndDistanceCode = $"{hptRace.DistanceCode}{hptRace.StartMethodCode}";
 
-            //hptRace.ReservOrder = race.ReservOrder;   // Inte relevant längre?
-            //hptRace.ReservOrderList = new int[0];
-            //if (!string.IsNullOrWhiteSpace(hptRace.ReservOrder))
-            //{
-            //    string[] reservStringArray = hptRace.ReservOrder.Split('-');
-            //    hptRace.ReservOrderList = new int[reservStringArray.Length];
-            //    for (int i = 0; i < reservStringArray.Length; i++)
-            //    {
-            //        hptRace.ReservOrderList[i] = int.Parse(reservStringArray[i]);
-            //    }
-            //}
 
-            hptRace.StartMethod = race.StartMethod;
-            hptRace.StartMethodCode = race.StartMethod; // Konvertera till A, V osv?
-            hptRace.TurnoverPlats = race.SharedInfo.TurnoverPlats;
-            hptRace.TurnoverTvilling = race.SharedInfo.TurnoverTvilling;
-            hptRace.TurnoverVinnare = race.SharedInfo.TurnoverVinnare;
-            hptRace.TurnoverTrio = race.SharedInfo.TurnoverTrio;
-            hptRace.TrackId = race.TrackId;
-            //hptRace.BetTypes = race.SharedInfo.BetTypes.ToArray();
+            // TODO: Lägga till VP åtminstone?
+            //hptRace.TurnoverPlats = race.SharedInfo.TurnoverPlats;
+            //hptRace.TurnoverTvilling = race.SharedInfo.TurnoverTvilling;
+            //hptRace.TurnoverVinnare = race.SharedInfo.TurnoverVinnare;
+            //hptRace.TurnoverTrio = race.SharedInfo.TurnoverTrio;
+            //hptRace.TrackId = race.TrackId;
+            //hptRace.BetTypes = race.SharedInfo.BetTypes.ToArray();    // TODO: Skita i det här?
 
-            if (hptRace.HorseList == null)
+            if (hptRace.HorseList == null && race.StartList != null)
             {
                 hptRace.HorseList = race.StartList.Select(s => new HPTHorse()
                 {
-                    //Age = s.Horse.Age,
-                    //ATGId = ,
-                    //Driver = s.
-                    StartNr = s.Number,
+                    Age = s.Horse.Age,
+                    ATGId = s.Horse.Id.ToString(),  // TODO: Byta datatyp?
+                    //Breeder = TODO:,
+                    //BreederName = TODO:,
+                    //CurrentYearStatistics = TODO:,
+                    Distance = s.Distance.ToString(),   // TODO: Ändra till INT?
+                    Driver = new()
+                    {
+                        Name = s.Driver.ShortName,  // TODO: Lägg till fullständigt namn
+                        ShortName = s.Driver.ShortName,
+                    },
+                    //DistanceFromHomeTrack = TODO: Kan jag bara anropa befintlig metod?
+                    DriverId = s.Driver.Id.ToString(),
+                    //DriverInfo = TODO: Varför två upps'ttningar?
+                    DriverName = s.Driver.Name,
+                    DriverNameShort = s.Driver.ShortName,
+                    //EarningsMeanLast3 = TODO:,
+                    //EarningsMeanLast5 = TODO:,
+                    HomeTrack = s.Horse.HomeTrack.TrackName,
+                    //HomeTrackInfo = TODO: Vad är detta?
                     HorseName = s.Horse.Name,
+                    //HorseResultInfo = TODO:Vad är detta?
+                    //InvestmentPlats = TODO: Skita i det här?
+                    //InvestmentVinnare = TODO: Skita i det här?
+                    //IsHomeTrack = TODO: Sätta längre ner
+                    //MarksPercent = TODO: Byta till decimal och ta bort Exact-varianten
+                    //MarksPercentExact = s.BetDistributionShare, // TODO: Se ovan
+                    //MarksPossibleValue    = TODO: Värden inför nästa lopp?
+                    //MarksQuantity = TODO: Verkar inte finnas längre
+                    //MarksShare
+                    MinPlatsOdds = Convert.ToInt32(s.PlatsOdds),
+                    MaxPlatsOdds = Convert.ToInt32(s.PlatsOdds),
+                    //StakeDistribution = TODO: Summa per häst verkar inte finnas längre
+                    //StakeDistributionPercent = TODO: Ta bort?
+                    StakeDistributionShare = s.BetDistributionShare,
+                    //StakeShareAlternate = TODO: Fixa i ATGDownloader
+                    //StakeShareAlternate2 = TODO: Fixa i ATGDownloader
+                    //StakeShareRounded = TODO: Ta bort
+                    StartNr = s.Number,
+                    //StartPoint = TODO: Ta bort, verkar inte användas längre
+                    //STLink = TODO: Ta bort
+                    //SulkyInfoCurrent = TODO: Fixa i ATGDownloader
+                    //SulkyInfoPrevious = TODO: Fixa i ATGDownloader
+                    Trainer = new()
+                    {
+                        Name = s.Horse.Trainer.ShortName,  // TODO: Lägg till fullständigt namn
+                        ShortName = s.Horse.Trainer.ShortName,
+                    },
+                    TrainerId = s.Horse.Trainer.Id.ToString(),
+                    //TrainerInfo = TODO: Varför dubbla objekt
+                    TrainerName = s.Horse.Trainer.Name,
+                    TrainerNameShort = s.Horse.Trainer.ShortName,
                     VinnarOdds = Convert.ToInt32(s.VinnarOdds),   // Ta bort?
                     VinnarOddsExact = s.VinnarOdds / 100M,
-                    //MinPlatsOdds = s.pl
-                }).ToList(); 
-            }
+                    ParentRace = hptRace
+                }).ToList();
 
-            if (race.HorseList != null)
-            {
-                //hptRace.HorseList = new ObservableCollection<HPTHorse>();
-                hptRace.HorseList = new List<HPTHorse>();
-                var startNumberRankCollection = HPTConfig.Config.StartNumberRankCollectionList.FirstOrDefault(snr => snr.StartMethodCode == hptRace.StartMethodCode);
-                foreach (HPTService.HPTHorse horse in race.HorseList)
+                hptRace.HorseList.ToList().ForEach(h =>
                 {
-                    var hptHorse = hptRace.HorseList.FirstOrDefault(h => h.StartNr == horse.StartInfo.StartNr);
-                    if (hptHorse == null)
-                    {
-                        hptHorse = new HPTHorse();
-                        hptHorse.ParentRace = hptRace;
-                        ConvertHorse(horse, hptHorse);
-                        hptRace.HorseList.Add(hptHorse);
-                        hptHorse.CreateXReductionRuleList();
-                    }
+                    // TODO: Flytta in i initieringen ovan?
+                    h.CreateXReductionRuleList();
+                });
 
-                    // Sätt Spårrank utifrån Config
-                    if (startNumberRankCollection != null)
-                    {
-                        var startNumberRank = startNumberRankCollection.StartNumberRankList.FirstOrDefault(sr => sr.StartNumber == hptHorse.StartNr);
-                        if (startNumberRank != null && hptHorse.Scratched != true)
-                        {
-                            hptHorse.Selected = startNumberRank.Select;
-                            hptHorse.RankStartNumber = startNumberRank.Rank;
-                        }
-                    }
-                }
+                hptRace.SetCorrectStakeDistributionShare();
 
-                // Sätt ATG-rank utifrån reservordning
-                for (int i = 0; i < hptRace.ReservOrderList.Length; i++)
-                {
-                    HPTHorse hptHorse = hptRace.GetHorseByNumber(hptRace.ReservOrderList[i]);
-                    hptHorse.RankATG = i + 1;
-                }
+                // TODO: Vad ska behållas?
+                //var startNumberRankCollection = HPTConfig.Config.StartNumberRankCollectionList.FirstOrDefault(snr => snr.StartMethodCode == hptRace.StartMethodCode);
+                //foreach (var horse in race.StartList)
+                //{
 
-                // Sätt ATG-rank utifrån startpoäng
-                int rank = 1;
-                hptRace.HorseList
-                    .OrderByDescending(h => h.StartPoint)
-                    .ToList()
-                    .ForEach(h => h.RankATG = rank++);
+                //    // Sätt Spårrank utifrån Config
+                //    if (startNumberRankCollection != null)
+                //    {
+                //        var startNumberRank = startNumberRankCollection.StartNumberRankList.FirstOrDefault(sr => sr.StartNumber == hptHorse.StartNr);
+                //        if (startNumberRank != null && hptHorse.Scratched != true)
+                //        {
+                //            hptHorse.Selected = startNumberRank.Select;
+                //            hptHorse.RankStartNumber = startNumberRank.Rank;
+                //        }
+                //    }
+                //}
+
+                // TODO: Detta används väl inte längre? Sätt ATG-rank utifrån startpoäng
+                //int rank = 1;
+                //hptRace.HorseList
+                //    .OrderByDescending(h => h.StartPoint)
+                //    .ToList()
+                //    .ForEach(h => h.RankATG = rank++);
 
                 // Sätt korrekt insatsfördelning pga V6
-                hptRace.SetCorrectStakeDistributionShare();
-                hptRace.SetCorrectStakeDistributionShareAlt1();
-                hptRace.SetCorrectStakeDistributionShareAlt2();
+                //hptRace.SetCorrectStakeDistributionShare();
+                //hptRace.SetCorrectStakeDistributionShareAlt1(); // TODO: Ska detta hämtas i framtiden?
+                //hptRace.SetCorrectStakeDistributionShareAlt2(); // TODO: Ska detta hämtas i framtiden?
             }
 
-            // Tvilling
-            if (hptRace.ParentRaceDayInfo.BetType.Code == "TV")
-            {
-                hptRace.CombinationListInfoTvilling = new HPTCombinationListInfo()
-                {
-                    CombinationList = new List<HPTCombination>(),
-                    BetType = hptRace.ParentRaceDayInfo.BetType.Code
-                };
+            //// TODO: Tvilling
+            //if (hptRace.ParentRaceDayInfo.BetType.Code == "TV")
+            //{
+            //    hptRace.CombinationListInfoTvilling = new HPTCombinationListInfo()
+            //    {
+            //        CombinationList = new List<HPTCombination>(),
+            //        BetType = hptRace.ParentRaceDayInfo.BetType.Code
+            //    };
 
-                if (race.SharedInfo.TvillingCombinationList != null && race.SharedInfo.TvillingCombinationList.Length > 0)
-                {
-                    foreach (HPTService.HPTCombination comb in race.SharedInfo.TvillingCombinationList)
-                    {
-                        HPTCombination hptComb = new HPTCombination();
-                        hptComb.ParentRace = hptRace;
-                        hptComb.ParentRaceDayInfo = hptRace.ParentRaceDayInfo;
-                        hptComb.CombinationOdds = comb.CombinationOdds;
-                        hptComb.CombinationOddsExact = comb.CombinationOddsExact;
-                        hptComb.Horse1Nr = comb.Horse1Nr;
-                        hptComb.Horse2Nr = comb.Horse2Nr;
-                        hptComb.Horse3Nr = comb.Horse3Nr;
+            //    if (race.SharedInfo.TvillingCombinationList != null && race.SharedInfo.TvillingCombinationList.Length > 0)
+            //    {
+            //        foreach (HPTService.HPTCombination comb in race.SharedInfo.TvillingCombinationList)
+            //        {
+            //            HPTCombination hptComb = new HPTCombination();
+            //            hptComb.ParentRace = hptRace;
+            //            hptComb.ParentRaceDayInfo = hptRace.ParentRaceDayInfo;
+            //            hptComb.CombinationOdds = comb.CombinationOdds;
+            //            hptComb.CombinationOddsExact = comb.CombinationOddsExact;
+            //            hptComb.Horse1Nr = comb.Horse1Nr;
+            //            hptComb.Horse2Nr = comb.Horse2Nr;
+            //            hptComb.Horse3Nr = comb.Horse3Nr;
 
-                        hptComb.Horse1 = hptRace.GetHorseByNumber(comb.Horse1Nr);
-                        hptComb.Horse2 = hptRace.GetHorseByNumber(comb.Horse2Nr);
+            //            hptComb.Horse1 = hptRace.GetHorseByNumber(comb.Horse1Nr);
+            //            hptComb.Horse2 = hptRace.GetHorseByNumber(comb.Horse2Nr);
 
-                        hptComb.CalculateQuotas("TV");
-                        hptRace.CombinationListInfoTvilling.CombinationList.Add(hptComb);
-                    }
-                    hptRace.CombinationListInfoTvilling.SortCombinationValues();
-                }
-                foreach (var horse in hptRace.HorseList)
-                {
-                    horse.OwnProbability = horse.StakeShareRounded;
-                }
-            }
+            //            hptComb.CalculateQuotas("TV");
+            //            hptRace.CombinationListInfoTvilling.CombinationList.Add(hptComb);
+            //        }
+            //        hptRace.CombinationListInfoTvilling.SortCombinationValues();
+            //    }
+            //    foreach (var horse in hptRace.HorseList)
+            //    {
+            //        horse.OwnProbability = horse.StakeShareRounded;
+            //    }
+            //}
 
-            // Trio
-            if (hptRace.ParentRaceDayInfo.BetType.Code == "T")
-            {
-                hptRace.CombinationListInfoTrio = new HPTCombinationListInfo()
-                {
-                    CombinationList = new List<HPTCombination>(),
-                    BetType = hptRace.ParentRaceDayInfo.BetType.Code
-                };
+            //// TODO: Trio
+            //if (hptRace.ParentRaceDayInfo.BetType.Code == "T")
+            //{
+            //    hptRace.CombinationListInfoTrio = new HPTCombinationListInfo()
+            //    {
+            //        CombinationList = new List<HPTCombination>(),
+            //        BetType = hptRace.ParentRaceDayInfo.BetType.Code
+            //    };
 
-                //hptRace.CombinationListInfoTrio.CalculatePercentages(hptRace.HorseList);                
-                hptRace.CreateAllTrioCombinations(race.SharedInfo.TrioCombinationList);
-                hptRace.CombinationListInfoTrio.SortCombinationValues();
-            }
+            //    //hptRace.CombinationListInfoTrio.CalculatePercentages(hptRace.HorseList);                
+            //    hptRace.CreateAllTrioCombinations(race.SharedInfo.TrioCombinationList);
+            //    hptRace.CombinationListInfoTrio.SortCombinationValues();
+            //}
 
             // Inbördes möte hästar emellan
             hptRace.FindHeadToHead();
+
+            return hptRace;
         }
 
-        public static void ConvertHorse(HPTService.HPTHorse horse, HPTHorse hptHorse)
+        public static HPTHorse CreateHorse(ATGStartBase start)
         {
-            // Startinfo (statisk)
-            hptHorse.StartNr = horse.StartInfo.StartNr;
-            hptHorse.TrainerName = horse.StartInfo.TrainerName;
-            hptHorse.TrainerNameShort = horse.StartInfo.TrainerNameShort;
-            hptHorse.Scratched = horse.StartInfo.Scratched;
-            hptHorse.OwnerName = horse.StartInfo.Owner;
-            hptHorse.BreederName = horse.StartInfo.Breeder;
-            hptHorse.Age = horse.StartInfo.Age;
-            hptHorse.Sex = horse.StartInfo.Sex;
-            hptHorse.StartPoint = horse.StartInfo.StartPoint;
-            hptHorse.Distance = horse.StartInfo.Distance;
-
-            // Unika nycklar för häst, kusk och tränare
-            if (horse.StartInfo.ATGId != 0)
+            var hptHorse = new HPTHorse()
             {
-                hptHorse.ATGId = horse.StartInfo.ATGId.ToString();
-            }
-            if (horse.StartInfo.DriverId != 0)
-            {
-                hptHorse.DriverId = horse.StartInfo.DriverId.ToString();
-            }
-            if (horse.StartInfo.TrainerId != 0)
-            {
-                hptHorse.TrainerId = horse.StartInfo.TrainerId.ToString();
-            }
-
-            // Hemmabana
-            hptHorse.HomeTrack = horse.StartInfo.HomeTrack;
-            hptHorse.IsHomeTrack = hptHorse.ParentRace.ParentRaceDayInfo.Trackcode == hptHorse.HomeTrack;
-            if (hptHorse.ParentRace.TrackId != null)
-            {
-                hptHorse.IsHomeTrack = hptHorse.ParentRace.TrackCode == hptHorse.HomeTrack;
-            }
-
-            hptHorse.PostPosition = horse.StartInfo.PostPosition;
-            hptHorse.DriverName = horse.StartInfo.DriverName;
-            hptHorse.DriverNameShort = horse.StartInfo.DriverNameShort;
-            hptHorse.HorseName = horse.StartInfo.HorseName;
-            hptHorse.DriverChanged = horse.StartInfo.DriverChanged;
-
-            // Skoinformation
-            hptHorse.ShoeInfoCurrent = CreateShoeInfo(horse.StartInfo.ShoeInfoCurrent);
-            hptHorse.ShoeInfoPrevious = CreateShoeInfo(horse.StartInfo.ShoeInfoPrevious);
-            if (hptHorse.ShoeInfoCurrent.Foreshoes == null && hptHorse.ShoeInfoCurrent.Hindshoes == null)
-            {
-                hptHorse.ShoeInfoCurrent.Foreshoes = hptHorse.ShoeInfoPrevious.Foreshoes;
-                hptHorse.ShoeInfoCurrent.Hindshoes = hptHorse.ShoeInfoPrevious.Hindshoes;
-                hptHorse.ShoeInfoCurrent.PreviousUsed = true;
-            }
-            else
-            {
-                hptHorse.ShoeInfoCurrent.SetChangedFlags(hptHorse.ShoeInfoPrevious);
-                hptHorse.ShoeInfoCurrent.PreviousUsed = false;
-            }
-
-            // Vagninformation
-            if (hptHorse.SulkyInfoCurrent == null)
-            {
-                hptHorse.SulkyInfoCurrent = new HPTHorseSulkyInfo()
+                Age = start.Horse.Age,
+                ATGId = start.Horse.Id.ToString(),  // TODO: Byta datatyp?
+                                                    //Breeder = TODO:,
+                                                    //BreederName = TODO:,
+                                                    //CurrentYearStatistics = TODO:,
+                Distance = start.Distance.ToString(),   // TODO: Ändra till INT?
+                Driver = new()
                 {
-                    Text = horse.StartInfo.SulkyInfoCurrent?.Text
-                };
-            }
-            else if (horse.StartInfo != null && horse.StartInfo.SulkyInfoCurrent != null)
-            {
-                hptHorse.SulkyInfoCurrent.Text = horse.StartInfo.SulkyInfoCurrent?.Text;
-            }
-
-            if (hptHorse.SulkyInfoPrevious == null)
-            {
-                hptHorse.SulkyInfoPrevious = new HPTHorseSulkyInfo()
+                    Name = start.Driver.ShortName,  // TODO: Lägg till fullständigt namn
+                    ShortName = start.Driver.ShortName,
+                },
+                //DistanceFromHomeTrack = TODO: Kan jag bara anropa befintlig metod?
+                DriverId = start.Driver.Id.ToString(),
+                //DriverInfo = TODO: Varför två upps'ttningar?
+                DriverName = start.Driver.Name,
+                DriverNameShort = start.Driver.ShortName,
+                //EarningsMeanLast3 = TODO:,
+                //EarningsMeanLast5 = TODO:,
+                HomeTrack = start.Horse.HomeTrack.TrackName,
+                //HomeTrackInfo = TODO: Vad är detta?
+                HorseName = start.Horse.Name,
+                //HorseResultInfo = TODO:Vad är detta?
+                //InvestmentPlats = TODO: Skita i det här?
+                //InvestmentVinnare = TODO: Skita i det här?
+                //IsHomeTrack = TODO: Sätta längre ner
+                //MarksPercent = TODO: Byta till decimal och ta bort Exact-varianten
+                //MarksPercentExact = s.BetDistributionShare, // TODO: Se ovan
+                //MarksPossibleValue    = TODO: Värden inför nästa lopp?
+                //MarksQuantity = TODO: Verkar inte finnas längre
+                //MarksShare
+                MinPlatsOdds = Convert.ToInt32(start.PlatsOdds),
+                MaxPlatsOdds = Convert.ToInt32(start.PlatsOdds),
+                //StakeDistribution = TODO: Summa per häst verkar inte finnas längre
+                //StakeDistributionPercent = TODO: Ta bort?
+                StakeDistributionShare = start.BetDistributionShare,
+                //StakeShareAlternate = TODO: Fixa i ATGDownloader
+                //StakeShareAlternate2 = TODO: Fixa i ATGDownloader
+                //StakeShareRounded = TODO: Ta bort
+                StartNr = start.Number,
+                //StartPoint = TODO: Ta bort, verkar inte användas längre
+                //STLink = TODO: Ta bort
+                //SulkyInfoCurrent = TODO: Fixa i ATGDownloader
+                //SulkyInfoPrevious = TODO: Fixa i ATGDownloader
+                Trainer = new()
                 {
-                    Text = horse.StartInfo.SulkyInfoPrevious?.Text
-                };
-            }
-            else if (horse.StartInfo != null && horse.StartInfo.SulkyInfoPrevious != null)
-            {
-                hptHorse.SulkyInfoPrevious.Text = horse.StartInfo.SulkyInfoPrevious?.Text;
-            }
+                    Name = start.Horse.Trainer.ShortName,  // TODO: Lägg till fullständigt namn
+                    ShortName = start.Horse.Trainer.ShortName,
+                },
+                TrainerId = start.Horse.Trainer.Id.ToString(),
+                //TrainerInfo = TODO: Varför dubbla objekt
+                TrainerName = start.Horse.Trainer.Name,
+                TrainerNameShort = start.Horse.Trainer.ShortName,
+                VinnarOdds = Convert.ToInt32(start.VinnarOdds),   // Ta bort?
+                VinnarOddsExact = start.VinnarOdds / 100M,
+                //ParentRace = hptRace
+            };
 
-            if (!string.IsNullOrEmpty(hptHorse.SulkyInfoCurrent?.Text) && !string.IsNullOrEmpty(hptHorse.SulkyInfoPrevious?.Text) && hptHorse.SulkyInfoCurrent.Text != hptHorse.SulkyInfoPrevious.Text)
-            {
-                hptHorse.SulkyInfoCurrent.SulkyChanged = true;
-            }
+
+
+            //// TODO: Skoinformation
+            //hptHorse.ShoeInfoCurrent = CreateShoeInfo(horse.StartInfo.ShoeInfoCurrent);
+            //hptHorse.ShoeInfoPrevious = CreateShoeInfo(horse.StartInfo.ShoeInfoPrevious);
+            //if (hptHorse.ShoeInfoCurrent.Foreshoes == null && hptHorse.ShoeInfoCurrent.Hindshoes == null)
+            //{
+            //    hptHorse.ShoeInfoCurrent.Foreshoes = hptHorse.ShoeInfoPrevious.Foreshoes;
+            //    hptHorse.ShoeInfoCurrent.Hindshoes = hptHorse.ShoeInfoPrevious.Hindshoes;
+            //    hptHorse.ShoeInfoCurrent.PreviousUsed = true;
+            //}
+            //else
+            //{
+            //    hptHorse.ShoeInfoCurrent.SetChangedFlags(hptHorse.ShoeInfoPrevious);
+            //    hptHorse.ShoeInfoCurrent.PreviousUsed = false;
+            //}
+
+            //// TODO: Vagninformation
+            //if (hptHorse.SulkyInfoCurrent == null)
+            //{
+            //    hptHorse.SulkyInfoCurrent = new HPTHorseSulkyInfo()
+            //    {
+            //        Text = horse.StartInfo.SulkyInfoCurrent?.Text
+            //    };
+            //}
+            //else if (horse.StartInfo != null && horse.StartInfo.SulkyInfoCurrent != null)
+            //{
+            //    hptHorse.SulkyInfoCurrent.Text = horse.StartInfo.SulkyInfoCurrent?.Text;
+            //}
+
+            //if (hptHorse.SulkyInfoPrevious == null)
+            //{
+            //    hptHorse.SulkyInfoPrevious = new HPTHorseSulkyInfo()
+            //    {
+            //        Text = horse.StartInfo.SulkyInfoPrevious?.Text
+            //    };
+            //}
+            //else if (horse.StartInfo != null && horse.StartInfo.SulkyInfoPrevious != null)
+            //{
+            //    hptHorse.SulkyInfoPrevious.Text = horse.StartInfo.SulkyInfoPrevious?.Text;
+            //}
+
+            //if (!string.IsNullOrEmpty(hptHorse.SulkyInfoCurrent?.Text) && !string.IsNullOrEmpty(hptHorse.SulkyInfoPrevious?.Text) && hptHorse.SulkyInfoCurrent.Text != hptHorse.SulkyInfoPrevious.Text)
+            //{
+            //    hptHorse.SulkyInfoCurrent.SulkyChanged = true;
+            //}
 
             // Sätt de värden som sedan kommer att uppdateras ofta
-            hptHorse.Merge(horse);
 
-            try
-            {
-                // Statistik
-                hptHorse.CurrentYearStatistics = ConvertHorseYearStatistics(horse.StartInfo.CurrentYearStatistics);
-                hptHorse.CurrentYearStatistics.YearString = DateTime.Now.Year.ToString();
+            //hptHorse.Merge(horse);
 
-                hptHorse.PreviousYearStatistics = ConvertHorseYearStatistics(horse.StartInfo.PreviousYearStatistics);
-                hptHorse.PreviousYearStatistics.YearString = DateTime.Now.AddYears(-1).Year.ToString();
+            //try
+            //{
+            //    // TODO: Statistik
+            //    hptHorse.CurrentYearStatistics = ConvertHorseYearStatistics(horse.StartInfo.CurrentYearStatistics);
+            //    hptHorse.CurrentYearStatistics.YearString = DateTime.Now.Year.ToString();
 
-                hptHorse.TotalStatistics = ConvertHorseYearStatistics(horse.StartInfo.TotalStatistics);
-                hptHorse.TotalStatistics.YearString = "Totalt";
+            //    hptHorse.PreviousYearStatistics = ConvertHorseYearStatistics(horse.StartInfo.PreviousYearStatistics);
+            //    hptHorse.PreviousYearStatistics.YearString = DateTime.Now.AddYears(-1).Year.ToString();
 
-                hptHorse.YearStatisticsList = new List<HPTHorseYearStatistics>() { hptHorse.CurrentYearStatistics, hptHorse.PreviousYearStatistics, hptHorse.TotalStatistics };
+            //    hptHorse.TotalStatistics = ConvertHorseYearStatistics(horse.StartInfo.TotalStatistics);
+            //    hptHorse.TotalStatistics.YearString = "Totalt";
 
-                // Records
-                hptHorse.RecordList = horse.StartInfo.RecordList.Select(r => new HPTHorseRecord()
-                {
-                    Date = r.Date.ToString("yyyy-MM-dd"),
-                    Distance = r.Distance,
-                    Place = r.Place,
-                    RaceNr = r.RaceNr,
-                    RecordType = r.RecordType,
-                    Time = FormatRecordTime(r.Time),
-                    TrackCode = r.TrackCode,
-                    Winner = r.Winner,
-                    TimeWeighed = SetWeighedRecord(r, hptHorse.ParentRace)
-                }).ToList();
+            //    hptHorse.YearStatisticsList = new List<HPTHorseYearStatistics>() { hptHorse.CurrentYearStatistics, hptHorse.PreviousYearStatistics, hptHorse.TotalStatistics };
 
-                // Hitta rekordet
-                SetRecord(hptHorse);
-            }
-            catch (Exception exc)
-            {
-                // Data isn't sent from service
-                string s = exc.Message;
-            }
+            //    // Records
+            //    hptHorse.RecordList = horse.StartInfo.RecordList.Select(r => new HPTHorseRecord()
+            //    {
+            //        Date = r.Date.ToString("yyyy-MM-dd"),
+            //        Distance = r.Distance,
+            //        Place = r.Place,
+            //        RaceNr = r.RaceNr,
+            //        RecordType = r.RecordType,
+            //        Time = FormatRecordTime(r.Time),
+            //        TrackCode = r.TrackCode,
+            //        Winner = r.Winner,
+            //        TimeWeighed = SetWeighedRecord(r, hptHorse.ParentRace)
+            //    }).ToList();
 
-            // Resultat
-            var resultList = horse.StartInfo.ResultList.Select(r => new HPTHorseResult()
-            {
-                Date = r.Date,
-                //DateString = r.DateString,
-                Distance = r.Distance,
-                Driver = r.Driver,
-                Earning = r.Earning,
-                FirstPrize = r.FirstPrize,
-                Odds = r.Odds,
-                PlaceString = r.PlaceString,
-                HorseName = hptHorse.HorseName,
-                Place = SetPlace(r),
-                Position = r.Position,
-                RaceType = r.RaceType,
-                RaceNr = r.RaceNr,
-                StartNr = r.StartNr,
-                Time = r.Time,
-                TrackCode = r.TrackCode,
-                Shoeinfo = CreateShoeInfo(r.ShoeInfo),
-                TimeWeighed = SetWeighedTime(r),
-                HeadToHeadResultList = new List<HPTHorseResult>()
-            });
-            hptHorse.ResultList = new ObservableCollection<HPTHorseResult>(resultList);
+            //    // Hitta rekordet
+            //    SetRecord(hptHorse);
+            //}
+            //catch (Exception exc)
+            //{
+            //    // Data isn't sent from service
+            //    string s = exc.Message;
+            //}
 
-            if (hptHorse.ResultList.Count > 0)
-            {
-                // Flagga för ny kusk
-                hptHorse.DriverChangedSinceLastStart = hptHorse.ResultList[0].Driver != hptHorse.DriverNameShort;
+            //// Resultat
+            //var resultList = horse.StartInfo.ResultList.Select(r => new HPTHorseResult()
+            //{
+            //    Date = r.Date,
+            //    //DateString = r.DateString,
+            //    Distance = r.Distance,
+            //    Driver = r.Driver,
+            //    Earning = r.Earning,
+            //    FirstPrize = r.FirstPrize,
+            //    Odds = r.Odds,
+            //    PlaceString = r.PlaceString,
+            //    HorseName = hptHorse.HorseName,
+            //    Place = SetPlace(r),
+            //    Position = r.Position,
+            //    RaceType = r.RaceType,
+            //    RaceNr = r.RaceNr,
+            //    StartNr = r.StartNr,
+            //    Time = r.Time,
+            //    TrackCode = r.TrackCode,
+            //    Shoeinfo = CreateShoeInfo(r.ShoeInfo),
+            //    TimeWeighed = SetWeighedTime(r),
+            //    HeadToHeadResultList = new List<HPTHorseResult>()
+            //});
+            //hptHorse.ResultList = new ObservableCollection<HPTHorseResult>(resultList);
 
-                // Aggregerade värden (senaste 5)
-                hptHorse.EarningsMeanLast5 = Convert.ToInt32(hptHorse.ResultList.Select(r => (decimal)r.Earning).Average());
-                hptHorse.RecordWeighedLast5 = hptHorse.ResultList.Select(r => (decimal)r.TimeWeighed).Average();
-                hptHorse.MeanPlaceLast5 = Convert.ToDecimal(hptHorse.ResultList.Select(r => r.Place).Average());
-                hptHorse.ResultRow = hptHorse.ResultList
-                    .Select(r => r.PlaceString)
-                    .Aggregate((place, next) => place + "-" + next);
+            //if (hptHorse.ResultList.Count > 0)
+            //{
+            //    // Flagga för ny kusk
+            //    hptHorse.DriverChangedSinceLastStart = hptHorse.ResultList[0].Driver != hptHorse.DriverNameShort;
 
-                // Aggregerade värden (senaste 3)
-                var last3Results = hptHorse.ResultList.OrderByDescending(r => r.Date).Take(3).ToList();
-                hptHorse.EarningsMeanLast3 = Convert.ToInt32(last3Results.Select(r => (decimal)r.Earning).Average());
-                hptHorse.RecordWeighedLast3 = last3Results.Select(r => (decimal)r.TimeWeighed).Average();
-                hptHorse.MeanPlaceLast3 = Convert.ToDecimal(last3Results.Select(r => r.Place).Average());
-            }
+            //    // Aggregerade värden (senaste 5)
+            //    hptHorse.EarningsMeanLast5 = Convert.ToInt32(hptHorse.ResultList.Select(r => (decimal)r.Earning).Average());
+            //    hptHorse.RecordWeighedLast5 = hptHorse.ResultList.Select(r => (decimal)r.TimeWeighed).Average();
+            //    hptHorse.MeanPlaceLast5 = Convert.ToDecimal(hptHorse.ResultList.Select(r => r.Place).Average());
+            //    hptHorse.ResultRow = hptHorse.ResultList
+            //        .Select(r => r.PlaceString)
+            //        .Aggregate((place, next) => place + "-" + next);
 
-            // Resultat i loppet om det är klart
-            if (horse.VPInfo != null && horse.VPInfo.HorseResultInfo != null)
-            {
-                hptHorse.HorseResultInfo = new HPTHorseResultInfo()
-                {
-                    Disqualified = horse.VPInfo.HorseResultInfo.Disqualified,
-                    Earning = horse.VPInfo.HorseResultInfo.Earning,
-                    FinishingPosition = horse.VPInfo.HorseResultInfo.FinishingPosition,
-                    KmTime = horse.VPInfo.HorseResultInfo.KmTime,
-                    Place = horse.VPInfo.HorseResultInfo.Place,
-                    TotalTime = horse.VPInfo.HorseResultInfo.TotalTime
-                };
-                hptHorse.HorseResultInfo.SetPlaceString(hptHorse);
-            }
+            //    // Aggregerade värden (senaste 3)
+            //    var last3Results = hptHorse.ResultList.OrderByDescending(r => r.Date).Take(3).ToList();
+            //    hptHorse.EarningsMeanLast3 = Convert.ToInt32(last3Results.Select(r => (decimal)r.Earning).Average());
+            //    hptHorse.RecordWeighedLast3 = last3Results.Select(r => (decimal)r.TimeWeighed).Average();
+            //    hptHorse.MeanPlaceLast3 = Convert.ToDecimal(last3Results.Select(r => r.Place).Average());
+            //}
 
-            if (HPTConfig.Config.DataToShowVxx.ShowOwnInformation || HPTConfig.Config.DataToShowComplementaryRules.ShowOwnInformation || HPTConfig.Config.DataToShowCorrection.ShowOwnInformation)// || HPTConfig.Config.MarkBetTabsToShow.ShowComments)
-            {
-                // Own information
-                hptHorse.OwnInformation = HPTConfig.Config.HorseOwnInformationCollection.GetOwnInformationByName(hptHorse.HorseName);
-                if (hptHorse.OwnInformation != null && hptHorse.OwnInformation.ATGId == "0")
-                {
-                    hptHorse.OwnInformation.ATGId = hptHorse.ATGId;
-                }
-            }
+            //// Resultat i loppet om det är klart
+            //if (horse.VPInfo != null && horse.VPInfo.HorseResultInfo != null)
+            //{
+            //    hptHorse.HorseResultInfo = new HPTHorseResultInfo()
+            //    {
+            //        Disqualified = horse.VPInfo.HorseResultInfo.Disqualified,
+            //        Earning = horse.VPInfo.HorseResultInfo.Earning,
+            //        FinishingPosition = horse.VPInfo.HorseResultInfo.FinishingPosition,
+            //        KmTime = horse.VPInfo.HorseResultInfo.KmTime,
+            //        Place = horse.VPInfo.HorseResultInfo.Place,
+            //        TotalTime = horse.VPInfo.HorseResultInfo.TotalTime
+            //    };
+            //    hptHorse.HorseResultInfo.SetPlaceString(hptHorse);
+            //}
+
+            //if (HPTConfig.Config.DataToShowVxx.ShowOwnInformation || HPTConfig.Config.DataToShowComplementaryRules.ShowOwnInformation || HPTConfig.Config.DataToShowCorrection.ShowOwnInformation)// || HPTConfig.Config.MarkBetTabsToShow.ShowComments)
+            //{
+            //    // Own information
+            //    hptHorse.OwnInformation = HPTConfig.Config.HorseOwnInformationCollection.GetOwnInformationByName(hptHorse.HorseName);
+            //    if (hptHorse.OwnInformation != null && hptHorse.OwnInformation.ATGId == "0")
+            //    {
+            //        hptHorse.OwnInformation.ATGId = hptHorse.ATGId;
+            //    }
+            //}
+
+            return hptHorse;
         }
 
         internal static string FormatRecordTime(string timeToFormat)
@@ -1982,15 +1957,15 @@ namespace HPTClient
 
                 // Skapa reservlista
                 hptRace.ReservOrderList = new int[0];
-                if (!string.IsNullOrWhiteSpace(hptRace.ReservOrder))
-                {
-                    string[] reservStringArray = hptRace.ReservOrder.Split('-');
-                    hptRace.ReservOrderList = new int[reservStringArray.Length];
-                    for (int i = 0; i < reservStringArray.Length; i++)
-                    {
-                        hptRace.ReservOrderList[i] = int.Parse(reservStringArray[i]);
-                    }
-                }
+                //if (!string.IsNullOrWhiteSpace(hptRace.ReservOrder))
+                //{
+                //    string[] reservStringArray = hptRace.ReservOrder.Split('-');
+                //    hptRace.ReservOrderList = new int[reservStringArray.Length];
+                //    for (int i = 0; i < reservStringArray.Length; i++)
+                //    {
+                //        hptRace.ReservOrderList[i] = int.Parse(reservStringArray[i]);
+                //    }
+                //}
 
 
                 foreach (HPTHorse hptHorse in hptRace.HorseList)

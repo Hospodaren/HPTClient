@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ATGDownloader;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
@@ -46,6 +47,233 @@ namespace HPTClient
 
 
         #region Conversion
+
+        public void Merge(ATGHorseBase horse)
+        {
+            // TODO: Uppdatera ALLT i den här metoden...
+            //// Sen kuskändring
+            //this.DriverChanged = !string.IsNullOrWhiteSpace(horse.NewDriverName);
+            //if (this.DriverChanged == true)
+            //{
+            //    this.DriverName = horse.NewDriverName;
+            //    this.DriverNameShort = horse.NewDriverNameShort;
+            //}
+
+            //// Streck
+            //this.MarksPossibleValue = horse.MarksPossibleValue > 0 ? horse.MarksPossibleValue : this.MarksPossibleValue;
+
+            //// Insatsfördelning
+            //this.StakeDistribution = horse.StakeDistribution > 0 ? horse.StakeDistribution : this.StakeDistribution;
+            //this.StakeDistributionPercent = horse.StakeDistributionPercent > 0 ? horse.StakeDistributionPercent : this.StakeDistributionPercent;
+
+            //// Sen strykning
+            //if (horse.Scratched == true)
+            //{
+            //    this.Scratched = horse.Scratched;
+            //    //this.VinnaroddsColor = new SolidColorBrush(Colors.Gray);
+            //}
+
+            //// Vinnare
+            //this.VinnarOdds = horse.VPInfo.VinnarOdds > 0 ? horse.VPInfo.VinnarOdds : this.VinnarOdds;  // Bakåtkompatibilitet
+            //this.VinnarOddsExact = horse.VPInfo.VinnarOddsExact > 0M ? horse.VPInfo.VinnarOddsExact : this.VinnarOddsExact;
+            //this.InvestmentVinnare = horse.VPInfo.InvestmentVinnare;
+
+            //// Plats
+            //this.MinPlatsOdds = horse.VPInfo.MinPlatsOdds > 0 ? horse.VPInfo.MinPlatsOdds : this.MinPlatsOdds;
+            //this.MaxPlatsOdds = horse.VPInfo.MaxPlatsOdds > 0 ? horse.VPInfo.MaxPlatsOdds : this.MaxPlatsOdds;
+            //this.MinPlatsOddsExact = horse.VPInfo.MinPlatsOddsExact > 0M ? horse.VPInfo.MinPlatsOddsExact : this.MinPlatsOddsExact;
+            //this.MaxPlatsOddsExact = horse.VPInfo.MaxPlatsOddsExact > 0M ? horse.VPInfo.MaxPlatsOddsExact : this.MaxPlatsOddsExact;
+            //this.InvestmentPlats = horse.VPInfo.InvestmentPlats;
+
+            //// Shareinfo
+            //this.DoubleShare = horse.ShareInfo.DoubleShare > 0 ? horse.ShareInfo.DoubleShare : this.DoubleShare;
+            //this.TrioShare = horse.ShareInfo.TrioShare > 0 ? horse.ShareInfo.TrioShare : this.TrioShare;
+            //this.TvillingShare = horse.ShareInfo.TvillingShare > 0 ? horse.ShareInfo.TvillingShare : this.TvillingShare;
+
+            //switch (this.ParentRace.ParentRaceDayInfo.BetType.Code)
+            //{
+            //    case "V65":
+            //    case "V75":
+            //    case "V85":
+            //    case "GS75":
+            //    case "V86":
+            //    case "V64":
+            //        this.StakeShareAlternate = horse.ShareInfo.StakeShareV4 > 0 ? horse.ShareInfo.StakeShareV4 : this.StakeShareAlternate;
+            //        this.StakeShareAlternate2 = horse.ShareInfo.StakeShareV5 > 0 ? horse.ShareInfo.StakeShareV5 : this.StakeShareAlternate2;
+            //        break;
+            //    //case "V3":
+            //    case "V4":
+            //        this.StakeShareAlternate = horse.ShareInfo.StakeShareVxx > 0 ? horse.ShareInfo.StakeShareVxx : this.StakeShareAlternate;
+            //        this.StakeShareAlternate2 = horse.ShareInfo.StakeShareV5 > 0 ? horse.ShareInfo.StakeShareV5 : this.StakeShareAlternate2;
+            //        break;
+            //    case "V5":
+            //        this.StakeShareAlternate = horse.ShareInfo.StakeShareVxx > 0 ? horse.ShareInfo.StakeShareVxx : this.StakeShareAlternate;
+            //        this.StakeShareAlternate2 = horse.ShareInfo.StakeShareV4 > 0 ? horse.ShareInfo.StakeShareV4 : this.StakeShareAlternate2;
+            //        break;
+            //    case "DD":
+            //    case "LD":
+            //        this.StakeDistributionPercent = Convert.ToInt32(horse.ShareInfo.DoubleShare * 100);
+            //        this.StakeDistributionShare = horse.ShareInfo.DoubleShare;
+            //        break;
+            //    case "TV":
+            //        this.StakeDistributionPercent = Convert.ToInt32(horse.ShareInfo.TvillingShare * 100);
+            //        this.StakeDistributionShare = horse.ShareInfo.TvillingShare;
+            //        break;
+            //    case "T":
+            //        this.StakeDistributionPercent = Convert.ToInt32(horse.ShareInfo.TrioShare * 100);
+            //        this.StakeDistributionShare = horse.ShareInfo.TrioShare;
+            //        break;
+            //    default:
+            //        break;
+            //}
+
+            //switch (this.ParentRace.ParentRaceDayInfo.BetType.Code)
+            //{
+            //    case "DD":
+            //    case "LD":
+            //    case "TV":
+            //    case "T":
+            //        if (horse.ShareInfo.StakeShareVxx > 0)
+            //        {
+            //            this.StakeShareAlternate = horse.ShareInfo.StakeShareVxx;
+            //            if (horse.ShareInfo.StakeShareV4 > 0)
+            //            {
+            //                this.StakeShareAlternate2 = horse.ShareInfo.StakeShareV4;
+            //            }
+            //            else
+            //            {
+            //                this.StakeShareAlternate2 = horse.ShareInfo.StakeShareV5;
+            //            }
+            //        }
+            //        else if (horse.ShareInfo.StakeShareV4 > 0)
+            //        {
+            //            this.StakeShareAlternate = horse.ShareInfo.StakeShareV4;
+            //            this.StakeShareAlternate2 = horse.ShareInfo.StakeShareV5;
+            //        }
+            //        else
+            //        {
+            //            this.StakeShareAlternate = horse.ShareInfo.StakeShareV5;
+            //        }
+            //        break;
+            //    default:
+            //        break;
+            //}
+
+            //// Skoinformation
+            //if (horse.ShoeInfoCurrent != null)
+            //{
+            //    this.ShoeInfoCurrent.Foreshoes = horse.ShoeInfoCurrent.Foreshoes;
+            //    this.ShoeInfoCurrent.Hindshoes = horse.ShoeInfoCurrent.Hindshoes;
+            //}
+            //else
+            //{
+            //    this.ShoeInfoCurrent = new HPTHorseShoeInfo();
+            //}
+
+            //if (horse.ShoeInfoPrevious != null)
+            //{
+            //    this.ShoeInfoPrevious.Foreshoes = horse.ShoeInfoPrevious.Foreshoes;
+            //    this.ShoeInfoPrevious.Hindshoes = horse.ShoeInfoPrevious.Hindshoes;
+            //}
+            //else
+            //{
+            //    this.ShoeInfoPrevious = new HPTHorseShoeInfo();
+            //}
+
+            //if (horse.ShoeInfoCurrent != null && horse.ShoeInfoPrevious != null)
+            //{
+            //    if (this.ShoeInfoCurrent.Foreshoes == null && this.ShoeInfoCurrent.Hindshoes == null)
+            //    {
+            //        this.ShoeInfoCurrent.Foreshoes = this.ShoeInfoPrevious.Foreshoes;
+            //        this.ShoeInfoCurrent.Hindshoes = this.ShoeInfoPrevious.Hindshoes;
+            //        this.ShoeInfoCurrent.PreviousUsed = true;
+            //    }
+            //    else
+            //    {
+            //        this.ShoeInfoCurrent.SetChangedFlags(this.ShoeInfoPrevious);
+            //        this.ShoeInfoCurrent.PreviousUsed = false;
+            //    }
+            //}
+
+            //// Vagninformation
+            //if (this.SulkyInfoCurrent == null)
+            //{
+            //    this.SulkyInfoCurrent = new HPTHorseSulkyInfo()
+            //    {
+            //        Text = horse.StartInfo.SulkyInfoCurrent.Text
+            //    };
+            //}
+            //else if (horse.StartInfo != null && horse.StartInfo.SulkyInfoCurrent != null)
+            //{
+            //    this.SulkyInfoCurrent.Text = horse.StartInfo.SulkyInfoCurrent.Text;
+            //}
+
+            //if (this.SulkyInfoPrevious == null)
+            //{
+            //    this.SulkyInfoPrevious = new HPTHorseSulkyInfo()
+            //    {
+            //        Text = horse.StartInfo.SulkyInfoPrevious.Text
+            //    };
+            //}
+            //else if (horse.StartInfo != null && horse.StartInfo.SulkyInfoPrevious != null)
+            //{
+            //    this.SulkyInfoPrevious.Text = horse.StartInfo.SulkyInfoPrevious.Text;
+            //}
+
+            //if (!string.IsNullOrEmpty(this.SulkyInfoCurrent?.Text) && !string.IsNullOrEmpty(this.SulkyInfoPrevious?.Text) && this.SulkyInfoCurrent.Text != this.SulkyInfoPrevious.Text)
+            //{
+            //    this.SulkyInfoCurrent.SulkyChanged = true;
+            //}
+
+            //// Trio
+            //if (this.ParentRace.ParentRaceDayInfo.BetType.Code == "T")
+            //{
+            //    if (horse.TrioInfo != null)
+            //    {
+            //        if (this.TrioInfo == null)
+            //        {
+            //            this.TrioInfo = new HPTHorseTrioInfo()
+            //            {
+            //                TrioIndex = horse.TrioInfo.TrioIndex,
+            //                PlaceInfo1 = new HPTHorseTrioPlaceInfo()
+            //                {
+            //                    Investment = (int)horse.TrioInfo.InvestmentFirst,
+            //                    Percent = horse.TrioInfo.PercentFirst,
+            //                    Place = 1
+            //                },
+            //                PlaceInfo2 = new HPTHorseTrioPlaceInfo()
+            //                {
+            //                    Investment = (int)horse.TrioInfo.InvestmentSecond,
+            //                    Percent = horse.TrioInfo.PercentSecond,
+            //                    Place = 2
+            //                },
+            //                PlaceInfo3 = new HPTHorseTrioPlaceInfo()
+            //                {
+            //                    Investment = (int)horse.TrioInfo.InvestmentThird,
+            //                    Percent = horse.TrioInfo.PercentThird,
+            //                    Place = 3
+            //                }
+            //            };
+            //        }
+            //        else
+            //        {
+            //            this.TrioInfo.TrioIndex = horse.TrioInfo.TrioIndex;
+            //            this.TrioInfo.PlaceInfo1.Investment = (int)horse.TrioInfo.InvestmentFirst;
+            //            this.TrioInfo.PlaceInfo1.Percent = horse.TrioInfo.PercentFirst;
+            //            this.TrioInfo.PlaceInfo2.Investment = (int)horse.TrioInfo.InvestmentSecond;
+            //            this.TrioInfo.PlaceInfo2.Percent = horse.TrioInfo.PercentSecond;
+            //            this.TrioInfo.PlaceInfo3.Investment = (int)horse.TrioInfo.InvestmentThird;
+            //            this.TrioInfo.PlaceInfo3.Percent = horse.TrioInfo.PercentThird;
+            //        }
+            //    }
+            //}
+
+            //// Resultat i loppet om det är klart
+            //HandleHorseResultInfo(horse, this);
+
+            // Beräkna härledda variabler
+            CalculateDerivedValues();
+        }
 
         public void Merge(HPTService.HPTHorse horse)
         {

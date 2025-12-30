@@ -175,18 +175,18 @@ namespace HPTClient
             this.RaceInfoShort = race.SharedInfo.RaceInfoShort.Replace("\n", string.Empty);
             this.RaceInfoLong = race.SharedInfo.RaceInfoLong;
             this.RaceShortText = "Lopp " + this.RaceNr.ToString();
-            this.ReservOrder = race.ReservOrder;
+            //this.ReservOrder = race.ReservOrder;
 
             this.ReservOrderList = new int[0];
-            if (this.ReservOrder != string.Empty)
-            {
-                string[] reservStringArray = this.ReservOrder.Split('-');
-                this.ReservOrderList = new int[reservStringArray.Length];
-                for (int i = 0; i < reservStringArray.Length; i++)
-                {
-                    this.ReservOrderList[i] = int.Parse(reservStringArray[i]);
-                }
-            }
+            //if (this.ReservOrder != string.Empty)
+            //{
+            //    string[] reservStringArray = this.ReservOrder.Split('-');
+            //    this.ReservOrderList = new int[reservStringArray.Length];
+            //    for (int i = 0; i < reservStringArray.Length; i++)
+            //    {
+            //        this.ReservOrderList[i] = int.Parse(reservStringArray[i]);
+            //    }
+            //}
 
             this.StartMethod = race.SharedInfo.StartMethod;
             this.StartMethodCode = race.SharedInfo.StartMethodCode;
@@ -662,8 +662,8 @@ namespace HPTClient
         //[DataMember(IsRequired = false, EmitDefaultValue = false)]
         //public int Reserv2Nr { get; set; }
 
-        [DataMember(IsRequired = false, EmitDefaultValue = false)]
-        public string ReservOrder { get; set; }
+        //[DataMember(IsRequired = false, EmitDefaultValue = false)]
+        //public string ReservOrder { get; set; }
 
         private int[] reservOrderList;
         public int[] ReservOrderList

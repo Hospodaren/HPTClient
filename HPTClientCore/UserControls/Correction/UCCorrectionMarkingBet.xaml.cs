@@ -429,7 +429,7 @@ namespace HPTClient
         private void PrepareForSave()
         {
             string fileName = this.MarkBet.SaveDirectory + this.MarkBet.ToFileNameString();
-            string hpt3Filename = fileName + ".hpt5";
+            string hpt3Filename = fileName + ".hpt7";
             this.MarkBet.MailSender.HPT3FileName = hpt3Filename;
             this.MarkBet.SetSerializerValues();
         }
@@ -510,15 +510,15 @@ namespace HPTClient
                     }
 
                     HPTLegResult legResult = horse.ParentRace.LegResult;
-                    if (legResult.Winners == null || legResult.Winners.Count() == 0)
+                    if (legResult.Winners is null || legResult.Winners.Count() == 0)
                     {
-                        legResult.Winners = new int[] { horse.StartNr };
-                        legResult.WinnerStrings = new string[] { horse.HorseName };
+                        legResult.Winners = [horse.StartNr];
+                        legResult.WinnerStrings = [horse.HorseName];
                     }
                     else
                     {
-                        legResult.Winners[0] = horse.StartNr;
-                        legResult.WinnerStrings[0] = horse.HorseName;
+                        legResult.Winners = [horse.StartNr];
+                        legResult.WinnerStrings = [horse.HorseName];
                     }
                 }
                 if (e.AddedItems.Count > 0 && (bool)this.chkSimulate.IsChecked)
@@ -888,7 +888,7 @@ namespace HPTClient
                     this.MarkBet.BetType.PayOutDummyList[1].PayOutAmount = sr.RowValueOneErrorFinalStakeShare;
                     if (numberOfPools > 2)
                     {
-                        this.MarkBet.BetType.PayOutDummyList[2].PayOutAmount = sr.RowValueTwoErrorsFinalStakeShare;
+                        this.MarkBet.BetType.PayOutDummyList[2].PayOutAmount = sr.RowValueThreeErrorsFinalStakeShare;
                     }
                 }
                 this.icWorstCaseScenario.ItemsSource = this.MarkBet.BetType.PayOutDummyList;
@@ -1004,7 +1004,7 @@ namespace HPTClient
                                             .Where(sr => sr.HorseList.Intersect(bestRow.HorseList).Count() == this.MarkBet.RaceDayInfo.RaceList.Count - 2)
                                             .ToList();
 
-                                        totalPotentialWinnings += rowsWith2Errors.Sum(sr => sr.BetMultiplier) * bestRow.RowValueThreeErrorsFinalStakeShare;
+                                        totalPotentialWinnings += rowsWith3Errors.Sum(sr => sr.BetMultiplier) * bestRow.RowValueThreeErrorsFinalStakeShare;
                                     }
                                 }
                             }

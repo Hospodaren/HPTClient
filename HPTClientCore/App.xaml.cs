@@ -16,16 +16,16 @@ namespace HPTClient
         {
             try
             {
-                if (e.Args != null && e.Args.Count(s => s.Contains(".hpt5")) > 0)
+                if (e.Args != null && e.Args.Count(s => s.Contains(".hpt7")) > 0)
                 {
                     if (e.Args.Length == 1)
                     {
-                        FileToOpen = e.Args.FirstOrDefault(s => s.Contains(".hpt5"));
+                        FileToOpen = e.Args.FirstOrDefault(s => s.Contains(".hpt7"));
                     }
                     else
                     {
                         string completeArgs = e.Args.Aggregate((s, next) => s + " " + next);
-                        var rexFilename = new Regex(@"\w:[\w\\\.\s_-]+?\.hpt5", RegexOptions.IgnoreCase);
+                        var rexFilename = new Regex(@"\w:[\w\\\.\s_-]+?\.hpt7", RegexOptions.IgnoreCase);
                         if (rexFilename.IsMatch(completeArgs))
                         {
                             Match m = rexFilename.Match(completeArgs);

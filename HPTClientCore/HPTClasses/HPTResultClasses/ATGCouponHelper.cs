@@ -1292,7 +1292,8 @@ namespace HPTClient
             {
                 var reservsToChooseFrom = race.HorseList
                     .Where(h => !h.Selected && h.Scratched != true)
-                    .OrderByDescending(h => h.RankList.First(hr => hr.Name == rankVariableName).Rank)
+                    .OrderBy(h => h.RankList.First(hr => hr.Name == rankVariableName).Rank)
+                    //.OrderByDescending(h => h.RankList.First(hr => hr.Name == rankVariableName).Rank)
                     .Select(h => h.StartNr)
                     .ToArray();
 

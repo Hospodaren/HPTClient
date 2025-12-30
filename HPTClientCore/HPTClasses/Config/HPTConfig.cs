@@ -310,7 +310,7 @@ namespace HPTClient
                     });
 
                 filenameList
-                    .Where(fn => fn.EndsWith(".hpt5m"))
+                    .Where(fn => fn.EndsWith(".hpt7m"))
                     .ToList()
                     .ForEach(fn =>
                     {

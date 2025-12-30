@@ -34,7 +34,7 @@ namespace HPTClient
             var ofd = new OpenFileDialog()
             {
                 InitialDirectory = HPTConfig.MyDocumentsPath,
-                Filter = "HPT 5-mallar|*.hpt5m;*.hptam;*.hptrm;*.hptrvm;*.hptrsm;*.hptgim",
+                Filter = "HPT 5-mallar|*.hpt7m;*.hptam;*.hptrm;*.hptrvm;*.hptrsm;*.hptgim",
                 Multiselect = true
             };
 

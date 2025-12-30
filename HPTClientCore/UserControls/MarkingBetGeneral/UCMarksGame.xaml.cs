@@ -1052,8 +1052,8 @@ namespace HPTClient
 
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.InitialDirectory = this.MarkBet.SaveDirectory;
-            sfd.FileName = this.MarkBet.ToFileNameString() + ".hpt5";
-            sfd.Filter = "Hjälp på traven-system|*.hpt5";
+            sfd.FileName = this.MarkBet.ToFileNameString() + ".hpt7";
+            sfd.Filter = "Hjälp på traven-system|*.hpt7";
             sfd.FileOk += new System.ComponentModel.CancelEventHandler(sfd_FileOk);
             sfd.ShowDialog();
         }
@@ -1070,7 +1070,7 @@ namespace HPTClient
                 string fileName = this.MarkBet.SaveDirectory + this.MarkBet.ToFileNameString();
                 this.MarkBet.SystemFilename = fileName + ".xml";
 
-                string hpt3Filename = fileName + ".hpt5";
+                string hpt3Filename = fileName + ".hpt7";
                 this.MarkBet.MailSender.HPT3FileName = hpt3Filename;
             }
             try
@@ -1089,7 +1089,7 @@ namespace HPTClient
             SaveFileDialog sfd = (SaveFileDialog)sender;
             string fileName = sfd.FileName;
             this.MarkBet.SystemFilename = fileName;
-            string hpt4Filename = fileName.Replace(".xml", ".hpt5");
+            string hpt4Filename = fileName.Replace(".xml", ".hpt7");
             this.MarkBet.MailSender.HPT3FileName = hpt4Filename;
             SaveFiles(true, true, false);
         }
@@ -1106,8 +1106,8 @@ namespace HPTClient
             //PrepareForSave(false);
             var sfdHPT4 = new SaveFileDialog();
             sfdHPT4.InitialDirectory = this.MarkBet.SaveDirectory;
-            sfdHPT4.FileName = this.MarkBet.ToFileNameString() + ".hpt5";
-            sfdHPT4.Filter = "Hjälp på traven-system|*.hpt5";
+            sfdHPT4.FileName = this.MarkBet.ToFileNameString() + ".hpt7";
+            sfdHPT4.Filter = "Hjälp på traven-system|*.hpt7";
             sfdHPT4.FileOk += new System.ComponentModel.CancelEventHandler(sfdHPT4_FileOk);
             sfdHPT4.ShowDialog();
         }
@@ -1463,7 +1463,7 @@ namespace HPTClient
                     }
                     this.MarkBet.CouponCorrector.CouponHelper.CreateATGFile();  // Skapa alltid ATG-fil
 
-                    string hpt3Filename = this.MarkBet.SaveDirectory + this.MarkBet.ToFileNameString() + ".hpt5";
+                    string hpt3Filename = this.MarkBet.SaveDirectory + this.MarkBet.ToFileNameString() + ".hpt7";
                     this.MarkBet.MailSender.HPT3FileName = hpt3Filename;
                     HPTSerializer.SerializeHPTSystem(hpt3Filename, this.MarkBet);
 

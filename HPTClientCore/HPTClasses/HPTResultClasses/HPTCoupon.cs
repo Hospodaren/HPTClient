@@ -434,6 +434,7 @@ namespace HPTClient
             this.NumberOfAllCorrect = 0;
             this.NumberOfOneError = 0;
             this.NumberOfTwoErrors = 0;
+            this.NumberOfThreeErrors = 0;
             if (this.NumberOfFinishedLegs > 0)
             {
                 SetNumberOfWinningRows(1);

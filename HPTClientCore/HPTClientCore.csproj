@@ -23,9 +23,9 @@
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>http://download.hpt.nu/</InstallUrl>
     <UpdateUrl>http://download.hpt.nu/</UpdateUrl>
-    <SupportUrl>http://www.hpt.nu</SupportUrl>
-    <ErrorReportUrl>http://www.hpt.nu</ErrorReportUrl>
-    <ProductName>Hjälp på traven 5.3</ProductName>
+    <SupportUrl>https://www.hpt.nu</SupportUrl>
+    <ErrorReportUrl>https://www.hpt.nu</ErrorReportUrl>
+    <ProductName>Hjälp på traven 7.0</ProductName>
     <PublisherName>HPT</PublisherName>
     <SuiteName>Hjälp på...</SuiteName>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
@@ -40,7 +40,7 @@
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <UseWinFormsOutOfProcDesigner>True</UseWinFormsOutOfProcDesigner>
     <ImplicitUsings>enable</ImplicitUsings>
-    <TargetFrameworks>net9.0-windows</TargetFrameworks>
+    <TargetFrameworks>net10.0-windows</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>3355D5589AEBC7D67C91BC34AD3394093046DB16</ManifestCertificateThumbprint>
@@ -65,7 +65,6 @@
     <StartupObject>HPTClient.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="HelperClasses\ATGDownloaderToHPTHelper.cs" />
     <Compile Remove="Program.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -332,9 +331,9 @@
     <Resource Include="Test.ico" />
   </ItemGroup>
   <ItemGroup>
-    <FileAssociation Include=".hpt5">
+    <FileAssociation Include=".hpt7">
       <Visible>False</Visible>
-      <Description>Hjälp på Traven 5-System</Description>
+      <Description>Hjälp på Traven 7-System</Description>
       <Progid>hpt5.system</Progid>
       <DefaultIcon>HptLogo.ico</DefaultIcon>
     </FileAssociation>
@@ -343,8 +342,30 @@
     <WCFMetadataStorage Include="Service References\HPTService\" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="ATGDownloader" Version="1.0.3" />
     <PackageReference Include="Extended.Wpf.Toolkit" Version="5.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Connections.Abstractions" Version="10.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel.Core" Version="2.3.6" />
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.Abstractions" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.FileSystemGlobbing" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.ObjectPool" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.WebEncoders" Version="10.0.1" />
+    <PackageReference Include="Microsoft.IdentityModel.Protocols.WsFederation" Version="8.15.0" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens.Saml" Version="8.15.0" />
+    <PackageReference Include="Microsoft.NETCore.Platforms" Version="7.0.4" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageReference Include="SharpZipLib" Version="1.4.2" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
@@ -353,7 +374,10 @@
     <PackageReference Include="CoreWCF.Http" Version="1.8.0" />
     <PackageReference Include="CoreWCF.WebHttp" Version="1.8.0" />
     <PackageReference Include="CoreWCF.NetTcp" Version="1.8.0" />
+    <PackageReference Include="System.DirectoryServices.Protocols" Version="10.0.1" />
     <PackageReference Include="System.IO.Compression" Version="4.3.0" />
     <PackageReference Include="System.IO.Compression.ZipFile" Version="4.3.0" />
+    <PackageReference Include="System.Net.WebSockets.WebSocketProtocol" Version="5.1.3" />
+    <PackageReference Include="System.Web.Services.Description" Version="10.0.652802" />
   </ItemGroup>
 </Project>

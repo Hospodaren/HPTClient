@@ -157,6 +157,7 @@ namespace HPTClient
                 this.RowValueFinalStakeShare = Convert.ToInt32(Math.Floor(result));
                 this.RowValueOneErrorFinalStakeShare = markBet.CouponCorrector.CalculatePayOutOneErrorFinalStakeShare(this.HorseList, markBet.BetType.PoolShareOneError * markBet.BetType.RowCost);
                 this.RowValueTwoErrorsFinalStakeShare = markBet.CouponCorrector.CalculatePayOutTwoErrorsFinalStakeShare(this.HorseList, markBet.BetType.PoolShareTwoErrors * markBet.BetType.RowCost);
+                this.RowValueThreeErrorsFinalStakeShare = markBet.CouponCorrector.CalculatePayOutThreeErrorsFinalStakeShare(this.HorseList, markBet.BetType.PoolShareThreeErrors * markBet.BetType.RowCost);
 
                 return this.RowValueFinalStakeShare;
             }

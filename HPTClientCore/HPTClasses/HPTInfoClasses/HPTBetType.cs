@@ -299,7 +299,7 @@ namespace HPTClient
         {
             get
             {
-                if (this.poolShareTwoErrors == 0m)
+                if (this.poolShareThreeErrors == 0m)
                 {
                     switch (this.Code)
                     {

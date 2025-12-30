@@ -36,7 +36,7 @@ namespace HPTClient
             ATGCouponHelper couponHelper = new ATGCouponHelper(this.CombBet);
             couponHelper.CreateCoupons();
             couponHelper.CreateATGFile();
-            HPTSerializer.SerializeHPTCombinationSystem(fileName + ".hpt5", this.CombBet);
+            HPTSerializer.SerializeHPTCombinationSystem(fileName + ".hpt7", this.CombBet);
         }
 
         void sfd_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
@@ -51,7 +51,7 @@ namespace HPTClient
                     ATGCouponHelper couponHelper = new ATGCouponHelper(this.CombBet);
                     couponHelper.CreateCoupons();
                     couponHelper.CreateATGFile();
-                    HPTSerializer.SerializeHPTCombinationSystem(fileName.Replace(".xml", ".hpt5"), this.CombBet);
+                    HPTSerializer.SerializeHPTCombinationSystem(fileName.Replace(".xml", ".hpt7"), this.CombBet);
                 }
                 catch (Exception exc)
                 {
@@ -69,8 +69,8 @@ namespace HPTClient
         {
             SaveFileDialog sfdSaveHPT = new SaveFileDialog();
             sfdSaveHPT.InitialDirectory = this.CombBet.SaveDirectory;
-            sfdSaveHPT.FileName = this.CombBet.ToFileNameString() + ".hpt5";
-            sfdSaveHPT.Filter = "Hjälp på traven-system|*.hpt5";
+            sfdSaveHPT.FileName = this.CombBet.ToFileNameString() + ".hpt7";
+            sfdSaveHPT.Filter = "Hjälp på traven-system|*.hpt7";
             sfdSaveHPT.FileOk += new System.ComponentModel.CancelEventHandler(sfdSaveHPT_FileOk);
             sfdSaveHPT.ShowDialog();
         }

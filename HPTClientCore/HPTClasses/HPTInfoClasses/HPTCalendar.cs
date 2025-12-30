@@ -18,18 +18,18 @@ namespace HPTClient
         [DataMember]
         public DateTime ToDate { get; set; }
 
-        [DataMember]
-        public string FromDateString { get; set; }
+        //[DataMember]
+        //public string FromDateString { get; set; }
 
-        [DataMember]
-        public string ToDateString { get; set; }
+        //[DataMember]
+        //public string ToDateString { get; set; }
 
         [DataMember]
         public ObservableCollection<HPTRaceDayInfo> RaceDayInfoList { get; set; }
 
         public override string ToString()
         {
-            return this.FromDateString + " - " + this.ToDateString;
+            return $"{FromDate:yyyy-MM-dd} - {ToDate:yyyy-MM-dd}";
         }
     }
 }

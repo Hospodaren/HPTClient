@@ -40,7 +40,7 @@
                 
                 <Button x:Name="btnClose" Content="Stäng" TextBlock.FontWeight="Black"  Margin="5" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Click="btnClose_Click" HorizontalAlignment="Right" Width="50" Height="25"/>
 
-                <TextBlock Text="Version 6.0.rc1" Grid.Row="3" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Text="Version 6.0.rc4" Grid.Row="3" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
                 <TextBlock Name="tbATGInfo" FontStyle="Italic"
                            Text="All information i Hjälp på traven tillhandahålls enligt samarbetsavtal med ATG. Samtliga rättigheter i materialet (upphovsrätt och databasrätt) tillhör ATG och får användas av annan endast efter avtal med ATG." 

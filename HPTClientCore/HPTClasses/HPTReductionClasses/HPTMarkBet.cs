@@ -885,11 +885,6 @@ namespace HPTClient
                 hmbClone.Config = HPTConfig.Config;
                 HPTServiceToHPTHelper.SetNonSerializedValues(hmbClone);
                 return hmbClone;
-
-                //string fileName = this.SaveDirectory + this.ToFileNameString() + ".hpt5";
-                //HPTSerializer.SerializeHPTSystem(fileName, this);
-                //HPTMarkBet hmbClone = HPTSerializer.DeserializeHPTSystem(fileName);
-                //return hmbClone;
             }
             catch (Exception exc)
             {
@@ -1541,7 +1536,7 @@ namespace HPTClient
                 {
                     this.SaveDirectory = HPTConfig.MyDocumentsPath + this.RaceDayInfo.ToDateAndTrackString() + "\\";
                     Directory.CreateDirectory(this.SaveDirectory);
-                    HPTSerializer.SerializeHPTSystem(this.SaveDirectory + this.ToFileNameString() + ".hpt5", this);
+                    HPTSerializer.SerializeHPTSystem(this.SaveDirectory + this.ToFileNameString() + ".hpt7", this);
                 }
             }
             catch (Exception exc)
@@ -4811,7 +4806,7 @@ namespace HPTClient
             string fileName = this.SaveDirectory + ToFileNameString();
             SystemFilename = fileName + ".xml";
             //Clipboard.SetText(this.MarkBet.SystemFilename);
-            string hpt3Filename = fileName + ".hpt5";
+            string hpt3Filename = fileName + ".hpt7";
             MailSender.HPT3FileName = hpt3Filename;
             SetSerializerValues();
         }

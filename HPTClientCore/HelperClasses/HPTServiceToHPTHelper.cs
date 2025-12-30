@@ -10,72 +10,6 @@ namespace HPTClient
 {
     public class HPTServiceToHPTHelper
     {
-        //public static HPTCalendar CreateCalendar(byte[] baCalendar)
-        //{
-        //    DateTime dtStart = DateTime.Now;
-        //    HPTCalendar hptCalendar = new HPTCalendar();
-        //    try
-        //    {
-        //        HPTService.HPTCalendar calendar = HPTSerializer.DeserializeHPTCalendar(baCalendar);
-        //        HPTServiceToHPTHelper.ConvertCalendar(calendar, hptCalendar);
-        //        IEnumerable<HPTService.HPTRaceDayInfo> orderedList =
-        //            calendar.HPTRaceDayInfoList.OrderBy(rdi => rdi.SharedInfo.FirstRaceStartTime);
-
-        //        foreach (HPTService.HPTRaceDayInfo rdi in orderedList)
-        //        {
-        //            try
-        //            {
-        //                HPTRaceDayInfo hptRdi = new HPTRaceDayInfo();
-        //                HPTServiceToHPTHelper.ConvertCalendarRaceDayInfo(rdi, hptRdi);
-        //                if (hptRdi.BetTypeList.Count > 0)
-        //                {
-        //                    hptRdi.ShowInUI = hptRdi.RaceDayDate.Date >= DateTime.Now.Date;
-        //                    hptCalendar.RaceDayInfoList.Add(hptRdi);
-        //                }
-        //            }
-        //            catch (Exception exc)
-        //            {
-        //                string s = exc.Message;
-        //            }
-        //        }
-
-        //        // Skapa lista med de tävlingar man ska kunna ladda ner systemförslag för
-        //        var markBetSystemList = hptCalendar.RaceDayInfoList
-        //            .Where(hptRdi => hptRdi.RaceDayDate < DateTime.Now.AddDays(6D) && hptRdi.RaceDayDate > DateTime.Now.AddDays(-3D));
-
-        //        foreach (var markBet in markBetSystemList)
-        //        {
-        //            var betTypeList = markBet.BetTypeList
-        //                .Where(bt => bt.Code.StartsWith("V"))
-        //                .Select(bt => new HPTRaceDayInfoLight()
-        //                {
-        //                    BetTypeCode = bt.Code,
-        //                    RaceDayDate = markBet.RaceDayDate,
-        //                    TrackId = markBet.TrackId,
-        //                    TrackName = markBet.Trackname,
-        //                    NumberOfUploadedSystems = bt.NumberOfUploadedSystems
-        //                }).OrderBy(hptRdi => hptRdi.RaceDayDate);
-
-        //            foreach (var raceDayInfoLight in betTypeList)
-        //            {
-        //                HPTConfig.Config.MarkBetSystemList.Add(raceDayInfoLight);
-        //            }
-        //        }
-
-        //        // Sätt sökväg och spara ner kalender på disk
-        //        string calendarPath = HPTConfig.MyDocumentsPath + "\\HPTCalendar.hptcal";
-
-        //        TimeSpan ts = DateTime.Now - dtStart;
-        //        string time = ts.TotalMilliseconds.ToString();
-        //    }
-        //    catch (Exception exc)
-        //    {
-        //        HPTConfig.AddToErrorLogStatic(exc);
-        //        return null;
-        //    }
-        //    return hptCalendar;
-        //}
-
         public static void CreateCalendar(byte[] baCalendar, HPTCalendar hptCalendar)
         {
             DateTime dtStart = DateTime.Now;
@@ -177,9 +111,9 @@ namespace HPTClient
         public static void ConvertCalendar(HPTService.HPTCalendar calendar, HPTCalendar hptCalendar)
         {
             hptCalendar.FromDate = calendar.FromDate;
-            hptCalendar.FromDateString = hptCalendar.FromDate.ToString("yyyy-MM-dd");
+            //hptCalendar.FromDateString = hptCalendar.FromDate.ToString("yyyy-MM-dd");
             hptCalendar.ToDate = calendar.ToDate;
-            hptCalendar.ToDateString = hptCalendar.ToDate.ToString("yyyy-MM-dd");
+            //hptCalendar.ToDateString = hptCalendar.ToDate.ToString("yyyy-MM-dd");
         }
 
         public static void ConvertCalendarRaceDayInfo(HPTService.HPTRaceDayInfo rdi, HPTRaceDayInfo hptRdi)
@@ -497,18 +431,18 @@ namespace HPTClient
             hptRace.RaceInfoShort = race.SharedInfo.RaceInfoShort.Replace("\n", string.Empty);
             hptRace.RaceInfoLong = race.SharedInfo.RaceInfoLong;
             hptRace.RaceShortText = "Lopp " + hptRace.RaceNr.ToString();
-            hptRace.ReservOrder = race.ReservOrder;
+            //hptRace.ReservOrder = race.ReservOrder;
 
             hptRace.ReservOrderList = new int[0];
-            if (!string.IsNullOrWhiteSpace(hptRace.ReservOrder))
-            {
-                string[] reservStringArray = hptRace.ReservOrder.Split('-');
-                hptRace.ReservOrderList = new int[reservStringArray.Length];
-                for (int i = 0; i < reservStringArray.Length; i++)
-                {
-                    hptRace.ReservOrderList[i] = int.Parse(reservStringArray[i]);
-                }
-            }
+            //if (!string.IsNullOrWhiteSpace(hptRace.ReservOrder))
+            //{
+            //    string[] reservStringArray = hptRace.ReservOrder.Split('-');
+            //    hptRace.ReservOrderList = new int[reservStringArray.Length];
+            //    for (int i = 0; i < reservStringArray.Length; i++)
+            //    {
+            //        hptRace.ReservOrderList[i] = int.Parse(reservStringArray[i]);
+            //    }
+            //}
 
             hptRace.StartMethod = race.SharedInfo.StartMethod;
             hptRace.StartMethodCode = race.SharedInfo.StartMethodCode;
@@ -2098,15 +2032,15 @@ namespace HPTClient
 
                 // Skapa reservlista
                 hptRace.ReservOrderList = new int[0];
-                if (!string.IsNullOrWhiteSpace(hptRace.ReservOrder))
-                {
-                    string[] reservStringArray = hptRace.ReservOrder.Split('-');
-                    hptRace.ReservOrderList = new int[reservStringArray.Length];
-                    for (int i = 0; i < reservStringArray.Length; i++)
-                    {
-                        hptRace.ReservOrderList[i] = int.Parse(reservStringArray[i]);
-                    }
-                }
+                //if (!string.IsNullOrWhiteSpace(hptRace.ReservOrder))
+                //{
+                //    string[] reservStringArray = hptRace.ReservOrder.Split('-');
+                //    hptRace.ReservOrderList = new int[reservStringArray.Length];
+                //    for (int i = 0; i < reservStringArray.Length; i++)
+                //    {
+                //        hptRace.ReservOrderList[i] = int.Parse(reservStringArray[i]);
+                //    }
+                //}
 
 
                 foreach (HPTHorse hptHorse in hptRace.HorseList)

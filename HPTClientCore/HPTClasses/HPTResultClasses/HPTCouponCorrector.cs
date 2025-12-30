@@ -81,6 +81,7 @@ namespace HPTClient
             this.CouponHelper.TotalNumberOfAllCorrect = 0;
             this.CouponHelper.TotalNumberOfOneError = 0;
             this.CouponHelper.TotalNumberOfTwoErrors = 0;
+            this.CouponHelper.TotalNumberOfThreeErrors = 0;
             foreach (HPTCoupon coupon in this.CouponHelper.CouponList)
             {
                 coupon.CorrectCoupon(this.RaceDayInfo, racesToCorrect);
@@ -197,12 +198,14 @@ namespace HPTClient
             this.CouponHelper.TotalNumberOfAllCorrect = 0;
             this.CouponHelper.TotalNumberOfOneError = 0;
             this.CouponHelper.TotalNumberOfTwoErrors = 0;
+            this.CouponHelper.TotalNumberOfThreeErrors = 0;
             foreach (HPTCoupon coupon in this.CouponHelper.CouponList)
             {
                 coupon.NumberOfCorrect = 0;
                 coupon.NumberOfAllCorrect = 0;
                 coupon.NumberOfOneError = 0;
                 coupon.NumberOfTwoErrors = 0;
+                coupon.NumberOfThreeErrors = 0;
                 coupon.NumberOfCorrectsColor = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.White);
             }
         }
@@ -213,12 +216,14 @@ namespace HPTClient
             this.CouponHelper.TotalNumberOfAllCorrect = 0;
             this.CouponHelper.TotalNumberOfOneError = 0;
             this.CouponHelper.TotalNumberOfTwoErrors = 0;
+            this.CouponHelper.TotalNumberOfThreeErrors = 0;
             foreach (HPTCoupon coupon in this.CouponHelper.CouponList)
             {
                 coupon.CorrectCouponSimulated(this.RaceDayInfo);
                 this.CouponHelper.TotalNumberOfAllCorrect += coupon.NumberOfAllCorrect * coupon.BetMultiplier;
                 this.CouponHelper.TotalNumberOfOneError += coupon.NumberOfOneError * coupon.BetMultiplier;
                 this.CouponHelper.TotalNumberOfTwoErrors += coupon.NumberOfTwoErrors * coupon.BetMultiplier;
+                this.CouponHelper.TotalNumberOfThreeErrors += coupon.NumberOfThreeErrors * coupon.BetMultiplier;
             }
 
             var horseList = this.RaceDayInfo.RaceList
@@ -248,6 +253,13 @@ namespace HPTClient
                 {
                     this.RaceDayInfo.PayOutList[2].NumberOfWinningRows = this.CouponHelper.TotalNumberOfTwoErrors;
                     this.RaceDayInfo.PayOutList[2].PayOutAmount = CalculatePayOutTwoErrors(horseList, this.RaceDayInfo.BetType.PoolShareTwoErrors * this.RaceDayInfo.BetType.RowCost);
+                }
+
+                // Tre fel
+                if (this.RaceDayInfo.PayOutList.Count > 3)
+                {
+                    this.RaceDayInfo.PayOutList[3].NumberOfWinningRows = this.CouponHelper.TotalNumberOfThreeErrors;
+                    this.RaceDayInfo.PayOutList[3].PayOutAmount = CalculatePayOutThreeErrors(horseList, this.RaceDayInfo.BetType.PoolShareThreeErrors * this.RaceDayInfo.BetType.RowCost);
                 }
 
                 foreach (HPTCoupon coupon in this.CouponHelper.CouponList)
@@ -282,7 +294,7 @@ namespace HPTClient
                         case "V85":
                             this.CouponHelper.TotalWinnings += this.RaceDayInfo.PayOutList[1].PayOutAmount * coupon.NumberOfOneError * coupon.BetMultiplier;
                             this.CouponHelper.TotalWinnings += this.RaceDayInfo.PayOutList[2].PayOutAmount * coupon.NumberOfTwoErrors * coupon.BetMultiplier;
-                            //this.CouponHelper.TotalWinnings += this.RaceDayInfo.PayOutList[3].PayOutAmount * coupon.NumberOfth * coupon.BetMultiplier;    // TODO
+                            this.CouponHelper.TotalWinnings += this.RaceDayInfo.PayOutList[3].PayOutAmount * coupon.NumberOfThreeErrors * coupon.BetMultiplier;    // TODO
                             break;
                         default:
                             break;
@@ -383,7 +395,7 @@ namespace HPTClient
                             * (1M - horse2.StakeDistributionShare)
                             * (1M - horse3.StakeDistributionShare);
 
-                        decimal stakeFactor = horse1.StakeDistributionShare * horse2.StakeDistributionShare * horse1.StakeDistributionShare * horse3.StakeDistributionShare;
+                        decimal stakeFactor = horse1.StakeDistributionShare * horse2.StakeDistributionShare * horse3.StakeDistributionShare;
                         totalStakeShare += (rowStakeShare / stakeFactor * invertedStakeFactor);
                     }
                 }
@@ -391,31 +403,6 @@ namespace HPTClient
             decimal result = factor / totalStakeShare;
             return Convert.ToInt32(Math.Floor(result));
         }
-
-        //internal int CalculatePayOutThreeErrors(IEnumerable<HPTHorse> horseList, decimal factor)
-        //{
-        //    var horseArray = horseList.ToArray();
-        //    decimal totalStakeShare = 0M;
-
-        //    decimal rowStakeShare = horseList
-        //        .Select(h => h.StakeDistributionShare)
-        //        .Aggregate((share, next) => share * next);
-
-        //    for (int i = 0; i < horseArray.Length - 1; i++)
-        //    {
-        //        var horse1 = horseArray[i];
-        //        for (int j = i + 1; j < horseArray.Length; j++)
-        //        {
-        //            var horse2 = horseArray[j];
-
-        //            decimal invertedStakeFactor = (1M - horse1.StakeDistributionShare) * (1M - horse2.StakeDistributionShare);
-        //            decimal stakeFactor = horse1.StakeDistributionShare * horse2.StakeDistributionShare;
-        //            totalStakeShare += (rowStakeShare / stakeFactor * invertedStakeFactor);
-        //        }
-        //    }
-        //    decimal result = factor / totalStakeShare;
-        //    return Convert.ToInt32(Math.Floor(result));
-        //}
 
         internal int CalculatePayOutOneErrorFinalStakeShare(IEnumerable<HPTHorse> horseList, decimal factor)
         {
@@ -451,6 +438,40 @@ namespace HPTClient
                     decimal invertedStakeFactor = (1M - (decimal)horse1.StakeDistributionShareFinal) * (1M - (decimal)horse2.StakeDistributionShareFinal);
                     decimal stakeFactor = (decimal)horse1.StakeDistributionShareFinal * (decimal)horse2.StakeDistributionShareFinal;
                     totalStakeShare += (rowStakeShare / stakeFactor * invertedStakeFactor);
+                }
+            }
+            decimal result = factor / totalStakeShare;
+            return Convert.ToInt32(Math.Floor(result));
+        }
+
+        internal int CalculatePayOutThreeErrorsFinalStakeShare(IEnumerable<HPTHorse> horseList, decimal factor)
+        {
+            // TODO:Fixa beräkningen
+            var horseArray = horseList.ToArray();
+            decimal totalStakeShare = 0M;
+
+            decimal rowStakeShare = horseList
+                .Select(h => (decimal)h.StakeDistributionShareFinal)
+                .Aggregate((share, next) => share * next);
+
+            for (int i1 = 0; i1 < horseArray.Length - 1; i1++)
+            {
+                var horse1 = horseArray[i1];
+                for (int i2 = i1 + 1; i2 < horseArray.Length; i2++)
+                {
+                    var horse2 = horseArray[i2];
+
+                    for (int i3 = i2 + 1; i3 < horseArray.Length; i3++)
+                    {
+                        var horse3 = horseArray[i3];
+
+                        decimal invertedStakeFactor = (1M - (decimal)horse1.StakeDistributionShareFinal)
+                            * (1M - (decimal)horse2.StakeDistributionShareFinal)
+                            * (1M - (decimal)horse3.StakeDistributionShareFinal);
+
+                        decimal stakeFactor = (decimal)horse1.StakeDistributionShareFinal * (decimal)horse2.StakeDistributionShareFinal * (decimal)horse3.StakeDistributionShareFinal;
+                        totalStakeShare += (rowStakeShare / stakeFactor * invertedStakeFactor);
+                    }
                 }
             }
             decimal result = factor / totalStakeShare;

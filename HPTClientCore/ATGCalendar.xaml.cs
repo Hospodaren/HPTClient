@@ -150,7 +150,7 @@ namespace HPTClient
                         ThreadPool.QueueUserWorkItem(new WaitCallback(GetCalendar), ThreadPriority.Normal);
                     }
                 }
-                catch(Exception exc)
+                catch (Exception exc)
                 { }
                 //catch (System.ServiceModel.EndpointNotFoundException)
                 //{
@@ -823,7 +823,7 @@ namespace HPTClient
         {
             OpenFileDialog ofdOpenHPT = new OpenFileDialog();
             ofdOpenHPT.InitialDirectory = HPTConfig.MyDocumentsPath;
-            ofdOpenHPT.Filter = "Hjälp på traven-system|*.hpt4;*.hpt5";
+            ofdOpenHPT.Filter = "Hjälp på traven-system|*.hpt7";
             ofdOpenHPT.FileOk += new System.ComponentModel.CancelEventHandler(ofdOpenHPT_FileOk);
             ofdOpenHPT.ShowDialog();
         }
@@ -1355,7 +1355,7 @@ namespace HPTClient
                     //    sb.Append("DÖTT LOPP");
                     //}
 
-                    string fileName = @"c:\Temp\GamlaSystem\" + raceDayData[1] + "_" + markBet.RaceDayInfo.TracknameFile + "_" + raceDayData[0] + ".hpt5";
+                    string fileName = @"c:\Temp\GamlaSystem\" + raceDayData[1] + "_" + markBet.RaceDayInfo.TracknameFile + "_" + raceDayData[0] + ".hpt7";
                     HPTSerializer.SerializeHPTSystem(fileName, markBet);
                 }
                 catch (Exception exc)
@@ -1373,7 +1373,7 @@ namespace HPTClient
             var sbMarkBetStatistics = new StringBuilder();
             var sbRaceStatistics = new StringBuilder();
 
-            Directory.GetFiles(directory, "*V75*.hpt5")
+            Directory.GetFiles(directory, "*V75*.hpt7")
                 .ToList()
                 .ForEach(f =>
                 {
@@ -1499,7 +1499,7 @@ namespace HPTClient
             var sbMarkBetStatistics = new StringBuilder();
             var sbRaceStatistics = new StringBuilder();
 
-            Directory.GetFiles(directory, "*V64*.hpt5")
+            Directory.GetFiles(directory, "*V64*.hpt7")
                 .ToList()
                 .ForEach(f =>
                 {
@@ -1637,7 +1637,7 @@ namespace HPTClient
             bool showOnlySwedish = (bool)this.chkShowOnlySwedishTracks.IsChecked;
             bool showOnlyWithMarksGame = (bool)this.chkShowOnlyWithMarksGame.IsChecked;
 
-            this.lvwCalenda.ItemsSource.Cast<HPTRaceDayInfo>().ToList().ForEach(rdi => 
+            this.lvwCalenda.ItemsSource.Cast<HPTRaceDayInfo>().ToList().ForEach(rdi =>
             //this.hptCalendar.RaceDayInfoList.ToList().ForEach(rdi =>
             {
                 bool showInUI = false;
@@ -1791,36 +1791,6 @@ namespace HPTClient
         private void miAnalysis_Click(object sender, RoutedEventArgs e)
         {
             AddTabItem(new UCResultAnalyzerList(), "Resultatanalys", "Analys", "/Icons/HPT.ico", HPTResultAnalyzer.ResultAnalyzerList);
-
-            //try
-            //{
-            //    Cursor = Cursors.Wait;
-
-            //    HPTRaceDayInfo hptRdi = new HPTRaceDayInfo()
-            //    {
-            //        DataToShow = this.Config.DataToShowVxx,
-            //        BetType = new HPTBetType()
-            //        {
-            //            Code = "V64",
-            //            Name = "V64"                        
-            //        }
-            //    };
-
-            //    HPTServiceConnector connector = new HPTServiceConnector();
-            //    connector.GetRaceDayInfoByTrackAndDate(hptRdi.BetType, 9, new DateTime(2013,8,6), new HPTServiceConnector.RaceDayInfoDelegate(ReceiveRaceDayInfo));
-            //    Cursor = Cursors.Arrow;
-
-            //}
-            //catch (Exception exc)
-            //{
-            //    Cursor = Cursors.Arrow;
-            //    HPTConfig.Config.AddToErrorLog(exc);
-            //}
-            //var ofd = new OpenFileDialog();
-            //ofd.InitialDirectory = HPTConfig.MyDocumentsPath;
-            //ofd.Filter = "Hjälp på traven-system|*.hpt4;*.hpt5";
-            //ofd.FileOk += new System.ComponentModel.CancelEventHandler(ofd_FileOk);
-            //ofd.ShowDialog();
         }
 
         void ofd_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
