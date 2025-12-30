@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
 
 namespace HPTClient
 {
@@ -13,19 +9,12 @@ namespace HPTClient
     {
         #region local variables used for threading
 
-        //private static string webserviceURL = "http://cloud1.hpt.nu/HPTService.svc";
-        //private static string webserviceURL = "http://cloud2.hpt.nu/HPTService.svc";
-        //private static string webserviceURL = "http://localhost:8731/Design_Time_Addresses/HPTServiceLibrary/Service1/HPTRestService";
-        //private static string webserviceURL = "http://hospodaren.asuscomm.com/HPTService.svc";  // 85.228.139.26    
-        //private static string webserviceURL = "http://85.228.139.26/HPTService.svc";  // 85.228.139.26
-        //private static string webserviceURLAlt = "http://hospodaren.asuscomm.com/HPTService.svc";
-
         private static IEnumerable<string> webserviceURLList = new List<string>()
         {
             "http://cloud1.hpt.nu/HPTService.svc",
             "http://cloud2.hpt.nu/HPTService.svc",
             "http://hospodaren.zapto.org/HPTService.svc",
-            "http://hospodar.asuscomm.com/HPTService.svc",
+            //"http://hospodar.asuscomm.com/HPTService.svc",
         };
 
         HPTBetType betType;
@@ -39,7 +28,7 @@ namespace HPTClient
 
         #endregion
 
-        #region Hantering av nyheter på siten
+        #region TODO: Hantering av nyheter på siten
 
 
         //internal static string LatestNewsHeadline { get; set; }
@@ -151,276 +140,6 @@ namespace HPTClient
             return false;
         }
 
-        internal bool SaveSystem(HPTMarkBet markBet)
-        {
-            try
-            {
-                var fs = new FileStream(markBet.SystemFilename, FileMode.Open, FileAccess.Read, FileShare.Read);
-                byte[] baAtgXml = HPTSerializer.ZipAndCreateBinary(fs);
-
-                var userSystem = new HPTService.HPTATGSystem()
-                {
-                    BetType = markBet.BetType.Code,
-                    EMail = HPTConfig.Config.EMailAddress,
-                    RaceDayDate = markBet.RaceDayInfo.RaceDayDate,
-                    TrackId = markBet.RaceDayInfo.TrackId,
-                    ATGXml = baAtgXml
-                };
-
-                var userSystemStream = HPTSerializer.SerializeHPTServiceObject(typeof(HPTService.HPTATGSystem), userSystem);
-                var request = CreateWebRequestForPOST("SaveSystem", userSystemStream);
-                var response = request.GetResponse();
-                var stream = response.GetResponseStream();
-                var sr = new StreamReader(stream);
-                string strData = sr.ReadToEnd();
-                var rexBinary = new Regex(">(.+?)<");
-                strData = rexBinary.Match(strData).Groups[1].Value;
-
-                var baSaveSystem = Convert.FromBase64String(strData);
-                var saveSystem = (HPTService.HPTSaveSystem)HPTSerializer.DeserializeHPTServiceObject(typeof(HPTService.HPTSaveSystem), baSaveSystem);
-                markBet.UploadedSystemGUID = saveSystem.SystemUniqueIdentifier;
-
-                return !string.IsNullOrEmpty(strData);
-            }
-            catch (Exception exc)
-            {
-                HPTConfig.AddToErrorLogStatic(exc);
-                throw;
-            }
-        }
-
-        //internal static void UploadComments(HPTMarkBet markBet)
-        //{
-        //    try
-        //    {
-        //        // Alla hästar med information
-        //        var raceCommentList = markBet.RaceDayInfo.RaceList
-        //            .Select(r => new HPTRaceComment()
-        //            {
-        //                Comment = string.Empty,
-        //                LegNr = r.LegNr,
-        //                RaceNr = r.RaceNr,
-        //                HorseOwnInformationList = r.HorseList
-        //                .Where(h => h.OwnInformation.HasComment)
-        //                .Select(h => h.OwnInformation).ToList()
-        //            }).ToList();
-
-        //        // Rotobjektet för hästkommentarer
-        //        var raceDayInfoCommentCollection = new HPTRaceDayInfoCommentCollection()
-        //        {
-        //            BetTypeCode = markBet.BetType.Code,
-        //            Comment = markBet.UserCommentsDescription,
-        //            LastUpdated = DateTime.Now,
-        //            RaceDayDateString = markBet.RaceDayInfo.RaceDayDateString,
-        //            TrackCode = markBet.RaceDayInfo.Trackcode,
-        //            TrackId = markBet.RaceDayInfo.TrackId,
-        //            TrackName = markBet.RaceDayInfo.Trackname,
-        //            UserName = HPTConfig.Config.UserNameForUploads,
-        //            RaceCommentList = raceCommentList
-        //        };
-
-        //        // Sätt namn och nummer om det inte redan finns
-        //        markBet.RaceDayInfo.RaceList
-        //            .AsParallel()
-        //            .ForAll(r =>
-        //            {
-        //                foreach (var horse in r.HorseList.Where(h => h.OwnInformation != null))
-        //                {
-        //                    horse.OwnInformation.StartNr = horse.StartNr;
-        //                    horse.OwnInformation.Name = horse.HorseName;
-        //                    horse.OwnInformation.ATGId = horse.ATGId;
-        //                    horse.OwnInformation.HomeTrack = horse.HomeTrack;
-        //                    horse.OwnInformation.Sex = horse.Sex;
-        //                    horse.OwnInformation.Age = horse.Age;
-        //                    horse.OwnInformation.Owner = horse.OwnerName;
-        //                    horse.OwnInformation.Trainer = horse.TrainerName;
-        //                }
-        //            });
-
-        //        byte[] baRaceDayInfoCommentCollection = HPTSerializer.SerializeHPTRaceDayInfoCommentCollection(raceDayInfoCommentCollection);
-
-        //        var userComments = new HPTService.HPTUserComments()
-        //        {
-        //            Comment = string.Empty,
-        //            CommentXml = baRaceDayInfoCommentCollection,
-        //            EMail = HPTConfig.Config.EMailAddress,
-        //            UploadDate = DateTime.Now,
-        //            UserName = HPTConfig.Config.UserNameForUploads
-        //        };
-
-        //        var userCommentsStream = HPTSerializer.SerializeHPTServiceObject(typeof(HPTService.HPTUserComments), userComments);
-        //        var request = CreateWebRequestForPOST("UploadRaceDayInfoComments", userCommentsStream);
-        //        var response = request.GetResponse();
-        //        var stream = response.GetResponseStream();
-        //        var sr = new StreamReader(stream);
-        //        string strData = sr.ReadToEnd();
-
-        //        //var saveSystem = Client.UploadRaceDayInfoComments(baRaceDayInfoCommentCollection, HPTConfig.Config.EMailAddress, HPTConfig.Config.UserNameForUploads,
-        //        //    raceDayInfoCommentCollection.Comment, markBet.RaceDayInfo.BetType.Code, markBet.RaceDayInfo.RaceDayDate, markBet.RaceDayInfo.TrackId);
-
-        //        //if (saveSystem.ErrorMessage != null && saveSystem.ErrorMessage != string.Empty)
-        //        //{
-        //        //    throw new Exception(saveSystem.ErrorMessage);
-        //        //}
-        //    }
-        //    catch (Exception exc)
-        //    {
-        //        HPTConfig.AddToErrorLogStatic(exc);
-        //        throw;
-        //    }
-        //}
-
-        //internal static void UploadComments(HPTMarkBet markBet)
-        //{
-        //    try
-        //    {
-        //        // Alla hästar med information
-        //        var raceCommentList = markBet.RaceDayInfo.RaceList
-        //            .Select(r => new HPTRaceComment()
-        //            {
-        //                Comment = string.Empty,
-        //                LegNr = r.LegNr,
-        //                RaceNr = r.RaceNr,
-        //                HorseOwnInformationList = r.HorseList
-        //                .Where(h => h.OwnInformation.HasComment)
-        //                .Select(h => h.OwnInformation).ToList()
-        //            }).ToList();
-
-        //        // Rotobjektet för hästkommentarer
-        //        var raceDayInfoCommentCollection = new HPTRaceDayInfoCommentCollection()
-        //        {
-        //            BetTypeCode = markBet.BetType.Code,
-        //            Comment = markBet.UserCommentsDescription,
-        //            LastUpdated = DateTime.Now,
-        //            RaceDayDateString = markBet.RaceDayInfo.RaceDayDateString,
-        //            TrackCode = markBet.RaceDayInfo.Trackcode,
-        //            TrackId = markBet.RaceDayInfo.TrackId,
-        //            TrackName = markBet.RaceDayInfo.Trackname,
-        //            UserName = HPTConfig.Config.UserNameForUploads,
-        //            RaceCommentList = raceCommentList
-        //        };
-
-        //        // Sätt namn och nummer om det inte redan finns
-        //        foreach (var race in markBet.RaceDayInfo.RaceList)
-        //        {
-        //            foreach (var horse in race.HorseList)
-        //            {
-        //                if (horse.OwnInformation != null)
-        //                {
-        //                    horse.OwnInformation.StartNr = horse.StartNr;
-        //                    horse.OwnInformation.Name = horse.HorseName;
-        //                }
-        //            }
-        //        }
-
-        //        byte[] baRaceDayInfoCommentCollection = HPTSerializer.SerializeHPTRaceDayInfoCommentCollection(raceDayInfoCommentCollection);
-
-        //        var saveSystem = Client.UploadRaceDayInfoComments(baRaceDayInfoCommentCollection, HPTConfig.Config.EMailAddress, HPTConfig.Config.UserNameForUploads,
-        //            raceDayInfoCommentCollection.Comment, markBet.RaceDayInfo.BetType.Code, markBet.RaceDayInfo.RaceDayDate, markBet.RaceDayInfo.TrackId);
-
-        //        if (saveSystem.ErrorMessage != null && saveSystem.ErrorMessage != string.Empty)
-        //        {
-        //            throw new Exception(saveSystem.ErrorMessage);
-        //        }
-        //    }
-        //    catch (Exception exc)
-        //    {
-        //        HPTConfig.AddToErrorLogStatic(exc);
-        //        throw exc;
-        //    }
-        //}
-
-        // /UserRaceDayInfoCommentsAll?betType={betType}&trackId={trackid}&raceDate={raceDate}
-
-        //internal static HPTService.HPTUserRaceDayInfoCommentsCollection DownloadCommentsAll(HPTMarkBet markBet)
-        //{
-        //    try
-        //    {
-        //        byte[] baUserRaceDayInfoCommentsCollection = DownloadAndCreateByteArrayStatic(webserviceURL, "UserRaceDayInfoCommentsAll?betType=" + markBet.RaceDayInfo.BetType.Code
-        //            + "&trackid=" + markBet.RaceDayInfo.TrackId.ToString()
-        //            + "&raceDate=" + markBet.RaceDayInfo.RaceDayDate.ToString("yyyy-MM-dd")
-        //            );
-
-        //        var userRaceDayInfoCommentsCollection = HPTSerializer.DeserializeHPTUserRaceDayInfoCommentsCollection(baUserRaceDayInfoCommentsCollection);
-        //        return userRaceDayInfoCommentsCollection;
-        //    }
-        //    catch (Exception exc)
-        //    {
-        //        HPTConfig.AddToErrorLogStatic(exc);
-        //        throw;
-        //    }
-        //}
-
-        //// /UserRaceDayInfoCommentsByEmail?eMail={eMail}&betType={betType}&trackId={trackId}&raceDate={raceDate}
-        //internal static HPTRaceDayInfoCommentCollection DownloadCommentsByEMail(HPTMarkBet markBet, string eMail)
-        //{
-        //    try
-        //    {
-        //        byte[] baUserRaceDayInfoComments = DownloadAndCreateByteArrayStatic(webserviceURL, "UserRaceDayInfoCommentsByEmail?eMail=" + eMail
-        //            + "&betType=" + markBet.RaceDayInfo.BetType.Code
-        //            + "&trackId=" + markBet.RaceDayInfo.TrackId.ToString()
-        //            + "&raceDate=" + markBet.RaceDayInfo.RaceDayDate.ToString("yyyy-MM-dd")
-        //            );
-
-        //        var userRaceDayInfoComment = HPTSerializer.DeserializeHPTRaceDayInfoCommentCollection(baUserRaceDayInfoComments);
-
-        //        foreach (var raceComment in userRaceDayInfoComment.RaceCommentList)
-        //        {
-        //            foreach (var horseInformation in raceComment.HorseOwnInformationList)
-        //            {
-        //                var horse = markBet.RaceDayInfo
-        //                    .RaceList.First(r => r.LegNr == raceComment.LegNr)
-        //                    .HorseList.First(h => h.HorseName == horseInformation.Name);
-
-        //                if (horse.OwnInformation == null)
-        //                {
-        //                    horse.OwnInformation = new HPTHorseOwnInformation()
-        //                    {
-        //                        Name = horse.HorseName,
-        //                        ATGId = horse.ATGId,
-        //                        HomeTrack = horse.HomeTrack,
-        //                        Sex = horse.Sex,
-        //                        Age = horse.Age,
-        //                        Owner = horse.OwnerName,
-        //                        Trainer = horse.TrainerName,
-        //                        CreationDate = DateTime.Now,
-        //                        HorseOwnInformationCommentList = new System.Collections.ObjectModel.ObservableCollection<HPTHorseOwnInformationComment>()
-        //                    };
-        //                }
-        //                else if (horse.OwnInformation.HorseOwnInformationCommentList == null)
-        //                {
-        //                    horse.OwnInformation.HorseOwnInformationCommentList = new System.Collections.ObjectModel.ObservableCollection<HPTHorseOwnInformationComment>();
-        //                }
-
-        //                foreach (var horseComment in horseInformation.HorseOwnInformationCommentList)
-        //                {
-        //                    var horseInformationComment = horse.OwnInformation.HorseOwnInformationCommentList
-        //                        .FirstOrDefault(hc => hc.CommentDate == horseComment.CommentDate && hc.CommentUser == horseComment.CommentUser);
-
-        //                    if (horseInformationComment != null)
-        //                    {
-        //                        horseInformationComment.Comment = horseComment.Comment;
-        //                    }
-        //                    else
-        //                    {
-        //                        horse.OwnInformation.HorseOwnInformationCommentList.Add(horseComment);
-        //                    }
-        //                    horse.OwnInformation.HasComment = true;
-        //                    horseComment.NextTimer = horseInformation.NextTimer;
-        //                }
-        //                horse.OwnInformation.Updated = true;
-        //            }
-        //        }
-        //        return userRaceDayInfoComment;
-        //    }
-        //    catch (Exception exc)
-        //    {
-        //        HPTConfig.AddToErrorLogStatic(exc);
-        //        //throw exc;
-        //    }
-        //    return null;
-        //}
-
         internal byte[] GetCalendar(HPTCalendar hptCalendar)
         {
             foreach (var webserviceURL in webserviceURLList)
@@ -471,31 +190,6 @@ namespace HPTClient
             }
         }
 
-        //internal static HttpWebRequest WR
-        //{
-        //    get
-        //    {
-        //        var request = (HttpWebRequest)HttpWebRequest.Create(webserviceURL + "/HPTRestService/");
-        //        request.Method = "GET";
-        //        request.Timeout = 15000;
-        //        request.ReadWriteTimeout = 15000;
-
-        //        return request;
-        //    }
-        //}
-
-        //internal static HttpWebRequest WRAlt
-        //{
-        //    get
-        //    {
-        //        var request = (HttpWebRequest)HttpWebRequest.Create(webserviceURLAlt + "/HPTRestService/");
-        //        request.Method = "GET";
-        //        request.Timeout = 15000;
-        //        request.ReadWriteTimeout = 15000;
-
-        //        return request;
-        //    }
-        //}
 
         internal static HttpWebRequest GetWebRequest(string url, string query)
         {
@@ -506,16 +200,6 @@ namespace HPTClient
 
             return request;
         }
-
-        //internal static HttpWebRequest GetWebRequest(string url)
-        //{
-        //    var request = (HttpWebRequest)HttpWebRequest.Create(webserviceURL + "/HPTRestService/" + url);
-        //    request.Method = "GET";
-        //    request.Timeout = 15000;
-        //    request.ReadWriteTimeout = 15000;
-
-        //    return request;
-        //}
 
         internal byte[] DownloadAndCreateByteArray(string url, string query)
         {
@@ -541,20 +225,6 @@ namespace HPTClient
                 return new byte[0];
             }
         }
-
-        //internal static string GetAlternateUrl(string url)
-        //{
-        //    return url.Replace(webserviceURL, webserviceURLAlt);
-        //}
-
-        //internal byte[] DownloadAndCreateByteArray(string url)
-        //{
-        //    string strData = WC.DownloadString(url);
-        //    Regex rexBinary = new Regex(">(.+?)<");
-        //    strData = rexBinary.Match(strData).Groups[1].Value;
-        //    byte[] baData = Convert.FromBase64String(strData);
-        //    return baData;
-        //}
 
         internal static byte[] DownloadAndCreateByteArrayStatic(string url, string query)
         {
@@ -589,183 +259,6 @@ namespace HPTClient
             return strData;
         }
 
-        //internal static HPTService.AuthenticationResponse authResponse;
-        //internal static HPTService.AuthenticationResponse AuthenticateAndGetCalendar()
-        //{
-        //    var request = CreateAuthenticationRequest();
-        //    request.IPAddress = "XXX.XXX.XXX.XXX";// FindIPAddress();
-
-        //    HPTService.AuthenticationResponse response = new HPTService.AuthenticationResponse()
-        //    {
-        //        ErrorMessage = "Autenticering misslyckades",
-        //        IsPayingCustomer = false
-        //    };
-
-        //    if (string.IsNullOrWhiteSpace(HPTConfig.Config.EMailAddress) || string.IsNullOrWhiteSpace(HPTConfig.Config.Password))
-        //    {
-        //        response.CalendarZip = DownloadAndCreateByteArrayStatic(webserviceURLAlt, "CalendarZip");
-        //    }
-        //    else
-        //    {
-        //        string query = "AuthenticateAndGetCalendarZip?eMailAddress=" + request.EMailAddress
-        //            + "&password=" + request.Password
-        //            + "&ipAddress=" + request.IPAddress;
-
-        //        try
-        //        {
-        //            byte[] baAuthenticationResponse = DownloadAndCreateByteArrayStatic(webserviceURL, query);
-        //            response = HPTSerializer.DeserializeAuthenticationResponse(baAuthenticationResponse);
-        //            HPTConfig.Config.LastIPAddress = request.IPAddress;
-        //            HPTConfig.Config.PROVersionExpirationDate = response.PROVersionExpirationDate;
-        //        }
-        //        catch (Exception exc)
-        //        {
-        //            if (HPTConfig.Config.PROVersionExpirationDate.Date < DateTime.Today)
-        //            {
-        //                //byte[] baAuthenticationResponse = DownloadAndCreateByteArrayStatic(webserviceURLAlt, query);
-        //                byte[] baAuthenticationResponse = DownloadAndCreateByteArrayStatic(webserviceURL, query);
-        //                response = HPTSerializer.DeserializeAuthenticationResponse(baAuthenticationResponse);
-        //                HPTConfig.Config.LastIPAddress = request.IPAddress;
-        //                HPTConfig.Config.PROVersionExpirationDate = response.PROVersionExpirationDate;
-        //            }
-        //            else
-        //            {
-        //                response.PROVersionExpirationDate = HPTConfig.Config.PROVersionExpirationDate;
-        //                response.CalendarZip = DownloadAndCreateByteArrayStatic(webserviceURLAlt, "CalendarZip");
-        //                response.IsPayingCustomer = true;
-        //            }
-        //            HPTConfig.AddToErrorLogStatic(exc);
-        //        }
-        //    }
-
-        //    authResponse = response;
-        //    return response;
-        //}
-
-        //internal static bool AuthenticationNeeded(HPTService.AuthenticationRequest request, HPTService.AuthenticationResponse response)
-        //{
-        //    // Ingen registrerad IP-adress, så autenticering krävs.
-        //    if (string.IsNullOrEmpty(HPTConfig.Config.LastIPAddress) || HPTConfig.Config.PROVersionExpirationDate < DateTime.Now)
-        //    {
-        //        return true;
-        //    }
-
-        //    // Samma IP-adress och betalande användare, hoppa över autenticering.
-        //    var rexDomain = new Regex(@"[xX\d]{1,3}\.[xX\d]{1,3}\.");
-        //    string oldIPAdress = rexDomain.Match(HPTConfig.Config.LastIPAddress).Value;
-        //    string newIPAdress = rexDomain.Match(request.IPAddress).Value;
-        //    if (oldIPAdress == newIPAdress)
-        //    {
-        //        response.IsPayingCustomer = true;
-        //        response.PROVersionExpirationDate = HPTConfig.Config.PROVersionExpirationDate;
-        //        response.ErrorMessage = string.Empty;
-        //        return false;
-        //    }
-
-        //    return true;
-        //}
-
-        //internal static void LogOut()
-        //{
-        //    try
-        //    {
-        //        HPTService.AuthenticationRequest request = CreateAuthenticationRequest();
-        //        //request.IPAddress = IPAddress;
-        //        request.IPAddress = "XXX.XXX.XXX.XXX";
-
-        //        byte[] baLogOut = DownloadAndCreateByteArrayStatic(webserviceURL, "Logout?eMailAddress=" + request.EMailAddress 
-        //                                                         + "&password=" + request.Password 
-        //                                                         + "&ipAddress=" + request.IPAddress);
-        //    }
-        //    catch (Exception exc)
-        //    {
-        //        HPTConfig.Config.AddToErrorLog(exc);
-        //        string s = exc.Message;
-        //    }
-        //}
-
-        private static HPTService.AuthenticationRequest CreateAuthenticationRequest()
-        {
-            //// Om epost/nyckel inte lästs upp från hptcon-filen
-            //if (string.IsNullOrEmpty(HPTConfig.Config.EMailAddress) || string.IsNullOrEmpty(HPTConfig.Config.Password))
-            //{
-            //    bool configRead = HPTConfig.Config.GetValuesFromIsolatedStorage();
-            //}
-
-            HPTService.AuthenticationRequest request = new HPTClient.HPTService.AuthenticationRequest();
-            request.ClientName = "HPT53";
-            request.ClientVersionNumber = 5.33M;
-            request.ClientBeta = false;
-            request.ClientBetaVersion = 0;
-            request.Password = HPTConfig.Config.Password == null ? string.Empty : HPTConfig.Config.Password;
-            request.UserName = HPTConfig.Config.UserName == null ? string.Empty : HPTConfig.Config.UserName;
-            request.EMailAddress = HPTConfig.Config.EMailAddress == null ? string.Empty : HPTConfig.Config.EMailAddress;
-
-            return request;
-        }
-
-        //internal static HPTService.HPTRegistration Register()
-        //{
-        //    byte[] baRegister = DownloadAndCreateByteArrayStatic(webserviceURL, "RegisterUser?username=" + HPTConfig.Config.UserName + "&eMailAddress=" + HPTConfig.Config.EMailAddress);
-        //    HPTService.HPTRegistration response = HPTSerializer.DeserializeHPTRegistration(baRegister);
-        //    return response;
-        //}
-
-        //internal static void GetKey()
-        //{
-        //    byte[] baRetrieveKey = DownloadAndCreateByteArrayStatic(webserviceURL, "RetrieveKey?eMailAddress=" + HPTConfig.Config.EMailAddress);
-        //    //HPTService.HPTUser response = Client.RetrieveKey(HPTConfig.Config.EMailAddress);
-        //}
-
-        //internal static string IPAddress = "XXX.XXX.XXX.XXX";
-        //internal static string FindIPAddress()
-        //{
-        //    //string ipAddress = "XXX.XXX.XXX.XXX";
-        //    //string whatIsMyIp = "http://automation.whatismyip.com/n09230945.asp";
-        //    //string whatIsMyIp = "http://checkip.dyndns.org/";
-        //    WebClient wc = new WebClient();
-        //    UTF8Encoding utf8 = new UTF8Encoding();
-        //    //string requestHtml = string.Empty;
-        //    try
-        //    {
-        //        wc.DownloadStringCompleted += (sender, e) =>
-        //            {
-        //                try
-        //                {
-        //                    var rexIPAddress = new Regex(@"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}");
-        //                    if (rexIPAddress.IsMatch(e.Result))
-        //                    {
-        //                        IPAddress = rexIPAddress.Match(e.Result).Value;
-        //                    }
-        //                }
-        //                catch (Exception exc)
-        //                {
-        //                    string s = exc.Message;
-        //                }
-        //            };
-
-        //        var uri = new Uri("http://checkip.dyndns.org/");
-        //        wc.DownloadStringAsync(uri);
-        //        //requestHtml = utf8.GetString(wc.DownloadData(whatIsMyIp));
-        //        //var rexIPAddress = new Regex(@"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}");
-        //        //if (rexIPAddress.IsMatch(requestHtml))
-        //        //{
-        //        //    ipAddress = rexIPAddress.Match(requestHtml).Value;
-        //        //}
-
-        //    }
-        //    catch (WebException we)
-        //    {
-        //        HPTConfig.AddToErrorLogStatic(we);
-        //    }
-        //    catch (Exception exc)
-        //    {
-        //        HPTConfig.AddToErrorLogStatic(exc);
-        //    }
-        //    return IPAddress;
-
-        //}
-
         #region GetRaceDayInfoByTrackAndDate
 
         internal void GetRaceDayInfoByTrackAndDate()
@@ -796,7 +289,7 @@ namespace HPTClient
                 {
                     HPTConfig.AddToErrorLogStatic(exc);
                 }
-            } 
+            }
 
             hptRdi = new HPTRaceDayInfo()
             {
@@ -1611,96 +1104,6 @@ namespace HPTClient
 
         #endregion
 
-        #region HPT Online
-
-        internal bool UploadSystemOnline(HPTMarkBet markBet)
-        {
-            try
-            {
-                var raceDayInfoReduction = HPTServiceToHPTHelper.CreateHPTOnlineFromHPTMarkBet(markBet);
-                var serializedStream = HPTSerializer.SerializeHPTServiceObject(typeof(HPTService.HPTRaceDayInfoReduction), raceDayInfoReduction);
-                var baRaceDayInfoReduction = HPTSerializer.ZipAndCreateBinary(serializedStream);
-
-                var userSystem = new HPTService.HPTUserSystem()
-                {
-                    BetType = markBet.BetType.Code,
-                    Comment = markBet.SystemComment,
-                    EMail = HPTConfig.Config.EMailAddress,
-                    UserName = markBet.SystemName, // FULLÖSNING
-                    //UserName = HPTConfig.Config.UserNameForUploads,
-                    HPTSystem = baRaceDayInfoReduction,
-                    OriginalSize = markBet.SystemSize,
-                    RaceDayDate = markBet.RaceDayInfo.RaceDayDate,
-                    ReducedSize = markBet.ReducedSize,
-                    ReductionNames = markBet.ToReductionNamesString(),
-                    TrackId = markBet.RaceDayInfo.TrackId,
-                    Timestamp = markBet.LastSaveTime
-                };
-
-                var userSystemStream = HPTSerializer.SerializeHPTServiceObject(typeof(HPTService.HPTUserSystem), userSystem);
-                var request = CreateWebRequestForPOST("UploadOnlineSystem", userSystemStream);
-                var response = request.GetResponse();
-                var stream = response.GetResponseStream();
-                //var sr = new StreamReader(stream);
-                //string strData = sr.ReadToEnd();
-
-                var saveSystem = (HPTService.HPTSaveSystem)HPTSerializer.DeserializeObjectFromStream(typeof(HPTService.HPTSaveSystem), stream);
-                string s = saveSystem.ToString();
-
-                //var baSaveSystem = Convert.FromBase64String(strData);
-                //var saveSystem = (HPTService.HPTSaveSystem)HPTSerializer.DeserializeHPTServiceObject(typeof(HPTService.HPTSaveSystem), baSaveSystem);
-
-                return true;
-            }
-            catch (Exception exc)
-            {
-                HPTConfig.Config.AddToErrorLog(exc);
-                return false;
-            }
-        }
-
-        //// /UserSystemOnlineByEmail?eMail={eMail}&startDate={startDate}&endDate={endDate}
-        //internal static List<HPTService.HPTUserSystem> DownloadSystemOnlineList(DateTime startDate, DateTime endDate)
-        //{
-        //    byte[] baUserSystemList = DownloadAndCreateByteArrayStatic(webserviceURL, "UserSystemOnlineByEmail?eMail=" + HPTConfig.Config.EMailAddress
-        //        + "&startDate=" + startDate.ToString("yyyy-MM-dd")
-        //        + "&endDate=" + endDate.ToString("yyyy-MM-dd")
-        //        );
-
-        //    var userSystemList = (List<HPTService.HPTUserSystem>)HPTSerializer.DeserializeHPTServiceObject(typeof(List<HPTService.HPTUserSystem>), baUserSystemList);
-        //    return userSystemList;
-        //}
-
-        //// /UserSystemOnlineByUniqueId?systemGUID={systemGUID}
-        //internal static HPTMarkBet DownloadSystemOnlineByUniqueId(string systemGUID)
-        //{
-        //    byte[] baUserSystem = DownloadAndCreateByteArrayStatic(webserviceURL, "UserSystemOnlineByUniqueId?systemGUID=" + systemGUID);
-
-        //    var raceDayInfoReduction = (HPTService.HPTRaceDayInfoReduction)HPTSerializer.DeserializeHPTObject(typeof(HPTService.HPTRaceDayInfoReduction), baUserSystem);
-        //    var serviceConnector = new HPTServiceConnector();
-        //    var raceDayInfo = serviceConnector.GetRaceDayInfoByTrackAndDate(raceDayInfoReduction.BetTypeCode, raceDayInfoReduction.RaceDayDateString, raceDayInfoReduction.TrackId.ToString());
-
-        //    string raceDayDirectory = HPTConfig.MyDocumentsPath + raceDayInfo.ToDateAndTrackString();
-        //    if (!Directory.Exists(raceDayDirectory))
-        //    {
-        //        Directory.CreateDirectory(raceDayDirectory);
-        //    }
-        //    raceDayInfo.DataToShow = HPTConfig.Config.DataToShowVxx;
-
-        //    var markBet = new HPTMarkBet(raceDayInfo, raceDayInfo.BetType);
-        //    markBet.SaveDirectory = raceDayDirectory + "\\";
-        //    markBet.Config = HPTConfig.Config;
-        //    HPTServiceToHPTHelper.ApplyHPTOnlineToHPTMarkBet(markBet, raceDayInfoReduction);
-        //    HPTServiceToHPTHelper.SetNonSerializedValues(markBet);
-        //    markBet.SystemSize = raceDayInfoReduction.RaceList
-        //        .Select(r => r.HorseList.Count(h => h.Selected))
-        //        .Aggregate((numberOfSelected, next) => numberOfSelected * next);
-
-        //    return markBet;
-        //}
-
-        #endregion
-
         #region Hämtning från ATGs REST-tjänst
 
         // https://www.atg.se/services/v1/horses/693542/results?stopdate=2015-09-24
@@ -1774,90 +1177,6 @@ namespace HPTClient
                 Hindshoes = shoes.back
             };
         }
-
-        //// https://www.atg.se/services/v1/drivers/53685/
-        //internal void GetDriverInfoFromATG(HPTHorse horse)
-        //{
-        //    try
-        //    {
-        //        if (horse.DriverId == "0" || horse.DriverInfo != null)
-        //        {
-        //            return;
-        //        }
-        //        var WCATG = new WebClient()
-        //        {
-        //            BaseAddress = "https://www.atg.se/services/v1/drivers/",
-        //            Encoding = Encoding.UTF8
-        //        };
-
-        //        string requestUrl = horse.DriverId;
-        //        //string requestUrl = "53685";
-        //        string json = WCATG.DownloadString(requestUrl);
-        //        horse.DriverInfo = (ATGDriverInformation)HPTSerializer.DeserializeJson(typeof(ATGDriverInformation), json);
-        //        horse.DriverInfo.statistics.years.ToList().ForEach(y =>
-        //        {
-        //            y.Value.earnings /= 100;
-        //            y.Value.winPercentage /= 10000M;
-        //        });
-
-        //        // Kopiera DriverInfo till övriga hästar som kusken kör
-        //        if (horse.ParentRace != null && horse.ParentRace.ParentRaceDayInfo != null)
-        //        {
-        //            horse.ParentRace.ParentRaceDayInfo.RaceList
-        //                .SelectMany(r => r.HorseList)
-        //                .Where(h => h.DriverId == horse.DriverId && h != horse)
-        //                .ToList()
-        //                .ForEach(h => h.DriverInfo = horse.DriverInfo);
-        //        }
-        //    }
-        //    catch (Exception exc)
-        //    {
-        //        string s = exc.Message;
-        //    }
-        //}
-
-        //// https://www.atg.se/services/v1/races/2016-03-11_12_4/start/2
-        //internal void GetStartInfoFromATG(HPTHorse horse)
-        //{
-        //    try
-        //    {
-        //        if (horse.DriverId == "0" || horse.DriverInfo != null)
-        //        {
-        //            return;
-        //        }
-        //        var WCATG = new WebClient()
-        //        {
-        //            BaseAddress = "https://www.atg.se/services/v1/drivers/",
-        //            Encoding = Encoding.UTF8
-        //        };
-
-        //        string requestUrl = horse.DriverId;
-        //        string json = WCATG.DownloadString(requestUrl);
-        //        horse.DriverInfo = (ATGDriverInformation)HPTSerializer.DeserializeJson(typeof(ATGDriverInformation), json);
-        //        horse.DriverInfo.statistics.years.ToList().ForEach(y =>
-        //        {
-        //            y.Value.earnings /= 100;
-        //            y.Value.winPercentage /= 10000M;
-        //        });
-
-        //        // Kopiera DriverInfo till övriga hästar som kusken kör
-        //        if (horse.ParentRace != null && horse.ParentRace.ParentRaceDayInfo != null)
-        //        {
-        //            horse.ParentRace.ParentRaceDayInfo.RaceList
-        //                .SelectMany(r => r.HorseList)
-        //                .Where(h => h.DriverId == horse.DriverId && h != horse)
-        //                .ToList()
-        //                .ForEach(h => h.DriverInfo = horse.DriverInfo);
-        //        }
-        //    }
-        //    catch (Exception exc)
-        //    {
-        //        string s = exc.Message;
-        //    }
-        //}
-
-        // https://www.atg.se/services/v1/races/2016-03-11_12_4/start/2
-        // https://www.atg.se/services/racinginfo/v1/api/races/2017-09-19_14_4/start/3
         internal void GetHorseStartInformationFromATG(HPTHorse horse)
         {
             try
@@ -1953,6 +1272,93 @@ namespace HPTClient
         #endregion
     }
 
+    #region Obsolete
+
+
+    //// https://www.atg.se/services/v1/drivers/53685/
+    //internal void GetDriverInfoFromATG(HPTHorse horse)
+    //{
+    //    try
+    //    {
+    //        if (horse.DriverId == "0" || horse.DriverInfo != null)
+    //        {
+    //            return;
+    //        }
+    //        var WCATG = new WebClient()
+    //        {
+    //            BaseAddress = "https://www.atg.se/services/v1/drivers/",
+    //            Encoding = Encoding.UTF8
+    //        };
+
+    //        string requestUrl = horse.DriverId;
+    //        //string requestUrl = "53685";
+    //        string json = WCATG.DownloadString(requestUrl);
+    //        horse.DriverInfo = (ATGDriverInformation)HPTSerializer.DeserializeJson(typeof(ATGDriverInformation), json);
+    //        horse.DriverInfo.statistics.years.ToList().ForEach(y =>
+    //        {
+    //            y.Value.earnings /= 100;
+    //            y.Value.winPercentage /= 10000M;
+    //        });
+
+    //        // Kopiera DriverInfo till övriga hästar som kusken kör
+    //        if (horse.ParentRace != null && horse.ParentRace.ParentRaceDayInfo != null)
+    //        {
+    //            horse.ParentRace.ParentRaceDayInfo.RaceList
+    //                .SelectMany(r => r.HorseList)
+    //                .Where(h => h.DriverId == horse.DriverId && h != horse)
+    //                .ToList()
+    //                .ForEach(h => h.DriverInfo = horse.DriverInfo);
+    //        }
+    //    }
+    //    catch (Exception exc)
+    //    {
+    //        string s = exc.Message;
+    //    }
+    //}
+
+    //// https://www.atg.se/services/v1/races/2016-03-11_12_4/start/2
+    //internal void GetStartInfoFromATG(HPTHorse horse)
+    //{
+    //    try
+    //    {
+    //        if (horse.DriverId == "0" || horse.DriverInfo != null)
+    //        {
+    //            return;
+    //        }
+    //        var WCATG = new WebClient()
+    //        {
+    //            BaseAddress = "https://www.atg.se/services/v1/drivers/",
+    //            Encoding = Encoding.UTF8
+    //        };
+
+    //        string requestUrl = horse.DriverId;
+    //        string json = WCATG.DownloadString(requestUrl);
+    //        horse.DriverInfo = (ATGDriverInformation)HPTSerializer.DeserializeJson(typeof(ATGDriverInformation), json);
+    //        horse.DriverInfo.statistics.years.ToList().ForEach(y =>
+    //        {
+    //            y.Value.earnings /= 100;
+    //            y.Value.winPercentage /= 10000M;
+    //        });
+
+    //        // Kopiera DriverInfo till övriga hästar som kusken kör
+    //        if (horse.ParentRace != null && horse.ParentRace.ParentRaceDayInfo != null)
+    //        {
+    //            horse.ParentRace.ParentRaceDayInfo.RaceList
+    //                .SelectMany(r => r.HorseList)
+    //                .Where(h => h.DriverId == horse.DriverId && h != horse)
+    //                .ToList()
+    //                .ForEach(h => h.DriverInfo = horse.DriverInfo);
+    //        }
+    //    }
+    //    catch (Exception exc)
+    //    {
+    //        string s = exc.Message;
+    //    }
+    //}
+
+    // https://www.atg.se/services/v1/races/2016-03-11_12_4/start/2
+    // https://www.atg.se/services/racinginfo/v1/api/races/2017-09-19_14_4/start/3
+
     //internal class HPTWebClient : WebClient
     //{
     //    public int Timeout { get; set; }
@@ -1966,4 +1372,564 @@ namespace HPTClient
     //    }
     //}
 
+    //internal bool UploadSystemOnline(HPTMarkBet markBet)
+    //{
+    //    try
+    //    {
+    //        var raceDayInfoReduction = HPTServiceToHPTHelper.CreateHPTOnlineFromHPTMarkBet(markBet);
+    //        var serializedStream = HPTSerializer.SerializeHPTServiceObject(typeof(HPTService.HPTRaceDayInfoReduction), raceDayInfoReduction);
+    //        var baRaceDayInfoReduction = HPTSerializer.ZipAndCreateBinary(serializedStream);
+
+    //        var userSystem = new HPTService.HPTUserSystem()
+    //        {
+    //            BetType = markBet.BetType.Code,
+    //            Comment = markBet.SystemComment,
+    //            EMail = HPTConfig.Config.EMailAddress,
+    //            UserName = markBet.SystemName, // FULLÖSNING
+    //            //UserName = HPTConfig.Config.UserNameForUploads,
+    //            HPTSystem = baRaceDayInfoReduction,
+    //            OriginalSize = markBet.SystemSize,
+    //            RaceDayDate = markBet.RaceDayInfo.RaceDayDate,
+    //            ReducedSize = markBet.ReducedSize,
+    //            ReductionNames = markBet.ToReductionNamesString(),
+    //            TrackId = markBet.RaceDayInfo.TrackId,
+    //            Timestamp = markBet.LastSaveTime
+    //        };
+
+    //        var userSystemStream = HPTSerializer.SerializeHPTServiceObject(typeof(HPTService.HPTUserSystem), userSystem);
+    //        var request = CreateWebRequestForPOST("UploadOnlineSystem", userSystemStream);
+    //        var response = request.GetResponse();
+    //        var stream = response.GetResponseStream();
+    //        //var sr = new StreamReader(stream);
+    //        //string strData = sr.ReadToEnd();
+
+    //        var saveSystem = (HPTService.HPTSaveSystem)HPTSerializer.DeserializeObjectFromStream(typeof(HPTService.HPTSaveSystem), stream);
+    //        string s = saveSystem.ToString();
+
+    //        //var baSaveSystem = Convert.FromBase64String(strData);
+    //        //var saveSystem = (HPTService.HPTSaveSystem)HPTSerializer.DeserializeHPTServiceObject(typeof(HPTService.HPTSaveSystem), baSaveSystem);
+
+    //        return true;
+    //    }
+    //    catch (Exception exc)
+    //    {
+    //        HPTConfig.Config.AddToErrorLog(exc);
+    //        return false;
+    //    }
+    //}
+
+    //// /UserSystemOnlineByEmail?eMail={eMail}&startDate={startDate}&endDate={endDate}
+    //internal static List<HPTService.HPTUserSystem> DownloadSystemOnlineList(DateTime startDate, DateTime endDate)
+    //{
+    //    byte[] baUserSystemList = DownloadAndCreateByteArrayStatic(webserviceURL, "UserSystemOnlineByEmail?eMail=" + HPTConfig.Config.EMailAddress
+    //        + "&startDate=" + startDate.ToString("yyyy-MM-dd")
+    //        + "&endDate=" + endDate.ToString("yyyy-MM-dd")
+    //        );
+
+    //    var userSystemList = (List<HPTService.HPTUserSystem>)HPTSerializer.DeserializeHPTServiceObject(typeof(List<HPTService.HPTUserSystem>), baUserSystemList);
+    //    return userSystemList;
+    //}
+
+    //// /UserSystemOnlineByUniqueId?systemGUID={systemGUID}
+    //internal static HPTMarkBet DownloadSystemOnlineByUniqueId(string systemGUID)
+    //{
+    //    byte[] baUserSystem = DownloadAndCreateByteArrayStatic(webserviceURL, "UserSystemOnlineByUniqueId?systemGUID=" + systemGUID);
+
+    //    var raceDayInfoReduction = (HPTService.HPTRaceDayInfoReduction)HPTSerializer.DeserializeHPTObject(typeof(HPTService.HPTRaceDayInfoReduction), baUserSystem);
+    //    var serviceConnector = new HPTServiceConnector();
+    //    var raceDayInfo = serviceConnector.GetRaceDayInfoByTrackAndDate(raceDayInfoReduction.BetTypeCode, raceDayInfoReduction.RaceDayDateString, raceDayInfoReduction.TrackId.ToString());
+
+    //    string raceDayDirectory = HPTConfig.MyDocumentsPath + raceDayInfo.ToDateAndTrackString();
+    //    if (!Directory.Exists(raceDayDirectory))
+    //    {
+    //        Directory.CreateDirectory(raceDayDirectory);
+    //    }
+    //    raceDayInfo.DataToShow = HPTConfig.Config.DataToShowVxx;
+
+    //    var markBet = new HPTMarkBet(raceDayInfo, raceDayInfo.BetType);
+    //    markBet.SaveDirectory = raceDayDirectory + "\\";
+    //    markBet.Config = HPTConfig.Config;
+    //    HPTServiceToHPTHelper.ApplyHPTOnlineToHPTMarkBet(markBet, raceDayInfoReduction);
+    //    HPTServiceToHPTHelper.SetNonSerializedValues(markBet);
+    //    markBet.SystemSize = raceDayInfoReduction.RaceList
+    //        .Select(r => r.HorseList.Count(h => h.Selected))
+    //        .Aggregate((numberOfSelected, next) => numberOfSelected * next);
+
+    //    return markBet;
+    //}
+
+    //internal bool SaveSystem(HPTMarkBet markBet)
+    //{
+    //    try
+    //    {
+    //        var fs = new FileStream(markBet.SystemFilename, FileMode.Open, FileAccess.Read, FileShare.Read);
+    //        byte[] baAtgXml = HPTSerializer.ZipAndCreateBinary(fs);
+
+    //        var userSystem = new HPTService.HPTATGSystem()
+    //        {
+    //            BetType = markBet.BetType.Code,
+    //            EMail = HPTConfig.Config.EMailAddress,
+    //            RaceDayDate = markBet.RaceDayInfo.RaceDayDate,
+    //            TrackId = markBet.RaceDayInfo.TrackId,
+    //            ATGXml = baAtgXml
+    //        };
+
+    //        var userSystemStream = HPTSerializer.SerializeHPTServiceObject(typeof(HPTService.HPTATGSystem), userSystem);
+    //        var request = CreateWebRequestForPOST("SaveSystem", userSystemStream);
+    //        var response = request.GetResponse();
+    //        var stream = response.GetResponseStream();
+    //        var sr = new StreamReader(stream);
+    //        string strData = sr.ReadToEnd();
+    //        var rexBinary = new Regex(">(.+?)<");
+    //        strData = rexBinary.Match(strData).Groups[1].Value;
+
+    //        var baSaveSystem = Convert.FromBase64String(strData);
+    //        var saveSystem = (HPTService.HPTSaveSystem)HPTSerializer.DeserializeHPTServiceObject(typeof(HPTService.HPTSaveSystem), baSaveSystem);
+    //        markBet.UploadedSystemGUID = saveSystem.SystemUniqueIdentifier;
+
+    //        return !string.IsNullOrEmpty(strData);
+    //    }
+    //    catch (Exception exc)
+    //    {
+    //        HPTConfig.AddToErrorLogStatic(exc);
+    //        throw;
+    //    }
+    //}
+
+    //internal static void UploadComments(HPTMarkBet markBet)
+    //{
+    //    try
+    //    {
+    //        // Alla hästar med information
+    //        var raceCommentList = markBet.RaceDayInfo.RaceList
+    //            .Select(r => new HPTRaceComment()
+    //            {
+    //                Comment = string.Empty,
+    //                LegNr = r.LegNr,
+    //                RaceNr = r.RaceNr,
+    //                HorseOwnInformationList = r.HorseList
+    //                .Where(h => h.OwnInformation.HasComment)
+    //                .Select(h => h.OwnInformation).ToList()
+    //            }).ToList();
+
+    //        // Rotobjektet för hästkommentarer
+    //        var raceDayInfoCommentCollection = new HPTRaceDayInfoCommentCollection()
+    //        {
+    //            BetTypeCode = markBet.BetType.Code,
+    //            Comment = markBet.UserCommentsDescription,
+    //            LastUpdated = DateTime.Now,
+    //            RaceDayDateString = markBet.RaceDayInfo.RaceDayDateString,
+    //            TrackCode = markBet.RaceDayInfo.Trackcode,
+    //            TrackId = markBet.RaceDayInfo.TrackId,
+    //            TrackName = markBet.RaceDayInfo.Trackname,
+    //            UserName = HPTConfig.Config.UserNameForUploads,
+    //            RaceCommentList = raceCommentList
+    //        };
+
+    //        // Sätt namn och nummer om det inte redan finns
+    //        markBet.RaceDayInfo.RaceList
+    //            .AsParallel()
+    //            .ForAll(r =>
+    //            {
+    //                foreach (var horse in r.HorseList.Where(h => h.OwnInformation != null))
+    //                {
+    //                    horse.OwnInformation.StartNr = horse.StartNr;
+    //                    horse.OwnInformation.Name = horse.HorseName;
+    //                    horse.OwnInformation.ATGId = horse.ATGId;
+    //                    horse.OwnInformation.HomeTrack = horse.HomeTrack;
+    //                    horse.OwnInformation.Sex = horse.Sex;
+    //                    horse.OwnInformation.Age = horse.Age;
+    //                    horse.OwnInformation.Owner = horse.OwnerName;
+    //                    horse.OwnInformation.Trainer = horse.TrainerName;
+    //                }
+    //            });
+
+    //        byte[] baRaceDayInfoCommentCollection = HPTSerializer.SerializeHPTRaceDayInfoCommentCollection(raceDayInfoCommentCollection);
+
+    //        var userComments = new HPTService.HPTUserComments()
+    //        {
+    //            Comment = string.Empty,
+    //            CommentXml = baRaceDayInfoCommentCollection,
+    //            EMail = HPTConfig.Config.EMailAddress,
+    //            UploadDate = DateTime.Now,
+    //            UserName = HPTConfig.Config.UserNameForUploads
+    //        };
+
+    //        var userCommentsStream = HPTSerializer.SerializeHPTServiceObject(typeof(HPTService.HPTUserComments), userComments);
+    //        var request = CreateWebRequestForPOST("UploadRaceDayInfoComments", userCommentsStream);
+    //        var response = request.GetResponse();
+    //        var stream = response.GetResponseStream();
+    //        var sr = new StreamReader(stream);
+    //        string strData = sr.ReadToEnd();
+
+    //        //var saveSystem = Client.UploadRaceDayInfoComments(baRaceDayInfoCommentCollection, HPTConfig.Config.EMailAddress, HPTConfig.Config.UserNameForUploads,
+    //        //    raceDayInfoCommentCollection.Comment, markBet.RaceDayInfo.BetType.Code, markBet.RaceDayInfo.RaceDayDate, markBet.RaceDayInfo.TrackId);
+
+    //        //if (saveSystem.ErrorMessage != null && saveSystem.ErrorMessage != string.Empty)
+    //        //{
+    //        //    throw new Exception(saveSystem.ErrorMessage);
+    //        //}
+    //    }
+    //    catch (Exception exc)
+    //    {
+    //        HPTConfig.AddToErrorLogStatic(exc);
+    //        throw;
+    //    }
+    //}
+
+    //internal static void UploadComments(HPTMarkBet markBet)
+    //{
+    //    try
+    //    {
+    //        // Alla hästar med information
+    //        var raceCommentList = markBet.RaceDayInfo.RaceList
+    //            .Select(r => new HPTRaceComment()
+    //            {
+    //                Comment = string.Empty,
+    //                LegNr = r.LegNr,
+    //                RaceNr = r.RaceNr,
+    //                HorseOwnInformationList = r.HorseList
+    //                .Where(h => h.OwnInformation.HasComment)
+    //                .Select(h => h.OwnInformation).ToList()
+    //            }).ToList();
+
+    //        // Rotobjektet för hästkommentarer
+    //        var raceDayInfoCommentCollection = new HPTRaceDayInfoCommentCollection()
+    //        {
+    //            BetTypeCode = markBet.BetType.Code,
+    //            Comment = markBet.UserCommentsDescription,
+    //            LastUpdated = DateTime.Now,
+    //            RaceDayDateString = markBet.RaceDayInfo.RaceDayDateString,
+    //            TrackCode = markBet.RaceDayInfo.Trackcode,
+    //            TrackId = markBet.RaceDayInfo.TrackId,
+    //            TrackName = markBet.RaceDayInfo.Trackname,
+    //            UserName = HPTConfig.Config.UserNameForUploads,
+    //            RaceCommentList = raceCommentList
+    //        };
+
+    //        // Sätt namn och nummer om det inte redan finns
+    //        foreach (var race in markBet.RaceDayInfo.RaceList)
+    //        {
+    //            foreach (var horse in race.HorseList)
+    //            {
+    //                if (horse.OwnInformation != null)
+    //                {
+    //                    horse.OwnInformation.StartNr = horse.StartNr;
+    //                    horse.OwnInformation.Name = horse.HorseName;
+    //                }
+    //            }
+    //        }
+
+    //        byte[] baRaceDayInfoCommentCollection = HPTSerializer.SerializeHPTRaceDayInfoCommentCollection(raceDayInfoCommentCollection);
+
+    //        var saveSystem = Client.UploadRaceDayInfoComments(baRaceDayInfoCommentCollection, HPTConfig.Config.EMailAddress, HPTConfig.Config.UserNameForUploads,
+    //            raceDayInfoCommentCollection.Comment, markBet.RaceDayInfo.BetType.Code, markBet.RaceDayInfo.RaceDayDate, markBet.RaceDayInfo.TrackId);
+
+    //        if (saveSystem.ErrorMessage != null && saveSystem.ErrorMessage != string.Empty)
+    //        {
+    //            throw new Exception(saveSystem.ErrorMessage);
+    //        }
+    //    }
+    //    catch (Exception exc)
+    //    {
+    //        HPTConfig.AddToErrorLogStatic(exc);
+    //        throw exc;
+    //    }
+    //}
+
+    // /UserRaceDayInfoCommentsAll?betType={betType}&trackId={trackid}&raceDate={raceDate}
+
+    //internal static HPTService.HPTUserRaceDayInfoCommentsCollection DownloadCommentsAll(HPTMarkBet markBet)
+    //{
+    //    try
+    //    {
+    //        byte[] baUserRaceDayInfoCommentsCollection = DownloadAndCreateByteArrayStatic(webserviceURL, "UserRaceDayInfoCommentsAll?betType=" + markBet.RaceDayInfo.BetType.Code
+    //            + "&trackid=" + markBet.RaceDayInfo.TrackId.ToString()
+    //            + "&raceDate=" + markBet.RaceDayInfo.RaceDayDate.ToString("yyyy-MM-dd")
+    //            );
+
+    //        var userRaceDayInfoCommentsCollection = HPTSerializer.DeserializeHPTUserRaceDayInfoCommentsCollection(baUserRaceDayInfoCommentsCollection);
+    //        return userRaceDayInfoCommentsCollection;
+    //    }
+    //    catch (Exception exc)
+    //    {
+    //        HPTConfig.AddToErrorLogStatic(exc);
+    //        throw;
+    //    }
+    //}
+
+    //// /UserRaceDayInfoCommentsByEmail?eMail={eMail}&betType={betType}&trackId={trackId}&raceDate={raceDate}
+    //internal static HPTRaceDayInfoCommentCollection DownloadCommentsByEMail(HPTMarkBet markBet, string eMail)
+    //{
+    //    try
+    //    {
+    //        byte[] baUserRaceDayInfoComments = DownloadAndCreateByteArrayStatic(webserviceURL, "UserRaceDayInfoCommentsByEmail?eMail=" + eMail
+    //            + "&betType=" + markBet.RaceDayInfo.BetType.Code
+    //            + "&trackId=" + markBet.RaceDayInfo.TrackId.ToString()
+    //            + "&raceDate=" + markBet.RaceDayInfo.RaceDayDate.ToString("yyyy-MM-dd")
+    //            );
+
+    //        var userRaceDayInfoComment = HPTSerializer.DeserializeHPTRaceDayInfoCommentCollection(baUserRaceDayInfoComments);
+
+    //        foreach (var raceComment in userRaceDayInfoComment.RaceCommentList)
+    //        {
+    //            foreach (var horseInformation in raceComment.HorseOwnInformationList)
+    //            {
+    //                var horse = markBet.RaceDayInfo
+    //                    .RaceList.First(r => r.LegNr == raceComment.LegNr)
+    //                    .HorseList.First(h => h.HorseName == horseInformation.Name);
+
+    //                if (horse.OwnInformation == null)
+    //                {
+    //                    horse.OwnInformation = new HPTHorseOwnInformation()
+    //                    {
+    //                        Name = horse.HorseName,
+    //                        ATGId = horse.ATGId,
+    //                        HomeTrack = horse.HomeTrack,
+    //                        Sex = horse.Sex,
+    //                        Age = horse.Age,
+    //                        Owner = horse.OwnerName,
+    //                        Trainer = horse.TrainerName,
+    //                        CreationDate = DateTime.Now,
+    //                        HorseOwnInformationCommentList = new System.Collections.ObjectModel.ObservableCollection<HPTHorseOwnInformationComment>()
+    //                    };
+    //                }
+    //                else if (horse.OwnInformation.HorseOwnInformationCommentList == null)
+    //                {
+    //                    horse.OwnInformation.HorseOwnInformationCommentList = new System.Collections.ObjectModel.ObservableCollection<HPTHorseOwnInformationComment>();
+    //                }
+
+    //                foreach (var horseComment in horseInformation.HorseOwnInformationCommentList)
+    //                {
+    //                    var horseInformationComment = horse.OwnInformation.HorseOwnInformationCommentList
+    //                        .FirstOrDefault(hc => hc.CommentDate == horseComment.CommentDate && hc.CommentUser == horseComment.CommentUser);
+
+    //                    if (horseInformationComment != null)
+    //                    {
+    //                        horseInformationComment.Comment = horseComment.Comment;
+    //                    }
+    //                    else
+    //                    {
+    //                        horse.OwnInformation.HorseOwnInformationCommentList.Add(horseComment);
+    //                    }
+    //                    horse.OwnInformation.HasComment = true;
+    //                    horseComment.NextTimer = horseInformation.NextTimer;
+    //                }
+    //                horse.OwnInformation.Updated = true;
+    //            }
+    //        }
+    //        return userRaceDayInfoComment;
+    //    }
+    //    catch (Exception exc)
+    //    {
+    //        HPTConfig.AddToErrorLogStatic(exc);
+    //        //throw exc;
+    //    }
+    //    return null;
+    //}
+
+    //internal static HttpWebRequest WR
+    //{
+    //    get
+    //    {
+    //        var request = (HttpWebRequest)HttpWebRequest.Create(webserviceURL + "/HPTRestService/");
+    //        request.Method = "GET";
+    //        request.Timeout = 15000;
+    //        request.ReadWriteTimeout = 15000;
+
+    //        return request;
+    //    }
+    //}
+
+    //internal static HttpWebRequest WRAlt
+    //{
+    //    get
+    //    {
+    //        var request = (HttpWebRequest)HttpWebRequest.Create(webserviceURLAlt + "/HPTRestService/");
+    //        request.Method = "GET";
+    //        request.Timeout = 15000;
+    //        request.ReadWriteTimeout = 15000;
+
+    //        return request;
+    //    }
+    //}
+
+    //internal static HPTService.AuthenticationResponse authResponse;
+    //internal static HPTService.AuthenticationResponse AuthenticateAndGetCalendar()
+    //{
+    //    var request = CreateAuthenticationRequest();
+    //    request.IPAddress = "XXX.XXX.XXX.XXX";// FindIPAddress();
+
+    //    HPTService.AuthenticationResponse response = new HPTService.AuthenticationResponse()
+    //    {
+    //        ErrorMessage = "Autenticering misslyckades",
+    //        IsPayingCustomer = false
+    //    };
+
+    //    if (string.IsNullOrWhiteSpace(HPTConfig.Config.EMailAddress) || string.IsNullOrWhiteSpace(HPTConfig.Config.Password))
+    //    {
+    //        response.CalendarZip = DownloadAndCreateByteArrayStatic(webserviceURLAlt, "CalendarZip");
+    //    }
+    //    else
+    //    {
+    //        string query = "AuthenticateAndGetCalendarZip?eMailAddress=" + request.EMailAddress
+    //            + "&password=" + request.Password
+    //            + "&ipAddress=" + request.IPAddress;
+
+    //        try
+    //        {
+    //            byte[] baAuthenticationResponse = DownloadAndCreateByteArrayStatic(webserviceURL, query);
+    //            response = HPTSerializer.DeserializeAuthenticationResponse(baAuthenticationResponse);
+    //            HPTConfig.Config.LastIPAddress = request.IPAddress;
+    //            HPTConfig.Config.PROVersionExpirationDate = response.PROVersionExpirationDate;
+    //        }
+    //        catch (Exception exc)
+    //        {
+    //            if (HPTConfig.Config.PROVersionExpirationDate.Date < DateTime.Today)
+    //            {
+    //                //byte[] baAuthenticationResponse = DownloadAndCreateByteArrayStatic(webserviceURLAlt, query);
+    //                byte[] baAuthenticationResponse = DownloadAndCreateByteArrayStatic(webserviceURL, query);
+    //                response = HPTSerializer.DeserializeAuthenticationResponse(baAuthenticationResponse);
+    //                HPTConfig.Config.LastIPAddress = request.IPAddress;
+    //                HPTConfig.Config.PROVersionExpirationDate = response.PROVersionExpirationDate;
+    //            }
+    //            else
+    //            {
+    //                response.PROVersionExpirationDate = HPTConfig.Config.PROVersionExpirationDate;
+    //                response.CalendarZip = DownloadAndCreateByteArrayStatic(webserviceURLAlt, "CalendarZip");
+    //                response.IsPayingCustomer = true;
+    //            }
+    //            HPTConfig.AddToErrorLogStatic(exc);
+    //        }
+    //    }
+
+    //    authResponse = response;
+    //    return response;
+    //}
+
+    //internal static bool AuthenticationNeeded(HPTService.AuthenticationRequest request, HPTService.AuthenticationResponse response)
+    //{
+    //    // Ingen registrerad IP-adress, så autenticering krävs.
+    //    if (string.IsNullOrEmpty(HPTConfig.Config.LastIPAddress) || HPTConfig.Config.PROVersionExpirationDate < DateTime.Now)
+    //    {
+    //        return true;
+    //    }
+
+    //    // Samma IP-adress och betalande användare, hoppa över autenticering.
+    //    var rexDomain = new Regex(@"[xX\d]{1,3}\.[xX\d]{1,3}\.");
+    //    string oldIPAdress = rexDomain.Match(HPTConfig.Config.LastIPAddress).Value;
+    //    string newIPAdress = rexDomain.Match(request.IPAddress).Value;
+    //    if (oldIPAdress == newIPAdress)
+    //    {
+    //        response.IsPayingCustomer = true;
+    //        response.PROVersionExpirationDate = HPTConfig.Config.PROVersionExpirationDate;
+    //        response.ErrorMessage = string.Empty;
+    //        return false;
+    //    }
+
+    //    return true;
+    //}
+
+    //internal static void LogOut()
+    //{
+    //    try
+    //    {
+    //        HPTService.AuthenticationRequest request = CreateAuthenticationRequest();
+    //        //request.IPAddress = IPAddress;
+    //        request.IPAddress = "XXX.XXX.XXX.XXX";
+
+    //        byte[] baLogOut = DownloadAndCreateByteArrayStatic(webserviceURL, "Logout?eMailAddress=" + request.EMailAddress 
+    //                                                         + "&password=" + request.Password 
+    //                                                         + "&ipAddress=" + request.IPAddress);
+    //    }
+    //    catch (Exception exc)
+    //    {
+    //        HPTConfig.Config.AddToErrorLog(exc);
+    //        string s = exc.Message;
+    //    }
+    //}
+
+    //private static HPTService.AuthenticationRequest CreateAuthenticationRequest()
+    //{
+    //    // Om epost/nyckel inte lästs upp från hptcon-filen
+    //    if (string.IsNullOrEmpty(HPTConfig.Config.EMailAddress) || string.IsNullOrEmpty(HPTConfig.Config.Password))
+    //    {
+    //        bool configRead = HPTConfig.Config.GetValuesFromIsolatedStorage();
+    //    }
+
+    //    HPTService.AuthenticationRequest request = new HPTClient.HPTService.AuthenticationRequest();
+    //    request.ClientName = "HPT53";
+    //    request.ClientVersionNumber = 5.33M;
+    //    request.ClientBeta = false;
+    //    request.ClientBetaVersion = 0;
+    //    request.Password = HPTConfig.Config.Password == null ? string.Empty : HPTConfig.Config.Password;
+    //    request.UserName = HPTConfig.Config.UserName == null ? string.Empty : HPTConfig.Config.UserName;
+    //    request.EMailAddress = HPTConfig.Config.EMailAddress == null ? string.Empty : HPTConfig.Config.EMailAddress;
+
+    //    return request;
+    //}
+
+    //internal static HPTService.HPTRegistration Register()
+    //{
+    //    byte[] baRegister = DownloadAndCreateByteArrayStatic(webserviceURL, "RegisterUser?username=" + HPTConfig.Config.UserName + "&eMailAddress=" + HPTConfig.Config.EMailAddress);
+    //    HPTService.HPTRegistration response = HPTSerializer.DeserializeHPTRegistration(baRegister);
+    //    return response;
+    //}
+
+    //internal static void GetKey()
+    //{
+    //    byte[] baRetrieveKey = DownloadAndCreateByteArrayStatic(webserviceURL, "RetrieveKey?eMailAddress=" + HPTConfig.Config.EMailAddress);
+    //    //HPTService.HPTUser response = Client.RetrieveKey(HPTConfig.Config.EMailAddress);
+    //}
+
+    //internal static string IPAddress = "XXX.XXX.XXX.XXX";
+    //internal static string FindIPAddress()
+    //{
+    //    //string ipAddress = "XXX.XXX.XXX.XXX";
+    //    //string whatIsMyIp = "http://automation.whatismyip.com/n09230945.asp";
+    //    //string whatIsMyIp = "http://checkip.dyndns.org/";
+    //    WebClient wc = new WebClient();
+    //    UTF8Encoding utf8 = new UTF8Encoding();
+    //    //string requestHtml = string.Empty;
+    //    try
+    //    {
+    //        wc.DownloadStringCompleted += (sender, e) =>
+    //            {
+    //                try
+    //                {
+    //                    var rexIPAddress = new Regex(@"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}");
+    //                    if (rexIPAddress.IsMatch(e.Result))
+    //                    {
+    //                        IPAddress = rexIPAddress.Match(e.Result).Value;
+    //                    }
+    //                }
+    //                catch (Exception exc)
+    //                {
+    //                    string s = exc.Message;
+    //                }
+    //            };
+
+    //        var uri = new Uri("http://checkip.dyndns.org/");
+    //        wc.DownloadStringAsync(uri);
+    //        //requestHtml = utf8.GetString(wc.DownloadData(whatIsMyIp));
+    //        //var rexIPAddress = new Regex(@"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}");
+    //        //if (rexIPAddress.IsMatch(requestHtml))
+    //        //{
+    //        //    ipAddress = rexIPAddress.Match(requestHtml).Value;
+    //        //}
+
+    //    }
+    //    catch (WebException we)
+    //    {
+    //        HPTConfig.AddToErrorLogStatic(we);
+    //    }
+    //    catch (Exception exc)
+    //    {
+    //        HPTConfig.AddToErrorLogStatic(exc);
+    //    }
+    //    return IPAddress;
+
+    //}
+
+    #endregion
 }

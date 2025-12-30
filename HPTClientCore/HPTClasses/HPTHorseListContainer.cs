@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace HPTClient
+﻿namespace HPTClient
 {
     class HPTHorseListContainer : Notifier, IHorseListContainer
     {

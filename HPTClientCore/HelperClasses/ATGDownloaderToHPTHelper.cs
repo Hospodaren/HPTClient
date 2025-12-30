@@ -1,15 +1,8 @@
 ﻿using ATGDownloader;
-using HPTClient.HPTService;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 using System.Text.RegularExpressions;
-using Xceed.Wpf.Toolkit.Core.Converters;
 using AD = ATGDownloader.ATG;
 
 namespace HPTClient

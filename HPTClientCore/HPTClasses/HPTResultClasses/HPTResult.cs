@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace HPTClient
+﻿namespace HPTClient
 {
     public class HPTResult
     {

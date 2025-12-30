@@ -1,13 +1,9 @@
 ﻿using ICSharpCode.SharpZipLib.Zip;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 //using System.IO.Compression;
-using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
-using System.Threading;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -141,13 +137,13 @@ namespace HPTClient
                 zipOutputStream.Password = ZipKey;
                 zipOutputStream.SetLevel(5); // Set compression level (0-9), 5 as a mid-range
                 var entry = new ZipEntry("System"); // Create a new entry for each file
-                zipOutputStream.PutNextEntry(entry);                
+                zipOutputStream.PutNextEntry(entry);
                 zipOutputStream.Write(bytesIn, 0, bytesIn.Length);
                 zipOutputStream.Finish();
                 ms.Position = 0;
                 byte[] buffer = ms.ToArray();
                 zipOutputStream.Close();
-                
+
                 return buffer;
             }
 
@@ -169,7 +165,7 @@ namespace HPTClient
         internal static Stream UnzipAndCreateStream(string fileName)
         {
             try
-            {                
+            {
                 return Decompress(fileName);
 
                 //Ionic.Zip.ZipFile zf = Ionic.Zip.ZipFile.Read(fileName);

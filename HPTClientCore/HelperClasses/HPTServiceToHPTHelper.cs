@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace HPTClient
@@ -380,11 +377,6 @@ namespace HPTClient
                 }
             }
         }
-
-        //public static HPTRace ConvertRace(HPTService.HPTRace race)
-        //{
-        //    var hptRace = new HPTRace
-        //}
 
         public static void ConvertRace(HPTService.HPTRace race, HPTRace hptRace)
         {
@@ -991,11 +983,6 @@ namespace HPTClient
             }
         }
 
-        private static int CompareRecords(HPTHorseRecord r1, HPTHorseRecord r2)
-        {
-            return r1.Distance - r2.Distance;
-        }
-
         public static HPTHorseYearStatistics ConvertHorseYearStatistics(HPTService.HPTHorseYearStatistics yearStatistics)
         {
             HPTHorseYearStatistics hptYearStatistics = new HPTHorseYearStatistics();
@@ -1071,302 +1058,6 @@ namespace HPTClient
                 }
             }
         }
-
-        //public static void ConvertRaceDayInfoHistory(HPTService.HPTRaceDayInfo raceDayInfoHistory, HPTRaceDayInfo hptRaceDayInfo)   //, int minutesPerGroup)
-        //{                        
-        //    // Hur många siffror finns det att tillgå
-        //    int totalNumberOfHistoricValues = raceDayInfoHistory.LegList
-        //        .First()
-        //        .RaceHistoryMarkingBetList
-        //        .Count();
-
-        //    // Kolla hur många vi ska plocka ut (max 10)
-        //    int arrayInterval = totalNumberOfHistoricValues / 10;
-        //    int numberOfHistoricValues = 10;
-        //    if (totalNumberOfHistoricValues < 10)
-        //    {
-        //        numberOfHistoricValues = totalNumberOfHistoricValues;
-        //        arrayInterval = 1;
-        //    }
-
-        //    // På vilka positioner i arrayen ska vi plocka våra värden
-        //    var positionsToSelect = Enumerable.Range(0, numberOfHistoricValues)
-        //        .Select(i => i * arrayInterval)
-        //        .ToArray();
-
-        //    // Skapa lista med de tidsstämplar vi har plockat ut
-        //    hptRaceDayInfo.TimestampListMarkBetHistory = new DateTime[positionsToSelect.Length];
-
-        //    var raceHistoryMarkingBetList = raceDayInfoHistory.LegList
-        //        .First()
-        //        .RaceHistoryMarkingBetList
-        //        .OrderByDescending(rh => rh.Timestamp)
-        //        .ToArray();
-
-        //    for (int i = 0; i < positionsToSelect.Length; i++)
-        //    {
-        //        int position = positionsToSelect[i];
-        //        hptRaceDayInfo.TimestampListMarkBetHistory[i] = raceHistoryMarkingBetList[position].Timestamp;
-        //    }
-
-        //    // Skapa listor ett lopp i taget
-        //    foreach (var race in raceDayInfoHistory.LegList)
-        //    {
-        //        // Skapa lista i fallande tidssortering
-        //        var markingBetListSorted = race
-        //            .RaceHistoryMarkingBetList
-        //            .OrderByDescending(rh => rh.Timestamp)
-        //            .ToArray();
-
-        //        var hptRace = hptRaceDayInfo.RaceList.FirstOrDefault(r => r.LegNr == race.LegNr);
-        //        if (hptRace != null)
-        //        {
-        //            // Skapa array för att få plats med rätt antal värden
-        //            foreach (var horse in hptRace.HorseList)
-        //            {
-        //                horse.HorseHistoryInfoGroupedList = new HPTHorseHistoryInfoGrouped[numberOfHistoricValues];
-        //            }
-
-        //            for (int i = 0; i < positionsToSelect.Length; i++)
-        //            {
-        //                int position = positionsToSelect[i];
-        //                var markingBetHistoryRace = markingBetListSorted[position];
-        //                int stakeSum = markingBetHistoryRace.HorseHistoryList.Sum(hh => hh.StakeDistribution);
-        //                decimal stakeShareSum = markingBetHistoryRace.HorseHistoryList.Sum(hh => hh.StakeShare);    // Verkar bli större än 1.0
-        //                int previousStakeSum = 0;
-        //                HPTService.HPTRaceHistoryMarkingBet previousMarkingBetHistoryRace = null;
-        //                if (i < positionsToSelect.Length - 1)
-        //                {
-        //                    int previousPosition = positionsToSelect[i + 1];
-        //                    previousMarkingBetHistoryRace = markingBetListSorted[previousPosition];
-        //                    previousStakeSum = previousMarkingBetHistoryRace.HorseHistoryList.Sum(hh => hh.StakeDistribution);
-        //                }
-        //                int periodStakeSum = stakeSum - previousStakeSum;
-        //                // Uppdatera varje häst
-        //                foreach (var horse in hptRace.HorseList)
-        //                {
-        //                    var horseHistory = markingBetHistoryRace.HorseHistoryList.FirstOrDefault(hh => hh.StartNr == horse.StartNr);
-        //                    if (horseHistory != null)
-        //                    {
-        //                        int previousStakeDistribution = 0;
-        //                        horseHistory.StakeShare /=  stakeShareSum;
-        //                        //var foreColor = new System.Windows.Media.SolidColorBrush();
-        //                        var fontWeight = System.Windows.FontWeights.Normal;
-        //                        var backColor = new System.Windows.Media.SolidColorBrush();
-
-        //                        // Om det finns äldre historieobjekt
-        //                        if (previousMarkingBetHistoryRace != null)
-        //                        {
-        //                            var previousHorseHistory = previousMarkingBetHistoryRace.HorseHistoryList.FirstOrDefault(hh => hh.StartNr == horse.StartNr);
-        //                            previousStakeDistribution = previousHorseHistory.StakeDistribution;
-
-        //                            // Kontrollera om det är stora ändringar i spelandet, men bara om det är hästar med hyfsat stor insatsfördelning
-        //                            decimal absoluteChange = Math.Abs(horseHistory.StakeShare - previousHorseHistory.StakeShare);
-        //                            if (absoluteChange > 0.05M && previousHorseHistory.StakeShare > 0M)
-        //                            {
-        //                                decimal relativeChange = horseHistory.StakeShare / previousHorseHistory.StakeShare;
-        //                                if (relativeChange > 1.01M)
-        //                                {
-        //                                    fontWeight = System.Windows.FontWeights.Bold;
-        //                                    //foreColor = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.DarkGreen);
-        //                                }
-        //                                else if (relativeChange < 0.99M)
-        //                                {
-        //                                    fontWeight = System.Windows.FontWeights.Light;
-        //                                    //foreColor = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.DarkRed);
-        //                                }
-        //                            }
-        //                        }
-
-        //                        int periodStakeDistribution = horseHistory.StakeDistribution - previousStakeDistribution;
-        //                        decimal stakeSharePeriod = 0M;
-        //                        if (periodStakeSum > 0)
-        //                        {
-        //                            stakeSharePeriod = Convert.ToDecimal(periodStakeDistribution) / Convert.ToDecimal(periodStakeSum);
-
-        //                            // Kontrollera om det är stora ändringar i spelandet, men bara om det är hästar med hyfsat stor insatsfördelning
-        //                            decimal periodStakeShareAbsoluteDifference = Math.Abs(stakeSharePeriod - horseHistory.StakeShare);
-        //                            if (periodStakeShareAbsoluteDifference > 0.02M)
-        //                            {
-        //                                decimal periodStakeShareInRelationToTotal = stakeSharePeriod / horseHistory.StakeShare;
-        //                                if (periodStakeShareInRelationToTotal > 1.08M)
-        //                                {
-        //                                    backColor = new System.Windows.Media.SolidColorBrush(HPTConfig.Config.ColorGood);
-        //                                }
-        //                                else if (periodStakeShareInRelationToTotal < 0.92M)
-        //                                {
-        //                                    backColor = new System.Windows.Media.SolidColorBrush(HPTConfig.Config.ColorBad);
-        //                                }
-        //                            }
-        //                        }
-
-        //                        horse.HorseHistoryInfoGroupedList[i] = new HPTHorseHistoryInfoGrouped()
-        //                        {
-        //                            StakeHistoryMain = new HPTStakeHistory()
-        //                            {
-        //                                StakeDistribution = horseHistory.StakeDistribution,
-        //                                StakeShare = horseHistory.StakeShare,
-        //                                StakeSharePeriod = stakeSharePeriod,
-        //                                BackColor = backColor,
-        //                                FontWeight = fontWeight
-        //                            }
-        //                        };
-        //                    }
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
-
-        //public static void SetPeriodStakeShare()
-        //{
-        //}
-
-        //public static List<HPTHorseHistoryInfoGrouped> CreateHorseHistoryInfoGrouped(HPTRaceDayInfo hptRaceDayInfo, HPTService.HPTHorseHistoryInfo horseHistoryInfo, DateTime newestTime, double intervalInMinutes)
-        //{
-        //    HPTService.HPTHorseHistoryMarkBet[] horseHistoryMainList = null;
-        //    HPTService.HPTHorseHistoryMarkBet[] horseHistoryAlternateList = null;
-        //    HPTService.HPTHorseHistoryMarkBet[] horseHistoryAlternate2List = null;
-
-        //    switch (hptRaceDayInfo.BetType.TypeCategory)
-        //    {
-        //        case BetTypeCategory.None:
-        //            return null;
-        //        case BetTypeCategory.V4:
-        //            horseHistoryMainList = horseHistoryInfo.HorseHistoryV4List;
-        //            horseHistoryAlternateList = horseHistoryInfo.HorseHistoryVxxList;
-        //            horseHistoryAlternate2List = horseHistoryInfo.HorseHistoryV5List;
-        //            break;
-        //        case BetTypeCategory.V5:
-        //            horseHistoryMainList = horseHistoryInfo.HorseHistoryV5List;
-        //            horseHistoryAlternateList = horseHistoryInfo.HorseHistoryVxxList;
-        //            horseHistoryAlternate2List = horseHistoryInfo.HorseHistoryV4List;
-        //            break;
-        //        case BetTypeCategory.V6X:
-        //        case BetTypeCategory.V75:
-        //        case BetTypeCategory.V86:
-        //            horseHistoryMainList = horseHistoryInfo.HorseHistoryVxxList;
-        //            horseHistoryAlternateList = horseHistoryInfo.HorseHistoryV4List;
-        //            horseHistoryAlternate2List = horseHistoryInfo.HorseHistoryV5List;
-        //            break;
-        //        case BetTypeCategory.Double:
-        //            break;
-        //        case BetTypeCategory.Trio:
-        //            break;
-        //        case BetTypeCategory.Twin:
-        //            break;
-        //        default:
-        //            break;
-        //    }
-
-        //    DateTime nextTime = newestTime;
-
-        //    var hptHorseHistoryInfoGroupedList = new List<HPTHorseHistoryInfoGrouped>();
-
-        //    for (int i = 0; i < 20; i++)
-        //    {
-        //        var hptHorseHistoryInfoGrouped = new HPTHorseHistoryInfoGrouped()
-        //        {
-        //            Timestamp = nextTime,
-        //            StakeHistoryMain = CreateStakeHistory(horseHistoryMainList, nextTime),
-        //            StakeHistoryAlternate = CreateStakeHistory(horseHistoryAlternateList, nextTime),
-        //            StakeHistoryAlternate2 = CreateStakeHistory(horseHistoryAlternate2List, nextTime)
-        //        };
-        //        SetVPHistory(hptHorseHistoryInfoGrouped, horseHistoryInfo.HorseHistoryVPList, nextTime);
-        //        hptHorseHistoryInfoGroupedList.Add(hptHorseHistoryInfoGrouped);
-        //        nextTime = nextTime.AddMinutes(intervalInMinutes);
-        //    }
-
-        //    //if (horseHistoryInfo.HorseHistoryDoubleList != null)
-        //    //{
-        //    //    var horseHistoryDoubleList = horseHistoryInfo.HorseHistoryDoubleList.Where(hhd => hhd.Timestamp <= newestTime && hhd.Timestamp > oldestTime);
-        //    //    if (horseHistoryDoubleList.Any())
-        //    //    {
-        //    //        hptHorseHistoryInfoGrouped.ShareDouble = horseHistoryDoubleList.Average(hh => hh.Share);
-        //    //    }
-        //    //}
-
-        //    //if (horseHistoryInfo.HorseHistoryVPList != null)
-        //    //{
-        //    //    var horseHistoryVPList = horseHistoryInfo.HorseHistoryVPList.Where(hhd => hhd.Timestamp <= newestTime && hhd.Timestamp > oldestTime);
-        //    //    if (horseHistoryVPList.Any())
-        //    //    {
-        //    //        hptHorseHistoryInfoGrouped.VinnarOdds = Convert.ToInt32(horseHistoryVPList.Average(hh => hh.VinnarOdds));
-        //    //    }
-        //    //}
-
-        //    //return hptHorseHistoryInfoGrouped;
-
-        //    return hptHorseHistoryInfoGroupedList;
-        //}
-
-        //public static HPTStakeHistory CreateStakeHistory(HPTService.HPTHorseHistoryMarkBet[] horseHistoryList, DateTime newestTime)
-        //{
-        //    if (horseHistoryList != null)
-        //    {
-        //        var horseHistoryMarkBet = horseHistoryList
-        //            .OrderByDescending(hhd => hhd.Timestamp)
-        //            .FirstOrDefault(hhd => hhd.Timestamp <= newestTime);
-
-        //        if (horseHistoryMarkBet != null)
-        //        {
-        //            var stakeHistory = new HPTStakeHistory()
-        //            {
-        //                StakeDistribution = horseHistoryMarkBet.StakeDistribution,
-        //                StakeShare = horseHistoryMarkBet.StakeShare,
-        //                StakeSharePeriod = 0M
-        //            };
-        //            return stakeHistory;
-        //        }
-        //    }
-        //    return null;
-        //}
-
-        //public static bool SetVPHistory(HPTHorseHistoryInfoGrouped horseHistoryInfoGrouped, HPTService.HPTHorseHistoryVP[] horseHistoryList, DateTime newestTime)
-        //{
-        //    if (horseHistoryList != null)
-        //    {
-        //        var horseHistoryVP = horseHistoryList
-        //            .OrderByDescending(hhd => hhd.Timestamp)
-        //            .FirstOrDefault(hhd => hhd.Timestamp <= newestTime);
-
-        //        if (horseHistoryVP != null)
-        //        {
-        //            horseHistoryInfoGrouped.InvestmentPlats = horseHistoryVP.InvestmentPlats;
-        //            horseHistoryInfoGrouped.InvestmentVinnare = horseHistoryVP.InvestmentVinnare;
-        //            horseHistoryInfoGrouped.MaxPlatsOdds = horseHistoryVP.MaxPlatsOdds;
-        //            horseHistoryInfoGrouped.VinnarOdds = horseHistoryVP.VinnarOdds;
-        //            return true;                                        
-        //        }
-        //    }
-        //    return false;
-        //}
-
-        //public static int GetStakeDistributionForPeriod(IOrderedEnumerable<HPTService.HPTHorseHistoryMarkBet> horseHistoryMarkBetOrdered, DateTime newestTime, DateTime oldestTime)
-        //{
-        //    var previousHorseHistoryMarkBet = horseHistoryMarkBetOrdered.LastOrDefault(hhmb => hhmb.Timestamp < oldestTime);
-        //    var currentHorseHistoryMarkBet = horseHistoryMarkBetOrdered.LastOrDefault(hhmb => hhmb.Timestamp < newestTime);
-
-        //    if (currentHorseHistoryMarkBet != null)
-        //    {
-        //        if (previousHorseHistoryMarkBet != null)
-        //        {
-        //            return currentHorseHistoryMarkBet.StakeDistribution - previousHorseHistoryMarkBet.StakeDistribution;
-        //        }
-        //        return currentHorseHistoryMarkBet.StakeDistribution;
-        //    }
-        //    return 0;
-        //}
-
-        //public static decimal GetAverageStakeShareForPeriod(IOrderedEnumerable<HPTService.HPTHorseHistoryMarkBet> horseHistoryMarkBetOrdered, DateTime newestTime, DateTime oldestTime)
-        //{
-        //    var horseHistoryMarkBetList = horseHistoryMarkBetOrdered.Where(hhd => hhd.Timestamp <= newestTime && hhd.Timestamp > oldestTime);
-        //    if (horseHistoryMarkBetList.Any())
-        //    {
-        //        return horseHistoryMarkBetList.Average(hhmb => hhmb.StakeShare);
-        //    }
-        //    return 0M;
-        //}
 
         #endregion
 
@@ -1555,11 +1246,6 @@ namespace HPTClient
                     }
                 }
             }
-        }
-
-        private int ComparePerson(HPTPerson p1, HPTPerson p2)
-        {
-            return string.Compare(p1.ShortName, p2.ShortName);
         }
 
         public static void SetNonSerializedValues(HPTCombBet hcb)
@@ -1988,319 +1674,6 @@ namespace HPTClient
             hmb.ParentRaceDayInfo = hmb.RaceDayInfo;
         }
 
-        public static void SetNonSerializedValuesParallell(HPTMarkBet hmb)
-        {
-            // Skapa variabler som måste finnas
-            if (hmb.HorseVariableList == null)
-            {
-                hmb.HorseVariableList = new ObservableCollection<HPTHorseVariable>(HPTHorseVariable.CreateVariableList());
-            }
-            hmb.RaceDayInfo.HorseListSelected = new ObservableCollection<HPTHorse>();
-
-            // Create IntervalReductionRuleList
-            if (hmb.IntervalReductionRuleList == null)
-            {
-                hmb.IntervalReductionRuleList = new ObservableCollection<HPTIntervalReductionRule>()
-                {
-                    //hmb.PercentSumReductionRule,
-                    hmb.RowValueReductionRule,
-                    hmb.StakePercentSumReductionRule,
-                    hmb.StartNrSumReductionRule,
-                    hmb.ATGRankSumReductionRule,
-                    hmb.OwnRankSumReductionRule,
-                    hmb.AlternateRankSumReductionRule,
-                    hmb.OddsSumReductionRule
-                };
-            }
-
-            //// Undvika specialkomprimering
-            //if (hmb.CouponCompression == CouponCompression.V6BetMultiplier)
-            //{
-            //    hmb.CouponCompression = CouponCompression.Default;
-            //}
-
-            // Undvik onödig uppläsning av HorseOwnInformation
-            bool horseOwnInformationShows = HPTConfig.Config.DataToShowVxx.ShowOwnInformation || HPTConfig.Config.DataToShowComplementaryRules.ShowOwnInformation || HPTConfig.Config.DataToShowCorrection.ShowOwnInformation || HPTConfig.Config.MarkBetTabsToShow.ShowComments;
-
-            // Ta hänsyn till V6/V7/V8
-            hmb.RaceDayInfo.SetV6Factor();
-
-            foreach (HPTRace hptRace in hmb.RaceDayInfo.RaceList)
-            {
-                hptRace.ParentRaceDayInfo = hmb.RaceDayInfo;
-                hptRace.HorseListSelected = new List<HPTHorse>();
-
-                // Skapa reservlista
-                hptRace.ReservOrderList = new int[0];
-                //if (!string.IsNullOrWhiteSpace(hptRace.ReservOrder))
-                //{
-                //    string[] reservStringArray = hptRace.ReservOrder.Split('-');
-                //    hptRace.ReservOrderList = new int[reservStringArray.Length];
-                //    for (int i = 0; i < reservStringArray.Length; i++)
-                //    {
-                //        hptRace.ReservOrderList[i] = int.Parse(reservStringArray[i]);
-                //    }
-                //}
-
-
-                foreach (HPTHorse hptHorse in hptRace.HorseList)
-                {
-                    // Skapa listor som måste finnas
-
-                    hptHorse.HorseXReductionList = new ObservableCollection<HPTHorseXReduction>();
-                    hptHorse.RankList = new ObservableCollection<HPTHorseRank>();
-
-                    // Sätt parent
-                    hptHorse.ParentRace = hptRace;
-
-                    // Beräknade värden
-                    hptHorse.CalculateDerivedValues();
-                    hptHorse.CalculateStaticDerivedValues();
-
-                    // Skapa ABCDEF-regler
-                    hptHorse.CreateXReductionRuleList();
-                    if (hptHorse.Prio != HPTPrio.M)
-                    {
-                        hptHorse.HorseXReductionList.First(h => h.Prio == hptHorse.Prio).Selected = true;
-                    }
-                    if (hptHorse.Selected)
-                    {
-                        hmb.RaceDayInfo.HorseListSelected.Add(hptHorse);
-                    }
-
-                    // Skoinfo
-                    if (hptHorse.ShoeInfoCurrent != null && hptHorse.ShoeInfoPrevious != null)
-                    {
-                        hptHorse.ShoeInfoCurrent.SetChangedFlags(hptHorse.ShoeInfoPrevious);
-                    }
-
-                    // Own information
-                    if (horseOwnInformationShows)
-                    {
-                        HPTConfig.Config.HorseOwnInformationCollection.MergeHorseOwnInformation(hptHorse);
-                    }
-                }
-
-                // Sätt justerad insatsfördelning
-                hptRace.SetCorrectStakeDistributionShare();
-                hptRace.SetCorrectStakeDistributionShareAlt1();
-                hptRace.SetCorrectStakeDistributionShareAlt2();
-
-                // Inbördes möten
-                hptRace.FindHeadToHead();
-
-                // Sätt visningstext för loppet
-                switch (hmb.BetType.Code)
-                {
-                    case "TV":
-                        hptRace.LegNrString = "Lopp " + hptRace.LegNr.ToString();
-                        break;
-                    case "T":
-                        hptRace.LegNrString = "Trio" + "-" + hptRace.LegNr.ToString();
-                        break;
-                    default:
-                        hptRace.LegNrString = hmb.BetType.Code + "-" + hptRace.LegNr.ToString();
-                        break;
-                }
-
-                // Grupperingsnamn för reserver i GUIt
-                hptRace.Reserv1GroupName = hptRace.LegNr.ToString() + "-" + "1";
-                hptRace.Reserv2GroupName = hptRace.LegNr.ToString() + "-" + "2";
-            }
-            SetTrainerAndDriver(hmb);
-
-            // ABCDEF-regel
-            var aRule = hmb.ABCDEFReductionRule.XReductionRuleList.First(r => r.Prio == HPTPrio.A);
-            aRule.Use = !aRule.Use ? HPTConfig.Config.UseA : true;
-            var bRule = hmb.ABCDEFReductionRule.XReductionRuleList.First(r => r.Prio == HPTPrio.B);
-            bRule.Use = !bRule.Use ? HPTConfig.Config.UseB : true;
-            var cRule = hmb.ABCDEFReductionRule.XReductionRuleList.First(r => r.Prio == HPTPrio.C);
-            cRule.Use = !cRule.Use ? HPTConfig.Config.UseC : true;
-            var dRule = hmb.ABCDEFReductionRule.XReductionRuleList.First(r => r.Prio == HPTPrio.D);
-            dRule.Use = !dRule.Use ? HPTConfig.Config.UseD : true;
-            var eRule = hmb.ABCDEFReductionRule.XReductionRuleList.First(r => r.Prio == HPTPrio.E);
-            eRule.Use = !eRule.Use ? HPTConfig.Config.UseE : true;
-            var fRule = hmb.ABCDEFReductionRule.XReductionRuleList.First(r => r.Prio == HPTPrio.F);
-            fRule.Use = !fRule.Use ? HPTConfig.Config.UseF : true;
-
-            // Drivers
-            foreach (HPTPersonReductionRule rule in hmb.DriverRulesCollection.ReductionRuleList)
-            {
-                rule.PersonList = new ObservableCollection<HPTPerson>();
-                foreach (string personName in rule.PersonShortNameList)
-                {
-                    var person = hmb.DriverRulesCollection.PersonList.FirstOrDefault(p => p.ShortName.ToLower() == personName.ToLower());
-                    if (person != null && !rule.PersonList.Contains(person))
-                    {
-                        rule.PersonList.Add(person);
-                    }
-                }
-            }
-            hmb.DriverRulesCollection.ReductionRuleFactory = hmb.DriverRulesCollection.CreateNewDriverReductionRule;
-            hmb.DriverRulesCollection.Initialize();
-
-            // Trainers
-            foreach (HPTPersonReductionRule rule in hmb.TrainerRulesCollection.ReductionRuleList)
-            {
-                rule.PersonList = new ObservableCollection<HPTPerson>();
-                foreach (string personName in rule.PersonShortNameList)
-                {
-                    var person = hmb.TrainerRulesCollection.PersonList.FirstOrDefault(p => p.ShortName == personName);
-                    if (person != null && !rule.PersonList.Contains(person))
-                    {
-                        rule.PersonList.Add(person);
-                    }
-                }
-            }
-            hmb.TrainerRulesCollection.ReductionRuleFactory = hmb.TrainerRulesCollection.CreateNewTrainerReductionRule;
-            hmb.TrainerRulesCollection.Initialize();
-
-            // Complementaryreduction rules
-            if (hmb.ComplementaryRulesCollection.ReductionRuleList != null)
-            {
-                foreach (HPTComplementaryReductionRule rule in hmb.ComplementaryRulesCollection.ReductionRuleList)
-                {
-                    rule.HorseList = new ObservableCollection<HPTHorse>();
-                    foreach (var horseLight in rule.HorseLightList)
-                    {
-                        HPTHorse horse = hmb.RaceDayInfo.HorseListSelected
-                            .FirstOrDefault(h => h.ParentRace.LegNr == horseLight.LegNr && h.StartNr == horseLight.StartNr);
-
-                        if (horse != null)
-                        {
-                            rule.HorseList.Add(horse);
-                        }
-                    }
-                }
-                hmb.ComplementaryRulesCollection.Initialize();
-            }
-
-            // V6BetMultiplierRule
-            int ruleNumber = 1;
-            foreach (var v6BetMultiplierRule in hmb.V6BetMultiplierRuleList)
-            {
-                v6BetMultiplierRule.HorseList = new List<HPTHorse>();
-                v6BetMultiplierRule.BetMultiplierList = hmb.BetType.BetMultiplierList;
-                v6BetMultiplierRule.MarkBet = hmb;
-
-                List<HPTHorseLightSelectable> horseLightSelectableList = v6BetMultiplierRule.RaceList
-                    .SelectMany(r => r.HorseList).ToList();
-
-                foreach (var horseLightSelectable in horseLightSelectableList)
-                {
-                    HPTHorse horse = hmb.RaceDayInfo.RaceList.SelectMany(r => r.HorseList)
-                        .FirstOrDefault(h => h.StartNr == horseLightSelectable.StartNr && h.ParentRace.LegNr == horseLightSelectable.LegNr);
-
-                    horseLightSelectable.Horse = horse;
-                    if (horseLightSelectable.Selected)
-                    {
-                        v6BetMultiplierRule.HorseList.Add(horse);
-                        v6BetMultiplierRule.RaceList.First(r => r.LegNr == horseLightSelectable.LegNr).SelectedHorse =
-                            horseLightSelectable;
-
-                        horseLightSelectable.GroupCode = ruleNumber.ToString() + horse.ParentRace.LegNr.ToString();
-                    }
-                }
-                ruleNumber++;
-            }
-
-            // GroupReductionRules
-            try
-            {
-                foreach (HPTGroupIntervalReductionRule rule in hmb.GroupIntervalRulesCollection.ReductionRuleList)
-                {
-                    rule.HorseVariable = HPTConfig.Config.HorseVariableList.FirstOrDefault(hv => hv.PropertyName == rule.PropertyName);
-                }
-                hmb.GroupIntervalRulesCollection.Initialize();
-            }
-            catch (Exception exc)
-            {
-                string s = exc.Message;
-            }
-
-            hmb.SingleRowCollection = new HPTMarkBetSingleRowCollection(hmb);
-            hmb.SingleRowCollection.AnalyzingFinished += hmb.SingleRowCollection_AnalyzingFinished;
-
-            // Ranksummereduceringsregler
-            if (hmb.HorseRankVariableList == null || hmb.HorseRankVariableList.Count == 0)
-            {
-                hmb.HorseRankVariableList = HPTHorseRankVariable.CreateVariableList();
-            }
-            if (hmb.HorseRankSumReductionRuleList != null)
-            {
-                var horseRankSumReductionRulesToRemove = new List<HPTHorseRankSumReductionRule>();
-                foreach (var horseRankSumReductionRule in hmb.HorseRankSumReductionRuleList)
-                {
-                    horseRankSumReductionRule.HorseRankVariable = hmb.HorseRankVariableList.FirstOrDefault(hrv => hrv.PropertyName == horseRankSumReductionRule.PropertyName);
-                    if (horseRankSumReductionRule != null)
-                    {
-                        if (horseRankSumReductionRule.HorseRankVariable == null)
-                        {
-                            horseRankSumReductionRulesToRemove.Add(horseRankSumReductionRule);
-                        }
-                        else
-                        {
-                            foreach (var rule in horseRankSumReductionRule.ReductionRuleList)
-                            {
-                                rule.ParentHorseRankSumReductionRule = horseRankSumReductionRule;
-                            }
-                        }
-                    }
-                }
-                foreach (var horseRankSumReductionRuleToRemove in horseRankSumReductionRulesToRemove)
-                {
-                    hmb.HorseRankSumReductionRuleList.Remove(horseRankSumReductionRuleToRemove);
-                }
-            }
-
-            // Ta bort rankvariabel för streckprocent
-            var rankVariableToRemove = hmb.HorseRankVariableList.FirstOrDefault(hrv => string.IsNullOrEmpty(hrv.PropertyName) || hrv.PropertyName == "MarksQuantity");
-            if (rankVariableToRemove != null)
-            {
-                hmb.HorseRankVariableList.Remove(rankVariableToRemove);
-            }
-
-            // Ta hand om låsta kuponger
-            if (hmb.LockCoupons && hmb.CouponList != null)
-            {
-                try
-                {
-                    hmb.CouponCorrector = new HPTCouponCorrector()
-                    {
-                        RaceDayInfo = hmb.RaceDayInfo,
-                        CouponHelper = new ATGCouponHelper(hmb)
-                        {
-                            CouponList = hmb.CouponList
-                        }
-                    };
-                    hmb.CouponCorrector.CouponHelper.CreateHorseListsForCoupons();
-                }
-                catch (Exception exc)
-                {
-                    string s = exc.Message;
-                }
-            }
-
-            try
-            {
-                if (!Directory.Exists(hmb.SaveDirectory))
-                {
-                    hmb.SaveDirectory = HPTConfig.MyDocumentsPath + hmb.RaceDayInfo.ToDateAndTrackString() + "\\";
-                }
-            }
-            catch (Exception exc)
-            {
-                HPTConfig.AddToErrorLogStatic(exc);
-            }
-
-            // Sätt avstån till hemmabanan för alla hästar
-            SetDistanceToHomeTrack(hmb.RaceDayInfo);
-
-            // IHorseListContainer
-            //hmb.HorseList = new ObservableCollection<HPTHorse>(hmb.RaceDayInfo.RaceList.SelectMany(r => r.HorseList));
-            hmb.HorseList = new List<HPTHorse>(hmb.RaceDayInfo.RaceList.SelectMany(r => r.HorseList));
-            hmb.ParentRaceDayInfo = hmb.RaceDayInfo;
-        }
 
         #region Konvertera Reducto/HPT Online till och från HPTMarkBet
 
@@ -2666,6 +2039,619 @@ namespace HPTClient
             return hptCalendar;
         }
 
+        #endregion
+
+        #region Obsolete
+
+        //public static void ConvertRaceDayInfoHistory(HPTService.HPTRaceDayInfo raceDayInfoHistory, HPTRaceDayInfo hptRaceDayInfo)   //, int minutesPerGroup)
+        //{                        
+        //    // Hur många siffror finns det att tillgå
+        //    int totalNumberOfHistoricValues = raceDayInfoHistory.LegList
+        //        .First()
+        //        .RaceHistoryMarkingBetList
+        //        .Count();
+
+        //    // Kolla hur många vi ska plocka ut (max 10)
+        //    int arrayInterval = totalNumberOfHistoricValues / 10;
+        //    int numberOfHistoricValues = 10;
+        //    if (totalNumberOfHistoricValues < 10)
+        //    {
+        //        numberOfHistoricValues = totalNumberOfHistoricValues;
+        //        arrayInterval = 1;
+        //    }
+
+        //    // På vilka positioner i arrayen ska vi plocka våra värden
+        //    var positionsToSelect = Enumerable.Range(0, numberOfHistoricValues)
+        //        .Select(i => i * arrayInterval)
+        //        .ToArray();
+
+        //    // Skapa lista med de tidsstämplar vi har plockat ut
+        //    hptRaceDayInfo.TimestampListMarkBetHistory = new DateTime[positionsToSelect.Length];
+
+        //    var raceHistoryMarkingBetList = raceDayInfoHistory.LegList
+        //        .First()
+        //        .RaceHistoryMarkingBetList
+        //        .OrderByDescending(rh => rh.Timestamp)
+        //        .ToArray();
+
+        //    for (int i = 0; i < positionsToSelect.Length; i++)
+        //    {
+        //        int position = positionsToSelect[i];
+        //        hptRaceDayInfo.TimestampListMarkBetHistory[i] = raceHistoryMarkingBetList[position].Timestamp;
+        //    }
+
+        //    // Skapa listor ett lopp i taget
+        //    foreach (var race in raceDayInfoHistory.LegList)
+        //    {
+        //        // Skapa lista i fallande tidssortering
+        //        var markingBetListSorted = race
+        //            .RaceHistoryMarkingBetList
+        //            .OrderByDescending(rh => rh.Timestamp)
+        //            .ToArray();
+
+        //        var hptRace = hptRaceDayInfo.RaceList.FirstOrDefault(r => r.LegNr == race.LegNr);
+        //        if (hptRace != null)
+        //        {
+        //            // Skapa array för att få plats med rätt antal värden
+        //            foreach (var horse in hptRace.HorseList)
+        //            {
+        //                horse.HorseHistoryInfoGroupedList = new HPTHorseHistoryInfoGrouped[numberOfHistoricValues];
+        //            }
+
+        //            for (int i = 0; i < positionsToSelect.Length; i++)
+        //            {
+        //                int position = positionsToSelect[i];
+        //                var markingBetHistoryRace = markingBetListSorted[position];
+        //                int stakeSum = markingBetHistoryRace.HorseHistoryList.Sum(hh => hh.StakeDistribution);
+        //                decimal stakeShareSum = markingBetHistoryRace.HorseHistoryList.Sum(hh => hh.StakeShare);    // Verkar bli större än 1.0
+        //                int previousStakeSum = 0;
+        //                HPTService.HPTRaceHistoryMarkingBet previousMarkingBetHistoryRace = null;
+        //                if (i < positionsToSelect.Length - 1)
+        //                {
+        //                    int previousPosition = positionsToSelect[i + 1];
+        //                    previousMarkingBetHistoryRace = markingBetListSorted[previousPosition];
+        //                    previousStakeSum = previousMarkingBetHistoryRace.HorseHistoryList.Sum(hh => hh.StakeDistribution);
+        //                }
+        //                int periodStakeSum = stakeSum - previousStakeSum;
+        //                // Uppdatera varje häst
+        //                foreach (var horse in hptRace.HorseList)
+        //                {
+        //                    var horseHistory = markingBetHistoryRace.HorseHistoryList.FirstOrDefault(hh => hh.StartNr == horse.StartNr);
+        //                    if (horseHistory != null)
+        //                    {
+        //                        int previousStakeDistribution = 0;
+        //                        horseHistory.StakeShare /=  stakeShareSum;
+        //                        //var foreColor = new System.Windows.Media.SolidColorBrush();
+        //                        var fontWeight = System.Windows.FontWeights.Normal;
+        //                        var backColor = new System.Windows.Media.SolidColorBrush();
+
+        //                        // Om det finns äldre historieobjekt
+        //                        if (previousMarkingBetHistoryRace != null)
+        //                        {
+        //                            var previousHorseHistory = previousMarkingBetHistoryRace.HorseHistoryList.FirstOrDefault(hh => hh.StartNr == horse.StartNr);
+        //                            previousStakeDistribution = previousHorseHistory.StakeDistribution;
+
+        //                            // Kontrollera om det är stora ändringar i spelandet, men bara om det är hästar med hyfsat stor insatsfördelning
+        //                            decimal absoluteChange = Math.Abs(horseHistory.StakeShare - previousHorseHistory.StakeShare);
+        //                            if (absoluteChange > 0.05M && previousHorseHistory.StakeShare > 0M)
+        //                            {
+        //                                decimal relativeChange = horseHistory.StakeShare / previousHorseHistory.StakeShare;
+        //                                if (relativeChange > 1.01M)
+        //                                {
+        //                                    fontWeight = System.Windows.FontWeights.Bold;
+        //                                    //foreColor = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.DarkGreen);
+        //                                }
+        //                                else if (relativeChange < 0.99M)
+        //                                {
+        //                                    fontWeight = System.Windows.FontWeights.Light;
+        //                                    //foreColor = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.DarkRed);
+        //                                }
+        //                            }
+        //                        }
+
+        //                        int periodStakeDistribution = horseHistory.StakeDistribution - previousStakeDistribution;
+        //                        decimal stakeSharePeriod = 0M;
+        //                        if (periodStakeSum > 0)
+        //                        {
+        //                            stakeSharePeriod = Convert.ToDecimal(periodStakeDistribution) / Convert.ToDecimal(periodStakeSum);
+
+        //                            // Kontrollera om det är stora ändringar i spelandet, men bara om det är hästar med hyfsat stor insatsfördelning
+        //                            decimal periodStakeShareAbsoluteDifference = Math.Abs(stakeSharePeriod - horseHistory.StakeShare);
+        //                            if (periodStakeShareAbsoluteDifference > 0.02M)
+        //                            {
+        //                                decimal periodStakeShareInRelationToTotal = stakeSharePeriod / horseHistory.StakeShare;
+        //                                if (periodStakeShareInRelationToTotal > 1.08M)
+        //                                {
+        //                                    backColor = new System.Windows.Media.SolidColorBrush(HPTConfig.Config.ColorGood);
+        //                                }
+        //                                else if (periodStakeShareInRelationToTotal < 0.92M)
+        //                                {
+        //                                    backColor = new System.Windows.Media.SolidColorBrush(HPTConfig.Config.ColorBad);
+        //                                }
+        //                            }
+        //                        }
+
+        //                        horse.HorseHistoryInfoGroupedList[i] = new HPTHorseHistoryInfoGrouped()
+        //                        {
+        //                            StakeHistoryMain = new HPTStakeHistory()
+        //                            {
+        //                                StakeDistribution = horseHistory.StakeDistribution,
+        //                                StakeShare = horseHistory.StakeShare,
+        //                                StakeSharePeriod = stakeSharePeriod,
+        //                                BackColor = backColor,
+        //                                FontWeight = fontWeight
+        //                            }
+        //                        };
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
+
+        //public static void SetPeriodStakeShare()
+        //{
+        //}
+
+        //public static List<HPTHorseHistoryInfoGrouped> CreateHorseHistoryInfoGrouped(HPTRaceDayInfo hptRaceDayInfo, HPTService.HPTHorseHistoryInfo horseHistoryInfo, DateTime newestTime, double intervalInMinutes)
+        //{
+        //    HPTService.HPTHorseHistoryMarkBet[] horseHistoryMainList = null;
+        //    HPTService.HPTHorseHistoryMarkBet[] horseHistoryAlternateList = null;
+        //    HPTService.HPTHorseHistoryMarkBet[] horseHistoryAlternate2List = null;
+
+        //    switch (hptRaceDayInfo.BetType.TypeCategory)
+        //    {
+        //        case BetTypeCategory.None:
+        //            return null;
+        //        case BetTypeCategory.V4:
+        //            horseHistoryMainList = horseHistoryInfo.HorseHistoryV4List;
+        //            horseHistoryAlternateList = horseHistoryInfo.HorseHistoryVxxList;
+        //            horseHistoryAlternate2List = horseHistoryInfo.HorseHistoryV5List;
+        //            break;
+        //        case BetTypeCategory.V5:
+        //            horseHistoryMainList = horseHistoryInfo.HorseHistoryV5List;
+        //            horseHistoryAlternateList = horseHistoryInfo.HorseHistoryVxxList;
+        //            horseHistoryAlternate2List = horseHistoryInfo.HorseHistoryV4List;
+        //            break;
+        //        case BetTypeCategory.V6X:
+        //        case BetTypeCategory.V75:
+        //        case BetTypeCategory.V86:
+        //            horseHistoryMainList = horseHistoryInfo.HorseHistoryVxxList;
+        //            horseHistoryAlternateList = horseHistoryInfo.HorseHistoryV4List;
+        //            horseHistoryAlternate2List = horseHistoryInfo.HorseHistoryV5List;
+        //            break;
+        //        case BetTypeCategory.Double:
+        //            break;
+        //        case BetTypeCategory.Trio:
+        //            break;
+        //        case BetTypeCategory.Twin:
+        //            break;
+        //        default:
+        //            break;
+        //    }
+
+        //    DateTime nextTime = newestTime;
+
+        //    var hptHorseHistoryInfoGroupedList = new List<HPTHorseHistoryInfoGrouped>();
+
+        //    for (int i = 0; i < 20; i++)
+        //    {
+        //        var hptHorseHistoryInfoGrouped = new HPTHorseHistoryInfoGrouped()
+        //        {
+        //            Timestamp = nextTime,
+        //            StakeHistoryMain = CreateStakeHistory(horseHistoryMainList, nextTime),
+        //            StakeHistoryAlternate = CreateStakeHistory(horseHistoryAlternateList, nextTime),
+        //            StakeHistoryAlternate2 = CreateStakeHistory(horseHistoryAlternate2List, nextTime)
+        //        };
+        //        SetVPHistory(hptHorseHistoryInfoGrouped, horseHistoryInfo.HorseHistoryVPList, nextTime);
+        //        hptHorseHistoryInfoGroupedList.Add(hptHorseHistoryInfoGrouped);
+        //        nextTime = nextTime.AddMinutes(intervalInMinutes);
+        //    }
+
+        //    //if (horseHistoryInfo.HorseHistoryDoubleList != null)
+        //    //{
+        //    //    var horseHistoryDoubleList = horseHistoryInfo.HorseHistoryDoubleList.Where(hhd => hhd.Timestamp <= newestTime && hhd.Timestamp > oldestTime);
+        //    //    if (horseHistoryDoubleList.Any())
+        //    //    {
+        //    //        hptHorseHistoryInfoGrouped.ShareDouble = horseHistoryDoubleList.Average(hh => hh.Share);
+        //    //    }
+        //    //}
+
+        //    //if (horseHistoryInfo.HorseHistoryVPList != null)
+        //    //{
+        //    //    var horseHistoryVPList = horseHistoryInfo.HorseHistoryVPList.Where(hhd => hhd.Timestamp <= newestTime && hhd.Timestamp > oldestTime);
+        //    //    if (horseHistoryVPList.Any())
+        //    //    {
+        //    //        hptHorseHistoryInfoGrouped.VinnarOdds = Convert.ToInt32(horseHistoryVPList.Average(hh => hh.VinnarOdds));
+        //    //    }
+        //    //}
+
+        //    //return hptHorseHistoryInfoGrouped;
+
+        //    return hptHorseHistoryInfoGroupedList;
+        //}
+
+        //public static HPTStakeHistory CreateStakeHistory(HPTService.HPTHorseHistoryMarkBet[] horseHistoryList, DateTime newestTime)
+        //{
+        //    if (horseHistoryList != null)
+        //    {
+        //        var horseHistoryMarkBet = horseHistoryList
+        //            .OrderByDescending(hhd => hhd.Timestamp)
+        //            .FirstOrDefault(hhd => hhd.Timestamp <= newestTime);
+
+        //        if (horseHistoryMarkBet != null)
+        //        {
+        //            var stakeHistory = new HPTStakeHistory()
+        //            {
+        //                StakeDistribution = horseHistoryMarkBet.StakeDistribution,
+        //                StakeShare = horseHistoryMarkBet.StakeShare,
+        //                StakeSharePeriod = 0M
+        //            };
+        //            return stakeHistory;
+        //        }
+        //    }
+        //    return null;
+        //}
+
+        //public static bool SetVPHistory(HPTHorseHistoryInfoGrouped horseHistoryInfoGrouped, HPTService.HPTHorseHistoryVP[] horseHistoryList, DateTime newestTime)
+        //{
+        //    if (horseHistoryList != null)
+        //    {
+        //        var horseHistoryVP = horseHistoryList
+        //            .OrderByDescending(hhd => hhd.Timestamp)
+        //            .FirstOrDefault(hhd => hhd.Timestamp <= newestTime);
+
+        //        if (horseHistoryVP != null)
+        //        {
+        //            horseHistoryInfoGrouped.InvestmentPlats = horseHistoryVP.InvestmentPlats;
+        //            horseHistoryInfoGrouped.InvestmentVinnare = horseHistoryVP.InvestmentVinnare;
+        //            horseHistoryInfoGrouped.MaxPlatsOdds = horseHistoryVP.MaxPlatsOdds;
+        //            horseHistoryInfoGrouped.VinnarOdds = horseHistoryVP.VinnarOdds;
+        //            return true;                                        
+        //        }
+        //    }
+        //    return false;
+        //}
+
+        //public static int GetStakeDistributionForPeriod(IOrderedEnumerable<HPTService.HPTHorseHistoryMarkBet> horseHistoryMarkBetOrdered, DateTime newestTime, DateTime oldestTime)
+        //{
+        //    var previousHorseHistoryMarkBet = horseHistoryMarkBetOrdered.LastOrDefault(hhmb => hhmb.Timestamp < oldestTime);
+        //    var currentHorseHistoryMarkBet = horseHistoryMarkBetOrdered.LastOrDefault(hhmb => hhmb.Timestamp < newestTime);
+
+        //    if (currentHorseHistoryMarkBet != null)
+        //    {
+        //        if (previousHorseHistoryMarkBet != null)
+        //        {
+        //            return currentHorseHistoryMarkBet.StakeDistribution - previousHorseHistoryMarkBet.StakeDistribution;
+        //        }
+        //        return currentHorseHistoryMarkBet.StakeDistribution;
+        //    }
+        //    return 0;
+        //}
+
+        //public static decimal GetAverageStakeShareForPeriod(IOrderedEnumerable<HPTService.HPTHorseHistoryMarkBet> horseHistoryMarkBetOrdered, DateTime newestTime, DateTime oldestTime)
+        //{
+        //    var horseHistoryMarkBetList = horseHistoryMarkBetOrdered.Where(hhd => hhd.Timestamp <= newestTime && hhd.Timestamp > oldestTime);
+        //    if (horseHistoryMarkBetList.Any())
+        //    {
+        //        return horseHistoryMarkBetList.Average(hhmb => hhmb.StakeShare);
+        //    }
+        //    return 0M;
+        //}
+
+        //public static void SetNonSerializedValuesParallell(HPTMarkBet hmb)
+        //{
+        //    // Skapa variabler som måste finnas
+        //    if (hmb.HorseVariableList == null)
+        //    {
+        //        hmb.HorseVariableList = new ObservableCollection<HPTHorseVariable>(HPTHorseVariable.CreateVariableList());
+        //    }
+        //    hmb.RaceDayInfo.HorseListSelected = new ObservableCollection<HPTHorse>();
+
+        //    // Create IntervalReductionRuleList
+        //    if (hmb.IntervalReductionRuleList == null)
+        //    {
+        //        hmb.IntervalReductionRuleList = new ObservableCollection<HPTIntervalReductionRule>()
+        //        {
+        //            //hmb.PercentSumReductionRule,
+        //            hmb.RowValueReductionRule,
+        //            hmb.StakePercentSumReductionRule,
+        //            hmb.StartNrSumReductionRule,
+        //            hmb.ATGRankSumReductionRule,
+        //            hmb.OwnRankSumReductionRule,
+        //            hmb.AlternateRankSumReductionRule,
+        //            hmb.OddsSumReductionRule
+        //        };
+        //    }
+
+        //    //// Undvika specialkomprimering
+        //    //if (hmb.CouponCompression == CouponCompression.V6BetMultiplier)
+        //    //{
+        //    //    hmb.CouponCompression = CouponCompression.Default;
+        //    //}
+
+        //    // Undvik onödig uppläsning av HorseOwnInformation
+        //    bool horseOwnInformationShows = HPTConfig.Config.DataToShowVxx.ShowOwnInformation || HPTConfig.Config.DataToShowComplementaryRules.ShowOwnInformation || HPTConfig.Config.DataToShowCorrection.ShowOwnInformation || HPTConfig.Config.MarkBetTabsToShow.ShowComments;
+
+        //    // Ta hänsyn till V6/V7/V8
+        //    hmb.RaceDayInfo.SetV6Factor();
+
+        //    foreach (HPTRace hptRace in hmb.RaceDayInfo.RaceList)
+        //    {
+        //        hptRace.ParentRaceDayInfo = hmb.RaceDayInfo;
+        //        hptRace.HorseListSelected = new List<HPTHorse>();
+
+        //        // Skapa reservlista
+        //        hptRace.ReservOrderList = new int[0];
+        //        //if (!string.IsNullOrWhiteSpace(hptRace.ReservOrder))
+        //        //{
+        //        //    string[] reservStringArray = hptRace.ReservOrder.Split('-');
+        //        //    hptRace.ReservOrderList = new int[reservStringArray.Length];
+        //        //    for (int i = 0; i < reservStringArray.Length; i++)
+        //        //    {
+        //        //        hptRace.ReservOrderList[i] = int.Parse(reservStringArray[i]);
+        //        //    }
+        //        //}
+
+
+        //        foreach (HPTHorse hptHorse in hptRace.HorseList)
+        //        {
+        //            // Skapa listor som måste finnas
+
+        //            hptHorse.HorseXReductionList = new ObservableCollection<HPTHorseXReduction>();
+        //            hptHorse.RankList = new ObservableCollection<HPTHorseRank>();
+
+        //            // Sätt parent
+        //            hptHorse.ParentRace = hptRace;
+
+        //            // Beräknade värden
+        //            hptHorse.CalculateDerivedValues();
+        //            hptHorse.CalculateStaticDerivedValues();
+
+        //            // Skapa ABCDEF-regler
+        //            hptHorse.CreateXReductionRuleList();
+        //            if (hptHorse.Prio != HPTPrio.M)
+        //            {
+        //                hptHorse.HorseXReductionList.First(h => h.Prio == hptHorse.Prio).Selected = true;
+        //            }
+        //            if (hptHorse.Selected)
+        //            {
+        //                hmb.RaceDayInfo.HorseListSelected.Add(hptHorse);
+        //            }
+
+        //            // Skoinfo
+        //            if (hptHorse.ShoeInfoCurrent != null && hptHorse.ShoeInfoPrevious != null)
+        //            {
+        //                hptHorse.ShoeInfoCurrent.SetChangedFlags(hptHorse.ShoeInfoPrevious);
+        //            }
+
+        //            // Own information
+        //            if (horseOwnInformationShows)
+        //            {
+        //                HPTConfig.Config.HorseOwnInformationCollection.MergeHorseOwnInformation(hptHorse);
+        //            }
+        //        }
+
+        //        // Sätt justerad insatsfördelning
+        //        hptRace.SetCorrectStakeDistributionShare();
+        //        hptRace.SetCorrectStakeDistributionShareAlt1();
+        //        hptRace.SetCorrectStakeDistributionShareAlt2();
+
+        //        // Inbördes möten
+        //        hptRace.FindHeadToHead();
+
+        //        // Sätt visningstext för loppet
+        //        switch (hmb.BetType.Code)
+        //        {
+        //            case "TV":
+        //                hptRace.LegNrString = "Lopp " + hptRace.LegNr.ToString();
+        //                break;
+        //            case "T":
+        //                hptRace.LegNrString = "Trio" + "-" + hptRace.LegNr.ToString();
+        //                break;
+        //            default:
+        //                hptRace.LegNrString = hmb.BetType.Code + "-" + hptRace.LegNr.ToString();
+        //                break;
+        //        }
+
+        //        // Grupperingsnamn för reserver i GUIt
+        //        hptRace.Reserv1GroupName = hptRace.LegNr.ToString() + "-" + "1";
+        //        hptRace.Reserv2GroupName = hptRace.LegNr.ToString() + "-" + "2";
+        //    }
+        //    SetTrainerAndDriver(hmb);
+
+        //    // ABCDEF-regel
+        //    var aRule = hmb.ABCDEFReductionRule.XReductionRuleList.First(r => r.Prio == HPTPrio.A);
+        //    aRule.Use = !aRule.Use ? HPTConfig.Config.UseA : true;
+        //    var bRule = hmb.ABCDEFReductionRule.XReductionRuleList.First(r => r.Prio == HPTPrio.B);
+        //    bRule.Use = !bRule.Use ? HPTConfig.Config.UseB : true;
+        //    var cRule = hmb.ABCDEFReductionRule.XReductionRuleList.First(r => r.Prio == HPTPrio.C);
+        //    cRule.Use = !cRule.Use ? HPTConfig.Config.UseC : true;
+        //    var dRule = hmb.ABCDEFReductionRule.XReductionRuleList.First(r => r.Prio == HPTPrio.D);
+        //    dRule.Use = !dRule.Use ? HPTConfig.Config.UseD : true;
+        //    var eRule = hmb.ABCDEFReductionRule.XReductionRuleList.First(r => r.Prio == HPTPrio.E);
+        //    eRule.Use = !eRule.Use ? HPTConfig.Config.UseE : true;
+        //    var fRule = hmb.ABCDEFReductionRule.XReductionRuleList.First(r => r.Prio == HPTPrio.F);
+        //    fRule.Use = !fRule.Use ? HPTConfig.Config.UseF : true;
+
+        //    // Drivers
+        //    foreach (HPTPersonReductionRule rule in hmb.DriverRulesCollection.ReductionRuleList)
+        //    {
+        //        rule.PersonList = new ObservableCollection<HPTPerson>();
+        //        foreach (string personName in rule.PersonShortNameList)
+        //        {
+        //            var person = hmb.DriverRulesCollection.PersonList.FirstOrDefault(p => p.ShortName.ToLower() == personName.ToLower());
+        //            if (person != null && !rule.PersonList.Contains(person))
+        //            {
+        //                rule.PersonList.Add(person);
+        //            }
+        //        }
+        //    }
+        //    hmb.DriverRulesCollection.ReductionRuleFactory = hmb.DriverRulesCollection.CreateNewDriverReductionRule;
+        //    hmb.DriverRulesCollection.Initialize();
+
+        //    // Trainers
+        //    foreach (HPTPersonReductionRule rule in hmb.TrainerRulesCollection.ReductionRuleList)
+        //    {
+        //        rule.PersonList = new ObservableCollection<HPTPerson>();
+        //        foreach (string personName in rule.PersonShortNameList)
+        //        {
+        //            var person = hmb.TrainerRulesCollection.PersonList.FirstOrDefault(p => p.ShortName == personName);
+        //            if (person != null && !rule.PersonList.Contains(person))
+        //            {
+        //                rule.PersonList.Add(person);
+        //            }
+        //        }
+        //    }
+        //    hmb.TrainerRulesCollection.ReductionRuleFactory = hmb.TrainerRulesCollection.CreateNewTrainerReductionRule;
+        //    hmb.TrainerRulesCollection.Initialize();
+
+        //    // Complementaryreduction rules
+        //    if (hmb.ComplementaryRulesCollection.ReductionRuleList != null)
+        //    {
+        //        foreach (HPTComplementaryReductionRule rule in hmb.ComplementaryRulesCollection.ReductionRuleList)
+        //        {
+        //            rule.HorseList = new ObservableCollection<HPTHorse>();
+        //            foreach (var horseLight in rule.HorseLightList)
+        //            {
+        //                HPTHorse horse = hmb.RaceDayInfo.HorseListSelected
+        //                    .FirstOrDefault(h => h.ParentRace.LegNr == horseLight.LegNr && h.StartNr == horseLight.StartNr);
+
+        //                if (horse != null)
+        //                {
+        //                    rule.HorseList.Add(horse);
+        //                }
+        //            }
+        //        }
+        //        hmb.ComplementaryRulesCollection.Initialize();
+        //    }
+
+        //    // V6BetMultiplierRule
+        //    int ruleNumber = 1;
+        //    foreach (var v6BetMultiplierRule in hmb.V6BetMultiplierRuleList)
+        //    {
+        //        v6BetMultiplierRule.HorseList = new List<HPTHorse>();
+        //        v6BetMultiplierRule.BetMultiplierList = hmb.BetType.BetMultiplierList;
+        //        v6BetMultiplierRule.MarkBet = hmb;
+
+        //        List<HPTHorseLightSelectable> horseLightSelectableList = v6BetMultiplierRule.RaceList
+        //            .SelectMany(r => r.HorseList).ToList();
+
+        //        foreach (var horseLightSelectable in horseLightSelectableList)
+        //        {
+        //            HPTHorse horse = hmb.RaceDayInfo.RaceList.SelectMany(r => r.HorseList)
+        //                .FirstOrDefault(h => h.StartNr == horseLightSelectable.StartNr && h.ParentRace.LegNr == horseLightSelectable.LegNr);
+
+        //            horseLightSelectable.Horse = horse;
+        //            if (horseLightSelectable.Selected)
+        //            {
+        //                v6BetMultiplierRule.HorseList.Add(horse);
+        //                v6BetMultiplierRule.RaceList.First(r => r.LegNr == horseLightSelectable.LegNr).SelectedHorse =
+        //                    horseLightSelectable;
+
+        //                horseLightSelectable.GroupCode = ruleNumber.ToString() + horse.ParentRace.LegNr.ToString();
+        //            }
+        //        }
+        //        ruleNumber++;
+        //    }
+
+        //    // GroupReductionRules
+        //    try
+        //    {
+        //        foreach (HPTGroupIntervalReductionRule rule in hmb.GroupIntervalRulesCollection.ReductionRuleList)
+        //        {
+        //            rule.HorseVariable = HPTConfig.Config.HorseVariableList.FirstOrDefault(hv => hv.PropertyName == rule.PropertyName);
+        //        }
+        //        hmb.GroupIntervalRulesCollection.Initialize();
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        string s = exc.Message;
+        //    }
+
+        //    hmb.SingleRowCollection = new HPTMarkBetSingleRowCollection(hmb);
+        //    hmb.SingleRowCollection.AnalyzingFinished += hmb.SingleRowCollection_AnalyzingFinished;
+
+        //    // Ranksummereduceringsregler
+        //    if (hmb.HorseRankVariableList == null || hmb.HorseRankVariableList.Count == 0)
+        //    {
+        //        hmb.HorseRankVariableList = HPTHorseRankVariable.CreateVariableList();
+        //    }
+        //    if (hmb.HorseRankSumReductionRuleList != null)
+        //    {
+        //        var horseRankSumReductionRulesToRemove = new List<HPTHorseRankSumReductionRule>();
+        //        foreach (var horseRankSumReductionRule in hmb.HorseRankSumReductionRuleList)
+        //        {
+        //            horseRankSumReductionRule.HorseRankVariable = hmb.HorseRankVariableList.FirstOrDefault(hrv => hrv.PropertyName == horseRankSumReductionRule.PropertyName);
+        //            if (horseRankSumReductionRule != null)
+        //            {
+        //                if (horseRankSumReductionRule.HorseRankVariable == null)
+        //                {
+        //                    horseRankSumReductionRulesToRemove.Add(horseRankSumReductionRule);
+        //                }
+        //                else
+        //                {
+        //                    foreach (var rule in horseRankSumReductionRule.ReductionRuleList)
+        //                    {
+        //                        rule.ParentHorseRankSumReductionRule = horseRankSumReductionRule;
+        //                    }
+        //                }
+        //            }
+        //        }
+        //        foreach (var horseRankSumReductionRuleToRemove in horseRankSumReductionRulesToRemove)
+        //        {
+        //            hmb.HorseRankSumReductionRuleList.Remove(horseRankSumReductionRuleToRemove);
+        //        }
+        //    }
+
+        //    // Ta bort rankvariabel för streckprocent
+        //    var rankVariableToRemove = hmb.HorseRankVariableList.FirstOrDefault(hrv => string.IsNullOrEmpty(hrv.PropertyName) || hrv.PropertyName == "MarksQuantity");
+        //    if (rankVariableToRemove != null)
+        //    {
+        //        hmb.HorseRankVariableList.Remove(rankVariableToRemove);
+        //    }
+
+        //    // Ta hand om låsta kuponger
+        //    if (hmb.LockCoupons && hmb.CouponList != null)
+        //    {
+        //        try
+        //        {
+        //            hmb.CouponCorrector = new HPTCouponCorrector()
+        //            {
+        //                RaceDayInfo = hmb.RaceDayInfo,
+        //                CouponHelper = new ATGCouponHelper(hmb)
+        //                {
+        //                    CouponList = hmb.CouponList
+        //                }
+        //            };
+        //            hmb.CouponCorrector.CouponHelper.CreateHorseListsForCoupons();
+        //        }
+        //        catch (Exception exc)
+        //        {
+        //            string s = exc.Message;
+        //        }
+        //    }
+
+        //    try
+        //    {
+        //        if (!Directory.Exists(hmb.SaveDirectory))
+        //        {
+        //            hmb.SaveDirectory = HPTConfig.MyDocumentsPath + hmb.RaceDayInfo.ToDateAndTrackString() + "\\";
+        //        }
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        HPTConfig.AddToErrorLogStatic(exc);
+        //    }
+
+        //    // Sätt avstån till hemmabanan för alla hästar
+        //    SetDistanceToHomeTrack(hmb.RaceDayInfo);
+
+        //    // IHorseListContainer
+        //    //hmb.HorseList = new ObservableCollection<HPTHorse>(hmb.RaceDayInfo.RaceList.SelectMany(r => r.HorseList));
+        //    hmb.HorseList = new List<HPTHorse>(hmb.RaceDayInfo.RaceList.SelectMany(r => r.HorseList));
+        //    hmb.ParentRaceDayInfo = hmb.RaceDayInfo;
+        //}
         #endregion
     }
 }

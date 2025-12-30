@@ -1,9 +1,6 @@
 ﻿using ATGDownloader;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
-using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -2273,68 +2270,68 @@ namespace HPTClient
         [DataMember]
         public decimal MarksPossibleValue { get; set; }
 
-        private int marksQuantity;
-        //[HorseRank("Streckprocent", 2, true, false, HPTRankCategory.MarksAndOdds, true, true, "Streckprocent", "MarksPercentExact", "P1", 0D)]
-        //[DataMember]
-        public int MarksQuantity
-        {
-            get
-            {
-                return marksQuantity;
-            }
-            set
-            {
-                marksQuantity = value;
-                OnPropertyChanged("MarksQuantity");
-            }
-        }
+        //private int marksQuantity;
+        ////[HorseRank("Streckprocent", 2, true, false, HPTRankCategory.MarksAndOdds, true, true, "Streckprocent", "MarksPercentExact", "P1", 0D)]
+        ////[DataMember]
+        //public int MarksQuantity
+        //{
+        //    get
+        //    {
+        //        return marksQuantity;
+        //    }
+        //    set
+        //    {
+        //        marksQuantity = value;
+        //        OnPropertyChanged("MarksQuantity");
+        //    }
+        //}
 
-        private int marksPercent;
-        //[RandomInterval("Streckprocent", 1, 80, 1D)]
-        //[GroupReduction("Streckprocent", 2, 0D, 100D, 1D, 10D, 50D)]
-        //[DataMember]
-        public int MarksPercent
-        {
-            get
-            {
-                return marksPercent;
-            }
-            set
-            {
-                marksPercent = value;
-                OnPropertyChanged("MarksPercent");
-            }
-        }
+        //private int marksPercent;
+        ////[RandomInterval("Streckprocent", 1, 80, 1D)]
+        ////[GroupReduction("Streckprocent", 2, 0D, 100D, 1D, 10D, 50D)]
+        ////[DataMember]
+        //public int MarksPercent
+        //{
+        //    get
+        //    {
+        //        return marksPercent;
+        //    }
+        //    set
+        //    {
+        //        marksPercent = value;
+        //        OnPropertyChanged("MarksPercent");
+        //    }
+        //}
 
-        private decimal marksPercentExact;
-        [XmlIgnore]
-        public decimal MarksPercentExact
-        {
-            get
-            {
-                return marksPercentExact;
-            }
-            set
-            {
-                marksPercentExact = value;
-                OnPropertyChanged("MarksPercentExact");
-            }
-        }
+        //private decimal marksPercentExact;
+        //[XmlIgnore]
+        //public decimal MarksPercentExact
+        //{
+        //    get
+        //    {
+        //        return marksPercentExact;
+        //    }
+        //    set
+        //    {
+        //        marksPercentExact = value;
+        //        OnPropertyChanged("MarksPercentExact");
+        //    }
+        //}
 
-        private decimal marksShare;
-        [XmlIgnore]
-        public decimal MarksShare
-        {
-            get
-            {
-                return marksShare;
-            }
-            set
-            {
-                marksShare = value;
-                OnPropertyChanged("MarksShare");
-            }
-        }
+        //private decimal marksShare;
+        //[XmlIgnore]
+        //public decimal MarksShare
+        //{
+        //    get
+        //    {
+        //        return marksShare;
+        //    }
+        //    set
+        //    {
+        //        marksShare = value;
+        //        OnPropertyChanged("MarksShare");
+        //    }
+        //}
 
         private int? rankTip;
         [HorseRank("Tipsrank", 53, false, false, HPTRankCategory.Rest, false, false, "", "", "", 0D)]
@@ -3023,40 +3020,40 @@ namespace HPTClient
             }
         }
 
-        private Brush marksPercentColor;
-        [XmlIgnore]
-        public Brush MarksPercentColor
-        {
-            get
-            {
-                if (marksPercentColor == null)
-                {
-                    Color c = Colors.White;
-                    if (this.VinnarOdds < 50)
-                    {
-                        //c = Colors.LightGreen;
-                        c = HPTConfig.Config.ColorGood;
-                    }
-                    else if (this.VinnarOdds < 100)
-                    {
-                        //c = Colors.LightYellow;
-                        c = HPTConfig.Config.ColorMedium;
-                    }
-                    else
-                    {
-                        //c = Colors.IndianRed;
-                        c = HPTConfig.Config.ColorBad;
-                    }
-                    if (this.Scratched == true)
-                    {
-                        c = Colors.Gray;
-                    }
-                    marksPercentColor = new SolidColorBrush(c);
-                    OnPropertyChanged("MarksPercentColor");
-                }
-                return marksPercentColor;
-            }
-        }
+        //private Brush marksPercentColor;
+        //[XmlIgnore]
+        //public Brush MarksPercentColor
+        //{
+        //    get
+        //    {
+        //        if (marksPercentColor == null)
+        //        {
+        //            Color c = Colors.White;
+        //            if (this.VinnarOdds < 50)
+        //            {
+        //                //c = Colors.LightGreen;
+        //                c = HPTConfig.Config.ColorGood;
+        //            }
+        //            else if (this.VinnarOdds < 100)
+        //            {
+        //                //c = Colors.LightYellow;
+        //                c = HPTConfig.Config.ColorMedium;
+        //            }
+        //            else
+        //            {
+        //                //c = Colors.IndianRed;
+        //                c = HPTConfig.Config.ColorBad;
+        //            }
+        //            if (this.Scratched == true)
+        //            {
+        //                c = Colors.Gray;
+        //            }
+        //            marksPercentColor = new SolidColorBrush(c);
+        //            OnPropertyChanged("MarksPercentColor");
+        //        }
+        //        return marksPercentColor;
+        //    }
+        //}
 
         private bool? driverChanged;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]

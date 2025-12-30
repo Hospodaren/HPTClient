@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace HPTClient
+﻿namespace HPTClient
 {
     public class HPTTemplateForBeginners : Notifier
     {

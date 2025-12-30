@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace HPTClient
+﻿namespace HPTClient
 {
     [AttributeUsage(AttributeTargets.Property)]
     public class HPTReductionAttribute : Attribute

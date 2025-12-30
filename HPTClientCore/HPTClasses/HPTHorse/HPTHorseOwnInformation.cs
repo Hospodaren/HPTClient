@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Threading;
 
 namespace HPTClient
 {

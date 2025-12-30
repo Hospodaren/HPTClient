@@ -1,13 +1,8 @@
 ﻿using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Security.Policy;
 using System.Text;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -674,29 +669,7 @@ namespace HPTClient
             }
         }
 
-        void miUploadCompleteSystem_Click(object sender, RoutedEventArgs e)
-        {
-            MenuItem mi = (MenuItem)sender;
-            HPTMarkBet hmb = (HPTMarkBet)mi.Tag;
-            hmb.SetSerializerValues();
-            if (hmb != null)
-            {
-                var wndUploadSystem = new Window()
-                {
-                    SizeToContent = SizeToContent.WidthAndHeight,
-                    Title = "Ladda upp system!",
-                    ShowInTaskbar = false,
-                    ResizeMode = ResizeMode.NoResize,
-                    Owner = App.Current.MainWindow
-                };
-                wndUploadSystem.Content = new UCUserSystemUpload()
-                {
-                    DataContext = hmb,
-                    MarkBet = hmb
-                };
-                wndUploadSystem.ShowDialog();
-            }
-        }
+
 
         void ucItemHeader_Close(object sender, RoutedEventArgs e)
         {
@@ -984,7 +957,7 @@ namespace HPTClient
             HPTSystemFile sysFile = (HPTSystemFile)item.DataContext;
             try
             {
-                if (sysFile.FileType == "hpt5" || sysFile.FileType == "hpt4")
+                if (sysFile.FileType is "hpt5" or "hpt4")
                 {
                     if (sysFile.FileNameShort.ToUpper().StartsWith("V4_")
                         || sysFile.FileNameShort.ToUpper().StartsWith("V5_")
@@ -1943,5 +1916,31 @@ namespace HPTClient
                 OnPropertyChanged("RaceDayInfo");
             }
         }
+
+        #region Obsoletet
+        //void miUploadCompleteSystem_Click(object sender, RoutedEventArgs e)
+        //{
+        //    MenuItem mi = (MenuItem)sender;
+        //    HPTMarkBet hmb = (HPTMarkBet)mi.Tag;
+        //    hmb.SetSerializerValues();
+        //    if (hmb != null)
+        //    {
+        //        var wndUploadSystem = new Window()
+        //        {
+        //            SizeToContent = SizeToContent.WidthAndHeight,
+        //            Title = "Ladda upp system!",
+        //            ShowInTaskbar = false,
+        //            ResizeMode = ResizeMode.NoResize,
+        //            Owner = App.Current.MainWindow
+        //        };
+        //        wndUploadSystem.Content = new UCUserSystemUpload()
+        //        {
+        //            DataContext = hmb,
+        //            MarkBet = hmb
+        //        };
+        //        wndUploadSystem.ShowDialog();
+        //    }
+        //}
+        #endregion
     }
 }

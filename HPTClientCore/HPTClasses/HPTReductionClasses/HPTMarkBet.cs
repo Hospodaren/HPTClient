@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Threading;
 using System.Xml.Serialization;
 
 namespace HPTClient
@@ -2458,7 +2454,7 @@ namespace HPTClient
 
         //[HPTReduction("Procentsumma", "PercentSumReductionRule.Use", true, 9)]
         //[DataMember(IsRequired = false, EmitDefaultValue = false)]
-        public HPTPercentSumReductionRule PercentSumReductionRule { get; set; }
+        //public HPTPercentSumReductionRule PercentSumReductionRule { get; set; }
 
         [HPTReduction("Insatsfördelning", "StakePercentSumReductionRule.Use", true, 10)]
         [DataMember(IsRequired = false, EmitDefaultValue = false)]

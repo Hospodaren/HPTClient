@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace HPTClient
+﻿namespace HPTClient
 {
     public class HPTTrackDistance
     {

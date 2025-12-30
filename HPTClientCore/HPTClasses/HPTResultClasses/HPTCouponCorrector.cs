@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System.Collections.ObjectModel;
 
 namespace HPTClient
 {
@@ -391,7 +388,7 @@ namespace HPTClient
                     {
                         var horse3 = horseArray[i3];
 
-                        decimal invertedStakeFactor = (1M - horse1.StakeDistributionShare) 
+                        decimal invertedStakeFactor = (1M - horse1.StakeDistributionShare)
                             * (1M - horse2.StakeDistributionShare)
                             * (1M - horse3.StakeDistributionShare);
 

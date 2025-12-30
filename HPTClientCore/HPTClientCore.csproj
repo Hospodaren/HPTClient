@@ -65,12 +65,17 @@
     <StartupObject>HPTClient.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="HPTClasses\HPTReductionRuleClasses\HPTPercentSumReductionRule.cs" />
     <Compile Remove="Program.cs" />
+    <Compile Remove="UserControls\UserData\UCUserSystemUpload.xaml.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="ATGImages\V85Small.png" />
     <None Remove="ATGImages\V85XSmall.png" />
     <None Remove="GitHub.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Remove="UserControls\UserData\UCUserSystemUpload.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Reference Update="System.Core">

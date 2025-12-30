@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace HPTClient
+﻿namespace HPTClient
 {
     public static class Extensions
     {

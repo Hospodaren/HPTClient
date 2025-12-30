@@ -1,9 +1,6 @@
 ﻿using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -1448,41 +1445,41 @@ namespace HPTClient
 
         #region Ladda upp system
 
-        private void btnUploadSystem_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                MessageBoxResult result = MessageBox.Show("Ladda upp system för mobilrättning till HPTs server. HPT- och ATG-filer kommer automatiskt att sparas med automatgenerade namn först. Gör du några ändringar i systemet innan inlämning eller mailskickning måste du ladda upp det på nytt.", "Ladda upp system", MessageBoxButton.YesNoCancel, MessageBoxImage.Exclamation);
+        //private void btnUploadSystem_Click(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        MessageBoxResult result = MessageBox.Show("Ladda upp system för mobilrättning till HPTs server. HPT- och ATG-filer kommer automatiskt att sparas med automatgenerade namn först. Gör du några ändringar i systemet innan inlämning eller mailskickning måste du ladda upp det på nytt.", "Ladda upp system", MessageBoxButton.YesNoCancel, MessageBoxImage.Exclamation);
 
-                if (result == MessageBoxResult.Yes)
-                {
-                    // Spara hpt5- och ATG-fil
-                    if (this.MarkBet.CouponCorrector.CouponHelper.CouponList.Count == 0)
-                    {
-                        this.MarkBet.CouponCorrector.CouponHelper.CreateCoupons();
-                    }
-                    this.MarkBet.CouponCorrector.CouponHelper.CreateATGFile();  // Skapa alltid ATG-fil
+        //        if (result == MessageBoxResult.Yes)
+        //        {
+        //            // Spara hpt5- och ATG-fil
+        //            if (this.MarkBet.CouponCorrector.CouponHelper.CouponList.Count == 0)
+        //            {
+        //                this.MarkBet.CouponCorrector.CouponHelper.CreateCoupons();
+        //            }
+        //            this.MarkBet.CouponCorrector.CouponHelper.CreateATGFile();  // Skapa alltid ATG-fil
 
-                    string hpt3Filename = this.MarkBet.SaveDirectory + this.MarkBet.ToFileNameString() + ".hpt7";
-                    this.MarkBet.MailSender.HPT3FileName = hpt3Filename;
-                    HPTSerializer.SerializeHPTSystem(hpt3Filename, this.MarkBet);
+        //            string hpt3Filename = this.MarkBet.SaveDirectory + this.MarkBet.ToFileNameString() + ".hpt7";
+        //            this.MarkBet.MailSender.HPT3FileName = hpt3Filename;
+        //            HPTSerializer.SerializeHPTSystem(hpt3Filename, this.MarkBet);
 
-                    // Ladda upp fil till servern
-                    var serviceConnector = new HPTServiceConnector();
-                    serviceConnector.SaveSystem(this.MarkBet);
+        //            // Ladda upp fil till servern
+        //            var serviceConnector = new HPTServiceConnector();
+        //            serviceConnector.SaveSystem(this.MarkBet);
 
-                    // Fixa till mailet
-                    string url = "http://correction.hpt.nu/Default.aspx?SystemGUID=" + this.MarkBet.UploadedSystemGUID;
-                    Clipboard.SetDataObject("http://correction.hpt.nu/Default.aspx?SystemGUID=" + this.MarkBet.UploadedSystemGUID);
-                    MessageBox.Show("System uppladdat till HPTs server.", "Uppladdning klar", MessageBoxButton.OK);
-                }
-            }
-            catch (Exception exc)
-            {
-                string s = exc.Message;
-                MessageBox.Show("Uppladdningen av system misslyckades, var vänlig försök igen senare.", "Uppladning misslyckades", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
+        //            // Fixa till mailet
+        //            string url = "http://correction.hpt.nu/Default.aspx?SystemGUID=" + this.MarkBet.UploadedSystemGUID;
+        //            Clipboard.SetDataObject("http://correction.hpt.nu/Default.aspx?SystemGUID=" + this.MarkBet.UploadedSystemGUID);
+        //            MessageBox.Show("System uppladdat till HPTs server.", "Uppladdning klar", MessageBoxButton.OK);
+        //        }
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        string s = exc.Message;
+        //        MessageBox.Show("Uppladdningen av system misslyckades, var vänlig försök igen senare.", "Uppladning misslyckades", MessageBoxButton.OK, MessageBoxImage.Error);
+        //    }
+        //}
 
         private void SetBody()
         {
@@ -1561,23 +1558,6 @@ namespace HPTClient
             }
         }
 
-        private void miUploadCompleteSystem_Click(object sender, RoutedEventArgs e)
-        {
-            var wndUploadSystem = new Window()
-            {
-                SizeToContent = SizeToContent.WidthAndHeight,
-                Title = "Ladda upp system!",
-                ShowInTaskbar = false,
-                ResizeMode = ResizeMode.NoResize,
-                Owner = App.Current.MainWindow
-            };
-            wndUploadSystem.Content = new UCUserSystemUpload()
-            {
-                DataContext = this.MarkBet,
-                MarkBet = this.MarkBet
-            };
-            wndUploadSystem.ShowDialog();
-        }
 
         #endregion
 
@@ -2688,11 +2668,11 @@ namespace HPTClient
         //    Clipboard.SetText(sb.ToString());
         //}
 
-        private void miUploadOnlineSystem_Click(object sender, RoutedEventArgs e)
-        {
-            var serviceConnector = new HPTServiceConnector();
-            serviceConnector.UploadSystemOnline(this.MarkBet);
-        }
+        //private void miUploadOnlineSystem_Click(object sender, RoutedEventArgs e)
+        //{
+        //    var serviceConnector = new HPTServiceConnector();
+        //    serviceConnector.UploadSystemOnline(this.MarkBet);
+        //}
 
         private void tcMarksGame_RequestNavigate(object sender, RoutedEventArgs e)
         {
@@ -2750,5 +2730,26 @@ namespace HPTClient
                 string fel = exc.Message;
             }
         }
+
+        #region Obsolete
+
+        //private void miUploadCompleteSystem_Click(object sender, RoutedEventArgs e)
+        //{
+        //    var wndUploadSystem = new Window()
+        //    {
+        //        SizeToContent = SizeToContent.WidthAndHeight,
+        //        Title = "Ladda upp system!",
+        //        ShowInTaskbar = false,
+        //        ResizeMode = ResizeMode.NoResize,
+        //        Owner = App.Current.MainWindow
+        //    };
+        //    wndUploadSystem.Content = new UCUserSystemUpload()
+        //    {
+        //        DataContext = this.MarkBet,
+        //        MarkBet = this.MarkBet
+        //    };
+        //    wndUploadSystem.ShowDialog();
+        //}
+        #endregion
     }
 }
