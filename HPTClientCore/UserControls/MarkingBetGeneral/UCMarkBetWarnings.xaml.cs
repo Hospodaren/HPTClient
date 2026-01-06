@@ -17,23 +17,23 @@ namespace HPTClient
 
         private void btnIgnoreReservChoice_Click(object sender, RoutedEventArgs e)
         {
-            this.MarkBet.NoReservChoiceMade = false;
+            MarkBet.NoReservChoiceMade = false;
         }
 
         private System.Windows.Controls.Primitives.Popup pu;
         private void btnShowUncoveredHorses_Click(object sender, RoutedEventArgs e)
         {
             var fe = (FrameworkElement)sender;
-            if (this.pu == null)
+            if (pu == null)
             {
-                this.pu = new System.Windows.Controls.Primitives.Popup()
+                pu = new System.Windows.Controls.Primitives.Popup()
                 {
                     Placement = System.Windows.Controls.Primitives.PlacementMode.Top,
                     PlacementTarget = fe//,
                     //HorizontalOffset = -10D,
                     //VerticalOffset = -10D
                 };
-                this.pu.MouseLeave += new MouseEventHandler(pu_MouseLeave);
+                pu.MouseLeave += new MouseEventHandler(pu_MouseLeave);
             }
 
             // Skapa innehållet för popupen
@@ -51,7 +51,7 @@ namespace HPTClient
             };
 
             // Plocka ut hästarna med rätt Prio
-            IOrderedEnumerable<HPTHorse> orderedHorseList = this.MarkBet.RaceDayInfo.HorseListSelected
+            IOrderedEnumerable<HPTHorse> orderedHorseList = MarkBet.RaceDayInfo.HorseListSelected
                 .Where(h => h.NumberOfCoveredRows == 0)
                 .OrderBy(h => h.ParentRace.LegNr)
                 .ThenBy(h => h.StartNr);
@@ -77,23 +77,23 @@ namespace HPTClient
             };
 
             // Visa popupen
-            this.pu.DataContext = horseCollection;
-            this.pu.Child = b;
-            this.pu.IsOpen = true;
+            pu.DataContext = horseCollection;
+            pu.Child = b;
+            pu.IsOpen = true;
         }
 
         private void btnIgnoreUncoveredHorses_Click(object sender, RoutedEventArgs e)
         {
-            this.MarkBet.HasUncoveredHorses = false;
+            MarkBet.HasUncoveredHorses = false;
         }
 
         private void btnDeselectUncoveredHorses_Click(object sender, RoutedEventArgs e)
         {
-            bool pauseRecalculation = this.MarkBet.pauseRecalculation;
-            this.MarkBet.pauseRecalculation = true;
+            bool pauseRecalculation = MarkBet.pauseRecalculation;
+            MarkBet.pauseRecalculation = true;
             try
             {
-                foreach (var horse in this.MarkBet.HorseListUncovered)
+                foreach (var horse in MarkBet.HorseListUncovered)
                 {
                     horse.Selected = false;
                 }
@@ -102,28 +102,28 @@ namespace HPTClient
             {
                 HPTConfig.AddToErrorLogStatic(exc);
             }
-            this.MarkBet.pauseRecalculation = pauseRecalculation;
-            this.MarkBet.RecalculateReduction(RecalculateReason.All);
+            MarkBet.pauseRecalculation = pauseRecalculation;
+            MarkBet.RecalculateReduction(RecalculateReason.All);
         }
 
         private void btnIgnoreOverlappingHorses_Click(object sender, RoutedEventArgs e)
         {
-            this.MarkBet.HasOverlappingComplementaryRuleHorses = false;
+            MarkBet.HasOverlappingComplementaryRuleHorses = false;
         }
 
         private void btnShowOverlappingHorses_Click(object sender, RoutedEventArgs e)
         {
             var fe = (FrameworkElement)sender;
-            if (this.pu == null)
+            if (pu == null)
             {
-                this.pu = new System.Windows.Controls.Primitives.Popup()
+                pu = new System.Windows.Controls.Primitives.Popup()
                 {
                     Placement = System.Windows.Controls.Primitives.PlacementMode.Top,
                     PlacementTarget = fe//,
                     //HorizontalOffset = -10D,
                     //VerticalOffset = -10D
                 };
-                this.pu.MouseLeave += new MouseEventHandler(pu_MouseLeave);
+                pu.MouseLeave += new MouseEventHandler(pu_MouseLeave);
             }
 
             // Skapa innehållet för popupen
@@ -141,7 +141,7 @@ namespace HPTClient
             };
 
             // Plocka ut hästarna med rätt Prio
-            IOrderedEnumerable<HPTHorse> orderedHorseList = this.MarkBet.RaceDayInfo.HorseListSelected
+            IOrderedEnumerable<HPTHorse> orderedHorseList = MarkBet.RaceDayInfo.HorseListSelected
                 .Where(h => h.NumberOfCoveredRows == 0)
                 .OrderBy(h => h.ParentRace.LegNr)
                 .ThenBy(h => h.StartNr);
@@ -167,15 +167,15 @@ namespace HPTClient
             };
 
             // Visa popupen
-            this.pu.DataContext = horseCollection;
-            this.pu.Child = b;
-            this.pu.IsOpen = true;
+            pu.DataContext = horseCollection;
+            pu.Child = b;
+            pu.IsOpen = true;
         }
 
         private void btnDeSelectScratchedHorses_Click(object sender, RoutedEventArgs e)
         {
-            this.MarkBet.RaceDayInfo.ScratchedHorseInfo.DeSelectAll();
-            foreach (HPTRace race in this.MarkBet.RaceDayInfo.RaceList)
+            MarkBet.RaceDayInfo.ScratchedHorseInfo.DeSelectAll();
+            foreach (HPTRace race in MarkBet.RaceDayInfo.RaceList)
             {
                 race.NumberOfSelectedHorses = race.HorseListSelected.Count;
             }
@@ -183,17 +183,17 @@ namespace HPTClient
 
         private void btnIgnorScratchedHorses_Click(object sender, RoutedEventArgs e)
         {
-            this.MarkBet.RaceDayInfo.ScratchedHorseInfo.HaveSelectedScratchedHorse = false;
+            MarkBet.RaceDayInfo.ScratchedHorseInfo.HaveSelectedScratchedHorse = false;
         }
 
         private void btnCloseSuperfluousXReduction_Click(object sender, RoutedEventArgs e)
         {
-            this.MarkBet.HasSuperfluousXReduction = false;
+            MarkBet.HasSuperfluousXReduction = false;
         }
 
         private void btnIgnoreTooManyCoupons_Click(object sender, RoutedEventArgs e)
         {
-            this.MarkBet.HasTooManySystems = false;
+            MarkBet.HasTooManySystems = false;
         }
 
         void pu_MouseLeave(object sender, MouseEventArgs e)

@@ -8,7 +8,7 @@ namespace HPTClient
     {
         public HPTCalendar()
         {
-            this.RaceDayInfoList = new ObservableCollection<HPTRaceDayInfo>();
+            RaceDayInfoList = new ObservableCollection<HPTRaceDayInfo>();
         }
 
         [DataMember]

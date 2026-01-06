@@ -18,11 +18,11 @@ namespace HPTClient
         {
             get
             {
-                return this.winnerStrings;
+                return winnerStrings;
             }
             set
             {
-                this.winnerStrings = value;
+                winnerStrings = value;
                 OnPropertyChanged("WinnerStrings");
             }
         }
@@ -48,11 +48,11 @@ namespace HPTClient
         {
             get
             {
-                return this.systemsLeft;
+                return systemsLeft;
             }
             set
             {
-                this.systemsLeft = value;
+                systemsLeft = value;
                 OnPropertyChanged("SystemsLeft");
             }
         }
@@ -63,11 +63,11 @@ namespace HPTClient
         {
             get
             {
-                return this.hasResult;
+                return hasResult;
             }
             set
             {
-                this.hasResult = value;
+                hasResult = value;
                 OnPropertyChanged("HasResult");
             }
         }
@@ -78,11 +78,11 @@ namespace HPTClient
         {
             get
             {
-                return this.winnerList;
+                return winnerList;
             }
             set
             {
-                this.winnerList = value;
+                winnerList = value;
                 OnPropertyChanged("WinnerList");
             }
         }
@@ -100,11 +100,11 @@ namespace HPTClient
         {
             get
             {
-                return this.numberOfCorrect;
+                return numberOfCorrect;
             }
             set
             {
-                this.numberOfCorrect = value;
+                numberOfCorrect = value;
                 OnPropertyChanged("NumberOfCorrect");
             }
         }
@@ -115,11 +115,11 @@ namespace HPTClient
         {
             get
             {
-                return this.payOutAmount;
+                return payOutAmount;
             }
             set
             {
-                this.payOutAmount = value;
+                payOutAmount = value;
                 OnPropertyChanged("PayOutAmount");
             }
         }
@@ -136,11 +136,11 @@ namespace HPTClient
         {
             get
             {
-                return this.totalAmount;
+                return totalAmount;
             }
             set
             {
-                this.totalAmount = value;
+                totalAmount = value;
                 OnPropertyChanged("TotalAmount");
             }
         }
@@ -151,11 +151,11 @@ namespace HPTClient
         {
             get
             {
-                return this.numberOfWinningRows;
+                return numberOfWinningRows;
             }
             set
             {
-                this.numberOfWinningRows = value;
+                numberOfWinningRows = value;
                 OnPropertyChanged("NumberOfWinningRows");
             }
         }
@@ -165,11 +165,11 @@ namespace HPTClient
         {
             get
             {
-                return this.minRowValue;
+                return minRowValue;
             }
             set
             {
-                this.minRowValue = value;
+                minRowValue = value;
                 OnPropertyChanged("MinRowValue");
             }
         }
@@ -179,11 +179,11 @@ namespace HPTClient
         {
             get
             {
-                return this.maxRowValue;
+                return maxRowValue;
             }
             set
             {
-                this.maxRowValue = value;
+                maxRowValue = value;
                 OnPropertyChanged("MaxRowValue");
             }
         }

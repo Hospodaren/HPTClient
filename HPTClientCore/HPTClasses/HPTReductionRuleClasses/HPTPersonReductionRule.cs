@@ -14,13 +14,13 @@ namespace HPTClient
     {
         public HPTPersonReductionRule()
         {
-            this.PersonList = new ObservableCollection<HPTPerson>();
+            PersonList = new ObservableCollection<HPTPerson>();
         }
 
         public HPTPersonReductionRule(int numberOfRaces, bool use)
             : base(numberOfRaces, use)
         {
-            this.PersonList = new ObservableCollection<HPTPerson>();
+            PersonList = new ObservableCollection<HPTPerson>();
         }
 
         private IEnumerable<HPTHorse> horseList;
@@ -28,11 +28,11 @@ namespace HPTClient
         {
             get
             {
-                if (this.horseList == null)
+                if (horseList == null)
                 {
-                    this.horseList = this.PersonList.SelectMany(p => p.HorseList);
+                    horseList = PersonList.SelectMany(p => p.HorseList);
                 }
-                return this.horseList;
+                return horseList;
             }
         }
 
@@ -42,7 +42,7 @@ namespace HPTClient
         //public void UpdateSelectable(IList<HPTHorse> horseList)
         public void UpdateSelectable(ICollection<HPTHorse> horseList)
         {
-            this.NumberOfSelected = 0;
+            NumberOfSelected = 0;
             int[] raceNumbers = new int[horseList.Count];
             for (int i = 0; i < horseList.Count; i++)
             {
@@ -50,9 +50,9 @@ namespace HPTClient
                 raceNumbers[i] = horseList.ElementAt(i).ParentRace.LegNr;
             }
             int antal = raceNumbers.Distinct().Count();
-            for (int i = 0; i <= this.NumberOfRaces; i++)
+            for (int i = 0; i <= NumberOfRaces; i++)
             {
-                HPTNumberOfWinners hptNow = this.NumberOfWinnersList.First(now => now.NumberOfWinners == i);
+                HPTNumberOfWinners hptNow = NumberOfWinnersList.First(now => now.NumberOfWinners == i);
                 if (hptNow.NumberOfWinners > antal)
                 {
                     hptNow.Selectable = false;
@@ -61,7 +61,7 @@ namespace HPTClient
                 else
                 {
                     hptNow.Selectable = true;
-                    this.NumberOfSelected += hptNow.Selected ? 1 : 0;
+                    NumberOfSelected += hptNow.Selected ? 1 : 0;
                 }
             }
         }
@@ -71,12 +71,12 @@ namespace HPTClient
             StringBuilder sb = new StringBuilder();
             sb.Append("-");
             sb.Append(": ");
-            foreach (HPTPerson person in this.PersonList)
+            foreach (HPTPerson person in PersonList)
             {
                 sb.Append(person.ShortName);
                 sb.Append(", ");
             }
-            this.ShortDescription = sb.ToString();
+            ShortDescription = sb.ToString();
         }
 
         private string shortDescription;
@@ -100,28 +100,28 @@ namespace HPTClient
         {
             get
             {
-                if (this.personShortNameList == null)
+                if (personShortNameList == null)
                 {
-                    this.personShortNameList = new List<string>();
+                    personShortNameList = new List<string>();
                 }
-                foreach (HPTPerson person in this.PersonList)
+                foreach (HPTPerson person in PersonList)
                 {
-                    for (int i = 0; i < this.personShortNameList.Count; i++)
+                    for (int i = 0; i < personShortNameList.Count; i++)
                     {
-                        if (this.personShortNameList[i] == person.ShortName)
+                        if (personShortNameList[i] == person.ShortName)
                         {
-                            this.personShortNameList.RemoveAt(i);
+                            personShortNameList.RemoveAt(i);
                             i--;
                         }
                     }
-                    this.personShortNameList.Add(person.ShortName);
+                    personShortNameList.Add(person.ShortName);
                 }
 
-                return this.personShortNameList;
+                return personShortNameList;
             }
             set
             {
-                this.personShortNameList = value;
+                personShortNameList = value;
             }
         }
 
@@ -131,28 +131,28 @@ namespace HPTClient
         {
             get
             {
-                if (this.personNameList == null)
+                if (personNameList == null)
                 {
-                    this.personNameList = new List<string>();
+                    personNameList = new List<string>();
                 }
-                foreach (HPTPerson person in this.PersonList)
+                foreach (HPTPerson person in PersonList)
                 {
-                    for (int i = 0; i < this.personNameList.Count; i++)
+                    for (int i = 0; i < personNameList.Count; i++)
                     {
-                        if (this.personNameList[i] == person.Name)
+                        if (personNameList[i] == person.Name)
                         {
-                            this.personNameList.RemoveAt(i);
+                            personNameList.RemoveAt(i);
                             i--;
                         }
                     }
-                    this.personNameList.Add(person.Name);
+                    personNameList.Add(person.Name);
                 }
 
-                return this.personNameList;
+                return personNameList;
             }
             set
             {
-                this.personNameList = value;
+                personNameList = value;
             }
         }
 
@@ -174,12 +174,12 @@ namespace HPTClient
         public override void Reset()
         {
             base.Reset();
-            if (this.HorseList.Any())
+            if (HorseList.Any())
             {
-                this.LowestLegNumber = this.HorseList.Min(h => h.ParentRace.LegNr);
-                this.HighestLegNumber = this.HorseList.Max(h => h.ParentRace.LegNr);
+                LowestLegNumber = HorseList.Min(h => h.ParentRace.LegNr);
+                HighestLegNumber = HorseList.Max(h => h.ParentRace.LegNr);
             }
-            this.horseList = null;
+            horseList = null;
         }
 
         [XmlIgnore]
@@ -190,27 +190,27 @@ namespace HPTClient
 
         public override bool IncludeRow(HPTMarkBet markBet, HPTMarkBetSingleRow singleRow)
         {
-            if (!this.Use)
+            if (!Use)
             {
                 return true;
             }
-            int numberOfHorses = this.HorseList.Intersect(singleRow.HorseList).Count();
-            return this.NumberOfWinnersList.First(now => now.NumberOfWinners == numberOfHorses).Selected;
+            int numberOfHorses = HorseList.Intersect(singleRow.HorseList).Count();
+            return NumberOfWinnersList.First(now => now.NumberOfWinners == numberOfHorses).Selected;
         }
 
         public override bool IncludeRow(HPTMarkBet markBet, HPTHorse[] horseList, int numberOfRacesToTest)
         {
-            if (this.HighestLegNumber > numberOfRacesToTest || this.LowestLegNumber > numberOfRacesToTest || !this.Use)
+            if (HighestLegNumber > numberOfRacesToTest || LowestLegNumber > numberOfRacesToTest || !Use)
             {
                 return true;
             }
 
             int numberOfHorses = horseList.Take(numberOfRacesToTest).Intersect(horseList).Count();
-            if (numberOfHorses > this.MaxNumberOfX) // Maxantalet har redan överskridits innan alla lopp kontrollerats
+            if (numberOfHorses > MaxNumberOfX) // Maxantalet har redan överskridits innan alla lopp kontrollerats
             {
                 return false;
             }
-            if (numberOfHorses + markBet.BetType.NumberOfRaces - numberOfRacesToTest < this.MinNumberOfX)   // Det går inte att komma upp i minimiantalet med kvarvarande lopp
+            if (numberOfHorses + markBet.BetType.NumberOfRaces - numberOfRacesToTest < MinNumberOfX)   // Det går inte att komma upp i minimiantalet med kvarvarande lopp
             {
                 return false;
             }
@@ -223,10 +223,10 @@ namespace HPTClient
             if (markBet.RaceDayInfo.ResultComplete)
             {
                 int numberOfCorrectHorses = markBet.CouponCorrector.HorseList
-                    .Intersect(this.HorseList)
+                    .Intersect(HorseList)
                     .Count();
 
-                this.RuleResultForCorrectRow = numberOfCorrectHorses.ToString() + " Häst(ar)";
+                RuleResultForCorrectRow = numberOfCorrectHorses.ToString() + " Häst(ar)";
             }
             return true;
         }

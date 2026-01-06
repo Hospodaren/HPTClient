@@ -20,7 +20,7 @@ namespace HPTClient
         {
             get
             {
-                return "Tränarvillkor: " + this.NumberOfWinnersString + " vinnare";
+                return "Tränarvillkor: " + NumberOfWinnersString + " vinnare";
             }
         }
 
@@ -28,11 +28,11 @@ namespace HPTClient
         {
             // Create String representation
             StringBuilder sb = new StringBuilder();
-            foreach (string person in this.PersonNameList)
+            foreach (string person in PersonNameList)
             {
                 sb.AppendLine(person);
             }
-            this.ClipboardString = this.ReductionTypeString + "\r\n" + sb.ToString();
+            ClipboardString = ReductionTypeString + "\r\n" + sb.ToString();
             return sb.ToString();
         }
     }

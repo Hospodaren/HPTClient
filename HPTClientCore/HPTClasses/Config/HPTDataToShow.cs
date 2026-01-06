@@ -23,11 +23,11 @@ namespace HPTClient
         {
             get
             {
-                return this.usage;
+                return usage;
             }
             set
             {
-                this.usage = value;
+                usage = value;
             }
         }
 
@@ -40,7 +40,7 @@ namespace HPTClient
         public List<HorseDataToShowAttribute> GetHorseDataToShowAttributes()
         {
             List<HorseDataToShowAttribute> attributeList = new List<HorseDataToShowAttribute>();
-            foreach (PropertyInfo pi in (this.GetType()).GetProperties())
+            foreach (PropertyInfo pi in (GetType()).GetProperties())
             {
                 foreach (object o in pi.GetCustomAttributes(true))
                 {
@@ -51,7 +51,7 @@ namespace HPTClient
                         //{
                         //    string s = string.Empty;
                         //}
-                        if (hda.Usage.HasFlag(this.Usage) || hda.Usage == DataToShowUsage.Everywhere)
+                        if (hda.Usage.HasFlag(Usage) || hda.Usage == DataToShowUsage.Everywhere)
                         {
                             attributeList.Add(hda);
                         }

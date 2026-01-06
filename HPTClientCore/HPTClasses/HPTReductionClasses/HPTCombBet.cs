@@ -14,15 +14,15 @@ namespace HPTClient
         public HPTCombBet(HPTRaceDayInfo rdi, HPTBetType bt)
             : base(rdi, bt)
         {
-            this.RaceDayInfo.RankTemplateChanged -= ApplyConfigRankVariables;
-            this.RaceDayInfo.RankTemplateChanged += ApplyConfigRankVariables;
+            RaceDayInfo.RankTemplateChanged -= ApplyConfigRankVariables;
+            RaceDayInfo.RankTemplateChanged += ApplyConfigRankVariables;
         }
 
         [OnDeserialized]
         public void InitializeOnDeserialized(StreamingContext sc)
         {
-            this.RaceDayInfo.RankTemplateChanged -= ApplyConfigRankVariables;
-            this.RaceDayInfo.RankTemplateChanged += ApplyConfigRankVariables;
+            RaceDayInfo.RankTemplateChanged -= ApplyConfigRankVariables;
+            RaceDayInfo.RankTemplateChanged += ApplyConfigRankVariables;
         }
 
         internal override void ApplyConfigRankVariables(HPTRankTemplate rankTemplate)
@@ -39,53 +39,53 @@ namespace HPTClient
         {
             int numberOfSelected = 0;
             int totalStake = 0;
-            switch (this.BetType.Code)
+            switch (BetType.Code)
             {
                 case "DD":
                 case "LD":
-                    totalStake = this.RaceDayInfo.CombinationListInfoDouble.CombinationList.Where(c => c.Selected && c.Stake != null).Sum(c => (int)c.Stake);
-                    numberOfSelected = this.RaceDayInfo.CombinationListInfoDouble.CombinationList.Count(c => c.Selected);
+                    totalStake = RaceDayInfo.CombinationListInfoDouble.CombinationList.Where(c => c.Selected && c.Stake != null).Sum(c => (int)c.Stake);
+                    numberOfSelected = RaceDayInfo.CombinationListInfoDouble.CombinationList.Count(c => c.Selected);
                     break;
                 case "TV":
-                    foreach (HPTRace hptRace in this.RaceDayInfo.RaceList)
+                    foreach (HPTRace hptRace in RaceDayInfo.RaceList)
                     {
                         hptRace.CombinationListInfoTvilling.SetStakeAndNumberOfSelected();
                     }
-                    numberOfSelected = this.RaceDayInfo.RaceList.Sum(r => r.CombinationListInfoTvilling.NumberOfSelectedCombinations);
-                    totalStake = this.RaceDayInfo.RaceList.Sum(r => r.CombinationListInfoTvilling.TotalStake);
+                    numberOfSelected = RaceDayInfo.RaceList.Sum(r => r.CombinationListInfoTvilling.NumberOfSelectedCombinations);
+                    totalStake = RaceDayInfo.RaceList.Sum(r => r.CombinationListInfoTvilling.TotalStake);
                     break;
                 case "T":
-                    foreach (HPTRace hptRace in this.RaceDayInfo.RaceList)
+                    foreach (HPTRace hptRace in RaceDayInfo.RaceList)
                     {
                         hptRace.CombinationListInfoTrio.SetStakeAndNumberOfSelected();
                     }
-                    numberOfSelected = this.RaceDayInfo.RaceList.Sum(r => r.CombinationListInfoTrio.NumberOfSelectedCombinations);
-                    totalStake = this.RaceDayInfo.RaceList.Sum(r => r.CombinationListInfoTrio.TotalStake);
+                    numberOfSelected = RaceDayInfo.RaceList.Sum(r => r.CombinationListInfoTrio.NumberOfSelectedCombinations);
+                    totalStake = RaceDayInfo.RaceList.Sum(r => r.CombinationListInfoTrio.TotalStake);
                     break;
                 default:
                     break;
             }
 
-            this.NumberOfSelected = numberOfSelected;
-            this.TotalStake = totalStake;
+            NumberOfSelected = numberOfSelected;
+            TotalStake = totalStake;
         }
 
         internal void CalculateStake()
         {
             IEnumerable<HPTCombination> combList = null;
-            switch (this.RaceDayInfo.BetType.Code)
+            switch (RaceDayInfo.BetType.Code)
             {
                 case "DD":
                 case "LD":
-                    combList = this.RaceDayInfo.CombinationListInfoDouble.CombinationList.Where(c => c.Selected);
+                    combList = RaceDayInfo.CombinationListInfoDouble.CombinationList.Where(c => c.Selected);
                     break;
                 case "T":
-                    combList = this.RaceDayInfo.RaceList
+                    combList = RaceDayInfo.RaceList
                         .SelectMany(r => r.CombinationListInfoTrio.CombinationList)
                         .Where(c => c.Selected);
                     break;
                 case "TV":
-                    combList = this.RaceDayInfo.RaceList
+                    combList = RaceDayInfo.RaceList
                         .SelectMany(r => r.CombinationListInfoTvilling.CombinationList)
                         .Where(c => c.Selected);
                     break;
@@ -97,9 +97,9 @@ namespace HPTClient
                 foreach (HPTCombination comb in combList)
                 {
                     CalculateStake(comb);
-                    if (comb.Stake < this.BetType.LowestStake)
+                    if (comb.Stake < BetType.LowestStake)
                     {
-                        comb.Stake = this.BetType.LowestStake;
+                        comb.Stake = BetType.LowestStake;
                     }
                 }
                 SetStakeAndNumberOfSelected();
@@ -113,7 +113,7 @@ namespace HPTClient
                 comb.Stake = 0;
                 return;
             }
-            decimal targetBet = this.TargetReturn / comb.CombinationOdds * 10M;
+            decimal targetBet = TargetReturn / comb.CombinationOdds * 10M;
             comb.Stake = Convert.ToInt32(targetBet);
         }
 
@@ -123,11 +123,11 @@ namespace HPTClient
         {
             get
             {
-                return this.numberOfSelected;
+                return numberOfSelected;
             }
             set
             {
-                this.numberOfSelected = value;
+                numberOfSelected = value;
                 OnPropertyChanged("NumberOfSelected");
             }
         }
@@ -138,11 +138,11 @@ namespace HPTClient
         {
             get
             {
-                return this.totalStake;
+                return totalStake;
             }
             set
             {
-                this.totalStake = value;
+                totalStake = value;
                 OnPropertyChanged("TotalStake");
             }
         }
@@ -153,11 +153,11 @@ namespace HPTClient
         {
             get
             {
-                return this.targetReturn;
+                return targetReturn;
             }
             set
             {
-                this.targetReturn = value;
+                targetReturn = value;
                 OnPropertyChanged("TargetReturn");
                 CalculateStake();
             }
@@ -191,13 +191,13 @@ namespace HPTClient
         public string ToFileNameString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append(this.BetType.Code);
+            sb.Append(BetType.Code);
             sb.Append("_");
-            sb.Append(this.RaceDayInfo.TracknameFile);
+            sb.Append(RaceDayInfo.TracknameFile);
             sb.Append("_");
-            sb.Append(this.RaceDayInfo.TrackId);
+            sb.Append(RaceDayInfo.TrackId);
             sb.Append("_");
-            sb.Append(this.RaceDayInfo.RaceDayDateString);
+            sb.Append(RaceDayInfo.RaceDayDateString);
 
             return sb.ToString();
         }
@@ -205,13 +205,13 @@ namespace HPTClient
         public string ToFileNameString(HPTRace hptRace, HPTCombinationListInfo combListInfo)
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append(this.BetType.Name);
+            sb.Append(BetType.Name);
             sb.Append("_");
-            sb.Append(this.RaceDayInfo.TracknameFile);
+            sb.Append(RaceDayInfo.TracknameFile);
             sb.Append("_");
-            sb.Append(this.RaceDayInfo.TrackId);
+            sb.Append(RaceDayInfo.TrackId);
             sb.Append("_");
-            sb.Append(this.RaceDayInfo.RaceDayDateString);
+            sb.Append(RaceDayInfo.RaceDayDateString);
             sb.Append("_");
             sb.Append(hptRace.LegNrString);
             sb.Append("_");
@@ -227,11 +227,11 @@ namespace HPTClient
             StringBuilder sb = new StringBuilder();
             sb.Append("T");
             sb.Append("_");
-            sb.Append(this.RaceDayInfo.Trackname);
+            sb.Append(RaceDayInfo.Trackname);
             sb.Append("_");
-            sb.Append(this.RaceDayInfo.TrackId);
+            sb.Append(RaceDayInfo.TrackId);
             sb.Append("_");
-            sb.Append(this.RaceDayInfo.RaceDayDateString);
+            sb.Append(RaceDayInfo.RaceDayDateString);
             sb.Append("_");
             sb.Append(hptRace.RaceNr);
             //sb.Append("_");

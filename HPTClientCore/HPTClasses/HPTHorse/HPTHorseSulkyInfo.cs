@@ -37,7 +37,7 @@ namespace HPTClient
                 //{
                 //    this.SulkyChanged = true;
                 //}
-                this.text = value;
+                text = value;
                 OnPropertyChanged("Text");
             }
         }

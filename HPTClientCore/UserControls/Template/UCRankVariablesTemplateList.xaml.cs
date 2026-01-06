@@ -31,11 +31,11 @@ namespace HPTClient
             };
             rankVariableTemplate.InitializeTemplate();
 
-            if (this.Config.RankTemplateList == null)
+            if (Config.RankTemplateList == null)
             {
-                this.Config.RankTemplateList = new System.Collections.ObjectModel.ObservableCollection<HPTRankTemplate>();
+                Config.RankTemplateList = new System.Collections.ObjectModel.ObservableCollection<HPTRankTemplate>();
             }
-            this.Config.RankTemplateList.Add(rankVariableTemplate);
+            Config.RankTemplateList.Add(rankVariableTemplate);
         }
 
     }

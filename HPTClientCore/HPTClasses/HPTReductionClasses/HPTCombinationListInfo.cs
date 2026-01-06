@@ -11,13 +11,13 @@ namespace HPTClient
 
         public HPTCombinationListInfo()
         {
-            this.CombinationsToShowList = new ObservableCollection<HPTCombination>();
+            CombinationsToShowList = new ObservableCollection<HPTCombination>();
         }
 
         [OnDeserialized]
         public void InitializeOnDeserialized(StreamingContext sc)
         {
-            this.CombinationsToShowList = new ObservableCollection<HPTCombination>();
+            CombinationsToShowList = new ObservableCollection<HPTCombination>();
         }
 
         [XmlIgnore]
@@ -31,16 +31,16 @@ namespace HPTClient
 
         public void SetStakeAndNumberOfSelected()
         {
-            int numberOfSelected = this.CombinationList.Where(c => c.Selected).Count();
-            int totalStake = this.CombinationList.Where(c => c.Selected && c.Stake != null).Sum(c => (int)c.Stake);
+            int numberOfSelected = CombinationList.Where(c => c.Selected).Count();
+            int totalStake = CombinationList.Where(c => c.Selected && c.Stake != null).Sum(c => (int)c.Stake);
 
-            if (this.NumberOfSelectedCombinations != numberOfSelected)
+            if (NumberOfSelectedCombinations != numberOfSelected)
             {
-                this.NumberOfSelectedCombinations = numberOfSelected;
+                NumberOfSelectedCombinations = numberOfSelected;
             }
-            if (this.TotalStake != totalStake)
+            if (TotalStake != totalStake)
             {
-                this.TotalStake = totalStake;
+                TotalStake = totalStake;
             }
         }
 
@@ -49,11 +49,11 @@ namespace HPTClient
         {
             get
             {
-                return this.numberOfSelectedCombinations;
+                return numberOfSelectedCombinations;
             }
             set
             {
-                this.numberOfSelectedCombinations = value;
+                numberOfSelectedCombinations = value;
                 OnPropertyChanged("NumberOfSelectedCombinations");
             }
         }
@@ -63,27 +63,27 @@ namespace HPTClient
         {
             get
             {
-                return this.totalStake;
+                return totalStake;
             }
             set
             {
-                this.totalStake = value;
+                totalStake = value;
                 OnPropertyChanged("TotalStake");
             }
         }
 
         public void SortCombinationValues()
         {
-            if (this.CombinationList != null)
+            if (CombinationList != null)
             {
-                List<HPTCombination> orderedCombinations = this.CombinationList.OrderBy(c => c.CombinationOddsExact).ToList();
+                List<HPTCombination> orderedCombinations = CombinationList.OrderBy(c => c.CombinationOddsExact).ToList();
                 for (int i = 0; i < orderedCombinations.Count(); i++)
                 {
                     orderedCombinations[i].CombinationOddsRank = i + 1;
                 }
 
-                orderedCombinations = this.CombinationList.OrderBy(c => c.CombinationOddsExact).ToList();
-                for (int i = 0; i < this.CombinationList.Count; i++)
+                orderedCombinations = CombinationList.OrderBy(c => c.CombinationOddsExact).ToList();
+                for (int i = 0; i < CombinationList.Count; i++)
                 {
                     orderedCombinations[i].MultipliedOddsRank = i + 1;
                 }
@@ -123,12 +123,12 @@ namespace HPTClient
             }
         }
 
-        internal string GetUniqueCodeFromCombination(HPTService.HPTCombination comb)
-        {
-            string code = GetHexCode(comb.Horse1Nr) + GetHexCode(comb.Horse2Nr) + GetHexCode(comb.Horse3Nr);
+        //internal string GetUniqueCodeFromCombination(HPTService.HPTCombination comb)
+        //{
+        //    string code = GetHexCode(comb.Horse1Nr) + GetHexCode(comb.Horse2Nr) + GetHexCode(comb.Horse3Nr);
 
-            return code;
-        }
+        //    return code;
+        //}
 
         // Trio
         public int TotalPercentage { get; set; }
@@ -136,7 +136,7 @@ namespace HPTClient
         // Trio
         public void CalculatePercentages(IEnumerable<HPTHorse> horseList)
         {
-            this.TotalPercentage = horseList
+            TotalPercentage = horseList
                 .Sum(h => h.TrioInfo.PlaceInfo1.Percent);
 
             //horseList.ToList().ForEach(h =>
@@ -144,7 +144,7 @@ namespace HPTClient
             //    var horse = this.horsel
             //});
 
-            if (this.TotalPercentage > 0)
+            if (TotalPercentage > 0)
             {
                 //foreach (HPTHorse horse in horseList)
                 //{
@@ -174,24 +174,24 @@ namespace HPTClient
         {
             try
             {
-                this.CombinationsToShowList.Clear();
+                CombinationsToShowList.Clear();
                 IEnumerable<HPTCombination> combinationsToShow = new List<HPTCombination>();
 
-                switch (this.BetType)
+                switch (BetType)
                 {
                     case "T":
-                        combinationsToShow = this.CombinationList
+                        combinationsToShow = CombinationList
                         .Where(c => c.Horse1.TrioInfo.PlaceInfo1.Selected && c.Horse2.TrioInfo.PlaceInfo2.Selected && c.Horse3.TrioInfo.PlaceInfo3.Selected)
                         .ToList();
                         break;
                     case "DD":
                     case "LD":
-                        combinationsToShow = this.CombinationList
+                        combinationsToShow = CombinationList
                         .Where(c => c.Horse1.Selected && c.Horse2.Selected)
                         .ToList();
                         break;
                     case "TV":
-                        combinationsToShow = this.CombinationList
+                        combinationsToShow = CombinationList
                         .Where(c => c.Horse1.Selected || c.Horse2.Selected)
                         .ToList();
                         break;
@@ -201,11 +201,11 @@ namespace HPTClient
 
                 foreach (var combinationToShow in combinationsToShow)
                 {
-                    this.CombinationsToShowList.Add(combinationToShow);
+                    CombinationsToShowList.Add(combinationToShow);
                 }
 
-                this.CombinationList
-                    .Except(this.CombinationsToShowList)
+                CombinationList
+                    .Except(CombinationsToShowList)
                     .Where(c => c.Selected)
                     .ToList()
                     .ForEach(c => c.Selected = false);

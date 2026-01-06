@@ -12,11 +12,11 @@ namespace HPTClient
         {
             get
             {
-                return this.horse;
+                return horse;
             }
             set
             {
-                this.horse = value;
+                horse = value;
                 OnPropertyChanged("Horse");
             }
         }
@@ -27,11 +27,11 @@ namespace HPTClient
         {
             get
             {
-                return this.prio;
+                return prio;
             }
             set
             {
-                this.prio = value;
+                prio = value;
                 OnPropertyChanged("Prio");
             }
         }
@@ -42,14 +42,14 @@ namespace HPTClient
         {
             get
             {
-                return this.selected;
+                return selected;
             }
             set
             {
-                this.selected = value;
-                if (this.Horse != null)
+                selected = value;
+                if (Horse != null)
                 {
-                    this.Horse.HandlePrioChange(this);
+                    Horse.HandlePrioChange(this);
 
                     //if (value)
                     //{
@@ -75,14 +75,14 @@ namespace HPTClient
         {
             get
             {
-                return this.selectable;
+                return selectable;
             }
             set
             {
-                this.selectable = value;
-                if (!value && this.Selected)
+                selectable = value;
+                if (!value && Selected)
                 {
-                    this.Selected = false;
+                    Selected = false;
                 }
                 OnPropertyChanged("Selectable");
             }

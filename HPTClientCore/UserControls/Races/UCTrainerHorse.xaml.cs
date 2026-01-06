@@ -15,9 +15,9 @@ namespace HPTClient
 
         private void lvwLopp_KeyUp(object sender, KeyEventArgs e)
         {
-            if (this.lvwLopp.SelectedItem != null)
+            if (lvwLopp.SelectedItem != null)
             {
-                HPTHorse horse = (HPTHorse)this.lvwLopp.SelectedItem;
+                HPTHorse horse = (HPTHorse)lvwLopp.SelectedItem;
                 switch (e.Key)
                 {
                     //case Key.A:

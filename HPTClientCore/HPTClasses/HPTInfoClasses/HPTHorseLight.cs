@@ -34,14 +34,14 @@ namespace HPTClient
         {
             get
             {
-                return this.selectable;
+                return selectable;
             }
             set
             {
-                this.selectable = value;
-                if (!this.selectable && this.Selected)
+                selectable = value;
+                if (!selectable && Selected)
                 {
-                    this.Selected = false;
+                    Selected = false;
                 }
                 OnPropertyChanged("Selectable");
             }
@@ -53,11 +53,11 @@ namespace HPTClient
         {
             get
             {
-                return this.selected;
+                return selected;
             }
             set
             {
-                this.selected = value;
+                selected = value;
                 OnPropertyChanged("Selected");
             }
         }

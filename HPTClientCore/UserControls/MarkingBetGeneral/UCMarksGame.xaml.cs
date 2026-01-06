@@ -24,13 +24,13 @@ namespace HPTClient
 
         public UCMarksGame(HPTMarkBet markBet)
         {
-            if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
+            if (!DesignerProperties.GetIsInDesignMode(this))
             {
-                this.MarkBet = markBet;
+                MarkBet = markBet;
 
-                this.rdi = markBet.RaceDayInfo;
-                this.RaceList = new ObservableCollection<HPTRace>(markBet.RaceDayInfo.RaceList);
-                this.atgUpdateTimer = new System.Threading.Timer(new System.Threading.TimerCallback(UpdateFromATG));
+                rdi = markBet.RaceDayInfo;
+                RaceList = new ObservableCollection<HPTRace>(markBet.RaceDayInfo.RaceList);
+                atgUpdateTimer = new Timer(new TimerCallback(UpdateFromATG));
 
                 InitializeComponent();
 
@@ -87,8 +87,8 @@ namespace HPTClient
                 //    //this.btnUpdate.IsEnabled = false;
                 //    //this.cmbUpdateInterval.IsEnabled = false;
                 //}
-                this.ReductionCheckBoxList = new ObservableCollection<CheckBox>();
-                this.CMMarkBetTabsToShow = new ContextMenu();
+                ReductionCheckBoxList = new ObservableCollection<CheckBox>();
+                CMMarkBetTabsToShow = new ContextMenu();
 
                 //if (HPTConfig.Config.FirstTimeHPT5User)
                 //{
@@ -177,25 +177,25 @@ namespace HPTClient
                 //beginneSizesList.Add(miBeginnerSize);
             }
 
-            this.btnBeginnerWizard.DropDownContent = spBeginnerSizes;
+            btnBeginnerWizard.DropDownContent = spBeginnerSizes;
         }
 
         void miBeginnerSize_Click(object sender, RoutedEventArgs e)
         {
-            this.btnBeginnerWizard.IsOpen = false;
-            if (this.MarkBet.RaceDayInfo.HorseListSelected.Count > 0)
+            btnBeginnerWizard.IsOpen = false;
+            if (MarkBet.RaceDayInfo.HorseListSelected.Count > 0)
             {
                 var result = MessageBox.Show("Du har redan valt hästar, vill du behålla dessa på ditt system?", "Behåll valda hästar?", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    foreach (var horse in this.MarkBet.RaceDayInfo.HorseListSelected)
+                    foreach (var horse in MarkBet.RaceDayInfo.HorseListSelected)
                     {
                         horse.Locked = true;
                     }
                 }
                 else
                 {
-                    this.MarkBet.ClearAll();
+                    MarkBet.ClearAll();
                 }
             }
             Cursor = Cursors.Wait;
@@ -205,7 +205,7 @@ namespace HPTClient
                 int systemStake = (int)fe.Tag;
                 int numberOfSpikes = 1;
 
-                switch (this.MarkBet.BetType.Code)
+                switch (MarkBet.BetType.Code)
                 {
                     case "V4":
                         if (systemStake > 100)
@@ -249,7 +249,7 @@ namespace HPTClient
                 }
 
                 // Skapa nybörjarmall med defaultvärden
-                this.MarkBet.TemplateForBeginners = new HPTTemplateForBeginners()
+                MarkBet.TemplateForBeginners = new HPTTemplateForBeginners()
                 {
                     DesiredProfit = HPTDesiredProfit.Medium,
                     HorseRankVariableList = HPTConfig.Config.DefaultRankTemplate.HorseRankVariableList.Where(rv => rv.Use).ToList(),
@@ -260,7 +260,7 @@ namespace HPTClient
 
                 Cursor = Cursors.Wait;
                 // Skapa systemförslag utifrån valen...
-                this.MarkBet.SelectFromBeginnerTemplate();
+                MarkBet.SelectFromBeginnerTemplate();
             }
             catch (Exception exc)
             {
@@ -282,16 +282,17 @@ namespace HPTClient
             try
             {
                 // Hindra krockar om det tar lång tid att beräkna mallresultat
-                if (this.MarkBet.IsCalculatingTemplates)
+                if (MarkBet.IsCalculatingTemplates)
                 {
                     return;
                 }
 
                 // Deaktivera knappen
-                this.btnUpdate.IsEnabled = false;
+                btnUpdate.IsEnabled = false;
 
                 var serviceConnector = new HPTServiceConnector();
-                serviceConnector.GetRaceDayInfoUpdate(this.MarkBet.RaceDayInfo.BetType.Code, this.MarkBet.RaceDayInfo.TrackId, this.MarkBet.RaceDayInfo.RaceDayDate, UpdateFromATG);
+                // TODO: Använd ATGDownloader
+                //serviceConnector.GetRaceDayInfoUpdate(MarkBet.RaceDayInfo.BetType.Code, MarkBet.RaceDayInfo.TrackId, MarkBet.RaceDayInfo.RaceDayDate, UpdateFromATG);
             }
             catch (Exception exc)
             {
@@ -300,54 +301,56 @@ namespace HPTClient
             }
         }
 
-        public void UpdateFromATG(HPTService.HPTRaceDayInfo rdi)
-        {
-            try
-            {
-                Dispatcher.Invoke(new Action<HPTService.HPTRaceDayInfo>(UpdateFromATGInvoke), rdi);
-            }
-            catch (Exception)
-            {
-                this.btnUpdate.IsEnabled = true;
-            }
-        }
+        // TODO: Använd ATGDownloader
+        //public void UpdateFromATG(HPTService.HPTRaceDayInfo rdi)
+        //{
+        //    try
+        //    {
+        //        Dispatcher.Invoke(new Action<HPTService.HPTRaceDayInfo>(UpdateFromATGInvoke), rdi);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        btnUpdate.IsEnabled = true;
+        //    }
+        //}
 
-        private void UpdateFromATGInvoke(HPTService.HPTRaceDayInfo rdi)
-        {
-            try
-            {
-                this.MarkBet.RaceDayInfo.Merge(rdi);
-                this.MarkBet.TimeStamp = DateTime.Now;
+        // TODO: Använd ATGDownloader
+        //private void UpdateFromATGInvoke(HPTService.HPTRaceDayInfo rdi)
+        //{
+        //    try
+        //    {
+        //        MarkBet.RaceDayInfo.Merge(rdi);
+        //        MarkBet.TimeStamp = DateTime.Now;
 
-                // Ska alltid göras
+        //        // Ska alltid göras
 
-                this.MarkBet.RecalculateAllRanks();
-                if (this.MarkBet.HasDynamicReductionRule()) // Regler som påverkas av uppdaterade hästvärden
-                {
-                    this.MarkBet.RecalculateReduction(RecalculateReason.All);
-                }
-                else   // Bara andra regler, så mindre beräkningar
-                {
-                    this.MarkBet.SingleRowCollection.RecalculateRowValues();
-                    this.MarkBet.RecalculateRank();
-                    this.MarkBet.SingleRowCollection.HandleHighestAndLowestSums();
-                    this.MarkBet.SingleRowCollection.HandleHighestAndLowestIncludedSums();
-                    //this.MarkBet.SingleRowCollection.RecalculateRowValues();
-                }
+        //        MarkBet.RecalculateAllRanks();
+        //        if (MarkBet.HasDynamicReductionRule()) // Regler som påverkas av uppdaterade hästvärden
+        //        {
+        //            MarkBet.RecalculateReduction(RecalculateReason.All);
+        //        }
+        //        else   // Bara andra regler, så mindre beräkningar
+        //        {
+        //            MarkBet.SingleRowCollection.RecalculateRowValues();
+        //            MarkBet.RecalculateRank();
+        //            MarkBet.SingleRowCollection.HandleHighestAndLowestSums();
+        //            MarkBet.SingleRowCollection.HandleHighestAndLowestIncludedSums();
+        //            //this.MarkBet.SingleRowCollection.RecalculateRowValues();
+        //        }
 
-                if (this.MarkBet.V6SingleRows || this.MarkBet.SingleRowBetMultiplier)
-                {
-                    this.MarkBet.UpdateV6BetMultiplierSingleRows();
-                }
+        //        if (MarkBet.V6SingleRows || MarkBet.SingleRowBetMultiplier)
+        //        {
+        //            MarkBet.UpdateV6BetMultiplierSingleRows();
+        //        }
 
-            }
-            catch (Exception exc)
-            {
-                HPTConfig.AddToErrorLogStatic(exc);
-            }
-            Cursor = Cursors.Arrow;
-            this.btnUpdate.IsEnabled = true;
-        }
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        HPTConfig.AddToErrorLogStatic(exc);
+        //    }
+        //    Cursor = Cursors.Arrow;
+        //    btnUpdate.IsEnabled = true;
+        //}
 
         #endregion
 
@@ -360,7 +363,7 @@ namespace HPTClient
             dt.Interval = TimeSpan.FromSeconds(1D);
             dt.Tick += (_, a) =>
             {
-                TimeSpan tsTemp = this.upcomingRace.PostTime - DateTime.Now;
+                TimeSpan tsTemp = upcomingRace.PostTime - DateTime.Now;
 
                 if (tsTemp.TotalSeconds < 1D)
                 {
@@ -377,10 +380,10 @@ namespace HPTClient
             dt.Start();
         }
 
-        System.Threading.Timer atgUpdateTimer;
+        Timer atgUpdateTimer;
         private void UpdateFromATG(object timerData)
         {
-            this.Dispatcher.Invoke(new Action(UpdateFromATG), null);
+            Dispatcher.Invoke(new Action(UpdateFromATG), null);
         }
 
         #endregion
@@ -392,66 +395,66 @@ namespace HPTClient
         private bool userSelection;
         private void cmbTemplates_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (!this.userSelection)
+            if (!userSelection)
             {
-                this.userSelection = true;
-                this.cmbTemplates.SelectedItem = null;
+                userSelection = true;
+                cmbTemplates.SelectedItem = null;
                 return;
             }
-            if (this.cmbTemplates.SelectedItem != null)
+            if (cmbTemplates.SelectedItem != null)
             {
                 Cursor = Cursors.Wait;
                 //bool currentCouponCompression = this.MarkBet.CompressCoupons;
                 try
                 {
-                    this.MarkBet.CompressCoupons = false;
+                    MarkBet.CompressCoupons = false;
 
-                    if (this.cmbTemplates.SelectedItem.GetType() == typeof(HPTMarkBetTemplateABCD))
+                    if (cmbTemplates.SelectedItem.GetType() == typeof(HPTMarkBetTemplateABCD))
                     {
-                        this.MarkBet.MarkBetTemplateABCD = (HPTMarkBetTemplateABCD)this.cmbTemplates.SelectedItem;
-                        this.MarkBet.Clear(false, true, true);
-                        this.MarkBet.SelectFromTemplateABCD();
+                        MarkBet.MarkBetTemplateABCD = (HPTMarkBetTemplateABCD)cmbTemplates.SelectedItem;
+                        MarkBet.Clear(false, true, true);
+                        MarkBet.SelectFromTemplateABCD();
                     }
-                    else if (this.cmbTemplates.SelectedItem.GetType() == typeof(HPTMarkBetTemplateRank))
+                    else if (cmbTemplates.SelectedItem.GetType() == typeof(HPTMarkBetTemplateRank))
                     {
-                        this.MarkBet.MarkBetTemplateRank = (HPTMarkBetTemplateRank)this.cmbTemplates.SelectedItem;
-                        this.MarkBet.Clear(false, true, true);
-                        this.MarkBet.SelectFromTemplateRank();
+                        MarkBet.MarkBetTemplateRank = (HPTMarkBetTemplateRank)cmbTemplates.SelectedItem;
+                        MarkBet.Clear(false, true, true);
+                        MarkBet.SelectFromTemplateRank();
                     }
                 }
                 catch (Exception exc)
                 {
                     Config.AddToErrorLog(exc);
                 }
-                this.MarkBet.CompressCoupons = true;//currentCouponCompression;
+                MarkBet.CompressCoupons = true;//currentCouponCompression;
                 Cursor = Cursors.Arrow;
             }
         }
 
         private void cmbTemplateResults_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (this.cmbTemplateResults.SelectedItem != null)
+            if (cmbTemplateResults.SelectedItem != null)
             {
                 Cursor = Cursors.Wait;
-                HPTMarkBetTemplateResult tr = (HPTMarkBetTemplateResult)this.cmbTemplateResults.SelectedItem;
-                this.MarkBet.ApplyTemplateResult(tr);
+                HPTMarkBetTemplateResult tr = (HPTMarkBetTemplateResult)cmbTemplateResults.SelectedItem;
+                MarkBet.ApplyTemplateResult(tr);
                 Cursor = Cursors.Arrow;
             }
         }
 
         private void cmbUpdateInterval_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (this.cmbUpdateInterval.SelectedItem != null)
+            if (cmbUpdateInterval.SelectedItem != null)
             {
-                ComboBoxItem cbi = (ComboBoxItem)this.cmbUpdateInterval.SelectedItem;
+                ComboBoxItem cbi = (ComboBoxItem)cmbUpdateInterval.SelectedItem;
                 int updatePeriod = Convert.ToInt32(cbi.Tag) * 60 * 1000;
                 if (updatePeriod == 0)
                 {
-                    this.atgUpdateTimer.Change(System.Threading.Timeout.Infinite, System.Threading.Timeout.Infinite);
+                    atgUpdateTimer.Change(Timeout.Infinite, Timeout.Infinite);
                 }
                 else
                 {
-                    this.atgUpdateTimer.Change(updatePeriod, updatePeriod);
+                    atgUpdateTimer.Change(updatePeriod, updatePeriod);
                 }
             }
         }
@@ -459,71 +462,71 @@ namespace HPTClient
         private bool isLoaded;
         private void ucMarksGame_Loaded(object sender, RoutedEventArgs e)
         {
-            if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this) && this.IsVisible)
+            if (!DesignerProperties.GetIsInDesignMode(this) && IsVisible)
             {
                 try
                 {
-                    if (this.MarkBet == null)
+                    if (MarkBet == null)
                     {
-                        this.MarkBet = (HPTMarkBet)this.DataContext;
+                        MarkBet = (HPTMarkBet)DataContext;
                     }
-                    if (!this.isLoaded)
+                    if (!isLoaded)
                     {
                         // V6/GS7
-                        this.chkV6.Visibility = MarkBet.V6Visibility;
+                        chkV6.Visibility = MarkBet.V6Visibility;
 
                         // Hur breda ska raderna i översikten vara?
-                        int maxNumberOfHorses = this.MarkBet.RaceDayInfo.RaceList.Max(r => r.HorseList.Count);
-                        this.OverviewMinWidth = maxNumberOfHorses * 24D;
+                        int maxNumberOfHorses = MarkBet.RaceDayInfo.RaceList.Max(r => r.HorseList.Count);
+                        OverviewMinWidth = maxNumberOfHorses * 24D;
 
                         // Se till att ingen beräkning sker
-                        this.MarkBet.pauseRecalculation = true;
+                        MarkBet.pauseRecalculation = true;
 
                         // Sätt rätt val i Comboboxarna
                         //this.cmbCouponCompression.SelectedIndex = (int)this.MarkBet.CouponCompression;
-                        this.cmbReservHandling.SelectedIndex = (int)this.MarkBet.ReservHandling - 1;
+                        cmbReservHandling.SelectedIndex = (int)MarkBet.ReservHandling - 1;
 
                         // Skapa upp eventhandlers som behövs för att uppdateringen ska funka
-                        this.MarkBet.SetEventHandlers();
+                        MarkBet.SetEventHandlers();
 
                         // Skapa listan med reduceringsalternativ utifrå om man är betalande kund eller ej.
-                        List<HPTReductionAttribute> attributeList = this.MarkBet.GetReductionAttributes();
-                        this.ReductionCheckBoxList.Clear();
+                        List<HPTReductionAttribute> attributeList = MarkBet.GetReductionAttributes();
+                        ReductionCheckBoxList.Clear();
                         foreach (HPTReductionAttribute ra in attributeList.OrderBy(a => a.Order))
                         {
                             var chk = new CheckBox()
                             {
                                 Content = ra.Name,
-                                DataContext = this.MarkBet,
+                                DataContext = MarkBet,
                                 Margin = new Thickness(1D, 0.5D, 5D, 0.5D)
                             };
                             chk.SetBinding(CheckBox.IsCheckedProperty, ra.PropertyName);
                             //chk.Checked += (cs, ce) => this.MarkBet.RecalculateReduction(RecalculateReason.All);
                             //chk.Unchecked += (cs, ce) => this.MarkBet.RecalculateReduction(RecalculateReason.All);
-                            this.ReductionCheckBoxList.Add(chk);
+                            ReductionCheckBoxList.Add(chk);
                         }
 
                         //// Skapa context menu för vilk flikar man vill visa
                         CreateMarkBetTabsToShowContextMenu();
 
                         // Ställ tillbaka flaggan så att reducering kan ske igen
-                        this.MarkBet.pauseRecalculation = false;
-                        this.MarkBet.IsDeserializing = false;
+                        MarkBet.pauseRecalculation = false;
+                        MarkBet.IsDeserializing = false;
 
                         // Beräkna reducering
-                        this.MarkBet.RecalculateAllRanks();
-                        this.MarkBet.RecalculateRank();
-                        if (this.MarkBet.SystemSize > 0)
+                        MarkBet.RecalculateAllRanks();
+                        MarkBet.RecalculateRank();
+                        if (MarkBet.SystemSize > 0)
                         {
-                            this.MarkBet.RecalculateReduction(RecalculateReason.All);
+                            MarkBet.RecalculateReduction(RecalculateReason.All);
                         }
 
                         // Begränsningar för gratisanvändarna
-                        if (!this.Config.IsPayingCustomer)
+                        if (!Config.IsPayingCustomer)
                         {
-                            this.gbFile.IsEnabled = false;
-                            this.btnCreateCoupons.IsEnabled = false;
-                            this.btnCreateCouponsAs.IsEnabled = false;
+                            gbFile.IsEnabled = false;
+                            btnCreateCoupons.IsEnabled = false;
+                            btnCreateCouponsAs.IsEnabled = false;
 
                             //IEnumerable<HPTXReductionRule> proXReductionRules = this.MarkBet.ABCDEFReductionRule.XReductionRuleList.Where(x => x.Use && (x.Prio == HPTPrio.D || x.Prio == HPTPrio.E || x.Prio == HPTPrio.F));
                             //if ((this.MarkBet.ABCDEFReductionRule.Use && this.MarkBet.ReductionRulesToApply.Count > 1)
@@ -534,44 +537,44 @@ namespace HPTClient
                             //}
                         }
 
-                        if (this.MarkBet.LastSaveTime == DateTime.MinValue)
+                        if (MarkBet.LastSaveTime == DateTime.MinValue)
                         {
                             // Hantera standardreservhantering
                             switch (HPTConfig.Config.DefaultReservHandling)
                             {
                                 case ReservHandling.Own:
                                 case ReservHandling.None:
-                                    this.cmbReservHandling.SelectedIndex = 0;
+                                    cmbReservHandling.SelectedIndex = 0;
                                     break;
                                 case ReservHandling.MarksSelected:
-                                    this.cmbReservHandling.SelectedIndex = 1;
+                                    cmbReservHandling.SelectedIndex = 1;
                                     break;
                                 case ReservHandling.MarksNotSelected:
-                                    this.cmbReservHandling.SelectedIndex = 2;
+                                    cmbReservHandling.SelectedIndex = 2;
                                     break;
                                 case ReservHandling.OwnRankSelected:
-                                    this.cmbReservHandling.SelectedIndex = 3;
+                                    cmbReservHandling.SelectedIndex = 3;
                                     break;
                                 case ReservHandling.OwnRankNotSelected:
-                                    this.cmbReservHandling.SelectedIndex = 4;
+                                    cmbReservHandling.SelectedIndex = 4;
                                     break;
                                 case ReservHandling.RankMeanSelected:
-                                    this.cmbReservHandling.SelectedIndex = 5;
+                                    cmbReservHandling.SelectedIndex = 5;
                                     break;
                                 case ReservHandling.RankMeanNotSelected:
-                                    this.cmbReservHandling.SelectedIndex = 6;
+                                    cmbReservHandling.SelectedIndex = 6;
                                     break;
                                 case ReservHandling.OddsSelected:
-                                    this.cmbReservHandling.SelectedIndex = 7;
+                                    cmbReservHandling.SelectedIndex = 7;
                                     break;
                                 case ReservHandling.OddsNotSelected:
-                                    this.cmbReservHandling.SelectedIndex = 8;
+                                    cmbReservHandling.SelectedIndex = 8;
                                     break;
                                 case ReservHandling.NextRankSelected:
-                                    this.cmbReservHandling.SelectedIndex = 9;
+                                    cmbReservHandling.SelectedIndex = 9;
                                     break;
                                 case ReservHandling.NextRankNotSelected:
-                                    this.cmbReservHandling.SelectedIndex = 10;
+                                    cmbReservHandling.SelectedIndex = 10;
                                     break;
                                 default:
                                     break;
@@ -581,28 +584,28 @@ namespace HPTClient
                             switch (HPTConfig.Config.DefaultUpdateInterval)
                             {
                                 case 3:
-                                    this.cmbUpdateInterval.SelectedIndex = 1;
+                                    cmbUpdateInterval.SelectedIndex = 1;
                                     break;
                                 case 5:
-                                    this.cmbUpdateInterval.SelectedIndex = 2;
+                                    cmbUpdateInterval.SelectedIndex = 2;
                                     break;
                                 case 10:
-                                    this.cmbUpdateInterval.SelectedIndex = 3;
+                                    cmbUpdateInterval.SelectedIndex = 3;
                                     break;
                                 case 15:
-                                    this.cmbUpdateInterval.SelectedIndex = 4;
+                                    cmbUpdateInterval.SelectedIndex = 4;
                                     break;
                                 case 20:
-                                    this.cmbUpdateInterval.SelectedIndex = 5;
+                                    cmbUpdateInterval.SelectedIndex = 5;
                                     break;
                                 case 30:
-                                    this.cmbUpdateInterval.SelectedIndex = 6;
+                                    cmbUpdateInterval.SelectedIndex = 6;
                                     break;
                                 case 60:
-                                    this.cmbUpdateInterval.SelectedIndex = 7;
+                                    cmbUpdateInterval.SelectedIndex = 7;
                                     break;
                                 default:
-                                    this.cmbUpdateInterval.SelectedIndex = 0;
+                                    cmbUpdateInterval.SelectedIndex = 0;
                                     break;
                             }
                         }
@@ -611,7 +614,7 @@ namespace HPTClient
                         SetCountDown();
 
                         // Sätt flagga att första laddningen är klar
-                        this.isLoaded = true;
+                        isLoaded = true;
                     }
                 }
                 catch (Exception exc)
@@ -630,8 +633,8 @@ namespace HPTClient
         {
             // Skapa context menu för vilk flikar man vill visa
             List<HPTMarkBetTabsToShowAttribute> tabsToShowAttributeList = HPTConfig.Config.MarkBetTabsToShow.GetMarkBetTabsToShowAttributes();
-            this.CMMarkBetTabsToShow.Items.Clear();
-            this.CMMarkBetTabsToShow.DataContext = HPTConfig.Config.MarkBetTabsToShow;
+            CMMarkBetTabsToShow.Items.Clear();
+            CMMarkBetTabsToShow.DataContext = HPTConfig.Config.MarkBetTabsToShow;
             foreach (HPTMarkBetTabsToShowAttribute hda in tabsToShowAttributeList)
             {
                 MenuItem mi = new MenuItem()
@@ -642,7 +645,7 @@ namespace HPTClient
                 };
 
                 mi.SetBinding(MenuItem.IsCheckedProperty, hda.PropertyName);
-                this.CMMarkBetTabsToShow.Items.Add(mi);
+                CMMarkBetTabsToShow.Items.Add(mi);
             }
         }
 
@@ -650,33 +653,33 @@ namespace HPTClient
         internal void SetCountDown()
         {
             // Återställ textinställningar
-            this.txtCountdownTimer.FontWeight = FontWeights.Normal;
-            this.txtCountdownTimer.Foreground = new SolidColorBrush(Colors.Black);
+            txtCountdownTimer.FontWeight = FontWeights.Normal;
+            txtCountdownTimer.Foreground = new SolidColorBrush(Colors.Black);
 
             // Hämta nästa lopp
-            this.upcomingRace = this.MarkBet.RaceDayInfo.RaceList
+            upcomingRace = MarkBet.RaceDayInfo.RaceList
                 .OrderBy(r => r.PostTime)
                 .FirstOrDefault(r => r.PostTime > DateTime.Now);
 
             // Dra igång nedräknare om tävlingen är idag
-            if (this.upcomingRace != null && this.upcomingRace.PostTime.Date == DateTime.Today)
+            if (upcomingRace != null && upcomingRace.PostTime.Date == DateTime.Today)
             {
-                TimeSpan ts = this.upcomingRace.PostTime - DateTime.Now;
+                TimeSpan ts = upcomingRace.PostTime - DateTime.Now;
                 Countdown(ts, cur =>
                     {
                         if ((int)cur.TotalSeconds == 600)
                         {
-                            this.txtCountdownTimer.FontWeight = FontWeights.Bold;
-                            this.txtCountdownTimer.Foreground = new SolidColorBrush(Colors.Red);
+                            txtCountdownTimer.FontWeight = FontWeights.Bold;
+                            txtCountdownTimer.Foreground = new SolidColorBrush(Colors.Red);
                         }
-                        this.txtCountdownTimer.Text = cur.ToString(@"hh\:mm\:ss");
+                        txtCountdownTimer.Text = cur.ToString(@"hh\:mm\:ss");
                     });
-                this.txtCountdownInfo.Text = this.upcomingRace.LegNrString + ":";
+                txtCountdownInfo.Text = upcomingRace.LegNrString + ":";
             }
             else
             {
-                this.txtCountdownTimer.Text = string.Empty;
-                this.txtCountdownInfo.Text = string.Empty;
+                txtCountdownTimer.Text = string.Empty;
+                txtCountdownInfo.Text = string.Empty;
             }
         }
 
@@ -705,22 +708,22 @@ namespace HPTClient
             try
             {
                 Cursor = Cursors.Wait;
-                this.MarkBet.CompressCoupons = false;
+                MarkBet.CompressCoupons = false;
 
-                if (this.cmbTemplates.SelectedItem.GetType() == typeof(HPTMarkBetTemplateABCD))
+                if (cmbTemplates.SelectedItem.GetType() == typeof(HPTMarkBetTemplateABCD))
                 {
-                    this.MarkBet.CreateSystemsFromTemplateABCD();
+                    MarkBet.CreateSystemsFromTemplateABCD();
                 }
-                else if (this.cmbTemplates.SelectedItem.GetType() == typeof(HPTMarkBetTemplateRank))
+                else if (cmbTemplates.SelectedItem.GetType() == typeof(HPTMarkBetTemplateRank))
                 {
-                    this.MarkBet.ChangeRankSize(this.MarkBet.MarkBetTemplateRank);
+                    MarkBet.ChangeRankSize(MarkBet.MarkBetTemplateRank);
                 }
             }
             catch (Exception exc)
             {
                 string s = exc.Message;
             }
-            this.MarkBet.CompressCoupons = true;//couponsCompressed;
+            MarkBet.CompressCoupons = true;//couponsCompressed;
             Cursor = Cursors.Arrow;
         }
 
@@ -728,7 +731,7 @@ namespace HPTClient
         {
             try
             {
-                System.Diagnostics.Process.Start("explorer.exe", "/select, \"" + this.MarkBet.SystemFilename + "\"");
+                System.Diagnostics.Process.Start("explorer.exe", "/select, \"" + MarkBet.SystemFilename + "\"");
             }
             catch (Exception exc)
             {
@@ -749,11 +752,11 @@ namespace HPTClient
                 // Expandera/fäll ihop delen med inställningar
                 if (ti.Name == "tiRaces" || ti.Name == "tiRacesGrouped")
                 {
-                    this.expanderMarksgame.IsExpanded = true;
+                    expanderMarksgame.IsExpanded = true;
                 }
                 else
                 {
-                    this.expanderMarksgame.IsExpanded = false;
+                    expanderMarksgame.IsExpanded = false;
                 }
 
                 // Ladda XML-fil till ATG
@@ -761,17 +764,17 @@ namespace HPTClient
                 {
                     try
                     {
-                        this.MarkBet.CouponCorrector.CouponHelper.OnlyCreateTempFile = true;
-                        this.MarkBet.CouponCorrector.CouponHelper.CreateATGFile();
-                        this.MarkBet.SystemFilename = this.MarkBet.CouponCorrector.CouponHelper.TempFileName;
-                        var encodedUrl = "file:///" + this.MarkBet.CouponCorrector.CouponHelper.TempFileName.Replace("\\", "/");
-                        this.wbXmlFile.Navigate(new Uri(encodedUrl));
+                        MarkBet.CouponCorrector.CouponHelper.OnlyCreateTempFile = true;
+                        MarkBet.CouponCorrector.CouponHelper.CreateATGFile();
+                        MarkBet.SystemFilename = MarkBet.CouponCorrector.CouponHelper.TempFileName;
+                        var encodedUrl = "file:///" + MarkBet.CouponCorrector.CouponHelper.TempFileName.Replace("\\", "/");
+                        wbXmlFile.Navigate(new Uri(encodedUrl));
                     }
                     catch (Exception exc)
                     {
                         string s = exc.Message;
                     }
-                    this.MarkBet.CouponCorrector.CouponHelper.OnlyCreateTempFile = false;
+                    MarkBet.CouponCorrector.CouponHelper.OnlyCreateTempFile = false;
                 }
             }
             catch (Exception exc)
@@ -791,8 +794,8 @@ namespace HPTClient
             {
                 ComboBoxItem cbi = (ComboBoxItem)e.AddedItems[0];
                 ReservHandling rh = (ReservHandling)Convert.ToInt32(cbi.Tag);
-                this.MarkBet.ReservHandling = rh;
-                this.MarkBet.CouponCorrector.CouponHelper.HandleReserverForCoupons(this.MarkBet.ReservHandling);
+                MarkBet.ReservHandling = rh;
+                MarkBet.CouponCorrector.CouponHelper.HandleReserverForCoupons(MarkBet.ReservHandling);
             }
         }
 
@@ -803,55 +806,55 @@ namespace HPTClient
                 case ModifierKeys.Alt:
                     if (e.SystemKey == Key.D1)
                     {
-                        this.MarkBet.CreateInternalSystemV4ABC();
+                        MarkBet.CreateInternalSystemV4ABC();
                     }
                     if (e.SystemKey == Key.D2)
                     {
-                        this.MarkBet.CreateInternalSystemV4PlaceThisYear();
+                        MarkBet.CreateInternalSystemV4PlaceThisYear();
                     }
                     if (e.SystemKey == Key.D3)
                     {
-                        this.MarkBet.CreateInternalSystemV4EarningsThisYear();
+                        MarkBet.CreateInternalSystemV4EarningsThisYear();
                     }
                     if (e.SystemKey == Key.D4)
                     {
-                        this.MarkBet.CreateInternalSystemV4CombinedRankingThisYear();
+                        MarkBet.CreateInternalSystemV4CombinedRankingThisYear();
                     }
                     if (e.SystemKey == Key.D5)
                     {
-                        this.MarkBet.CreateInternalSystemV4CombinedRankingLastYear();
+                        MarkBet.CreateInternalSystemV4CombinedRankingLastYear();
                     }
                     if (e.SystemKey == Key.D6)
                     {
-                        this.MarkBet.CreateInternalSystemV4CombinedRankingTotal();
+                        MarkBet.CreateInternalSystemV4CombinedRankingTotal();
                     }
                     if (e.SystemKey == Key.D8)
                     {
-                        this.MarkBet.CreateInternalSystem();
+                        MarkBet.CreateInternalSystem();
                     }
                     if (e.SystemKey == Key.D7)
                     {
-                        this.MarkBet.CreateInternalSystemV4StakeDistributionRanking();
+                        MarkBet.CreateInternalSystemV4StakeDistributionRanking();
                     }
                     if (e.SystemKey == Key.C)
                     {
-                        string result = this.MarkBet.CalculateBestABCDCombination();
+                        string result = MarkBet.CalculateBestABCDCombination();
                         Clipboard.SetDataObject(result);
                     }
                     if (e.SystemKey == Key.D)
                     {
-                        string result = this.MarkBet.CalculateBestAPlusBPlusCCombinations();
+                        string result = MarkBet.CalculateBestAPlusBPlusCCombinations();
                         Clipboard.SetDataObject(result);
                     }
                     if (e.SystemKey == Key.A)
                     {
                         //string result = this.MarkBet.CalculateDifficulty();
-                        string result = this.MarkBet.CalculateDifficultyAlt();
+                        string result = MarkBet.CalculateDifficultyAlt();
                         Clipboard.SetDataObject(result);
                     }
                     if (e.SystemKey == Key.J)
                     {
-                        string result = this.MarkBet.CalculateJackpotRows();
+                        string result = MarkBet.CalculateJackpotRows();
                         Clipboard.SetDataObject(result);
                     }
                     break;
@@ -894,7 +897,7 @@ namespace HPTClient
         private void HandlePastedText()
         {
             string tips = Clipboard.GetText();
-            if (this.MarkBet.ParseTips(tips))
+            if (MarkBet.ParseTips(tips))
             {
                 ShowTipsWindow();
             }
@@ -912,8 +915,8 @@ namespace HPTClient
             };
             wndShowTipsOverview.Content = new UCOverviewFromTips()
             {
-                DataContext = this.MarkBet,
-                MarkBet = this.MarkBet
+                DataContext = MarkBet,
+                MarkBet = MarkBet
             };
             wndShowTipsOverview.ShowDialog();
         }
@@ -945,7 +948,7 @@ namespace HPTClient
 
         private void SetRaceListCollectionViewSource()
         {
-            var raceListView = CollectionViewSource.GetDefaultView(this.RaceList);
+            var raceListView = CollectionViewSource.GetDefaultView(RaceList);
             //raceListView.SortDescriptions
         }
 
@@ -964,11 +967,11 @@ namespace HPTClient
                 {
                     try
                     {
-                        this.MarkBet.CouponCorrector.CouponHelper.CreateATGFile();
+                        MarkBet.CouponCorrector.CouponHelper.CreateATGFile();
                         if (HPTConfig.Config.MarkBetTabsToShow.ShowATGXmlFile)
                         {
-                            var encodedUrl = "file:///" + this.MarkBet.SystemFilename.Replace("\\", "/");
-                            this.wbXmlFile.Navigate(new Uri(encodedUrl));
+                            var encodedUrl = "file:///" + MarkBet.SystemFilename.Replace("\\", "/");
+                            wbXmlFile.Navigate(new Uri(encodedUrl));
                         }
                     }
                     catch (Exception atgExc)
@@ -981,7 +984,7 @@ namespace HPTClient
                 {
                     try
                     {
-                        HPTSerializer.SerializeHPTSystem(this.MarkBet.MailSender.HPT3FileName, this.MarkBet);
+                        HPTSerializer.SerializeHPTSystem(MarkBet.MailSender.HPT3FileName, MarkBet);
                     }
                     catch (Exception hptExc)
                     {
@@ -1004,7 +1007,7 @@ namespace HPTClient
 
         private void miSaveHPT4File_Click(object sender, RoutedEventArgs e)
         {
-            this.btnCreateCoupons.IsOpen = false;
+            btnCreateCoupons.IsOpen = false;
             SaveFiles(true, false, true);
             //Cursor = Cursors.Wait;
             //PrepareForSave();
@@ -1042,98 +1045,98 @@ namespace HPTClient
 
         private void btnCreateCouponsAs_Click(object sender, RoutedEventArgs e)
         {
-            this.MarkBet.CheckForWarnings();
+            MarkBet.CheckForWarnings();
 
             // Varna för att det är fler kuponger än tillåtet
-            this.MarkBet.HandleTooManyCoupons();
+            MarkBet.HandleTooManyCoupons();
 
             SaveFileDialog sfd = new SaveFileDialog();
-            sfd.InitialDirectory = this.MarkBet.SaveDirectory;
-            sfd.FileName = this.MarkBet.ToFileNameString() + ".hpt7";
+            sfd.InitialDirectory = MarkBet.SaveDirectory;
+            sfd.FileName = MarkBet.ToFileNameString() + ".hpt7";
             sfd.Filter = "Hjälp på traven-system|*.hpt7";
-            sfd.FileOk += new System.ComponentModel.CancelEventHandler(sfd_FileOk);
+            sfd.FileOk += new CancelEventHandler(sfd_FileOk);
             sfd.ShowDialog();
         }
 
         internal void PrepareForSave(bool setFileNames)
         {
-            this.MarkBet.CheckForWarnings();
+            MarkBet.CheckForWarnings();
 
             // Varna för att det är fler kuponger än tillåtet
-            this.MarkBet.HandleTooManyCoupons();
+            MarkBet.HandleTooManyCoupons();
 
             if (setFileNames)
             {
-                string fileName = this.MarkBet.SaveDirectory + this.MarkBet.ToFileNameString();
-                this.MarkBet.SystemFilename = fileName + ".xml";
+                string fileName = MarkBet.SaveDirectory + MarkBet.ToFileNameString();
+                MarkBet.SystemFilename = fileName + ".xml";
 
                 string hpt3Filename = fileName + ".hpt7";
-                this.MarkBet.MailSender.HPT3FileName = hpt3Filename;
+                MarkBet.MailSender.HPT3FileName = hpt3Filename;
             }
             try
             {
-                Clipboard.SetDataObject(this.MarkBet.SystemFilename);
+                Clipboard.SetDataObject(MarkBet.SystemFilename);
             }
             catch (Exception exc)
             {
                 HPTConfig.AddToErrorLogStatic(exc);
             }
-            this.MarkBet.SetSerializerValues();
+            MarkBet.SetSerializerValues();
         }
 
-        void sfd_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        void sfd_FileOk(object sender, CancelEventArgs e)
         {
             SaveFileDialog sfd = (SaveFileDialog)sender;
             string fileName = sfd.FileName;
-            this.MarkBet.SystemFilename = fileName;
+            MarkBet.SystemFilename = fileName;
             string hpt4Filename = fileName.Replace(".xml", ".hpt7");
-            this.MarkBet.MailSender.HPT3FileName = hpt4Filename;
+            MarkBet.MailSender.HPT3FileName = hpt4Filename;
             SaveFiles(true, true, false);
         }
 
         private void miSaveATGFile_Click(object sender, RoutedEventArgs e)
         {
-            this.btnCreateCoupons.IsOpen = false;
+            btnCreateCoupons.IsOpen = false;
             SaveFiles(false, true, true);
         }
 
         private void miSaveHPT4FileAs_Click(object sender, RoutedEventArgs e)
         {
-            this.btnCreateCouponsAs.IsOpen = false;
+            btnCreateCouponsAs.IsOpen = false;
             //PrepareForSave(false);
             var sfdHPT4 = new SaveFileDialog();
-            sfdHPT4.InitialDirectory = this.MarkBet.SaveDirectory;
-            sfdHPT4.FileName = this.MarkBet.ToFileNameString() + ".hpt7";
+            sfdHPT4.InitialDirectory = MarkBet.SaveDirectory;
+            sfdHPT4.FileName = MarkBet.ToFileNameString() + ".hpt7";
             sfdHPT4.Filter = "Hjälp på traven-system|*.hpt7";
-            sfdHPT4.FileOk += new System.ComponentModel.CancelEventHandler(sfdHPT4_FileOk);
+            sfdHPT4.FileOk += new CancelEventHandler(sfdHPT4_FileOk);
             sfdHPT4.ShowDialog();
         }
 
-        void sfdHPT4_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        void sfdHPT4_FileOk(object sender, CancelEventArgs e)
         {
             SaveFileDialog sfd = (SaveFileDialog)sender;
             string fileName = sfd.FileName;
-            this.MarkBet.MailSender.HPT3FileName = fileName;
+            MarkBet.MailSender.HPT3FileName = fileName;
             SaveFiles(true, false, false);
         }
 
         private void miSaveATGFileAs_Click(object sender, RoutedEventArgs e)
         {
-            this.btnCreateCouponsAs.IsOpen = false;
+            btnCreateCouponsAs.IsOpen = false;
             //PrepareForSave();
             var sfdATG = new SaveFileDialog();
-            sfdATG.InitialDirectory = this.MarkBet.SaveDirectory;
-            sfdATG.FileName = this.MarkBet.ToFileNameString() + ".xml";
+            sfdATG.InitialDirectory = MarkBet.SaveDirectory;
+            sfdATG.FileName = MarkBet.ToFileNameString() + ".xml";
             sfdATG.Filter = "ATG kupongfil (*.xml)|*.xml|Alla filer (*.*)|*.*";
-            sfdATG.FileOk += new System.ComponentModel.CancelEventHandler(sfdATG_FileOk);
+            sfdATG.FileOk += new CancelEventHandler(sfdATG_FileOk);
             sfdATG.ShowDialog();
         }
 
-        void sfdATG_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        void sfdATG_FileOk(object sender, CancelEventArgs e)
         {
             SaveFileDialog sfd = (SaveFileDialog)sender;
             string fileName = sfd.FileName;
-            this.MarkBet.SystemFilename = fileName;
+            MarkBet.SystemFilename = fileName;
             SaveFiles(false, true, false);
             Cursor = Cursors.Arrow;
         }
@@ -1149,15 +1152,15 @@ namespace HPTClient
 
         internal string CopySystemInformationToClipboard()
         {
-            this.MarkBet.SetReductionRuleString();
-            string systemInfo = this.MarkBet.ToClipboardString();
+            MarkBet.SetReductionRuleString();
+            string systemInfo = MarkBet.ToClipboardString();
             if (HPTConfig.Config.CopyCouponsToClipboard)
             {
-                systemInfo += this.MarkBet.CouponCorrector.CouponHelper.ToCouponsString();
+                systemInfo += MarkBet.CouponCorrector.CouponHelper.ToCouponsString();
             }
             if (HPTConfig.Config.CopySingleRowsToClipboard)
             {
-                systemInfo += this.MarkBet.SingleRowCollection.ToSingleRowsString();
+                systemInfo += MarkBet.SingleRowCollection.ToSingleRowsString();
             }
             try
             {
@@ -1172,9 +1175,9 @@ namespace HPTClient
 
         private void miCopySystem_Click(object sender, RoutedEventArgs e)
         {
-            this.btnCopy.IsOpen = false;
-            this.MarkBet.SetReductionRuleString();
-            string systemInfo = this.MarkBet.ToClipboardString();
+            btnCopy.IsOpen = false;
+            MarkBet.SetReductionRuleString();
+            string systemInfo = MarkBet.ToClipboardString();
             try
             {
                 Clipboard.SetDataObject(systemInfo);
@@ -1187,10 +1190,10 @@ namespace HPTClient
 
         private void miCopySingleRows_Click(object sender, RoutedEventArgs e)
         {
-            this.btnCopy.IsOpen = false;
+            btnCopy.IsOpen = false;
             try
             {
-                Clipboard.SetDataObject(this.MarkBet.SingleRowCollection.ToSingleRowsString());
+                Clipboard.SetDataObject(MarkBet.SingleRowCollection.ToSingleRowsString());
             }
             catch (Exception exc)
             {
@@ -1200,10 +1203,10 @@ namespace HPTClient
 
         private void miCopyCoupons_Click(object sender, RoutedEventArgs e)
         {
-            this.btnCopy.IsOpen = false;
+            btnCopy.IsOpen = false;
             try
             {
-                Clipboard.SetDataObject(this.MarkBet.CouponCorrector.CouponHelper.ToCouponsString());
+                Clipboard.SetDataObject(MarkBet.CouponCorrector.CouponHelper.ToCouponsString());
             }
             catch (Exception exc)
             {
@@ -1213,10 +1216,10 @@ namespace HPTClient
 
         private void miCopyHorseRank_Click(object sender, RoutedEventArgs e)
         {
-            this.btnCopy.IsOpen = false;
+            btnCopy.IsOpen = false;
             try
             {
-                Clipboard.SetDataObject(this.MarkBet.SetRankMeanString());
+                Clipboard.SetDataObject(MarkBet.SetRankMeanString());
             }
             catch (Exception exc)
             {
@@ -1226,10 +1229,10 @@ namespace HPTClient
 
         private void miCopyOwnRank_Click(object sender, RoutedEventArgs e)
         {
-            this.btnCopy.IsOpen = false;
+            btnCopy.IsOpen = false;
             try
             {
-                Clipboard.SetDataObject(this.MarkBet.SetRankOwnString());
+                Clipboard.SetDataObject(MarkBet.SetRankOwnString());
             }
             catch (Exception exc)
             {
@@ -1239,10 +1242,10 @@ namespace HPTClient
 
         private void miCopyCompactSystemInfo_Click(object sender, RoutedEventArgs e)
         {
-            this.btnCopy.IsOpen = false;
+            btnCopy.IsOpen = false;
             try
             {
-                Clipboard.SetDataObject(this.MarkBet.RaceInformationStringCompact);
+                Clipboard.SetDataObject(MarkBet.RaceInformationStringCompact);
             }
             catch (Exception exc)
             {
@@ -1256,21 +1259,21 @@ namespace HPTClient
 
         private void btnClearAll_Click(object sender, RoutedEventArgs e)
         {
-            this.MarkBet.ClearAll();
-            this.cmbTemplates.SelectedIndex = -1;
-            this.cmbTemplateResults.SelectedIndex = -1;
+            MarkBet.ClearAll();
+            cmbTemplates.SelectedIndex = -1;
+            cmbTemplateResults.SelectedIndex = -1;
         }
 
         private void miClearReductions_Click(object sender, RoutedEventArgs e)
         {
-            this.btnClearAll.IsOpen = false;
-            this.MarkBet.ClearReductions();
+            btnClearAll.IsOpen = false;
+            MarkBet.ClearReductions();
         }
 
         private void miClearABCD_Click(object sender, RoutedEventArgs e)
         {
-            this.btnClearAll.IsOpen = false;
-            this.MarkBet.ClearABCD();
+            btnClearAll.IsOpen = false;
+            MarkBet.ClearABCD();
         }
 
         #endregion
@@ -1280,9 +1283,9 @@ namespace HPTClient
         private void miPrintText_Click(object sender, RoutedEventArgs e)
         {
             // Skapa utskriftsytan
-            this.btnPrint.IsOpen = false;
-            this.MarkBet.SetReductionRuleString();
-            string systemInfo = this.MarkBet.ToClipboardString();
+            btnPrint.IsOpen = false;
+            MarkBet.SetReductionRuleString();
+            string systemInfo = MarkBet.ToClipboardString();
             PrintUsingDocumentCondensed(systemInfo, "HPT-uskrift text");
         }
 
@@ -1302,9 +1305,9 @@ namespace HPTClient
 
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
-            this.MarkBet.SetReductionRuleString();
+            MarkBet.SetReductionRuleString();
             UCMarkingBetSystemDocument uc = new UCMarkingBetSystemDocument();
-            uc.DataContext = this.MarkBet;
+            uc.DataContext = MarkBet;
             PrintDialog pd = new PrintDialog();
             if ((bool)pd.ShowDialog().GetValueOrDefault())
             {
@@ -1318,10 +1321,10 @@ namespace HPTClient
         private void miPrintXPS_Click(object sender, RoutedEventArgs e)
         {
             // Skapa utskriftsytan
-            this.btnPrint.IsOpen = false;
-            this.MarkBet.SetReductionRuleString();
+            btnPrint.IsOpen = false;
+            MarkBet.SetReductionRuleString();
             UCMarkingBetSystemDocument uc = new UCMarkingBetSystemDocument();
-            uc.DataContext = this.MarkBet;
+            uc.DataContext = MarkBet;
             uc.Measure(new Size(816, 1500));
             uc.Arrange(new Rect(new Size(816, 1300)));
             uc.UpdateLayout();
@@ -1336,7 +1339,7 @@ namespace HPTClient
             ((System.Windows.Markup.IAddChild)pageContent).AddChild(fixedPage);
             fixedDoc.Pages.Add(pageContent);
 
-            string fileName = this.MarkBet.SaveDirectory + this.MarkBet.ToFileNameString() + ".xps";
+            string fileName = MarkBet.SaveDirectory + MarkBet.ToFileNameString() + ".xps";
             var xpsDoc = new XpsDocument(fileName, System.IO.FileAccess.ReadWrite);
             var xw = XpsDocument.CreateXpsDocumentWriter(xpsDoc);
             xw.Write(fixedDoc);
@@ -1347,16 +1350,16 @@ namespace HPTClient
         {
             try
             {
-                this.btnCreateCoupons.IsOpen = false;
-                this.MarkBet.SetReductionRuleString();
+                btnCreateCoupons.IsOpen = false;
+                MarkBet.SetReductionRuleString();
                 var uc = new UCMarkingBetSystemDocument();
-                uc.DataContext = this.MarkBet;
+                uc.DataContext = MarkBet;
                 uc.Measure(new Size(816, 1300));
                 uc.Arrange(new Rect(new Size(816, 1300)));
 
                 uc.UpdateLayout();
 
-                string fileName = this.MarkBet.SaveDirectory + this.MarkBet.ToFileNameString() + ".png";
+                string fileName = MarkBet.SaveDirectory + MarkBet.ToFileNameString() + ".png";
                 //string fileName = this.MarkBet.SaveDirectory + this.MarkBet.ToFileNameString() + ".jpg";
 
                 CreateImageFromVisual(uc, fileName);
@@ -1380,8 +1383,8 @@ namespace HPTClient
                     Source = bmp
                 };
 
-                var enc = new System.Windows.Media.Imaging.PngBitmapEncoder();
-                enc.Frames.Add(System.Windows.Media.Imaging.BitmapFrame.Create(bmp));
+                var enc = new PngBitmapEncoder();
+                enc.Frames.Add(BitmapFrame.Create(bmp));
 
                 using (var stm = System.IO.File.Create(fileName))
                 {
@@ -1399,18 +1402,18 @@ namespace HPTClient
 
         private void btnInterruptTemplateCalculation_Click(object sender, RoutedEventArgs e)
         {
-            this.MarkBet.InterruptSystemsCreation = true;
+            MarkBet.InterruptSystemsCreation = true;
         }
 
         private void chkAutomaticRecalculation_Checked(object sender, RoutedEventArgs e)
         {
             try
             {
-                bool automaticRecalculation = (bool)this.chkAutomaticRecalculation.IsChecked;
-                this.MarkBet.pauseRecalculation = !automaticRecalculation;
+                bool automaticRecalculation = (bool)chkAutomaticRecalculation.IsChecked;
+                MarkBet.pauseRecalculation = !automaticRecalculation;
                 if (automaticRecalculation)
                 {
-                    this.MarkBet.RecalculateReduction(RecalculateReason.All);
+                    MarkBet.RecalculateReduction(RecalculateReason.All);
                 }
             }
             catch (Exception exc)
@@ -1426,7 +1429,7 @@ namespace HPTClient
 
         private void OpenBeginnerWindow()
         {
-            this.MarkBet.TemplateForBeginners = this.MarkBet.CreateTemplateForBeginners();
+            MarkBet.TemplateForBeginners = MarkBet.CreateTemplateForBeginners();
             var wndBeginnerWizard = new Window()
             {
                 SizeToContent = SizeToContent.WidthAndHeight,
@@ -1437,8 +1440,8 @@ namespace HPTClient
             };
             wndBeginnerWizard.Content = new UCBeginnerWizard(wndBeginnerWizard)
             {
-                DataContext = this.MarkBet.TemplateForBeginners,
-                MarkBet = this.MarkBet
+                DataContext = MarkBet.TemplateForBeginners,
+                MarkBet = MarkBet
             };
             wndBeginnerWizard.ShowDialog();
         }
@@ -1483,7 +1486,7 @@ namespace HPTClient
 
         private void SetBody()
         {
-            if (this.MarkBet == null)
+            if (MarkBet == null)
             {
                 return;
             }
@@ -1493,17 +1496,17 @@ namespace HPTClient
 
         private string GetSubject()
         {
-            return this.MarkBet.BetType.Code + " " + this.MarkBet.RaceDayInfo.RaceDayDate.ToString("yyyy-MM-dd") + ", " + this.MarkBet.ReducedSize.ToString() + " rader.";
+            return MarkBet.BetType.Code + " " + MarkBet.RaceDayInfo.RaceDayDate.ToString("yyyy-MM-dd") + ", " + MarkBet.ReducedSize.ToString() + " rader.";
         }
 
         private void miCopySystemGUIDToClipboard_Click(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(this.MarkBet.UploadedSystemGUID))
+            if (!string.IsNullOrEmpty(MarkBet.UploadedSystemGUID))
             {
                 try
                 {
                     //Clipboard.SetText("http://correction.hpt.nu/Default.aspx?SystemGUID=" + this.MarkBet.UploadedSystemGUID);
-                    Clipboard.SetDataObject(this.MarkBet.SystemURL);
+                    Clipboard.SetDataObject(MarkBet.SystemURL);
                 }
                 catch (Exception exc)
                 {
@@ -1551,10 +1554,10 @@ namespace HPTClient
         private void miOpenCorrectionURL_Click(object sender, RoutedEventArgs e)
         {
             //if (!string.IsNullOrEmpty(this.MarkBet.UploadedSystemGUID))
-            if (!string.IsNullOrEmpty(this.MarkBet.SystemURL))
+            if (!string.IsNullOrEmpty(MarkBet.SystemURL))
             {
                 //System.Diagnostics.Process.Start("http://correction.hpt.nu/Default.aspx?SystemGUID=" + this.MarkBet.UploadedSystemGUID);
-                System.Diagnostics.Process.Start(this.MarkBet.SystemURL);
+                System.Diagnostics.Process.Start(MarkBet.SystemURL);
             }
         }
 
@@ -1571,16 +1574,16 @@ namespace HPTClient
                 return;
             }
             var horse = (HPTHorse)fe.DataContext;
-            if (this.pu == null)
+            if (pu == null)
             {
-                this.pu = new System.Windows.Controls.Primitives.Popup()
+                pu = new System.Windows.Controls.Primitives.Popup()
                 {
                     Placement = System.Windows.Controls.Primitives.PlacementMode.MousePoint,
                     PlacementTarget = fe,
                     HorizontalOffset = -5D,
                     VerticalOffset = -5D
                 };
-                this.pu.MouseLeave += new MouseEventHandler(pu_MouseLeave);
+                pu.MouseLeave += new MouseEventHandler(pu_MouseLeave);
             }
 
             // Skapa innehållet för popupen
@@ -1601,9 +1604,9 @@ namespace HPTClient
             e.Handled = true;
 
             // Visa popupen
-            this.pu.DataContext = horse;
-            this.pu.Child = b;
-            this.pu.IsOpen = true;
+            pu.DataContext = horse;
+            pu.Child = b;
+            pu.IsOpen = true;
         }
 
         void pu_MouseLeave(object sender, MouseEventArgs e)
@@ -1636,19 +1639,19 @@ namespace HPTClient
             {
                 var cbi = (ComboBoxItem)e.AddedItems[0];
                 GUIProfile gp = (GUIProfile)Convert.ToInt32(cbi.Tag);
-                this.Profile = gp;
-                this.GUIElementsToShow = HPTConfig.Config.GetElementsToShow(this.Profile);
-                ApplyGUIElementsToShow(this.GUIElementsToShow);
-                ApplyProfile(this.Profile);
+                Profile = gp;
+                GUIElementsToShow = HPTConfig.Config.GetElementsToShow(Profile);
+                ApplyGUIElementsToShow(GUIElementsToShow);
+                ApplyProfile(Profile);
             }
         }
 
         internal void ApplyProfile(GUIProfile profile)
         {
             HPTConfig.Config.SetMarkBetProfile(profile);
-            this.tcMarksGame.Items.Clear();
+            tcMarksGame.Items.Clear();
             HPTConfig.Config.MarkBetTabsToShow.PropertyChanged -= new PropertyChangedEventHandler(MarkBetTabsToShow_PropertyChanged);
-            this.MarkBet.RaceDayInfo.DataToShow = HPTConfig.Config.DataToShowVxx;
+            MarkBet.RaceDayInfo.DataToShow = HPTConfig.Config.DataToShowVxx;
             CreateMarkBetTabsToShowContextMenu();
             HPTConfig.Config.MarkBetTabsToShow.PropertyChanged += new PropertyChangedEventHandler(MarkBetTabsToShow_PropertyChanged);
             CreateTabsToShow();
@@ -1657,54 +1660,54 @@ namespace HPTClient
         internal void ApplyGUIElementsToShow(HPTGUIElementsToShow guiElementsToShow)
         {
             // Översikt
-            this.gbOverview.Visibility = GetVisibility(guiElementsToShow.ShowOverview);
-            this.RaceLockVisibility = GetVisibility(guiElementsToShow.ShowRaceLock);
+            gbOverview.Visibility = GetVisibility(guiElementsToShow.ShowOverview);
+            RaceLockVisibility = GetVisibility(guiElementsToShow.ShowRaceLock);
 
             // Inställningar
-            this.txtReservHandling.Visibility = GetVisibility(guiElementsToShow.ShowReservHandling);
-            this.cmbReservHandling.Visibility = GetVisibility(guiElementsToShow.ShowReservHandling);
+            txtReservHandling.Visibility = GetVisibility(guiElementsToShow.ShowReservHandling);
+            cmbReservHandling.Visibility = GetVisibility(guiElementsToShow.ShowReservHandling);
 
-            this.txtBetMultiplier.Visibility = GetVisibility(guiElementsToShow.ShowBetMultiplier);
-            this.iudBetMultiplier.Visibility = GetVisibility(guiElementsToShow.ShowBetMultiplier);
+            txtBetMultiplier.Visibility = GetVisibility(guiElementsToShow.ShowBetMultiplier);
+            iudBetMultiplier.Visibility = GetVisibility(guiElementsToShow.ShowBetMultiplier);
 
             //this.chkCouponCompression.Visibility = GetVisibility(guiElementsToShow.ShowCouponCompression);
             //this.cmbCouponCompression.Visibility = GetVisibility(guiElementsToShow.ShowCouponCompression);
 
             // V6/V7/V8
-            if (this.MarkBet.BetType.NumberOfRaces > 5)
+            if (MarkBet.BetType.NumberOfRaces > 5)
             {
-                this.chkV6.Visibility = GetVisibility(guiElementsToShow.ShowV6);
+                chkV6.Visibility = GetVisibility(guiElementsToShow.ShowV6);
             }
             else
             {
-                this.chkV6.Visibility = System.Windows.Visibility.Collapsed;
+                chkV6.Visibility = Visibility.Collapsed;
             }
 
-            this.txtBetMultiplier.Visibility = GetVisibility(guiElementsToShow.ShowBetMultiplier);
-            this.iudBetMultiplier.Visibility = GetVisibility(guiElementsToShow.ShowBetMultiplier);
+            txtBetMultiplier.Visibility = GetVisibility(guiElementsToShow.ShowBetMultiplier);
+            iudBetMultiplier.Visibility = GetVisibility(guiElementsToShow.ShowBetMultiplier);
 
-            this.chkAutomaticRecalculation.Visibility = GetVisibility(guiElementsToShow.ShowAutomaticCalculation);
+            chkAutomaticRecalculation.Visibility = GetVisibility(guiElementsToShow.ShowAutomaticCalculation);
 
             // Mallar
-            this.gbTemplates.Visibility = GetVisibility(guiElementsToShow.ShowTemplates);
+            gbTemplates.Visibility = GetVisibility(guiElementsToShow.ShowTemplates);
 
             // Systeminformation
-            this.grdReductionPercentage.Visibility = GetVisibility(guiElementsToShow.ShowReductionPercentage);
-            this.grdCouponInfo.Visibility = GetVisibility(guiElementsToShow.ShowCouponInfo);
-            this.grdNumberOfSystems.Visibility = GetVisibility(guiElementsToShow.ShowNumberOfSystems);
-            this.grdNumberOfGambledRows.Visibility = GetVisibility(guiElementsToShow.ShowNumberOfGambledRows);
-            this.grdSystemCostChange.Visibility = GetVisibility(guiElementsToShow.ShowSystemCostChange);
-            this.spRowValueInterval.Visibility = GetVisibility(guiElementsToShow.ShowRowValueInterval);
-            this.grdLiveCalculation.Visibility = GetVisibility(guiElementsToShow.ShowLiveCalculation);
+            grdReductionPercentage.Visibility = GetVisibility(guiElementsToShow.ShowReductionPercentage);
+            grdCouponInfo.Visibility = GetVisibility(guiElementsToShow.ShowCouponInfo);
+            grdNumberOfSystems.Visibility = GetVisibility(guiElementsToShow.ShowNumberOfSystems);
+            grdNumberOfGambledRows.Visibility = GetVisibility(guiElementsToShow.ShowNumberOfGambledRows);
+            grdSystemCostChange.Visibility = GetVisibility(guiElementsToShow.ShowSystemCostChange);
+            spRowValueInterval.Visibility = GetVisibility(guiElementsToShow.ShowRowValueInterval);
+            grdLiveCalculation.Visibility = GetVisibility(guiElementsToShow.ShowLiveCalculation);
 
             // Reducering
-            this.gbReductionList.Visibility = GetVisibility(guiElementsToShow.ShowReductionList);
+            gbReductionList.Visibility = GetVisibility(guiElementsToShow.ShowReductionList);
 
             // Fil
-            this.btnCreateCouponsAs.Visibility = GetVisibility(guiElementsToShow.ShowSaveAs);
-            this.btnCopy.Visibility = GetVisibility(guiElementsToShow.ShowCopy);
-            this.btnPrint.Visibility = GetVisibility(guiElementsToShow.ShowPrint);
-            this.btnClearAll.Visibility = GetVisibility(guiElementsToShow.ShowClear);
+            btnCreateCouponsAs.Visibility = GetVisibility(guiElementsToShow.ShowSaveAs);
+            btnCopy.Visibility = GetVisibility(guiElementsToShow.ShowCopy);
+            btnPrint.Visibility = GetVisibility(guiElementsToShow.ShowPrint);
+            btnClearAll.Visibility = GetVisibility(guiElementsToShow.ShowClear);
             //this.btnUploadSystem.Visibility = GetVisibility(guiElementsToShow.ShowUpload);
         }
 
@@ -1714,7 +1717,7 @@ namespace HPTClient
             {
                 return Visibility.Visible;
             }
-            return System.Windows.Visibility.Collapsed;
+            return Visibility.Collapsed;
         }
 
 
@@ -1754,208 +1757,208 @@ namespace HPTClient
             }
 
             // Avdelningar
-            if (HPTConfig.Config.MarkBetTabsToShow.ShowRaces && (this.tiRaces == null || !this.tcMarksGame.Items.Contains(this.tiRaces)))
+            if (HPTConfig.Config.MarkBetTabsToShow.ShowRaces && (tiRaces == null || !tcMarksGame.Items.Contains(tiRaces)))
             {
                 CreateRacesTabItem();
             }
-            else if (!HPTConfig.Config.MarkBetTabsToShow.ShowRaces && this.tiRaces != null)
+            else if (!HPTConfig.Config.MarkBetTabsToShow.ShowRaces && tiRaces != null)
             {
-                this.tcMarksGame.Items.Remove(this.tiRaces);
-                this.tiRaces = null;
+                tcMarksGame.Items.Remove(tiRaces);
+                tiRaces = null;
             }
-            HandleTabItemOrder(this.tiRaces, "tiRaces");
+            HandleTabItemOrder(tiRaces, "tiRaces");
 
             // Översikt
-            if (HPTConfig.Config.MarkBetTabsToShow.ShowOverview && (this.tiOverview == null || !this.tcMarksGame.Items.Contains(this.tiOverview)))
+            if (HPTConfig.Config.MarkBetTabsToShow.ShowOverview && (tiOverview == null || !tcMarksGame.Items.Contains(tiOverview)))
             {
                 CreateOverviewTabItem();
             }
-            else if (!HPTConfig.Config.MarkBetTabsToShow.ShowOverview && this.tiOverview != null)
+            else if (!HPTConfig.Config.MarkBetTabsToShow.ShowOverview && tiOverview != null)
             {
-                this.tcMarksGame.Items.Remove(this.tiOverview);
-                this.tiOverview = null;
+                tcMarksGame.Items.Remove(tiOverview);
+                tiOverview = null;
             }
-            HandleTabItemOrder(this.tiOverview, "tiOverview");
+            HandleTabItemOrder(tiOverview, "tiOverview");
 
             // Avdelningar (grupperade)
-            if (HPTConfig.Config.MarkBetTabsToShow.ShowRacesGrouped && (this.tiRacesGrouped == null || !this.tcMarksGame.Items.Contains(this.tiRacesGrouped)))
+            if (HPTConfig.Config.MarkBetTabsToShow.ShowRacesGrouped && (tiRacesGrouped == null || !tcMarksGame.Items.Contains(tiRacesGrouped)))
             {
                 CreateRacesGroupedTabItem();
             }
-            else if (!HPTConfig.Config.MarkBetTabsToShow.ShowRacesGrouped && this.tiRacesGrouped != null)
+            else if (!HPTConfig.Config.MarkBetTabsToShow.ShowRacesGrouped && tiRacesGrouped != null)
             {
-                this.tcMarksGame.Items.Remove(this.tiRacesGrouped);
-                this.tiRacesGrouped = null;
+                tcMarksGame.Items.Remove(tiRacesGrouped);
+                tiRacesGrouped = null;
             }
-            HandleTabItemOrder(this.tiRacesGrouped, "tiRacesGrouped");
+            HandleTabItemOrder(tiRacesGrouped, "tiRacesGrouped");
 
             // Ranköversikt
-            if (HPTConfig.Config.MarkBetTabsToShow.ShowRankOverview && (this.tiRankOverview == null || !this.tcMarksGame.Items.Contains(this.tiRankOverview)))
+            if (HPTConfig.Config.MarkBetTabsToShow.ShowRankOverview && (tiRankOverview == null || !tcMarksGame.Items.Contains(tiRankOverview)))
             {
                 CreateRankOverviewTabItem();
             }
-            else if (!HPTConfig.Config.MarkBetTabsToShow.ShowRankOverview && this.tiRankOverview != null)
+            else if (!HPTConfig.Config.MarkBetTabsToShow.ShowRankOverview && tiRankOverview != null)
             {
-                this.tcMarksGame.Items.Remove(this.tiRankOverview);
-                this.tiRankOverview = null;
+                tcMarksGame.Items.Remove(tiRankOverview);
+                tiRankOverview = null;
             }
-            HandleTabItemOrder(this.tiRankOverview, "tiRankOverview");
+            HandleTabItemOrder(tiRankOverview, "tiRankOverview");
 
             // Kuskar
-            if (HPTConfig.Config.MarkBetTabsToShow.ShowDriverReduction && (this.tiDrivers == null || !this.tcMarksGame.Items.Contains(this.tiDrivers)))
+            if (HPTConfig.Config.MarkBetTabsToShow.ShowDriverReduction && (tiDrivers == null || !tcMarksGame.Items.Contains(tiDrivers)))
             {
                 CreateDriversTabItem();
             }
-            else if (!HPTConfig.Config.MarkBetTabsToShow.ShowDriverReduction && this.tiDrivers != null)
+            else if (!HPTConfig.Config.MarkBetTabsToShow.ShowDriverReduction && tiDrivers != null)
             {
-                this.tcMarksGame.Items.Remove(this.tiDrivers);
-                this.tiDrivers = null;
+                tcMarksGame.Items.Remove(tiDrivers);
+                tiDrivers = null;
             }
-            HandleTabItemOrder(this.tiDrivers, "tiDrivers");
+            HandleTabItemOrder(tiDrivers, "tiDrivers");
 
             // Tränare
-            if (HPTConfig.Config.MarkBetTabsToShow.ShowTrainerReduction && (this.tiTrainers == null || !this.tcMarksGame.Items.Contains(this.tiTrainers)))
+            if (HPTConfig.Config.MarkBetTabsToShow.ShowTrainerReduction && (tiTrainers == null || !tcMarksGame.Items.Contains(tiTrainers)))
             {
                 CreateTrainersTabItem();
             }
-            else if (!HPTConfig.Config.MarkBetTabsToShow.ShowTrainerReduction && this.tiTrainers != null)
+            else if (!HPTConfig.Config.MarkBetTabsToShow.ShowTrainerReduction && tiTrainers != null)
             {
-                this.tcMarksGame.Items.Remove(this.tiTrainers);
-                this.tiTrainers = null;
+                tcMarksGame.Items.Remove(tiTrainers);
+                tiTrainers = null;
             }
-            HandleTabItemOrder(this.tiTrainers, "tiTrainers");
+            HandleTabItemOrder(tiTrainers, "tiTrainers");
 
             // Trender
-            if (HPTConfig.Config.MarkBetTabsToShow.ShowTrends && (this.tiTrends == null || !this.tcMarksGame.Items.Contains(this.tiTrends)))
+            if (HPTConfig.Config.MarkBetTabsToShow.ShowTrends && (tiTrends == null || !tcMarksGame.Items.Contains(tiTrends)))
             {
                 CreateTrendsTabItem();
             }
-            else if (!HPTConfig.Config.MarkBetTabsToShow.ShowTrends && this.tiTrends != null)
+            else if (!HPTConfig.Config.MarkBetTabsToShow.ShowTrends && tiTrends != null)
             {
-                this.tcMarksGame.Items.Remove(this.tiTrends);
-                this.tiTrends = null;
+                tcMarksGame.Items.Remove(tiTrends);
+                tiTrends = null;
             }
-            HandleTabItemOrder(this.tiTrends, "tiTrends");
+            HandleTabItemOrder(tiTrends, "tiTrends");
 
             // Villkorsstatistik
-            if (HPTConfig.Config.MarkBetTabsToShow.ShowReductionStatistics && (this.tiReductionStatistics == null || !this.tcMarksGame.Items.Contains(this.tiReductionStatistics)))
+            if (HPTConfig.Config.MarkBetTabsToShow.ShowReductionStatistics && (tiReductionStatistics == null || !tcMarksGame.Items.Contains(tiReductionStatistics)))
             {
                 CreateReductionStatisticsTabItem();
             }
-            else if (!HPTConfig.Config.MarkBetTabsToShow.ShowReductionStatistics && this.tiReductionStatistics != null)
+            else if (!HPTConfig.Config.MarkBetTabsToShow.ShowReductionStatistics && tiReductionStatistics != null)
             {
-                this.tcMarksGame.Items.Remove(this.tiReductionStatistics);
-                this.tiReductionStatistics = null;
+                tcMarksGame.Items.Remove(tiReductionStatistics);
+                tiReductionStatistics = null;
             }
-            HandleTabItemOrder(this.tiReductionStatistics, "tiReductionStatistics");
+            HandleTabItemOrder(tiReductionStatistics, "tiReductionStatistics");
 
             // Kommentarer
-            if (HPTConfig.Config.MarkBetTabsToShow.ShowComments && (this.tiComments == null || !this.tcMarksGame.Items.Contains(this.tiComments)))
+            if (HPTConfig.Config.MarkBetTabsToShow.ShowComments && (tiComments == null || !tcMarksGame.Items.Contains(tiComments)))
             {
                 CreateCommentsTabItem();
             }
-            else if (!HPTConfig.Config.MarkBetTabsToShow.ShowComments && this.tiComments != null)
+            else if (!HPTConfig.Config.MarkBetTabsToShow.ShowComments && tiComments != null)
             {
-                this.tcMarksGame.Items.Remove(this.tiComments);
-                this.tiComments = null;
+                tcMarksGame.Items.Remove(tiComments);
+                tiComments = null;
             }
-            HandleTabItemOrder(this.tiComments, "tiComments");
+            HandleTabItemOrder(tiComments, "tiComments");
 
             // Rankreducering
-            if (HPTConfig.Config.MarkBetTabsToShow.ShowRankReduction && (this.tiRankReduction == null || !this.tcMarksGame.Items.Contains(this.tiRankReduction)))
+            if (HPTConfig.Config.MarkBetTabsToShow.ShowRankReduction && (tiRankReduction == null || !tcMarksGame.Items.Contains(tiRankReduction)))
             {
                 CreateRankReductionTabItem();
             }
-            else if (!HPTConfig.Config.MarkBetTabsToShow.ShowRankReduction && this.tiRankReduction != null)
+            else if (!HPTConfig.Config.MarkBetTabsToShow.ShowRankReduction && tiRankReduction != null)
             {
-                this.tcMarksGame.Items.Remove(this.tiRankReduction);
-                this.tiRankReduction = null;
+                tcMarksGame.Items.Remove(tiRankReduction);
+                tiRankReduction = null;
             }
-            HandleTabItemOrder(this.tiRankReduction, "tiRankReduction");
+            HandleTabItemOrder(tiRankReduction, "tiRankReduction");
 
             // Rankreducering
-            if (HPTConfig.Config.MarkBetTabsToShow.ShowSingleRows && (this.tiSingleRows == null || !this.tcMarksGame.Items.Contains(this.tiSingleRows)))
+            if (HPTConfig.Config.MarkBetTabsToShow.ShowSingleRows && (tiSingleRows == null || !tcMarksGame.Items.Contains(tiSingleRows)))
             {
                 CreateSingleRowsTabItem();
             }
-            else if (!HPTConfig.Config.MarkBetTabsToShow.ShowSingleRows && this.tiSingleRows != null)
+            else if (!HPTConfig.Config.MarkBetTabsToShow.ShowSingleRows && tiSingleRows != null)
             {
-                this.tcMarksGame.Items.Remove(this.tiSingleRows);
-                this.tiSingleRows = null;
+                tcMarksGame.Items.Remove(tiSingleRows);
+                tiSingleRows = null;
             }
-            HandleTabItemOrder(this.tiSingleRows, "tiSingleRows");
+            HandleTabItemOrder(tiSingleRows, "tiSingleRows");
 
             // Utgångar
-            if (HPTConfig.Config.MarkBetTabsToShow.ShowComplimentaryRules && (this.tiComplimentaryRules == null || !this.tcMarksGame.Items.Contains(this.tiComplimentaryRules)))
+            if (HPTConfig.Config.MarkBetTabsToShow.ShowComplimentaryRules && (tiComplimentaryRules == null || !tcMarksGame.Items.Contains(tiComplimentaryRules)))
             {
                 CreateComplimentaryRulesTabItem();
             }
-            else if (!HPTConfig.Config.MarkBetTabsToShow.ShowComplimentaryRules && this.tiComplimentaryRules != null)
+            else if (!HPTConfig.Config.MarkBetTabsToShow.ShowComplimentaryRules && tiComplimentaryRules != null)
             {
-                this.tcMarksGame.Items.Remove(this.tiComplimentaryRules);
-                this.tiComplimentaryRules = null;
+                tcMarksGame.Items.Remove(tiComplimentaryRules);
+                tiComplimentaryRules = null;
             }
-            HandleTabItemOrder(this.tiComplimentaryRules, "tiComplimentaryRules");
+            HandleTabItemOrder(tiComplimentaryRules, "tiComplimentaryRules");
 
             // Intervall
-            if (HPTConfig.Config.MarkBetTabsToShow.ShowIntervalReduction && (this.tiIntervalReduction == null || !this.tcMarksGame.Items.Contains(this.tiIntervalReduction)))
+            if (HPTConfig.Config.MarkBetTabsToShow.ShowIntervalReduction && (tiIntervalReduction == null || !tcMarksGame.Items.Contains(tiIntervalReduction)))
             {
                 CreateIntervalReductionTabItem();
             }
-            else if (!HPTConfig.Config.MarkBetTabsToShow.ShowIntervalReduction && this.tiIntervalReduction != null)
+            else if (!HPTConfig.Config.MarkBetTabsToShow.ShowIntervalReduction && tiIntervalReduction != null)
             {
-                this.tcMarksGame.Items.Remove(this.tiIntervalReduction);
-                this.tiIntervalReduction = null;
+                tcMarksGame.Items.Remove(tiIntervalReduction);
+                tiIntervalReduction = null;
             }
-            HandleTabItemOrder(this.tiIntervalReduction, "tiIntervalReduction");
+            HandleTabItemOrder(tiIntervalReduction, "tiIntervalReduction");
 
             // Gruppintervall
-            if (HPTConfig.Config.MarkBetTabsToShow.ShowGroupIntervalReduction && (this.tiGroupInterval == null || !this.tcMarksGame.Items.Contains(this.tiGroupInterval)))
+            if (HPTConfig.Config.MarkBetTabsToShow.ShowGroupIntervalReduction && (tiGroupInterval == null || !tcMarksGame.Items.Contains(tiGroupInterval)))
             {
                 CreateGroupIntervalTabItem();
             }
-            else if (!HPTConfig.Config.MarkBetTabsToShow.ShowGroupIntervalReduction && this.tiGroupInterval != null)
+            else if (!HPTConfig.Config.MarkBetTabsToShow.ShowGroupIntervalReduction && tiGroupInterval != null)
             {
-                this.tcMarksGame.Items.Remove(this.tiGroupInterval);
-                this.tiGroupInterval = null;
+                tcMarksGame.Items.Remove(tiGroupInterval);
+                tiGroupInterval = null;
             }
-            HandleTabItemOrder(this.tiGroupInterval, "tiGroupInterval");
+            HandleTabItemOrder(tiGroupInterval, "tiGroupInterval");
 
             // Multi-ABCD
-            if (HPTConfig.Config.MarkBetTabsToShow.ShowMultiABCD && (this.tiMultiABCD == null || !this.tcMarksGame.Items.Contains(this.tiMultiABCD)))
+            if (HPTConfig.Config.MarkBetTabsToShow.ShowMultiABCD && (tiMultiABCD == null || !tcMarksGame.Items.Contains(tiMultiABCD)))
             {
                 CreateMultiABCDTabItem();
             }
-            else if (!HPTConfig.Config.MarkBetTabsToShow.ShowMultiABCD && this.tiMultiABCD != null)
+            else if (!HPTConfig.Config.MarkBetTabsToShow.ShowMultiABCD && tiMultiABCD != null)
             {
-                this.tcMarksGame.Items.Remove(this.tiMultiABCD);
-                this.tiMultiABCD = null;
+                tcMarksGame.Items.Remove(tiMultiABCD);
+                tiMultiABCD = null;
             }
-            HandleTabItemOrder(this.tiMultiABCD, "tiMultiABCD");
+            HandleTabItemOrder(tiMultiABCD, "tiMultiABCD");
 
             // V6/V7/V8/Flerbong
-            if (HPTConfig.Config.MarkBetTabsToShow.ShowV6BetMultiplier && (this.tiV6BetMultiplier == null || !this.tcMarksGame.Items.Contains(this.tiV6BetMultiplier)))
+            if (HPTConfig.Config.MarkBetTabsToShow.ShowV6BetMultiplier && (tiV6BetMultiplier == null || !tcMarksGame.Items.Contains(tiV6BetMultiplier)))
             {
                 CreateV6BetMultiplierTabItem();
             }
-            else if (!HPTConfig.Config.MarkBetTabsToShow.ShowV6BetMultiplier && this.tiV6BetMultiplier != null)
+            else if (!HPTConfig.Config.MarkBetTabsToShow.ShowV6BetMultiplier && tiV6BetMultiplier != null)
             {
-                this.tcMarksGame.Items.Remove(this.tiV6BetMultiplier);
-                this.tiV6BetMultiplier = null;
+                tcMarksGame.Items.Remove(tiV6BetMultiplier);
+                tiV6BetMultiplier = null;
             }
-            HandleTabItemOrder(this.tiV6BetMultiplier, "tiV6BetMultiplier");
+            HandleTabItemOrder(tiV6BetMultiplier, "tiV6BetMultiplier");
 
             // Kuponger/Rättning
-            if (HPTConfig.Config.MarkBetTabsToShow.ShowCorrection && (this.tiCorrection == null || !this.tcMarksGame.Items.Contains(this.tiCorrection)))
+            if (HPTConfig.Config.MarkBetTabsToShow.ShowCorrection && (tiCorrection == null || !tcMarksGame.Items.Contains(tiCorrection)))
             {
                 CreateCorrectionTabItem();
             }
-            else if (!HPTConfig.Config.MarkBetTabsToShow.ShowCorrection && this.tiCorrection != null)
+            else if (!HPTConfig.Config.MarkBetTabsToShow.ShowCorrection && tiCorrection != null)
             {
-                this.tcMarksGame.Items.Remove(this.tiCorrection);
-                this.tiCorrection = null;
+                tcMarksGame.Items.Remove(tiCorrection);
+                tiCorrection = null;
             }
-            HandleTabItemOrder(this.tiCorrection, "tiCorrection");
+            HandleTabItemOrder(tiCorrection, "tiCorrection");
 
             //// Bolagsspel
             //if (HPTConfig.Config.MarkBetTabsToShow.ShowCompanyGambling && (this.tiCompanyGambling == null || !this.tcMarksGame.Items.Contains(this.tiCompanyGambling)))
@@ -1982,30 +1985,30 @@ namespace HPTClient
             //HandleTabItemOrder(this.tiXmlFile, "tiXmlFile");
 
             // Mallverkstad
-            if (HPTConfig.Config.MarkBetTabsToShow.ShowTemplateWorkshop && (this.tiTemplateWorkshop == null || !this.tcMarksGame.Items.Contains(this.tiTemplateWorkshop)))
+            if (HPTConfig.Config.MarkBetTabsToShow.ShowTemplateWorkshop && (tiTemplateWorkshop == null || !tcMarksGame.Items.Contains(tiTemplateWorkshop)))
             {
                 CreateTemplateWorkshopTabItem();
             }
-            else if (!HPTConfig.Config.MarkBetTabsToShow.ShowTemplateWorkshop && this.tiTemplateWorkshop != null)
+            else if (!HPTConfig.Config.MarkBetTabsToShow.ShowTemplateWorkshop && tiTemplateWorkshop != null)
             {
-                this.tcMarksGame.Items.Remove(this.tiTemplateWorkshop);
-                this.tiTemplateWorkshop = null;
+                tcMarksGame.Items.Remove(tiTemplateWorkshop);
+                tiTemplateWorkshop = null;
             }
-            HandleTabItemOrder(this.tiTemplateWorkshop, "tiTemplateWorkshop");
+            HandleTabItemOrder(tiTemplateWorkshop, "tiTemplateWorkshop");
 
             // Sortera tabbarna
             foreach (var tabName in HPTConfig.Config.MarkBetTabsToShow.ColumnsInOrder)
             {
                 if (!string.IsNullOrEmpty(tabName))
                 {
-                    object o = this.GetType().GetProperty(tabName)?.GetValue(this);
+                    object o = GetType().GetProperty(tabName)?.GetValue(this);
 
                     if (o != null && o.GetType() == typeof(TabItem))
                     {
                         var tabItem = (TabItem)o;
-                        if (!this.tcMarksGame.Items.Contains(tabItem))
+                        if (!tcMarksGame.Items.Contains(tabItem))
                         {
-                            this.tcMarksGame.Items.Add(tabItem);
+                            tcMarksGame.Items.Add(tabItem);
                         }
                     }
                 }
@@ -2034,7 +2037,7 @@ namespace HPTClient
         public TabItem tiRaces { get; set; }
         internal void CreateRacesTabItem()
         {
-            this.tiRaces = new TabItem()
+            tiRaces = new TabItem()
             {
                 Name = "tiRaces",
                 Header = new UCTabItemHeader()
@@ -2046,7 +2049,7 @@ namespace HPTClient
                 //ToolTip = "Visar vy med detaljinformation om samtliga avdelningar",
                 Content = new UCRacesTabControl()
                 {
-                    MarkBet = this.MarkBet
+                    MarkBet = MarkBet
                 }
             };
         }
@@ -2054,7 +2057,7 @@ namespace HPTClient
         public TabItem tiReductionStatistics { get; set; }
         internal void CreateReductionStatisticsTabItem()
         {
-            this.tiReductionStatistics = new TabItem()
+            tiReductionStatistics = new TabItem()
             {
                 Name = "tiReductionStatistics",
                 Header = new UCTabItemHeader()
@@ -2065,8 +2068,8 @@ namespace HPTClient
                 },
                 Content = new UCReductionRuleStatistics()
                 {
-                    MarkBet = this.MarkBet,
-                    DataContext = this.MarkBet
+                    MarkBet = MarkBet,
+                    DataContext = MarkBet
                 }
             };
         }
@@ -2074,7 +2077,7 @@ namespace HPTClient
         public TabItem tiRacesGrouped { get; set; }
         internal void CreateRacesGroupedTabItem()
         {
-            this.tiRacesGrouped = new TabItem()
+            tiRacesGrouped = new TabItem()
             {
                 Name = "tiRacesGrouped",
                 Header = new UCTabItemHeader()
@@ -2086,8 +2089,8 @@ namespace HPTClient
                 },
                 Content = new UCOwnRankSumReduction()
                 {
-                    MarkBet = this.MarkBet,
-                    DataContext = this.MarkBet
+                    MarkBet = MarkBet,
+                    DataContext = MarkBet
                 }
             };
         }
@@ -2095,7 +2098,7 @@ namespace HPTClient
         public TabItem tiRankOverview { get; set; }
         internal void CreateRankOverviewTabItem()
         {
-            this.tiRankOverview = new TabItem()
+            tiRankOverview = new TabItem()
             {
                 Name = "tiRankOverview",
                 Header = new UCTabItemHeader()
@@ -2106,8 +2109,8 @@ namespace HPTClient
                 },
                 Content = new UCRankOverview()
                 {
-                    MarkBet = this.MarkBet,
-                    DataContext = this.MarkBet
+                    MarkBet = MarkBet,
+                    DataContext = MarkBet
                 }
             };
         }
@@ -2115,7 +2118,7 @@ namespace HPTClient
         public TabItem tiOverview { get; set; }
         internal void CreateOverviewTabItem()
         {
-            this.tiOverview = new TabItem()
+            tiOverview = new TabItem()
             {
                 Name = "tiOverview",
                 Header = new UCTabItemHeader()
@@ -2126,7 +2129,7 @@ namespace HPTClient
                 },
                 Content = new UCRacesOverview()
                 {
-                    MarkBet = this.MarkBet
+                    MarkBet = MarkBet
                 }
             };
         }
@@ -2134,7 +2137,7 @@ namespace HPTClient
         public TabItem tiDrivers { get; set; }
         internal void CreateDriversTabItem()
         {
-            this.tiDrivers = new TabItem()
+            tiDrivers = new TabItem()
             {
                 Name = "tiDrivers",
                 Header = new UCTabItemHeader()
@@ -2145,8 +2148,8 @@ namespace HPTClient
                 },
                 Content = new UCPersonReduction()
                 {
-                    MarkBet = this.MarkBet,
-                    DataContext = this.MarkBet.DriverRulesCollection
+                    MarkBet = MarkBet,
+                    DataContext = MarkBet.DriverRulesCollection
                 }
             };
         }
@@ -2154,7 +2157,7 @@ namespace HPTClient
         public TabItem tiTrainers { get; set; }
         internal void CreateTrainersTabItem()
         {
-            this.tiTrainers = new TabItem()
+            tiTrainers = new TabItem()
             {
                 Name = "tiTrainers",
                 Header = new UCTabItemHeader()
@@ -2165,8 +2168,8 @@ namespace HPTClient
                 },
                 Content = new UCPersonReduction()
                 {
-                    MarkBet = this.MarkBet,
-                    DataContext = this.MarkBet.TrainerRulesCollection
+                    MarkBet = MarkBet,
+                    DataContext = MarkBet.TrainerRulesCollection
                 }
             };
         }
@@ -2174,7 +2177,7 @@ namespace HPTClient
         public TabItem tiTrends { get; set; }
         internal void CreateTrendsTabItem()
         {
-            this.tiTrends = new TabItem()
+            tiTrends = new TabItem()
             {
                 Name = "tiTrends",
                 Header = new UCTabItemHeader()
@@ -2185,8 +2188,8 @@ namespace HPTClient
                 },
                 Content = new UCTrends()
                 {
-                    MarkBet = this.MarkBet,
-                    DataContext = this.MarkBet
+                    MarkBet = MarkBet,
+                    DataContext = MarkBet
                 }
             };
         }
@@ -2194,7 +2197,7 @@ namespace HPTClient
         public TabItem tiComments { get; set; }
         internal void CreateCommentsTabItem()
         {
-            this.tiComments = new TabItem()
+            tiComments = new TabItem()
             {
                 Name = "tiComments",
                 Header = new UCTabItemHeader()
@@ -2205,8 +2208,8 @@ namespace HPTClient
                 },
                 Content = new UCHorseCommentView()
                 {
-                    MarkBet = this.MarkBet,
-                    DataContext = this.MarkBet
+                    MarkBet = MarkBet,
+                    DataContext = MarkBet
                 }
             };
         }
@@ -2214,7 +2217,7 @@ namespace HPTClient
         public TabItem tiRankReduction { get; set; }
         internal void CreateRankReductionTabItem()
         {
-            this.tiRankReduction = new TabItem()
+            tiRankReduction = new TabItem()
             {
                 Name = "tiRankReduction",
                 Header = new UCTabItemHeader()
@@ -2225,8 +2228,8 @@ namespace HPTClient
                 },
                 Content = new UCHorseRankSumReduction()
                 {
-                    MarkBet = this.MarkBet,
-                    DataContext = this.MarkBet
+                    MarkBet = MarkBet,
+                    DataContext = MarkBet
                 }
             };
         }
@@ -2234,7 +2237,7 @@ namespace HPTClient
         public TabItem tiSingleRows { get; set; }
         internal void CreateSingleRowsTabItem()
         {
-            this.tiSingleRows = new TabItem()
+            tiSingleRows = new TabItem()
             {
                 Name = "tiSingleRows",
                 Header = new UCTabItemHeader()
@@ -2245,8 +2248,8 @@ namespace HPTClient
                 },
                 Content = new UCSingleRowCollectionView()
                 {
-                    MarkBet = this.MarkBet,
-                    DataContext = this.MarkBet
+                    MarkBet = MarkBet,
+                    DataContext = MarkBet
                 }
             };
         }
@@ -2254,7 +2257,7 @@ namespace HPTClient
         public TabItem tiComplimentaryRules { get; set; }
         internal void CreateComplimentaryRulesTabItem()
         {
-            this.tiComplimentaryRules = new TabItem()
+            tiComplimentaryRules = new TabItem()
             {
                 Name = "tiComplimentaryRules",
                 Header = new UCTabItemHeader()
@@ -2265,8 +2268,8 @@ namespace HPTClient
                 },
                 Content = new UCComplimentaryRules()
                 {
-                    MarkBet = this.MarkBet,
-                    DataContext = this.MarkBet
+                    MarkBet = MarkBet,
+                    DataContext = MarkBet
                 }
             };
         }
@@ -2274,7 +2277,7 @@ namespace HPTClient
         public TabItem tiIntervalReduction { get; set; }
         internal void CreateIntervalReductionTabItem()
         {
-            this.tiIntervalReduction = new TabItem()
+            tiIntervalReduction = new TabItem()
             {
                 Name = "tiIntervalReduction",
                 Header = new UCTabItemHeader()
@@ -2285,8 +2288,8 @@ namespace HPTClient
                 },
                 Content = new UCIntervalReductionNew()
                 {
-                    MarkBet = this.MarkBet,
-                    DataContext = this.MarkBet
+                    MarkBet = MarkBet,
+                    DataContext = MarkBet
                 }
             };
         }
@@ -2294,7 +2297,7 @@ namespace HPTClient
         public TabItem tiGroupInterval { get; set; }
         internal void CreateGroupIntervalTabItem()
         {
-            this.tiGroupInterval = new TabItem()
+            tiGroupInterval = new TabItem()
             {
                 Name = "tiGroupInterval",
                 Header = new UCTabItemHeader()
@@ -2305,8 +2308,8 @@ namespace HPTClient
                 },
                 Content = new UCGroupIntervalReduction()
                 {
-                    MarkBet = this.MarkBet,
-                    DataContext = this.MarkBet
+                    MarkBet = MarkBet,
+                    DataContext = MarkBet
                 }
             };
         }
@@ -2314,7 +2317,7 @@ namespace HPTClient
         public TabItem tiMultiABCD { get; set; }
         internal void CreateMultiABCDTabItem()
         {
-            this.tiMultiABCD = new TabItem()
+            tiMultiABCD = new TabItem()
             {
                 Name = "tiMultiABCD",
                 Header = new UCTabItemHeader()
@@ -2325,8 +2328,8 @@ namespace HPTClient
                 },
                 Content = new UCMultiABCD()
                 {
-                    MarkBet = this.MarkBet,
-                    DataContext = this.MarkBet
+                    MarkBet = MarkBet,
+                    DataContext = MarkBet
                 }
             };
         }
@@ -2334,7 +2337,7 @@ namespace HPTClient
         public TabItem tiV6BetMultiplier { get; set; }
         internal void CreateV6BetMultiplierTabItem()
         {
-            this.tiV6BetMultiplier = new TabItem()
+            tiV6BetMultiplier = new TabItem()
             {
                 Name = "tiV6BetMultiplier",
                 Header = new UCTabItemHeader()
@@ -2347,8 +2350,8 @@ namespace HPTClient
                 ToolTip = "Flik för att spela V6/Flerbong utifrån en eller flera hästar",
                 Content = new UCV6BetMultiplier()
                 {
-                    MarkBet = this.MarkBet,
-                    DataContext = this.MarkBet
+                    MarkBet = MarkBet,
+                    DataContext = MarkBet
                 }
             };
         }
@@ -2356,7 +2359,7 @@ namespace HPTClient
         public TabItem tiCorrection { get; set; }
         internal void CreateCorrectionTabItem()
         {
-            this.tiCorrection = new TabItem()
+            tiCorrection = new TabItem()
             {
                 Name = "tiCorrection",
                 Header = new UCTabItemHeader()
@@ -2367,8 +2370,8 @@ namespace HPTClient
                 },
                 Content = new UCCorrectionMarkingBet()
                 {
-                    MarkBet = this.MarkBet,
-                    DataContext = this.MarkBet.CouponCorrector,
+                    MarkBet = MarkBet,
+                    DataContext = MarkBet.CouponCorrector,
                     Name = "ucCorrection"
                 }
             };
@@ -2411,11 +2414,11 @@ namespace HPTClient
             tb.SetBinding(TextBlock.TextProperty, "MarkBet.SystemFilename");
             grid.Children.Add(tb);
 
-            this.wbXmlFile = new WebBrowser();
-            this.wbXmlFile.SetValue(Grid.RowProperty, 1);
-            grid.Children.Add(this.wbXmlFile);
+            wbXmlFile = new WebBrowser();
+            wbXmlFile.SetValue(Grid.RowProperty, 1);
+            grid.Children.Add(wbXmlFile);
 
-            this.tiXmlFile = new TabItem()
+            tiXmlFile = new TabItem()
             {
                 Name = "tiXmlFile",
                 Header = new UCTabItemHeader()
@@ -2431,7 +2434,7 @@ namespace HPTClient
         public TabItem tiTemplateWorkshop { get; set; }
         internal void CreateTemplateWorkshopTabItem()
         {
-            this.tiTemplateWorkshop = new TabItem()
+            tiTemplateWorkshop = new TabItem()
             {
                 Name = "tiTemplateWorkshop",
                 Header = new UCTabItemHeader()
@@ -2442,8 +2445,8 @@ namespace HPTClient
                 },
                 Content = new UCTemplateWorkshop()
                 {
-                    MarkBet = this.MarkBet,
-                    DataContext = this.MarkBet
+                    MarkBet = MarkBet,
+                    DataContext = MarkBet
                 }
             };
         }
@@ -2452,8 +2455,8 @@ namespace HPTClient
         internal WebBrowser wbATG;
         internal void CreateATGTabItem()
         {
-            this.wbATG = new WebBrowser();
-            this.tiATG = new TabItem()
+            wbATG = new WebBrowser();
+            tiATG = new TabItem()
             {
                 Name = "tiATG",
                 Header = new UCTabItemHeader()
@@ -2462,17 +2465,17 @@ namespace HPTClient
                     Text = "ATG",
                     TextColor = new SolidColorBrush(Colors.DarkBlue)
                 },
-                Content = this.wbATG
+                Content = wbATG
             };
-            this.tcMarksGame.Items.Add(this.tiATG);
+            tcMarksGame.Items.Add(tiATG);
         }
 
         public TabItem tiST { get; set; }
         internal WebBrowser wbST;
         internal void CreateSTTabItem()
         {
-            this.wbST = new WebBrowser();
-            this.tiST = new TabItem()
+            wbST = new WebBrowser();
+            tiST = new TabItem()
             {
                 Name = "tiST",
                 Header = new UCTabItemHeader()
@@ -2481,9 +2484,9 @@ namespace HPTClient
                     Text = "Svensk Travsport",
                     TextColor = new SolidColorBrush(Colors.DarkBlue)
                 },
-                Content = this.wbST
+                Content = wbST
             };
-            this.tcMarksGame.Items.Add(this.tiST);
+            tcMarksGame.Items.Add(tiST);
         }
 
         #endregion
@@ -2493,7 +2496,7 @@ namespace HPTClient
         internal void RemoveRowsFromFile()
         {
             var ofdRemoveRowsFromFile = new OpenFileDialog();
-            ofdRemoveRowsFromFile.InitialDirectory = this.MarkBet.SaveDirectory;
+            ofdRemoveRowsFromFile.InitialDirectory = MarkBet.SaveDirectory;
             ofdRemoveRowsFromFile.Filter = "ATG-kupongfiler|*.xml";
             ofdRemoveRowsFromFile.FileOk += ofdRemoveRowsFromFile_FileOk;
             ofdRemoveRowsFromFile.ShowDialog();
@@ -2509,7 +2512,7 @@ namespace HPTClient
             var ofd = (OpenFileDialog)sender;
             try
             {
-                this.MarkBet.RemoveRowsInFileFromSystem(ofd.FileName);
+                MarkBet.RemoveRowsInFileFromSystem(ofd.FileName);
             }
             catch (Exception exc)
             {
@@ -2520,7 +2523,7 @@ namespace HPTClient
         internal void AddRowsFromFile()
         {
             var ofdAddRowsFromFile = new OpenFileDialog();
-            ofdAddRowsFromFile.InitialDirectory = this.MarkBet.SaveDirectory;
+            ofdAddRowsFromFile.InitialDirectory = MarkBet.SaveDirectory;
             ofdAddRowsFromFile.Filter = "ATG-kupongfiler|*.xml";
             ofdAddRowsFromFile.FileOk += ofdAddRowsFromFile_FileOk;
             ofdAddRowsFromFile.ShowDialog();
@@ -2531,7 +2534,7 @@ namespace HPTClient
             try
             {
                 Cursor = Cursors.Wait;
-                string result = this.MarkBet.CalculateJackpotRows();
+                string result = MarkBet.CalculateJackpotRows();
                 MessageBox.Show(result, "Jackpottrisk", MessageBoxButton.OK);
             }
             catch (Exception)
@@ -2546,7 +2549,7 @@ namespace HPTClient
             try
             {
                 Cursor = Cursors.Wait;
-                int result = this.MarkBet.CalculateNumberOfSingleRows();
+                int result = MarkBet.CalculateNumberOfSingleRows();
                 MessageBox.Show(result.ToString(), " ensamma rader", MessageBoxButton.OK);
             }
             catch (Exception)
@@ -2565,7 +2568,7 @@ namespace HPTClient
             var ofd = (OpenFileDialog)sender;
             try
             {
-                this.MarkBet.AddRowsInFileToSystem(ofd.FileName);
+                MarkBet.AddRowsInFileToSystem(ofd.FileName);
             }
             catch (Exception exc)
             {
@@ -2638,7 +2641,7 @@ namespace HPTClient
         internal void CreateColumnOrderList()
         {
             HPTConfig.Config.MarkBetTabsToShow.ColumnsInOrder.Clear();
-            foreach (TabItem tabItem in this.tcMarksGame.Items)
+            foreach (TabItem tabItem in tcMarksGame.Items)
             {
                 if (!string.IsNullOrEmpty(tabItem.Name))
                 {
@@ -2684,24 +2687,24 @@ namespace HPTClient
                 // Länk till atg.se, normalt sett resultat
                 if (url.Contains("atg.se"))
                 {
-                    if (this.wbATG == null)
+                    if (wbATG == null)
                     {
                         CreateATGTabItem();
                     }
-                    this.wbATG.Navigate(hl.NavigateUri);
-                    this.tcMarksGame.SelectedItem = this.tiATG;
+                    wbATG.Navigate(hl.NavigateUri);
+                    tcMarksGame.SelectedItem = tiATG;
                     return;
                 }
 
                 // Länk till utökad hästinformation på 
                 if (url.Contains("travsport.se"))
                 {
-                    if (this.wbST == null)
+                    if (wbST == null)
                     {
                         CreateSTTabItem();
                     }
-                    this.wbST.Navigate(hl.NavigateUri);
-                    this.tcMarksGame.SelectedItem = this.tiST;
+                    wbST.Navigate(hl.NavigateUri);
+                    tcMarksGame.SelectedItem = tiST;
                     return;
                 }
             }
@@ -2715,15 +2718,15 @@ namespace HPTClient
         {
             try
             {
-                this.btnCreateCoupons.IsOpen = false;
+                btnCreateCoupons.IsOpen = false;
                 SaveFiles(true, true, true);
-                Clipboard.SetDataObject(this.MarkBet.SystemFilename);
-                if (this.wbATG == null)
+                Clipboard.SetDataObject(MarkBet.SystemFilename);
+                if (wbATG == null)
                 {
                     CreateATGTabItem();
                 }
-                this.wbATG.Navigate("https://www.atg.se/spel/fil");
-                this.tcMarksGame.SelectedItem = this.tiATG;
+                wbATG.Navigate("https://www.atg.se/spel/fil");
+                tcMarksGame.SelectedItem = tiATG;
             }
             catch (Exception exc)
             {

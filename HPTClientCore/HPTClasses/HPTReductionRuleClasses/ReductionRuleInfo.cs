@@ -13,11 +13,11 @@ namespace HPTClient
         {
             get
             {
-                return this.headlineString;
+                return headlineString;
             }
             set
             {
-                this.headlineString = value;
+                headlineString = value;
                 OnPropertyChanged("HeadlineString");
             }
         }
@@ -28,11 +28,11 @@ namespace HPTClient
         {
             get
             {
-                return this.reductionTypeString;
+                return reductionTypeString;
             }
             set
             {
-                this.reductionTypeString = value;
+                reductionTypeString = value;
                 OnPropertyChanged("ReductionTypeString");
             }
         }
@@ -43,11 +43,11 @@ namespace HPTClient
         {
             get
             {
-                return this.reductionRuleString;
+                return reductionRuleString;
             }
             set
             {
-                this.reductionRuleString = value;
+                reductionRuleString = value;
                 OnPropertyChanged("ReductionRuleString");
             }
         }
@@ -56,7 +56,7 @@ namespace HPTClient
         {
             get
             {
-                return string.IsNullOrEmpty(this.HeadlineString) ? Visibility.Collapsed : Visibility.Visible;
+                return string.IsNullOrEmpty(HeadlineString) ? Visibility.Collapsed : Visibility.Visible;
             }
         }
 
@@ -64,7 +64,7 @@ namespace HPTClient
         {
             get
             {
-                return string.IsNullOrEmpty(this.ReductionTypeString) ? Visibility.Collapsed : Visibility.Visible;
+                return string.IsNullOrEmpty(ReductionTypeString) ? Visibility.Collapsed : Visibility.Visible;
             }
         }
 
@@ -72,24 +72,24 @@ namespace HPTClient
         {
             get
             {
-                return string.IsNullOrEmpty(this.reductionRuleString) ? Visibility.Collapsed : Visibility.Visible;
+                return string.IsNullOrEmpty(reductionRuleString) ? Visibility.Collapsed : Visibility.Visible;
             }
         }
 
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            if (!string.IsNullOrEmpty(this.HeadlineString))
+            if (!string.IsNullOrEmpty(HeadlineString))
             {
-                sb.AppendLine(this.HeadlineString);
+                sb.AppendLine(HeadlineString);
             }
-            if (!string.IsNullOrEmpty(this.ReductionTypeString))
+            if (!string.IsNullOrEmpty(ReductionTypeString))
             {
-                sb.AppendLine(this.ReductionTypeString);
+                sb.AppendLine(ReductionTypeString);
             }
-            if (!string.IsNullOrEmpty(this.ReductionRuleString))
+            if (!string.IsNullOrEmpty(ReductionRuleString))
             {
-                sb.AppendLine(this.ReductionRuleString);
+                sb.AppendLine(ReductionRuleString);
             }
             return sb.ToString();
         }

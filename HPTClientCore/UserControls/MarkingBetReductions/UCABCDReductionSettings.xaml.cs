@@ -33,27 +33,27 @@ namespace HPTClient
         {
             get
             {
-                if (this.abcdefreductionRule == null)
+                if (abcdefreductionRule == null)
                 {
-                    this.abcdefreductionRule = (HPTABCDEFReductionRule)this.DataContext;
+                    abcdefreductionRule = (HPTABCDEFReductionRule)DataContext;
                 }
-                return this.abcdefreductionRule;
+                return abcdefreductionRule;
             }
         }
 
         private void ItemsControl_Checked(object sender, RoutedEventArgs e)
         {
-            if (this.IsLoaded && this.MarkBet != null)
+            if (IsLoaded && MarkBet != null)
             {
-                if (!this.MarkBet.IsDeserializing)
+                if (!MarkBet.IsDeserializing)
                 {
-                    if (this.MarkBet.MultiABCDEFReductionRule.Use && this.ABCDEFreductionRule.Use)
+                    if (MarkBet.MultiABCDEFReductionRule.Use && ABCDEFreductionRule.Use)
                     {
-                        this.MarkBet.RecalculateReduction(RecalculateReason.XReduction);
+                        MarkBet.RecalculateReduction(RecalculateReason.XReduction);
                     }
-                    else if (this.ABCDEFreductionRule == this.MarkBet.ABCDEFReductionRule && this.MarkBet.ABCDEFReductionRule.Use)
+                    else if (ABCDEFreductionRule == MarkBet.ABCDEFReductionRule && MarkBet.ABCDEFReductionRule.Use)
                     {
-                        this.MarkBet.RecalculateReduction(RecalculateReason.XReduction);
+                        MarkBet.RecalculateReduction(RecalculateReason.XReduction);
                     }
                 }
             }
@@ -69,16 +69,16 @@ namespace HPTClient
 
             TextBlock tb = (TextBlock)sender;
             HPTXReductionRule rule = (HPTXReductionRule)tb.DataContext;
-            if (this.pu == null)
+            if (pu == null)
             {
-                this.pu = new System.Windows.Controls.Primitives.Popup()
+                pu = new System.Windows.Controls.Primitives.Popup()
                 {
                     Placement = System.Windows.Controls.Primitives.PlacementMode.Top,
                     PlacementTarget = tb//,
                     //HorizontalOffset = -10D,
                     //VerticalOffset = -10D
                 };
-                this.pu.MouseLeave += new MouseEventHandler(pu_MouseLeave);
+                pu.MouseLeave += new MouseEventHandler(pu_MouseLeave);
             }
 
             // Skapa innehållet för popupen
@@ -96,7 +96,7 @@ namespace HPTClient
             };
 
             // Plocka ut hästarna med rätt Prio
-            var orderedHorseList = this.MarkBet.RaceDayInfo.HorseListSelected
+            var orderedHorseList = MarkBet.RaceDayInfo.HorseListSelected
                 .Where(h => h.Prio == rule.Prio)
                 .OrderBy(h => h.ParentRace.LegNr)
                 .ThenBy(h => h.StartNr);
@@ -134,16 +134,16 @@ namespace HPTClient
             };
 
             // Visa popupen
-            this.pu.DataContext = horseCollection;
-            this.pu.Child = b;
-            this.pu.IsOpen = true;
+            pu.DataContext = horseCollection;
+            pu.Child = b;
+            pu.IsOpen = true;
         }
 
         private void chkUseABCDRule_Checked(object sender, RoutedEventArgs e)
         {
-            if (this.IsLoaded)
+            if (IsLoaded)
             {
-                this.MarkBet.RecalculateReduction(RecalculateReason.XReduction);
+                MarkBet.RecalculateReduction(RecalculateReason.XReduction);
             }
         }
 

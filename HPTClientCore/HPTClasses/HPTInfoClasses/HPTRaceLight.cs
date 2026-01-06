@@ -18,11 +18,11 @@ namespace HPTClient
         {
             get
             {
-                return this.selectedHorse;
+                return selectedHorse;
             }
             set
             {
-                this.selectedHorse = value;
+                selectedHorse = value;
                 OnPropertyChanged("SelectedHorse");
             }
         }

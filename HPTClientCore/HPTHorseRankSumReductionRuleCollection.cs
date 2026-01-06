@@ -16,11 +16,11 @@ namespace HPTClient
         {
             get
             {
-                return this.typeCategory;
+                return typeCategory;
             }
             set
             {
-                this.typeCategory = value;
+                typeCategory = value;
                 OnPropertyChanged("TypeCategory");
             }
         }
@@ -31,11 +31,11 @@ namespace HPTClient
         {
             get
             {
-                return this.name;
+                return name;
             }
             set
             {
-                this.name = value;
+                name = value;
                 OnPropertyChanged("Name");
             }
         }

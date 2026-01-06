@@ -13,11 +13,11 @@ namespace HPTClient
         {
             get
             {
-                return this.name;
+                return name;
             }
             set
             {
-                this.name = value;
+                name = value;
                 OnPropertyChanged("Name");
             }
         }
@@ -28,11 +28,11 @@ namespace HPTClient
         {
             get
             {
-                return this.recipientList;
+                return recipientList;
             }
             set
             {
-                this.recipientList = value;
+                recipientList = value;
                 OnPropertyChanged("RecipientList");
             }
         }
@@ -43,11 +43,11 @@ namespace HPTClient
         {
             get
             {
-                return this.expanded;
+                return expanded;
             }
             set
             {
-                this.expanded = value;
+                expanded = value;
                 OnPropertyChanged("Expanded");
             }
         }

@@ -24,17 +24,17 @@ namespace HPTClient
 
         public ATGCouponHelper(HPTBet bet)
         {
-            this.CouponList = new ObservableCollection<HPTCoupon>();
-            this.CurrentCouponId = 1;
-            this.Bet = bet;
+            CouponList = new ObservableCollection<HPTCoupon>();
+            CurrentCouponId = 1;
+            Bet = bet;
 
             if (bet.GetType() == typeof(HPTMarkBet))
             {
-                this.MarkBet = (HPTMarkBet)bet;
+                MarkBet = (HPTMarkBet)bet;
             }
             else if (bet.GetType() == typeof(HPTCombBet))
             {
-                this.CombBet = (HPTCombBet)bet;
+                CombBet = (HPTCombBet)bet;
             }
             InitiateATGFile();
         }
@@ -44,18 +44,18 @@ namespace HPTClient
         {
             get
             {
-                return this.couponList;
+                return couponList;
             }
             set
             {
-                this.couponList = value;
+                couponList = value;
                 OnPropertyChanged("CouponList");
             }
         }
 
         internal void InitiateATGFile()
         {
-            this.ATGFile = new issuer()
+            ATGFile = new issuer()
             {
                 company = "Kubin Software",
                 createddate = DateTime.Now,
@@ -74,13 +74,13 @@ namespace HPTClient
         {
             issuer clonedATGFile = new issuer()
             {
-                company = this.ATGFile.company,
-                createddate = this.ATGFile.createddate,
-                createddateSpecified = this.ATGFile.createddateSpecified,
-                createdtime = this.ATGFile.createdtime,
-                createdtimeSpecified = this.ATGFile.createdtimeSpecified,   // Borde vara true, men serialiseringen skapar ett felaktigt format
-                product = this.ATGFile.product,
-                version = this.ATGFile.version,
+                company = ATGFile.company,
+                createddate = ATGFile.createddate,
+                createddateSpecified = ATGFile.createddateSpecified,
+                createdtime = ATGFile.createdtime,
+                createdtimeSpecified = ATGFile.createdtimeSpecified,   // Borde vara true, men serialiseringen skapar ett felaktigt format
+                product = ATGFile.product,
+                version = ATGFile.version,
                 betcoupons = new betcouponsType()
             };
             return clonedATGFile;
@@ -93,34 +93,34 @@ namespace HPTClient
             get
             {
                 //return 15;
-                if (this.numberOfMarksInLeg == 0)
+                if (numberOfMarksInLeg == 0)
                 {
-                    if (this.CombBet != null)
+                    if (CombBet != null)
                     {
                         // Franska banor med 20 hästar
-                        if ((this.BetType == "T" || this.BetType == "TV") && this.CombBet.RaceDayInfo.TrackId >= 62 && this.CombBet.RaceDayInfo.TrackId <= 66)
+                        if ((BetType == "T" || BetType == "TV") && CombBet.RaceDayInfo.TrackId >= 62 && CombBet.RaceDayInfo.TrackId <= 66)
                         {
-                            this.numberOfMarksInLeg = 20;
+                            numberOfMarksInLeg = 20;
                         }
                         else
                         {
-                            this.numberOfMarksInLeg = 15;
+                            numberOfMarksInLeg = 15;
                         }
                     }
                     else
                     {
-                        switch (this.MarkBet.RaceDayInfo.BetType.Code)
+                        switch (MarkBet.RaceDayInfo.BetType.Code)
                         {
                             case "V4":
-                                this.numberOfMarksInLeg = 20;
+                                numberOfMarksInLeg = 20;
                                 break;
                             default:
-                                this.numberOfMarksInLeg = 15;
+                                numberOfMarksInLeg = 15;
                                 break;
                         }
                     }
                 }
-                return this.numberOfMarksInLeg;
+                return numberOfMarksInLeg;
             }
         }
 
@@ -128,23 +128,23 @@ namespace HPTClient
         private string partString = string.Empty;       // Sträng för när man delar upp ett system i flera filer
         public string CreateATGFile()
         {
-            if (this.CombBet != null)
+            if (CombBet != null)
             {
-                CreateATGFile(this.CouponList, this.ATGFile);
+                CreateATGFile(CouponList, ATGFile);
                 return string.Empty;
             }
-            if (this.MarkBet != null)
+            if (MarkBet != null)
             {
                 //if (!HPTConfig.Config.IsPayingCustomer && this.MarkBet.TooExpensive)
                 //{
                 //    return string.Empty;
                 //}
-                HandleReserverForCoupons(this.MarkBet.ReservHandling);
+                HandleReserverForCoupons(MarkBet.ReservHandling);
             }
 
-            if (!this.MarkBet.HasTooManySystems)
+            if (!MarkBet.HasTooManySystems)
             {
-                CreateATGFile(this.CouponList, this.ATGFile);
+                CreateATGFile(CouponList, ATGFile);
             }
             else    // Fullständigt jävla enormt många kuponger...eller snarare än ATG tycker man ska få ha
             {
@@ -155,12 +155,12 @@ namespace HPTClient
                 foreach (var couponList in couponListList)
                 {
                     issuer clonedATGFile = CloneATGFile();
-                    this.partString = "_Part" + partNumber.ToString();
+                    partString = "_Part" + partNumber.ToString();
                     CreateATGFile(couponList, clonedATGFile);
                     partNumber++;
                 }
 
-                this.partString = string.Empty;
+                partString = string.Empty;
             }
             return string.Empty;
         }
@@ -172,11 +172,11 @@ namespace HPTClient
             var couponList = new List<HPTCoupon>();
             decimal systemSizeATGSum = 0;
             int couponIdFile = 1;
-            foreach (var coupon in this.CouponList)
+            foreach (var coupon in CouponList)
             {
                 systemSizeATGSum += coupon.SystemSizeATG;
                 coupon.CouponIdFile = couponIdFile++;
-                if (systemSizeATGSum > this.MarkBet.BetType.MaxNumberOfSystemsInFile)
+                if (systemSizeATGSum > MarkBet.BetType.MaxNumberOfSystemsInFile)
                 {
                     couponIdFile = 1;
                     coupon.CouponIdFile = couponIdFile++;
@@ -194,7 +194,7 @@ namespace HPTClient
         public string CreateATGFile(IEnumerable<HPTCoupon> couponList, issuer atgFile)//, int accumulatedNumberOfCoupons)
         {
             #region Skapa ATG-kuponger
-            switch (this.Bet.BetType.Code)
+            switch (Bet.BetType.Code)
             {
                 case "V4":
                     atgFile.betcoupons.v4Coupon = couponList.Select(hc => new v4CouponType()
@@ -360,26 +360,26 @@ namespace HPTClient
             serializer.Serialize(xtw, atgXMLFile);
 
             string dir = string.Empty;
-            if (this.OnlyCreateTempFile)
+            if (OnlyCreateTempFile)
             {
                 dir = Path.GetDirectoryName(HPTConfig.TempPath);
                 if (!Directory.Exists(dir))
                 {
                     Directory.CreateDirectory(dir);
                 }
-                string fileName = dir + "\\" + this.MarkBet.ToFileNameString() + ".xml";
+                string fileName = dir + "\\" + MarkBet.ToFileNameString() + ".xml";
                 serializer = new XmlSerializer(typeof(issuer));
                 xtw = new XmlTextWriter(fileName, Encoding.UTF8);
                 serializer.Serialize(xtw, atgXMLFile);
                 xtw.Flush();
                 xtw.Close();
-                this.TempFileName = fileName;
+                TempFileName = fileName;
                 return;
             }
             else
             {
                 // Skapa katalog för systemfilen om den inte finns
-                dir = Path.GetDirectoryName(this.Bet.SystemFilename);
+                dir = Path.GetDirectoryName(Bet.SystemFilename);
                 if (!Directory.Exists(dir))
                 {
                     Directory.CreateDirectory(dir);
@@ -389,11 +389,11 @@ namespace HPTClient
                 {
                     Directory.CreateDirectory(archiveDir);
                 }
-                if (!string.IsNullOrEmpty(this.CurrentFileName))
+                if (!string.IsNullOrEmpty(CurrentFileName))
                 {
                     try
                     {
-                        File.Move(this.CurrentFileName, archiveDir + Path.GetFileName(this.CurrentFileName));
+                        File.Move(CurrentFileName, archiveDir + Path.GetFileName(CurrentFileName));
                     }
                     catch (Exception exc)
                     {
@@ -406,30 +406,30 @@ namespace HPTClient
 
             // Lägg till CRC-checken
             xtw.BaseStream.Position = 0;
-            string file = Path.GetFileNameWithoutExtension(this.Bet.SystemFilename);
+            string file = Path.GetFileNameWithoutExtension(Bet.SystemFilename);
             Crc16 crc = new Crc16();
             string crcHex = crc.GetCheckSumAsHexString(xtw.BaseStream);
-            this.Bet.SystemFilename = dir + @"\" + file + this.raceNumberString + this.partString + "_" + crcHex + ".xml";
+            Bet.SystemFilename = dir + @"\" + file + raceNumberString + partString + "_" + crcHex + ".xml";
 
             // Spara ner på disk
             xtw.BaseStream.Position = 0;
 
             StreamReader sr = new StreamReader(xtw.BaseStream);
             string xml = sr.ReadToEnd();
-            StreamWriter sw = new StreamWriter(this.Bet.SystemFilename);
+            StreamWriter sw = new StreamWriter(Bet.SystemFilename);
             sw.Write(xml);
             sw.Flush();
             sw.Close();
             xtw.Close();
 
-            if (!string.IsNullOrEmpty(this.raceNumberString) || !string.IsNullOrEmpty(this.partString))
+            if (!string.IsNullOrEmpty(raceNumberString) || !string.IsNullOrEmpty(partString))
             {
-                string partToRemove = this.raceNumberString + this.partString + "_" + crcHex;
-                this.Bet.SystemFilename = this.Bet.SystemFilename.Replace(partToRemove, string.Empty);
+                string partToRemove = raceNumberString + partString + "_" + crcHex;
+                Bet.SystemFilename = Bet.SystemFilename.Replace(partToRemove, string.Empty);
             }
 
             // Spara filnamn så filen kan flyttas när en ny version sparas
-            this.CurrentFileName = this.Bet.SystemFilename;
+            CurrentFileName = Bet.SystemFilename;
 
             #endregion
         }
@@ -465,7 +465,7 @@ namespace HPTClient
             int[] numbers = uniqueCode.ToCharArray()
                 .Select(c => ConvertCharToInt(c)).ToArray();
 
-            string marks = Enumerable.Range(1, this.NumberOfMarksInLeg)
+            string marks = Enumerable.Range(1, NumberOfMarksInLeg)
                 .Select(h => numbers.Contains(h) ? "1" : "0")
                 .Aggregate((selectedStrings, next) => selectedStrings + next);
 
@@ -476,7 +476,7 @@ namespace HPTClient
         {
             int[] numbers = race.HorseListSelected.Select(h => h.StartNr).ToArray();
 
-            string marks = Enumerable.Range(1, this.NumberOfMarksInLeg)
+            string marks = Enumerable.Range(1, NumberOfMarksInLeg)
                 .Select(h => numbers.Contains(h) ? "1" : "0")
                 .Aggregate((selectedStrings, next) => selectedStrings + next);
 
@@ -489,7 +489,7 @@ namespace HPTClient
             {
                 IEnumerable<int> numbers = horseList.Select(h => h.StartNr);
 
-                string marks = Enumerable.Range(1, this.NumberOfMarksInLeg)
+                string marks = Enumerable.Range(1, NumberOfMarksInLeg)
                     .Select(h => numbers.Contains(h) ? "1" : "0")
                     .Aggregate((selectedStrings, next) => selectedStrings + next);
 
@@ -506,7 +506,7 @@ namespace HPTClient
         {
             int[] numbers = new int[] { startNr };
 
-            string marks = Enumerable.Range(1, this.NumberOfMarksInLeg)
+            string marks = Enumerable.Range(1, NumberOfMarksInLeg)
                 .Select(h => numbers.Contains(h) ? "1" : "0")
                 .Aggregate((selectedStrings, next) => selectedStrings + next);
 
@@ -568,7 +568,7 @@ namespace HPTClient
 
         public string CreateCoupons()
         {
-            switch (this.Bet.BetType.Code)
+            switch (Bet.BetType.Code)
             {
                 case "V4":
                 case "V5":
@@ -579,46 +579,46 @@ namespace HPTClient
                 case "GS75":
                 case "V86":
                     // Returnera om systemet är tomt
-                    if (this.MarkBet.ReducedSize == 0)
+                    if (MarkBet.ReducedSize == 0)
                     {
-                        if (this.CouponList != null)
+                        if (CouponList != null)
                         {
-                            this.CouponList.Clear();
-                            this.TotalSystemSize = 0;
+                            CouponList.Clear();
+                            TotalSystemSize = 0;
                         }
                         return string.Empty;
                     }
 
-                    if (this.MarkBet.SingleRowCollection.CalculationInProgress || this.MarkBet.SingleRowCollection.CompressionInProgress)
+                    if (MarkBet.SingleRowCollection.CalculationInProgress || MarkBet.SingleRowCollection.CompressionInProgress)
                     {
                         return string.Empty;
                     }
-                    this.TotalSystemSize = this.MarkBet.ReducedSize;
-                    if (this.MarkBet.ReducedSize == 0)
+                    TotalSystemSize = MarkBet.ReducedSize;
+                    if (MarkBet.ReducedSize == 0)
                     {
                         return string.Empty;
                     }
-                    if (this.MarkBet.ReductionRulesToApply.Count == 0
-                        && !this.MarkBet.SingleRowBetMultiplier
-                        && !this.MarkBet.V6SingleRows
-                        && !this.MarkBet.ReductionV6BetMultiplierRule)
+                    if (MarkBet.ReductionRulesToApply.Count == 0
+                        && !MarkBet.SingleRowBetMultiplier
+                        && !MarkBet.V6SingleRows
+                        && !MarkBet.ReductionV6BetMultiplierRule)
                     {
                         CreateSingleCoupon();
                     }
-                    else if (this.MarkBet.GuaranteeReduction && this.MarkBet.NumberOfToleratedErrors > 0)
+                    else if (MarkBet.GuaranteeReduction && MarkBet.NumberOfToleratedErrors > 0)
                     {
                         CreateSingleRowCoupons();
                     }
-                    else if (this.MarkBet.SingleRowBetMultiplier
-                        || (this.MarkBet.V6SingleRows && this.MarkBet.V6UpperBoundary > 0M)
-                        || (this.MarkBet.ReductionV6BetMultiplierRule && this.MarkBet.V6BetMultiplierRuleList != null && this.MarkBet.V6BetMultiplierRuleList.Count > 0)
-                        || this.MarkBet.BetMultiplierRowAddition
-                        || this.MarkBet.SingleRowCollection.SingleRows.Any(sr => sr.Edited))
+                    else if (MarkBet.SingleRowBetMultiplier
+                        || (MarkBet.V6SingleRows && MarkBet.V6UpperBoundary > 0M)
+                        || (MarkBet.ReductionV6BetMultiplierRule && MarkBet.V6BetMultiplierRuleList != null && MarkBet.V6BetMultiplierRuleList.Count > 0)
+                        || MarkBet.BetMultiplierRowAddition
+                        || MarkBet.SingleRowCollection.SingleRows.Any(sr => sr.Edited))
                     {
                         CreateCompressedCouponsV6BetMultiplier();
                     }
-                    else if (this.MarkBet.CompressCoupons
-                        && !this.MarkBet.SingleRowBetMultiplier)
+                    else if (MarkBet.CompressCoupons
+                        && !MarkBet.SingleRowBetMultiplier)
                     {
                         CreateCompressedCoupons();
                     }
@@ -645,22 +645,22 @@ namespace HPTClient
         public void CreateCompressedCoupons()
         {
             var couponList = new List<HPTCoupon>();
-            this.MarkBet.CreateBetMultiplierList();
+            MarkBet.CreateBetMultiplierList();
 
-            foreach (var multiplier in this.MarkBet.BetMultiplierList)
+            foreach (var multiplier in MarkBet.BetMultiplierList)
             {
-                couponList.AddRange(this.MarkBet.SingleRowCollection.CompressedCoupons
+                couponList.AddRange(MarkBet.SingleRowCollection.CompressedCoupons
                     .OrderBy(sr => sr.CouponNumber)
                     .Select(rc => new HPTCoupon()
                     {
                         BetMultiplier = multiplier,
-                        BetType = this.MarkBet.BetType.Code,
+                        BetType = MarkBet.BetType.Code,
                         CouponId = rc.CouponNumber,
-                        TrackCode = this.MarkBet.RaceDayInfo.TrackId.ToString(),
+                        TrackCode = MarkBet.RaceDayInfo.TrackId.ToString(),
                         V6 = rc.V6,
                         SystemSize = rc.Size,
-                        Date = this.MarkBet.RaceDayInfo.RaceDayDate,
-                        CouponRaceList = new System.Collections.ObjectModel.ObservableCollection<HPTCouponRace>(
+                        Date = MarkBet.RaceDayInfo.RaceDayDate,
+                        CouponRaceList = new ObservableCollection<HPTCouponRace>(
                             Enumerable.Range(1, rc.NumberOfRaces)
                             .Select(i => new HPTCouponRace()
                             {
@@ -677,25 +677,25 @@ namespace HPTClient
                 coupon.CouponId = couponNumber++;
             }
 
-            this.CouponList = new ObservableCollection<HPTCoupon>(couponList);
+            CouponList = new ObservableCollection<HPTCoupon>(couponList);
         }
 
         public void CreateCompressedCouponsV6BetMultiplier()
         {
             var couponList = new List<HPTCoupon>();
 
-            couponList.AddRange(this.MarkBet.SingleRowCollection.CompressedCoupons
+            couponList.AddRange(MarkBet.SingleRowCollection.CompressedCoupons
                     .OrderBy(sr => sr.CouponNumber)
                     .Select(rc => new HPTCoupon()
                     {
                         BetMultiplier = rc.BetMultiplier,
-                        BetType = this.MarkBet.BetType.Code,
+                        BetType = MarkBet.BetType.Code,
                         CouponId = rc.CouponNumber,
-                        TrackCode = this.MarkBet.RaceDayInfo.TrackId.ToString(),
+                        TrackCode = MarkBet.RaceDayInfo.TrackId.ToString(),
                         V6 = rc.V6,
                         SystemSize = rc.Size,
-                        Date = this.MarkBet.RaceDayInfo.RaceDayDate,
-                        CouponRaceList = new System.Collections.ObjectModel.ObservableCollection<HPTCouponRace>(
+                        Date = MarkBet.RaceDayInfo.RaceDayDate,
+                        CouponRaceList = new ObservableCollection<HPTCouponRace>(
                             //Enumerable.Range(1, rc.UniqueCodes.Count)
                             Enumerable.Range(1, rc.NumberOfRaces)
                             .Select(i => new HPTCouponRace()
@@ -706,7 +706,7 @@ namespace HPTClient
                     })
                 .ToList());
 
-            this.CouponList = new ObservableCollection<HPTCoupon>(couponList);
+            CouponList = new ObservableCollection<HPTCoupon>(couponList);
         }
 
         public void CreateSingleRowCoupons()
@@ -714,20 +714,20 @@ namespace HPTClient
             var couponList = new List<HPTCoupon>();
             int couponNumber = 1;
 
-            foreach (var singleRow in this.MarkBet.SingleRowCollection.SingleRows)
+            foreach (var singleRow in MarkBet.SingleRowCollection.SingleRows)
             {
                 foreach (var betMultiplier in singleRow.BetMultiplierList)
                 {
                     var coupon = new HPTCoupon()
                     {
                         BetMultiplier = betMultiplier,
-                        BetType = this.MarkBet.BetType.Code,
+                        BetType = MarkBet.BetType.Code,
                         CouponId = couponNumber++,
-                        TrackCode = this.MarkBet.RaceDayInfo.TrackId.ToString(),
+                        TrackCode = MarkBet.RaceDayInfo.TrackId.ToString(),
                         V6 = singleRow.V6,
-                        Date = this.MarkBet.RaceDayInfo.RaceDayDate,
+                        Date = MarkBet.RaceDayInfo.RaceDayDate,
                         SystemSize = 1,
-                        CouponRaceList = new System.Collections.ObjectModel.ObservableCollection<HPTCouponRace>(
+                        CouponRaceList = new ObservableCollection<HPTCouponRace>(
                             Enumerable.Range(0, singleRow.HorseList.Count())
                             .Select(i => new HPTCouponRace()
                             {
@@ -739,44 +739,44 @@ namespace HPTClient
                 }
             }
 
-            this.CouponList = new ObservableCollection<HPTCoupon>(couponList);
+            CouponList = new ObservableCollection<HPTCoupon>(couponList);
         }
 
         public void CreateSingleCoupon()
         {
             var couponList = new List<HPTCoupon>();
 
-            this.MarkBet.CreateBetMultiplierList();
+            MarkBet.CreateBetMultiplierList();
             int couponNumber = 1;
-            foreach (var multiplier in this.MarkBet.BetMultiplierList)
+            foreach (var multiplier in MarkBet.BetMultiplierList)
             {
                 var coupon = new HPTCoupon()
                 {
                     BetMultiplier = multiplier,
-                    BetType = this.MarkBet.BetType.Code,
+                    BetType = MarkBet.BetType.Code,
                     CouponId = couponNumber++,
-                    TrackCode = this.MarkBet.RaceDayInfo.TrackId.ToString(),
-                    V6 = this.MarkBet.V6,
-                    Date = this.MarkBet.RaceDayInfo.RaceDayDate,
-                    SystemSize = this.MarkBet.SystemSize,
-                    CouponRaceList = new System.Collections.ObjectModel.ObservableCollection<HPTCouponRace>(
-                        Enumerable.Range(1, this.MarkBet.RaceDayInfo.RaceList.Count)
+                    TrackCode = MarkBet.RaceDayInfo.TrackId.ToString(),
+                    V6 = MarkBet.V6,
+                    Date = MarkBet.RaceDayInfo.RaceDayDate,
+                    SystemSize = MarkBet.SystemSize,
+                    CouponRaceList = new ObservableCollection<HPTCouponRace>(
+                        Enumerable.Range(1, MarkBet.RaceDayInfo.RaceList.Count)
                         .Select(i => new HPTCouponRace()
                         {
                             LegNr = i,
-                            HorseList = this.MarkBet.RaceDayInfo.RaceList.First(r => r.LegNr == i).HorseListSelected
+                            HorseList = MarkBet.RaceDayInfo.RaceList.First(r => r.LegNr == i).HorseListSelected
                         }))
                 };
                 couponList.Add(coupon);
             }
 
-            this.CouponList = new ObservableCollection<HPTCoupon>(couponList);
-            this.TotalSystemSize = this.MarkBet.ReducedSize;
+            CouponList = new ObservableCollection<HPTCoupon>(couponList);
+            TotalSystemSize = MarkBet.ReducedSize;
         }
 
         public void CreateDoubleCoupons()
         {
-            IEnumerable<HPTCoupon> couponList = this.CombBet.RaceDayInfo.CombinationListInfoDouble.CombinationList
+            IEnumerable<HPTCoupon> couponList = CombBet.RaceDayInfo.CombinationListInfoDouble.CombinationList
                 .Where(c => c.Selected)
                 .Select(c => new HPTCoupon()
                 {
@@ -792,7 +792,7 @@ namespace HPTClient
                 }).ToList();
 
 
-            this.CouponList = new ObservableCollection<HPTCoupon>(couponList);
+            CouponList = new ObservableCollection<HPTCoupon>(couponList);
             SetCouponID();
         }
 
@@ -816,14 +816,14 @@ namespace HPTClient
                 }).ToList();
 
             SetCouponID(couponList);
-            this.raceNumberString = "_Lopp" + combinationListInfo.CombinationList.First().Horse1.ParentRace.LegNr.ToString();
-            CreateATGFile(couponList, this.ATGFile);
-            this.raceNumberString = string.Empty;
+            raceNumberString = "_Lopp" + combinationListInfo.CombinationList.First().Horse1.ParentRace.LegNr.ToString();
+            CreateATGFile(couponList, ATGFile);
+            raceNumberString = string.Empty;
         }
 
         public void CreateTvillingCoupons()
         {
-            IEnumerable<HPTCoupon> couponList = this.CombBet.RaceDayInfo.RaceList
+            IEnumerable<HPTCoupon> couponList = CombBet.RaceDayInfo.RaceList
                 .SelectMany(r => r.CombinationListInfoTvilling.CombinationList)
                 .Where(c => c.Selected)
                 .Select(c => new HPTCoupon()
@@ -841,9 +841,9 @@ namespace HPTClient
                     }
                 }).ToList();
 
-            this.CouponList = new ObservableCollection<HPTCoupon>(couponList);
+            CouponList = new ObservableCollection<HPTCoupon>(couponList);
             SetCouponID();
-            CreateATGFile(this.CouponList, this.ATGFile);
+            CreateATGFile(CouponList, ATGFile);
         }
 
         public void CreateTvillingCoupons(HPTRace race)
@@ -866,14 +866,14 @@ namespace HPTClient
                 }).ToList();
 
             SetCouponID();
-            this.raceNumberString = "_Lopp" + race.LegNr.ToString();
-            CreateATGFile(couponList, this.ATGFile);
-            this.raceNumberString = string.Empty;
+            raceNumberString = "_Lopp" + race.LegNr.ToString();
+            CreateATGFile(couponList, ATGFile);
+            raceNumberString = string.Empty;
         }
 
         public void CreateTrioCoupons()
         {
-            IEnumerable<HPTCoupon> couponList = this.CombBet.RaceDayInfo.RaceList
+            IEnumerable<HPTCoupon> couponList = CombBet.RaceDayInfo.RaceList
                 .SelectMany(r => r.CombinationListInfoTrio.CombinationList)
                 .Where(c => c.Selected)
                 .Select(c => new HPTCoupon()
@@ -890,9 +890,9 @@ namespace HPTClient
                         }
                     }
                 }).ToList();
-            this.CouponList = new ObservableCollection<HPTCoupon>(couponList);
+            CouponList = new ObservableCollection<HPTCoupon>(couponList);
             SetCouponID();
-            CreateATGFile(this.CouponList, this.ATGFile);
+            CreateATGFile(CouponList, ATGFile);
         }
 
         public void CreateTrioCoupons(HPTRace race)
@@ -915,14 +915,14 @@ namespace HPTClient
                 }).ToList();
 
             SetCouponID(couponList);
-            this.raceNumberString = "_Lopp_" + race.LegNr.ToString();
-            CreateATGFile(couponList, this.ATGFile);
-            this.raceNumberString = string.Empty;
+            raceNumberString = "_Lopp_" + race.LegNr.ToString();
+            CreateATGFile(couponList, ATGFile);
+            raceNumberString = string.Empty;
         }
 
         private void SetCouponID()
         {
-            SetCouponID(this.CouponList);
+            SetCouponID(CouponList);
         }
 
         private void SetCouponID(IEnumerable<HPTCoupon> couponList)
@@ -943,11 +943,11 @@ namespace HPTClient
         {
             get
             {
-                return this.totalSystemSize;
+                return totalSystemSize;
             }
             set
             {
-                this.totalSystemSize = value;
+                totalSystemSize = value;
                 OnPropertyChanged("TotalSystemSize");
             }
         }
@@ -957,11 +957,11 @@ namespace HPTClient
         {
             get
             {
-                return this.totalNumberOfAllCorrect;
+                return totalNumberOfAllCorrect;
             }
             set
             {
-                this.totalNumberOfAllCorrect = value;
+                totalNumberOfAllCorrect = value;
                 OnPropertyChanged("TotalNumberOfAllCorrect");
             }
         }
@@ -973,11 +973,11 @@ namespace HPTClient
         {
             get
             {
-                return this.totalNumberOfOneError;
+                return totalNumberOfOneError;
             }
             set
             {
-                this.totalNumberOfOneError = value;
+                totalNumberOfOneError = value;
                 OnPropertyChanged("TotalNumberOfOneError");
             }
         }
@@ -989,11 +989,11 @@ namespace HPTClient
         {
             get
             {
-                return this.totalNumberOfTwoErrors;
+                return totalNumberOfTwoErrors;
             }
             set
             {
-                this.totalNumberOfTwoErrors = value;
+                totalNumberOfTwoErrors = value;
                 OnPropertyChanged("TotalNumberOfTwoErrors ");
             }
         }
@@ -1005,11 +1005,11 @@ namespace HPTClient
         {
             get
             {
-                return this.totalNumberOfThreeErrors;
+                return totalNumberOfThreeErrors;
             }
             set
             {
-                this.totalNumberOfThreeErrors = value;
+                totalNumberOfThreeErrors = value;
                 OnPropertyChanged("TotalNumberOfThreeErrors ");
             }
         }
@@ -1019,11 +1019,11 @@ namespace HPTClient
         {
             get
             {
-                return this.totalWinnings;
+                return totalWinnings;
             }
             set
             {
-                this.totalWinnings = value;
+                totalWinnings = value;
                 OnPropertyChanged("TotalWinnings");
             }
         }
@@ -1034,12 +1034,12 @@ namespace HPTClient
 
         public void CreateHorseListsForCoupons()
         {
-            foreach (var coupon in this.CouponList)
+            foreach (var coupon in CouponList)
             {
                 foreach (var couponRace in coupon.CouponRaceList)
                 {
                     couponRace.HorseList = new List<HPTHorse>();
-                    var race = this.MarkBet.RaceDayInfo.RaceList.FirstOrDefault(r => r.LegNr == couponRace.LegNr);
+                    var race = MarkBet.RaceDayInfo.RaceList.FirstOrDefault(r => r.LegNr == couponRace.LegNr);
                     if (race != null)
                     {
                         foreach (var startNr in couponRace.StartNrList)
@@ -1057,11 +1057,11 @@ namespace HPTClient
 
         public void CreateStartnumberListsForCoupons()
         {
-            foreach (var coupon in this.CouponList)
+            foreach (var coupon in CouponList)
             {
                 foreach (var couponRace in coupon.CouponRaceList)
                 {
-                    var race = this.MarkBet.RaceDayInfo.RaceList.FirstOrDefault(r => r.LegNr == couponRace.LegNr);
+                    var race = MarkBet.RaceDayInfo.RaceList.FirstOrDefault(r => r.LegNr == couponRace.LegNr);
                     if (race != null)
                     {
                         couponRace.StartNrList = couponRace.HorseList.Select(h => h.StartNr).ToList();
@@ -1072,7 +1072,7 @@ namespace HPTClient
 
         internal List<HPTMarkBetSingleRow> CreateSingleRowsFromCoupons()
         {
-            var singleRowList = this.CouponList
+            var singleRowList = CouponList
                 .SelectMany(c => c.CreateSingleRows())
                 .ToList();
 
@@ -1085,7 +1085,7 @@ namespace HPTClient
 
         public void HandleReserverForCoupons(ReservHandling rh)
         {
-            if (this.CouponList == null || this.CouponList.Count == 0)
+            if (CouponList == null || CouponList.Count == 0)
             {
                 return;
             }
@@ -1210,14 +1210,14 @@ namespace HPTClient
 
         internal void HandleReservNone()
         {
-            foreach (HPTRace race in this.MarkBet.RaceDayInfo.RaceList)
+            foreach (HPTRace race in MarkBet.RaceDayInfo.RaceList)
             {
                 int[] scratchedHorses = race.HorseList
                     .Where(h => h.Scratched == true)
                     .Select(h => h.StartNr)
                     .ToArray();
 
-                foreach (HPTCoupon coupon in this.CouponList)
+                foreach (HPTCoupon coupon in CouponList)
                 {
                     HPTCouponRace couponRace = coupon.CouponRaceList.First(cr => cr.LegNr == race.LegNr);
                     IEnumerable<int> couponStartNrList = couponRace.HorseList.Select(h => h.StartNr);
@@ -1254,11 +1254,11 @@ namespace HPTClient
 
         internal void HandleReservOwn()
         {
-            foreach (HPTRace race in this.MarkBet.RaceDayInfo.RaceList)
+            foreach (HPTRace race in MarkBet.RaceDayInfo.RaceList)
             {
                 int[] reservsToChooseFrom = race.ReservOrderList.Except(race.HorseListSelected.Select(h => h.StartNr)).ToArray();
                 ExchangeReservArrayWithOwnChoices(reservsToChooseFrom, race);
-                foreach (HPTCoupon coupon in this.CouponList)
+                foreach (HPTCoupon coupon in CouponList)
                 {
                     HPTCouponRace couponRace = coupon.CouponRaceList.First(cr => cr.LegNr == race.LegNr);
                     if (race.Reserv1Nr != 0)
@@ -1284,7 +1284,7 @@ namespace HPTClient
 
         internal void HandleReservNotSelectedRank(string rankVariableName)
         {
-            foreach (HPTRace race in this.MarkBet.RaceDayInfo.RaceList)
+            foreach (HPTRace race in MarkBet.RaceDayInfo.RaceList)
             {
                 var reservsToChooseFrom = race.HorseList
                     .Where(h => !h.Selected && h.Scratched != true)
@@ -1300,7 +1300,7 @@ namespace HPTClient
                     reservsToChooseFrom = ExchangeReservArrayWithReservOrder(reservsToChooseFrom, selectedStartNumbers, race);
                 }
 
-                foreach (HPTCoupon coupon in this.CouponList)
+                foreach (HPTCoupon coupon in CouponList)
                 {
                     HPTCouponRace couponRace = coupon.CouponRaceList.First(cr => cr.LegNr == race.LegNr);
                     if (reservsToChooseFrom[0] == 0 || reservsToChooseFrom[1] == 0)
@@ -1320,9 +1320,9 @@ namespace HPTClient
 
         internal void HandleReservSelectedRank(string rankVariableName)
         {
-            foreach (HPTRace race in this.MarkBet.RaceDayInfo.RaceList)
+            foreach (HPTRace race in MarkBet.RaceDayInfo.RaceList)
             {
-                IEnumerable<string> uniqueCodeList = this.CouponList
+                IEnumerable<string> uniqueCodeList = CouponList
                     .SelectMany(hc => hc.CouponRaceList)
                     .Where(hcr => hcr.LegNr == race.LegNr)
                     .Select(hcr => hcr.UniqueCode)
@@ -1330,7 +1330,7 @@ namespace HPTClient
 
                 foreach (string uniqueCode in uniqueCodeList)
                 {
-                    IEnumerable<HPTCouponRace> couponRaceList = this.CouponList
+                    IEnumerable<HPTCouponRace> couponRaceList = CouponList
                     .SelectMany(hc => hc.CouponRaceList)
                     .Where(hcr => hcr.LegNr == race.LegNr && hcr.UniqueCode == uniqueCode);
 
@@ -1374,7 +1374,7 @@ namespace HPTClient
 
         internal void HandleReservDefault()
         {
-            foreach (HPTRace race in this.MarkBet.RaceDayInfo.RaceList)
+            foreach (HPTRace race in MarkBet.RaceDayInfo.RaceList)
             {
                 var orderedHorses = race.HorseList
                     .Where(h => h.Scratched != true)
@@ -1389,7 +1389,7 @@ namespace HPTClient
                     .Select(h => h.StartNr)
                     .ToArray();
 
-                foreach (var coupon in this.CouponList)
+                foreach (var coupon in CouponList)
                 {
                     var couponRace = coupon.CouponRaceList.First(cr => cr.LegNr == race.LegNr);
                     var reservsToChooseFromOnCoupon = reservsToChooseFrom
@@ -1418,7 +1418,7 @@ namespace HPTClient
 
         internal void HandleReservNotSelectedRankMean()
         {
-            foreach (HPTRace race in this.MarkBet.RaceDayInfo.RaceList)
+            foreach (HPTRace race in MarkBet.RaceDayInfo.RaceList)
             {
                 var reservsToChooseFrom = race.HorseList
                     .Where(h => !h.Selected && h.Scratched != true)
@@ -1433,7 +1433,7 @@ namespace HPTClient
                     reservsToChooseFrom = ExchangeReservArrayWithReservOrder(reservsToChooseFrom, selectedStartNumbers, race);
                 }
 
-                foreach (HPTCoupon coupon in this.CouponList)
+                foreach (HPTCoupon coupon in CouponList)
                 {
                     HPTCouponRace couponRace = coupon.CouponRaceList.First(cr => cr.LegNr == race.LegNr);
                     couponRace.Reserv1 = reservsToChooseFrom[0];
@@ -1444,9 +1444,9 @@ namespace HPTClient
 
         internal void HandleReservSelectedRankMean()
         {
-            foreach (HPTRace race in this.MarkBet.RaceDayInfo.RaceList)
+            foreach (HPTRace race in MarkBet.RaceDayInfo.RaceList)
             {
-                IEnumerable<string> uniqueCodeList = this.CouponList
+                IEnumerable<string> uniqueCodeList = CouponList
                     .SelectMany(hc => hc.CouponRaceList)
                     .Where(hcr => hcr.LegNr == race.LegNr)
                     .Select(hcr => hcr.UniqueCode)
@@ -1454,7 +1454,7 @@ namespace HPTClient
 
                 foreach (string uniqueCode in uniqueCodeList)
                 {
-                    IEnumerable<HPTCouponRace> couponRaceList = this.CouponList
+                    IEnumerable<HPTCouponRace> couponRaceList = CouponList
                     .SelectMany(hc => hc.CouponRaceList)
                     .Where(hcr => hcr.LegNr == race.LegNr && hcr.UniqueCode == uniqueCode);
 
@@ -1489,9 +1489,9 @@ namespace HPTClient
 
         internal void HandleReservNotSelectedRankNext()
         {
-            foreach (HPTRace race in this.MarkBet.RaceDayInfo.RaceList)
+            foreach (HPTRace race in MarkBet.RaceDayInfo.RaceList)
             {
-                IEnumerable<string> uniqueCodeList = this.CouponList
+                IEnumerable<string> uniqueCodeList = CouponList
                     .SelectMany(hc => hc.CouponRaceList)
                     .Where(hcr => hcr.LegNr == race.LegNr)
                     .Select(hcr => hcr.UniqueCode)
@@ -1499,7 +1499,7 @@ namespace HPTClient
 
                 foreach (string uniqueCode in uniqueCodeList)
                 {
-                    IEnumerable<HPTCouponRace> couponRaceList = this.CouponList
+                    IEnumerable<HPTCouponRace> couponRaceList = CouponList
                     .SelectMany(hc => hc.CouponRaceList)
                     .Where(hcr => hcr.LegNr == race.LegNr && hcr.UniqueCode == uniqueCode);
 
@@ -1547,9 +1547,9 @@ namespace HPTClient
 
         internal void HandleReservSelectedNextRank()
         {
-            foreach (HPTRace race in this.MarkBet.RaceDayInfo.RaceList)
+            foreach (HPTRace race in MarkBet.RaceDayInfo.RaceList)
             {
-                IEnumerable<string> uniqueCodeList = this.CouponList
+                IEnumerable<string> uniqueCodeList = CouponList
                     .SelectMany(hc => hc.CouponRaceList)
                     .Where(hcr => hcr.LegNr == race.LegNr)
                     .Select(hcr => hcr.UniqueCode)
@@ -1557,7 +1557,7 @@ namespace HPTClient
 
                 foreach (string uniqueCode in uniqueCodeList)
                 {
-                    IEnumerable<HPTCouponRace> couponRaceList = this.CouponList
+                    IEnumerable<HPTCouponRace> couponRaceList = CouponList
                     .SelectMany(hc => hc.CouponRaceList)
                     .Where(hcr => hcr.LegNr == race.LegNr && hcr.UniqueCode == uniqueCode);
 

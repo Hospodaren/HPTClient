@@ -11,11 +11,11 @@ namespace HPTClient
         {
             get
             {
-                return this.numberOfRules;
+                return numberOfRules;
             }
             set
             {
-                this.numberOfRules = value;
+                numberOfRules = value;
                 OnPropertyChanged("NumberOfRules");
             }
         }
@@ -26,15 +26,15 @@ namespace HPTClient
         {
             get
             {
-                return this.selected;
+                return selected;
             }
             set
             {
-                if (this.selected == value)
+                if (selected == value)
                 {
                     return;
                 }
-                this.selected = value;
+                selected = value;
                 OnPropertyChanged("Selected");
             }
         }
@@ -45,19 +45,19 @@ namespace HPTClient
         {
             get
             {
-                return this.selectable;
+                return selectable;
             }
             set
             {
-                if (!value && this.Selected)
+                if (!value && Selected)
                 {
-                    this.Selected = false;
+                    Selected = false;
                 }
-                if (this.selectable == value)
+                if (selectable == value)
                 {
                     return;
                 }
-                this.selectable = value;
+                selectable = value;
                 OnPropertyChanged("Selectable");
             }
         }

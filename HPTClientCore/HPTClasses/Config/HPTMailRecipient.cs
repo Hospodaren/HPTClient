@@ -12,11 +12,11 @@ namespace HPTClient
         {
             get
             {
-                return this.name;
+                return name;
             }
             set
             {
-                this.name = value;
+                name = value;
                 OnPropertyChanged("Name");
             }
         }
@@ -27,11 +27,11 @@ namespace HPTClient
         {
             get
             {
-                return this.eMailAddress;
+                return eMailAddress;
             }
             set
             {
-                this.eMailAddress = value;
+                eMailAddress = value;
                 OnPropertyChanged("EMailAddress");
             }
         }
@@ -42,18 +42,18 @@ namespace HPTClient
         {
             get
             {
-                return this.selected;
+                return selected;
             }
             set
             {
-                this.selected = value;
+                selected = value;
                 OnPropertyChanged("Selected");
             }
         }
 
         public override string ToString()
         {
-            return this.Name + " (" + this.EMailAddress + ")";
+            return Name + " (" + EMailAddress + ")";
         }
     }
 }

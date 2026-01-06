@@ -32,15 +32,15 @@ namespace HPTClient
         {
             get
             {
-                if (this.betTypeATGLogo == null)
+                if (betTypeATGLogo == null)
                 {
-                    this.betTypeATGLogo = new Image()
+                    betTypeATGLogo = new Image()
                     {
                         Height = 20,
-                        Source = new BitmapImage(new Uri("/ATGImages/" + this.BetTypeCode + "Small.png", UriKind.Relative))
+                        Source = new BitmapImage(new Uri("/ATGImages/" + BetTypeCode + "Small.png", UriKind.Relative))
                     };
                 }
-                return this.betTypeATGLogo;
+                return betTypeATGLogo;
             }
         }
 
@@ -50,11 +50,11 @@ namespace HPTClient
         {
             get
             {
-                if (this.betTypeATGSource == null)
+                if (betTypeATGSource == null)
                 {
-                    this.betTypeATGSource = new BitmapImage(new Uri("/ATGImages/" + this.BetTypeCode + "Small.png", UriKind.Relative));
+                    betTypeATGSource = new BitmapImage(new Uri("/ATGImages/" + BetTypeCode + "Small.png", UriKind.Relative));
                 }
-                return this.betTypeATGSource;
+                return betTypeATGSource;
             }
         }
 
@@ -63,14 +63,14 @@ namespace HPTClient
             StringBuilder sb = new StringBuilder();
             //sb.Append(this.BetTypeCode);
             //sb.Append(" ");
-            sb.Append(this.TrackName);
+            sb.Append(TrackName);
             sb.Append(" (");
-            sb.Append(this.RaceDayDate.ToString("d MMM"));
+            sb.Append(RaceDayDate.ToString("d MMM"));
             sb.Append(")");
-            if (this.NumberOfUploadedSystems > 0)
+            if (NumberOfUploadedSystems > 0)
             {
                 sb.Append(" (");
-                sb.Append(this.NumberOfUploadedSystems);
+                sb.Append(NumberOfUploadedSystems);
                 sb.Append(" system)");
             }
             return sb.ToString();

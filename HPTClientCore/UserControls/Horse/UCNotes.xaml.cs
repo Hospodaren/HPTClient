@@ -15,7 +15,7 @@ namespace HPTClient
 
         internal HPTHorse Horse
         {
-            get { return (HPTHorse)this.DataContext; }
+            get { return (HPTHorse)DataContext; }
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -24,7 +24,7 @@ namespace HPTClient
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            this.Horse.OwnInformation.Comment = this.txtNotes.Text;
+            Horse.OwnInformation.Comment = txtNotes.Text;
         }
     }
 }

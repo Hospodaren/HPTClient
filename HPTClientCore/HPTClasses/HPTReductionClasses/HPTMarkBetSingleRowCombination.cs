@@ -12,21 +12,21 @@ namespace HPTClient
 
         public HPTMarkBetSingleRowCombination(HPTMarkBetSingleRow startRow)
         {
-            this.NumberOfRaces = startRow.UniqueCode.Length;
+            NumberOfRaces = startRow.UniqueCode.Length;
 
             //this.UniqueCodes = Enumerable.Range(0, startRow.UniqueCode.Length)
             //    .Select(i => startRow.UniqueCode.Substring(i, 1))
             //    .ToList();
 
             // Skapa listan med unika radkoder
-            this.Size = 1;
-            this.RowList = new List<string>()
+            Size = 1;
+            RowList = new List<string>()
                 {
                     startRow.UniqueCode
                 };
 
             // Skapa uppslagslista med loppnummer och hästar
-            this.horseDictionary = startRow.HorseList
+            horseDictionary = startRow.HorseList
                 .Select(h => new List<HPTHorse>() { h })
                 .ToDictionary(hl => hl.First().ParentRace.LegNr);
         }
@@ -42,15 +42,15 @@ namespace HPTClient
         List<string> newRowsToFind = new List<string>();
         public void AddHorseNew(HPTHorse horse)
         {
-            this.addedHorse = horse;
-            this.newRowsToFind.Clear();
+            addedHorse = horse;
+            newRowsToFind.Clear();
             int position = horse.ParentRace.LegNr - 1;
-            this.RowList.ForEach(r =>
+            RowList.ForEach(r =>
                 {
                     string newRow = r.Remove(position, 1).Insert(position, horse.HexCode);
-                    if (!this.newRowsToFind.Contains(newRow))
+                    if (!newRowsToFind.Contains(newRow))
                     {
-                        this.newRowsToFind.Add(newRow);
+                        newRowsToFind.Add(newRow);
                     }
                 });
         }
@@ -106,7 +106,7 @@ namespace HPTClient
 
         public bool CheckAddedRow(Dictionary<string, HPTMarkBetSingleRow> rowsToCompress, int currentCouponNumber)
         {
-            foreach (var newRow in this.newRowsToFind)
+            foreach (var newRow in newRowsToFind)
             {
                 if (!rowsToCompress.ContainsKey(newRow))
                 {
@@ -114,21 +114,21 @@ namespace HPTClient
                 }
             }
 
-            this.horseDictionary[this.addedHorse.ParentRace.LegNr].Add(this.addedHorse);
-            foreach (var newRow in this.newRowsToFind)
+            horseDictionary[addedHorse.ParentRace.LegNr].Add(addedHorse);
+            foreach (var newRow in newRowsToFind)
             {
-                this.RowList.Add(newRow);
+                RowList.Add(newRow);
                 var addedRow = rowsToCompress[newRow];
                 addedRow.CouponNumber = currentCouponNumber;
                 rowsToCompress.Remove(newRow);
             }
-            this.Size = this.RowList.Count;
+            Size = RowList.Count;
             return true;
         }
 
         internal List<HPTHorse> GetCouponHorseList(int legNr)
         {
-            return this.horseDictionary[legNr];
+            return horseDictionary[legNr];
         }
 
         #endregion
@@ -152,10 +152,10 @@ namespace HPTClient
             StringBuilder sb = new StringBuilder();
 
             sb.Append("Kupong ");
-            sb.Append(this.CouponNumber);
+            sb.Append(CouponNumber);
             sb.AppendLine();
 
-            foreach (var leg in this.horseDictionary.OrderBy(kv => kv.Key))
+            foreach (var leg in horseDictionary.OrderBy(kv => kv.Key))
             {
                 sb.Append("Avd ");
                 sb.Append(leg.Key);

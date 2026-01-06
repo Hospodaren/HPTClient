@@ -8,17 +8,17 @@
 
         public ABCDTemplateSettings(HPTPrio prio)
         {
-            this.Prio = prio;
+            Prio = prio;
         }
 
         public ABCDTemplateSettings Clone()
         {
             ABCDTemplateSettings abcdTemplateSettings = new ABCDTemplateSettings();
 
-            abcdTemplateSettings.MaxNumberOfSelectedPerRace = this.MaxNumberOfSelectedPerRace;
-            abcdTemplateSettings.MinNumberOfSelectedPerRace = this.MinNumberOfSelectedPerRace;
-            abcdTemplateSettings.Prio = this.Prio;
-            abcdTemplateSettings.Selected = this.Selected;
+            abcdTemplateSettings.MaxNumberOfSelectedPerRace = MaxNumberOfSelectedPerRace;
+            abcdTemplateSettings.MinNumberOfSelectedPerRace = MinNumberOfSelectedPerRace;
+            abcdTemplateSettings.Prio = Prio;
+            abcdTemplateSettings.Selected = Selected;
 
             return abcdTemplateSettings;
         }

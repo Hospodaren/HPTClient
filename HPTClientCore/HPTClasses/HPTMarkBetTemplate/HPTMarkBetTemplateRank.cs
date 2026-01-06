@@ -6,15 +6,15 @@
         {
             var template = new HPTMarkBetTemplateRank()
             {
-                DesiredSystemSize = this.DesiredSystemSize,
-                Name = this.Name,
-                NumberOfSpikes = this.NumberOfSpikes,
-                RankTemplate = this.RankTemplate,
-                RankTemplateName = this.RankTemplateName,
-                TypeCategory = this.TypeCategory,
-                LowerPercentageLimit = this.LowerPercentageLimit,
-                UpperPercentageLimit = this.UpperPercentageLimit,
-                ReductionPercentage = this.ReductionPercentage
+                DesiredSystemSize = DesiredSystemSize,
+                Name = Name,
+                NumberOfSpikes = NumberOfSpikes,
+                RankTemplate = RankTemplate,
+                RankTemplateName = RankTemplateName,
+                TypeCategory = TypeCategory,
+                LowerPercentageLimit = LowerPercentageLimit,
+                UpperPercentageLimit = UpperPercentageLimit,
+                ReductionPercentage = ReductionPercentage
             };
 
             return template;

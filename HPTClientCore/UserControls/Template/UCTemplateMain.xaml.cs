@@ -144,7 +144,7 @@ namespace HPTClient
             foreach (var rankTemplate in templateCollection.RankTemplateList)
             {
                 // Kontrollera om det redan finns en mall som heter likadant
-                var existingRankTemplate = this.Config.RankTemplateList.FirstOrDefault(rt => rt.Name == rankTemplate.Name);
+                var existingRankTemplate = Config.RankTemplateList.FirstOrDefault(rt => rt.Name == rankTemplate.Name);
                 if (existingRankTemplate != null)
                 {
                     int rankTemplateNumber = 1;
@@ -153,13 +153,13 @@ namespace HPTClient
                     {
                         rankTemplateNumber++;
                         templateName = rankTemplate.Name + " (" + rankTemplateNumber.ToString() + ")";
-                        existingRankTemplate = this.Config.RankTemplateList.FirstOrDefault(rt => rt.Name == templateName);
+                        existingRankTemplate = Config.RankTemplateList.FirstOrDefault(rt => rt.Name == templateName);
                     }
                     ChangeRankTemplateReference(templateCollection.MarkBetTemplateABCDList, rankTemplate.Name, templateName);
                     ChangeRankTemplateReference(templateCollection.MarkBetTemplateRankList, rankTemplate.Name, templateName);
                     rankTemplate.Name = templateName;   // Sätt namn med löpnummer efter
                 }
-                this.Config.RankTemplateList.Add(rankTemplate);
+                Config.RankTemplateList.Add(rankTemplate);
             }
             #endregion
 
@@ -167,7 +167,7 @@ namespace HPTClient
             foreach (var markBetABCDTemplate in templateCollection.MarkBetTemplateABCDList)
             {
                 // Kontrollera om det redan finns en mall som heter likadant
-                var existingTemplate = this.Config.MarkBetTemplateABCDList.FirstOrDefault(t => t.Name == markBetABCDTemplate.Name);
+                var existingTemplate = Config.MarkBetTemplateABCDList.FirstOrDefault(t => t.Name == markBetABCDTemplate.Name);
                 if (existingTemplate != null)
                 {
                     int templateNumber = 1;
@@ -176,12 +176,12 @@ namespace HPTClient
                     {
                         templateNumber++;
                         templateName = markBetABCDTemplate.Name + " (" + templateNumber.ToString() + ")";
-                        existingTemplate = this.Config.MarkBetTemplateABCDList.FirstOrDefault(t => t.Name == templateName);
+                        existingTemplate = Config.MarkBetTemplateABCDList.FirstOrDefault(t => t.Name == templateName);
                     }
                     markBetABCDTemplate.Name = templateName;   // Sätt namn med löpnummer efter
                 }
-                markBetABCDTemplate.RankTemplate = this.Config.RankTemplateList.FirstOrDefault(rt => rt.Name == markBetABCDTemplate.RankTemplateName);
-                this.Config.MarkBetTemplateABCDList.Add(markBetABCDTemplate);
+                markBetABCDTemplate.RankTemplate = Config.RankTemplateList.FirstOrDefault(rt => rt.Name == markBetABCDTemplate.RankTemplateName);
+                Config.MarkBetTemplateABCDList.Add(markBetABCDTemplate);
             }
             #endregion
 
@@ -189,7 +189,7 @@ namespace HPTClient
             foreach (var markBetRankTemplate in templateCollection.MarkBetTemplateRankList)
             {
                 // Kontrollera om det redan finns en mall som heter likadant
-                var existingTemplate = this.Config.MarkBetTemplateRankList.FirstOrDefault(t => t.Name == markBetRankTemplate.Name);
+                var existingTemplate = Config.MarkBetTemplateRankList.FirstOrDefault(t => t.Name == markBetRankTemplate.Name);
                 if (existingTemplate != null)
                 {
                     int templateNumber = 1;
@@ -198,12 +198,12 @@ namespace HPTClient
                     {
                         templateNumber++;
                         templateName = markBetRankTemplate.Name + " (" + templateNumber.ToString() + ")";
-                        existingTemplate = this.Config.MarkBetTemplateRankList.FirstOrDefault(t => t.Name == templateName);
+                        existingTemplate = Config.MarkBetTemplateRankList.FirstOrDefault(t => t.Name == templateName);
                     }
                     markBetRankTemplate.Name = templateName;   // Sätt namn med löpnummer efter
                 }
-                markBetRankTemplate.RankTemplate = this.Config.RankTemplateList.FirstOrDefault(rt => rt.Name == markBetRankTemplate.RankTemplateName);
-                this.Config.MarkBetTemplateRankList.Add(markBetRankTemplate);
+                markBetRankTemplate.RankTemplate = Config.RankTemplateList.FirstOrDefault(rt => rt.Name == markBetRankTemplate.RankTemplateName);
+                Config.MarkBetTemplateRankList.Add(markBetRankTemplate);
             }
             #endregion
 
@@ -211,7 +211,7 @@ namespace HPTClient
             foreach (var groupIntervalRulesCollection in templateCollection.GroupIntervalTemplateList)
             {
                 // Kontrollera om det redan finns en mall som heter likadant
-                var existingTemplate = this.Config.GroupIntervalRulesCollectionList.FirstOrDefault(t => t.Name == groupIntervalRulesCollection.Name);
+                var existingTemplate = Config.GroupIntervalRulesCollectionList.FirstOrDefault(t => t.Name == groupIntervalRulesCollection.Name);
                 if (existingTemplate != null)
                 {
                     int templateNumber = 1;
@@ -220,7 +220,7 @@ namespace HPTClient
                     {
                         templateNumber++;
                         templateName = groupIntervalRulesCollection.Name + " (" + templateNumber.ToString() + ")";
-                        existingTemplate = this.Config.GroupIntervalRulesCollectionList.FirstOrDefault(t => t.Name == templateName);
+                        existingTemplate = Config.GroupIntervalRulesCollectionList.FirstOrDefault(t => t.Name == templateName);
                     }
                     groupIntervalRulesCollection.Name = templateName;   // Sätt namn med löpnummer efter
                 }
@@ -229,7 +229,7 @@ namespace HPTClient
                     rule.HorseVariable = HPTConfig.Config.HorseVariableList.FirstOrDefault(hv => hv.PropertyName == rule.PropertyName);
                     //rule.HorseVariable = HPTHorseVariable.SortedVariableList[rule.PropertyName];
                 }
-                this.Config.GroupIntervalRulesCollectionList.Add(groupIntervalRulesCollection);
+                Config.GroupIntervalRulesCollectionList.Add(groupIntervalRulesCollection);
             }
             #endregion
 
@@ -238,7 +238,7 @@ namespace HPTClient
             foreach (var rankSumReductionCollection in templateCollection.RankSumReductionRuleCollection)
             {
                 // Kontrollera om det redan finns en mall som heter likadant
-                var existingTemplate = this.Config.RankSumReductionRuleCollection.FirstOrDefault(t => t.Name == rankSumReductionCollection.Name);
+                var existingTemplate = Config.RankSumReductionRuleCollection.FirstOrDefault(t => t.Name == rankSumReductionCollection.Name);
                 if (existingTemplate != null)
                 {
                     int templateNumber = 1;
@@ -247,7 +247,7 @@ namespace HPTClient
                     {
                         templateNumber++;
                         templateName = rankSumReductionCollection.Name + " (" + templateNumber.ToString() + ")";
-                        existingTemplate = this.Config.RankSumReductionRuleCollection.FirstOrDefault(t => t.Name == templateName);
+                        existingTemplate = Config.RankSumReductionRuleCollection.FirstOrDefault(t => t.Name == templateName);
                     }
                     rankSumReductionCollection.Name = templateName;   // Sätt namn med löpnummer efter
                 }
@@ -260,7 +260,7 @@ namespace HPTClient
                     }
                     //rule.HorseVariable = HPTConfig.Config.HorseVariableList.FirstOrDefault(hv => hv.PropertyName == rule.PropertyName);
                 }
-                this.Config.RankSumReductionRuleCollection.Add(rankSumReductionCollection);
+                Config.RankSumReductionRuleCollection.Add(rankSumReductionCollection);
             }
             #endregion
         }

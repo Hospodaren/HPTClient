@@ -16,11 +16,11 @@ namespace HPTClient
         {
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
-                this.ParentRaceDayInfo = new HPTRaceDayInfo()
+                ParentRaceDayInfo = new HPTRaceDayInfo()
                 {
                     DataToShow = HPTConfig.Config.DataToShowComplementaryRules
                 };
-                this.HorseList = new ObservableCollection<HPTHorse>();
+                HorseList = new ObservableCollection<HPTHorse>();
             }
             InitializeComponent();
         }
@@ -32,18 +32,18 @@ namespace HPTClient
 
         private void CreateNewRule()
         {
-            HPTComplementaryReductionRule oldRule = this.CurrentComplimentaryReductionRule;
-            HPTComplementaryReductionRule newRule = new HPTComplementaryReductionRule(this.MarkBet.RaceDayInfo.RaceList.Count, true);
+            HPTComplementaryReductionRule oldRule = CurrentComplimentaryReductionRule;
+            HPTComplementaryReductionRule newRule = new HPTComplementaryReductionRule(MarkBet.RaceDayInfo.RaceList.Count, true);
 
-            this.MarkBet.ComplementaryRulesCollection.ReductionRuleList.Add(newRule);
-            this.CurrentComplimentaryReductionRule = newRule;
+            MarkBet.ComplementaryRulesCollection.ReductionRuleList.Add(newRule);
+            CurrentComplimentaryReductionRule = newRule;
 
             if (oldRule != null)
             {
                 //oldRule.PropertyChanged -= new System.ComponentModel.PropertyChangedEventHandler(newRule_PropertyChanged);
                 if (oldRule.HorseList.Count == 0)
                 {
-                    this.MarkBet.ComplementaryRulesCollection.ReductionRuleList.Remove(oldRule);
+                    MarkBet.ComplementaryRulesCollection.ReductionRuleList.Remove(oldRule);
 
                 }
                 else if (oldRule.HorseList.Count > 0)
@@ -62,7 +62,7 @@ namespace HPTClient
         {
             if (e.PropertyName == "Use")
             {
-                this.MarkBet.RecalculateReduction(RecalculateReason.All);
+                MarkBet.RecalculateReduction(RecalculateReason.All);
             }
         }
 
@@ -78,10 +78,10 @@ namespace HPTClient
 
         private void btnRemove_Click(object sender, RoutedEventArgs e)
         {
-            bool recalculationPaused = this.MarkBet.pauseRecalculation;
+            bool recalculationPaused = MarkBet.pauseRecalculation;
             try
             {
-                this.MarkBet.pauseRecalculation = true;
+                MarkBet.pauseRecalculation = true;
                 Button btn = (Button)sender;
                 HPTComplementaryReductionRule rule = (HPTComplementaryReductionRule)btn.DataContext;
                 for (int i = rule.HorseList.Count - 1; i >= 0; i--)
@@ -91,31 +91,31 @@ namespace HPTClient
                 }
 
                 // Recalculate
-                this.MarkBet.ComplementaryRulesCollection.ReductionRuleList.Remove(rule);
-                this.MarkBet.pauseRecalculation = recalculationPaused;
-                if (rule.Use && this.MarkBet.ComplementaryRulesCollection.Use)
+                MarkBet.ComplementaryRulesCollection.ReductionRuleList.Remove(rule);
+                MarkBet.pauseRecalculation = recalculationPaused;
+                if (rule.Use && MarkBet.ComplementaryRulesCollection.Use)
                 {
-                    this.MarkBet.RecalculateReduction(RecalculateReason.Other);
+                    MarkBet.RecalculateReduction(RecalculateReason.Other);
                 }
             }
             catch (Exception exc)
             {
-                this.MarkBet.pauseRecalculation = recalculationPaused;
+                MarkBet.pauseRecalculation = recalculationPaused;
                 Config.AddToErrorLog(exc);
             }
         }
 
         private void btnSelect_Click(object sender, RoutedEventArgs e)
         {
-            bool recalculationPaused = this.MarkBet.pauseRecalculation;
+            bool recalculationPaused = MarkBet.pauseRecalculation;
             try
             {
-                this.MarkBet.pauseRecalculation = true;
+                MarkBet.pauseRecalculation = true;
                 Button btn = (Button)sender;
                 HPTComplementaryReductionRule rule = (HPTComplementaryReductionRule)btn.DataContext;
 
-                HPTComplementaryReductionRule oldRule = this.CurrentComplimentaryReductionRule;
-                this.CurrentComplimentaryReductionRule = rule;
+                HPTComplementaryReductionRule oldRule = CurrentComplimentaryReductionRule;
+                CurrentComplimentaryReductionRule = rule;
 
                 if (oldRule != null && oldRule != rule)
                 {
@@ -135,16 +135,16 @@ namespace HPTClient
             {
                 HPTConfig.AddToErrorLogStatic(exc);
             }
-            this.MarkBet.pauseRecalculation = recalculationPaused;
+            MarkBet.pauseRecalculation = recalculationPaused;
         }
 
         private void btnRemoveAll_Click(object sender, RoutedEventArgs e)
         {
-            bool recalculationPaused = this.MarkBet.pauseRecalculation;
+            bool recalculationPaused = MarkBet.pauseRecalculation;
             try
             {
-                this.MarkBet.pauseRecalculation = true;
-                foreach (HPTComplementaryReductionRule rule in this.MarkBet.ComplementaryRulesCollection.ReductionRuleList)
+                MarkBet.pauseRecalculation = true;
+                foreach (HPTComplementaryReductionRule rule in MarkBet.ComplementaryRulesCollection.ReductionRuleList)
                 {
                     for (int i = rule.HorseList.Count - 1; i >= 0; i--)
                     {
@@ -152,18 +152,18 @@ namespace HPTClient
                         rule.HorseList.ElementAt(i).SelectedForComplimentaryRule = false;
                     }
                 }
-                this.MarkBet.ComplementaryRulesCollection.ReductionRuleList.Clear();
+                MarkBet.ComplementaryRulesCollection.ReductionRuleList.Clear();
 
-                if (this.cmbTemplateList.SelectedIndex != -1)
+                if (cmbTemplateList.SelectedIndex != -1)
                 {
-                    this.cmbTemplateList.SelectedIndex = -1;
+                    cmbTemplateList.SelectedIndex = -1;
                 }
-                this.MarkBet.pauseRecalculation = recalculationPaused;
-                this.MarkBet.RecalculateReduction(RecalculateReason.All);
+                MarkBet.pauseRecalculation = recalculationPaused;
+                MarkBet.RecalculateReduction(RecalculateReason.All);
             }
             catch (Exception exc)
             {
-                this.MarkBet.pauseRecalculation = recalculationPaused;
+                MarkBet.pauseRecalculation = recalculationPaused;
                 Config.AddToErrorLog(exc);
             }
         }
@@ -180,24 +180,24 @@ namespace HPTClient
                 if (chk.Name == "chkComplimentarySelect")
                 {
                     HPTHorse horse = (HPTHorse)chk.DataContext;
-                    if (this.CurrentComplimentaryReductionRule == null || this.CurrentComplimentaryReductionRule.NumberOfWinnersList == null)
+                    if (CurrentComplimentaryReductionRule == null || CurrentComplimentaryReductionRule.NumberOfWinnersList == null)
                     {
-                        btnNewRule_Click(this.btnNewRule, new RoutedEventArgs());
+                        btnNewRule_Click(btnNewRule, new RoutedEventArgs());
                     }
                     if ((bool)chk.IsChecked)
                     {
-                        if (!this.CurrentComplimentaryReductionRule.HorseList.Contains(horse))
+                        if (!CurrentComplimentaryReductionRule.HorseList.Contains(horse))
                         {
-                            this.CurrentComplimentaryReductionRule.HorseList.Add(horse);
+                            CurrentComplimentaryReductionRule.HorseList.Add(horse);
                         }
                     }
                     else
                     {
                         try
                         {
-                            if (!this.MarkBet.pauseRecalculation)   // Manuell uppdatering av häst, inte föranledd av Välj-knappen
+                            if (!MarkBet.pauseRecalculation)   // Manuell uppdatering av häst, inte föranledd av Välj-knappen
                             {
-                                this.CurrentComplimentaryReductionRule.HorseList.Remove(horse);
+                                CurrentComplimentaryReductionRule.HorseList.Remove(horse);
                             }
                         }
                         catch (Exception exc)
@@ -206,10 +206,10 @@ namespace HPTClient
                             HPTConfig.AddToErrorLogStatic(exc);
                         }
                     }
-                    this.CurrentComplimentaryReductionRule.UpdateSelectable();
-                    if (this.CurrentComplimentaryReductionRule.NumberOfSelected > 0 && this.MarkBet.ComplementaryRulesCollection.Use && !this.MarkBet.pauseRecalculation)
+                    CurrentComplimentaryReductionRule.UpdateSelectable();
+                    if (CurrentComplimentaryReductionRule.NumberOfSelected > 0 && MarkBet.ComplementaryRulesCollection.Use && !MarkBet.pauseRecalculation)
                     {
-                        this.MarkBet.RecalculateReduction(RecalculateReason.Other);
+                        MarkBet.RecalculateReduction(RecalculateReason.Other);
                     }
                 }
             }
@@ -226,7 +226,7 @@ namespace HPTClient
             {
                 if (e.NewValue != null && e.NewValue.GetType() == typeof(HPTMarkBet))
                 {
-                    this.HorseList = this.MarkBet.RaceDayInfo.HorseListSelected;
+                    HorseList = MarkBet.RaceDayInfo.HorseListSelected;
                 }
             }
             catch (Exception exc)
@@ -237,15 +237,15 @@ namespace HPTClient
 
         private void ItemsControl_Checked(object sender, RoutedEventArgs e)
         {
-            if (!this.IsLoaded)
+            if (!IsLoaded)
             {
                 return;
             }
             ItemsControl it = (ItemsControl)sender;
             HPTComplementaryReductionRule rule = (HPTComplementaryReductionRule)it.DataContext;
-            if (this.MarkBet.ComplementaryRulesCollection.Use && rule.Use)
+            if (MarkBet.ComplementaryRulesCollection.Use && rule.Use)
             {
-                this.MarkBet.RecalculateReduction(RecalculateReason.Other);
+                MarkBet.RecalculateReduction(RecalculateReason.Other);
             }
         }
 
@@ -254,181 +254,181 @@ namespace HPTClient
         private void cbiMarksNumberOne_Selected(object sender, RoutedEventArgs e)
         {
             CreateNewRule();
-            this.MarkBet.RecalculateAllRanks();
-            IEnumerable<HPTHorse> marksNumberOneHorseList = this.MarkBet.RaceDayInfo.HorseListSelected.Where(h => h.RankList.FirstOrDefault(hr => hr.Name == "StakeDistributionShare" && hr.Rank == 1) != null);
+            MarkBet.RecalculateAllRanks();
+            IEnumerable<HPTHorse> marksNumberOneHorseList = MarkBet.RaceDayInfo.HorseListSelected.Where(h => h.RankList.FirstOrDefault(hr => hr.Name == "StakeDistributionShare" && hr.Rank == 1) != null);
 
-            bool recalculationPaused = this.MarkBet.pauseRecalculation;
-            this.MarkBet.pauseRecalculation = true;
+            bool recalculationPaused = MarkBet.pauseRecalculation;
+            MarkBet.pauseRecalculation = true;
             foreach (HPTHorse horse in marksNumberOneHorseList)
             {
                 horse.SelectedForComplimentaryRule = true;
             }
-            this.MarkBet.pauseRecalculation = recalculationPaused;
+            MarkBet.pauseRecalculation = recalculationPaused;
         }
 
         private void cbiOddsNumberOne_Selected(object sender, RoutedEventArgs e)
         {
             CreateNewRule();
-            this.MarkBet.RecalculateAllRanks();
-            IEnumerable<HPTHorse> oddsNumberOneHorseList = this.MarkBet.RaceDayInfo.HorseListSelected.Where(h => h.RankList.FirstOrDefault(hr => hr.Name == "VinnarOdds" && hr.Rank == 1) != null);
+            MarkBet.RecalculateAllRanks();
+            IEnumerable<HPTHorse> oddsNumberOneHorseList = MarkBet.RaceDayInfo.HorseListSelected.Where(h => h.RankList.FirstOrDefault(hr => hr.Name == "VinnarOdds" && hr.Rank == 1) != null);
 
-            bool recalculationPaused = this.MarkBet.pauseRecalculation;
-            this.MarkBet.pauseRecalculation = true;
+            bool recalculationPaused = MarkBet.pauseRecalculation;
+            MarkBet.pauseRecalculation = true;
             foreach (HPTHorse horse in oddsNumberOneHorseList)
             {
                 horse.SelectedForComplimentaryRule = true;
             }
-            this.MarkBet.pauseRecalculation = recalculationPaused;
+            MarkBet.pauseRecalculation = recalculationPaused;
         }
 
         private void cbiHomeHorses_Selected(object sender, RoutedEventArgs e)
         {
             CreateNewRule();
-            IEnumerable<HPTHorse> homeTrackHorseList = this.MarkBet.RaceDayInfo.HorseListSelected
+            IEnumerable<HPTHorse> homeTrackHorseList = MarkBet.RaceDayInfo.HorseListSelected
                 .Where(h => h.IsHomeTrack && h.ParentRace.NumberOfSelectedHorses > 1);
 
-            bool recalculationPaused = this.MarkBet.pauseRecalculation;
-            this.MarkBet.pauseRecalculation = true;
+            bool recalculationPaused = MarkBet.pauseRecalculation;
+            MarkBet.pauseRecalculation = true;
             foreach (HPTHorse horse in homeTrackHorseList)
             {
                 horse.SelectedForComplimentaryRule = true;
             }
-            this.MarkBet.pauseRecalculation = recalculationPaused;
+            MarkBet.pauseRecalculation = recalculationPaused;
         }
 
         private void cbiBackTrackHorse_Selected(object sender, RoutedEventArgs e)
         {
             CreateNewRule();
-            IEnumerable<HPTHorse> backTrackHorseList = this.MarkBet.RaceDayInfo.HorseListSelected
+            IEnumerable<HPTHorse> backTrackHorseList = MarkBet.RaceDayInfo.HorseListSelected
                 .Where(h => h.StartNr > 8 && h.ParentRace.NumberOfSelectedHorses > 1);
 
-            bool recalculationPaused = this.MarkBet.pauseRecalculation;
-            this.MarkBet.pauseRecalculation = true;
+            bool recalculationPaused = MarkBet.pauseRecalculation;
+            MarkBet.pauseRecalculation = true;
             foreach (HPTHorse horse in backTrackHorseList)
             {
                 horse.SelectedForComplimentaryRule = true;
             }
-            this.MarkBet.pauseRecalculation = recalculationPaused;
+            MarkBet.pauseRecalculation = recalculationPaused;
         }
 
         private void cbi1Or2Favourites_Selected(object sender, RoutedEventArgs e)
         {
             CreateNewRule();
-            this.MarkBet.RecalculateAllRanks();
-            IEnumerable<HPTHorse> marksNumberOneHorseList = this.MarkBet.RaceDayInfo.HorseListSelected
+            MarkBet.RecalculateAllRanks();
+            IEnumerable<HPTHorse> marksNumberOneHorseList = MarkBet.RaceDayInfo.HorseListSelected
                 .Where(h => h.ParentRace.NumberOfSelectedHorses > 1 && h.RankList.FirstOrDefault(hr => hr.Name == "StakeDistributionShare" && hr.Rank == 1) != null)
                 .OrderByDescending(h => h.StakeDistributionShare).Take(2);
 
-            this.MarkBet.pauseRecalculation = true;
+            MarkBet.pauseRecalculation = true;
             foreach (HPTHorse horse in marksNumberOneHorseList)
             {
                 horse.SelectedForComplimentaryRule = true;
             }
-            this.CurrentComplimentaryReductionRule.NumberOfWinnersList.First(now => now.NumberOfWinners == 1).Selected = true;
-            this.CurrentComplimentaryReductionRule.NumberOfWinnersList.First(now => now.NumberOfWinners == 2).Selected = true;
-            this.MarkBet.pauseRecalculation = false;
-            this.MarkBet.RecalculateReduction(RecalculateReason.Other);
+            CurrentComplimentaryReductionRule.NumberOfWinnersList.First(now => now.NumberOfWinners == 1).Selected = true;
+            CurrentComplimentaryReductionRule.NumberOfWinnersList.First(now => now.NumberOfWinners == 2).Selected = true;
+            MarkBet.pauseRecalculation = false;
+            MarkBet.RecalculateReduction(RecalculateReason.Other);
         }
 
         private void cbi1Or2FavouritesOf3_Selected(object sender, RoutedEventArgs e)
         {
             CreateNewRule();
-            this.MarkBet.RecalculateAllRanks();
-            IEnumerable<HPTHorse> marksNumberOneHorseList = this.MarkBet.RaceDayInfo.HorseListSelected
+            MarkBet.RecalculateAllRanks();
+            IEnumerable<HPTHorse> marksNumberOneHorseList = MarkBet.RaceDayInfo.HorseListSelected
                 .Where(h => h.ParentRace.NumberOfSelectedHorses > 1 && h.RankList.FirstOrDefault(hr => hr.Name == "StakeDistributionShare" && hr.Rank == 1) != null)
                 .OrderByDescending(h => h.StakeDistributionShare)
                 .Take(3);
 
-            bool recalculationPaused = this.MarkBet.pauseRecalculation;
-            this.MarkBet.pauseRecalculation = true;
+            bool recalculationPaused = MarkBet.pauseRecalculation;
+            MarkBet.pauseRecalculation = true;
             foreach (HPTHorse horse in marksNumberOneHorseList)
             {
                 horse.SelectedForComplimentaryRule = true;
             }
-            this.CurrentComplimentaryReductionRule.NumberOfWinnersList.First(now => now.NumberOfWinners == 1).Selected = true;
-            this.CurrentComplimentaryReductionRule.NumberOfWinnersList.First(now => now.NumberOfWinners == 2).Selected = true;
-            this.MarkBet.pauseRecalculation = recalculationPaused;
-            this.MarkBet.RecalculateReduction(RecalculateReason.Other);
+            CurrentComplimentaryReductionRule.NumberOfWinnersList.First(now => now.NumberOfWinners == 1).Selected = true;
+            CurrentComplimentaryReductionRule.NumberOfWinnersList.First(now => now.NumberOfWinners == 2).Selected = true;
+            MarkBet.pauseRecalculation = recalculationPaused;
+            MarkBet.RecalculateReduction(RecalculateReason.Other);
         }
 
         private void cbiEffectHorses_Selected(object sender, RoutedEventArgs e)
         {
             CreateNewRule();
-            this.MarkBet.RecalculateAllRanks();
-            IEnumerable<HPTHorse> homeTrackHorseList = this.MarkBet.RaceDayInfo.HorseListSelected
+            MarkBet.RecalculateAllRanks();
+            IEnumerable<HPTHorse> homeTrackHorseList = MarkBet.RaceDayInfo.HorseListSelected
                 .Where(h => h.ParentRace.NumberOfSelectedHorses > 1
                     && h.RankList.FirstOrDefault(hr => hr.Name == "StakeDistributionShare" && hr.Rank > 3) != null && h.Markability > 1.5M);
 
-            bool recalculationPaused = this.MarkBet.pauseRecalculation;
-            this.MarkBet.pauseRecalculation = true;
+            bool recalculationPaused = MarkBet.pauseRecalculation;
+            MarkBet.pauseRecalculation = true;
             foreach (HPTHorse horse in homeTrackHorseList)
             {
                 horse.SelectedForComplimentaryRule = true;
             }
-            this.MarkBet.pauseRecalculation = recalculationPaused;
+            MarkBet.pauseRecalculation = recalculationPaused;
         }
 
         private void cbiOddNumbers_Selected(object sender, RoutedEventArgs e)
         {
             CreateNewRule();
-            IEnumerable<HPTHorse> numbersHorseList = this.MarkBet.RaceDayInfo.HorseListSelected
+            IEnumerable<HPTHorse> numbersHorseList = MarkBet.RaceDayInfo.HorseListSelected
                 .Where(h => h.StartNr % 2 == 1);
 
-            bool recalculationPaused = this.MarkBet.pauseRecalculation;
-            this.MarkBet.pauseRecalculation = true;
+            bool recalculationPaused = MarkBet.pauseRecalculation;
+            MarkBet.pauseRecalculation = true;
             foreach (HPTHorse horse in numbersHorseList)
             {
                 horse.SelectedForComplimentaryRule = true;
             }
-            this.MarkBet.pauseRecalculation = recalculationPaused;
+            MarkBet.pauseRecalculation = recalculationPaused;
         }
 
         private void cbiEvenNumbers_Selected(object sender, RoutedEventArgs e)
         {
             CreateNewRule();
-            IEnumerable<HPTHorse> numbersHorseList = this.MarkBet.RaceDayInfo.HorseListSelected
+            IEnumerable<HPTHorse> numbersHorseList = MarkBet.RaceDayInfo.HorseListSelected
                 .Where(h => h.StartNr % 2 == 0);
 
-            this.MarkBet.pauseRecalculation = true;
+            MarkBet.pauseRecalculation = true;
             foreach (HPTHorse horse in numbersHorseList)
             {
                 horse.SelectedForComplimentaryRule = true;
             }
-            this.MarkBet.pauseRecalculation = false;
+            MarkBet.pauseRecalculation = false;
         }
 
         private void cbiNoShoes_Selected(object sender, RoutedEventArgs e)
         {
             CreateNewRule();
-            IEnumerable<HPTHorse> noShoesList = this.MarkBet.RaceDayInfo.HorseListSelected
+            IEnumerable<HPTHorse> noShoesList = MarkBet.RaceDayInfo.HorseListSelected
                 .Where(h => h.ShoeInfoCurrent.Foreshoes == false && h.ShoeInfoCurrent.Hindshoes == false);
 
-            this.MarkBet.pauseRecalculation = true;
+            MarkBet.pauseRecalculation = true;
             foreach (HPTHorse horse in noShoesList)
             {
                 horse.SelectedForComplimentaryRule = true;
             }
-            this.MarkBet.pauseRecalculation = false;
+            MarkBet.pauseRecalculation = false;
         }
 
         private void cbiShoesChanged_Selected(object sender, RoutedEventArgs e)
         {
             CreateNewRule();
-            IEnumerable<HPTHorse> noShoesList = this.MarkBet.RaceDayInfo.HorseListSelected
+            IEnumerable<HPTHorse> noShoesList = MarkBet.RaceDayInfo.HorseListSelected
                 .Where(h => h.ShoeInfoCurrent.ForeshoesChanged || h.ShoeInfoCurrent.HindshoesChanged);
 
-            this.MarkBet.pauseRecalculation = true;
+            MarkBet.pauseRecalculation = true;
             foreach (HPTHorse horse in noShoesList)
             {
                 horse.SelectedForComplimentaryRule = true;
             }
-            this.MarkBet.pauseRecalculation = false;
+            MarkBet.pauseRecalculation = false;
         }
 
         private void cbiATGTillsammans_Selected(object sender, RoutedEventArgs e)
         {
             // Alla lopp som inte bara har en spik
-            var allRacesWithoutSpike = this.MarkBet.RaceDayInfo.RaceList
+            var allRacesWithoutSpike = MarkBet.RaceDayInfo.RaceList
                 .Where(r => r.NumberOfSelectedHorses > 1);
 
             // Om det inte finns tillräckligt med lopp att välja från är det ingen ide att fortsätta
@@ -438,7 +438,7 @@ namespace HPTClient
             }
 
             // Plocka ut de två största favoriterna bland valda hästar
-            var biggestFavourites = this.MarkBet.RaceDayInfo.HorseListSelected
+            var biggestFavourites = MarkBet.RaceDayInfo.HorseListSelected
                 .Where(h => h.ParentRace.NumberOfSelectedHorses > 1)
                 .OrderByDescending(h => h.StakeDistributionShare)
                 .Take(2);
@@ -455,14 +455,14 @@ namespace HPTClient
                 return;
             }
 
-            this.MarkBet.pauseRecalculation = true;
+            MarkBet.pauseRecalculation = true;
 
             // Skapa regel för favoriter
             CreateNewRule();
             biggestFavourites.First().SelectedForComplimentaryRule = true;
             biggestFavourites.Last().SelectedForComplimentaryRule = true;
-            this.CurrentComplimentaryReductionRule.NumberOfWinnersList.First(now => now.NumberOfWinners == 1).Selected = true;
-            this.CurrentComplimentaryReductionRule.NumberOfWinnersList.First(now => now.NumberOfWinners == 2).Selected = true;
+            CurrentComplimentaryReductionRule.NumberOfWinnersList.First(now => now.NumberOfWinners == 1).Selected = true;
+            CurrentComplimentaryReductionRule.NumberOfWinnersList.First(now => now.NumberOfWinners == 2).Selected = true;
 
             // Skapa regel för skrällar
             CreateNewRule();
@@ -477,27 +477,27 @@ namespace HPTClient
                     horse.SelectedForComplimentaryRule = true;
                 }
             }
-            this.CurrentComplimentaryReductionRule.NumberOfWinnersList.First(now => now.NumberOfWinners == 0).Selected = true;
-            this.CurrentComplimentaryReductionRule.NumberOfWinnersList.First(now => now.NumberOfWinners == 1).Selected = true;
+            CurrentComplimentaryReductionRule.NumberOfWinnersList.First(now => now.NumberOfWinners == 0).Selected = true;
+            CurrentComplimentaryReductionRule.NumberOfWinnersList.First(now => now.NumberOfWinners == 1).Selected = true;
 
-            this.MarkBet.pauseRecalculation = false;
+            MarkBet.pauseRecalculation = false;
         }
 
         #endregion
 
         private void chkUseReduction_Checked(object sender, RoutedEventArgs e)
         {
-            if (this.IsLoaded)
+            if (IsLoaded)
             {
-                this.MarkBet.RecalculateReduction(RecalculateReason.Other);
+                MarkBet.RecalculateReduction(RecalculateReason.Other);
             }
         }
 
         private void itNumberOfComplementaryRules_Checked(object sender, RoutedEventArgs e)
         {
-            if (this.IsLoaded && this.MarkBet.ComplementaryRulesCollection.Use)
+            if (IsLoaded && MarkBet.ComplementaryRulesCollection.Use)
             {
-                this.MarkBet.RecalculateReduction(RecalculateReason.Other);
+                MarkBet.RecalculateReduction(RecalculateReason.Other);
             }
         }
     }

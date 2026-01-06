@@ -55,19 +55,19 @@ namespace HPTClient
 
         private bool CreateRace()
         {
-            if (this.DataContext.GetType() == typeof(HPTRace))
+            if (DataContext.GetType() == typeof(HPTRace))
             {
-                if (this.HorseList == null)
+                if (HorseList == null)
                 {
-                    this.Race = (HPTRace)this.DataContext;
-                    this.HorseList = this.Race.HorseList.Select(h => new UCCompactHorse()
+                    Race = (HPTRace)DataContext;
+                    HorseList = Race.HorseList.Select(h => new UCCompactHorse()
                     {
                         DataContext = h,
                         Horse = h,
                         AllowDrop = true,
                         ClipToBounds = false
                     }).ToList();
-                    this.HorseList.ForEach(h =>
+                    HorseList.ForEach(h =>
                         {
                             h.MouseMove += icHorseOverview_MouseMove;
                             h.DragOver += UCCompactHorse_DragOver;
@@ -83,7 +83,7 @@ namespace HPTClient
         internal void SetRank()
         {
             int rankToSet = 1;
-            this.HorseList.ForEach(uc =>
+            HorseList.ForEach(uc =>
                 {
                     try
                     {
@@ -102,7 +102,7 @@ namespace HPTClient
                         // NumericUpDowns som inte finns... :-(
                     }
                 });
-            this.DragDropEnabled = true;
+            DragDropEnabled = true;
         }
 
         private void icHorseOverview_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
@@ -116,19 +116,19 @@ namespace HPTClient
             {
                 var tb = (TextBlock)fe;
 
-                bool recalculationPaused = this.MarkBet.pauseRecalculation;
+                bool recalculationPaused = MarkBet.pauseRecalculation;
                 try
                 {
-                    this.MarkBet.pauseRecalculation = true;
+                    MarkBet.pauseRecalculation = true;
                     // Startnummer
                     int startNumber = 0;
                     bool isStartNumber = int.TryParse(tb.Text, out startNumber);
                     if (isStartNumber && startNumber > 0 && startNumber < 21)
                     {
-                        if (this.HorseList != null)
+                        if (HorseList != null)
                         {
                             bool select = true;
-                            this.HorseList.ForEach(h =>
+                            HorseList.ForEach(h =>
                                 {
                                     if (h.Horse.Scratched != true)
                                     {
@@ -150,10 +150,10 @@ namespace HPTClient
                     var prio = EnumHelper.GetHPTPrioFromShortString(tb.Text);
                     if (prio != HPTPrio.M)
                     {
-                        if (this.HorseList != null)
+                        if (HorseList != null)
                         {
                             bool select = true;
-                            this.HorseList.ForEach(h =>
+                            HorseList.ForEach(h =>
                             {
                                 if (h.Horse.Scratched != true)
                                 {
@@ -177,12 +177,12 @@ namespace HPTClient
                             });
                         }
                     }
-                    this.MarkBet.pauseRecalculation = recalculationPaused;
-                    this.MarkBet.RecalculateReduction(RecalculateReason.All);
+                    MarkBet.pauseRecalculation = recalculationPaused;
+                    MarkBet.RecalculateReduction(RecalculateReason.All);
                 }
                 catch (Exception)
                 {
-                    this.MarkBet.pauseRecalculation = recalculationPaused;
+                    MarkBet.pauseRecalculation = recalculationPaused;
                 }
 
 
@@ -196,24 +196,24 @@ namespace HPTClient
 
         internal void SetFilter()
         {
-            if (this.ShowOnlySelected)
+            if (ShowOnlySelected)
             {
-                this.HorseList
+                HorseList
                     .Where(h => !h.Horse.Selected || h.Horse.Scratched == true)
                     .ToList()
-                    .ForEach(h => h.Visibility = System.Windows.Visibility.Collapsed);
+                    .ForEach(h => h.Visibility = Visibility.Collapsed);
             }
             else
             {
-                this.HorseList
-                            .ForEach(h => h.Visibility = System.Windows.Visibility.Visible);
+                HorseList
+                            .ForEach(h => h.Visibility = Visibility.Visible);
 
-                if (this.HideScratched)
+                if (HideScratched)
                 {
-                    this.HorseList
+                    HorseList
                         .Where(h => h.Horse.Scratched == true)
                         .ToList()
-                        .ForEach(h => h.Visibility = System.Windows.Visibility.Collapsed);
+                        .ForEach(h => h.Visibility = Visibility.Collapsed);
                 }
             }
         }
@@ -222,14 +222,14 @@ namespace HPTClient
         {
             var uc = obj as UCCompactHorse;
 
-            return (this.HideScratched != (bool)uc.Horse.Scratched || (bool)uc.Horse.Scratched == false) && (this.ShowOnlySelected == uc.Horse.Selected || !this.ShowOnlySelected);
+            return (HideScratched != (bool)uc.Horse.Scratched || (bool)uc.Horse.Scratched == false) && (ShowOnlySelected == uc.Horse.Selected || !ShowOnlySelected);
         }
 
         #region Drag-and-drop
 
         private void icHorseOverview_MouseMove(object sender, MouseEventArgs e)
         {
-            if (!this.DragDropEnabled)
+            if (!DragDropEnabled)
             {
                 return;
             }
@@ -245,7 +245,7 @@ namespace HPTClient
 
         private void UCCompactHorse_DragOver(object sender, DragEventArgs e)
         {
-            if (!this.DragDropEnabled)
+            if (!DragDropEnabled)
             {
                 return;
             }
@@ -277,8 +277,8 @@ namespace HPTClient
                 {
                     return;
                 }
-                bool recalculationPaused = this.MarkBet.pauseRecalculation;
-                this.MarkBet.pauseRecalculation = true;
+                bool recalculationPaused = MarkBet.pauseRecalculation;
+                MarkBet.pauseRecalculation = true;
                 if (ucTarget.Horse.RankOwn > ucSource.Horse.RankOwn)
                 {
                     List<HPTHorse> horsesToAlter = ucTarget.Horse.ParentRace.HorseList
@@ -313,15 +313,15 @@ namespace HPTClient
                 Sort("RankOwn");
                 UpdateHorseOrder();
 
-                this.MarkBet.pauseRecalculation = recalculationPaused;
-                if (this.MarkBet.HasOwnRankReduction())
+                MarkBet.pauseRecalculation = recalculationPaused;
+                if (MarkBet.HasOwnRankReduction())
                 {
-                    this.MarkBet.RecalculateReduction(RecalculateReason.Rank);
+                    MarkBet.RecalculateReduction(RecalculateReason.Rank);
                 }
                 else
                 {
-                    this.MarkBet.RecalculateAllRanks();
-                    this.MarkBet.RecalculateRank();
+                    MarkBet.RecalculateAllRanks();
+                    MarkBet.RecalculateRank();
                 }
             }
         }
@@ -333,16 +333,16 @@ namespace HPTClient
         // Egen rank ändrad på någon av hästarna
         private void IntegerUpDown_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            if (this.IsLoaded && this.MarkBet != null && !this.MarkBet.pauseRecalculation)
+            if (IsLoaded && MarkBet != null && !MarkBet.pauseRecalculation)
             {
-                if (this.MarkBet.HasOwnRankReduction())
+                if (MarkBet.HasOwnRankReduction())
                 {
-                    this.MarkBet.RecalculateReduction(RecalculateReason.Rank);
+                    MarkBet.RecalculateReduction(RecalculateReason.Rank);
                 }
                 else
                 {
-                    this.MarkBet.RecalculateAllRanks();
-                    this.MarkBet.RecalculateRank();
+                    MarkBet.RecalculateAllRanks();
+                    MarkBet.RecalculateRank();
                 }
             }
         }
@@ -350,16 +350,16 @@ namespace HPTClient
         // Poäng ändrad på någon av hästarna
         private void iudRankAlternate_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            if (this.IsLoaded && this.MarkBet != null && !this.MarkBet.pauseRecalculation)
+            if (IsLoaded && MarkBet != null && !MarkBet.pauseRecalculation)
             {
-                if (this.MarkBet.HasAlternateRankReduction())
+                if (MarkBet.HasAlternateRankReduction())
                 {
-                    this.MarkBet.RecalculateReduction(RecalculateReason.Rank);
+                    MarkBet.RecalculateReduction(RecalculateReason.Rank);
                 }
                 else
                 {
-                    this.MarkBet.RecalculateAllRanks();
-                    this.MarkBet.RecalculateRank();
+                    MarkBet.RecalculateAllRanks();
+                    MarkBet.RecalculateRank();
                 }
             }
         }
@@ -369,30 +369,30 @@ namespace HPTClient
 
         public void Sort(string sortVariable)
         {
-            this.DragDropEnabled = false;
+            DragDropEnabled = false;
             switch (sortVariable)
             {
                 case "StakeDistributionShare":
-                    this.HorseList.Sort(CompareHorsesStakeShare);
+                    HorseList.Sort(CompareHorsesStakeShare);
                     break;
                 case "RankOwn":
-                    this.HorseList.Sort(CompareHorsesRankOwn);
-                    this.DragDropEnabled = true;
+                    HorseList.Sort(CompareHorsesRankOwn);
+                    DragDropEnabled = true;
                     break;
                 case "StartNr":
-                    this.HorseList.Sort(CompareHorsesStartNr);
+                    HorseList.Sort(CompareHorsesStartNr);
                     break;
                 case "VinnarOdds":
-                    this.HorseList.Sort(CompareHorsesVinnarOdds);
+                    HorseList.Sort(CompareHorsesVinnarOdds);
                     break;
                 case "RankWeighted":
-                    this.HorseList.Sort(CompareHorsesRankWeighted);
+                    HorseList.Sort(CompareHorsesRankWeighted);
                     break;
                 case "RankTip":
-                    this.HorseList.Sort(CompareHorsesRankTip);
+                    HorseList.Sort(CompareHorsesRankTip);
                     break;
                 case "HorseName":
-                    this.HorseList.Sort(CompareHorsesName);
+                    HorseList.Sort(CompareHorsesName);
                     break;
                 default:
                     break;
@@ -403,7 +403,7 @@ namespace HPTClient
 
         internal void UpdateHorseOrder()
         {
-            var itemsView = CollectionViewSource.GetDefaultView(this.icHorseOverview.ItemsSource);
+            var itemsView = CollectionViewSource.GetDefaultView(icHorseOverview.ItemsSource);
             itemsView.Refresh();
         }
 

@@ -85,9 +85,9 @@ namespace HPTClient
 
             var newDir = ListSortDirection.Ascending;
 
-            if (this.lvwOwnInformationList.Items.SortDescriptions.Count > 0)
+            if (lvwOwnInformationList.Items.SortDescriptions.Count > 0)
             {
-                var sd = this.lvwOwnInformationList.Items.SortDescriptions[0];
+                var sd = lvwOwnInformationList.Items.SortDescriptions[0];
                 if (sd.PropertyName == field)
                 {
                     SortDescription sdNew = new SortDescription();
@@ -95,8 +95,8 @@ namespace HPTClient
                     sdNew.Direction = sd.Direction == ListSortDirection.Ascending
                                           ? ListSortDirection.Descending
                                           : ListSortDirection.Ascending;
-                    this.lvwOwnInformationList.Items.SortDescriptions.Clear();
-                    this.lvwOwnInformationList.Items.SortDescriptions.Add(sdNew);
+                    lvwOwnInformationList.Items.SortDescriptions.Clear();
+                    lvwOwnInformationList.Items.SortDescriptions.Add(sdNew);
                     return;
                 }
             }
@@ -123,11 +123,11 @@ namespace HPTClient
             }
 
             // Aldrig sortering på mer än två variabler
-            if (this.lvwOwnInformationList.Items.SortDescriptions.Count > 1)
+            if (lvwOwnInformationList.Items.SortDescriptions.Count > 1)
             {
-                this.lvwOwnInformationList.Items.SortDescriptions.RemoveAt(1); ;
+                lvwOwnInformationList.Items.SortDescriptions.RemoveAt(1); ;
             }
-            this.lvwOwnInformationList.Items.SortDescriptions.Insert(0, new SortDescription(field, newDir));
+            lvwOwnInformationList.Items.SortDescriptions.Insert(0, new SortDescription(field, newDir));
         }
 
         #region Popup handling
@@ -137,17 +137,17 @@ namespace HPTClient
         {
             get
             {
-                if (this.pu == null)
+                if (pu == null)
                 {
-                    this.pu = new System.Windows.Controls.Primitives.Popup()
+                    pu = new System.Windows.Controls.Primitives.Popup()
                     {
                         Placement = System.Windows.Controls.Primitives.PlacementMode.MousePoint,
                         HorizontalOffset = -10D,
                         VerticalOffset = -10D
                     };
-                    this.pu.MouseLeave += new MouseEventHandler(pu_MouseLeave);
+                    pu.MouseLeave += new MouseEventHandler(pu_MouseLeave);
                 }
-                return this.pu;
+                return pu;
             }
         }
 
@@ -157,9 +157,9 @@ namespace HPTClient
             if (e.ChangedButton == MouseButton.Left)
             {
                 TextBlock tb = (TextBlock)sender;
-                this.PU.DataContext = tb.DataContext;
-                this.PU.Child = new UCResultView();
-                this.PU.IsOpen = true;
+                PU.DataContext = tb.DataContext;
+                PU.Child = new UCResultView();
+                PU.IsOpen = true;
             }
         }
 
@@ -205,7 +205,7 @@ namespace HPTClient
                 // Välj häst och visa detaljer på sidan
                 var fe = (FrameworkElement)sender;
                 var ownInformation = (HPTHorseOwnInformation)fe.DataContext;
-                this.SelectedOwnInformation = new HPTHorse()
+                SelectedOwnInformation = new HPTHorse()
                 {
                     OwnInformation = ownInformation,
                     HorseName = ownInformation.Name,
@@ -223,7 +223,7 @@ namespace HPTClient
             try
             {
                 // Kod för att ladda rätt spel på ny flik
-                if (this.RaceDayInfoSelected != null)
+                if (RaceDayInfoSelected != null)
                 {
                     var feOriginal = (FrameworkElement)e.OriginalSource;
                     var betType = (HPTBetType)feOriginal.DataContext;
@@ -231,7 +231,7 @@ namespace HPTClient
                     var feSender = (FrameworkElement)sender;
                     var ownInformation = (HPTHorseOwnInformation)feSender.DataContext;
 
-                    this.RaceDayInfoSelected(ownInformation.NextStart.TrackId, ownInformation.NextStart.StartDate, betType.Code, ownInformation.NextStart.RaceNumber);
+                    RaceDayInfoSelected(ownInformation.NextStart.TrackId, ownInformation.NextStart.StartDate, betType.Code, ownInformation.NextStart.RaceNumber);
                 }
             }
             catch (Exception)
@@ -245,7 +245,7 @@ namespace HPTClient
             try
             {
                 var hl = (Hyperlink)e.OriginalSource;
-                System.Diagnostics.Process.Start(hl.NavigateUri.ToString());
+                Process.Start(hl.NavigateUri.ToString());
                 e.Handled = true;
             }
             catch (Exception)
@@ -273,7 +273,7 @@ namespace HPTClient
 
         private void HandleOwnInformationFilter()
         {
-            var collectionView = CollectionViewSource.GetDefaultView(this.lvwOwnInformationList.ItemsSource);
+            var collectionView = CollectionViewSource.GetDefaultView(lvwOwnInformationList.ItemsSource);
             collectionView.Filter = new Predicate<object>(FilterOwnInformation);
         }
 
@@ -281,11 +281,11 @@ namespace HPTClient
         {
             var oi = obj as HPTHorseOwnInformation;
             bool showOwnInformation = true;
-            if (this.chkShowOnlyWithNextStart.IsChecked == true)
+            if (chkShowOnlyWithNextStart.IsChecked == true)
             {
                 showOwnInformation = oi.NextStart != null && oi.NextStart.StartDate > DateTime.Now;
             }
-            if (showOwnInformation && this.chkShowOnlyNextTimer.IsChecked == true)
+            if (showOwnInformation && chkShowOnlyNextTimer.IsChecked == true)
             {
                 showOwnInformation = oi.NextTimer == true;
             }

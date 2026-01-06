@@ -13,7 +13,7 @@ namespace HPTClient
 
         public HPTABCDEFReductionRule(HPTMarkBet markBet)
         {
-            this.XReductionRuleList = new ObservableCollection<HPTXReductionRule>()
+            XReductionRuleList = new ObservableCollection<HPTXReductionRule>()
             {
                 new HPTXReductionRule(HPTPrio.A, markBet.RaceDayInfo.RaceList.Count, HPTConfig.Config.UseA),
                 new HPTXReductionRule(HPTPrio.B, markBet.RaceDayInfo.RaceList.Count, HPTConfig.Config.UseB),
@@ -31,18 +31,18 @@ namespace HPTClient
         {
             get
             {
-                return this.xReductionRuleList;
+                return xReductionRuleList;
             }
             set
             {
-                this.xReductionRuleList = value;
+                xReductionRuleList = value;
                 OnPropertyChanged("XReductionRuleList");
             }
         }
 
         public override bool IncludeRow(HPTMarkBet markBet, HPTMarkBetSingleRow singleRow)
         {
-            foreach (var hptXReductionRule in this.RulesToUse)
+            foreach (var hptXReductionRule in RulesToUse)
             {
                 if (!hptXReductionRule.IncludeRow(markBet, singleRow))
                 {
@@ -54,7 +54,7 @@ namespace HPTClient
 
         public override bool IncludeRow(HPTMarkBet markBet, HPTHorse[] horseList, int numberOfRacesToTest)
         {
-            foreach (var hptXReductionRule in this.RulesToUse)
+            foreach (var hptXReductionRule in RulesToUse)
             {
                 if (!hptXReductionRule.IncludeRow(markBet, horseList, numberOfRacesToTest))
                 {
@@ -69,19 +69,19 @@ namespace HPTClient
         {
             get
             {
-                if (this.rulesToUse == null)
+                if (rulesToUse == null)
                 {
-                    this.rulesToUse = this.XReductionRuleList.Where(x => x.Use).ToList();
+                    rulesToUse = XReductionRuleList.Where(x => x.Use).ToList();
                 }
-                return this.rulesToUse;
+                return rulesToUse;
             }
         }
 
         public override void Reset()
         {
             base.Reset();
-            this.rulesToUse = null;
-            this.LowestMax = this.RulesToUse
+            rulesToUse = null;
+            LowestMax = RulesToUse
                 .OrderBy(rr => rr.MaxNumberOfX)
                 .First().MaxNumberOfX;
 
@@ -97,11 +97,11 @@ namespace HPTClient
         {
             get
             {
-                return this.lowestMax;
+                return lowestMax;
             }
             set
             {
-                this.lowestMax = value;
+                lowestMax = value;
                 OnPropertyChanged("LowestMax");
             }
         }
@@ -112,11 +112,11 @@ namespace HPTClient
         {
             get
             {
-                return this.use;
+                return use;
             }
             set
             {
-                this.use = value;
+                use = value;
                 OnPropertyChanged("Use");
             }
         }
@@ -155,7 +155,7 @@ namespace HPTClient
             StringBuilder sb = new StringBuilder();
             //sb.AppendLine("ABCD-Villkor");
 
-            this.XReductionRuleList
+            XReductionRuleList
                 .Where(r => r.NumberOfRacesWithX > 0)
                 .OrderBy(r => r.Prio)
                 .ToList()
@@ -165,7 +165,7 @@ namespace HPTClient
                     sb.AppendLine(r.ReductionSpecificationString);
                 });
 
-            this.ClipboardString = sb.ToString();
+            ClipboardString = sb.ToString();
             return sb.ToString();
 
             //foreach (var xReductionRule in this.XReductionRuleList.Where(r => r.NumberOfRacesWithX > 0))

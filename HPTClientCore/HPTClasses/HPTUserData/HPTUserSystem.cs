@@ -28,7 +28,7 @@
         {
             get
             {
-                return this.EMail == HPTConfig.Config.EMailAddress;
+                return EMail == HPTConfig.Config.EMailAddress;
             }
         }
     }

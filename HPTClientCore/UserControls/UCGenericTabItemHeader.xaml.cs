@@ -62,7 +62,7 @@ namespace HPTClient
 
         private void StackPanel_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            RoutedEventArgs newEventArgs = new RoutedEventArgs(UCGenericTabItemHeader.CloseEvent, this.Tag);
+            RoutedEventArgs newEventArgs = new RoutedEventArgs(CloseEvent, Tag);
             RaiseEvent(newEventArgs);
         }
     }

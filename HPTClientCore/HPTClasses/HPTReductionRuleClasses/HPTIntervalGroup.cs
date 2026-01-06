@@ -24,11 +24,11 @@ namespace HPTClient
         {
             get
             {
-                return this.numberOfWinnersList;
+                return numberOfWinnersList;
             }
             set
             {
-                this.numberOfWinnersList = value;
+                numberOfWinnersList = value;
                 OnPropertyChanged("NumberOfWinnersList");
             }
         }
@@ -41,7 +41,7 @@ namespace HPTClient
                 decimal horseValue = Convert.ToDecimal(horse.GetType().GetProperty(propertyName).GetValue(horse, null));
                 horsesInInterval += IsInInterval(horseValue) ? 1 : 0;
             }
-            return this.NumberOfWinnersList.First(now => now.NumberOfWinners == horsesInInterval).Selected;
+            return NumberOfWinnersList.First(now => now.NumberOfWinners == horsesInInterval).Selected;
         }
 
         private bool use;
@@ -54,7 +54,7 @@ namespace HPTClient
             }
             set
             {
-                this.use = value;
+                use = value;
                 OnPropertyChanged("Use");
             }
         }
@@ -69,7 +69,7 @@ namespace HPTClient
             }
             set
             {
-                this.lowerBoundary = value;
+                lowerBoundary = value;
                 OnPropertyChanged("LowerBoundary");
             }
         }
@@ -84,14 +84,14 @@ namespace HPTClient
             }
             set
             {
-                this.upperBoundary = value;
+                upperBoundary = value;
                 OnPropertyChanged("UpperBoundary");
             }
         }
 
         public bool IsInInterval(decimal Value)
         {
-            return (Value >= this.LowerBoundary && Value <= this.UpperBoundary);
+            return (Value >= LowerBoundary && Value <= UpperBoundary);
         }
     }
 }

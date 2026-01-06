@@ -60,7 +60,7 @@ namespace HPTClient
             }
             set
             {
-                this.isPayingCustomer = value;
+                isPayingCustomer = value;
                 OnPropertyChanged("IsPayingCustomer");
             }
         }
@@ -152,11 +152,11 @@ namespace HPTClient
         {
             get
             {
-                return this.showRankReduction;
+                return showRankReduction;
             }
             set
             {
-                this.showRankReduction = value;
+                showRankReduction = value;
                 OnPropertyChanged("ShowRankReduction");
             }
         }
@@ -168,11 +168,11 @@ namespace HPTClient
         {
             get
             {
-                return this.showRankOverview;
+                return showRankOverview;
             }
             set
             {
-                this.showRankOverview = value;
+                showRankOverview = value;
                 OnPropertyChanged("ShowRankOverview");
             }
         }
@@ -200,11 +200,11 @@ namespace HPTClient
         {
             get
             {
-                return this.showComplimentaryRules;
+                return showComplimentaryRules;
             }
             set
             {
-                this.showComplimentaryRules = value;
+                showComplimentaryRules = value;
                 OnPropertyChanged("ShowComplimentaryRules");
             }
         }
@@ -217,11 +217,11 @@ namespace HPTClient
         {
             get
             {
-                return this.showIntervalReduction;
+                return showIntervalReduction;
             }
             set
             {
-                this.showIntervalReduction = value;
+                showIntervalReduction = value;
                 OnPropertyChanged("ShowIntervalReduction");
             }
         }
@@ -296,11 +296,11 @@ namespace HPTClient
         {
             get
             {
-                return this.showReductionStatistics;
+                return showReductionStatistics;
             }
             set
             {
-                this.showReductionStatistics = value;
+                showReductionStatistics = value;
                 OnPropertyChanged("ShowReductionStatistics");
             }
         }
@@ -312,11 +312,11 @@ namespace HPTClient
         {
             get
             {
-                return this.showAdvanced;
+                return showAdvanced;
             }
             set
             {
-                this.showAdvanced = value;
+                showAdvanced = value;
                 OnPropertyChanged("ShowAdvanced");
             }
         }
@@ -328,11 +328,11 @@ namespace HPTClient
         {
             get
             {
-                return this.showGroupIntervalReduction;
+                return showGroupIntervalReduction;
             }
             set
             {
-                this.showGroupIntervalReduction = value;
+                showGroupIntervalReduction = value;
                 OnPropertyChanged("ShowGroupIntervalReduction");
             }
         }
@@ -344,11 +344,11 @@ namespace HPTClient
         {
             get
             {
-                return this.showMultiABCD;
+                return showMultiABCD;
             }
             set
             {
-                this.showMultiABCD = value;
+                showMultiABCD = value;
                 OnPropertyChanged("ShowMultiABCD");
             }
         }
@@ -361,11 +361,11 @@ namespace HPTClient
         {
             get
             {
-                return this.showV6BetMultiplier;
+                return showV6BetMultiplier;
             }
             set
             {
-                this.showV6BetMultiplier = value;
+                showV6BetMultiplier = value;
                 OnPropertyChanged("ShowV6BetMultiplier");
             }
         }
@@ -377,11 +377,11 @@ namespace HPTClient
         {
             get
             {
-                return this.showCompanyGambling;
+                return showCompanyGambling;
             }
             set
             {
-                this.showCompanyGambling = value;
+                showCompanyGambling = value;
                 OnPropertyChanged("ShowCompanyGambling");
             }
         }
@@ -393,11 +393,11 @@ namespace HPTClient
         {
             get
             {
-                return this.showATGXmlFile;
+                return showATGXmlFile;
             }
             set
             {
-                this.showATGXmlFile = value;
+                showATGXmlFile = value;
                 OnPropertyChanged("ShowATGXmlFile");
             }
         }
@@ -409,11 +409,11 @@ namespace HPTClient
         {
             get
             {
-                return this.showTemplateWorkshop;
+                return showTemplateWorkshop;
             }
             set
             {
-                this.showTemplateWorkshop = value;
+                showTemplateWorkshop = value;
                 OnPropertyChanged("ShowTemplateWorkshop");
             }
         }

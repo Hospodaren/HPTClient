@@ -20,7 +20,7 @@ namespace HPTClient
 
         private void icGroupRule_Checked(object sender, RoutedEventArgs e)
         {
-            this.MarkBet.RecalculateReduction(RecalculateReason.Rank);
+            MarkBet.RecalculateReduction(RecalculateReason.Rank);
         }
 
         private void btnNewGroupRule_Click(object sender, RoutedEventArgs e)
@@ -54,7 +54,7 @@ namespace HPTClient
                 if (rule.ReductionRuleList != null && rule.ReductionRuleList.Count > 0)
                 {
                     rule.ReductionRuleList.Clear();
-                    this.MarkBet.RecalculateReduction(RecalculateReason.Rank);
+                    MarkBet.RecalculateReduction(RecalculateReason.Rank);
                 }
             }
             catch (Exception exc)
@@ -71,7 +71,7 @@ namespace HPTClient
                 var rule = (HPTHorseRankSumReductionRule)iud.DataContext;
                 if (rule.Use)
                 {
-                    this.MarkBet.RecalculateReduction(RecalculateReason.Rank);
+                    MarkBet.RecalculateReduction(RecalculateReason.Rank);
                 }
             }
             catch (Exception exc)
@@ -88,7 +88,7 @@ namespace HPTClient
             //    this.MarkBet.ReductionHorseRank = false;
             //}
             //this.MarkBet.ReductionHorseRank = 
-            this.MarkBet.RecalculateReduction(RecalculateReason.Rank);
+            MarkBet.RecalculateReduction(RecalculateReason.Rank);
         }
 
         private void iudMinNumberOfWinners_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -97,7 +97,7 @@ namespace HPTClient
             {
                 var iud = (IntegerUpDown)sender;
                 var rule = (HPTHorseRankReductionRule)iud.DataContext;
-                this.MarkBet.RecalculateReduction(RecalculateReason.Rank);
+                MarkBet.RecalculateReduction(RecalculateReason.Rank);
             }
             catch (Exception exc)
             {
@@ -107,9 +107,9 @@ namespace HPTClient
 
         private void dudMinValue_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            if (this.MarkBet.ReductionRank)
+            if (MarkBet.ReductionRank)
             {
-                this.MarkBet.RecalculateReduction(RecalculateReason.Rank);
+                MarkBet.RecalculateReduction(RecalculateReason.Rank);
             }
         }
 
@@ -121,7 +121,7 @@ namespace HPTClient
                 var rule = (HPTHorseRankReductionRule)btn.DataContext;
                 rule.ParentHorseRankSumReductionRule.ReductionRuleList.Remove(rule);
                 rule.ParentHorseRankSumReductionRule = null;
-                this.MarkBet.RecalculateReduction(RecalculateReason.Rank);
+                MarkBet.RecalculateReduction(RecalculateReason.Rank);
             }
             catch (Exception exc)
             {
@@ -141,16 +141,16 @@ namespace HPTClient
             {
                 var btn = (Button)sender;
                 var rule = (HPTHorseRankReductionRule)btn.DataContext;
-                if (this.pu == null)
+                if (pu == null)
                 {
-                    this.pu = new System.Windows.Controls.Primitives.Popup()
+                    pu = new System.Windows.Controls.Primitives.Popup()
                     {
                         Placement = System.Windows.Controls.Primitives.PlacementMode.Top,
                         PlacementTarget = btn//,
                         //HorizontalOffset = -10D,
                         //VerticalOffset = -10D
                     };
-                    this.pu.MouseLeave += new MouseEventHandler(pu_MouseLeave);
+                    pu.MouseLeave += new MouseEventHandler(pu_MouseLeave);
                 }
 
                 // Skapa innehållet för popupen
@@ -171,7 +171,7 @@ namespace HPTClient
                 var pi = rule.ParentHorseRankSumReductionRule.HorseRankVariable.HorseProperty;
 
                 var horseList = new List<HPTHorse>();
-                foreach (var horse in this.MarkBet.RaceDayInfo.HorseListSelected)
+                foreach (var horse in MarkBet.RaceDayInfo.HorseListSelected)
                 {
                     if (rule.OnlyInSpecifiedLegs && rule.LegSelectionList.First(l => l.LegNumber == horse.ParentRace.LegNr).Selected == false)
                     {
@@ -220,9 +220,9 @@ namespace HPTClient
                 };
 
                 // Visa popupen
-                this.pu.DataContext = horseCollection;
-                this.pu.Child = b;
-                this.pu.IsOpen = true;
+                pu.DataContext = horseCollection;
+                pu.Child = b;
+                pu.IsOpen = true;
             }
             catch (Exception exc)
             {

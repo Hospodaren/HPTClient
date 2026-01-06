@@ -15,7 +15,7 @@ namespace HPTClient
         public HPTGroupIntervalReductionRule(int numberOfRaces, bool use)
             : base(numberOfRaces, use)
         {
-            this.NumberOfWinnersList
+            NumberOfWinnersList
                 .ToList()
                 .ForEach(now => now.Selectable = true);
             //foreach (HPTNumberOfWinners now in this.NumberOfWinnersList)
@@ -29,7 +29,7 @@ namespace HPTClient
         public HPTGroupIntervalReductionRule Clone()
         {
             var groupIntervalReductionRule = (HPTGroupIntervalReductionRule)HPTSerializer.CreateDeepCopy(this);
-            groupIntervalReductionRule.HorseVariable = this.HorseVariable;
+            groupIntervalReductionRule.HorseVariable = HorseVariable;
             return groupIntervalReductionRule;
         }
 
@@ -38,59 +38,59 @@ namespace HPTClient
 
         public override bool IncludeRow(HPTMarkBet markBet, HPTMarkBetSingleRow singleRow)
         {
-            if (!this.Use || this.SkipRule)
+            if (!Use || SkipRule)
             {
                 return true;
             }
             if (singleRow.CurrentGroupIntervalValues == null)
             {
-                singleRow.SetCurrentGroupIntervalValues(this.HorseVariable.HorseProperty);
+                singleRow.SetCurrentGroupIntervalValues(HorseVariable.HorseProperty);
             }
 
-            if (!this.OnlyInSpecifiedLegs)
+            if (!OnlyInSpecifiedLegs)
             {
-                int horsesInInterval = singleRow.CurrentGroupIntervalValues.Count(d => d >= this.LowerBoundary && d <= this.UpperBoundary);
-                return this.NumberOfWinnersList[horsesInInterval].Selected;
+                int horsesInInterval = singleRow.CurrentGroupIntervalValues.Count(d => d >= LowerBoundary && d <= UpperBoundary);
+                return NumberOfWinnersList[horsesInInterval].Selected;
             }
             else
             {
                 int numberOfX = 0;
-                foreach (var legNumber in this.LegList)
+                foreach (var legNumber in LegList)
                 {
                     decimal horseValue = singleRow.CurrentGroupIntervalValues[legNumber - 1];
-                    numberOfX += horseValue >= this.LowerBoundary && horseValue <= this.UpperBoundary ? 1 : 0;
+                    numberOfX += horseValue >= LowerBoundary && horseValue <= UpperBoundary ? 1 : 0;
                 }
-                return this.NumberOfWinnersList[numberOfX].Selected;
+                return NumberOfWinnersList[numberOfX].Selected;
             }
         }
 
         public override bool IncludeRow(HPTMarkBet markBet, HPTHorse[] horseList, int numberOfRacesToTest)
         {
-            if (!this.Use)
+            if (!Use)
             {
                 return true;
             }
 
-            if (!this.OnlyInSpecifiedLegs)
+            if (!OnlyInSpecifiedLegs)
             {
                 int horsesInInterval = 0;
                 foreach (HPTHorse horse in horseList)
                 {
-                    decimal horseValue = Convert.ToDecimal(this.HorseVariable.HorseProperty.GetValue(horse, null));
+                    decimal horseValue = Convert.ToDecimal(HorseVariable.HorseProperty.GetValue(horse, null));
                     horsesInInterval += IsInInterval(horseValue) ? 1 : 0;
                 }
-                return this.MaxNumberOfX >= horsesInInterval;
+                return MaxNumberOfX >= horsesInInterval;
             }
-            else if (numberOfRacesToTest >= this.LegList.Max())
+            else if (numberOfRacesToTest >= LegList.Max())
             {
                 int numberOfX = 0;
-                foreach (var legNumber in this.LegList.Where(l => l <= numberOfRacesToTest))
+                foreach (var legNumber in LegList.Where(l => l <= numberOfRacesToTest))
                 {
                     var horse = horseList[legNumber - 1];
-                    decimal horseValue = Convert.ToDecimal(this.HorseVariable.HorseProperty.GetValue(horse, null));
-                    numberOfX += horseValue >= this.LowerBoundary && horseValue <= this.UpperBoundary ? 1 : 0;
+                    decimal horseValue = Convert.ToDecimal(HorseVariable.HorseProperty.GetValue(horse, null));
+                    numberOfX += horseValue >= LowerBoundary && horseValue <= UpperBoundary ? 1 : 0;
                 }
-                return this.NumberOfWinnersList
+                return NumberOfWinnersList
                     .Where(now => now.Selected)
                     .Max(now => now.NumberOfWinners) >= numberOfX;
             }
@@ -100,25 +100,25 @@ namespace HPTClient
         public override bool GetRuleResultForCorrectRow(HPTMarkBet markBet)
         {
             var currentGroupIntervalValues = markBet.CouponCorrector.HorseList
-            .Select(h => Convert.ToDecimal(this.HorseVariable.HorseProperty.GetValue(h, null)))
+            .Select(h => Convert.ToDecimal(HorseVariable.HorseProperty.GetValue(h, null)))
             .ToArray();
 
-            if (!this.OnlyInSpecifiedLegs)
+            if (!OnlyInSpecifiedLegs)
             {
 
-                int horsesInInterval = currentGroupIntervalValues.Count(d => d >= this.LowerBoundary && d <= this.UpperBoundary);
-                this.RuleResultForCorrectRow = horsesInInterval.ToString() + " Hästar";
+                int horsesInInterval = currentGroupIntervalValues.Count(d => d >= LowerBoundary && d <= UpperBoundary);
+                RuleResultForCorrectRow = horsesInInterval.ToString() + " Hästar";
                 return true;
             }
             else
             {
                 int numberOfX = 0;
-                foreach (var legNumber in this.LegList)
+                foreach (var legNumber in LegList)
                 {
                     decimal horseValue = currentGroupIntervalValues[legNumber - 1];
-                    numberOfX += horseValue >= this.LowerBoundary && horseValue <= this.UpperBoundary ? 1 : 0;
+                    numberOfX += horseValue >= LowerBoundary && horseValue <= UpperBoundary ? 1 : 0;
                 }
-                this.RuleResultForCorrectRow = numberOfX.ToString() + " Hästar";
+                RuleResultForCorrectRow = numberOfX.ToString() + " Hästar";
                 return true;
             }
         }
@@ -133,7 +133,7 @@ namespace HPTClient
             }
             set
             {
-                this.lowerBoundary = value;
+                lowerBoundary = value;
                 OnPropertyChanged("LowerBoundary");
             }
         }
@@ -148,21 +148,21 @@ namespace HPTClient
             }
             set
             {
-                this.upperBoundary = value;
+                upperBoundary = value;
                 OnPropertyChanged("UpperBoundary");
             }
         }
 
         public bool IsInInterval(decimal Value)
         {
-            return (Value >= this.LowerBoundary && Value <= this.UpperBoundary);
+            return (Value >= LowerBoundary && Value <= UpperBoundary);
         }
 
         public override string ReductionTypeString
         {
             get
             {
-                if (this.NumberOfWinnersList.Count(now => now.Selected) == 0)
+                if (NumberOfWinnersList.Count(now => now.Selected) == 0)
                 {
                     return string.Empty;
                 }
@@ -176,14 +176,14 @@ namespace HPTClient
         {
             get
             {
-                return this.horseVariable;
+                return horseVariable;
             }
             set
             {
-                this.horseVariable = value;
-                if (this.horseVariable != null)
+                horseVariable = value;
+                if (horseVariable != null)
                 {
-                    this.PropertyName = this.horseVariable.PropertyName;
+                    PropertyName = horseVariable.PropertyName;
                 }
                 OnPropertyChanged("HorseVariable");
             }
@@ -191,43 +191,43 @@ namespace HPTClient
 
         public override void SetReductionSpecificationString()
         {
-            if (this.NumberOfWinnersList.Count(now => now.Selected) == 0)
+            if (NumberOfWinnersList.Count(now => now.Selected) == 0)
             {
-                this.ReductionSpecificationString = string.Empty;
+                ReductionSpecificationString = string.Empty;
                 return;
             }
 
             var sb = new StringBuilder();
-            sb.Append(this.NumberOfWinnersString);
+            sb.Append(NumberOfWinnersString);
             sb.Append(" vinnare");
-            if (this.OnlyInSpecifiedLegs)
+            if (OnlyInSpecifiedLegs)
             {
                 sb.Append(" (");
-                sb.Append(this.SelectedRacesString);
+                sb.Append(SelectedRacesString);
                 sb.Append(")");
             }
-            this.ReductionSpecificationString = sb.ToString();
+            ReductionSpecificationString = sb.ToString();
         }
 
         public override string ToString(HPTMarkBet markBet)
         {
-            if (this.NumberOfWinnersList.Count(now => now.Selected) == 0)
+            if (NumberOfWinnersList.Count(now => now.Selected) == 0)
             {
                 return string.Empty;
             }
 
             // Create String representation
             var sb = new StringBuilder();
-            sb.Append(this.HorseVariable.GroupReductionInfo.Name);
+            sb.Append(HorseVariable.GroupReductionInfo.Name);
             sb.Append(" (");
-            sb.Append(this.LowerBoundary);
+            sb.Append(LowerBoundary);
             sb.Append(" - ");
-            sb.Append(this.UpperBoundary);
+            sb.Append(UpperBoundary);
             sb.AppendLine(")");
-            sb.Append(this.NumberOfWinnersString);
+            sb.Append(NumberOfWinnersString);
             sb.AppendLine(" vinnare");
 
-            this.ClipboardString = this.ReductionTypeString + "\r\n" + sb.ToString();
+            ClipboardString = ReductionTypeString + "\r\n" + sb.ToString();
             return sb.ToString();
         }
     }

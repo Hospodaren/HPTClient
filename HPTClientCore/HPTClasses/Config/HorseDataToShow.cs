@@ -105,11 +105,11 @@ namespace HPTClient
         {
             get
             {
-                return this.showSex;
+                return showSex;
             }
             set
             {
-                this.showSex = value;
+                showSex = value;
                 OnPropertyChanged("ShowSex");
             }
         }
@@ -121,11 +121,11 @@ namespace HPTClient
         {
             get
             {
-                return this.showAge;
+                return showAge;
             }
             set
             {
-                this.showAge = value;
+                showAge = value;
                 OnPropertyChanged("ShowAge");
             }
         }
@@ -185,11 +185,11 @@ namespace HPTClient
         {
             get
             {
-                return this.showOwner;
+                return showOwner;
             }
             set
             {
-                this.showOwner = value;
+                showOwner = value;
                 OnPropertyChanged("ShowOwner");
             }
         }
@@ -201,11 +201,11 @@ namespace HPTClient
         {
             get
             {
-                return this.showOwnProbability;
+                return showOwnProbability;
             }
             set
             {
-                this.showOwnProbability = value;
+                showOwnProbability = value;
                 OnPropertyChanged("ShowOwnProbability");
             }
         }
@@ -217,11 +217,11 @@ namespace HPTClient
         {
             get
             {
-                return this.showBreeder;
+                return showBreeder;
             }
             set
             {
-                this.showBreeder = value;
+                showBreeder = value;
                 OnPropertyChanged("ShowBreeder");
             }
         }
@@ -1035,11 +1035,11 @@ namespace HPTClient
         {
             get
             {
-                return this.showRankRecordWeighedTotal;
+                return showRankRecordWeighedTotal;
             }
             set
             {
-                this.showRankRecordWeighedTotal = value;
+                showRankRecordWeighedTotal = value;
                 OnPropertyChanged("ShowRankRecordWeighedTotal");
             }
         }
@@ -1050,11 +1050,11 @@ namespace HPTClient
         {
             get
             {
-                return this.showRankRecordWeighedLast5;
+                return showRankRecordWeighedLast5;
             }
             set
             {
-                this.showRankRecordWeighedLast5 = value;
+                showRankRecordWeighedLast5 = value;
                 OnPropertyChanged("ShowRankRecordWeighedLast5");
             }
         }
@@ -1065,11 +1065,11 @@ namespace HPTClient
         {
             get
             {
-                return this.showRankEarningsMeanThisYear;
+                return showRankEarningsMeanThisYear;
             }
             set
             {
-                this.showRankEarningsMeanThisYear = value;
+                showRankEarningsMeanThisYear = value;
                 OnPropertyChanged("ShowRankEarningsMeanThisYear");
             }
         }
@@ -1080,11 +1080,11 @@ namespace HPTClient
         {
             get
             {
-                return this.showRankEarningsMeanLastYear;
+                return showRankEarningsMeanLastYear;
             }
             set
             {
-                this.showRankEarningsMeanLastYear = value;
+                showRankEarningsMeanLastYear = value;
                 OnPropertyChanged("ShowRankEarningsMeanLastYear");
             }
         }
@@ -1095,11 +1095,11 @@ namespace HPTClient
         {
             get
             {
-                return this.showRankTotalEarningsMean;
+                return showRankTotalEarningsMean;
             }
             set
             {
-                this.showRankTotalEarningsMean = value;
+                showRankTotalEarningsMean = value;
                 OnPropertyChanged("ShowRankTotalEarningsMean");
             }
         }
@@ -1110,11 +1110,11 @@ namespace HPTClient
         {
             get
             {
-                return this.showRankPlatsodds;
+                return showRankPlatsodds;
             }
             set
             {
-                this.showRankPlatsodds = value;
+                showRankPlatsodds = value;
                 OnPropertyChanged("ShowRankPlatsodds");
             }
         }

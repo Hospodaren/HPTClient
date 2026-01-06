@@ -25,7 +25,7 @@
         public int GetDistance(TrackNameEnum horseTrack)
         {
             // Hemmabana
-            if (horseTrack == this.TrackName)
+            if (horseTrack == TrackName)
             {
                 return 0;
             }
@@ -34,7 +34,7 @@
             var horseTrackDistance = TrackDistanceArray.FirstOrDefault(td => td.TrackName == horseTrack);
             if (horseTrackDistance != null)
             {
-                return this.DistanceArray[horseTrackDistance.PositionInArray];
+                return DistanceArray[horseTrackDistance.PositionInArray];
             }
 
             // Ingen träff på bana

@@ -28,7 +28,7 @@ namespace HPTClient
         {
             get
             {
-                return this.StartTime > DateTime.Now ? this.StartTime : this.EndTime;
+                return StartTime > DateTime.Now ? StartTime : EndTime;
             }
         }
 
@@ -39,7 +39,7 @@ namespace HPTClient
         {
             get
             {
-                if (this.Jackpot)
+                if (Jackpot)
                 {
                     return "JACKPOTT";
                 }
@@ -50,13 +50,13 @@ namespace HPTClient
         internal void SetCalendarRacaDayInfoBrush()
         {
             var c = Colors.Transparent;
-            if (this.StartTime.Date == DateTime.Now.Date)
+            if (StartTime.Date == DateTime.Now.Date)
             {
-                if (this.StartTime > DateTime.Now)
+                if (StartTime > DateTime.Now)
                 {
                     c = Colors.LightGreen;
                 }
-                else if (this.EndTime < DateTime.Now)
+                else if (EndTime < DateTime.Now)
                 {
                     c = Colors.IndianRed;
                 }
@@ -65,12 +65,12 @@ namespace HPTClient
                     c = Colors.LightYellow;
                 }
             }
-            else if (this.EndTime < DateTime.Now)
+            else if (EndTime < DateTime.Now)
             {
                 c = Colors.IndianRed;
             }
 
-            this.CalendarRacaDayInfoBrush = new SolidColorBrush(c);
+            CalendarRacaDayInfoBrush = new SolidColorBrush(c);
         }
 
         private Brush calendarRacaDayInfoBrush;
@@ -78,15 +78,15 @@ namespace HPTClient
         {
             get
             {
-                if (this.calendarRacaDayInfoBrush == null)
+                if (calendarRacaDayInfoBrush == null)
                 {
                     SetCalendarRacaDayInfoBrush();
                 }
-                return this.calendarRacaDayInfoBrush;
+                return calendarRacaDayInfoBrush;
             }
             set
             {
-                this.calendarRacaDayInfoBrush = value;
+                calendarRacaDayInfoBrush = value;
                 OnPropertyChanged("CalendarRacaDayInfoBrush");
             }
         }
@@ -100,24 +100,24 @@ namespace HPTClient
         {
             get
             {
-                if (this.betTypeATGLogo == null)
+                if (betTypeATGLogo == null)
                 {
-                    string folder = this.IsEnabled ? "/ATGImages/" : "/ATGImagesBW/";
-                    this.betTypeATGLogo = GetBetTypeATGLogo();  // new BitmapImage(new Uri(folder + this.Code + "Small.png", UriKind.Relative));
+                    string folder = IsEnabled ? "/ATGImages/" : "/ATGImagesBW/";
+                    betTypeATGLogo = GetBetTypeATGLogo();  // new BitmapImage(new Uri(folder + this.Code + "Small.png", UriKind.Relative));
                 }
-                return this.betTypeATGLogo;
+                return betTypeATGLogo;
             }
             set
             {
-                this.betTypeATGLogo = value;
+                betTypeATGLogo = value;
                 OnPropertyChanged("BetTypeATGLogo");
             }
         }
 
         public ImageSource GetBetTypeATGLogo()
         {
-            string folder = this.IsEnabled ? "/ATGImages/" : "/ATGImagesBW/";
-            return new BitmapImage(new Uri(folder + this.Code + "Small.png", UriKind.Relative));
+            string folder = IsEnabled ? "/ATGImages/" : "/ATGImagesBW/";
+            return new BitmapImage(new Uri(folder + Code + "Small.png", UriKind.Relative));
         }
 
         [DataMember]
@@ -130,7 +130,7 @@ namespace HPTClient
         {
             get
             {
-                return this.Code == "V4" || this.Code == "V5" || this.Code == "V64" || this.Code == "V65" || this.Code == "V75" || this.Code == "V86" || this.Code == "GS75" || this.Code == "V85";
+                return Code == "V4" || Code == "V5" || Code == "V64" || Code == "V65" || Code == "V75" || Code == "V86" || Code == "GS75" || Code == "V85";
             }
         }
 
@@ -138,7 +138,7 @@ namespace HPTClient
         {
             get
             {
-                return this.Code == "GS75" || this.Code == "V64" || this.Code == "V65" || this.Code == "V75" || this.Code == "V86" || this.Code == "V85";
+                return Code == "GS75" || Code == "V64" || Code == "V65" || Code == "V75" || Code == "V86" || Code == "V85";
             }
         }
 
@@ -148,45 +148,45 @@ namespace HPTClient
         {
             get
             {
-                if (this.poolShare == 0m)
+                if (poolShare == 0m)
                 {
-                    switch (this.Code)
+                    switch (Code)
                     {
                         case "V3":
                         case "V4":
                         case "DD":
                         case "LD":
-                            this.poolShare = 0.75m;
+                            poolShare = 0.75m;
                             break;
                         case "V5":
-                            this.poolShare = 0.65m;
+                            poolShare = 0.65m;
                             break;
                         case "V64":
                         case "V75":
                         case "GS75":
                         case "V86":
-                            this.poolShare = 0.26m;
+                            poolShare = 0.26m;
                             break;
                         case "V85":
-                            this.poolShare = 0.2275m;
+                            poolShare = 0.2275m;
                             break;
                         case "V65":
-                            this.poolShare = 0.325m;
+                            poolShare = 0.325m;
                             break;
                         case "T":
-                            this.poolShare = 0.7m;
+                            poolShare = 0.7m;
                             break;
                         case "V":
                         case "P":
                         case "TV":
-                            this.poolShare = 0.8m;
+                            poolShare = 0.8m;
                             break;
                         default:
-                            this.poolShare = 1m;
+                            poolShare = 1m;
                             break;
                     }
                 }
-                return this.poolShare;
+                return poolShare;
             }
         }
 
@@ -196,15 +196,15 @@ namespace HPTClient
         {
             get
             {
-                if (this.gamblerReturnPercentage == 0m)
+                if (gamblerReturnPercentage == 0m)
                 {
-                    switch (this.Code)
+                    switch (Code)
                     {
                         case "V3":
                         case "V4":
                         case "DD":
                         case "LD":
-                            this.gamblerReturnPercentage = 0.75m;
+                            gamblerReturnPercentage = 0.75m;
                             break;
                         case "V5":
                         case "V64":
@@ -213,22 +213,22 @@ namespace HPTClient
                         case "GS75":
                         case "V86":
                         case "V65":
-                            this.gamblerReturnPercentage = 0.65m;
+                            gamblerReturnPercentage = 0.65m;
                             break;
                         case "T":
-                            this.gamblerReturnPercentage = 0.7m;
+                            gamblerReturnPercentage = 0.7m;
                             break;
                         case "V":
                         case "P":
                         case "TV":
-                            this.gamblerReturnPercentage = 0.8m;
+                            gamblerReturnPercentage = 0.8m;
                             break;
                         default:
-                            this.gamblerReturnPercentage = 1m;
+                            gamblerReturnPercentage = 1m;
                             break;
                     }
                 }
-                return this.gamblerReturnPercentage;
+                return gamblerReturnPercentage;
             }
         }
 
@@ -238,28 +238,28 @@ namespace HPTClient
         {
             get
             {
-                if (this.poolShareOneError == 0m)
+                if (poolShareOneError == 0m)
                 {
-                    switch (this.Code)
+                    switch (Code)
                     {
                         case "V64":
                         case "V75":
                         case "GS75":
                         case "V86":
-                            this.poolShareOneError = 0.13m;
+                            poolShareOneError = 0.13m;
                             break;
                         case "V85":
-                            this.poolShareOneError = 0.0975m;
+                            poolShareOneError = 0.0975m;
                             break;
                         case "V65":
-                            this.poolShareOneError = 0.325m;
+                            poolShareOneError = 0.325m;
                             break;
                         default:
-                            this.poolShareOneError = 0m;
+                            poolShareOneError = 0m;
                             break;
                     }
                 }
-                return this.poolShareOneError;
+                return poolShareOneError;
             }
         }
 
@@ -269,25 +269,25 @@ namespace HPTClient
         {
             get
             {
-                if (this.poolShareTwoErrors == 0m)
+                if (poolShareTwoErrors == 0m)
                 {
-                    switch (this.Code)
+                    switch (Code)
                     {
                         case "V64":
                         case "V75":
                         case "GS75":
                         case "V86":
-                            this.poolShareTwoErrors = 0.26m;
+                            poolShareTwoErrors = 0.26m;
                             break;
                         case "V85":
-                            this.poolShareTwoErrors = 0.0975m;
+                            poolShareTwoErrors = 0.0975m;
                             break;
                         default:
-                            this.poolShareTwoErrors = 0m;
+                            poolShareTwoErrors = 0m;
                             break;
                     }
                 }
-                return this.poolShareTwoErrors;
+                return poolShareTwoErrors;
             }
         }
 
@@ -297,19 +297,19 @@ namespace HPTClient
         {
             get
             {
-                if (this.poolShareThreeErrors == 0m)
+                if (poolShareThreeErrors == 0m)
                 {
-                    switch (this.Code)
+                    switch (Code)
                     {
                         case "V85":
-                            this.poolShareThreeErrors = 0.2275m;
+                            poolShareThreeErrors = 0.2275m;
                             break;
                         default:
-                            this.poolShareThreeErrors = 0m;
+                            poolShareThreeErrors = 0m;
                             break;
                     }
                 }
-                return this.poolShareThreeErrors;
+                return poolShareThreeErrors;
             }
         }
 
@@ -319,25 +319,25 @@ namespace HPTClient
         {
             get
             {
-                if (this.v6Factor == 0m)
+                if (v6Factor == 0m)
                 {
-                    switch (this.Code)
+                    switch (Code)
                     {
                         case "V64":
                         case "V75":
                         case "GS75":
                         case "V86":
-                            this.v6Factor = 2.5m;
+                            v6Factor = 2.5m;
                             break;
                         case "V65":
-                            this.v6Factor = 2.0m;
+                            v6Factor = 2.0m;
                             break;
                         default:
-                            this.v6Factor = 1m;
+                            v6Factor = 1m;
                             break;
                     }
                 }
-                return this.v6Factor;
+                return v6Factor;
             }
         }
 
@@ -347,27 +347,27 @@ namespace HPTClient
         {
             get
             {
-                if (string.IsNullOrEmpty(this.v6String))
+                if (string.IsNullOrEmpty(v6String))
                 {
-                    switch (this.Code)
+                    switch (Code)
                     {
                         case "V64":
                         case "V65":
-                            this.v6String = "V6";
+                            v6String = "V6";
                             break;
                         case "V75":
                         case "GS75":
-                            this.v6String = "V7";
+                            v6String = "V7";
                             break;
                         case "V86":
-                            this.v6String = "V8";
+                            v6String = "V8";
                             break;
                         default:
-                            this.v6String = string.Empty;
+                            v6String = string.Empty;
                             break;
                     }
                 }
-                return this.v6String;
+                return v6String;
             }
         }
 
@@ -379,15 +379,15 @@ namespace HPTClient
         {
             get
             {
-                if (this.rowValueIntervalList == null)
+                if (rowValueIntervalList == null)
                 {
-                    switch (this.Code)
+                    switch (Code)
                     {
                         case "V75":
                         case "GS75":
                         case "V86":
                         case "V85":
-                            this.rowValueIntervalList = new ObservableCollection<HPTRowValueInterval>
+                            rowValueIntervalList = new ObservableCollection<HPTRowValueInterval>
                             {
                                 new HPTRowValueInterval()
                                 {
@@ -433,7 +433,7 @@ namespace HPTClient
                             break;
                         case "V4":
                         case "V5":
-                            this.rowValueIntervalList = new ObservableCollection<HPTRowValueInterval>
+                            rowValueIntervalList = new ObservableCollection<HPTRowValueInterval>
                             {
                                 new HPTRowValueInterval()
                                 {
@@ -479,7 +479,7 @@ namespace HPTClient
                             break;
                         case "V64":
                         case "V65":
-                            this.rowValueIntervalList = new ObservableCollection<HPTRowValueInterval>
+                            rowValueIntervalList = new ObservableCollection<HPTRowValueInterval>
                             {
                                 new HPTRowValueInterval()
                                 {
@@ -527,7 +527,7 @@ namespace HPTClient
                             break;
                     }
                 }
-                return this.rowValueIntervalList;
+                return rowValueIntervalList;
             }
         }
 
@@ -538,9 +538,9 @@ namespace HPTClient
         {
             get
             {
-                if (this.rowValuePercentileList == null)
+                if (rowValuePercentileList == null)
                 {
-                    this.rowValuePercentileList = new HPTRowValuePercentile[]
+                    rowValuePercentileList = new HPTRowValuePercentile[]
                             {
                                 new HPTRowValuePercentile()
                                 {
@@ -569,7 +569,7 @@ namespace HPTClient
                                 }
                             };
                 }
-                return this.rowValuePercentileList;
+                return rowValuePercentileList;
             }
         }
 
@@ -579,13 +579,13 @@ namespace HPTClient
         {
             get
             {
-                if (this.payOutDummyList == null)
+                if (payOutDummyList == null)
                 {
-                    switch (this.Code)
+                    switch (Code)
                     {
                         case "V75":
                         case "GS75":
-                            this.payOutDummyList = new HPTPayOut[]
+                            payOutDummyList = new HPTPayOut[]
                             {
                                 new HPTPayOut()
                                 {
@@ -602,7 +602,7 @@ namespace HPTClient
                             };
                             break;
                         case "V86":
-                            this.payOutDummyList = new HPTPayOut[]
+                            payOutDummyList = new HPTPayOut[]
                             {
                                 new HPTPayOut()
                                 {
@@ -619,7 +619,7 @@ namespace HPTClient
                             };
                             break;
                         case "V85":
-                            this.payOutDummyList = new HPTPayOut[]
+                            payOutDummyList = new HPTPayOut[]
                             {
                                 new HPTPayOut()
                                 {
@@ -640,7 +640,7 @@ namespace HPTClient
                             };
                             break;
                         case "V5":
-                            this.payOutDummyList = new HPTPayOut[]
+                            payOutDummyList = new HPTPayOut[]
                             {
                                 new HPTPayOut()
                                 {
@@ -649,7 +649,7 @@ namespace HPTClient
                             };
                             break;
                         case "V4":
-                            this.payOutDummyList = new HPTPayOut[]
+                            payOutDummyList = new HPTPayOut[]
                             {
                                 new HPTPayOut()
                                 {
@@ -658,7 +658,7 @@ namespace HPTClient
                             };
                             break;
                         case "V64":
-                            this.payOutDummyList = new HPTPayOut[]
+                            payOutDummyList = new HPTPayOut[]
                             {
                                 new HPTPayOut()
                                 {
@@ -675,7 +675,7 @@ namespace HPTClient
                             };
                             break;
                         case "V65":
-                            this.payOutDummyList = new HPTPayOut[]
+                            payOutDummyList = new HPTPayOut[]
                             {
                                 new HPTPayOut()
                                 {
@@ -691,7 +691,7 @@ namespace HPTClient
                             break;
                     }
                 }
-                return this.payOutDummyList;
+                return payOutDummyList;
             }
         }
 
@@ -701,28 +701,28 @@ namespace HPTClient
         {
             get
             {
-                if (this.betMultiplierList == null || this.betMultiplierList.Count() == 0)
+                if (betMultiplierList == null || betMultiplierList.Count() == 0)
                 {
-                    switch (this.Code)
+                    switch (Code)
                     {
                         case "V75":
                         case "GS75":
                         case "V86":
                         case "V85":
                         case "V5":
-                            this.betMultiplierList = new int[] { 1, 2, 5, 10, 20, 50, 100 };
+                            betMultiplierList = new int[] { 1, 2, 5, 10, 20, 50, 100 };
                             break;
                         case "V4":
                         case "V64":
                         case "V65":
-                            this.betMultiplierList = new int[] { 1, 2, 3, 4, 5, 10, 50, 100 };
+                            betMultiplierList = new int[] { 1, 2, 3, 4, 5, 10, 50, 100 };
                             break;
                         default:
-                            this.betMultiplierList = new int[] { 1 };
+                            betMultiplierList = new int[] { 1 };
                             break;
                     }
                 }
-                return this.betMultiplierList;
+                return betMultiplierList;
             }
         }
 
@@ -732,24 +732,24 @@ namespace HPTClient
         {
             get
             {
-                if (this.lowestStake == 0)
+                if (lowestStake == 0)
                 {
-                    switch (this.Code)
+                    switch (Code)
                     {
                         case "DD":
                         case "LD":
                         case "TV":
-                            this.lowestStake = 5;
+                            lowestStake = 5;
                             break;
                         case "T":
-                            this.lowestStake = 2;
+                            lowestStake = 2;
                             break;
                         default:
-                            this.lowestStake = 1;
+                            lowestStake = 1;
                             break;
                     }
                 }
-                return this.lowestStake;
+                return lowestStake;
             }
         }
 
@@ -759,24 +759,24 @@ namespace HPTClient
         {
             get
             {
-                if (this.highestStake == 0)
+                if (highestStake == 0)
                 {
-                    switch (this.Code)
+                    switch (Code)
                     {
                         case "DD":
                         case "LD":
                         case "TV":
-                            this.highestStake = 1000;
+                            highestStake = 1000;
                             break;
                         case "T":
-                            this.highestStake = 500;
+                            highestStake = 500;
                             break;
                         default:
-                            this.highestStake = 1;
+                            highestStake = 1;
                             break;
                     }
                 }
-                return this.highestStake;
+                return highestStake;
             }
         }
 
@@ -786,35 +786,35 @@ namespace HPTClient
         {
             get
             {
-                if (this.rowCost == 0M)
+                if (rowCost == 0M)
                 {
-                    switch (this.Code)
+                    switch (Code)
                     {
                         case "V3":
-                            this.rowCost = 10m;
+                            rowCost = 10m;
                             break;
                         case "V4":
-                            this.rowCost = 2m;
+                            rowCost = 2m;
                             break;
                         case "V5":
                         case "V64":
                         case "V65":
                         case "GS75":
-                            this.rowCost = 1m;
+                            rowCost = 1m;
                             break;
                         case "V75":
                         case "V85":
-                            this.rowCost = 0.5m;
+                            rowCost = 0.5m;
                             break;
                         case "V86":
-                            this.rowCost = 0.25m;
+                            rowCost = 0.25m;
                             break;
                         default:
-                            this.rowCost = 0m;
+                            rowCost = 0m;
                             break;
                     }
                 }
-                return this.rowCost;
+                return rowCost;
             }
         }
 
@@ -827,23 +827,23 @@ namespace HPTClient
         {
             get
             {
-                if (this.jackpotLimit == 0)
+                if (jackpotLimit == 0)
                 {
-                    switch (this.Code)
+                    switch (Code)
                     {
                         case "V65":
-                            this.jackpotLimit = 20;
+                            jackpotLimit = 20;
                             break;
                         case "V64":
-                            this.jackpotLimit = 7;
+                            jackpotLimit = 7;
                             break;
                         case "V75":
                         case "GS75":
                         case "V86":
-                            this.jackpotLimit = 15;
+                            jackpotLimit = 15;
                             break;
                         case "V85":
-                            this.jackpotLimit = 5;
+                            jackpotLimit = 5;
                             break;
                         case "DD":
                         case "LD":
@@ -852,13 +852,13 @@ namespace HPTClient
                         case "V5":
                         case "TV":
                         case "T":
-                            this.jackpotLimit = 0;
+                            jackpotLimit = 0;
                             break;
                         default:
                             return 0;
                     }
                 }
-                return this.jackpotLimit;
+                return jackpotLimit;
             }
         }
 
@@ -868,44 +868,44 @@ namespace HPTClient
         {
             get
             {
-                if (this.numberOfRaces == 0m)
+                if (numberOfRaces == 0m)
                 {
-                    switch (this.Code)
+                    switch (Code)
                     {
                         case "V3":
-                            this.numberOfRaces = 3;
+                            numberOfRaces = 3;
                             break;
                         case "V4":
-                            this.numberOfRaces = 4;
+                            numberOfRaces = 4;
                             break;
                         case "V5":
-                            this.numberOfRaces = 5;
+                            numberOfRaces = 5;
                             break;
                         case "V65":
                         case "V64":
-                            this.numberOfRaces = 6;
+                            numberOfRaces = 6;
                             break;
                         case "V75":
                         case "GS75":
-                            this.numberOfRaces = 7;
+                            numberOfRaces = 7;
                             break;
                         case "V86":
                         case "V85":
-                            this.numberOfRaces = 8;
+                            numberOfRaces = 8;
                             break;
                         case "DD":
                         case "LD":
-                            this.numberOfRaces = 2;
+                            numberOfRaces = 2;
                             break;
                         case "TV":
                         case "T":
-                            this.numberOfRaces = 1;
+                            numberOfRaces = 1;
                             break;
                         default:
                             return 0;
                     }
                 }
-                return this.numberOfRaces;
+                return numberOfRaces;
             }
         }
 
@@ -915,30 +915,30 @@ namespace HPTClient
         {
             get
             {
-                if (this.maxNumberOfSystemsInFile == 0m)
+                if (maxNumberOfSystemsInFile == 0m)
                 {
-                    switch (this.Code)
+                    switch (Code)
                     {
                         case "V4":
                         case "V5":
-                            this.maxNumberOfSystemsInFile = 500;
+                            maxNumberOfSystemsInFile = 500;
                             break;
                         case "V65":
                         case "V64":
-                            this.maxNumberOfSystemsInFile = 2000;
+                            maxNumberOfSystemsInFile = 2000;
                             break;
                         case "V75":
                         case "V85":
                         case "GS75":
                         case "V86":
-                            this.maxNumberOfSystemsInFile = 5000;
+                            maxNumberOfSystemsInFile = 5000;
                             break;
                         default:
-                            this.maxNumberOfSystemsInFile = 9999;
+                            maxNumberOfSystemsInFile = 9999;
                             break;
                     }
                 }
-                return this.maxNumberOfSystemsInFile;
+                return maxNumberOfSystemsInFile;
             }
         }
 
@@ -948,46 +948,46 @@ namespace HPTClient
         {
             get
             {
-                if (this.typeCategory == BetTypeCategory.None)
+                if (typeCategory == BetTypeCategory.None)
                 {
-                    switch (this.Code)
+                    switch (Code)
                     {
                         //case "V3":
                         //    this.typeCategory = BetTypeCategory.None;
                         //    break;
                         case "V4":
-                            this.typeCategory = BetTypeCategory.V4;
+                            typeCategory = BetTypeCategory.V4;
                             break;
                         case "V5":
-                            this.typeCategory = BetTypeCategory.V5;
+                            typeCategory = BetTypeCategory.V5;
                             break;
                         case "V65":
                         case "V64":
-                            this.typeCategory = BetTypeCategory.V6X;
+                            typeCategory = BetTypeCategory.V6X;
                             break;
                         case "V75":
                         case "GS75":
-                            this.typeCategory = BetTypeCategory.V75;
+                            typeCategory = BetTypeCategory.V75;
                             break;
                         case "V86":
-                            this.typeCategory = BetTypeCategory.V86;
+                            typeCategory = BetTypeCategory.V86;
                             break;
                         case "V85":
-                            this.typeCategory = BetTypeCategory.V85;
+                            typeCategory = BetTypeCategory.V85;
                             break;
                         case "DD":
                         case "LD":
-                            this.typeCategory = BetTypeCategory.Double;
+                            typeCategory = BetTypeCategory.Double;
                             break;
                         case "TV":
                         case "T":
-                            this.typeCategory = BetTypeCategory.Twin;
+                            typeCategory = BetTypeCategory.Twin;
                             break;
                         default:
                             return BetTypeCategory.None;
                     }
                 }
-                return this.typeCategory;
+                return typeCategory;
             }
         }
 
@@ -997,26 +997,26 @@ namespace HPTClient
         {
             get
             {
-                switch (this.Code)
+                switch (Code)
                 {
                     case "V4":
-                        this.maxBetForNotPayingCustomer = 50;
+                        maxBetForNotPayingCustomer = 50;
                         break;
                     case "V65":
                     case "V64":
-                        this.maxBetForNotPayingCustomer = 150;
+                        maxBetForNotPayingCustomer = 150;
                         break;
                     //case "V75":
                     //    this.maxBetForNotPayingCustomer = 7;
                     //    break;
                     case "V86":
-                        this.maxBetForNotPayingCustomer = 300;
+                        maxBetForNotPayingCustomer = 300;
                         break;
                     default:
-                        this.maxBetForNotPayingCustomer = 0;
+                        maxBetForNotPayingCustomer = 0;
                         return 0;
                 }
-                return this.maxBetForNotPayingCustomer;
+                return maxBetForNotPayingCustomer;
             }
         }
 

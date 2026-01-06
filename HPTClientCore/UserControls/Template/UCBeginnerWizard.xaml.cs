@@ -16,35 +16,35 @@ namespace HPTClient
         private Window ownerWindow;
         public UCBeginnerWizard(Window owner)
         {
-            this.ownerWindow = owner;
+            ownerWindow = owner;
             InitializeComponent();
         }
 
         private void btnCreateSystem_Click(object sender, RoutedEventArgs e)
         {
-            if (this.MarkBet.RaceDayInfo.HorseListSelected.Count > 0)
+            if (MarkBet.RaceDayInfo.HorseListSelected.Count > 0)
             {
                 var result = MessageBox.Show("Du har redan valt hästar, vill du behålla dessa på ditt system?", "Behåll valda hästar?", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    foreach (var horse in this.MarkBet.RaceDayInfo.HorseListSelected)
+                    foreach (var horse in MarkBet.RaceDayInfo.HorseListSelected)
                     {
                         horse.Locked = true;
                     }
                 }
                 else
                 {
-                    this.MarkBet.ClearAll();
+                    MarkBet.ClearAll();
                 }
             }
             Cursor = Cursors.Wait;
             try
             {
-                this.btnSaveAndClose.Visibility = System.Windows.Visibility.Visible;
+                btnSaveAndClose.Visibility = Visibility.Visible;
 
                 // Skapa systemförslag utifrån valen...
-                this.MarkBet.SelectFromBeginnerTemplate();
-                this.btnSaveAndClose.IsEnabled = true;
+                MarkBet.SelectFromBeginnerTemplate();
+                btnSaveAndClose.IsEnabled = true;
             }
             catch (Exception exc)
             {
@@ -60,14 +60,14 @@ namespace HPTClient
 
         private void btnSaveAndClose_Click(object sender, RoutedEventArgs e)
         {
-            this.MarkBet.SaveFiles();
-            if (this.ownerWindow != null)
+            MarkBet.SaveFiles();
+            if (ownerWindow != null)
             {
-                this.ownerWindow.Close();
+                ownerWindow.Close();
             }
             else
             {
-                var parentWindow = (Window)this.Parent;
+                var parentWindow = (Window)Parent;
                 parentWindow.Close();
             }
         }
@@ -75,10 +75,10 @@ namespace HPTClient
         private void btnClearSystem_Click(object sender, RoutedEventArgs e)
         {
             // Välj ut de vanligaste rankvariablerna
-            this.MarkBet.TemplateForBeginners.HorseRankVariableList = new List<HPTHorseRankVariable>(this.MarkBet.HorseRankVariableList.Where(rv => rv.HorseRankInfo.UseForBeginner));
-            this.MarkBet.TemplateForBeginners.NumberOfSpikes = 1;
-            this.MarkBet.TemplateForBeginners.ReductionRisk = HPTReductionRisk.Medium;
-            this.MarkBet.TemplateForBeginners.Stake = 300;
+            MarkBet.TemplateForBeginners.HorseRankVariableList = new List<HPTHorseRankVariable>(MarkBet.HorseRankVariableList.Where(rv => rv.HorseRankInfo.UseForBeginner));
+            MarkBet.TemplateForBeginners.NumberOfSpikes = 1;
+            MarkBet.TemplateForBeginners.ReductionRisk = HPTReductionRisk.Medium;
+            MarkBet.TemplateForBeginners.Stake = 300;
         }
     }
 }

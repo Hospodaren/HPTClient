@@ -10,28 +10,28 @@ namespace HPTClient
         public HPTV6BetMultiplierRule()
         {
             //this.HorseList = new ObservableCollection<HPTHorse>();
-            this.HorseList = new List<HPTHorse>();
+            HorseList = new List<HPTHorse>();
         }
 
         public HPTV6BetMultiplierRule(HPTMarkBet markBet, int ruleNumber)
         {
-            this.MarkBet = markBet;
+            MarkBet = markBet;
             //this.HorseList = new ObservableCollection<HPTHorse>();
-            this.HorseList = new List<HPTHorse>();
-            this.BetMultiplier = 1;
-            this.BetMultiplierList = markBet.BetType.BetMultiplierList;
-            this.RuleNumber = ruleNumber;
+            HorseList = new List<HPTHorse>();
+            BetMultiplier = 1;
+            BetMultiplierList = markBet.BetType.BetMultiplierList;
+            RuleNumber = ruleNumber;
 
-            this.RaceList = markBet.RaceDayInfo.RaceList
+            RaceList = markBet.RaceDayInfo.RaceList
                 .Select(r => new HPTRaceLight()
                 {
                     LegNr = r.LegNr,
-                    LegNrString = this.MarkBet.BetType.Code + "-" + r.LegNr.ToString(),
+                    LegNrString = MarkBet.BetType.Code + "-" + r.LegNr.ToString(),
                     HorseList = r.HorseList
                             .Select(h => new HPTHorseLightSelectable()
                             {
                                 LegNr = r.LegNr,
-                                LegNrString = this.MarkBet.BetType.Code + "-" + r.LegNr.ToString(),
+                                LegNrString = MarkBet.BetType.Code + "-" + r.LegNr.ToString(),
                                 Name = h.HorseName,
                                 Selectable = h.Selected,
                                 StartNr = h.StartNr,
@@ -45,7 +45,7 @@ namespace HPTClient
 
         internal void RemoveHorse(HPTHorse horse)
         {
-            var horseLight = this.RaceList
+            var horseLight = RaceList
                 .SelectMany(r => r.HorseList)
                 .FirstOrDefault(h => h.StartNr == horse.StartNr && h.LegNr == horse.ParentRace.LegNr);
 
@@ -53,15 +53,15 @@ namespace HPTClient
             {
                 horseLight.Selectable = false;
             }
-            if (this.HorseList.Contains(horse))
+            if (HorseList.Contains(horse))
             {
-                this.HorseList.Remove(horse);
+                HorseList.Remove(horse);
             }
         }
 
         public void InitializeEventHandlers()
         {
-            foreach (var horseLightSelectable in this.RaceList.SelectMany(r => r.HorseList))
+            foreach (var horseLightSelectable in RaceList.SelectMany(r => r.HorseList))
             {
                 horseLightSelectable.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(horseLightSelectable_PropertyChanged);
             }
@@ -72,20 +72,20 @@ namespace HPTClient
             if (e.PropertyName == "Selected")
             {
                 HPTHorseLightSelectable horseLightSelectable = (HPTHorseLightSelectable)sender;
-                HPTHorse horse = this.MarkBet.RaceDayInfo.HorseListSelected
+                HPTHorse horse = MarkBet.RaceDayInfo.HorseListSelected
                     .FirstOrDefault(h => h.StartNr == horseLightSelectable.StartNr && h.ParentRace.LegNr == horseLightSelectable.LegNr);
 
                 if (horse != null)
                 {
                     if (horseLightSelectable.Selected)
                     {
-                        var raceLight = this.RaceList.First(r => r.LegNr == horseLightSelectable.LegNr);
+                        var raceLight = RaceList.First(r => r.LegNr == horseLightSelectable.LegNr);
                         raceLight.SelectedHorse = horseLightSelectable;
-                        this.HorseList.Add(horse);
+                        HorseList.Add(horse);
                     }
                     else
                     {
-                        this.HorseList.Remove(horse);
+                        HorseList.Remove(horse);
                     }
                 }
             }
@@ -107,11 +107,11 @@ namespace HPTClient
         {
             get
             {
-                return this.use;
+                return use;
             }
             set
             {
-                this.use = value;
+                use = value;
                 OnPropertyChanged("Use");
             }
         }
@@ -122,11 +122,11 @@ namespace HPTClient
         {
             get
             {
-                return this.v6;
+                return v6;
             }
             set
             {
-                this.v6 = value;
+                v6 = value;
                 OnPropertyChanged("V6");
             }
         }
@@ -137,11 +137,11 @@ namespace HPTClient
         {
             get
             {
-                return this.betMultiplier;
+                return betMultiplier;
             }
             set
             {
-                this.betMultiplier = value;
+                betMultiplier = value;
                 OnPropertyChanged("BetMultiplier");
             }
         }
@@ -152,11 +152,11 @@ namespace HPTClient
         {
             get
             {
-                return this.ruleNumber;
+                return ruleNumber;
             }
             set
             {
-                this.ruleNumber = value;
+                ruleNumber = value;
                 OnPropertyChanged("RuleNumber");
             }
         }
@@ -167,11 +167,11 @@ namespace HPTClient
         {
             get
             {
-                return this.betMultiplierList;
+                return betMultiplierList;
             }
             set
             {
-                this.betMultiplierList = value;
+                betMultiplierList = value;
                 OnPropertyChanged("BetMultiplierList");
             }
         }
@@ -182,11 +182,11 @@ namespace HPTClient
         {
             get
             {
-                return this.numberOfRowsAffected;
+                return numberOfRowsAffected;
             }
             set
             {
-                this.numberOfRowsAffected = value;
+                numberOfRowsAffected = value;
                 OnPropertyChanged("NumberOfRowsAffected");
             }
         }
@@ -200,30 +200,30 @@ namespace HPTClient
             StringBuilder sb = new StringBuilder();
             //sb.AppendLine("Regel för V6/V7/V8/Flerbong");
             sb.AppendLine("Regel för V6/Flerbong");
-            if (this.Use)
+            if (Use)
             {
-                if (this.V6)
+                if (V6)
                 {
                     sb.Append("V");
                     sb.Append(markBet.BetType.NumberOfRaces);
                 }
-                if (this.V6 && this.BetMultiplier > 1)
+                if (V6 && BetMultiplier > 1)
                 {
                     sb.Append(" och ");
                 }
-                if (this.BetMultiplier > 1)
+                if (BetMultiplier > 1)
                 {
-                    sb.Append(this.BetMultiplier);
+                    sb.Append(BetMultiplier);
                     sb.Append(" x Flerbong");
                 }
             }
             sb.AppendLine();
 
-            foreach (HPTHorse horse in this.HorseList)
+            foreach (HPTHorse horse in HorseList)
             {
                 sb.AppendLine(horse.HorseName);
             }
-            this.ClipboardString = sb.ToString();
+            ClipboardString = sb.ToString();
             return sb.ToString();
         }
     }

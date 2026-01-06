@@ -23,7 +23,7 @@ namespace HPTClient
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void hlATGSpelAnsvar_Click(object sender, RoutedEventArgs e)

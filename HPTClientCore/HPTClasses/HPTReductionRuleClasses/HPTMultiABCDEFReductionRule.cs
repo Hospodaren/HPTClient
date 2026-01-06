@@ -13,18 +13,18 @@ namespace HPTClient
         {
             get
             {
-                return this.abcdefReductionRuleList;
+                return abcdefReductionRuleList;
             }
             set
             {
-                this.abcdefReductionRuleList = value;
+                abcdefReductionRuleList = value;
                 OnPropertyChanged("ABCDEFReductionRuleList");
             }
         }
 
         public override bool IncludeRow(HPTMarkBet markBet, HPTMarkBetSingleRow singleRow)
         {
-            foreach (var abcdefReductionRule in this.ABCDEFReductionRuleList.Where(r => r.Use))
+            foreach (var abcdefReductionRule in ABCDEFReductionRuleList.Where(r => r.Use))
             {
                 if (abcdefReductionRule.IncludeRow(markBet, singleRow))
                 {
@@ -40,11 +40,11 @@ namespace HPTClient
         {
             get
             {
-                return this.use;
+                return use;
             }
             set
             {
-                this.use = value;
+                use = value;
                 OnPropertyChanged("Use");
             }
         }
@@ -52,7 +52,7 @@ namespace HPTClient
         public override void Reset()
         {
             base.Reset();
-            foreach (var rule in this.ABCDEFReductionRuleList)
+            foreach (var rule in ABCDEFReductionRuleList)
             {
                 rule.Reset();
             }
@@ -68,7 +68,7 @@ namespace HPTClient
                     }
                 };
 
-            this.ABCDEFReductionRuleList
+            ABCDEFReductionRuleList
                 .Where(r => r.Use)
                 .ToList()
                 .ForEach(r => ruleInfoList.Add(r.GetReductionRuleInfo(markBet)));
@@ -95,7 +95,7 @@ namespace HPTClient
             var sb = new StringBuilder();
             sb.AppendLine("Multi-ABCD");
             sb.AppendLine();
-            foreach (var abcdefReductionRule in this.ABCDEFReductionRuleList.Where(r => r.Use))
+            foreach (var abcdefReductionRule in ABCDEFReductionRuleList.Where(r => r.Use))
             {
                 sb.AppendLine(abcdefReductionRule.ToString(markBet));
             }

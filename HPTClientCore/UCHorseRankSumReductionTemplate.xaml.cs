@@ -29,11 +29,11 @@ namespace HPTClient
         {
             get
             {
-                if (this.horseRankSumReductionRuleCollection == null || this.horseRankSumReductionRuleCollection != (HPTHorseRankSumReductionRuleCollection)this.DataContext)
+                if (horseRankSumReductionRuleCollection == null || horseRankSumReductionRuleCollection != (HPTHorseRankSumReductionRuleCollection)DataContext)
                 {
-                    this.horseRankSumReductionRuleCollection = (HPTHorseRankSumReductionRuleCollection)this.DataContext;
+                    horseRankSumReductionRuleCollection = (HPTHorseRankSumReductionRuleCollection)DataContext;
                 }
-                return this.horseRankSumReductionRuleCollection;
+                return horseRankSumReductionRuleCollection;
             }
         }
 
@@ -70,7 +70,7 @@ namespace HPTClient
 
         private void btnRemoveAll_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var rule in this.HorseRankSumReductionRuleCollection.RankSumReductionRuleList)
+            foreach (var rule in HorseRankSumReductionRuleCollection.RankSumReductionRuleList)
             {
                 rule.Use = false;
                 foreach (var horseRankReductionRule in rule.ReductionRuleList)
@@ -79,7 +79,7 @@ namespace HPTClient
                 }
                 rule.ReductionRuleList.Clear();
             }
-            this.HorseRankSumReductionRuleCollection.RankSumReductionRuleList.Clear();
+            HorseRankSumReductionRuleCollection.RankSumReductionRuleList.Clear();
         }
 
         private int NumberOfRaces;
@@ -88,50 +88,50 @@ namespace HPTClient
         {
             if (e.AddedItems.Count > 0)
             {
-                this.TypeCategory = (BetTypeCategory)e.AddedItems[0];
-                switch (this.TypeCategory)
+                TypeCategory = (BetTypeCategory)e.AddedItems[0];
+                switch (TypeCategory)
                 {
                     case BetTypeCategory.None:
                         break;
                     case BetTypeCategory.V4:
-                        this.NumberOfRaces = 4;
+                        NumberOfRaces = 4;
                         break;
                     case BetTypeCategory.V5:
-                        this.NumberOfRaces = 5;
+                        NumberOfRaces = 5;
                         break;
                     case BetTypeCategory.V6X:
-                        this.NumberOfRaces = 6;
+                        NumberOfRaces = 6;
                         break;
                     case BetTypeCategory.V75:
-                        this.NumberOfRaces = 7;
+                        NumberOfRaces = 7;
                         break;
                     case BetTypeCategory.V86:
                     case BetTypeCategory.V85:
-                        this.NumberOfRaces = 8;
+                        NumberOfRaces = 8;
                         break;
                     case BetTypeCategory.Double:
-                        this.NumberOfRaces = 2;
+                        NumberOfRaces = 2;
                         break;
                     case BetTypeCategory.Trio:
                     case BetTypeCategory.Twin:
-                        this.NumberOfRaces = 1;
+                        NumberOfRaces = 1;
                         break;
                     default:
-                        this.NumberOfRaces = 0;
+                        NumberOfRaces = 0;
                         break;
                 }
 
-                foreach (var horseRankSumReductionRule in this.HorseRankSumReductionRuleCollection.RankSumReductionRuleList)
+                foreach (var horseRankSumReductionRule in HorseRankSumReductionRuleCollection.RankSumReductionRuleList)
                 {
                     foreach (var horseRankReductionRule in horseRankSumReductionRule.ReductionRuleList)
                     {
                         if (horseRankReductionRule.NumberOfWinnersList != null && horseRankReductionRule.NumberOfWinnersList.Count > 0)
                         {
                             int maxNumberOfWinners = horseRankReductionRule.NumberOfWinnersList.Max(now => now.NumberOfWinners);
-                            if (maxNumberOfWinners > this.NumberOfRaces)
+                            if (maxNumberOfWinners > NumberOfRaces)
                             {
                                 List<HPTNumberOfWinners> numberOfWinnersToRemove = horseRankReductionRule.NumberOfWinnersList
-                                    .Where(now => now.NumberOfWinners > this.NumberOfRaces).ToList();
+                                    .Where(now => now.NumberOfWinners > NumberOfRaces).ToList();
 
                                 foreach (var numberOfWinners in numberOfWinnersToRemove)
                                 {
@@ -139,9 +139,9 @@ namespace HPTClient
                                     horseRankReductionRule.NumberOfWinnersList.Remove(numberOfWinners);
                                 }
                             }
-                            else if (maxNumberOfWinners < this.NumberOfRaces)
+                            else if (maxNumberOfWinners < NumberOfRaces)
                             {
-                                for (int i = maxNumberOfWinners + 1; i <= this.NumberOfRaces; i++)
+                                for (int i = maxNumberOfWinners + 1; i <= NumberOfRaces; i++)
                                 {
                                     var numberOfWinners = new HPTNumberOfWinners()
                                     {
@@ -159,7 +159,7 @@ namespace HPTClient
 
         private void btnRemoveTemplate_Click(object sender, RoutedEventArgs e)
         {
-            this.Config.RankSumReductionRuleCollection.Remove(this.HorseRankSumReductionRuleCollection);
+            Config.RankSumReductionRuleCollection.Remove(HorseRankSumReductionRuleCollection);
         }
 
         private void btnRemoveRankReductionRule_Click(object sender, RoutedEventArgs e)
@@ -169,7 +169,7 @@ namespace HPTClient
                 var horseRankReductionRule = (HPTHorseRankSumReductionRule)sender;
                 if (horseRankReductionRule != null)
                 {
-                    this.HorseRankSumReductionRuleCollection.RankSumReductionRuleList.Remove(horseRankReductionRule);
+                    HorseRankSumReductionRuleCollection.RankSumReductionRuleList.Remove(horseRankReductionRule);
                 }
             }
             catch (Exception exc)
@@ -182,9 +182,9 @@ namespace HPTClient
         {
             var clonedHorseRankSumReductionRuleCollection = new HPTHorseRankSumReductionRuleCollection()
             {
-                Name = this.HorseRankSumReductionRuleCollection.Name + " (kopia)",
-                RankSumReductionRuleList = new ObservableCollection<HPTHorseRankSumReductionRule>(this.HorseRankSumReductionRuleCollection.RankSumReductionRuleList.Select(r => r.Clone())),
-                TypeCategory = this.TypeCategory
+                Name = HorseRankSumReductionRuleCollection.Name + " (kopia)",
+                RankSumReductionRuleList = new ObservableCollection<HPTHorseRankSumReductionRule>(HorseRankSumReductionRuleCollection.RankSumReductionRuleList.Select(r => r.Clone())),
+                TypeCategory = TypeCategory
             };
 
             var horseRankVariableList = HPTHorseRankVariable.CreateVariableList();
@@ -193,7 +193,7 @@ namespace HPTClient
                 horseRankSumReductionRule.HorseRankVariable = horseRankVariableList.FirstOrDefault(hrv => hrv.PropertyName == horseRankSumReductionRule.PropertyName);
             }
 
-            this.Config.RankSumReductionRuleCollection.Add(clonedHorseRankSumReductionRuleCollection);
+            Config.RankSumReductionRuleCollection.Add(clonedHorseRankSumReductionRuleCollection);
         }
 
         private void cmbHorseRankVariable_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -203,12 +203,12 @@ namespace HPTClient
 
         private void btnAddVariable_Click(object sender, RoutedEventArgs e)
         {
-            var horseRankVariableBase = (HPTHorseRankVariableBase)this.cmbHorseRankVariable.SelectedItem;
+            var horseRankVariableBase = (HPTHorseRankVariableBase)cmbHorseRankVariable.SelectedItem;
             if (horseRankVariableBase == null)
             {
                 return;
             }
-            var horseRankSumReductionRule = this.HorseRankSumReductionRuleCollection.RankSumReductionRuleList.FirstOrDefault(r => r.PropertyName == horseRankVariableBase.PropertyName);
+            var horseRankSumReductionRule = HorseRankSumReductionRuleCollection.RankSumReductionRuleList.FirstOrDefault(r => r.PropertyName == horseRankVariableBase.PropertyName);
             if (horseRankSumReductionRule == null)
             {
                 var horseRankVariable = new HPTHorseRankVariable()
@@ -218,11 +218,11 @@ namespace HPTClient
                     Show = horseRankVariableBase.Show,
                     Text = horseRankVariableBase.Text
                 };
-                horseRankSumReductionRule = new HPTHorseRankSumReductionRule(horseRankVariable, this.NumberOfRaces)
+                horseRankSumReductionRule = new HPTHorseRankSumReductionRule(horseRankVariable, NumberOfRaces)
                 {
                     Use = true
                 };
-                this.HorseRankSumReductionRuleCollection.RankSumReductionRuleList.Add(horseRankSumReductionRule);
+                HorseRankSumReductionRuleCollection.RankSumReductionRuleList.Add(horseRankSumReductionRule);
 
                 //try
                 //{

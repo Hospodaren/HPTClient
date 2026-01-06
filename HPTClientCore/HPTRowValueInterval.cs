@@ -11,11 +11,11 @@ namespace HPTClient
         {
             get
             {
-                return this.lowerLimit;
+                return lowerLimit;
             }
             set
             {
-                this.lowerLimit = value;
+                lowerLimit = value;
                 OnPropertyChanged("LowerLimit");
             }
         }
@@ -26,11 +26,11 @@ namespace HPTClient
         {
             get
             {
-                return this.upperLimit;
+                return upperLimit;
             }
             set
             {
-                this.upperLimit = value;
+                upperLimit = value;
                 OnPropertyChanged("UpperLimit");
             }
         }
@@ -41,11 +41,11 @@ namespace HPTClient
         {
             get
             {
-                return this.numberOfRows;
+                return numberOfRows;
             }
             set
             {
-                this.numberOfRows = value;
+                numberOfRows = value;
                 OnPropertyChanged("NumberOfRows");
             }
         }
@@ -56,11 +56,11 @@ namespace HPTClient
         {
             get
             {
-                return this.percentageOfRows;
+                return percentageOfRows;
             }
             set
             {
-                this.percentageOfRows = value;
+                percentageOfRows = value;
                 OnPropertyChanged("PercentageOfRows");
             }
         }
@@ -75,11 +75,11 @@ namespace HPTClient
         {
             get
             {
-                return this.percentile;
+                return percentile;
             }
             set
             {
-                this.percentile = value;
+                percentile = value;
                 OnPropertyChanged("Percentile");
             }
         }
@@ -90,11 +90,11 @@ namespace HPTClient
         {
             get
             {
-                return this.description;
+                return description;
             }
             set
             {
-                this.description = value;
+                description = value;
                 OnPropertyChanged("Description");
             }
         }
@@ -105,11 +105,11 @@ namespace HPTClient
         {
             get
             {
-                return this.rowValue;
+                return rowValue;
             }
             set
             {
-                this.rowValue = value;
+                rowValue = value;
                 OnPropertyChanged("RowValue");
             }
         }

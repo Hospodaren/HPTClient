@@ -8,12 +8,12 @@ namespace HPTClient
         {
             return new HPTMarkBetTemplate()
             {
-                DesiredSystemSize = this.DesiredSystemSize,
-                Name = this.Name,
-                NumberOfSpikes = this.NumberOfSpikes,
-                RankTemplate = this.RankTemplate,
-                RankTemplateName = this.RankTemplateName,
-                TypeCategory = this.TypeCategory
+                DesiredSystemSize = DesiredSystemSize,
+                Name = Name,
+                NumberOfSpikes = NumberOfSpikes,
+                RankTemplate = RankTemplate,
+                RankTemplateName = RankTemplateName,
+                TypeCategory = TypeCategory
             };
         }
 
@@ -22,11 +22,11 @@ namespace HPTClient
         {
             get
             {
-                return this.name;
+                return name;
             }
             set
             {
-                this.name = value;
+                name = value;
                 OnPropertyChanged("Name");
             }
         }
@@ -36,11 +36,11 @@ namespace HPTClient
         {
             get
             {
-                return this.rankTemplatename;
+                return rankTemplatename;
             }
             set
             {
-                this.rankTemplatename = value;
+                rankTemplatename = value;
                 OnPropertyChanged("RankTemplateName");
             }
         }
@@ -51,14 +51,14 @@ namespace HPTClient
         {
             get
             {
-                return this.rankTemplate;
+                return rankTemplate;
             }
             set
             {
-                this.rankTemplate = value;
+                rankTemplate = value;
                 if (value != null)
                 {
-                    this.RankTemplateName = this.rankTemplate.Name;
+                    RankTemplateName = rankTemplate.Name;
                 }
                 OnPropertyChanged("RankTemplate");
             }
@@ -78,7 +78,7 @@ namespace HPTClient
 
         public override string ToString()
         {
-            return this.Name;
+            return Name;
         }
     }
 }

@@ -10,24 +10,24 @@ namespace HPTClient
 
         public HPTMarkBetTemplateResult(HPTMarkBet markBet)
         {
-            this.XReductionRuleList = new ObservableCollection<HPTXReductionRule>();
+            XReductionRuleList = new ObservableCollection<HPTXReductionRule>();
             if (markBet.ABCDEFReductionRule.Use)
             {
                 foreach (HPTXReductionRule rule in markBet.ABCDEFReductionRule.XReductionRuleList)
                 {
                     HPTXReductionRule clonedRule = rule.Clone();
                     clonedRule.Reset();
-                    this.XReductionRuleList.Add(clonedRule);
+                    XReductionRuleList.Add(clonedRule);
                 }
             }
 
-            this.MinRankSum = markBet.MinRankSum;
-            this.MaxRankSum = markBet.MaxRankSum;
-            this.MinRowValue = markBet.RowValueReductionRule.LowestIncludedSum;
-            this.MaxRowValue = markBet.RowValueReductionRule.HighestIncludedSum;
-            this.ReducedSize = markBet.ReducedSize;
-            this.useABCD = markBet.ABCDEFReductionRule.Use;
-            this.useRankSum = markBet.ReductionRank;
+            MinRankSum = markBet.MinRankSum;
+            MaxRankSum = markBet.MaxRankSum;
+            MinRowValue = markBet.RowValueReductionRule.LowestIncludedSum;
+            MaxRowValue = markBet.RowValueReductionRule.HighestIncludedSum;
+            ReducedSize = markBet.ReducedSize;
+            useABCD = markBet.ABCDEFReductionRule.Use;
+            useRankSum = markBet.ReductionRank;
         }
 
         public bool Use { get; set; }
@@ -51,11 +51,11 @@ namespace HPTClient
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append(this.ReducedSize);
+            sb.Append(ReducedSize);
             sb.Append(" rader (");
-            if (this.useABCD)
+            if (useABCD)
             {
-                foreach (HPTXReductionRule rule in this.XReductionRuleList)
+                foreach (HPTXReductionRule rule in XReductionRuleList)
                 {
                     if (rule.Use && rule.MaxNumberOfX > 0)
                     {
@@ -70,11 +70,11 @@ namespace HPTClient
                 }
                 sb.Remove(sb.Length - 1, 1);
             }
-            if (this.useRankSum)
+            if (useRankSum)
             {
-                sb.Append(this.MinRankSum.ToString("F1"));
+                sb.Append(MinRankSum.ToString("F1"));
                 sb.Append(" - ");
-                sb.Append(this.MaxRankSum.ToString("F1"));
+                sb.Append(MaxRankSum.ToString("F1"));
             }
             sb.Append(")");
             return sb.ToString();

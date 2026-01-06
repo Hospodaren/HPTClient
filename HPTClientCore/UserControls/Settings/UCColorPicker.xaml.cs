@@ -20,16 +20,16 @@ namespace HPTClient
         private void rctColorGood_MouseUp(object sender, MouseButtonEventArgs e)
         {
             e.Handled = true;
-            switch (this.cpGood.Visibility)
+            switch (cpGood.Visibility)
             {
                 case Visibility.Collapsed:
                 case Visibility.Hidden:
-                    this.cpGood.Visibility = System.Windows.Visibility.Visible;
-                    this.cpMedium.Visibility = System.Windows.Visibility.Collapsed;
-                    this.cpBad.Visibility = System.Windows.Visibility.Collapsed;
+                    cpGood.Visibility = Visibility.Visible;
+                    cpMedium.Visibility = Visibility.Collapsed;
+                    cpBad.Visibility = Visibility.Collapsed;
                     break;
                 case Visibility.Visible:
-                    this.cpGood.Visibility = System.Windows.Visibility.Collapsed;
+                    cpGood.Visibility = Visibility.Collapsed;
                     break;
                 default:
                     break;
@@ -39,16 +39,16 @@ namespace HPTClient
         private void rctColorMedium_MouseUp(object sender, MouseButtonEventArgs e)
         {
             e.Handled = true;
-            switch (this.cpMedium.Visibility)
+            switch (cpMedium.Visibility)
             {
                 case Visibility.Collapsed:
                 case Visibility.Hidden:
-                    this.cpGood.Visibility = System.Windows.Visibility.Collapsed;
-                    this.cpMedium.Visibility = System.Windows.Visibility.Visible;
-                    this.cpBad.Visibility = System.Windows.Visibility.Collapsed;
+                    cpGood.Visibility = Visibility.Collapsed;
+                    cpMedium.Visibility = Visibility.Visible;
+                    cpBad.Visibility = Visibility.Collapsed;
                     break;
                 case Visibility.Visible:
-                    this.cpMedium.Visibility = System.Windows.Visibility.Collapsed;
+                    cpMedium.Visibility = Visibility.Collapsed;
                     break;
                 default:
                     break;
@@ -58,16 +58,16 @@ namespace HPTClient
         private void rctColorBad_MouseUp(object sender, MouseButtonEventArgs e)
         {
             e.Handled = true;
-            switch (this.cpBad.Visibility)
+            switch (cpBad.Visibility)
             {
                 case Visibility.Collapsed:
                 case Visibility.Hidden:
-                    this.cpGood.Visibility = System.Windows.Visibility.Collapsed;
-                    this.cpMedium.Visibility = System.Windows.Visibility.Collapsed;
-                    this.cpBad.Visibility = System.Windows.Visibility.Visible;
+                    cpGood.Visibility = Visibility.Collapsed;
+                    cpMedium.Visibility = Visibility.Collapsed;
+                    cpBad.Visibility = Visibility.Visible;
                     break;
                 case Visibility.Visible:
-                    this.cpBad.Visibility = System.Windows.Visibility.Collapsed;
+                    cpBad.Visibility = Visibility.Collapsed;
                     break;
                 default:
                     break;
@@ -78,21 +78,21 @@ namespace HPTClient
         {
             HPTConfig.Config.ColorIntervalVinnarOdds.LowColor = (Color)e.NewValue;
             HPTConfig.Config.ColorGood = (Color)e.NewValue;
-            this.cpGood.Visibility = System.Windows.Visibility.Collapsed;
+            cpGood.Visibility = Visibility.Collapsed;
         }
 
         private void cpBad_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
         {
             HPTConfig.Config.ColorIntervalVinnarOdds.HighColor = (Color)e.NewValue;
             HPTConfig.Config.ColorBad = (Color)e.NewValue;
-            this.cpBad.Visibility = System.Windows.Visibility.Collapsed;
+            cpBad.Visibility = Visibility.Collapsed;
         }
 
         private void cpMedium_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
         {
             HPTConfig.Config.ColorIntervalVinnarOdds.MediumColor = (Color)e.NewValue;
             HPTConfig.Config.ColorMedium = (Color)e.NewValue;
-            this.cpMedium.Visibility = System.Windows.Visibility.Collapsed;
+            cpMedium.Visibility = Visibility.Collapsed;
         }
 
         #endregion

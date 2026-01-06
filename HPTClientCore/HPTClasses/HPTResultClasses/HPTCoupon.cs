@@ -12,7 +12,7 @@ namespace HPTClient
         public HPTCoupon()
         {
             //this.CouponRaceListSorted = new SortedList<int, HPTCouponRace>();
-            this.CouponRaceList = new ObservableCollection<HPTCouponRace>();
+            CouponRaceList = new ObservableCollection<HPTCouponRace>();
             //this.ARow = new int[this.NumberOfRaces];
         }
 
@@ -22,11 +22,11 @@ namespace HPTClient
         {
             get
             {
-                return this.betMultiplier;
+                return betMultiplier;
             }
             set
             {
-                this.betMultiplier = value;
+                betMultiplier = value;
                 OnPropertyChanged("BetMultiplier");
             }
         }
@@ -37,11 +37,11 @@ namespace HPTClient
         {
             get
             {
-                return this.numberOfCorrect;
+                return numberOfCorrect;
             }
             set
             {
-                this.numberOfCorrect = value;
+                numberOfCorrect = value;
                 OnPropertyChanged("NumberOfCorrect");
             }
         }
@@ -58,7 +58,7 @@ namespace HPTClient
         private HPTRaceDayInfo raceDayInfo;
         public void CorrectCoupon(HPTRaceDayInfo raceDayInfo, int racesToCorrect)
         {
-            foreach (var couponRace in this.CouponRaceList)
+            foreach (var couponRace in CouponRaceList)
             {
                 if (couponRace.StartNrList == null)
                 {
@@ -66,22 +66,22 @@ namespace HPTClient
                 }
             }
             this.raceDayInfo = raceDayInfo;
-            this.ARow = new int[raceDayInfo.RaceList.Count];
-            this.NumberOfFinishedLegs = raceDayInfo.NumberOfFinishedRaces;
+            ARow = new int[raceDayInfo.RaceList.Count];
+            NumberOfFinishedLegs = raceDayInfo.NumberOfFinishedRaces;
             if (racesToCorrect == 0 || racesToCorrect > raceDayInfo.NumberOfFinishedRaces)
             {
                 racesToCorrect = raceDayInfo.NumberOfFinishedRaces;
             }
-            this.NumberOfCorrect = 0;
+            NumberOfCorrect = 0;
             for (int raceNumber = 1; raceNumber <= racesToCorrect; raceNumber++)
             {
                 HPTRace hptRace = raceDayInfo.RaceList.First(r => r.LegNr == raceNumber);
                 if (hptRace.LegResult != null && hptRace.LegResult.WinnerList != null)
                 {
                     HPTLegResult hptLegResult = hptRace.LegResult;
-                    HPTCouponRace couponRace = this.CouponRaceList.First(cr => cr.LegNr == raceNumber);
+                    HPTCouponRace couponRace = CouponRaceList.First(cr => cr.LegNr == raceNumber);
                     int correctNumbersOnCouponRace = couponRace.StartNrList.Intersect(hptLegResult.Winners).Count();
-                    this.NumberOfCorrect += correctNumbersOnCouponRace == 0 ? 0 : 1;
+                    NumberOfCorrect += correctNumbersOnCouponRace == 0 ? 0 : 1;
                 }
             }
             SetNumberOfWinningRows();
@@ -91,19 +91,19 @@ namespace HPTClient
         public void CorrectCouponSimulated(HPTRaceDayInfo raceDayInfo)
         {
             this.raceDayInfo = raceDayInfo;
-            this.ARow = new int[raceDayInfo.RaceList.Count];
-            this.NumberOfFinishedLegs = raceDayInfo.NumberOfFinishedRaces;
+            ARow = new int[raceDayInfo.RaceList.Count];
+            NumberOfFinishedLegs = raceDayInfo.NumberOfFinishedRaces;
 
-            this.NumberOfCorrect = 0;
+            NumberOfCorrect = 0;
             for (int raceNumber = 1; raceNumber <= raceDayInfo.RaceList.Count; raceNumber++)
             {
                 HPTRace hptRace = raceDayInfo.RaceList.First(r => r.LegNr == raceNumber);
                 if (hptRace.LegResult != null && hptRace.LegResult.WinnerList != null)
                 {
                     HPTLegResult hptLegResult = hptRace.LegResult;
-                    HPTCouponRace couponRace = this.CouponRaceList.First(cr => cr.LegNr == raceNumber);
+                    HPTCouponRace couponRace = CouponRaceList.First(cr => cr.LegNr == raceNumber);
                     int correctNumbersOnCouponRace = couponRace.StartNrList.Intersect(hptLegResult.Winners).Count();
-                    this.NumberOfCorrect += correctNumbersOnCouponRace == 0 ? 0 : 1;
+                    NumberOfCorrect += correctNumbersOnCouponRace == 0 ? 0 : 1;
                 }
             }
             SetNumberOfWinningRows();
@@ -127,11 +127,11 @@ namespace HPTClient
         {
             get
             {
-                return this.numberOfAllCorrect;
+                return numberOfAllCorrect;
             }
             set
             {
-                this.numberOfAllCorrect = value;
+                numberOfAllCorrect = value;
                 OnPropertyChanged("NumberOfAllCorrect");
             }
         }
@@ -142,11 +142,11 @@ namespace HPTClient
         {
             get
             {
-                return this.numberOfOneError;
+                return numberOfOneError;
             }
             set
             {
-                this.numberOfOneError = value;
+                numberOfOneError = value;
                 OnPropertyChanged("NumberOfOneError");
             }
         }
@@ -157,11 +157,11 @@ namespace HPTClient
         {
             get
             {
-                return this.numberOfTwoErrors;
+                return numberOfTwoErrors;
             }
             set
             {
-                this.numberOfTwoErrors = value;
+                numberOfTwoErrors = value;
                 OnPropertyChanged("NumberOfTwoErrors");
             }
         }
@@ -172,11 +172,11 @@ namespace HPTClient
         {
             get
             {
-                return this.numberOfThreeErrors;
+                return numberOfThreeErrors;
             }
             set
             {
-                this.numberOfThreeErrors = value;
+                numberOfThreeErrors = value;
                 OnPropertyChanged("NumberOfThreeErrors");
             }
         }
@@ -187,11 +187,11 @@ namespace HPTClient
         {
             get
             {
-                return this.couponId;
+                return couponId;
             }
             set
             {
-                this.couponId = value;
+                couponId = value;
                 OnPropertyChanged("CouponId");
             }
         }
@@ -204,18 +204,18 @@ namespace HPTClient
             {
                 if (couponIdFile == 0)
                 {
-                    return this.CouponId;
+                    return CouponId;
                 }
-                return this.couponIdFile;
+                return couponIdFile;
             }
             set
             {
-                this.couponIdFile = value;
+                couponIdFile = value;
                 OnPropertyChanged("CouponIdFile");
             }
         }
 
-        //// För att få rätt kupongnummer när man måste skapa flera filer
+        //// Fï¿½r att fï¿½ rï¿½tt kupongnummer nï¿½r man mï¿½ste skapa flera filer
         //public int CouponIdFile
         //{
         //    get
@@ -230,11 +230,11 @@ namespace HPTClient
         {
             get
             {
-                return this.date;
+                return date;
             }
             set
             {
-                this.date = value;
+                date = value;
                 OnPropertyChanged("Date");
             }
         }
@@ -245,11 +245,11 @@ namespace HPTClient
         {
             get
             {
-                return this.trackCode;
+                return trackCode;
             }
             set
             {
-                this.trackCode = value;
+                trackCode = value;
                 OnPropertyChanged("TrackCode");
             }
         }
@@ -260,11 +260,11 @@ namespace HPTClient
         {
             get
             {
-                return this.v6;
+                return v6;
             }
             set
             {
-                this.v6 = value;
+                v6 = value;
                 OnPropertyChanged("V6");
             }
         }
@@ -274,11 +274,11 @@ namespace HPTClient
         {
             get
             {
-                return this.canWin;
+                return canWin;
             }
             set
             {
-                this.canWin = value;
+                canWin = value;
                 OnPropertyChanged("CanWin");
             }
         }
@@ -286,16 +286,16 @@ namespace HPTClient
         private void SetNumberOfCorrectsColor()
         {
             Color c = Colors.White;
-            if (this.NumberOfFinishedLegs > 0)
+            if (NumberOfFinishedLegs > 0)
             {
-                if (this.NumberOfAllCorrect > 0)
+                if (NumberOfAllCorrect > 0)
                 {
                     c = HPTConfig.Config.ColorGood;
-                    this.CanWin = true;
+                    CanWin = true;
                 }
-                else if (this.NumberOfOneError > 0 && !this.V6)
+                else if (NumberOfOneError > 0 && !V6)
                 {
-                    switch (this.BetType)
+                    switch (BetType)
                     {
                         case "V64":
                         case "V65":
@@ -304,17 +304,17 @@ namespace HPTClient
                         case "GS75":
                         case "V86":
                             c = HPTConfig.Config.ColorMedium;
-                            this.CanWin = true;
+                            CanWin = true;
                             break;
                         default:
                             c = HPTConfig.Config.ColorBad;
-                            this.CanWin = false;
+                            CanWin = false;
                             break;
                     }
                 }
-                else if (this.NumberOfTwoErrors > 0 && !this.V6)
+                else if (NumberOfTwoErrors > 0 && !V6)
                 {
-                    switch (this.BetType)
+                    switch (BetType)
                     {
                         case "V64":
                         case "V75":
@@ -322,39 +322,39 @@ namespace HPTClient
                         case "V85":
                         case "V86":
                             c = HPTConfig.Config.ColorMedium;
-                            this.CanWin = true;
+                            CanWin = true;
                             break;
                         default:
                             c = HPTConfig.Config.ColorBad;
-                            this.CanWin = false;
+                            CanWin = false;
                             break;
                     }
                 }   // TODO
-                else if (this.NumberOfThreeErrors > 0 && !this.V6)
+                else if (NumberOfThreeErrors > 0 && !V6)
                 {
-                    switch (this.BetType)
+                    switch (BetType)
                     {
                         case "V85":
                             c = HPTConfig.Config.ColorMedium;
-                            this.CanWin = true;
+                            CanWin = true;
                             break;
                         default:
                             c = HPTConfig.Config.ColorBad;
-                            this.CanWin = false;
+                            CanWin = false;
                             break;
                     }
                 }
                 else
                 {
                     c = HPTConfig.Config.ColorBad;
-                    this.CanWin = false;
+                    CanWin = false;
                 }
             }
             else
             {
                 c = Colors.LightGray;
             }
-            this.NumberOfCorrectsColor = new SolidColorBrush(c);
+            NumberOfCorrectsColor = new SolidColorBrush(c);
         }
 
         private Brush numberOfCorrectsColor;
@@ -367,7 +367,7 @@ namespace HPTClient
             }
             set
             {
-                this.numberOfCorrectsColor = value;
+                numberOfCorrectsColor = value;
                 OnPropertyChanged("NumberOfCorrectsColor");
             }
         }
@@ -378,11 +378,11 @@ namespace HPTClient
         {
             get
             {
-                return this.systemSize;
+                return systemSize;
             }
             set
             {
-                this.systemSize = value;
+                systemSize = value;
                 OnPropertyChanged("SystemSize");
             }
         }
@@ -391,22 +391,22 @@ namespace HPTClient
         {
             get
             {
-                if (this.V6)
+                if (V6)
                 {
-                    switch (this.BetType)
+                    switch (BetType)
                     {
                         case "V64":
                         case "V75":
                         case "GS75":
                         case "V86":
-                            return this.BetMultiplier * 2.5M;
+                            return BetMultiplier * 2.5M;
                         case "V65":
-                            return this.BetMultiplier * 2M;
+                            return BetMultiplier * 2M;
                         default:
                             break;
                     }
                 }
-                return this.BetMultiplier;
+                return BetMultiplier;
             }
         }
 
@@ -416,11 +416,11 @@ namespace HPTClient
         {
             get
             {
-                return this.payOutAmount;
+                return payOutAmount;
             }
             set
             {
-                this.payOutAmount = value;
+                payOutAmount = value;
                 OnPropertyChanged("PayOutAmount");
             }
         }
@@ -428,11 +428,11 @@ namespace HPTClient
 
         public void SetNumberOfWinningRows()
         {
-            this.NumberOfAllCorrect = 0;
-            this.NumberOfOneError = 0;
-            this.NumberOfTwoErrors = 0;
-            this.NumberOfThreeErrors = 0;
-            if (this.NumberOfFinishedLegs > 0)
+            NumberOfAllCorrect = 0;
+            NumberOfOneError = 0;
+            NumberOfTwoErrors = 0;
+            NumberOfThreeErrors = 0;
+            if (NumberOfFinishedLegs > 0)
             {
                 SetNumberOfWinningRows(1);
             }
@@ -440,34 +440,34 @@ namespace HPTClient
 
         private void SetNumberOfWinningRows(int legNr)
         {
-            HPTCouponRace couponRace = this.CouponRaceList.First(cr => cr.LegNr == legNr);
+            HPTCouponRace couponRace = CouponRaceList.First(cr => cr.LegNr == legNr);
             foreach (int startNr in couponRace.StartNrList)
             {
-                this.ARow[legNr - 1] = startNr;
-                if (legNr == this.NumberOfFinishedLegs)
+                ARow[legNr - 1] = startNr;
+                if (legNr == NumberOfFinishedLegs)
                 {
                     int numberOfErrors = 0;
-                    for (int i = 1; i <= this.NumberOfFinishedLegs; i++)
+                    for (int i = 1; i <= NumberOfFinishedLegs; i++)
                     {
-                        HPTRace race = this.raceDayInfo.RaceList.First(r => r.LegNr == i);
+                        HPTRace race = raceDayInfo.RaceList.First(r => r.LegNr == i);
                         if (race.LegResult != null && race.LegResult.WinnerList != null && race.LegResult.WinnerList[0] != null)
                         {
                             //HPTLegResult legResult = race.LegResult;
                             int winner = race.LegResult.Winners[0];
-                            bool correct = winner == this.ARow[i - 1];
+                            bool correct = winner == ARow[i - 1];
 
                             if (!correct && race.LegResult.Winners.Length > 1)
                             {
                                 winner = race.LegResult.Winners[1];
-                                correct = winner == this.ARow[i - 1];
+                                correct = winner == ARow[i - 1];
                             }
                             numberOfErrors += correct ? 0 : 1;
                         }
                     }
-                    this.NumberOfAllCorrect += numberOfErrors == 0 ? 1 : 0;
-                    this.NumberOfOneError += numberOfErrors == 1 ? 1 : 0;
-                    this.NumberOfTwoErrors += numberOfErrors == 2 ? 1 : 0;
-                    this.NumberOfThreeErrors += numberOfErrors == 3 ? 1 : 0;
+                    NumberOfAllCorrect += numberOfErrors == 0 ? 1 : 0;
+                    NumberOfOneError += numberOfErrors == 1 ? 1 : 0;
+                    NumberOfTwoErrors += numberOfErrors == 2 ? 1 : 0;
+                    NumberOfThreeErrors += numberOfErrors == 3 ? 1 : 0;
                 }
                 else
                 {
@@ -480,30 +480,30 @@ namespace HPTClient
         internal List<HPTMarkBetSingleRow> singleRowList;
         internal List<HPTMarkBetSingleRow> CreateSingleRows()
         {
-            this.singleRowHorseList = new HPTHorse[this.CouponRaceList.Count];
-            this.singleRowList = new List<HPTMarkBetSingleRow>();
+            singleRowHorseList = new HPTHorse[CouponRaceList.Count];
+            singleRowList = new List<HPTMarkBetSingleRow>();
 
             CreateSingleRows(0);
 
-            return this.singleRowList;
+            return singleRowList;
         }
 
         internal void CreateSingleRows(int position)
         {
-            if (position == this.CouponRaceList.Count)
+            if (position == CouponRaceList.Count)
             {
-                var singleRow = new HPTMarkBetSingleRow(this.singleRowHorseList)
+                var singleRow = new HPTMarkBetSingleRow(singleRowHorseList)
                 {
-                    BetMultiplier = this.BetMultiplier,
-                    V6 = this.V6
+                    BetMultiplier = BetMultiplier,
+                    V6 = V6
                 };
-                this.singleRowList.Add(singleRow);
+                singleRowList.Add(singleRow);
                 return;
             }
-            var couponRace = this.CouponRaceList[position];
+            var couponRace = CouponRaceList[position];
             foreach (var horse in couponRace.HorseList)
             {
-                this.singleRowHorseList[position] = horse;
+                singleRowHorseList[position] = horse;
                 CreateSingleRows(position + 1);
             }
         }
@@ -512,14 +512,14 @@ namespace HPTClient
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("Kupong " + this.couponId.ToString());
+            sb.Append("Kupong " + couponId.ToString());
 
-            if (this.V6 || this.BetMultiplier > 1)
+            if (V6 || BetMultiplier > 1)
             {
                 sb.Append(" (");
-                if (this.V6)
+                if (V6)
                 {
-                    switch (this.BetType)
+                    switch (BetType)
                     {
                         case "V64":
                         case "V65":
@@ -536,20 +536,20 @@ namespace HPTClient
                             break;
                     }
                 }
-                if (this.V6 && this.BetMultiplier > 1)
+                if (V6 && BetMultiplier > 1)
                 {
                     sb.Append(" och ");
                 }
-                if (this.BetMultiplier > 1)
+                if (BetMultiplier > 1)
                 {
-                    sb.Append(this.BetMultiplier);
+                    sb.Append(BetMultiplier);
                     sb.Append(" X Flerbong");
                 }
                 sb.Append(")");
             }
             sb.AppendLine();
 
-            IOrderedEnumerable<HPTCouponRace> orderedRaceList = this.CouponRaceList.OrderBy(cr => cr.LegNr);
+            IOrderedEnumerable<HPTCouponRace> orderedRaceList = CouponRaceList.OrderBy(cr => cr.LegNr);
 
             foreach (var hptCouponRace in orderedRaceList)
             {

@@ -24,10 +24,10 @@ namespace HPTClient
 
         private void UserControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            this.race = null;
-            if (this.DataContext != null && this.DataContext.GetType() == typeof(HPTRace))
+            race = null;
+            if (DataContext != null && DataContext.GetType() == typeof(HPTRace))
             {
-                this.race = this.DataContext as HPTRace;
+                race = DataContext as HPTRace;
             }
         }
 
@@ -36,53 +36,53 @@ namespace HPTClient
         {
             get
             {
-                if (this.race == null)
+                if (race == null)
                 {
-                    this.race = this.DataContext as HPTRace;
+                    race = DataContext as HPTRace;
                 }
-                return this.race;
+                return race;
             }
         }
         internal void SetCountDown()
         {
             // Återställ textinställningar
-            this.txtCountdownTimer.FontWeight = FontWeights.Normal;
-            this.txtCountdownTimer.Foreground = new SolidColorBrush(Colors.Black);
+            txtCountdownTimer.FontWeight = FontWeights.Normal;
+            txtCountdownTimer.Foreground = new SolidColorBrush(Colors.Black);
 
             // Dra igång nedräknare om tävlingen är idag
-            if (this.Race != null && this.Race.PostTime.Date == DateTime.Today)
+            if (Race != null && Race.PostTime.Date == DateTime.Today)
             {
-                TimeSpan ts = this.Race.PostTime - DateTime.Now;
+                TimeSpan ts = Race.PostTime - DateTime.Now;
                 Countdown(ts, cur =>
                 {
                     if ((int)cur.TotalSeconds < 600)
                     {
-                        this.txtCountdownTimer.FontWeight = FontWeights.Bold;
-                        this.txtCountdownTimer.Foreground = new SolidColorBrush(Colors.Red);
+                        txtCountdownTimer.FontWeight = FontWeights.Bold;
+                        txtCountdownTimer.Foreground = new SolidColorBrush(Colors.Red);
                     }
                     else
                     {
-                        this.txtCountdownTimer.FontWeight = FontWeights.Normal;
-                        this.txtCountdownTimer.Foreground = new SolidColorBrush(Colors.Black);
+                        txtCountdownTimer.FontWeight = FontWeights.Normal;
+                        txtCountdownTimer.Foreground = new SolidColorBrush(Colors.Black);
                     }
 
                     // Ska texten sättas?
                     if ((int)cur.TotalSeconds < 0)
                     {
-                        this.txtCountdownTimer.Text = string.Empty;
-                        this.txtCountdownInfo.Text = string.Empty;
+                        txtCountdownTimer.Text = string.Empty;
+                        txtCountdownInfo.Text = string.Empty;
                     }
                     else
                     {
-                        this.txtCountdownTimer.Text = cur.ToString(@"hh\:mm\:ss");
-                        this.txtCountdownInfo.Text = "Start om:";
+                        txtCountdownTimer.Text = cur.ToString(@"hh\:mm\:ss");
+                        txtCountdownInfo.Text = "Start om:";
                     }
                 });
             }
             else
             {
-                this.txtCountdownTimer.Text = string.Empty;
-                this.txtCountdownInfo.Text = string.Empty;
+                txtCountdownTimer.Text = string.Empty;
+                txtCountdownInfo.Text = string.Empty;
             }
         }
 
@@ -95,7 +95,7 @@ namespace HPTClient
                 dt.Interval = TimeSpan.FromSeconds(1D);
                 dt.Tick += (_, a) =>
                 {
-                    TimeSpan tsTemp = this.Race.PostTime - DateTime.Now;
+                    TimeSpan tsTemp = Race.PostTime - DateTime.Now;
 
                     if (tsTemp.TotalSeconds < 1D)
                     {

@@ -10,11 +10,11 @@ namespace HPTClient
         {
             get
             {
-                return this.name;
+                return name;
             }
             set
             {
-                this.name = value;
+                name = value;
                 OnPropertyChanged("Name");
             }
         }
@@ -23,14 +23,14 @@ namespace HPTClient
         {
             get
             {
-                int numberOfSelected = this.HorseList.Count(h => h.Selected);
+                int numberOfSelected = HorseList.Count(h => h.Selected);
                 return numberOfSelected;
             }
         }
 
         public void SetNameAndNumberOfHorse()
         {
-            this.NameAndNumberOfHorses = this.Name + " (" + this.NumberOfSelectedHorse.ToString() + "/" + this.HorseList.Count.ToString() + ")";
+            NameAndNumberOfHorses = Name + " (" + NumberOfSelectedHorse.ToString() + "/" + HorseList.Count.ToString() + ")";
         }
 
         private string nameAndNumberOfHorses;
@@ -38,15 +38,15 @@ namespace HPTClient
         {
             get
             {
-                if (this.nameAndNumberOfHorses == null || this.nameAndNumberOfHorses == string.Empty)
+                if (nameAndNumberOfHorses == null || nameAndNumberOfHorses == string.Empty)
                 {
                     SetNameAndNumberOfHorse();
                 }
-                return this.nameAndNumberOfHorses;
+                return nameAndNumberOfHorses;
             }
             set
             {
-                this.nameAndNumberOfHorses = value;
+                nameAndNumberOfHorses = value;
                 OnPropertyChanged("NameAndNumberOfHorses");
             }
         }
@@ -62,11 +62,11 @@ namespace HPTClient
         {
             get
             {
-                return this.selected;
+                return selected;
             }
             set
             {
-                this.selected = value;
+                selected = value;
                 OnPropertyChanged("Selected");
             }
         }

@@ -146,20 +146,6 @@ namespace HPTClient
 
                 return buffer;
             }
-
-            return null;
-            //Ionic.Zip.ZipFile zf = new Ionic.Zip.ZipFile()
-            //{
-            //    CompressionLevel = Ionic.Zlib.CompressionLevel.BestCompression,
-            //    Password = ZipKey
-            //};
-
-            //MemoryStream ms = new MemoryStream();
-            //zf.AddEntry("System", stream);
-            //zf.Save(ms);
-            //ms.Position = 0;
-            //byte[] resultArray = ms.ToArray();
-            //return resultArray;
         }
 
         internal static Stream UnzipAndCreateStream(string fileName)
@@ -224,47 +210,47 @@ namespace HPTClient
 
         #region Serialisering/deserialisering av HPTService-objekt
 
-        internal static HPTService.AuthenticationResponse DeserializeAuthenticationResponse(byte[] binaryZip)
-        {
-            var response = DeserializeHPTServiceObject(typeof(HPTService.AuthenticationResponse), binaryZip);
-            return (HPTService.AuthenticationResponse)response;
-        }
+        //internal static HPTService.AuthenticationResponse DeserializeAuthenticationResponse(byte[] binaryZip)
+        //{
+        //    var response = DeserializeHPTServiceObject(typeof(HPTService.AuthenticationResponse), binaryZip);
+        //    return (HPTService.AuthenticationResponse)response;
+        //}
 
-        internal static HPTService.HPTSaveSystem DeserializeHPTSaveSystem(byte[] binaryZip)
-        {
-            var response = DeserializeHPTServiceObject(typeof(HPTService.HPTSaveSystem), binaryZip);
-            return (HPTService.HPTSaveSystem)response;
-        }
+        //internal static HPTService.HPTSaveSystem DeserializeHPTSaveSystem(byte[] binaryZip)
+        //{
+        //    var response = DeserializeHPTServiceObject(typeof(HPTService.HPTSaveSystem), binaryZip);
+        //    return (HPTService.HPTSaveSystem)response;
+        //}
 
-        internal static HPTService.HPTRegistration DeserializeHPTRegistration(byte[] binaryZip)
-        {
-            var response = DeserializeHPTServiceObject(typeof(HPTService.HPTRegistration), binaryZip);
-            return (HPTService.HPTRegistration)response;
-        }
+        //internal static HPTService.HPTRegistration DeserializeHPTRegistration(byte[] binaryZip)
+        //{
+        //    var response = DeserializeHPTServiceObject(typeof(HPTService.HPTRegistration), binaryZip);
+        //    return (HPTService.HPTRegistration)response;
+        //}
 
-        internal static HPTService.HPTCalendar DeserializeHPTCalendar(byte[] binaryZip)
-        {
-            var response = DeserializeHPTServiceObject(typeof(HPTService.HPTCalendar), binaryZip);
-            return (HPTService.HPTCalendar)response;
-        }
+        //internal static HPTService.HPTCalendar DeserializeHPTCalendar(byte[] binaryZip)
+        //{
+        //    var response = DeserializeHPTServiceObject(typeof(HPTService.HPTCalendar), binaryZip);
+        //    return (HPTService.HPTCalendar)response;
+        //}
 
-        internal static HPTService.HPTRaceDayInfo DeserializeHPTRaceDayInfo(byte[] binaryZip)
-        {
-            var response = DeserializeHPTServiceObject(typeof(HPTService.HPTRaceDayInfo), binaryZip);
-            return (HPTService.HPTRaceDayInfo)response;
-        }
+        //internal static HPTService.HPTRaceDayInfo DeserializeHPTRaceDayInfo(byte[] binaryZip)
+        //{
+        //    var response = DeserializeHPTServiceObject(typeof(HPTService.HPTRaceDayInfo), binaryZip);
+        //    return (HPTService.HPTRaceDayInfo)response;
+        //}
 
-        internal static HPTService.HPTResultMarkingBet DeserializeHPTResultMarkingBet(byte[] binaryZip)
-        {
-            var response = DeserializeHPTServiceObject(typeof(HPTService.HPTResultMarkingBet), binaryZip);
-            return (HPTService.HPTResultMarkingBet)response;
-        }
+        //internal static HPTService.HPTResultMarkingBet DeserializeHPTResultMarkingBet(byte[] binaryZip)
+        //{
+        //    var response = DeserializeHPTServiceObject(typeof(HPTService.HPTResultMarkingBet), binaryZip);
+        //    return (HPTService.HPTResultMarkingBet)response;
+        //}
 
-        internal static HPTService.HPTUserRaceDayInfoCommentsCollection DeserializeHPTUserRaceDayInfoCommentsCollection(byte[] binaryZip)
-        {
-            var response = DeserializeHPTServiceObject(typeof(HPTService.HPTUserRaceDayInfoCommentsCollection), binaryZip);
-            return (HPTService.HPTUserRaceDayInfoCommentsCollection)response;
-        }
+        //internal static HPTService.HPTUserRaceDayInfoCommentsCollection DeserializeHPTUserRaceDayInfoCommentsCollection(byte[] binaryZip)
+        //{
+        //    var response = DeserializeHPTServiceObject(typeof(HPTService.HPTUserRaceDayInfoCommentsCollection), binaryZip);
+        //    return (HPTService.HPTUserRaceDayInfoCommentsCollection)response;
+        //}
 
         //internal static byte[] SerializeHPTResultMarkingBet(HPTService.HPTResultMarkingBet hptRmb)
         //{
@@ -447,7 +433,6 @@ namespace HPTClient
 
                 stream.Flush();
                 stream.Close();
-                stream = null;
 
                 return horseOwnInformationCollection;
             }
@@ -458,7 +443,6 @@ namespace HPTClient
                 XmlTextReader xtr = new XmlTextReader(stream);
                 var hptHorseOwnInformation = (HPTHorseOwnInformationCollection)serializer.Deserialize(xtr);
                 xtr.Close();
-                xtr = null;
                 return hptHorseOwnInformation;
             }
             catch (Exception)
@@ -476,7 +460,7 @@ namespace HPTClient
                 }
                 return new HPTHorseOwnInformationCollection()
                 {
-                    HorseOwnInformationList = new System.Collections.ObjectModel.ObservableCollection<HPTHorseOwnInformation>()
+                    HorseOwnInformationList = new ObservableCollection<HPTHorseOwnInformation>()
                 };
             }
         }
@@ -564,7 +548,7 @@ namespace HPTClient
                         IEnumerable<HPTRaceDayInfo> finalRaceDayInfoList = orderedRaceDayInfoList
                             .Where(rdi => rdi.BetTypeList.Count > 0);
 
-                        hptCalendar.RaceDayInfoList = new System.Collections.ObjectModel.ObservableCollection<HPTRaceDayInfo>(finalRaceDayInfoList);
+                        hptCalendar.RaceDayInfoList = new ObservableCollection<HPTRaceDayInfo>(finalRaceDayInfoList);
 
                         hptCalendar.FromDate = DateTime.Now;
                         //hptCalendar.FromDateString = hptCalendar.FromDate.ToString("yyyy-MM-dd");
@@ -621,8 +605,6 @@ namespace HPTClient
         internal static void SerializeHPTTemplateCollection(string fileName, HPTTemplateCollection hptTemplateCollection)
         {
             SerializeHPTObject(typeof(HPTTemplateCollection), fileName, hptTemplateCollection);
-            //XmlSerializer serializer = new XmlSerializer(typeof(HPTTemplateCollection));
-            //SerializeHPTObject(typeof(HPTTemplateCollection), fileName, hptTemplateCollection);
         }
 
         internal static object CreateDeepCopy(object o)

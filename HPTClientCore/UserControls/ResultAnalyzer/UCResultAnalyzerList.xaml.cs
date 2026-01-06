@@ -99,7 +99,7 @@ namespace HPTClient
         {
             try
             {
-                BindingOperations.GetBindingExpression(this.lvwResultAnalyzerList, ListView.ItemsSourceProperty).UpdateTarget();
+                BindingOperations.GetBindingExpression(lvwResultAnalyzerList, ListView.ItemsSourceProperty).UpdateTarget();
             }
             catch (Exception exc)
             {
@@ -124,9 +124,9 @@ namespace HPTClient
 
             ListSortDirection newDir = ListSortDirection.Ascending;
 
-            if (this.lvwResultAnalyzerList.Items.SortDescriptions.Count > 0)
+            if (lvwResultAnalyzerList.Items.SortDescriptions.Count > 0)
             {
-                SortDescription sd = this.lvwResultAnalyzerList.Items.SortDescriptions[0];
+                SortDescription sd = lvwResultAnalyzerList.Items.SortDescriptions[0];
                 if (sd.PropertyName == field)
                 {
                     SortDescription sdNew = new SortDescription();
@@ -134,23 +134,23 @@ namespace HPTClient
                     sdNew.Direction = sd.Direction == ListSortDirection.Ascending
                                             ? ListSortDirection.Descending
                                             : ListSortDirection.Ascending;
-                    this.lvwResultAnalyzerList.Items.SortDescriptions.Clear();
-                    this.lvwResultAnalyzerList.Items.SortDescriptions.Add(sdNew);
+                    lvwResultAnalyzerList.Items.SortDescriptions.Clear();
+                    lvwResultAnalyzerList.Items.SortDescriptions.Add(sdNew);
                     return;
                 }
             }
 
             // Aldrig sortering på mer än två variabler
-            if (this.lvwResultAnalyzerList.Items.SortDescriptions.Count > 1)
+            if (lvwResultAnalyzerList.Items.SortDescriptions.Count > 1)
             {
-                this.lvwResultAnalyzerList.Items.SortDescriptions.RemoveAt(1); ;
+                lvwResultAnalyzerList.Items.SortDescriptions.RemoveAt(1); ;
             }
-            this.lvwResultAnalyzerList.Items.SortDescriptions.Insert(0, new SortDescription(field, newDir));
+            lvwResultAnalyzerList.Items.SortDescriptions.Insert(0, new SortDescription(field, newDir));
         }
 
         private void btnExportToClipboard_Click(object sender, RoutedEventArgs e)
         {
-            this.btnExportToClipboard.IsOpen = false;
+            btnExportToClipboard.IsOpen = false;
 
             var sb = new StringBuilder();
 
@@ -175,7 +175,7 @@ namespace HPTClient
 
         private void miCompleteResults_Click(object sender, RoutedEventArgs e)
         {
-            this.btnExportToClipboard.IsOpen = false;
+            btnExportToClipboard.IsOpen = false;
 
             var sb = new StringBuilder();
 

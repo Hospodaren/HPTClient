@@ -24,7 +24,8 @@ namespace HPTClient
             DependencyProperty.Register("MarkBet", typeof(HPTMarkBet), typeof(UCUserRaceDayInfoCommentsList), new UIPropertyMetadata(null));
 
 
-        public List<HPTService.HPTUserComments> UserCommentsToDownloadList { get; set; }
+        // TODO: Skita i det här tillsvidare
+        //public List<HPTService.HPTUserComments> UserCommentsToDownloadList { get; set; }
 
         //private void btnDownloadSelectedComments_Click(object sender, RoutedEventArgs e)
         //{
@@ -55,20 +56,20 @@ namespace HPTClient
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            if (this.UserCommentsToDownloadList == null)
-            {
-                this.UserCommentsToDownloadList = new List<HPTService.HPTUserComments>();
-            }
-            var chk = (CheckBox)sender;
-            var userComments = (HPTService.HPTUserComments)chk.DataContext;
-            if (chk.IsChecked == true)
-            {
-                this.UserCommentsToDownloadList.Add(userComments);
-            }
-            else
-            {
-                this.UserCommentsToDownloadList.Remove(userComments);
-            }
+            //if (UserCommentsToDownloadList == null)
+            //{
+            //    UserCommentsToDownloadList = new List<HPTService.HPTUserComments>();
+            //}
+            //var chk = (CheckBox)sender;
+            //var userComments = (HPTService.HPTUserComments)chk.DataContext;
+            //if (chk.IsChecked == true)
+            //{
+            //    UserCommentsToDownloadList.Add(userComments);
+            //}
+            //else
+            //{
+            //    UserCommentsToDownloadList.Remove(userComments);
+            //}
         }
 
         //private void btnGetCommentsList_Click(object sender, RoutedEventArgs e)

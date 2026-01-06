@@ -9,18 +9,18 @@ namespace HPTClient
             switch (betType)
             {
                 case "V4":
-                    return this.GroupIntervalRulesCollectionV4;
+                    return GroupIntervalRulesCollectionV4;
                 case "V5":
-                    return this.GroupIntervalRulesCollectionV5;
+                    return GroupIntervalRulesCollectionV5;
                 case "V64":
                 case "V65":
-                    return this.GroupIntervalRulesCollectionV6X;
+                    return GroupIntervalRulesCollectionV6X;
                 case "V75":
                 case "GS75":
-                    return this.GroupIntervalRulesCollectionV75;
+                    return GroupIntervalRulesCollectionV75;
                 case "V86":
                 case "V85":
-                    return this.GroupIntervalRulesCollectionV86;
+                    return GroupIntervalRulesCollectionV86;
                 default:
                     return null;
             }
@@ -41,18 +41,18 @@ namespace HPTClient
         {
             get
             {
-                if (this.groupIntervalRulesCollectionList == null)
+                if (groupIntervalRulesCollectionList == null)
                 {
-                    this.groupIntervalRulesCollectionList = new ObservableCollection<HPTGroupIntervalRulesCollection>()
+                    groupIntervalRulesCollectionList = new ObservableCollection<HPTGroupIntervalRulesCollection>()
                     {
-                        this.GroupIntervalRulesCollectionV4,
-                        this.GroupIntervalRulesCollectionV5,
-                        this.GroupIntervalRulesCollectionV6X,
-                        this.GroupIntervalRulesCollectionV75,
-                        this.GroupIntervalRulesCollectionV86
+                        GroupIntervalRulesCollectionV4,
+                        GroupIntervalRulesCollectionV5,
+                        GroupIntervalRulesCollectionV6X,
+                        GroupIntervalRulesCollectionV75,
+                        GroupIntervalRulesCollectionV86
                     };
                 }
-                return this.groupIntervalRulesCollectionList;
+                return groupIntervalRulesCollectionList;
             }
         }
     }

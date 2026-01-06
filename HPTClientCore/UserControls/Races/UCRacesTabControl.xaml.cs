@@ -16,7 +16,7 @@ namespace HPTClient
 
         internal void UpdateSortOrder()
         {
-            var raceViewList = this.tcRaces.Items.Cast<UCRaceView>();
+            var raceViewList = tcRaces.Items.Cast<UCRaceView>();
         }
 
         private void hlVPOnAtgSe_RequestNavigate(object sender, RequestNavigateEventArgs e)

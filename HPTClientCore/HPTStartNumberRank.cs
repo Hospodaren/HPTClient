@@ -11,11 +11,11 @@ namespace HPTClient
         {
             get
             {
-                return this.select;
+                return select;
             }
             set
             {
-                this.select = value;
+                select = value;
                 OnPropertyChanged("Select");
             }
         }
@@ -26,11 +26,11 @@ namespace HPTClient
         {
             get
             {
-                return this.startNumber;
+                return startNumber;
             }
             set
             {
-                this.startNumber = value;
+                startNumber = value;
                 OnPropertyChanged("StartNumber");
             }
         }
@@ -41,11 +41,11 @@ namespace HPTClient
         {
             get
             {
-                return this.rank;
+                return rank;
             }
             set
             {
-                this.rank = value;
+                rank = value;
                 OnPropertyChanged("Rank");
             }
         }

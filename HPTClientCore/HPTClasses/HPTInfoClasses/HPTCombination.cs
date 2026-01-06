@@ -40,11 +40,11 @@ namespace HPTClient
         {
             get
             {
-                return this.multipliedOdds;
+                return multipliedOdds;
             }
             set
             {
-                this.multipliedOdds = value;
+                multipliedOdds = value;
                 OnPropertyChanged("MultipliedOdds");
             }
         }
@@ -55,11 +55,11 @@ namespace HPTClient
         {
             get
             {
-                return this.multipliedPlatsOdds;
+                return multipliedPlatsOdds;
             }
             set
             {
-                this.multipliedPlatsOdds = value;
+                multipliedPlatsOdds = value;
                 OnPropertyChanged("MultipliedPlatsOdds");
             }
         }
@@ -70,11 +70,11 @@ namespace HPTClient
         {
             get
             {
-                return this.combinationOdds;
+                return combinationOdds;
             }
             set
             {
-                this.combinationOdds = value;
+                combinationOdds = value;
                 OnPropertyChanged("CombinationOdds");
                 //if (this.combinationOdds > 0 && this.ParentRaceDayInfo != null)
                 //{
@@ -94,11 +94,11 @@ namespace HPTClient
             }
             set
             {
-                this._CombinationOddsExact = value;
+                _CombinationOddsExact = value;
                 OnPropertyChanged("CombinationOddsExact");
-                if (this.CombinationOddsExact > 0M && this.ParentRaceDayInfo != null)
+                if (CombinationOddsExact > 0M && ParentRaceDayInfo != null)
                 {
-                    this.CombinationOddsShare = this.ParentRaceDayInfo.BetType.PoolShare / this.CombinationOddsExact;
+                    CombinationOddsShare = ParentRaceDayInfo.BetType.PoolShare / CombinationOddsExact;
                 }
             }
         }
@@ -109,11 +109,11 @@ namespace HPTClient
         {
             get
             {
-                return this.calculatedOdds;
+                return calculatedOdds;
             }
             set
             {
-                this.calculatedOdds = value;
+                calculatedOdds = value;
                 OnPropertyChanged("CalculatedOdds");
             }
         }
@@ -124,11 +124,11 @@ namespace HPTClient
         {
             get
             {
-                return this.calculatedOddsQuota;
+                return calculatedOddsQuota;
             }
             set
             {
-                this.calculatedOddsQuota = value;
+                calculatedOddsQuota = value;
                 OnPropertyChanged("CalculatedOddsQuota");
             }
         }
@@ -141,11 +141,11 @@ namespace HPTClient
         {
             get
             {
-                return this.oddsQuota;
+                return oddsQuota;
             }
             set
             {
-                this.oddsQuota = value;
+                oddsQuota = value;
                 OnPropertyChanged("OddsQuota");
             }
         }
@@ -156,11 +156,11 @@ namespace HPTClient
         {
             get
             {
-                return this.vOdds;
+                return vOdds;
             }
             set
             {
-                this.vOdds = value;
+                vOdds = value;
                 OnPropertyChanged("VOdds");
             }
         }
@@ -171,11 +171,11 @@ namespace HPTClient
         {
             get
             {
-                return this.vQuota;
+                return vQuota;
             }
             set
             {
-                this.vQuota = value;
+                vQuota = value;
                 OnPropertyChanged("VQuota");
             }
         }
@@ -186,11 +186,11 @@ namespace HPTClient
         {
             get
             {
-                return this.pOdds;
+                return pOdds;
             }
             set
             {
-                this.pOdds = value;
+                pOdds = value;
                 OnPropertyChanged("POdds");
             }
         }
@@ -201,11 +201,11 @@ namespace HPTClient
         {
             get
             {
-                return this.pQuota;
+                return pQuota;
             }
             set
             {
-                this.pQuota = value;
+                pQuota = value;
                 OnPropertyChanged("PQuota");
             }
         }
@@ -216,11 +216,11 @@ namespace HPTClient
         {
             get
             {
-                return this.vpOdds;
+                return vpOdds;
             }
             set
             {
-                this.vpOdds = value;
+                vpOdds = value;
                 OnPropertyChanged("VPOdds");
             }
         }
@@ -231,11 +231,11 @@ namespace HPTClient
         {
             get
             {
-                return this.vpQuota;
+                return vpQuota;
             }
             set
             {
-                this.vpQuota = value;
+                vpQuota = value;
                 OnPropertyChanged("VPQuota");
             }
         }
@@ -246,11 +246,11 @@ namespace HPTClient
         {
             get
             {
-                return this.opQuota;
+                return opQuota;
             }
             set
             {
-                this.opQuota = value;
+                opQuota = value;
                 OnPropertyChanged("OPQuota");
             }
         }
@@ -261,11 +261,11 @@ namespace HPTClient
         {
             get
             {
-                return this.tvQuota;
+                return tvQuota;
             }
             set
             {
-                this.tvQuota = value;
+                tvQuota = value;
                 OnPropertyChanged("TVQuota");
             }
         }
@@ -276,11 +276,11 @@ namespace HPTClient
         {
             get
             {
-                return this.tQuota;
+                return tQuota;
             }
             set
             {
-                this.tQuota = value;
+                tQuota = value;
                 OnPropertyChanged("TQuota");
             }
         }
@@ -291,11 +291,11 @@ namespace HPTClient
         {
             get
             {
-                return this.dQuota;
+                return dQuota;
             }
             set
             {
-                this.dQuota = value;
+                dQuota = value;
                 OnPropertyChanged("DQuota");
             }
         }
@@ -306,11 +306,11 @@ namespace HPTClient
         {
             get
             {
-                return this.stakeQuota;
+                return stakeQuota;
             }
             set
             {
-                this.stakeQuota = value;
+                stakeQuota = value;
                 OnPropertyChanged("StakeQuota");
             }
         }
@@ -321,11 +321,11 @@ namespace HPTClient
         {
             get
             {
-                return this.selected;
+                return selected;
             }
             set
             {
-                this.selected = value;
+                selected = value;
                 OnPropertyChanged("Selected");
             }
         }
@@ -336,24 +336,24 @@ namespace HPTClient
         {
             get
             {
-                return this.stake;
+                return stake;
             }
             set
             {
-                this.stake = value;
+                stake = value;
                 OnPropertyChanged("Stake");
                 if (value == null)
                 {
                     return;
                 }
-                if (this.CombinationOdds == 9999 && this.CalculatedOdds != 0M)
+                if (CombinationOdds == 9999 && CalculatedOdds != 0M)
                 {
-                    this.Profit = Convert.ToInt32(this.stake * this.CalculatedOdds);
+                    Profit = Convert.ToInt32(stake * CalculatedOdds);
                 }
                 else
                 {
                     //this.Profit = Convert.ToInt32(this.stake * this.CombinationOdds / 10);
-                    this.Profit = Convert.ToInt32(this.stake * this.CombinationOddsExact);
+                    Profit = Convert.ToInt32(stake * CombinationOddsExact);
                 }
             }
         }
@@ -364,18 +364,18 @@ namespace HPTClient
         {
             get
             {
-                return this.profit;
+                return profit;
             }
             set
             {
-                this.profit = value;
-                switch (this.profit)
+                profit = value;
+                switch (profit)
                 {
                     case 0:
-                        this.ProfitString = string.Empty;
+                        ProfitString = string.Empty;
                         break;
                     default:
-                        this.ProfitString = string.Format("{0:## ### ###}", this.profit); ;
+                        ProfitString = string.Format("{0:## ### ###}", profit); ;
                         break;
                 }
                 OnPropertyChanged("Profit");
@@ -388,11 +388,11 @@ namespace HPTClient
         {
             get
             {
-                return this.profitString;
+                return profitString;
             }
             set
             {
-                this.profitString = value;
+                profitString = value;
                 OnPropertyChanged("ProfitString");
             }
         }
@@ -405,11 +405,11 @@ namespace HPTClient
         {
             get
             {
-                return this.multipliedOddsRank;
+                return multipliedOddsRank;
             }
             set
             {
-                this.multipliedOddsRank = value;
+                multipliedOddsRank = value;
                 OnPropertyChanged("MultipliedOddsRank");
             }
         }
@@ -420,11 +420,11 @@ namespace HPTClient
         {
             get
             {
-                return this.combinationOddsRank;
+                return combinationOddsRank;
             }
             set
             {
-                this.combinationOddsRank = value;
+                combinationOddsRank = value;
                 OnPropertyChanged("CombinationOddsRank");
             }
         }
@@ -435,11 +435,11 @@ namespace HPTClient
         {
             get
             {
-                return this.playability;
+                return playability;
             }
             set
             {
-                this.playability = value;
+                playability = value;
                 OnPropertyChanged("Playability");
             }
         }
@@ -448,14 +448,14 @@ namespace HPTClient
         {
             get
             {
-                if (this.Horse3 == null)
+                if (Horse3 == null)
                 {
-                    return this.Horse1.HexCode + this.Horse2.HexCode;
+                    return Horse1.HexCode + Horse2.HexCode;
                 }
 
                 else
                 {
-                    return this.Horse1.HexCode + this.Horse2.HexCode + this.Horse3.HexCode;
+                    return Horse1.HexCode + Horse2.HexCode + Horse3.HexCode;
                 }
             }
         }
@@ -466,21 +466,21 @@ namespace HPTClient
             {
                 case "DD":
                 case "LD":
-                    if (this.ParentRaceDayInfo == null)
+                    if (ParentRaceDayInfo == null)
                     {
                         return;
                     }
                     CalculateQuotasDD();
                     break;
                 case "TV":
-                    if (this.ParentRace == null || this.ParentRace.HorseList == null || this.ParentRace.HorseList.Count == 0)
+                    if (ParentRace == null || ParentRace.HorseList == null || ParentRace.HorseList.Count == 0)
                     {
                         return;
                     }
                     CalculateQuotasTvilling();
                     break;
                 case "T":
-                    if (this.ParentRace == null || this.ParentRace.HorseList == null || this.ParentRace.HorseList.Count == 0)
+                    if (ParentRace == null || ParentRace.HorseList == null || ParentRace.HorseList.Count == 0)
                     {
                         return;
                     }
@@ -495,22 +495,22 @@ namespace HPTClient
         {
             try
             {
-                this.MultipliedOdds = this.Horse1.VinnarOddsExact * this.Horse2.VinnarOddsExact;
+                MultipliedOdds = Horse1.VinnarOddsExact * Horse2.VinnarOddsExact;
                 //this.OddsQuota = this.CombinationOdds / this.MultipliedOdds / 10;
-                this.OddsQuota = this.CombinationOddsExact / this.MultipliedOdds;
-                this.Playability = Convert.ToDecimal(Math.Sqrt(decimal.ToDouble(this.MultipliedOdds))) / (this.OddsQuota * this.OddsQuota);
+                OddsQuota = CombinationOddsExact / MultipliedOdds;
+                Playability = Convert.ToDecimal(Math.Sqrt(decimal.ToDouble(MultipliedOdds))) / (OddsQuota * OddsQuota);
 
                 // NYA MÅTT
-                if (this.CombinationOddsShare > 0M)
+                if (CombinationOddsShare > 0M)
                 {
-                    this.VQuota = (this.Horse1.VinnarOddsShare * this.Horse2.VinnarOddsShare) / this.CombinationOddsShare;
-                    this.PQuota = (this.Horse1.PlatsOddsShare * this.Horse2.PlatsOddsShare) / this.CombinationOddsShare;
-                    this.TVQuota = (this.Horse1.TvillingShare * this.Horse2.TvillingShare) / this.CombinationOddsShare;
-                    this.OPQuota = (Convert.ToDecimal(this.Horse1.OwnProbability) * Convert.ToDecimal(this.Horse2.OwnProbability)) / this.CombinationOddsShare;
+                    VQuota = (Horse1.VinnarOddsShare * Horse2.VinnarOddsShare) / CombinationOddsShare;
+                    PQuota = (Horse1.PlatsOddsShare * Horse2.PlatsOddsShare) / CombinationOddsShare;
+                    TVQuota = (Horse1.TvillingShare * Horse2.TvillingShare) / CombinationOddsShare;
+                    OPQuota = (Convert.ToDecimal(Horse1.OwnProbability) * Convert.ToDecimal(Horse2.OwnProbability)) / CombinationOddsShare;
 
-                    if (this.Horse1.StakeShareAlternate > 0M && this.Horse2.StakeShareAlternate > 0M)
+                    if (Horse1.StakeShareAlternate > 0M && Horse2.StakeShareAlternate > 0M)
                     {
-                        this.StakeQuota = (Convert.ToDecimal(this.Horse1.StakeShareAlternate) * Convert.ToDecimal(this.Horse2.StakeShareAlternate)) / this.CombinationOddsShare;
+                        StakeQuota = (Convert.ToDecimal(Horse1.StakeShareAlternate) * Convert.ToDecimal(Horse2.StakeShareAlternate)) / CombinationOddsShare;
                     }
                 }
             }
@@ -523,58 +523,58 @@ namespace HPTClient
         public void CalculateQuotasTvilling()
         {
             // Andel kombinationer i förhållande till totalantal om det varit DD/LD istället
-            int numberOfStartingHorse = this.ParentRace.HorseList.Count(h => h.Scratched == null || h.Scratched == false);
+            int numberOfStartingHorse = ParentRace.HorseList.Count(h => h.Scratched == null || h.Scratched == false);
             decimal numberOfCombinationsQuota =
                 Convert.ToDecimal(numberOfStartingHorse * (numberOfStartingHorse - 1) * 0.5M) /
                 Convert.ToDecimal(numberOfStartingHorse * numberOfStartingHorse);
 
-            this.MultipliedOdds = this.Horse1.VinnarOddsExact * this.Horse2.VinnarOddsExact;
-            this.MultipliedPlatsOdds = Convert.ToDecimal(this.Horse1.MaxPlatsOdds * this.Horse2.MaxPlatsOdds) / 100;
+            MultipliedOdds = Horse1.VinnarOddsExact * Horse2.VinnarOddsExact;
+            MultipliedPlatsOdds = Convert.ToDecimal(Horse1.MaxPlatsOdds * Horse2.MaxPlatsOdds) / 100;
 
-            if (this.MultipliedOdds != 0M && this.MultipliedPlatsOdds != 0M && this.combinationOdds != 0M)
+            if (MultipliedOdds != 0M && MultipliedPlatsOdds != 0M && combinationOdds != 0M)
             {
                 //decimal vinnarOddsQuota = this.CombinationOdds / 10 / numberOfCombinationsQuota / this.MultipliedOdds;
                 //decimal platsOddsQuota = this.CombinationOdds / 10 / this.MultipliedPlatsOdds;
-                decimal vinnarOddsQuota = this.CombinationOddsExact / numberOfCombinationsQuota / this.MultipliedOdds;
-                decimal platsOddsQuota = this.CombinationOddsExact / this.MultipliedPlatsOdds;
-                this.OddsQuota = vinnarOddsQuota;
-                this.Playability = Convert.ToDecimal(Math.Sqrt(decimal.ToDouble(this.MultipliedOdds + this.MultipliedPlatsOdds))) / (this.OddsQuota * this.OddsQuota * platsOddsQuota * platsOddsQuota);
+                decimal vinnarOddsQuota = CombinationOddsExact / numberOfCombinationsQuota / MultipliedOdds;
+                decimal platsOddsQuota = CombinationOddsExact / MultipliedPlatsOdds;
+                OddsQuota = vinnarOddsQuota;
+                Playability = Convert.ToDecimal(Math.Sqrt(decimal.ToDouble(MultipliedOdds + MultipliedPlatsOdds))) / (OddsQuota * OddsQuota * platsOddsQuota * platsOddsQuota);
             }
 
             // NYA MÅTT
-            decimal adjustedCombinationShare = this.CombinationOddsShare * numberOfCombinationsQuota;
-            if (this.CombinationOddsShare > 0M && adjustedCombinationShare > 0M)
+            decimal adjustedCombinationShare = CombinationOddsShare * numberOfCombinationsQuota;
+            if (CombinationOddsShare > 0M && adjustedCombinationShare > 0M)
             {
-                decimal vpShare = (this.Horse1.VinnarOddsShare * this.Horse2.PlatsOddsShare) + (this.Horse1.PlatsOddsShare * this.Horse2.VinnarOddsShare);
+                decimal vpShare = (Horse1.VinnarOddsShare * Horse2.PlatsOddsShare) + (Horse1.PlatsOddsShare * Horse2.VinnarOddsShare);
                 if (vpShare > 0M)
                 {
-                    this.VPQuota = vpShare / adjustedCombinationShare / 2M;
-                    this.VPOdds = this.CombinationOdds / this.VPQuota;
+                    VPQuota = vpShare / adjustedCombinationShare / 2M;
+                    VPOdds = CombinationOdds / VPQuota;
                 }
 
-                decimal vShare = this.Horse1.VinnarOddsShare * this.Horse2.VinnarOddsShare;
+                decimal vShare = Horse1.VinnarOddsShare * Horse2.VinnarOddsShare;
                 if (vShare > 0M)
                 {
-                    this.VQuota = vShare / adjustedCombinationShare;
-                    this.VOdds = this.CombinationOdds / this.VQuota;
+                    VQuota = vShare / adjustedCombinationShare;
+                    VOdds = CombinationOdds / VQuota;
                 }
 
-                decimal pShare = this.Horse1.PlatsOddsShare * this.Horse2.PlatsOddsShare;
+                decimal pShare = Horse1.PlatsOddsShare * Horse2.PlatsOddsShare;
                 if (pShare > 0M)
                 {
-                    this.PQuota = pShare / adjustedCombinationShare;
-                    this.POdds = this.CombinationOdds / this.PQuota;
+                    PQuota = pShare / adjustedCombinationShare;
+                    POdds = CombinationOdds / PQuota;
                 }
 
-                this.OPQuota = (Convert.ToDecimal(this.Horse1.OwnProbability) * Convert.ToDecimal(this.Horse2.OwnProbability)) / adjustedCombinationShare;
+                OPQuota = (Convert.ToDecimal(Horse1.OwnProbability) * Convert.ToDecimal(Horse2.OwnProbability)) / adjustedCombinationShare;
 
-                if (this.Horse1.StakeShareAlternate > 0M && this.Horse2.StakeShareAlternate > 0M)
+                if (Horse1.StakeShareAlternate > 0M && Horse2.StakeShareAlternate > 0M)
                 {
-                    this.StakeQuota = (Convert.ToDecimal(this.Horse1.StakeShareAlternate) * Convert.ToDecimal(this.Horse2.StakeShareAlternate)) / adjustedCombinationShare;
+                    StakeQuota = (Convert.ToDecimal(Horse1.StakeShareAlternate) * Convert.ToDecimal(Horse2.StakeShareAlternate)) / adjustedCombinationShare;
                 }
-                if (this.Horse1.DoubleShare > 0M && this.Horse2.DoubleShare > 0M)
+                if (Horse1.DoubleShare > 0M && Horse2.DoubleShare > 0M)
                 {
-                    this.DQuota = (Convert.ToDecimal(this.Horse1.DoubleShare) * Convert.ToDecimal(this.Horse2.DoubleShare)) / adjustedCombinationShare;
+                    DQuota = (Convert.ToDecimal(Horse1.DoubleShare) * Convert.ToDecimal(Horse2.DoubleShare)) / adjustedCombinationShare;
                 }
             }
         }
@@ -583,50 +583,50 @@ namespace HPTClient
         {
             try
             {
-                this.MultipliedOdds = this.Horse1.VinnarOddsExact * this.Horse2.VinnarOddsExact * this.Horse3.VinnarOddsExact;
+                MultipliedOdds = Horse1.VinnarOddsExact * Horse2.VinnarOddsExact * Horse3.VinnarOddsExact;
                 //this.OddsQuota = this.CombinationOdds / this.MultipliedOdds / 10;
-                this.OddsQuota = this.CombinationOddsExact / this.MultipliedOdds;
+                OddsQuota = CombinationOddsExact / MultipliedOdds;
 
                 //this.CalculatedOdds = 0.343M / (this.Horse1.TrioInfo.PlaceInfo1.InvestmentShare * this.Horse2.TrioInfo.PlaceInfo2.InvestmentShare * this.Horse3.TrioInfo.PlaceInfo3.InvestmentShare);
 
                 // Beräkna vad oddset "borde" vara utifrån hur Trio-spelarena spelat
-                this.CalculatedOdds = 0.7M / (this.Horse1.TrioInfo.PlaceInfo1.InvestmentShare * this.Horse2.TrioInfo.PlaceInfo2.InvestmentShare * this.Horse3.TrioInfo.PlaceInfo3.InvestmentShare);
+                CalculatedOdds = 0.7M / (Horse1.TrioInfo.PlaceInfo1.InvestmentShare * Horse2.TrioInfo.PlaceInfo2.InvestmentShare * Horse3.TrioInfo.PlaceInfo3.InvestmentShare);
 
 
-                if (this.CombinationOdds == 0M || this.CombinationOdds == 9999M)
+                if (CombinationOdds == 0M || CombinationOdds == 9999M)
                 {
-                    this.CalculatedOddsQuota = 0M;
-                    this.VPQuota = 0M;
-                    this.VQuota = 0M;
-                    this.PQuota = 0M;
+                    CalculatedOddsQuota = 0M;
+                    VPQuota = 0M;
+                    VQuota = 0M;
+                    PQuota = 0M;
                 }
                 else
                 {
                     // Vad oddset borde vara utifrån de olika insatserna per placering
-                    this.CalculatedOddsQuota = this.CalculatedOdds / this.CombinationOdds * 10M;
+                    CalculatedOddsQuota = CalculatedOdds / CombinationOdds * 10M;
 
                     // Beräkna vad oddset "borde" varit utifrån VP
-                    decimal vpShare = this.Horse1.VinnarOddsShare * this.Horse2.PlatsOddsShare * this.Horse3.PlatsOddsShare;
+                    decimal vpShare = Horse1.VinnarOddsShare * Horse2.PlatsOddsShare * Horse3.PlatsOddsShare;
                     if (vpShare > 0M)
                     {
-                        this.VPOdds = 0.7M / vpShare * 10M;
-                        this.VPQuota = this.CombinationOdds / this.VPOdds;
+                        VPOdds = 0.7M / vpShare * 10M;
+                        VPQuota = CombinationOdds / VPOdds;
                     }
 
                     // Beräkna vad oddset "borde" varit utifrån Vinnare
-                    decimal vShare = this.Horse1.VinnarOddsShare * this.Horse2.VinnarOddsShare * this.Horse3.VinnarOddsShare;
+                    decimal vShare = Horse1.VinnarOddsShare * Horse2.VinnarOddsShare * Horse3.VinnarOddsShare;
                     if (vShare > 0M)
                     {
-                        this.VOdds = 0.7M / vShare * 10M;
-                        this.VQuota = this.CombinationOdds / this.VOdds;
+                        VOdds = 0.7M / vShare * 10M;
+                        VQuota = CombinationOdds / VOdds;
                     }
 
                     // Beräkna vad oddset "borde" varit utifrån Plats
-                    decimal pShare = this.Horse1.PlatsOddsShare * this.Horse2.PlatsOddsShare * this.Horse3.PlatsOddsShare;
+                    decimal pShare = Horse1.PlatsOddsShare * Horse2.PlatsOddsShare * Horse3.PlatsOddsShare;
                     if (pShare > 0M)
                     {
-                        this.POdds = 0.7M / pShare * 10M;
-                        this.PQuota = this.CombinationOdds / this.POdds;
+                        POdds = 0.7M / pShare * 10M;
+                        PQuota = CombinationOdds / POdds;
                     }
                 }
             }
@@ -639,11 +639,11 @@ namespace HPTClient
         private void SetColorsDD()
         {
             Color c = Colors.White;
-            if (this.VQuota > 1.2M)
+            if (VQuota > 1.2M)
             {
                 c = HPTConfig.Config.ColorGood;
             }
-            else if (this.VQuota > 1M)
+            else if (VQuota > 1M)
             {
                 c = HPTConfig.Config.ColorMedium;
             }
@@ -651,18 +651,18 @@ namespace HPTClient
             {
                 c = HPTConfig.Config.ColorBad;
             }
-            this.OddsQuotaColor = new SolidColorBrush(c);
+            OddsQuotaColor = new SolidColorBrush(c);
         }
 
         private void SetColorsTvilling()
         {
             // Färg för oddskvot
             Color c = Colors.White;
-            if (this.VPQuota > 1.2M)
+            if (VPQuota > 1.2M)
             {
                 c = HPTConfig.Config.ColorGood;
             }
-            else if (this.VPQuota > 1M)
+            else if (VPQuota > 1M)
             {
                 c = HPTConfig.Config.ColorMedium;
             }
@@ -670,18 +670,18 @@ namespace HPTClient
             {
                 c = HPTConfig.Config.ColorBad;
             }
-            this.OddsQuotaColor = new SolidColorBrush(c);
+            OddsQuotaColor = new SolidColorBrush(c);
         }
 
         private void SetColorsTrio()
         {
             // Färg för oddskvot
             Color c = Colors.White;
-            if (this.VPQuota > 1.2M)
+            if (VPQuota > 1.2M)
             {
                 c = HPTConfig.Config.ColorGood;
             }
-            else if (this.VPQuota > 1M)
+            else if (VPQuota > 1M)
             {
                 c = HPTConfig.Config.ColorMedium;
             }
@@ -689,7 +689,7 @@ namespace HPTClient
             {
                 c = HPTConfig.Config.ColorBad;
             }
-            this.OddsQuotaColor = new SolidColorBrush(c);
+            OddsQuotaColor = new SolidColorBrush(c);
 
             //// Färg för differens i rank
             //int rankDiff = this.CombinationOddsRank - this.MultipliedOddsRank;
@@ -730,15 +730,15 @@ namespace HPTClient
             get
             {
                 StringBuilder sb = new StringBuilder();
-                sb.Append(this.Horse1.StartNr);
+                sb.Append(Horse1.StartNr);
                 sb.Append(" - ");
-                sb.Append(this.Horse1.HorseName);
+                sb.Append(Horse1.HorseName);
                 sb.Append(" / ");
-                sb.Append(this.Horse2.StartNr);
+                sb.Append(Horse2.StartNr);
                 sb.Append(" - ");
-                sb.Append(this.Horse2.HorseName);
+                sb.Append(Horse2.HorseName);
                 sb.Append(" (");
-                sb.Append(this.Stake);
+                sb.Append(Stake);
                 sb.Append(")");
                 return sb.ToString();
             }
@@ -750,9 +750,9 @@ namespace HPTClient
         {
             get
             {
-                if (this.oddsQuotaColor == null)
+                if (oddsQuotaColor == null)
                 {
-                    switch (this.ParentRaceDayInfo.BetType.Code)
+                    switch (ParentRaceDayInfo.BetType.Code)
                     {
                         case "DD":
                         case "LD":
@@ -768,11 +768,11 @@ namespace HPTClient
                             break;
                     }
                 }
-                return this.oddsQuotaColor;
+                return oddsQuotaColor;
             }
             set
             {
-                this.oddsQuotaColor = value;
+                oddsQuotaColor = value;
                 OnPropertyChanged("OddsQuotaColor");
             }
         }
@@ -783,9 +783,9 @@ namespace HPTClient
         {
             get
             {
-                if (this.rankDiffColor == null)
+                if (rankDiffColor == null)
                 {
-                    switch (this.ParentRaceDayInfo.BetType.Code)
+                    switch (ParentRaceDayInfo.BetType.Code)
                     {
                         case "DD":
                         case "LD":
@@ -801,11 +801,11 @@ namespace HPTClient
                             break;
                     }
                 }
-                return this.rankDiffColor;
+                return rankDiffColor;
             }
             set
             {
-                this.rankDiffColor = value;
+                rankDiffColor = value;
                 OnPropertyChanged("RankDiffColor");
             }
         }
@@ -816,9 +816,9 @@ namespace HPTClient
         {
             get
             {
-                if (this.playabilityColor == null)
+                if (playabilityColor == null)
                 {
-                    switch (this.ParentRaceDayInfo.BetType.Code)
+                    switch (ParentRaceDayInfo.BetType.Code)
                     {
                         case "DD":
                         case "LD":
@@ -834,11 +834,11 @@ namespace HPTClient
                             break;
                     }
                 }
-                return this.playabilityColor;
+                return playabilityColor;
             }
             set
             {
-                this.playabilityColor = value;
+                playabilityColor = value;
                 OnPropertyChanged("PlayabilityColor");
             }
         }

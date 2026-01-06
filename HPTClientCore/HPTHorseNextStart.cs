@@ -15,7 +15,7 @@ namespace HPTClient
             }
             set
             {
-                this._StartDate = value;
+                _StartDate = value;
                 OnPropertyChanged("StartDate");
             }
         }
@@ -30,7 +30,7 @@ namespace HPTClient
             }
             set
             {
-                this._RaceNumber = value;
+                _RaceNumber = value;
                 OnPropertyChanged("RaceNumber");
             }
         }
@@ -45,7 +45,7 @@ namespace HPTClient
             }
             set
             {
-                this._TrackId = value;
+                _TrackId = value;
                 OnPropertyChanged("TrackId");
             }
         }
@@ -60,39 +60,39 @@ namespace HPTClient
             }
             set
             {
-                this._BetTypes = value;
+                _BetTypes = value;
                 OnPropertyChanged("BetTypes");
             }
         }
 
-        private List<HPTBetType> betTypeList;
-        public List<HPTBetType> BetTypeList
-        {
-            get
-            {
-                if (this.betTypeList == null)
-                {
-                    this.betTypeList = this.BetTypes
-                        .Select(bt => new HPTBetType()
-                        {
-                            Code = bt,
-                            Name = bt,
-                            IsEnabled = true
-                        })
-                        //.Select(bt => new HPTBetType(new Uri("/ATGImages/" + bt + "XSmall.png", UriKind.Relative)))
-                        .ToList();
-                }
-                return this.betTypeList;
-            }
-        }
+        // private List<HPTBetType> betTypeList;
+        // public List<HPTBetType> BetTypeList
+        // {
+        //     get
+        //     {
+        //         if (this.betTypeList == null)
+        //         {
+        //             this.betTypeList = this.BetTypes
+        //                 .Select(bt => new HPTBetType()
+        //                 {
+        //                     Code = bt,
+        //                     Name = bt,
+        //                     IsEnabled = true
+        //                 })
+        //                 //.Select(bt => new HPTBetType(new Uri("/ATGImages/" + bt + "XSmall.png", UriKind.Relative)))
+        //                 .ToList();
+        //         }
+        //         return this.betTypeList;
+        //     }
+        // }
 
-        public string ATGLink   // För Saxade banor
-        {
-            get
-            {
-                return ATGLinkCreator.CreateRaceStartlistLink(this.TrackId, this.StartDate, this.RaceNumber);
-            }
-        }
+        // public string ATGLink   // För Saxade banor
+        // {
+        //     get
+        //     {
+        //         return ATGLinkCreator.CreateRaceStartlistLink(this.TrackId, this.StartDate, this.RaceNumber);
+        //     }
+        // }
 
         public int CompareTo(object obj)
         {

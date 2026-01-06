@@ -55,15 +55,16 @@ namespace HPTClient
         {
             get
             {
-                if (this.timeWeighed == 0M)
-                {
-                    HPTServiceToHPTHelper.SetWeighedTime(this);
-                }
-                return this.timeWeighed;
+                // TODO: Anropa ATGToHPTHelper istället
+                //if (timeWeighed == 0M)
+                //{
+                //    HPTServiceToHPTHelper.SetWeighedTime(this);
+                //}
+                return timeWeighed;
             }
             set
             {
-                this.timeWeighed = value;
+                timeWeighed = value;
             }
         }
 
@@ -92,12 +93,12 @@ namespace HPTClient
                 if (backColor == null)
                 {
                     Color c = Colors.White;
-                    if (this.Place == 1)
+                    if (Place == 1)
                     {
                         //c = Colors.LightGreen;
                         c = HPTConfig.Config.ColorGood;
                     }
-                    else if (this.Place == 2 || this.Place == 3)
+                    else if (Place == 2 || Place == 3)
                     {
                         //c = Colors.LightYellow;
                         c = HPTConfig.Config.ColorMedium;

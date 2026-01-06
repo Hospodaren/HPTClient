@@ -19,12 +19,12 @@ namespace HPTClient
         {
             if (Keyboard.Modifiers == ModifierKeys.Control)
             {
-                if (this.ucHorseCommentList.DataContext == null || this.ucHorseCommentList.DataContext.GetType() != typeof(HPTHorse))
+                if (ucHorseCommentList.DataContext == null || ucHorseCommentList.DataContext.GetType() != typeof(HPTHorse))
                 {
                     e.Handled = true;
                     return;
                 }
-                var horse = (HPTHorse)this.ucHorseCommentList.DataContext;
+                var horse = (HPTHorse)ucHorseCommentList.DataContext;
                 switch (e.Key)
                 {
                     case Key.Left:
@@ -82,7 +82,7 @@ namespace HPTClient
                         FindAndSelectRace(nextRace);
                         break;
                     case Key.N:
-                        this.ucHorseCommentList.AddComment();
+                        ucHorseCommentList.AddComment();
                         break;
                 }
             }
@@ -93,7 +93,7 @@ namespace HPTClient
         {
             try
             {
-                var itemParent = this.tvwHorseComments.ItemContainerGenerator.ContainerFromItem(horse.ParentRace) as TreeViewItem;
+                var itemParent = tvwHorseComments.ItemContainerGenerator.ContainerFromItem(horse.ParentRace) as TreeViewItem;
                 itemParent.IsExpanded = true;
 
                 var itemToSelect = itemParent.ItemContainerGenerator.ContainerFromItem(horse) as TreeViewItem;
@@ -109,7 +109,7 @@ namespace HPTClient
         {
             try
             {
-                var itemParent = this.tvwHorseComments.ItemContainerGenerator.ContainerFromItem(race) as TreeViewItem;
+                var itemParent = tvwHorseComments.ItemContainerGenerator.ContainerFromItem(race) as TreeViewItem;
                 itemParent.IsExpanded = true;
                 //itemParent.IsSelected = true;
 
@@ -169,7 +169,7 @@ namespace HPTClient
         private void btnCopyComments_Click(object sender, RoutedEventArgs e)
         {
             // Alla hästar med information
-            var raceCommentList = this.MarkBet.RaceDayInfo.RaceList
+            var raceCommentList = MarkBet.RaceDayInfo.RaceList
                 .Select(r => new HPTRaceComment()
                 {
                     Comment = string.Empty,
@@ -181,7 +181,7 @@ namespace HPTClient
                 }).ToList();
 
             // Sätt namn och nummer om det inte redan finns
-            this.MarkBet.RaceDayInfo.RaceList
+            MarkBet.RaceDayInfo.RaceList
                 .AsParallel()
                 .ForAll(r =>
                 {
@@ -201,7 +201,7 @@ namespace HPTClient
             var sb = new StringBuilder();
             raceCommentList.ForEach(rc =>
                 {
-                    sb.Append(this.MarkBet.BetType.Code);
+                    sb.Append(MarkBet.BetType.Code);
                     sb.Append("-");
                     sb.Append(rc.LegNr);
                     sb.AppendLine();

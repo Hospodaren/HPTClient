@@ -20,18 +20,18 @@ namespace HPTClient
         {
             try
             {
-                if (this.HorseOwnInformationList == null)
+                if (HorseOwnInformationList == null)
                 {
-                    this.HorseOwnInformationList = new ObservableCollection<HPTHorseOwnInformation>();
+                    HorseOwnInformationList = new ObservableCollection<HPTHorseOwnInformation>();
                 }
-                var savedHorseInformation = this.HorseOwnInformationList.FirstOrDefault(oi => oi.Name == horse.HorseName);
+                var savedHorseInformation = HorseOwnInformationList.FirstOrDefault(oi => oi.Name == horse.HorseName);
                 if (horse.OwnInformation == savedHorseInformation)
                 {
                     return horse.OwnInformation;
                 }
                 if (savedHorseInformation == null && horse.OwnInformation != null)
                 {
-                    this.HorseOwnInformationList.Add(horse.OwnInformation);
+                    HorseOwnInformationList.Add(horse.OwnInformation);
                     savedHorseInformation = horse.OwnInformation;
                     if (horse.OwnInformation.HorseOwnInformationCommentList.Count > 0)
                     {
@@ -87,12 +87,12 @@ namespace HPTClient
 
         internal HPTHorseOwnInformation GetOwnInformationByName(string name)
         {
-            if (this.HorseOwnInformationList == null)
+            if (HorseOwnInformationList == null)
             {
-                this.HorseOwnInformationList = new ObservableCollection<HPTHorseOwnInformation>();
+                HorseOwnInformationList = new ObservableCollection<HPTHorseOwnInformation>();
             }
 
-            var ownInformation = this.HorseOwnInformationList.FirstOrDefault(oi => oi != null && oi.Name != null && oi.Name == name);
+            var ownInformation = HorseOwnInformationList.FirstOrDefault(oi => oi != null && oi.Name != null && oi.Name == name);
             if (ownInformation != null)
             {
                 if (string.IsNullOrEmpty(ownInformation.Comment)
@@ -101,7 +101,7 @@ namespace HPTClient
                 {
                     try
                     {
-                        this.HorseOwnInformationList.Remove(ownInformation);
+                        HorseOwnInformationList.Remove(ownInformation);
                     }
                     catch (Exception exc)
                     {
@@ -138,11 +138,11 @@ namespace HPTClient
 
         internal void CleanUpOldNextStarts()
         {
-            this.HorseOwnInformationList
+            HorseOwnInformationList
                 .Where(oi => oi.NextStart != null)
                 .Where(oi => oi.NextStart.StartDate < DateTime.Now.AddDays(-7D))
                 .ToList()
-                .ForEach(oi => this.HorseOwnInformationList.Remove(oi));
+                .ForEach(oi => HorseOwnInformationList.Remove(oi));
         }
 
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
@@ -183,7 +183,7 @@ namespace HPTClient
             }
             set
             {
-                this._ATGId = value;
+                _ATGId = value;
                 OnPropertyChanged("ATGId");
             }
         }
@@ -206,11 +206,11 @@ namespace HPTClient
         {
             get
             {
-                if (string.IsNullOrEmpty(this.Name))
+                if (string.IsNullOrEmpty(Name))
                 {
                     return "ERROR";
                 }
-                string correctedHorseName = this.Name;
+                string correctedHorseName = Name;
                 System.IO.Path.GetInvalidFileNameChars()
                     .ToList()
                     .ForEach(ic => correctedHorseName = correctedHorseName.Replace(ic, '_'));
@@ -268,9 +268,9 @@ namespace HPTClient
             {
                 comment = value;
                 OnPropertyChanged("Comment");
-                if (!string.IsNullOrEmpty(this.comment))
+                if (!string.IsNullOrEmpty(comment))
                 {
-                    this.HasComment = true;
+                    HasComment = true;
                 }
             }
         }
@@ -300,7 +300,7 @@ namespace HPTClient
             }
             set
             {
-                this._NextStart = value;
+                _NextStart = value;
                 OnPropertyChanged("NextStart");
             }
         }
@@ -316,7 +316,7 @@ namespace HPTClient
             }
             set
             {
-                this._Age = value;
+                _Age = value;
                 OnPropertyChanged("Age");
             }
         }
@@ -331,7 +331,7 @@ namespace HPTClient
             }
             set
             {
-                this._Sex = value;
+                _Sex = value;
                 OnPropertyChanged("Sex");
             }
         }
@@ -346,7 +346,7 @@ namespace HPTClient
             }
             set
             {
-                this._Owner = value;
+                _Owner = value;
                 OnPropertyChanged("Owner");
             }
         }
@@ -361,7 +361,7 @@ namespace HPTClient
             }
             set
             {
-                this._Trainer = value;
+                _Trainer = value;
                 OnPropertyChanged("Trainer");
             }
         }
@@ -376,7 +376,7 @@ namespace HPTClient
             }
             set
             {
-                this._HomeTrack = value;
+                _HomeTrack = value;
                 OnPropertyChanged("HomeTrack");
             }
         }
@@ -392,7 +392,7 @@ namespace HPTClient
             }
             set
             {
-                this._CreationDate = value;
+                _CreationDate = value;
                 OnPropertyChanged("CreationDate");
             }
         }
@@ -401,7 +401,7 @@ namespace HPTClient
         {
             get
             {
-                return ATGLinkCreator.CreateSTHorseLink(this.ATGId);
+                return ATGLinkCreator.CreateSTHorseLink(ATGId);
             }
         }
 
@@ -409,11 +409,11 @@ namespace HPTClient
         {
             get
             {
-                if (this.HorseOwnInformationCommentList == null || this.HorseOwnInformationCommentList.Count == 0)
+                if (HorseOwnInformationCommentList == null || HorseOwnInformationCommentList.Count == 0)
                 {
-                    return this.CreationDate;
+                    return CreationDate;
                 }
-                return this.HorseOwnInformationCommentList.Max(c => c.CommentDate);
+                return HorseOwnInformationCommentList.Max(c => c.CommentDate);
             }
         }
 
@@ -468,7 +468,7 @@ namespace HPTClient
             {
                 comment = value;
                 OnPropertyChanged("Comment");
-                this.HasComment = !string.IsNullOrEmpty(this.comment);
+                HasComment = !string.IsNullOrEmpty(comment);
             }
         }
 
@@ -551,8 +551,8 @@ namespace HPTClient
         {
             var sb = new StringBuilder();
 
-            sb.AppendLine(this.CommentDate.ToString("yyyy-MM-dd"));
-            sb.AppendLine(this.Comment);
+            sb.AppendLine(CommentDate.ToString("yyyy-MM-dd"));
+            sb.AppendLine(Comment);
             sb.AppendLine();
 
             return sb.ToString();

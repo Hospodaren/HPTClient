@@ -20,15 +20,15 @@ namespace HPTClient
         {
             get
             {
-                if (this.v6BetMultiplierRule == null && this.DataContext != null && this.DataContext.GetType() == typeof(HPTV6BetMultiplierRule))
+                if (v6BetMultiplierRule == null && DataContext != null && DataContext.GetType() == typeof(HPTV6BetMultiplierRule))
                 {
-                    this.v6BetMultiplierRule = (HPTV6BetMultiplierRule)this.DataContext;
-                    if (this.MarkBet == null)
+                    v6BetMultiplierRule = (HPTV6BetMultiplierRule)DataContext;
+                    if (MarkBet == null)
                     {
-                        this.MarkBet = this.v6BetMultiplierRule.MarkBet;
+                        MarkBet = v6BetMultiplierRule.MarkBet;
                     }
                 }
-                return this.v6BetMultiplierRule;
+                return v6BetMultiplierRule;
             }
         }
 
@@ -39,106 +39,106 @@ namespace HPTClient
 
         private void ClearRule()
         {
-            foreach (var horse in this.V6BetMultiplierRule.RaceList.SelectMany(r => r.HorseList))
+            foreach (var horse in V6BetMultiplierRule.RaceList.SelectMany(r => r.HorseList))
             {
                 horse.Selected = false;
             }
-            foreach (var raceLight in this.V6BetMultiplierRule.RaceList)
+            foreach (var raceLight in V6BetMultiplierRule.RaceList)
             {
                 raceLight.SelectedHorse = null;
             }
-            this.V6BetMultiplierRule.Use = false;
-            this.V6BetMultiplierRule.V6 = false;
-            this.V6BetMultiplierRule.BetMultiplier = 1;
-            this.V6BetMultiplierRule.HorseList.Clear();
-            this.MarkBet.UpdateV6BetMultiplierSingleRows();
+            V6BetMultiplierRule.Use = false;
+            V6BetMultiplierRule.V6 = false;
+            V6BetMultiplierRule.BetMultiplier = 1;
+            V6BetMultiplierRule.HorseList.Clear();
+            MarkBet.UpdateV6BetMultiplierSingleRows();
         }
 
         private void btnRemove_Click(object sender, RoutedEventArgs e)
         {
             ClearRule();
-            this.MarkBet.UpdateV6BetMultiplierSingleRows();
-            this.MarkBet.V6BetMultiplierRuleList.Remove(this.V6BetMultiplierRule);
+            MarkBet.UpdateV6BetMultiplierSingleRows();
+            MarkBet.V6BetMultiplierRuleList.Remove(V6BetMultiplierRule);
         }
 
         private void chkUseRule_Checked(object sender, RoutedEventArgs e)
         {
-            if (this.MarkBet != null)
+            if (MarkBet != null)
             {
-                this.MarkBet.UpdateV6BetMultiplierSingleRows();
+                MarkBet.UpdateV6BetMultiplierSingleRows();
                 //this.MarkBet.SetV6BetMultiplierSingleRows();
             }
         }
 
         private void lst_Checked(object sender, RoutedEventArgs e)
         {
-            if (this.V6BetMultiplierRule != null && this.V6BetMultiplierRule.Use && this.MarkBet != null)
+            if (V6BetMultiplierRule != null && V6BetMultiplierRule.Use && MarkBet != null)
             {
-                this.MarkBet.UpdateV6BetMultiplierSingleRows();
+                MarkBet.UpdateV6BetMultiplierSingleRows();
             }
         }
 
         private void cmbBetMultiplier_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (this.V6BetMultiplierRule != null && this.V6BetMultiplierRule.Use && this.MarkBet != null)
+            if (V6BetMultiplierRule != null && V6BetMultiplierRule.Use && MarkBet != null)
             {
-                this.MarkBet.UpdateV6BetMultiplierSingleRows();
+                MarkBet.UpdateV6BetMultiplierSingleRows();
             }
         }
 
         private void chkV6_Checked(object sender, RoutedEventArgs e)
         {
-            if (this.V6BetMultiplierRule != null && this.V6BetMultiplierRule.Use && this.MarkBet != null)
+            if (V6BetMultiplierRule != null && V6BetMultiplierRule.Use && MarkBet != null)
             {
-                this.MarkBet.UpdateV6BetMultiplierSingleRows();
+                MarkBet.UpdateV6BetMultiplierSingleRows();
             }
         }
 
         private void iudBetMultiplier_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            if (this.V6BetMultiplierRule != null && this.V6BetMultiplierRule.Use && this.MarkBet != null)
+            if (V6BetMultiplierRule != null && V6BetMultiplierRule.Use && MarkBet != null)
             {
-                this.MarkBet.UpdateV6BetMultiplierSingleRows();
+                MarkBet.UpdateV6BetMultiplierSingleRows();
             }
         }
 
         private void AddEventHandlers()
         {
-            this.chkUseRule.AddHandler(CheckBox.CheckedEvent, new RoutedEventHandler(chkUseRule_Checked));
-            this.chkUseRule.AddHandler(CheckBox.UncheckedEvent, new RoutedEventHandler(chkUseRule_Checked));
-            if (this.chkV6 != null && this.chkV6.Visibility == System.Windows.Visibility.Visible)
+            chkUseRule.AddHandler(CheckBox.CheckedEvent, new RoutedEventHandler(chkUseRule_Checked));
+            chkUseRule.AddHandler(CheckBox.UncheckedEvent, new RoutedEventHandler(chkUseRule_Checked));
+            if (chkV6 != null && chkV6.Visibility == Visibility.Visible)
             {
-                this.chkV6.AddHandler(CheckBox.CheckedEvent, new RoutedEventHandler(chkV6_Checked));
-                this.chkV6.AddHandler(CheckBox.UncheckedEvent, new RoutedEventHandler(chkV6_Checked));
+                chkV6.AddHandler(CheckBox.CheckedEvent, new RoutedEventHandler(chkV6_Checked));
+                chkV6.AddHandler(CheckBox.UncheckedEvent, new RoutedEventHandler(chkV6_Checked));
             }
-            this.lst.AddHandler(ToggleButton.CheckedEvent, new RoutedEventHandler(lst_Checked));
-            this.iudBetMultiplier.AddHandler(IntegerUpDown.ValueChangedEvent, new RoutedPropertyChangedEventHandler<object>(iudBetMultiplier_ValueChanged));
+            lst.AddHandler(ToggleButton.CheckedEvent, new RoutedEventHandler(lst_Checked));
+            iudBetMultiplier.AddHandler(IntegerUpDown.ValueChangedEvent, new RoutedPropertyChangedEventHandler<object>(iudBetMultiplier_ValueChanged));
         }
 
         private void RemoveEventHandlers()
         {
-            this.chkUseRule.RemoveHandler(CheckBox.CheckedEvent, new RoutedEventHandler(chkUseRule_Checked));
-            this.chkUseRule.RemoveHandler(CheckBox.UncheckedEvent, new RoutedEventHandler(chkUseRule_Checked));
-            if (this.chkV6 != null && this.chkV6.Visibility == System.Windows.Visibility.Visible)
+            chkUseRule.RemoveHandler(CheckBox.CheckedEvent, new RoutedEventHandler(chkUseRule_Checked));
+            chkUseRule.RemoveHandler(CheckBox.UncheckedEvent, new RoutedEventHandler(chkUseRule_Checked));
+            if (chkV6 != null && chkV6.Visibility == Visibility.Visible)
             {
-                this.chkV6.RemoveHandler(CheckBox.CheckedEvent, new RoutedEventHandler(chkV6_Checked));
-                this.chkV6.RemoveHandler(CheckBox.UncheckedEvent, new RoutedEventHandler(chkV6_Checked));
+                chkV6.RemoveHandler(CheckBox.CheckedEvent, new RoutedEventHandler(chkV6_Checked));
+                chkV6.RemoveHandler(CheckBox.UncheckedEvent, new RoutedEventHandler(chkV6_Checked));
             }
-            this.lst.RemoveHandler(ToggleButton.CheckedEvent, new RoutedEventHandler(lst_Checked));
-            this.iudBetMultiplier.RemoveHandler(IntegerUpDown.ValueChangedEvent, new RoutedPropertyChangedEventHandler<object>(iudBetMultiplier_ValueChanged));
+            lst.RemoveHandler(ToggleButton.CheckedEvent, new RoutedEventHandler(lst_Checked));
+            iudBetMultiplier.RemoveHandler(IntegerUpDown.ValueChangedEvent, new RoutedPropertyChangedEventHandler<object>(iudBetMultiplier_ValueChanged));
 
         }
 
         private void ucV6BetMultiplierRule_Loaded(object sender, RoutedEventArgs e)
         {
-            if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this) && this.IsVisible)
+            if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this) && IsVisible)
             {
                 RemoveEventHandlers();
                 AddEventHandlers();
 
-                if (this.MarkBet.BetType.V6Factor == 1M)
+                if (MarkBet.BetType.V6Factor == 1M)
                 {
-                    this.bdrV6.Visibility = System.Windows.Visibility.Collapsed;
+                    bdrV6.Visibility = Visibility.Collapsed;
                 }
             }
         }
@@ -151,9 +151,9 @@ namespace HPTClient
                 var race = (HPTRaceLight)btn.DataContext;
                 race.SelectedHorse.Selected = false;
                 race.SelectedHorse = null;
-                if (this.V6BetMultiplierRule != null && this.V6BetMultiplierRule.Use && this.MarkBet != null)
+                if (V6BetMultiplierRule != null && V6BetMultiplierRule.Use && MarkBet != null)
                 {
-                    this.MarkBet.UpdateV6BetMultiplierSingleRows();
+                    MarkBet.UpdateV6BetMultiplierSingleRows();
                     //this.MarkBet.SetV6BetMultiplierSingleRows();
                 }
             }

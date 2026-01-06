@@ -7,7 +7,6 @@ namespace HPTClient
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             int intValue = System.Convert.ToInt32(value);
-            string intString = intValue.ToString();
             if (culture == null)
             {
                 culture = new System.Globalization.CultureInfo("sv-SE");

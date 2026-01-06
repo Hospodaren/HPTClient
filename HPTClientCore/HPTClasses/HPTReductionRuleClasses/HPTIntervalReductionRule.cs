@@ -68,7 +68,7 @@ namespace HPTClient
         {
             get
             {
-                return this.minPercentSum;
+                return minPercentSum;
             }
             set
             {
@@ -76,7 +76,7 @@ namespace HPTClient
                 {
                     return;
                 }
-                this.minPercentSum = value;
+                minPercentSum = value;
                 OnPropertyChanged("MinPercentSum");
             }
         }
@@ -87,7 +87,7 @@ namespace HPTClient
         {
             get
             {
-                return this.maxPercentSum;
+                return maxPercentSum;
             }
             set
             {
@@ -95,7 +95,7 @@ namespace HPTClient
                 {
                     return;
                 }
-                this.maxPercentSum = value;
+                maxPercentSum = value;
                 OnPropertyChanged("MaxPercentSum");
             }
         }
@@ -106,15 +106,15 @@ namespace HPTClient
         {
             get
             {
-                return this.lowestSum;
+                return lowestSum;
             }
             set
             {
-                if (value == this.lowestSum)
+                if (value == lowestSum)
                 {
                     return;
                 }
-                this.lowestSum = value;
+                lowestSum = value;
                 OnPropertyChanged("LowestSum");
             }
         }
@@ -125,15 +125,15 @@ namespace HPTClient
         {
             get
             {
-                return this.highestSum;
+                return highestSum;
             }
             set
             {
-                if (value == this.highestSum)
+                if (value == highestSum)
                 {
                     return;
                 }
-                this.highestSum = value;
+                highestSum = value;
                 OnPropertyChanged("HighestSum");
             }
         }
@@ -144,15 +144,15 @@ namespace HPTClient
         {
             get
             {
-                return this.lowestIncludedSum;
+                return lowestIncludedSum;
             }
             set
             {
-                if (value == this.lowestIncludedSum)
+                if (value == lowestIncludedSum)
                 {
                     return;
                 }
-                this.lowestIncludedSum = value;
+                lowestIncludedSum = value;
                 OnPropertyChanged("LowestIncludedSum");
             }
         }
@@ -163,15 +163,15 @@ namespace HPTClient
         {
             get
             {
-                return this.highestIncludedSum;
+                return highestIncludedSum;
             }
             set
             {
-                if (value == this.highestIncludedSum)
+                if (value == highestIncludedSum)
                 {
                     return;
                 }
-                this.highestIncludedSum = value;
+                highestIncludedSum = value;
                 OnPropertyChanged("HighestIncludedSum");
             }
         }
@@ -208,7 +208,7 @@ namespace HPTClient
 
         public override void SetReductionSpecificationString()
         {
-            this.ReductionSpecificationString = "Summa " + this.MinSum.ToString() + " - " + this.MaxSum.ToString();
+            ReductionSpecificationString = "Summa " + MinSum.ToString() + " - " + MaxSum.ToString();
         }
 
     }

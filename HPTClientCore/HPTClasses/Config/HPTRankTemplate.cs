@@ -11,11 +11,11 @@ namespace HPTClient
         {
             var rankTemplate = new HPTRankTemplate()
             {
-                Name = this.Name,
+                Name = Name,
                 HorseRankVariableList = HPTHorseRankVariable.CreateVariableList()
             };
 
-            var rankVariablesToUse = this.HorseRankVariableList.Where(rv => rv.Use).ToList();
+            var rankVariablesToUse = HorseRankVariableList.Where(rv => rv.Use).ToList();
             foreach (var rankVariableToUse in rankVariablesToUse)
             {
                 var rankVariable = rankTemplate.HorseRankVariableList.FirstOrDefault(rv => rv.PropertyName == rankVariableToUse.PropertyName);
@@ -30,7 +30,7 @@ namespace HPTClient
 
         public virtual void InitializeTemplate()
         {
-            this.HorseRankVariableList = HPTHorseRankVariable.CreateVariableList();
+            HorseRankVariableList = HPTHorseRankVariable.CreateVariableList();
         }
 
         private string name;
@@ -39,11 +39,11 @@ namespace HPTClient
         {
             get
             {
-                return this.name;
+                return name;
             }
             set
             {
-                this.name = value;
+                name = value;
                 OnPropertyChanged("Name");
             }
         }
@@ -70,9 +70,9 @@ namespace HPTClient
 
         private ObservableCollection<HPTHorseRankVariable> CreateRankVariableList(HPTRankCategory category)
         {
-            if (this.HorseRankVariableList != null)
+            if (HorseRankVariableList != null)
             {
-                IEnumerable<HPTHorseRankVariable> tempList = this.HorseRankVariableList.Where(hrv => hrv.Category == category);
+                IEnumerable<HPTHorseRankVariable> tempList = HorseRankVariableList.Where(hrv => hrv.Category == category);
                 return new ObservableCollection<HPTHorseRankVariable>(tempList);
             }
             return new ObservableCollection<HPTHorseRankVariable>();
@@ -84,11 +84,11 @@ namespace HPTClient
         {
             get
             {
-                return this.horseRankVariableList;
+                return horseRankVariableList;
             }
             set
             {
-                this.horseRankVariableList = value;
+                horseRankVariableList = value;
                 OnPropertyChanged("HorseRankVariableList");
             }
         }
@@ -99,15 +99,15 @@ namespace HPTClient
         {
             get
             {
-                if (this.horseRankVariableListMarksAndOdds == null)
+                if (horseRankVariableListMarksAndOdds == null)
                 {
-                    this.horseRankVariableListMarksAndOdds = CreateRankVariableList(HPTRankCategory.MarksAndOdds);
+                    horseRankVariableListMarksAndOdds = CreateRankVariableList(HPTRankCategory.MarksAndOdds);
                 }
-                return this.horseRankVariableListMarksAndOdds;
+                return horseRankVariableListMarksAndOdds;
             }
             set
             {
-                this.horseRankVariableListMarksAndOdds = value;
+                horseRankVariableListMarksAndOdds = value;
                 OnPropertyChanged("HorseRankVariableListMarksAndOdds");
             }
         }
@@ -118,15 +118,15 @@ namespace HPTClient
         {
             get
             {
-                if (this.horseRankVariableListRecords == null)
+                if (horseRankVariableListRecords == null)
                 {
-                    this.horseRankVariableListRecords = CreateRankVariableList(HPTRankCategory.Record);
+                    horseRankVariableListRecords = CreateRankVariableList(HPTRankCategory.Record);
                 }
-                return this.horseRankVariableListRecords;
+                return horseRankVariableListRecords;
             }
             set
             {
-                this.horseRankVariableListRecords = value;
+                horseRankVariableListRecords = value;
                 OnPropertyChanged("HorseRankVariableListRecords");
             }
         }
@@ -137,15 +137,15 @@ namespace HPTClient
         {
             get
             {
-                if (this.horseRankVariableListWinning == null)
+                if (horseRankVariableListWinning == null)
                 {
-                    this.horseRankVariableListWinning = CreateRankVariableList(HPTRankCategory.Winnings);
+                    horseRankVariableListWinning = CreateRankVariableList(HPTRankCategory.Winnings);
                 }
-                return this.horseRankVariableListWinning;
+                return horseRankVariableListWinning;
             }
             set
             {
-                this.horseRankVariableListWinning = value;
+                horseRankVariableListWinning = value;
                 OnPropertyChanged("HorseRankVariableListWinning");
             }
         }
@@ -156,15 +156,15 @@ namespace HPTClient
         {
             get
             {
-                if (this.horseRankVariableListPlace == null)
+                if (horseRankVariableListPlace == null)
                 {
-                    this.horseRankVariableListPlace = CreateRankVariableList(HPTRankCategory.Place);
+                    horseRankVariableListPlace = CreateRankVariableList(HPTRankCategory.Place);
                 }
-                return this.horseRankVariableListPlace;
+                return horseRankVariableListPlace;
             }
             set
             {
-                this.horseRankVariableListPlace = value;
+                horseRankVariableListPlace = value;
                 OnPropertyChanged("HorseRankVariableListPlace");
             }
         }
@@ -175,15 +175,15 @@ namespace HPTClient
         {
             get
             {
-                if (this.horseRankVariableListRest == null)
+                if (horseRankVariableListRest == null)
                 {
-                    this.horseRankVariableListRest = CreateRankVariableList(HPTRankCategory.Rest);
+                    horseRankVariableListRest = CreateRankVariableList(HPTRankCategory.Rest);
                 }
-                return this.horseRankVariableListRest;
+                return horseRankVariableListRest;
             }
             set
             {
-                this.horseRankVariableListRest = value;
+                horseRankVariableListRest = value;
                 OnPropertyChanged("HorseRankVariableListRest");
             }
         }
@@ -192,7 +192,7 @@ namespace HPTClient
 
         public override string ToString()
         {
-            return this.Name;
+            return Name;
         }
 
     }

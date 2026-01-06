@@ -47,15 +47,15 @@
             return result;
         }
 
-        internal static string CreateRaceResultLink(HPTRace race)
-        {
-            string result = CreateRaceStartlistLink(race) +
-                "/resultat";
-
-            race.ATGResultLink = result;
-
-            return result;
-        }
+        // internal static string CreateRaceResultLink(HPTRace race)
+        // {
+        //     string result = CreateRaceStartlistLink(race) +
+        //         "/resultat";
+        //
+        //     race.ATGResultLink = result;
+        //
+        //     return result;
+        // }
 
         internal static string CreateRaceResultLink(HPTHorseResult horseResult)
         {
@@ -97,17 +97,17 @@
         //}
 
         // https://www.atg.se/video/archive/22321221281/vinnare_2015-10-26_15_7
-        internal static string CreateRaceVideoLink(HPTHorseResult horseResult)
-        {
-            string result = ATGBaseUrl +
-                horseResult.Date.ToString("yyyy-MM-dd") +
-                "/vp/" +
-                EnumHelper.GetTrackNameATGSEFromShortString(horseResult.TrackCode) +
-                "/lopp" +
-                horseResult.RaceNr.ToString() +
-                "/resultat";
-
-            return result;
-        }
+        // internal static string CreateRaceVideoLink(HPTHorseResult horseResult)
+        // {
+        //     string result = ATGBaseUrl +
+        //         horseResult.Date.ToString("yyyy-MM-dd") +
+        //         "/vp/" +
+        //         EnumHelper.GetTrackNameATGSEFromShortString(horseResult.TrackCode) +
+        //         "/lopp" +
+        //         horseResult.RaceNr.ToString() +
+        //         "/resultat";
+        //
+        //     return result;
+        // }
     }
 }

@@ -37,7 +37,7 @@ namespace HPTClient
         {
             try
             {
-                HPTConfig config = (HPTConfig)this.DataContext;
+                HPTConfig config = (HPTConfig)DataContext;
                 StringBuilder sb = new StringBuilder();
                 foreach (Exception exc in config.ErrorLog)
                 {

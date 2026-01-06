@@ -13,7 +13,7 @@ namespace HPTClient // KOMMANDE
             {
                 singleRow.CalculateValues();
             }
-            return this.MinProbability <= singleRow.OwnProbabilityQuota;
+            return MinProbability <= singleRow.OwnProbabilityQuota;
         }
 
         public override bool IncludeRow(HPTMarkBet markBet, HPTHorse[] horseList, int numberOfRacesToTest)
@@ -69,16 +69,16 @@ namespace HPTClient // KOMMANDE
 
         public override void SetReductionSpecificationString()
         {
-            this.ReductionSpecificationString = "Värderad sannolikhet över " + this.MinProbability.ToString("P1");
+            ReductionSpecificationString = "Värderad sannolikhet över " + MinProbability.ToString("P1");
         }
 
         public override string ToString(HPTMarkBet markBet)
         {
             // Create String representation
             var sb = new StringBuilder();
-            sb.Append(this.ReductionTypeString);
+            sb.Append(ReductionTypeString);
             sb.Append(": ");
-            sb.Append(this.ReductionSpecificationString);
+            sb.Append(ReductionSpecificationString);
             //this.ClipboardString = this.ReductionTypeString + "\r\n" + sb.ToString();
             return sb.ToString();
         }

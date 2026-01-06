@@ -15,7 +15,7 @@ namespace HPTClient
 
         private void UserControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            object o = this.DataContext;
+            object o = DataContext;
         }
     }
 }

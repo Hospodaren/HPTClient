@@ -21,7 +21,7 @@ namespace HPTClient
         {
             try
             {
-                ATGCalendar ac = (ATGCalendar)this.DataContext;
+                ATGCalendar ac = (ATGCalendar)DataContext;
             }
             catch (Exception exc)
             {

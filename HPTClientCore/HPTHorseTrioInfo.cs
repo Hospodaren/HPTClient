@@ -11,11 +11,11 @@ namespace HPTClient
         {
             get
             {
-                return this.trioIndex;
+                return trioIndex;
             }
             set
             {
-                this.trioIndex = value;
+                trioIndex = value;
                 OnPropertyChanged("TrioIndex");
             }
         }
@@ -26,11 +26,11 @@ namespace HPTClient
         {
             get
             {
-                return this.placeInfo1;
+                return placeInfo1;
             }
             set
             {
-                this.placeInfo1 = value;
+                placeInfo1 = value;
                 OnPropertyChanged("PlaceInfo1");
             }
         }
@@ -41,11 +41,11 @@ namespace HPTClient
         {
             get
             {
-                return this.placeInfo2;
+                return placeInfo2;
             }
             set
             {
-                this.placeInfo2 = value;
+                placeInfo2 = value;
                 OnPropertyChanged("PlaceInfo2");
             }
         }
@@ -56,32 +56,32 @@ namespace HPTClient
         {
             get
             {
-                return this.placeInfo3;
+                return placeInfo3;
             }
             set
             {
-                this.placeInfo3 = value;
+                placeInfo3 = value;
                 OnPropertyChanged("PlaceInfo3");
             }
         }
 
-        private List<HPTHorseTrioPlaceInfo> horseTrioPlaceInfoList;
-        public List<HPTHorseTrioPlaceInfo> HorseTrioPlaceInfoList
-        {
-            get
-            {
-                if (this.horseTrioPlaceInfoList == null && this.PlaceInfo1 != null)
-                {
-                    this.horseTrioPlaceInfoList = new List<HPTHorseTrioPlaceInfo>()
-                    {
-                        this.PlaceInfo1,
-                        this.PlaceInfo2,
-                        this.PlaceInfo3
-                    };
-                }
-                return this.horseTrioPlaceInfoList;
-            }
-        }
+        // private List<HPTHorseTrioPlaceInfo> horseTrioPlaceInfoList;
+        // public List<HPTHorseTrioPlaceInfo> HorseTrioPlaceInfoList
+        // {
+        //     get
+        //     {
+        //         if (this.horseTrioPlaceInfoList == null && this.PlaceInfo1 != null)
+        //         {
+        //             this.horseTrioPlaceInfoList = new List<HPTHorseTrioPlaceInfo>()
+        //             {
+        //                 this.PlaceInfo1,
+        //                 this.PlaceInfo2,
+        //                 this.PlaceInfo3
+        //             };
+        //         }
+        //         return this.horseTrioPlaceInfoList;
+        //     }
+        // }
     }
 
     [DataContract]
@@ -99,7 +99,7 @@ namespace HPTClient
             }
             set
             {
-                this.investment = value;
+                investment = value;
                 OnPropertyChanged("Investment");
             }
         }
@@ -109,11 +109,11 @@ namespace HPTClient
         {
             get
             {
-                return this.investmentShare;
+                return investmentShare;
             }
             set
             {
-                this.investmentShare = value;
+                investmentShare = value;
                 OnPropertyChanged("InvestmentShare");
             }
         }
@@ -124,11 +124,11 @@ namespace HPTClient
         {
             get
             {
-                return this.percent;
+                return percent;
             }
             set
             {
-                this.percent = value;
+                percent = value;
                 OnPropertyChanged("Percent");
             }
         }

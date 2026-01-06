@@ -14,11 +14,11 @@ namespace HPTClient
         {
             get
             {
-                return this.subject;
+                return subject;
             }
             set
             {
-                this.subject = value;
+                subject = value;
                 OnPropertyChanged("Subject");
             }
         }
@@ -29,11 +29,11 @@ namespace HPTClient
         {
             get
             {
-                return this.body;
+                return body;
             }
             set
             {
-                this.body = value;
+                body = value;
                 OnPropertyChanged("Body");
             }
         }
@@ -44,11 +44,11 @@ namespace HPTClient
         {
             get
             {
-                return this.mailRecipients;
+                return mailRecipients;
             }
             set
             {
-                this.mailRecipients = value;
+                mailRecipients = value;
                 OnPropertyChanged("MyProperty");
             }
         }
@@ -59,11 +59,11 @@ namespace HPTClient
         {
             get
             {
-                return this.hpt3FileName;
+                return hpt3FileName;
             }
             set
             {
-                this.hpt3FileName = value;
+                hpt3FileName = value;
                 OnPropertyChanged("HPT3FileName");
             }
         }
@@ -74,11 +74,11 @@ namespace HPTClient
         {
             get
             {
-                return this.atgSystemFileName;
+                return atgSystemFileName;
             }
             set
             {
-                this.atgSystemFileName = value;
+                atgSystemFileName = value;
                 OnPropertyChanged("ATGSystemFileName");
             }
         }
@@ -89,11 +89,11 @@ namespace HPTClient
         {
             get
             {
-                return this.attachATGSystemFile;
+                return attachATGSystemFile;
             }
             set
             {
-                this.attachATGSystemFile = value;
+                attachATGSystemFile = value;
                 OnPropertyChanged("AttachATGSystemFile");
             }
         }
@@ -104,52 +104,52 @@ namespace HPTClient
         {
             get
             {
-                return this.attachHPT3File;
+                return attachHPT3File;
             }
             set
             {
-                this.attachHPT3File = value;
+                attachHPT3File = value;
                 OnPropertyChanged("AttachHPT3File");
             }
         }
 
         public void SendMail()
         {
-            MailMessage mail = new System.Net.Mail.MailMessage();
+            MailMessage mail = new MailMessage();
 
             System.Net.NetworkCredential cred = new System.Net.NetworkCredential("hpt.travsystem", "Brickleberry2");
 
-            foreach (HPTMailRecipient recipient in this.MailRecipients)
+            foreach (HPTMailRecipient recipient in MailRecipients)
             {
                 if (recipient.EMailAddress != null && recipient.EMailAddress != string.Empty)
                 {
                     mail.To.Add(recipient.EMailAddress);
                 }
             }
-            mail.Subject = this.Subject;
+            mail.Subject = Subject;
 
             mail.ReplyToList.Add(HPTConfig.Config.EMailAddress);
-            mail.From = new System.Net.Mail.MailAddress("hpt.travsystem@gmail.com", "Hjälp på Traven-system");
-            mail.Sender = new System.Net.Mail.MailAddress("hpt.travsystem@gmail.com", "Hjälp på Traven-system");
+            mail.From = new MailAddress("hpt.travsystem@gmail.com", "Hjälp på Traven-system");
+            mail.Sender = new MailAddress("hpt.travsystem@gmail.com", "Hjälp på Traven-system");
             mail.IsBodyHtml = false;
-            mail.Body = this.Body;
+            mail.Body = Body;
 
-            if (this.AttachHPT3File && this.HPT3FileName != string.Empty)
+            if (AttachHPT3File && HPT3FileName != string.Empty)
             {
-                FileStream fs1 = new FileStream(this.HPT3FileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                Attachment a1 = new Attachment(fs1, GetFilenameAndRemoveSwedishChars(this.HPT3FileName), System.Net.Mime.MediaTypeNames.Text.Xml);
-                a1.ContentType.Name = Path.GetFileName(this.HPT3FileName);
+                FileStream fs1 = new FileStream(HPT3FileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                Attachment a1 = new Attachment(fs1, GetFilenameAndRemoveSwedishChars(HPT3FileName), System.Net.Mime.MediaTypeNames.Text.Xml);
+                a1.ContentType.Name = Path.GetFileName(HPT3FileName);
                 mail.Attachments.Add(a1);
             }
-            if (this.AttachATGSystemFile && this.ATGSystemFileName != string.Empty)
+            if (AttachATGSystemFile && ATGSystemFileName != string.Empty)
             {
-                FileStream fs2 = new FileStream(this.ATGSystemFileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                Attachment a2 = new Attachment(fs2, GetFilenameAndRemoveSwedishChars(this.ATGSystemFileName), System.Net.Mime.MediaTypeNames.Text.Xml);
-                a2.ContentType.Name = Path.GetFileName(this.ATGSystemFileName);
+                FileStream fs2 = new FileStream(ATGSystemFileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                Attachment a2 = new Attachment(fs2, GetFilenameAndRemoveSwedishChars(ATGSystemFileName), System.Net.Mime.MediaTypeNames.Text.Xml);
+                a2.ContentType.Name = Path.GetFileName(ATGSystemFileName);
                 mail.Attachments.Add(a2);
             }
 
-            SmtpClient smtp = new System.Net.Mail.SmtpClient("smtp.gmail.com");
+            SmtpClient smtp = new SmtpClient("smtp.gmail.com");
             smtp.UseDefaultCredentials = false;
             smtp.EnableSsl = true;
             smtp.Credentials = cred;
@@ -173,7 +173,7 @@ namespace HPTClient
 
         public static void SendMail(string subject, string body, string hpt3FileName, string atgSystemFileName, IList<HPTMailRecipient> recipients)
         {
-            MailMessage mail = new System.Net.Mail.MailMessage();
+            MailMessage mail = new MailMessage();
 
             System.Net.NetworkCredential cred = new System.Net.NetworkCredential("hpt.travsystem", "Brickleberry2");
 
@@ -186,8 +186,8 @@ namespace HPTClient
             }
             mail.Subject = "Systemtest " + DateTime.Now.ToShortTimeString();
 
-            mail.From = new System.Net.Mail.MailAddress("hpt.travsystem@gmail.com", "Hjälp på Traven-system");
-            mail.Sender = new System.Net.Mail.MailAddress("hpt.travsystem@gmail.com", "Hjälp på Traven-system");
+            mail.From = new MailAddress("hpt.travsystem@gmail.com", "Hjälp på Traven-system");
+            mail.Sender = new MailAddress("hpt.travsystem@gmail.com", "Hjälp på Traven-system");
             mail.IsBodyHtml = false;
             mail.Body = body;
 
@@ -200,7 +200,7 @@ namespace HPTClient
                 mail.Attachments.Add(new Attachment(atgSystemFileName));
             }
 
-            SmtpClient smtp = new System.Net.Mail.SmtpClient("smtp.gmail.com");
+            SmtpClient smtp = new SmtpClient("smtp.gmail.com");
             smtp.UseDefaultCredentials = false;
             smtp.EnableSsl = true;
             smtp.Credentials = cred;

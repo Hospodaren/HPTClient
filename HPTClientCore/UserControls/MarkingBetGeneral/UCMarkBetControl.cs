@@ -20,7 +20,7 @@ namespace HPTClient
                 {
                     try
                     {
-                        HPTMarkBet markBet = (HPTMarkBet)this.DataContext;
+                        HPTMarkBet markBet = (HPTMarkBet)DataContext;
                         SetValue(MarkBetProperty, markBet);
                     }
                     catch (Exception)

@@ -20,18 +20,18 @@ namespace HPTClient
                 OnPropertyChanged("Foreshoes");
                 if (value == null)
                 {
-                    this.ForeshoesString1 = string.Empty;
-                    this.ForeshoesString2 = string.Empty;
+                    ForeshoesString1 = string.Empty;
+                    ForeshoesString2 = string.Empty;
                 }
                 else if (value == true)
                 {
-                    this.ForeshoesString1 = "C";
-                    this.ForeshoesString2 = string.Empty;
+                    ForeshoesString1 = "C";
+                    ForeshoesString2 = string.Empty;
                 }
                 else
                 {
-                    this.ForeshoesString1 = "C";
-                    this.ForeshoesString2 = "/";
+                    ForeshoesString1 = "C";
+                    ForeshoesString2 = "/";
                 }
             }
         }
@@ -80,18 +80,18 @@ namespace HPTClient
                 OnPropertyChanged("Hindshoes");
                 if (value == null)
                 {
-                    this.HindshoesString1 = string.Empty;
-                    this.HindshoesString2 = string.Empty;
+                    HindshoesString1 = string.Empty;
+                    HindshoesString2 = string.Empty;
                 }
                 else if (value == true)
                 {
-                    this.HindshoesString1 = "C";
-                    this.HindshoesString2 = string.Empty;
+                    HindshoesString1 = "C";
+                    HindshoesString2 = string.Empty;
                 }
                 else
                 {
-                    this.HindshoesString1 = "C";
-                    this.HindshoesString2 = "/";
+                    HindshoesString1 = "C";
+                    HindshoesString2 = "/";
                 }
             }
         }
@@ -173,8 +173,8 @@ namespace HPTClient
 
         public void SetChangedFlags(HPTHorseShoeInfo shoeinfoPrevious)
         {
-            this.ForeshoesChanged = this.Foreshoes != shoeinfoPrevious.Foreshoes;
-            this.HindshoesChanged = this.Hindshoes != shoeinfoPrevious.Hindshoes;
+            ForeshoesChanged = Foreshoes != shoeinfoPrevious.Foreshoes;
+            HindshoesChanged = Hindshoes != shoeinfoPrevious.Hindshoes;
         }
     }
 }

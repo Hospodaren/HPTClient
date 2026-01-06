@@ -13,13 +13,13 @@ namespace HPTClient
         {
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
-                this.CurrentMarkBetTemplateABCD = new HPTMarkBetTemplateABCD()
+                CurrentMarkBetTemplateABCD = new HPTMarkBetTemplateABCD()
                 {
                     DesiredSystemSize = 1000,
                     NumberOfSpikes = 1
                 };
-                this.CurrentMarkBetTemplateABCD.InitializeTemplate(new HPTPrio[] { HPTPrio.A, HPTPrio.B, HPTPrio.C });
-                this.CurrentMarkBetTemplateRank = new HPTMarkBetTemplateRank();
+                CurrentMarkBetTemplateABCD.InitializeTemplate(new HPTPrio[] { HPTPrio.A, HPTPrio.B, HPTPrio.C });
+                CurrentMarkBetTemplateRank = new HPTMarkBetTemplateRank();
             }
             InitializeComponent();
         }
@@ -68,12 +68,12 @@ namespace HPTClient
         {
             if (e.AddedItems.Count > 0)
             {
-                this.isSelecting = true;
+                isSelecting = true;
                 try
                 {
                     RemoveEventHandlers();
                     var rankTemplate = (HPTRankTemplate)e.AddedItems[0];
-                    this.CurrentRankTemplate = rankTemplate.Clone();
+                    CurrentRankTemplate = rankTemplate.Clone();
                     UpdateSelectionFromTemplate();
                 }
                 catch (Exception exc)
@@ -82,13 +82,13 @@ namespace HPTClient
                 }
                 //RemoveEventHandlers();
                 AddEventHandlers();
-                this.isSelecting = false;
+                isSelecting = false;
             }
         }
 
         private void RankTemplate_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            if (this.isSelecting)
+            if (isSelecting)
             {
                 return;
             }
@@ -99,7 +99,7 @@ namespace HPTClient
 
         private void chkSelected_Checked(object sender, RoutedEventArgs e)
         {
-            if (this.isSelecting)
+            if (isSelecting)
             {
                 return;
             }
@@ -111,109 +111,109 @@ namespace HPTClient
         private bool calculationInProgress;
         internal void UpdateSelectionFromTemplate()
         {
-            bool recalculationPaused = this.MarkBet.pauseRecalculation;
-            if (this.MarkBet == null || this.CurrentRankTemplate == null || this.CurrentMarkBetTemplateABCD == null || this.calculationInProgress)
+            bool recalculationPaused = MarkBet.pauseRecalculation;
+            if (MarkBet == null || CurrentRankTemplate == null || CurrentMarkBetTemplateABCD == null || calculationInProgress)
             {
                 return;
             }
             //RemoveEventHandlers();
-            this.MarkBet.pauseRecalculation = true;
-            this.calculationInProgress = true;
+            MarkBet.pauseRecalculation = true;
+            calculationInProgress = true;
             try
             {
-                if (this.CurrentMarkBetTemplateABCD.DesiredSystemSize == 0)
+                if (CurrentMarkBetTemplateABCD.DesiredSystemSize == 0)
                 {
-                    this.CurrentMarkBetTemplateABCD.DesiredSystemSize = 500;
-                    this.CurrentMarkBetTemplateABCD.RankTemplate = this.CurrentRankTemplate;
+                    CurrentMarkBetTemplateABCD.DesiredSystemSize = 500;
+                    CurrentMarkBetTemplateABCD.RankTemplate = CurrentRankTemplate;
                     //this.CurrentMarkBetTemplateABCD.RankTemplateName = this.CurrentRankTemplate.Name;
                 }
-                if (this.CurrentMarkBetTemplateABCD.RankTemplate == null)
+                if (CurrentMarkBetTemplateABCD.RankTemplate == null)
                 {
-                    this.CurrentMarkBetTemplateABCD.RankTemplate = this.CurrentRankTemplate;
+                    CurrentMarkBetTemplateABCD.RankTemplate = CurrentRankTemplate;
                 }
-                this.MarkBet.ApplyConfigRankVariables(this.CurrentRankTemplate);
-                this.MarkBet.MarkBetTemplateABCD = this.CurrentMarkBetTemplateABCD;
-                this.MarkBet.SelectFromTemplateABCD();
+                MarkBet.ApplyConfigRankVariables(CurrentRankTemplate);
+                MarkBet.MarkBetTemplateABCD = CurrentMarkBetTemplateABCD;
+                MarkBet.SelectFromTemplateABCD();
 
-                this.ucRaceView.FilterSelected();
+                ucRaceView.FilterSelected();
             }
             catch (Exception exc)
             {
-                this.Config.AddToErrorLog(exc);
+                Config.AddToErrorLog(exc);
             }
-            this.MarkBet.pauseRecalculation = recalculationPaused;
-            this.calculationInProgress = false;
+            MarkBet.pauseRecalculation = recalculationPaused;
+            calculationInProgress = false;
             //AddEventHandlers();
         }
 
         private void AddEventHandlers()
         {
-            this.lvwRankVariablesTemplate.AddHandler(CheckBox.CheckedEvent, new RoutedEventHandler(chkSelected_Checked));
-            this.lvwRankVariablesTemplate.AddHandler(CheckBox.UncheckedEvent, new RoutedEventHandler(chkSelected_Checked));
-            this.lvwRankVariablesTemplate.AddHandler(DecimalUpDown.ValueChangedEvent, new RoutedPropertyChangedEventHandler<object>(RankTemplate_ValueChanged));
+            lvwRankVariablesTemplate.AddHandler(CheckBox.CheckedEvent, new RoutedEventHandler(chkSelected_Checked));
+            lvwRankVariablesTemplate.AddHandler(CheckBox.UncheckedEvent, new RoutedEventHandler(chkSelected_Checked));
+            lvwRankVariablesTemplate.AddHandler(DecimalUpDown.ValueChangedEvent, new RoutedPropertyChangedEventHandler<object>(RankTemplate_ValueChanged));
 
-            this.gbMarkBetTemplate.AddHandler(CheckBox.CheckedEvent, new RoutedEventHandler(chkSelected_Checked));
-            this.gbMarkBetTemplate.AddHandler(CheckBox.UncheckedEvent, new RoutedEventHandler(chkSelected_Checked));
-            this.gbMarkBetTemplate.AddHandler(IntegerUpDown.ValueChangedEvent, new RoutedPropertyChangedEventHandler<object>(RankTemplate_ValueChanged));
+            gbMarkBetTemplate.AddHandler(CheckBox.CheckedEvent, new RoutedEventHandler(chkSelected_Checked));
+            gbMarkBetTemplate.AddHandler(CheckBox.UncheckedEvent, new RoutedEventHandler(chkSelected_Checked));
+            gbMarkBetTemplate.AddHandler(IntegerUpDown.ValueChangedEvent, new RoutedPropertyChangedEventHandler<object>(RankTemplate_ValueChanged));
 
         }
 
         private void RemoveEventHandlers()
         {
-            this.lvwRankVariablesTemplate.RemoveHandler(CheckBox.CheckedEvent, new RoutedEventHandler(chkSelected_Checked));
-            this.lvwRankVariablesTemplate.RemoveHandler(CheckBox.UncheckedEvent, new RoutedEventHandler(chkSelected_Checked));
-            this.lvwRankVariablesTemplate.RemoveHandler(DecimalUpDown.ValueChangedEvent, new RoutedPropertyChangedEventHandler<object>(RankTemplate_ValueChanged));
+            lvwRankVariablesTemplate.RemoveHandler(CheckBox.CheckedEvent, new RoutedEventHandler(chkSelected_Checked));
+            lvwRankVariablesTemplate.RemoveHandler(CheckBox.UncheckedEvent, new RoutedEventHandler(chkSelected_Checked));
+            lvwRankVariablesTemplate.RemoveHandler(DecimalUpDown.ValueChangedEvent, new RoutedPropertyChangedEventHandler<object>(RankTemplate_ValueChanged));
 
-            this.gbMarkBetTemplate.RemoveHandler(CheckBox.CheckedEvent, new RoutedEventHandler(chkSelected_Checked));
-            this.gbMarkBetTemplate.RemoveHandler(CheckBox.UncheckedEvent, new RoutedEventHandler(chkSelected_Checked));
-            this.gbMarkBetTemplate.RemoveHandler(IntegerUpDown.ValueChangedEvent, new RoutedPropertyChangedEventHandler<object>(RankTemplate_ValueChanged));
+            gbMarkBetTemplate.RemoveHandler(CheckBox.CheckedEvent, new RoutedEventHandler(chkSelected_Checked));
+            gbMarkBetTemplate.RemoveHandler(CheckBox.UncheckedEvent, new RoutedEventHandler(chkSelected_Checked));
+            gbMarkBetTemplate.RemoveHandler(IntegerUpDown.ValueChangedEvent, new RoutedPropertyChangedEventHandler<object>(RankTemplate_ValueChanged));
 
         }
 
         private void btnSaveMarkBetABCDTemplate_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(this.CurrentMarkBetTemplateABCD.Name))
+            if (string.IsNullOrEmpty(CurrentMarkBetTemplateABCD.Name))
             {
-                this.CurrentMarkBetTemplateABCD.Name = "Ny mall " + DateTime.Now.ToLongDateString();
+                CurrentMarkBetTemplateABCD.Name = "Ny mall " + DateTime.Now.ToLongDateString();
             }
-            if (this.CurrentRankTemplate != null)
+            if (CurrentRankTemplate != null)
             {
-                btnSaveRankTemplate_Click(this.btnSaveRankTemplate, e);
-                var rankTemplate = this.Config.RankTemplateList.FirstOrDefault(rt => rt.Name == this.CurrentRankTemplate.Name);
-                this.CurrentMarkBetTemplateABCD.RankTemplate = rankTemplate;
-                this.CurrentMarkBetTemplateABCD.RankTemplateName = rankTemplate.Name;
+                btnSaveRankTemplate_Click(btnSaveRankTemplate, e);
+                var rankTemplate = Config.RankTemplateList.FirstOrDefault(rt => rt.Name == CurrentRankTemplate.Name);
+                CurrentMarkBetTemplateABCD.RankTemplate = rankTemplate;
+                CurrentMarkBetTemplateABCD.RankTemplateName = rankTemplate.Name;
             }
-            this.CurrentMarkBetTemplateABCD.TypeCategory = this.MarkBet.BetType.TypeCategory;
-            this.Config.MarkBetTemplateABCDList.Add(this.CurrentMarkBetTemplateABCD);
+            CurrentMarkBetTemplateABCD.TypeCategory = MarkBet.BetType.TypeCategory;
+            Config.MarkBetTemplateABCDList.Add(CurrentMarkBetTemplateABCD);
         }
 
         private void btnSaveMarkBetRankTemplate_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(this.CurrentMarkBetTemplateRank.Name))
+            if (string.IsNullOrEmpty(CurrentMarkBetTemplateRank.Name))
             {
-                this.CurrentMarkBetTemplateRank.Name = "Ny mall " + DateTime.Now.ToLongDateString();
+                CurrentMarkBetTemplateRank.Name = "Ny mall " + DateTime.Now.ToLongDateString();
             }
-            this.CurrentMarkBetTemplateRank.DesiredSystemSize = this.CurrentMarkBetTemplateABCD.DesiredSystemSize;
-            this.CurrentMarkBetTemplateRank.NumberOfSpikes = this.CurrentMarkBetTemplateABCD.NumberOfSpikes;
-            if (this.CurrentRankTemplate != null)
+            CurrentMarkBetTemplateRank.DesiredSystemSize = CurrentMarkBetTemplateABCD.DesiredSystemSize;
+            CurrentMarkBetTemplateRank.NumberOfSpikes = CurrentMarkBetTemplateABCD.NumberOfSpikes;
+            if (CurrentRankTemplate != null)
             {
-                btnSaveRankTemplate_Click(this.btnSaveRankTemplate, e);
-                var rankTemplate = this.Config.RankTemplateList.FirstOrDefault(rt => rt.Name == this.CurrentRankTemplate.Name);
-                this.CurrentMarkBetTemplateRank.RankTemplate = rankTemplate;
-                this.CurrentMarkBetTemplateRank.RankTemplateName = rankTemplate.Name;
+                btnSaveRankTemplate_Click(btnSaveRankTemplate, e);
+                var rankTemplate = Config.RankTemplateList.FirstOrDefault(rt => rt.Name == CurrentRankTemplate.Name);
+                CurrentMarkBetTemplateRank.RankTemplate = rankTemplate;
+                CurrentMarkBetTemplateRank.RankTemplateName = rankTemplate.Name;
             }
-            this.CurrentMarkBetTemplateRank.TypeCategory = this.MarkBet.BetType.TypeCategory;
-            this.Config.MarkBetTemplateRankList.Add(this.CurrentMarkBetTemplateRank);
+            CurrentMarkBetTemplateRank.TypeCategory = MarkBet.BetType.TypeCategory;
+            Config.MarkBetTemplateRankList.Add(CurrentMarkBetTemplateRank);
         }
 
         private void btnSaveRankTemplate_Click(object sender, RoutedEventArgs e)
         {
-            if (this.cmbRankTemplates.SelectedItem != null)
+            if (cmbRankTemplates.SelectedItem != null)
             {
-                var rankTemplate = (HPTRankTemplate)this.cmbRankTemplates.SelectedItem;
-                if (this.CurrentRankTemplate.Name == rankTemplate.Name)
+                var rankTemplate = (HPTRankTemplate)cmbRankTemplates.SelectedItem;
+                if (CurrentRankTemplate.Name == rankTemplate.Name)
                 {
-                    foreach (var horseRankVariable in this.CurrentRankTemplate.HorseRankVariableList)
+                    foreach (var horseRankVariable in CurrentRankTemplate.HorseRankVariableList)
                     {
                         var rankVariableToUpdate = rankTemplate.HorseRankVariableList.FirstOrDefault(rv => rv.PropertyName == horseRankVariable.PropertyName);
                         if (rankVariableToUpdate != null)
@@ -225,12 +225,12 @@ namespace HPTClient
                 }
                 else
                 {
-                    this.Config.RankTemplateList.Add(this.CurrentRankTemplate);
+                    Config.RankTemplateList.Add(CurrentRankTemplate);
                 }
             }
-            else if (this.CurrentRankTemplate != null)
+            else if (CurrentRankTemplate != null)
             {
-                this.Config.RankTemplateList.Add(this.CurrentRankTemplate);
+                Config.RankTemplateList.Add(CurrentRankTemplate);
             }
         }
     }

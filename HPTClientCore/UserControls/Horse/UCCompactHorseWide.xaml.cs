@@ -22,19 +22,19 @@ namespace HPTClient
                 return;
             }
             TextBlock tb = (TextBlock)sender;
-            if (this.pu == null)
+            if (pu == null)
             {
-                this.pu = new System.Windows.Controls.Primitives.Popup()
+                pu = new System.Windows.Controls.Primitives.Popup()
                 {
                     Placement = System.Windows.Controls.Primitives.PlacementMode.MousePoint,
                     HorizontalOffset = -10D,
                     VerticalOffset = -10D
                 };
-                this.pu.MouseLeave += new MouseEventHandler(pu_MouseLeave);
+                pu.MouseLeave += new MouseEventHandler(pu_MouseLeave);
             }
-            this.pu.DataContext = tb.DataContext;
-            this.pu.Child = new UCResultView();
-            this.pu.IsOpen = true;
+            pu.DataContext = tb.DataContext;
+            pu.Child = new UCResultView();
+            pu.IsOpen = true;
         }
 
         void pu_MouseLeave(object sender, MouseEventArgs e)
@@ -47,7 +47,7 @@ namespace HPTClient
         private void chkNextTimer_Checked(object sender, RoutedEventArgs e)
         {
             var chk = (CheckBox)sender;
-            var horse = (HPTHorse)this.DataContext;
+            var horse = (HPTHorse)DataContext;
             if (horse.OwnInformation == null)
             {
                 horse.OwnInformation = new HPTHorseOwnInformation()

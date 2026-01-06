@@ -21,10 +21,10 @@ namespace HPTClient
         int trackId;
         DateTime raceDate;
 
-        Action<HPTRaceDayInfo> rdiDelegate;
-        Action<HPTService.HPTRaceDayInfo> updateDelegate;
-        Action<HPTService.HPTResultMarkingBet> resultDelegate;
-        Action<HPTService.HPTRaceDayInfoHistoryInfoGrouped> historyDelegate;
+        //Action<HPTRaceDayInfo> rdiDelegate;
+        //Action<HPTService.HPTRaceDayInfo> updateDelegate;
+        //Action<HPTService.HPTResultMarkingBet> resultDelegate;
+        //Action<HPTService.HPTRaceDayInfoHistoryInfoGrouped> historyDelegate;
 
         #endregion
 
@@ -92,51 +92,51 @@ namespace HPTClient
 
         internal bool GetHorseNextStartList()
         {
-            try
-            {
-                var atgIdList = HPTConfig.Config.HorseOwnInformationCollection.HorseOwnInformationList
-                    .Where(oi => !string.IsNullOrEmpty(oi.ATGId))
-                    .Where(oi => oi.NextStart == null || oi.NextStart.StartDate < DateTime.Now)
-                    .Select(h => Convert.ToInt32(h.ATGId))
-                    .Where(ai => ai > 0)
-                    .ToList();
+            //try
+            //{
+            //    var atgIdList = HPTConfig.Config.HorseOwnInformationCollection.HorseOwnInformationList
+            //        .Where(oi => !string.IsNullOrEmpty(oi.ATGId))
+            //        .Where(oi => oi.NextStart == null || oi.NextStart.StartDate < DateTime.Now)
+            //        .Select(h => Convert.ToInt32(h.ATGId))
+            //        .Where(ai => ai > 0)
+            //        .ToList();
 
-                var atgIdStream = HPTSerializer.SerializeHPTServiceObject(typeof(IEnumerable<int>), atgIdList);
-                var request = CreateWebRequestForPOST("NextStartForHorses", atgIdStream);
-                var response = request.GetResponse();
-                var stream = response.GetResponseStream();
-                var sr = new StreamReader(stream);
-                string strData = sr.ReadToEnd();
-                var rexBinary = new Regex(">(.+?)<");
-                strData = rexBinary.Match(strData).Groups[1].Value;
+            //    var atgIdStream = HPTSerializer.SerializeHPTServiceObject(typeof(IEnumerable<int>), atgIdList);
+            //    var request = CreateWebRequestForPOST("NextStartForHorses", atgIdStream);
+            //    var response = request.GetResponse();
+            //    var stream = response.GetResponseStream();
+            //    var sr = new StreamReader(stream);
+            //    string strData = sr.ReadToEnd();
+            //    var rexBinary = new Regex(">(.+?)<");
+            //    strData = rexBinary.Match(strData).Groups[1].Value;
 
-                var baNextStartList = Convert.FromBase64String(strData);
-                var nextStartList = (List<List<HPTService.HPTHorseNextStart>>)HPTSerializer.DeserializeHPTServiceObject(typeof(List<List<HPTService.HPTHorseNextStart>>), baNextStartList);
+            //    var baNextStartList = Convert.FromBase64String(strData);
+            //    var nextStartList = (List<List<HPTService.HPTHorseNextStart>>)HPTSerializer.DeserializeHPTServiceObject(typeof(List<List<HPTService.HPTHorseNextStart>>), baNextStartList);
 
-                nextStartList.ForEach(nsList =>
-                {
-                    var ns = nsList.First();
-                    var ownInformation = HPTConfig.Config.HorseOwnInformationCollection.HorseOwnInformationList
-                        .FirstOrDefault(oi => oi.ATGId == ns.ATGId.ToString());
+            //    nextStartList.ForEach(nsList =>
+            //    {
+            //        var ns = nsList.First();
+            //        var ownInformation = HPTConfig.Config.HorseOwnInformationCollection.HorseOwnInformationList
+            //            .FirstOrDefault(oi => oi.ATGId == ns.ATGId.ToString());
 
-                    if (ownInformation != null)
-                    {
-                        ownInformation.NextStart = new HPTHorseNextStart()
-                        {
-                            BetTypes = ns.BetTypeList.ToList(),
-                            RaceNumber = ns.RaceNumber,
-                            StartDate = ns.RaceDate,
-                            TrackId = ns.TrackId
-                        };
-                    }
-                });
+            //        if (ownInformation != null)
+            //        {
+            //            ownInformation.NextStart = new HPTHorseNextStart()
+            //            {
+            //                BetTypes = ns.BetTypeList.ToList(),
+            //                RaceNumber = ns.RaceNumber,
+            //                StartDate = ns.RaceDate,
+            //                TrackId = ns.TrackId
+            //            };
+            //        }
+            //    });
 
-                return !string.IsNullOrEmpty(strData);
-            }
-            catch (Exception exc)
-            {
-                HPTConfig.AddToErrorLogStatic(exc);
-            }
+            //    return !string.IsNullOrEmpty(strData);
+            //}
+            //catch (Exception exc)
+            //{
+            //    HPTConfig.AddToErrorLogStatic(exc);
+            //}
             return false;
         }
 
@@ -149,7 +149,9 @@ namespace HPTClient
                 {
                     byte[] baCalendar = DownloadAndCreateByteArray(webserviceURL, "CalendarZip");
                     string calendarPath = HPTConfig.MyDocumentsPath + "\\HPTCalendar.hptc";
-                    HPTServiceToHPTHelper.CreateCalendar(baCalendar, hptCalendar);
+                    // TODO: Anropa ATGToHPTHelper istället
+                    //HPTServiceToHPTHelper.CreateCalendar(CalendarZip, hptCalendar);
+                    ATGDownloaderToHPTHelper.UpdateCalendar(hptCalendar);
 
                     // Sätt sökväg och spara ner kalender på disk
                     HPTSerializer.SerializeHPTCalendar(HPTConfig.MyDocumentsPath + "HPTCalendar.hptc", hptCalendar);
@@ -265,46 +267,46 @@ namespace HPTClient
         {
             HPTRaceDayInfo hptRdi = new HPTRaceDayInfo();
             string query = "RaceDayInfo?betType="
-                            + this.betType.Code + "&trackId=" +
-                            this.trackId.ToString() + "&raceDate=" +
-                            this.raceDate.ToString("yyyy-MM-dd");
-            foreach (var webserviceURL in webserviceURLList)
-            {
-                try
-                {
-                    byte[] baRaceDayInfo = DownloadAndCreateByteArray(webserviceURL, query);
+                            + betType.Code + "&trackId=" +
+                            trackId.ToString() + "&raceDate=" +
+                            raceDate.ToString("yyyy-MM-dd");
+            //foreach (var webserviceURL in webserviceURLList)
+            //{
+            //    try
+            //    {
+            //        byte[] baRaceDayInfo = DownloadAndCreateByteArray(webserviceURL, query);
 
-                    var rdi = HPTSerializer.DeserializeHPTRaceDayInfo(baRaceDayInfo);
-                    HPTServiceToHPTHelper.ConvertRaceDayInfo(rdi, hptRdi);
+            //        var rdi = HPTSerializer.DeserializeHPTRaceDayInfo(baRaceDayInfo);
+            //        HPTServiceToHPTHelper.ConvertRaceDayInfo(rdi, hptRdi);
 
-                    hptRdi.BetTypeString = this.betType.Code;
-                    hptRdi.BetType = this.betType;
-                    this.rdiDelegate(hptRdi);
-                    rdi = null;
-                    GC.Collect();
+            //        hptRdi.BetTypeString = betType.Code;
+            //        hptRdi.BetType = betType;
+            //        rdiDelegate(hptRdi);
+            //        rdi = null;
+            //        GC.Collect();
 
-                    return;
-                }
-                catch (Exception exc)
-                {
-                    HPTConfig.AddToErrorLogStatic(exc);
-                }
-            }
+            //        return;
+            //    }
+            //    catch (Exception exc)
+            //    {
+            //        HPTConfig.AddToErrorLogStatic(exc);
+            //    }
+            //}
 
-            hptRdi = new HPTRaceDayInfo()
-            {
-                BetTypeString = this.betType.Code,
-                TrackId = this.trackId,
-                RaceDayDate = this.raceDate
-            };
-            this.rdiDelegate(hptRdi);
+            //hptRdi = new HPTRaceDayInfo()
+            //{
+            //    BetTypeString = betType.Code,
+            //    TrackId = trackId,
+            //    RaceDayDate = raceDate
+            //};
+            //rdiDelegate(hptRdi);
         }
 
         internal void GetRaceDayInfoByTrackAndDate(HPTBetType betType, int trackId, DateTime raceDate, Action<HPTRaceDayInfo> rdiDelegate)
         {
             this.betType = betType;
             this.raceDate = raceDate;
-            this.rdiDelegate = rdiDelegate;
+            //this.rdiDelegate = rdiDelegate;
             this.trackId = trackId;
             ThreadStart starter = new ThreadStart(GetRaceDayInfoByTrackAndDate);
             Thread thread = new Thread(starter);
@@ -316,222 +318,222 @@ namespace HPTClient
         internal HPTRaceDayInfo GetRaceDayInfoByTrackAndDate(string betType, string raceDate, string trackId)
         {
             var hptRdi = new HPTRaceDayInfo();
-            foreach (var webserviceURL in webserviceURLList)
-            {
-                byte[] baRaceDayInfo = DownloadAndCreateByteArray(webserviceURL, "RaceDayInfo?betType="
-                                                                  + betType + "&trackId=" +
-                                                                  trackId + "&raceDate=" +
-                                                                  raceDate);
+            //foreach (var webserviceURL in webserviceURLList)
+            //{
+            //    byte[] baRaceDayInfo = DownloadAndCreateByteArray(webserviceURL, "RaceDayInfo?betType="
+            //                                                      + betType + "&trackId=" +
+            //                                                      trackId + "&raceDate=" +
+            //                                                      raceDate);
 
-                HPTService.HPTRaceDayInfo rdi = HPTSerializer.DeserializeHPTRaceDayInfo(baRaceDayInfo);
+            //    HPTService.HPTRaceDayInfo rdi = HPTSerializer.DeserializeHPTRaceDayInfo(baRaceDayInfo);
 
-                HPTServiceToHPTHelper.ConvertRaceDayInfo(rdi, hptRdi);
-                hptRdi.BetTypeString = betType;
-                hptRdi.BetType = new HPTBetType()
-                {
-                    Code = betType,
-                    Name = betType
-                };
-                return hptRdi;
-            }
+            //    HPTServiceToHPTHelper.ConvertRaceDayInfo(rdi, hptRdi);
+            //    hptRdi.BetTypeString = betType;
+            //    hptRdi.BetType = new HPTBetType()
+            //    {
+            //        Code = betType,
+            //        Name = betType
+            //    };
+            //    return hptRdi;
+            //}
             return hptRdi;
         }
 
-        internal void GetRaceDayInfoUpdate(string betTypeString, int trackId, DateTime raceDate, Action<HPTService.HPTRaceDayInfo> updateRaceDayInfoDelegate)
-        {
-            this.betType = new HPTBetType() { Code = betTypeString };
-            this.raceDate = raceDate;
-            this.updateDelegate = updateRaceDayInfoDelegate;
-            this.trackId = trackId;
-            ThreadStart starter = new ThreadStart(GetRaceDayInfoUpdate);
-            Thread thread = new Thread(starter);
-            thread.Priority = ThreadPriority.BelowNormal;
-            thread.SetApartmentState(ApartmentState.STA);
-            thread.Start();
-        }
+        //internal void GetRaceDayInfoUpdate(string betTypeString, int trackId, DateTime raceDate, Action<HPTService.HPTRaceDayInfo> updateRaceDayInfoDelegate)
+        //{
+        //    betType = new HPTBetType() { Code = betTypeString };
+        //    this.raceDate = raceDate;
+        //    updateDelegate = updateRaceDayInfoDelegate;
+        //    this.trackId = trackId;
+        //    ThreadStart starter = new ThreadStart(GetRaceDayInfoUpdate);
+        //    Thread thread = new Thread(starter);
+        //    thread.Priority = ThreadPriority.BelowNormal;
+        //    thread.SetApartmentState(ApartmentState.STA);
+        //    thread.Start();
+        //}
 
         internal void GetRaceDayInfoUpdate()
         {
-            string query = "RaceDayInfoUpdate?betType="
-                            + this.betType.Code + "&trackId=" +
-                            this.trackId.ToString() + "&raceDate=" +
-                            this.raceDate.ToString("yyyy-MM-dd");
-            foreach (var webserviceURL in webserviceURLList)
-            {
-                try
-                {
-                    byte[] baRaceDayInfo = DownloadAndCreateByteArray(webserviceURL, query);
+            //string query = "RaceDayInfoUpdate?betType="
+            //                + betType.Code + "&trackId=" +
+            //                trackId.ToString() + "&raceDate=" +
+            //                raceDate.ToString("yyyy-MM-dd");
+            //foreach (var webserviceURL in webserviceURLList)
+            //{
+            //    try
+            //    {
+            //        byte[] baRaceDayInfo = DownloadAndCreateByteArray(webserviceURL, query);
 
-                    //if (baRaceDayInfo == null)
-                    //{
-                    //    baRaceDayInfo = DownloadAndCreateByteArray(webserviceURLAlt, query);
-                    //}
+            //        //if (baRaceDayInfo == null)
+            //        //{
+            //        //    baRaceDayInfo = DownloadAndCreateByteArray(webserviceURLAlt, query);
+            //        //}
 
-                    HPTService.HPTRaceDayInfo rdi = HPTSerializer.DeserializeHPTRaceDayInfo(baRaceDayInfo);
-                    this.updateDelegate(rdi);
+            //        HPTService.HPTRaceDayInfo rdi = HPTSerializer.DeserializeHPTRaceDayInfo(baRaceDayInfo);
+            //        updateDelegate(rdi);
 
-                    return;
-                }
-                catch (Exception)
-                {
-                }
-            }
-            this.updateDelegate(null);
+            //        return;
+            //    }
+            //    catch (Exception)
+            //    {
+            //    }
+            //}
+            //updateDelegate(null);
         }
 
         internal void GetRaceDayInfoUpdate(HPTRaceDayInfo hptRdi)
         {
-            foreach (var webserviceURL in webserviceURLList)
-            {
-                try
-                {
-                    byte[] baRaceDayInfo = DownloadAndCreateByteArray(webserviceURL, "RaceDayInfoUpdate?betType="
-                                                                          + hptRdi.BetType.Code + "&trackId=" +
-                                                                          hptRdi.TrackId.ToString() + "&raceDate=" +
-                                                                          hptRdi.RaceDayDate.ToString("yyyy-MM-dd"));
+            //foreach (var webserviceURL in webserviceURLList)
+            //{
+            //    try
+            //    {
+            //        byte[] baRaceDayInfo = DownloadAndCreateByteArray(webserviceURL, "RaceDayInfoUpdate?betType="
+            //                                                              + hptRdi.BetType.Code + "&trackId=" +
+            //                                                              hptRdi.TrackId.ToString() + "&raceDate=" +
+            //                                                              hptRdi.RaceDayDate.ToString("yyyy-MM-dd"));
 
-                    HPTService.HPTRaceDayInfo rdi = HPTSerializer.DeserializeHPTRaceDayInfo(baRaceDayInfo);
-                    hptRdi.Merge(rdi);
-                    rdi = null;
-                    GC.Collect();
-                    return;
-                }
-                catch (Exception)
-                {
-                }
-            }
+            //        HPTService.HPTRaceDayInfo rdi = HPTSerializer.DeserializeHPTRaceDayInfo(baRaceDayInfo);
+            //        hptRdi.Merge(rdi);
+            //        rdi = null;
+            //        GC.Collect();
+            //        return;
+            //    }
+            //    catch (Exception)
+            //    {
+            //    }
+            //}
         }
 
-        internal HPTService.HPTRaceDayInfo GetRaceDayInfoUpdateNoMerge(HPTRaceDayInfo hptRdi)
-        {
-            if (hptRdi.RaceList.Min(r => r.PostTime) > DateTime.Now.AddMinutes(4D))
-            {
-                return null;
-            }
+        //internal HPTService.HPTRaceDayInfo GetRaceDayInfoUpdateNoMerge(HPTRaceDayInfo hptRdi)
+        //{
+        //    if (hptRdi.RaceList.Min(r => r.PostTime) > DateTime.Now.AddMinutes(4D))
+        //    {
+        //        return null;
+        //    }
 
-            foreach (var webserviceURL in webserviceURLList)
-            {
-                try
-                {
-                    byte[] baRaceDayInfo = DownloadAndCreateByteArray(webserviceURL, "RaceDayInfoUpdate?betType="
-                                                                          + hptRdi.BetType.Code + "&trackId=" +
-                                                                          hptRdi.TrackId.ToString() + "&raceDate=" +
-                                                                          hptRdi.RaceDayDate.ToString("yyyy-MM-dd"));
+        //    foreach (var webserviceURL in webserviceURLList)
+        //    {
+        //        try
+        //        {
+        //            byte[] baRaceDayInfo = DownloadAndCreateByteArray(webserviceURL, "RaceDayInfoUpdate?betType="
+        //                                                                  + hptRdi.BetType.Code + "&trackId=" +
+        //                                                                  hptRdi.TrackId.ToString() + "&raceDate=" +
+        //                                                                  hptRdi.RaceDayDate.ToString("yyyy-MM-dd"));
 
-                    var rdi = HPTSerializer.DeserializeHPTRaceDayInfo(baRaceDayInfo);
+        //            var rdi = HPTSerializer.DeserializeHPTRaceDayInfo(baRaceDayInfo);
 
-                    var horsesWithoutResultInfo = hptRdi.RaceList
-                        .SelectMany(r => r.HorseList)
-                        .ToList();
+        //            var horsesWithoutResultInfo = hptRdi.RaceList
+        //                .SelectMany(r => r.HorseList)
+        //                .ToList();
 
-                    int finalTurnover = rdi.LegList.First().HorseList.Sum(h => h.StakeDistribution);
+        //            int finalTurnover = rdi.LegList.First().HorseList.Sum(h => h.StakeDistribution);
 
-                    if (finalTurnover > 0)
-                    {
-                        horsesWithoutResultInfo.ForEach(h =>
-                            {
-                                var horse = rdi.LegList
-                                .First(l => l.LegNr == h.ParentRace.LegNr)
-                                .HorseList
-                                .First(hInner => hInner.StartNr == h.StartNr);
+        //            if (finalTurnover > 0)
+        //            {
+        //                horsesWithoutResultInfo.ForEach(h =>
+        //                    {
+        //                        var horse = rdi.LegList
+        //                        .First(l => l.LegNr == h.ParentRace.LegNr)
+        //                        .HorseList
+        //                        .First(hInner => hInner.StartNr == h.StartNr);
 
-                                // Hur gick det i loppet?
-                                HPTHorse.HandleHorseResultInfo(horse, h);
+        //                        // Hur gick det i loppet?
+        //                        HPTHorse.HandleHorseResultInfo(horse, h);
 
-                                // Sätt den slutliga insatsfördelningen
-                                h.StakeDistributionShareFinal = Convert.ToDecimal(horse.StakeDistribution) / finalTurnover;
-                                h.VinnarDddsFinal = horse.VPInfo.VinnarOddsExact;
-                            });
-                    }
+        //                        // Sätt den slutliga insatsfördelningen
+        //                        h.StakeDistributionShareFinal = Convert.ToDecimal(horse.StakeDistribution) / finalTurnover;
+        //                        h.VinnarDddsFinal = horse.VPInfo.VinnarOddsExact;
+        //                    });
+        //            }
 
-                    return rdi;
-                }
-                catch (Exception)
-                {
-                }
-            }
-            return null;
-        }
+        //            return rdi;
+        //        }
+        //        catch (Exception)
+        //        {
+        //        }
+        //    }
+        //    return null;
+        //}
 
-        internal HPTService.HPTRaceDayInfo GetScratchedHorses(HPTRaceDayInfo hptRdi)
-        {
-            foreach (var webserviceURL in webserviceURLList)
-            {
-                byte[] baRaceDayInfo = DownloadAndCreateByteArray(webserviceURL, "RaceDayInfoUpdate?betType="
-                                                                      + hptRdi.BetType.Code + "&trackId=" +
-                                                                      hptRdi.TrackId.ToString() + "&raceDate=" +
-                                                                      hptRdi.RaceDayDate.ToString("yyyy-MM-dd"));
+        //internal HPTService.HPTRaceDayInfo GetScratchedHorses(HPTRaceDayInfo hptRdi)
+        //{
+        //    foreach (var webserviceURL in webserviceURLList)
+        //    {
+        //        byte[] baRaceDayInfo = DownloadAndCreateByteArray(webserviceURL, "RaceDayInfoUpdate?betType="
+        //                                                              + hptRdi.BetType.Code + "&trackId=" +
+        //                                                              hptRdi.TrackId.ToString() + "&raceDate=" +
+        //                                                              hptRdi.RaceDayDate.ToString("yyyy-MM-dd"));
 
-                var rdi = HPTSerializer.DeserializeHPTRaceDayInfo(baRaceDayInfo);
-                return rdi;
-            }
-            return null;
-        }
+        //        var rdi = HPTSerializer.DeserializeHPTRaceDayInfo(baRaceDayInfo);
+        //        return rdi;
+        //    }
+        //    return null;
+        //}
 
         // /RaceDayInfoHistoryGrouped?betType={betType}&trackId={trackid}&raceDate={raceDate}
         internal bool GetRaceDayInfoHistoryGrouped(HPTRaceDayInfo hptRdi)
         {
-            foreach (var webserviceURL in webserviceURLList)
-            {
-                try
-                {
-                    byte[] baRaceDayInfo = DownloadAndCreateByteArray(webserviceURL, "RaceDayInfoHistoryGrouped?betType=" + hptRdi.BetType.Code +
-                                                                            "&trackId=" + hptRdi.TrackId.ToString() +
-                                                                            "&raceDate=" + hptRdi.RaceDayDate.ToString("yyyy-MM-dd"));
+            //foreach (var webserviceURL in webserviceURLList)
+            //{
+            //    try
+            //    {
+            //        byte[] baRaceDayInfo = DownloadAndCreateByteArray(webserviceURL, "RaceDayInfoHistoryGrouped?betType=" + hptRdi.BetType.Code +
+            //                                                                "&trackId=" + hptRdi.TrackId.ToString() +
+            //                                                                "&raceDate=" + hptRdi.RaceDayDate.ToString("yyyy-MM-dd"));
 
-                    var rdiHistory = (HPTService.HPTRaceDayInfoHistoryInfoGrouped)HPTSerializer.DeserializeHPTServiceObject(typeof(HPTService.HPTRaceDayInfoHistoryInfoGrouped), baRaceDayInfo);
+            //        var rdiHistory = (HPTService.HPTRaceDayInfoHistoryInfoGrouped)HPTSerializer.DeserializeHPTServiceObject(typeof(HPTService.HPTRaceDayInfoHistoryInfoGrouped), baRaceDayInfo);
 
-                    HPTServiceToHPTHelper.ConvertRaceDayInfoHistory(rdiHistory, hptRdi);
+            //        HPTServiceToHPTHelper.ConvertRaceDayInfoHistory(rdiHistory, hptRdi);
 
-                    return true;
-                }
-                catch (Exception)
-                {
-                }
-            }
+            //        return true;
+            //    }
+            //    catch (Exception)
+            //    {
+            //    }
+            //}
             return false;
         }
 
-        internal void GetRaceDayInfoHistoryGrouped(string betTypeString, int trackId, DateTime raceDate, Action<HPTService.HPTRaceDayInfoHistoryInfoGrouped> historyDelegate)
-        {
-            this.betType = new HPTBetType() { Code = betTypeString };
-            this.raceDate = raceDate;
-            this.historyDelegate = historyDelegate;
-            this.trackId = trackId;
-            ThreadStart starter = new ThreadStart(GetRaceDayInfoHistoryGrouped);
-            Thread thread = new Thread(starter);
-            thread.Priority = ThreadPriority.BelowNormal;
-            thread.SetApartmentState(ApartmentState.STA);
-            thread.Start();
-        }
+        //internal void GetRaceDayInfoHistoryGrouped(string betTypeString, int trackId, DateTime raceDate, Action<HPTService.HPTRaceDayInfoHistoryInfoGrouped> historyDelegate)
+        //{
+        //    betType = new HPTBetType() { Code = betTypeString };
+        //    this.raceDate = raceDate;
+        //    this.historyDelegate = historyDelegate;
+        //    this.trackId = trackId;
+        //    ThreadStart starter = new ThreadStart(GetRaceDayInfoHistoryGrouped);
+        //    Thread thread = new Thread(starter);
+        //    thread.Priority = ThreadPriority.BelowNormal;
+        //    thread.SetApartmentState(ApartmentState.STA);
+        //    thread.Start();
+        //}
 
-        internal void GetRaceDayInfoHistoryGrouped()
-        {
-            string query = "RaceDayInfoHistoryGrouped?betType=" + this.betType.Code +
-                                                    "&trackId=" + this.trackId.ToString() +
-                                                    "&raceDate=" + this.raceDate.ToString("yyyy-MM-dd");
-            foreach (var webserviceURL in webserviceURLList)
-            {
-                try
-                {
-                    byte[] baRaceDayInfo = DownloadAndCreateByteArray(webserviceURL, query);
+        //internal void GetRaceDayInfoHistoryGrouped()
+        //{
+        //    string query = "RaceDayInfoHistoryGrouped?betType=" + betType.Code +
+        //                                            "&trackId=" + trackId.ToString() +
+        //                                            "&raceDate=" + raceDate.ToString("yyyy-MM-dd");
+        //    foreach (var webserviceURL in webserviceURLList)
+        //    {
+        //        try
+        //        {
+        //            byte[] baRaceDayInfo = DownloadAndCreateByteArray(webserviceURL, query);
 
-                    //if (baRaceDayInfo == null)
-                    //{
-                    //    baRaceDayInfo = DownloadAndCreateByteArray(webserviceURLAlt, query);
-                    //}
+        //            //if (baRaceDayInfo == null)
+        //            //{
+        //            //    baRaceDayInfo = DownloadAndCreateByteArray(webserviceURLAlt, query);
+        //            //}
 
-                    var rdiHistory = (HPTService.HPTRaceDayInfoHistoryInfoGrouped)HPTSerializer.DeserializeHPTServiceObject(typeof(HPTService.HPTRaceDayInfoHistoryInfoGrouped), baRaceDayInfo);
-                    this.historyDelegate(rdiHistory);
+        //            var rdiHistory = (HPTService.HPTRaceDayInfoHistoryInfoGrouped)HPTSerializer.DeserializeHPTServiceObject(typeof(HPTService.HPTRaceDayInfoHistoryInfoGrouped), baRaceDayInfo);
+        //            historyDelegate(rdiHistory);
 
-                    return;
-                }
-                catch (Exception)
-                {
-                }
-            }
-            this.historyDelegate(null);
-        }
+        //            return;
+        //        }
+        //        catch (Exception)
+        //        {
+        //        }
+        //    }
+        //    historyDelegate(null);
+        //}
 
         #endregion
 
@@ -539,137 +541,137 @@ namespace HPTClient
 
         internal void GetResultMarkingBetByTrackAndDate(string betType, int trackId, DateTime raceDate, HPTRaceDayInfo hptRdi, bool setValues)
         {
-            foreach (var webserviceURL in webserviceURLList)
-            {
-                try
-                {
-                    byte[] baResultMarkingBet = DownloadAndCreateByteArray(webserviceURL, "Result?betType="
-                                                                                  + betType + "&trackId=" +
-                                                                                  trackId.ToString() + "&raceDate=" +
-                                                                                  raceDate.ToString("yyyy-MM-dd"));
+            //foreach (var webserviceURL in webserviceURLList)
+            //{
+            //    try
+            //    {
+            //        byte[] baResultMarkingBet = DownloadAndCreateByteArray(webserviceURL, "Result?betType="
+            //                                                                      + betType + "&trackId=" +
+            //                                                                      trackId.ToString() + "&raceDate=" +
+            //                                                                      raceDate.ToString("yyyy-MM-dd"));
 
-                    HPTService.HPTResultMarkingBet rmb = HPTSerializer.DeserializeHPTResultMarkingBet(baResultMarkingBet);
-                    if (rmb.ResultComplete)
-                    {
-                        SaveResult(rmb, baResultMarkingBet);
-                    }
-                    HPTServiceToHPTHelper.ConvertResultMarkingBet(rmb, hptRdi, setValues);
-                    rmb = null;
-                    GC.Collect();
-                    return;
-                }
-                catch (Exception)
-                {
-                }
-            }
+            //        HPTService.HPTResultMarkingBet rmb = HPTSerializer.DeserializeHPTResultMarkingBet(baResultMarkingBet);
+            //        if (rmb.ResultComplete)
+            //        {
+            //            SaveResult(rmb, baResultMarkingBet);
+            //        }
+            //        HPTServiceToHPTHelper.ConvertResultMarkingBet(rmb, hptRdi, setValues);
+            //        rmb = null;
+            //        GC.Collect();
+            //        return;
+            //    }
+            //    catch (Exception)
+            //    {
+            //    }
+            //}
         }
 
         internal void GetResultMarkingBetByTrackAndDate(string betType, string raceDate, string trackId, HPTRaceDayInfo hptRdi)
         {
-            foreach (var webserviceURL in webserviceURLList)
-            {
-                try
-                {
-                    byte[] baResultMarkingBet = DownloadAndCreateByteArray(webserviceURL, "Result?betType="
-                                                                          + betType + "&trackId=" +
-                                                                          trackId + "&raceDate=" +
-                                                                          raceDate);
+            //foreach (var webserviceURL in webserviceURLList)
+            //{
+            //    try
+            //    {
+            //        byte[] baResultMarkingBet = DownloadAndCreateByteArray(webserviceURL, "Result?betType="
+            //                                                              + betType + "&trackId=" +
+            //                                                              trackId + "&raceDate=" +
+            //                                                              raceDate);
 
-                    HPTService.HPTResultMarkingBet rmb = HPTSerializer.DeserializeHPTResultMarkingBet(baResultMarkingBet);
-                    if (rmb.ResultComplete)
-                    {
-                        SaveResult(rmb, baResultMarkingBet);
-                    }
-                    HPTServiceToHPTHelper.ConvertResultMarkingBet(rmb, hptRdi, true);
-                    rmb = null;
-                    GC.Collect();
+            //        HPTService.HPTResultMarkingBet rmb = HPTSerializer.DeserializeHPTResultMarkingBet(baResultMarkingBet);
+            //        if (rmb.ResultComplete)
+            //        {
+            //            SaveResult(rmb, baResultMarkingBet);
+            //        }
+            //        HPTServiceToHPTHelper.ConvertResultMarkingBet(rmb, hptRdi, true);
+            //        rmb = null;
+            //        GC.Collect();
 
-                    return;
-                }
-                catch (Exception)
-                {
-                }
-            }
+            //        return;
+            //    }
+            //    catch (Exception)
+            //    {
+            //    }
+            //}
         }
 
-        internal void GetResultMarkingBetByTrackAndDate(string betTypeString, int trackId, DateTime raceDate, Action<HPTService.HPTResultMarkingBet> resultDelegate)
-        {
-            this.betType = new HPTBetType() { Code = betTypeString };
-            this.raceDate = raceDate;
-            this.resultDelegate = resultDelegate;
-            this.trackId = trackId;
-            ThreadStart starter = new ThreadStart(GetResultMarkingBetByTrackAndDate);
-            Thread thread = new Thread(starter);
-            thread.Priority = ThreadPriority.BelowNormal;
-            thread.SetApartmentState(ApartmentState.STA);
-            thread.Start();
-        }
+        //internal void GetResultMarkingBetByTrackAndDate(string betTypeString, int trackId, DateTime raceDate, Action<HPTService.HPTResultMarkingBet> resultDelegate)
+        //{
+        //    betType = new HPTBetType() { Code = betTypeString };
+        //    this.raceDate = raceDate;
+        //    this.resultDelegate = resultDelegate;
+        //    this.trackId = trackId;
+        //    ThreadStart starter = new ThreadStart(GetResultMarkingBetByTrackAndDate);
+        //    Thread thread = new Thread(starter);
+        //    thread.Priority = ThreadPriority.BelowNormal;
+        //    thread.SetApartmentState(ApartmentState.STA);
+        //    thread.Start();
+        //}
 
-        internal void SaveResult(HPTService.HPTResultMarkingBet rmb, byte[] baResultMarkingBet)
-        {
-            try
-            {
-                string resultPath = HPTConfig.MyDocumentsPath + "Resultat";
-                if (!Directory.Exists(resultPath))
-                {
-                    Directory.CreateDirectory(resultPath);
-                }
-                string raceDayPath = resultPath + "\\" + rmb.RaceDate.ToString("yyyy-MM-dd") + "_" + rmb.TrackCode;
-                if (!Directory.Exists(raceDayPath))
-                {
-                    Directory.CreateDirectory(raceDayPath);
-                }
-                string filename = raceDayPath + "\\" + rmb.BetType + ".hptresult";
-                File.WriteAllBytes(filename, baResultMarkingBet);
-            }
-            catch (Exception exc)
-            {
-                HPTConfig.AddToErrorLogStatic(exc);
-            }
-        }
+        //internal void SaveResult(HPTService.HPTResultMarkingBet rmb, byte[] baResultMarkingBet)
+        //{
+        //    try
+        //    {
+        //        string resultPath = HPTConfig.MyDocumentsPath + "Resultat";
+        //        if (!Directory.Exists(resultPath))
+        //        {
+        //            Directory.CreateDirectory(resultPath);
+        //        }
+        //        string raceDayPath = resultPath + "\\" + rmb.RaceDate.ToString("yyyy-MM-dd") + "_" + rmb.TrackCode;
+        //        if (!Directory.Exists(raceDayPath))
+        //        {
+        //            Directory.CreateDirectory(raceDayPath);
+        //        }
+        //        string filename = raceDayPath + "\\" + rmb.BetType + ".hptresult";
+        //        File.WriteAllBytes(filename, baResultMarkingBet);
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        HPTConfig.AddToErrorLogStatic(exc);
+        //    }
+        //}
 
-        internal HPTService.HPTResultMarkingBet GetResultFromDisk(HPTRaceDayInfo raceDayInfo)
-        {
-            string filename = HPTConfig.MyDocumentsPath
-                + "Resultat\\" + raceDayInfo.RaceDayDate.ToString("yyyy-MM-dd") + "_" + raceDayInfo.Trackcode
-                + "\\" + raceDayInfo.BetType.Code + ".hptresult";
+        //internal HPTService.HPTResultMarkingBet GetResultFromDisk(HPTRaceDayInfo raceDayInfo)
+        //{
+        //    string filename = HPTConfig.MyDocumentsPath
+        //        + "Resultat\\" + raceDayInfo.RaceDayDate.ToString("yyyy-MM-dd") + "_" + raceDayInfo.Trackcode
+        //        + "\\" + raceDayInfo.BetType.Code + ".hptresult";
 
-            if (File.Exists(filename))
-            {
-                byte[] baResultMarkingBet = File.ReadAllBytes(filename);
-                return HPTSerializer.DeserializeHPTResultMarkingBet(baResultMarkingBet);
-            }
-            return null;
-        }
+        //    if (File.Exists(filename))
+        //    {
+        //        byte[] baResultMarkingBet = File.ReadAllBytes(filename);
+        //        return HPTSerializer.DeserializeHPTResultMarkingBet(baResultMarkingBet);
+        //    }
+        //    return null;
+        //}
 
-        internal void GetResultMarkingBetByTrackAndDate()
-        {
-            HPTService.HPTResultMarkingBet rmb = new HPTService.HPTResultMarkingBet();
-            string query = "Result?betType="
-                            + this.betType.Code + "&trackId=" +
-                            this.trackId.ToString() + "&raceDate=" +
-                            this.raceDate.ToString("yyyy-MM-dd");
-            foreach (var webserviceURL in webserviceURLList)
-            {
-                try
-                {
-                    byte[] baResultMarkingBet = DownloadAndCreateByteArray(webserviceURL, query);
+        //internal void GetResultMarkingBetByTrackAndDate()
+        //{
+        //    HPTService.HPTResultMarkingBet rmb = new HPTService.HPTResultMarkingBet();
+        //    string query = "Result?betType="
+        //                    + betType.Code + "&trackId=" +
+        //                    trackId.ToString() + "&raceDate=" +
+        //                    raceDate.ToString("yyyy-MM-dd");
+        //    foreach (var webserviceURL in webserviceURLList)
+        //    {
+        //        try
+        //        {
+        //            byte[] baResultMarkingBet = DownloadAndCreateByteArray(webserviceURL, query);
 
-                    //if (baResultMarkingBet == null)
-                    //{
-                    //    baResultMarkingBet = DownloadAndCreateByteArray(webserviceURLAlt, query);
-                    //}
+        //            //if (baResultMarkingBet == null)
+        //            //{
+        //            //    baResultMarkingBet = DownloadAndCreateByteArray(webserviceURLAlt, query);
+        //            //}
 
-                    rmb = HPTSerializer.DeserializeHPTResultMarkingBet(baResultMarkingBet);
-                    GC.Collect();
-                }
-                catch (Exception exc)
-                {
-                    HPTConfig.Config.AddToErrorLog(exc);
-                }
-            }
-            this.resultDelegate(rmb);
-        }
+        //            rmb = HPTSerializer.DeserializeHPTResultMarkingBet(baResultMarkingBet);
+        //            GC.Collect();
+        //        }
+        //        catch (Exception exc)
+        //        {
+        //            HPTConfig.Config.AddToErrorLog(exc);
+        //        }
+        //    }
+        //    resultDelegate(rmb);
+        //}
 
         #endregion
 
@@ -815,134 +817,134 @@ namespace HPTClient
         //    }
         //}
 
-        internal bool UploadSystem(HPTMarkBet markBet)
-        {
-            try
-            {
-                var serializedStream = HPTSerializer.SerializeHPTServiceObject(typeof(HPTMarkBet), markBet);
-                var baMarkBet = HPTSerializer.ZipAndCreateBinary(serializedStream);
+        //internal bool UploadSystem(HPTMarkBet markBet)
+        //{
+        //    try
+        //    {
+        //        var serializedStream = HPTSerializer.SerializeHPTServiceObject(typeof(HPTMarkBet), markBet);
+        //        var baMarkBet = HPTSerializer.ZipAndCreateBinary(serializedStream);
 
-                var userSystem = new HPTService.HPTUserSystem()
-                {
-                    BetType = markBet.BetType.Code,
-                    Comment = markBet.SystemComment,
-                    EMail = HPTConfig.Config.EMailAddress,
-                    UserName = HPTConfig.Config.UserNameForUploads,
-                    HPTSystem = baMarkBet,
-                    OriginalSize = markBet.SystemSize,
-                    RaceDayDate = markBet.RaceDayInfo.RaceDayDate,
-                    ReducedSize = markBet.ReducedSize,
-                    ReductionNames = markBet.ToReductionNamesString(),
-                    TrackId = markBet.RaceDayInfo.TrackId,
-                    Timestamp = markBet.LastSaveTime
-                };
+        //        var userSystem = new HPTService.HPTUserSystem()
+        //        {
+        //            BetType = markBet.BetType.Code,
+        //            Comment = markBet.SystemComment,
+        //            EMail = HPTConfig.Config.EMailAddress,
+        //            UserName = HPTConfig.Config.UserNameForUploads,
+        //            HPTSystem = baMarkBet,
+        //            OriginalSize = markBet.SystemSize,
+        //            RaceDayDate = markBet.RaceDayInfo.RaceDayDate,
+        //            ReducedSize = markBet.ReducedSize,
+        //            ReductionNames = markBet.ToReductionNamesString(),
+        //            TrackId = markBet.RaceDayInfo.TrackId,
+        //            Timestamp = markBet.LastSaveTime
+        //        };
 
-                var userSystemStream = HPTSerializer.SerializeHPTServiceObject(typeof(HPTService.HPTUserSystem), userSystem);
-                var request = CreateWebRequestForPOST("UploadSystem", userSystemStream);
-                var response = request.GetResponse();
-                var stream = response.GetResponseStream();
-                var sr = new StreamReader(stream);
-                string strData = sr.ReadToEnd();
-                return !string.IsNullOrEmpty(strData);
-            }
-            catch (Exception exc)
-            {
-                HPTConfig.Config.AddToErrorLog(exc);
-                return false;
-            }
-        }
+        //        var userSystemStream = HPTSerializer.SerializeHPTServiceObject(typeof(HPTService.HPTUserSystem), userSystem);
+        //        var request = CreateWebRequestForPOST("UploadSystem", userSystemStream);
+        //        var response = request.GetResponse();
+        //        var stream = response.GetResponseStream();
+        //        var sr = new StreamReader(stream);
+        //        string strData = sr.ReadToEnd();
+        //        return !string.IsNullOrEmpty(strData);
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        HPTConfig.Config.AddToErrorLog(exc);
+        //        return false;
+        //    }
+        //}
 
-        internal bool UploadCompleteSystem(HPTMarkBet markBet, bool isPublic, bool locked)
-        {
-            try
-            {
-                var serializedStream = HPTSerializer.SerializeHPTServiceObject(typeof(HPTMarkBet), markBet);
-                var baMarkBet = HPTSerializer.ZipAndCreateBinary(serializedStream);
+        //internal bool UploadCompleteSystem(HPTMarkBet markBet, bool isPublic, bool locked)
+        //{
+        //    try
+        //    {
+        //        var serializedStream = HPTSerializer.SerializeHPTServiceObject(typeof(HPTMarkBet), markBet);
+        //        var baMarkBet = HPTSerializer.ZipAndCreateBinary(serializedStream);
 
-                // Skapa kupongfilen
-                if (!File.Exists(markBet.SystemFilename))
-                {
-                    markBet.CouponCorrector.CouponHelper.CreateATGFile();
-                }
-                var srATGXml = new StreamReader(markBet.SystemFilename);
-                string atgXml = srATGXml.ReadToEnd();
+        //        // Skapa kupongfilen
+        //        if (!File.Exists(markBet.SystemFilename))
+        //        {
+        //            markBet.CouponCorrector.CouponHelper.CreateATGFile();
+        //        }
+        //        var srATGXml = new StreamReader(markBet.SystemFilename);
+        //        string atgXml = srATGXml.ReadToEnd();
 
-                // Konvertera systemet till ett HPT Online-system
-                var raceDayInfoReduction = HPTServiceToHPTHelper.CreateHPTOnlineFromHPTMarkBet(markBet);
-                raceDayInfoReduction.Locked = locked;
+        //        // Konvertera systemet till ett HPT Online-system
+        //        var raceDayInfoReduction = HPTServiceToHPTHelper.CreateHPTOnlineFromHPTMarkBet(markBet);
+        //        raceDayInfoReduction.Locked = locked;
 
-                // Skapa uppladdningsobjektet
-                var userSystem = new HPTService.HPTUserSystemComplete()
-                {
-                    HPTSystem = baMarkBet,
-                    RaceDayInfoReduction = raceDayInfoReduction,
-                    IsPublic = isPublic,
-                    Timestamp = markBet.LastSaveTime,
-                    EMail = HPTConfig.Config.EMailAddress,
-                    UserName = HPTConfig.Config.UserNameForUploads
-                };
+        //        // Skapa uppladdningsobjektet
+        //        var userSystem = new HPTService.HPTUserSystemComplete()
+        //        {
+        //            HPTSystem = baMarkBet,
+        //            RaceDayInfoReduction = raceDayInfoReduction,
+        //            IsPublic = isPublic,
+        //            Timestamp = markBet.LastSaveTime,
+        //            EMail = HPTConfig.Config.EMailAddress,
+        //            UserName = HPTConfig.Config.UserNameForUploads
+        //        };
 
-                // Fyll på med reduceringsresutatet
-                userSystem.RaceDayInfoReduction.ReductionResultFile = new HPTService.HPTReductionResultFile()
-                {
-                    ATGSystemCount = markBet.NumberOfSystems,
-                    CorrectionUrl = string.Empty,
-                    CouponFile = atgXml,
-                    CouponList = markBet.CouponCorrector.CouponHelper.CouponList.Select(c => new HPTService.HPTMarkBetSingleRowCombination()
-                    {
-                        BM = c.BetMultiplier,
-                        CN = c.CouponId,
-                        CRL = c.CouponRaceList.Select(cr => new HPTService.HPTMarkBetSingleRowCombinationRace()
-                        {
-                            CR = cr.StartNrList.ToArray(),
-                            LN = cr.LegNr,
-                            R1 = cr.Reserv1,
-                            R2 = cr.Reserv2
-                        }).ToArray(),
-                        S = c.SystemSize,
-                        V6 = c.V6
-                    }).ToArray(),
-                    ReducedSize = markBet.ReducedSize,
-                    ReductionPercentage = markBet.ReductionQuota,
-                    SystemGUID = string.Empty,
-                    SystemCost = markBet.SystemCost,
-                    SystemSize = markBet.SystemSize,
-                    LastUpdated = markBet.LastSaveTime,
-                    LegList = markBet.RaceDayInfo.RaceList.Select(r => new HPTService.HPTRaceReductionResponse()
-                    {
-                        LegNr = r.LegNr,
-                        HorseList = r.HorseList.Select(h => new HPTService.HPTHorseReductionResponse()
-                        {
-                            StartNr = h.StartNr,
-                            NumberOfRows = h.NumberOfCoveredRows,
-                            PercentageOfRows = h.SystemCoverage
-                        }).ToArray()
-                    }).ToArray()
-                };
+        //        // Fyll på med reduceringsresutatet
+        //        userSystem.RaceDayInfoReduction.ReductionResultFile = new HPTService.HPTReductionResultFile()
+        //        {
+        //            ATGSystemCount = markBet.NumberOfSystems,
+        //            CorrectionUrl = string.Empty,
+        //            CouponFile = atgXml,
+        //            CouponList = markBet.CouponCorrector.CouponHelper.CouponList.Select(c => new HPTService.HPTMarkBetSingleRowCombination()
+        //            {
+        //                BM = c.BetMultiplier,
+        //                CN = c.CouponId,
+        //                CRL = c.CouponRaceList.Select(cr => new HPTService.HPTMarkBetSingleRowCombinationRace()
+        //                {
+        //                    CR = cr.StartNrList.ToArray(),
+        //                    LN = cr.LegNr,
+        //                    R1 = cr.Reserv1,
+        //                    R2 = cr.Reserv2
+        //                }).ToArray(),
+        //                S = c.SystemSize,
+        //                V6 = c.V6
+        //            }).ToArray(),
+        //            ReducedSize = markBet.ReducedSize,
+        //            ReductionPercentage = markBet.ReductionQuota,
+        //            SystemGUID = string.Empty,
+        //            SystemCost = markBet.SystemCost,
+        //            SystemSize = markBet.SystemSize,
+        //            LastUpdated = markBet.LastSaveTime,
+        //            LegList = markBet.RaceDayInfo.RaceList.Select(r => new HPTService.HPTRaceReductionResponse()
+        //            {
+        //                LegNr = r.LegNr,
+        //                HorseList = r.HorseList.Select(h => new HPTService.HPTHorseReductionResponse()
+        //                {
+        //                    StartNr = h.StartNr,
+        //                    NumberOfRows = h.NumberOfCoveredRows,
+        //                    PercentageOfRows = h.SystemCoverage
+        //                }).ToArray()
+        //            }).ToArray()
+        //        };
 
-                string json = HPTSerializer.CreateJson(userSystem);
+        //        string json = HPTSerializer.CreateJson(userSystem);
 
-                var userSystemStream = HPTSerializer.SerializeHPTServiceObject(typeof(HPTService.HPTUserSystemComplete), userSystem);
-                var request = CreateWebRequestForPOST("UploadCompleteSystem", userSystemStream);
-                var response = request.GetResponse();
-                var stream = response.GetResponseStream();
+        //        var userSystemStream = HPTSerializer.SerializeHPTServiceObject(typeof(HPTService.HPTUserSystemComplete), userSystem);
+        //        var request = CreateWebRequestForPOST("UploadCompleteSystem", userSystemStream);
+        //        var response = request.GetResponse();
+        //        var stream = response.GetResponseStream();
 
-                var saveSystem = (HPTService.HPTSaveSystem)HPTSerializer.DeserializeHPTServiceObject(typeof(HPTService.HPTSaveSystem), stream);
-                markBet.SystemURL = saveSystem.UrlForMobile;
-                markBet.UniqueIdentifier = saveSystem.SystemUniqueIdentifier;
+        //        var saveSystem = (HPTService.HPTSaveSystem)HPTSerializer.DeserializeHPTServiceObject(typeof(HPTService.HPTSaveSystem), stream);
+        //        markBet.SystemURL = saveSystem.UrlForMobile;
+        //        markBet.UniqueIdentifier = saveSystem.SystemUniqueIdentifier;
 
-                return true;
+        //        return true;
 
-                //var sr = new StreamReader(stream);
-                //string strData = sr.ReadToEnd();
-                //return !string.IsNullOrEmpty(strData);
-            }
-            catch (Exception exc)
-            {
-                HPTConfig.Config.AddToErrorLog(exc);
-                return false;
-            }
-        }
+        //        //var sr = new StreamReader(stream);
+        //        //string strData = sr.ReadToEnd();
+        //        //return !string.IsNullOrEmpty(strData);
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        HPTConfig.Config.AddToErrorLog(exc);
+        //        return false;
+        //    }
+        //}
 
         // /UserSystems?betType={betType}&trackId={trackId}&raceDate={raceDate}
         //internal static HPTUserSystemCollection DownloadSystemList(HPTRaceDayInfoLight raceDayInfoLight)
@@ -1014,17 +1016,17 @@ namespace HPTClient
         //}
 
         // /UserSystemDeleteByUniqueId?uniqueId={uniqueId}&betType={betType}&trackId={trackId}&raceDate={raceDate}
-        internal static bool DeleteSystemByUniqueId(HPTRaceDayInfoLight raceDayInfoLight, string uniqueId)
-        {
-            //CultureInfo ci = new CultureInfo("sv-SE");
-            var success = DownloadStringStatic("UserSystemDeleteByUniqueId?uniqueId=" + uniqueId
-                + "&betType=" + raceDayInfoLight.BetTypeCode
-                + "&trackId=" + raceDayInfoLight.TrackId.ToString()
-                + "&raceDate=" + raceDayInfoLight.RaceDayDate.ToString("yyyy-MM-dd")
-                );
+        //internal static bool DeleteSystemByUniqueId(HPTRaceDayInfoLight raceDayInfoLight, string uniqueId)
+        //{
+        //    //CultureInfo ci = new CultureInfo("sv-SE");
+        //    var success = DownloadStringStatic("UserSystemDeleteByUniqueId?uniqueId=" + uniqueId
+        //        + "&betType=" + raceDayInfoLight.BetTypeCode
+        //        + "&trackId=" + raceDayInfoLight.TrackId.ToString()
+        //        + "&raceDate=" + raceDayInfoLight.RaceDayDate.ToString("yyyy-MM-dd")
+        //        );
 
-            return bool.Parse(success);
-        }
+        //    return bool.Parse(success);
+        //}
 
         //internal void UploadOwnInformation()
         //{
@@ -1189,7 +1191,7 @@ namespace HPTClient
 
                 };
                 //WCATG.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36");
-                System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
                 var rdi = horse.ParentRace.ParentRaceDayInfo;
                 var race = horse.ParentRace;

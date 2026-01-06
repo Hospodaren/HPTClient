@@ -42,7 +42,7 @@ namespace HPTClient
             sb.Append(markBet.MinRankSum);
             sb.Append(" - ");
             sb.Append(markBet.MaxRankSum);
-            this.ClipboardString = this.ReductionTypeString + "\r\n" + sb.ToString();
+            ClipboardString = ReductionTypeString + "\r\n" + sb.ToString();
             return sb.ToString();
         }
     }

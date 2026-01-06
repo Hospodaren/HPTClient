@@ -15,7 +15,7 @@ namespace HPTClient
         public HPTHorseRankReductionRule(int numberOfRaces, bool use)
             : base(numberOfRaces, use)
         {
-            foreach (HPTNumberOfWinners now in this.NumberOfWinnersList)
+            foreach (HPTNumberOfWinners now in NumberOfWinnersList)
             {
                 now.Selectable = true;
             }
@@ -53,14 +53,14 @@ namespace HPTClient
         {
             // Skapa lista med alla rankpoäng
             var rankList = singleRow.HorseList
-                .Select(h => h.RankList.First(r => r.Name == this.ParentHorseRankSumReductionRule.PropertyName))
+                .Select(h => h.RankList.First(r => r.Name == ParentHorseRankSumReductionRule.PropertyName))
                 .Select(r => r.Rank)
                 .ToList();
 
-            if (!this.OnlyInSpecifiedLegs)
+            if (!OnlyInSpecifiedLegs)
             {
-                int numberInInterval = rankList.Count(r => r >= this.LowerBoundary && r <= this.UpperBoundary);
-                if (!this.NumberOfWinnersList.First(now => now.NumberOfWinners == numberInInterval).Selected)
+                int numberInInterval = rankList.Count(r => r >= LowerBoundary && r <= UpperBoundary);
+                if (!NumberOfWinnersList.First(now => now.NumberOfWinners == numberInInterval).Selected)
                 {
                     return false;
                 }
@@ -68,12 +68,12 @@ namespace HPTClient
             else
             {
                 int numberOfX = 0;
-                foreach (var legNumber in this.LegList)
+                foreach (var legNumber in LegList)
                 {
                     int rankValue = rankList[legNumber - 1];
-                    numberOfX += rankValue >= this.LowerBoundary && rankValue <= this.UpperBoundary ? 1 : 0;
+                    numberOfX += rankValue >= LowerBoundary && rankValue <= UpperBoundary ? 1 : 0;
                 }
-                if (!this.NumberOfWinnersList[numberOfX].Selected)
+                if (!NumberOfWinnersList[numberOfX].Selected)
                 {
                     return false;
                 }
@@ -91,7 +91,7 @@ namespace HPTClient
             }
             set
             {
-                this.lowerBoundary = value;
+                lowerBoundary = value;
                 OnPropertyChanged("LowerBoundary");
             }
         }
@@ -106,7 +106,7 @@ namespace HPTClient
             }
             set
             {
-                this.upperBoundary = value;
+                upperBoundary = value;
                 OnPropertyChanged("UpperBoundary");
             }
         }
@@ -127,12 +127,12 @@ namespace HPTClient
             // Create String representation
             var sb = new StringBuilder();
             sb.Append("Rank ");
-            sb.Append(this.LowerBoundary);
+            sb.Append(LowerBoundary);
             sb.Append(" - ");
-            sb.Append(this.UpperBoundary);
+            sb.Append(UpperBoundary);
             sb.Append(": ");
-            sb.Append(this.NumberOfWinnersString);
-            this.ClipboardString = sb.ToString();
+            sb.Append(NumberOfWinnersString);
+            ClipboardString = sb.ToString();
             return sb.ToString();
         }
     }

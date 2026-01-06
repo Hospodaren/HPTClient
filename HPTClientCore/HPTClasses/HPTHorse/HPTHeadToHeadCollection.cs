@@ -4,12 +4,12 @@
     {
         public HPTHeadToHeadCollection(List<HPTHorseResult> headToHeadResultList)
         {
-            this.HeadToHeadResultList = headToHeadResultList;
-            this.RaceNr = this.HeadToHeadResultList.First().RaceNr;
+            HeadToHeadResultList = headToHeadResultList;
+            RaceNr = HeadToHeadResultList.First().RaceNr;
             //this.DateString = this.HeadToHeadResultList.First().DateString;
-            this.Trackname = this.HeadToHeadResultList.First().TrackCode;   //EnumHelper.GetTrackNameFromTrackId(this.HeadToHeadResultList.First().TrackCode);
-            this.Distance = this.HeadToHeadResultList.Min(r => r.Distance);
-            this.FirstPrize = Convert.ToDecimal(this.HeadToHeadResultList.First().FirstPrize);
+            Trackname = HeadToHeadResultList.First().TrackCode;   //EnumHelper.GetTrackNameFromTrackId(this.HeadToHeadResultList.First().TrackCode);
+            Distance = HeadToHeadResultList.Min(r => r.Distance);
+            FirstPrize = Convert.ToDecimal(HeadToHeadResultList.First().FirstPrize);
         }
 
         public string Trackname { get; set; }

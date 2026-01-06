@@ -37,17 +37,17 @@ namespace HPTClient
         {
             try
             {
-                var horse = this.DataContext as HPTHorse;
+                var horse = DataContext as HPTHorse;
                 if (horse.ResultList.Count < 5)
                 {
-                    this.btnGetMoreResults.Visibility = Visibility.Collapsed;
+                    btnGetMoreResults.Visibility = Visibility.Collapsed;
                     return;
                 }
 
                 var serviceConnector = new HPTServiceConnector();
                 //serviceConnector.GetHorseResultListFromATG(this.DataContext as HPTHorse);
                 serviceConnector.GetHorseStartInformationFromATG(horse);
-                this.btnGetMoreResults.Visibility = Visibility.Collapsed;
+                btnGetMoreResults.Visibility = Visibility.Collapsed;
             }
             catch (Exception exc)
             {
@@ -59,12 +59,12 @@ namespace HPTClient
         {
             try
             {
-                if (this.DataContext.GetType() == typeof(HPTHorse))
+                if (DataContext.GetType() == typeof(HPTHorse))
                 {
-                    var horse = this.DataContext as HPTHorse;
+                    var horse = DataContext as HPTHorse;
                     if (horse.ResultList.Count != 5)
                     {
-                        this.btnGetMoreResults.Visibility = Visibility.Collapsed;
+                        btnGetMoreResults.Visibility = Visibility.Collapsed;
                     }
                 }
             }

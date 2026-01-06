@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using ATGDownloader;
+using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
@@ -19,157 +20,158 @@ namespace HPTClient
 
         public HPTRaceDayInfo()
         {
-            this.ScratchedHorseInfo = new HPTScratchedHorsesInfo(this);
-            this.ScratchedHorseInfo.HaveSelectedScratchedHorse = false;
-            this.HorseListSelected = new ObservableCollection<HPTHorse>();
+            ScratchedHorseInfo = new HPTScratchedHorsesInfo(this);
+            ScratchedHorseInfo.HaveSelectedScratchedHorse = false;
+            HorseListSelected = new ObservableCollection<HPTHorse>();
         }
 
-        public void Merge(HPTService.HPTRaceDayInfo rdi)
+        public void Merge(ATGGameBase rdi)
         {
-            try
-            {
-                this.MarksQuantity = rdi.MarksQuantity;
-                if (rdi.Turnover != 0)
-                {
-                    this.Turnover = rdi.Turnover;
-                }
+            // TODO: Använd ATGGameBase
+            //try
+            //{
+            //    MarksQuantity = rdi.MarksQuantity;
+            //    if (rdi.Turnover != 0)
+            //    {
+            //        Turnover = rdi.Turnover;
+            //    }
 
-                // Uppdatera storleken på vinstpotterna
-                if (rdi.PayoutList != null)
-                {
-                    if (this.PayOutListATG == null)
-                    {
-                        HPTServiceToHPTHelper.CreatePayOutLists(rdi, this);
-                    }
-                    else
-                    {
-                        foreach (var payOut in rdi.PayoutList)
-                        {
-                            var payOutATG = this.PayOutListATG.FirstOrDefault(po => po.NumberOfCorrect == payOut.NumberOfCorrect);
-                            if (payOutATG != null)
-                            {
-                                payOutATG.NumberOfSystems = payOut.NumberOfSystems;
-                                payOutATG.PayOutAmount = payOut.PayOutAmount;
-                                payOutATG.TotalAmount = payOut.TotalAmount;
-                            }
-                        }
-                    }
-                    //if (this.PayOutListATG != null && this.PayOutListATG.Count > 0 && this.PayOutListATG.First().TotalAmount == 0)
-                    if (this.PayOutListATG != null && this.PayOutListATG.Count > 0)
-                    {
-                        if (this.BetType.Code == "V4" || this.BetType.Code == "V5")
-                        {
-                            this.PayOutListATG.First().TotalAmount += Convert.ToInt32(Convert.ToDecimal(this.Turnover) * this.BetType.PoolShare);
-                        }
+            //    // Uppdatera storleken på vinstpotterna
+            //    if (rdi.PayoutList != null)
+            //    {
+            //        if (PayOutListATG == null)
+            //        {
+            //            HPTServiceToHPTHelper.CreatePayOutLists(rdi, this);
+            //        }
+            //        else
+            //        {
+            //            foreach (var payOut in rdi.PayoutList)
+            //            {
+            //                var payOutATG = PayOutListATG.FirstOrDefault(po => po.NumberOfCorrect == payOut.NumberOfCorrect);
+            //                if (payOutATG != null)
+            //                {
+            //                    payOutATG.NumberOfSystems = payOut.NumberOfSystems;
+            //                    payOutATG.PayOutAmount = payOut.PayOutAmount;
+            //                    payOutATG.TotalAmount = payOut.TotalAmount;
+            //                }
+            //            }
+            //        }
+            //        //if (this.PayOutListATG != null && this.PayOutListATG.Count > 0 && this.PayOutListATG.First().TotalAmount == 0)
+            //        if (PayOutListATG != null && PayOutListATG.Count > 0)
+            //        {
+            //            if (BetType.Code == "V4" || BetType.Code == "V5")
+            //            {
+            //                PayOutListATG.First().TotalAmount += Convert.ToInt32(Convert.ToDecimal(Turnover) * BetType.PoolShare);
+            //            }
 
-                        this.MaxPayOut = this.PayOutListATG
-                            .OrderByDescending(po => po.NumberOfCorrect)
-                            .First()
-                            .TotalAmount;
-                    }
-                }
-                foreach (HPTService.HPTRace race in rdi.LegList)
-                {
-                    HPTRace hptRace = null;
-                    switch (this.BetType.TypeCategory)
-                    {
-                        case BetTypeCategory.None:
-                            break;
-                        case BetTypeCategory.V4:
-                        case BetTypeCategory.V5:
-                        case BetTypeCategory.V6X:
-                        case BetTypeCategory.V75:
-                        case BetTypeCategory.V86:
-                        case BetTypeCategory.V85:
-                        case BetTypeCategory.Double:
-                            hptRace = this.RaceList.Where(hr => hr.LegNr == race.LegNr).FirstOrDefault();
-                            break;
-                        case BetTypeCategory.Trio:
-                        case BetTypeCategory.Twin:
-                            hptRace = this.RaceList.Where(hr => hr.RaceNr == race.SharedInfo.RaceNr).FirstOrDefault();
-                            break;
-                        default:
-                            break;
-                    }
+            //            MaxPayOut = PayOutListATG
+            //                .OrderByDescending(po => po.NumberOfCorrect)
+            //                .First()
+            //                .TotalAmount;
+            //        }
+            //    }
+            //    foreach (HPTService.HPTRace race in rdi.LegList)
+            //    {
+            //        HPTRace hptRace = null;
+            //        switch (BetType.TypeCategory)
+            //        {
+            //            case BetTypeCategory.None:
+            //                break;
+            //            case BetTypeCategory.V4:
+            //            case BetTypeCategory.V5:
+            //            case BetTypeCategory.V6X:
+            //            case BetTypeCategory.V75:
+            //            case BetTypeCategory.V86:
+            //            case BetTypeCategory.V85:
+            //            case BetTypeCategory.Double:
+            //                hptRace = RaceList.Where(hr => hr.LegNr == race.LegNr).FirstOrDefault();
+            //                break;
+            //            case BetTypeCategory.Trio:
+            //            case BetTypeCategory.Twin:
+            //                hptRace = RaceList.Where(hr => hr.RaceNr == race.SharedInfo.RaceNr).FirstOrDefault();
+            //                break;
+            //            default:
+            //                break;
+            //        }
 
-                    if (hptRace != null)
-                    {
-                        hptRace.Merge(race);
-                    }
-                }
+            //        if (hptRace != null)
+            //        {
+            //            hptRace.Merge(race);
+            //        }
+            //    }
 
-                // Hantera potterna för olika antal rätt
-                if (rdi.PayoutList != null)
-                {
-                    IEnumerable<HPTPayOut> payOutList = rdi.PayoutList.Select(po => new HPTPayOut()
-                    {
-                        NumberOfCorrect = po.NumberOfCorrect,
-                        NumberOfSystems = po.NumberOfSystems,
-                        PayOutAmount = po.PayOutAmount,
-                        TotalAmount = po.TotalAmount
-                    });
-                    this.PayOutListATG = new ObservableCollection<HPTPayOut>(payOutList);
-                    if (this.Jackpot > 0)
-                    {
-                        var payOut = this.PayOutListATG.FirstOrDefault(po => po.NumberOfCorrect == this.RaceList.Count);
-                        this.JackpotFactor = Convert.ToDecimal(payOut.TotalAmount) / Convert.ToDecimal(payOut.TotalAmount - this.Jackpot);
-                        if (this.JackpotFactor > 2M && DateTime.Now < this.RaceList.First().PostTime)
-                        {
-                            this.JackpotFactor = 2M;
-                        }
-                    }
-                    else
-                    {
-                        this.JackpotFactor = 1M;
-                    }
-                    if (this.BetType.Code == "V4" || this.BetType.Code == "V5")
-                    {
-                        if (this.PayOutListATG.First().TotalAmount == 0)
-                        {
-                            this.PayOutListATG.First().TotalAmount += Convert.ToInt32(Convert.ToDecimal(this.Turnover) * this.BetType.PoolShare);
-                        }
-                    }
+            //    // Hantera potterna för olika antal rätt
+            //    if (rdi.PayoutList != null)
+            //    {
+            //        IEnumerable<HPTPayOut> payOutList = rdi.PayoutList.Select(po => new HPTPayOut()
+            //        {
+            //            NumberOfCorrect = po.NumberOfCorrect,
+            //            NumberOfSystems = po.NumberOfSystems,
+            //            PayOutAmount = po.PayOutAmount,
+            //            TotalAmount = po.TotalAmount
+            //        });
+            //        PayOutListATG = new ObservableCollection<HPTPayOut>(payOutList);
+            //        if (Jackpot > 0)
+            //        {
+            //            var payOut = PayOutListATG.FirstOrDefault(po => po.NumberOfCorrect == RaceList.Count);
+            //            JackpotFactor = Convert.ToDecimal(payOut.TotalAmount) / Convert.ToDecimal(payOut.TotalAmount - Jackpot);
+            //            if (JackpotFactor > 2M && DateTime.Now < RaceList.First().PostTime)
+            //            {
+            //                JackpotFactor = 2M;
+            //            }
+            //        }
+            //        else
+            //        {
+            //            JackpotFactor = 1M;
+            //        }
+            //        if (BetType.Code == "V4" || BetType.Code == "V5")
+            //        {
+            //            if (PayOutListATG.First().TotalAmount == 0)
+            //            {
+            //                PayOutListATG.First().TotalAmount += Convert.ToInt32(Convert.ToDecimal(Turnover) * BetType.PoolShare);
+            //            }
+            //        }
 
-                    SetV6Factor();
-                }
+            //        SetV6Factor();
+            //    }
 
-                if (rdi.CombinationList != null)
-                {
-                    foreach (HPTService.HPTCombination comb in rdi.CombinationList)
-                    {
-                        string uniqueCode = GetUniqueCodeFromCombination(comb);
-                        var hptComb = this.CombinationListInfoDouble.CombinationList
-                            .FirstOrDefault(hc => hc.UniqueCode == uniqueCode);
+            //    if (rdi.CombinationList != null)
+            //    {
+            //        foreach (HPTService.HPTCombination comb in rdi.CombinationList)
+            //        {
+            //            string uniqueCode = GetUniqueCodeFromCombination(comb);
+            //            var hptComb = CombinationListInfoDouble.CombinationList
+            //                .FirstOrDefault(hc => hc.UniqueCode == uniqueCode);
 
-                        if (hptComb != null)
-                        {
-                            if (hptComb.Horse1.Scratched == true || hptComb.Horse2.Scratched == true)
-                            {
-                                hptComb.Selected = false;
-                                hptComb.Stake = null;
-                            }
-                            else
-                            {
-                                hptComb.CombinationOdds = comb.CombinationOdds;
-                                hptComb.CombinationOddsExact = comb.CombinationOddsExact;
-                                hptComb.CalculateQuotas(this.BetType.Code);
-                            }
-                        }
-                    }
-                    SortCombinationValues();
-                }
-            }
-            catch (Exception exc)
-            {
-                HPTConfig.Config.AddToErrorLog(exc);
-            }
+            //            if (hptComb != null)
+            //            {
+            //                if (hptComb.Horse1.Scratched == true || hptComb.Horse2.Scratched == true)
+            //                {
+            //                    hptComb.Selected = false;
+            //                    hptComb.Stake = null;
+            //                }
+            //                else
+            //                {
+            //                    hptComb.CombinationOdds = comb.CombinationOdds;
+            //                    hptComb.CombinationOddsExact = comb.CombinationOddsExact;
+            //                    hptComb.CalculateQuotas(BetType.Code);
+            //                }
+            //            }
+            //        }
+            //        SortCombinationValues();
+            //    }
+            //}
+            //catch (Exception exc)
+            //{
+            //    HPTConfig.Config.AddToErrorLog(exc);
+            //}
         }
 
         internal void SetV6Factor()
         {
             try
             {
-                int minPayOut = this.PayOutListATG
+                int minPayOut = PayOutListATG
                         .OrderBy(po => po.NumberOfCorrect)
                         .First()
                         .TotalAmount;
@@ -180,19 +182,19 @@ namespace HPTClient
                 //decimal amountToAdd = this.BetType.V6Factor * v6Turnover;
                 //decimal totalAmount = minPayOut + amountToAdd;
                 //this.V6Factor = totalAmount / payoutWithoutJackpot;
-                decimal payoutWithoutJackpot = this.MaxPayOut - (decimal)this.Jackpot;
+                decimal payoutWithoutJackpot = MaxPayOut - (decimal)Jackpot;
                 decimal v6Turnover = payoutWithoutJackpot - minPayOut;
                 //decimal amountToAdd = this.BetType.V6Factor * v6Turnover;
                 //decimal totalAmount = minPayOut + amountToAdd;
-                this.V6Factor = 1M + v6Turnover / payoutWithoutJackpot;
-                if (this.V6Factor < 1M)
+                V6Factor = 1M + v6Turnover / payoutWithoutJackpot;
+                if (V6Factor < 1M)
                 {
-                    this.V6Factor = 1M;
+                    V6Factor = 1M;
                 }
             }
             catch (Exception)
             {
-                this.V6Factor = 1M;
+                V6Factor = 1M;
             }
         }
 
@@ -221,16 +223,16 @@ namespace HPTClient
 
         public void SortCombinationValues()
         {
-            this.CombinationListInfoDouble.CombinationList.Sort(CompareCombinationOddsRank);
-            for (int i = 0; i < this.CombinationListInfoDouble.CombinationList.Count; i++)
+            CombinationListInfoDouble.CombinationList.Sort(CompareCombinationOddsRank);
+            for (int i = 0; i < CombinationListInfoDouble.CombinationList.Count; i++)
             {
-                this.CombinationListInfoDouble.CombinationList[i].CombinationOddsRank = i + 1;
+                CombinationListInfoDouble.CombinationList[i].CombinationOddsRank = i + 1;
             }
 
-            this.CombinationListInfoDouble.CombinationList.Sort(CompareMultipliedOddsRank);
-            for (int i = 0; i < this.CombinationListInfoDouble.CombinationList.Count; i++)
+            CombinationListInfoDouble.CombinationList.Sort(CompareMultipliedOddsRank);
+            for (int i = 0; i < CombinationListInfoDouble.CombinationList.Count; i++)
             {
-                this.CombinationListInfoDouble.CombinationList[i].MultipliedOddsRank = i + 1;
+                CombinationListInfoDouble.CombinationList[i].MultipliedOddsRank = i + 1;
             }
         }
 
@@ -277,10 +279,10 @@ namespace HPTClient
             }
         }
 
-        private string GetUniqueCodeFromCombination(HPTService.HPTCombination comb)
-        {
-            return GetHexCode(comb.Horse1Nr) + GetHexCode(comb.Horse2Nr);
-        }
+        //private string GetUniqueCodeFromCombination(HPTService.HPTCombination comb)
+        //{
+        //    return GetHexCode(comb.Horse1Nr) + GetHexCode(comb.Horse2Nr);
+        //}
 
         // Config property
         private HPTHorseDataToShow dataToShow;
@@ -289,11 +291,11 @@ namespace HPTClient
         {
             get
             {
-                return this.dataToShow;
+                return dataToShow;
             }
             set
             {
-                this.dataToShow = value;
+                dataToShow = value;
                 OnPropertyChanged("DataToShow");
             }
         }
@@ -309,7 +311,7 @@ namespace HPTClient
         {
             get
             {
-                return this.Trackname.Replace('/', '-');
+                return Trackname.Replace('/', '-');
             }
         }
 
@@ -325,11 +327,11 @@ namespace HPTClient
         {
             get
             {
-                return this.trackCondition;
+                return trackCondition;
             }
             set
             {
-                this.trackCondition = value;
+                trackCondition = value;
                 OnPropertyChanged("TrackCondition");
             }
         }
@@ -348,13 +350,13 @@ namespace HPTClient
                 OnPropertyChanged("RaceDayDate");
                 if (value == DateTime.MinValue)
                 {
-                    this.RaceDayDateString = string.Empty;
-                    this.RaceDayDateShortString = string.Empty;
+                    RaceDayDateString = string.Empty;
+                    RaceDayDateShortString = string.Empty;
                 }
                 else
                 {
-                    this.RaceDayDateString = value.ToString("yyyy-MM-dd");
-                    this.RaceDayDateShortString = value.ToString("d MMM");
+                    RaceDayDateString = value.ToString("yyyy-MM-dd");
+                    RaceDayDateShortString = value.ToString("d MMM");
                 }
             }
         }
@@ -365,11 +367,11 @@ namespace HPTClient
         {
             get
             {
-                return this.showInUI;
+                return showInUI;
             }
             set
             {
-                this.showInUI = value;
+                showInUI = value;
                 OnPropertyChanged("ShowInUI");
             }
         }
@@ -390,7 +392,7 @@ namespace HPTClient
         {
             get
             {
-                return this.BetTypeList.Any(bt => bt.IsMarksGame);
+                return BetTypeList.Any(bt => bt.IsMarksGame);
             }
         }
 
@@ -398,7 +400,7 @@ namespace HPTClient
         {
             get
             {
-                return this.TrackId <= 50;
+                return TrackId <= 50;
             }
         }
 
@@ -420,11 +422,11 @@ namespace HPTClient
         {
             get
             {
-                return this.marksQuantity;
+                return marksQuantity;
             }
             set
             {
-                this.marksQuantity = value;
+                marksQuantity = value;
                 OnPropertyChanged("MarksQuantity");
             }
         }
@@ -435,19 +437,19 @@ namespace HPTClient
         {
             get
             {
-                return this.turnover;
+                return turnover;
             }
             set
             {
-                this.turnover = value;
+                turnover = value;
                 OnPropertyChanged("Turnover");
-                if (this.marksQuantity > 0)
+                if (marksQuantity > 0)
                 {
-                    this.MeanSystemCost = Convert.ToDecimal(this.turnover) / Convert.ToDecimal(this.marksQuantity);
+                    MeanSystemCost = Convert.ToDecimal(turnover) / Convert.ToDecimal(marksQuantity);
                 }
-                if (this.turnover > 0 && this.BetType.RowCost > 0M)
+                if (turnover > 0 && BetType.RowCost > 0M)
                 {
-                    this.NumberOfGambledRowsTotal = this.turnover / this.BetType.RowCost;
+                    NumberOfGambledRowsTotal = turnover / BetType.RowCost;
                 }
             }
         }
@@ -473,11 +475,11 @@ namespace HPTClient
         {
             get
             {
-                return this.meanSystemCost;
+                return meanSystemCost;
             }
             set
             {
-                this.meanSystemCost = value;
+                meanSystemCost = value;
                 OnPropertyChanged("MeanSystemCost");
             }
         }
@@ -497,11 +499,11 @@ namespace HPTClient
         {
             get
             {
-                if (this.correlationFactor == 0)
+                if (correlationFactor == 0)
                 {
-                    this.correlationFactor = Convert.ToDecimal(Math.Pow(1.1D, this.RaceList.Count));
+                    correlationFactor = Convert.ToDecimal(Math.Pow(1.1D, RaceList.Count));
                 }
-                return this.correlationFactor;
+                return correlationFactor;
             }
         }
 
@@ -514,15 +516,15 @@ namespace HPTClient
         {
             get
             {
-                if (this.scratchedHorseInfo == null)
+                if (scratchedHorseInfo == null)
                 {
-                    this.scratchedHorseInfo = new HPTScratchedHorsesInfo(this);
+                    scratchedHorseInfo = new HPTScratchedHorsesInfo(this);
                 }
-                return this.scratchedHorseInfo;
+                return scratchedHorseInfo;
             }
             set
             {
-                this.scratchedHorseInfo = value;
+                scratchedHorseInfo = value;
             }
         }
 
@@ -535,7 +537,7 @@ namespace HPTClient
         {
             get
             {
-                return this.BetTypeList.FirstOrDefault(bt => bt.Code == "V64" || bt.Code == "V85" || bt.Code == "V75" || bt.Code == "V86" || bt.Code == "GS75");
+                return BetTypeList.FirstOrDefault(bt => bt.Code == "V64" || bt.Code == "V85" || bt.Code == "V75" || bt.Code == "V86" || bt.Code == "GS75");
             }
         }
 
@@ -544,7 +546,7 @@ namespace HPTClient
         {
             get
             {
-                return this.BetTypeList.FirstOrDefault(bt => bt.Code == "V4");
+                return BetTypeList.FirstOrDefault(bt => bt.Code == "V4");
             }
         }
 
@@ -553,7 +555,7 @@ namespace HPTClient
         {
             get
             {
-                return this.BetTypeList.FirstOrDefault(bt => bt.Code == "V5");
+                return BetTypeList.FirstOrDefault(bt => bt.Code == "V5");
             }
         }
 
@@ -562,7 +564,7 @@ namespace HPTClient
         {
             get
             {
-                return this.BetTypeList.FirstOrDefault(bt => bt.Code == "V65");
+                return BetTypeList.FirstOrDefault(bt => bt.Code == "V65");
             }
         }
 
@@ -571,7 +573,7 @@ namespace HPTClient
         {
             get
             {
-                return this.BetTypeList.FirstOrDefault(bt => bt.Code == "DD");
+                return BetTypeList.FirstOrDefault(bt => bt.Code == "DD");
             }
         }
 
@@ -580,7 +582,7 @@ namespace HPTClient
         {
             get
             {
-                return this.BetTypeList.FirstOrDefault(bt => bt.Code == "LD");
+                return BetTypeList.FirstOrDefault(bt => bt.Code == "LD");
             }
         }
 
@@ -589,7 +591,7 @@ namespace HPTClient
         {
             get
             {
-                return this.BetTypeList.FirstOrDefault(bt => bt.Code == "TV");
+                return BetTypeList.FirstOrDefault(bt => bt.Code == "TV");
             }
         }
 
@@ -598,7 +600,7 @@ namespace HPTClient
         {
             get
             {
-                return this.BetTypeList.FirstOrDefault(bt => bt.Code == "T");
+                return BetTypeList.FirstOrDefault(bt => bt.Code == "T");
             }
         }
 
@@ -607,7 +609,7 @@ namespace HPTClient
         {
             get
             {
-                return this.BetTypeList.FirstOrDefault(bt => bt.Code == "V3");
+                return BetTypeList.FirstOrDefault(bt => bt.Code == "V3");
             }
         }
 
@@ -615,30 +617,30 @@ namespace HPTClient
 
         public string ToDateAndTrackString()
         {
-            return this.RaceDayDateString + " " + this.TracknameFile;
+            return RaceDayDateString + " " + TracknameFile;
         }
 
         internal void ActivateABCDChanged()
         {
-            if (this.ABCDChanged != null)
+            if (ABCDChanged != null)
             {
-                this.ABCDChanged(new object(), new EventArgs());
+                ABCDChanged(new object(), new EventArgs());
             }
         }
 
         public void ClearABCDRaceDayInfo()
         {
-            if (this.ClearABCD != null)
+            if (ClearABCD != null)
             {
-                this.ClearABCD();
+                ClearABCD();
             }
         }
 
         public void SetRankTemplateChanged(HPTRankTemplate rankTemplate)
         {
-            if (this.RankTemplateChanged != null)
+            if (RankTemplateChanged != null)
             {
-                this.RankTemplateChanged(rankTemplate);
+                RankTemplateChanged(rankTemplate);
             }
         }
 
@@ -650,11 +652,11 @@ namespace HPTClient
         {
             get
             {
-                return this.hasResult;
+                return hasResult;
             }
             set
             {
-                this.hasResult = value;
+                hasResult = value;
                 OnPropertyChanged("HasResult");
             }
         }
@@ -665,11 +667,11 @@ namespace HPTClient
         {
             get
             {
-                return this.resultComplete;
+                return resultComplete;
             }
             set
             {
-                this.resultComplete = value;
+                resultComplete = value;
                 OnPropertyChanged("ResultComplete");
             }
         }
@@ -679,13 +681,13 @@ namespace HPTClient
             get
             {
                 // Inte ens utdelning är inte klar
-                if (this.PayOutList.Count == 0 || this.PayOutList.Sum(po => po.PayOutAmount) == 0)
+                if (PayOutList.Count == 0 || PayOutList.Sum(po => po.PayOutAmount) == 0)
                 {
                     return false;
                 }
 
                 // Utdelning klar, men kanske inte samtliga resultat för loppet
-                int numberOfHorsesWithResultInfoInLastRace = this.RaceList
+                int numberOfHorsesWithResultInfoInLastRace = RaceList
                     .OrderByDescending(r => r.RaceNr)
                     .First()
                     .HorseList
@@ -700,7 +702,7 @@ namespace HPTClient
             get
             {
                 // Utdelning klar, men kanske inte samtliga resultat för loppet
-                int numberOfHorsesWithResultInfo = this.RaceList
+                int numberOfHorsesWithResultInfo = RaceList
                     .OrderBy(r => r.RaceNr)
                     .First()
                     .HorseList
@@ -716,11 +718,11 @@ namespace HPTClient
         {
             get
             {
-                return this.numberOfFinishedRaces;
+                return numberOfFinishedRaces;
             }
             set
             {
-                this.numberOfFinishedRaces = value;
+                numberOfFinishedRaces = value;
                 OnPropertyChanged("NumberOfFinishedRaces");
             }
         }
@@ -728,19 +730,19 @@ namespace HPTClient
         internal void CalculateSimulatedRaceValues(HPTMarkBet markBet)
         {
             //decimal tempValue = 0M;
-            decimal numberOfWinningSystems = this.MarksQuantity;
-            var horseList = new HPTHorse[this.RaceList.Count];
+            decimal numberOfWinningSystems = MarksQuantity;
+            var horseList = new HPTHorse[RaceList.Count];
 
             //decimal divisionFactor = 1M;
             //decimal percentageToAdd = 0.05M;
-            for (int i = 0; i < this.RaceList.Count; i++)
+            for (int i = 0; i < RaceList.Count; i++)
             {
-                var race = this.RaceList[i];
+                var race = RaceList[i];
                 if (race.LegResult != null && race.LegResult.WinnerList != null && race.LegResult.WinnerList.Count() > 0)
                 {
                     race.LegResult.Value = null;
 
-                    if (race.LegNr == this.RaceList.Count && !horseList.Any(h => h == null))
+                    if (race.LegNr == RaceList.Count && !horseList.Any(h => h == null))
                     {
                         var singleRow = new HPTMarkBetSingleRow(horseList);
                         singleRow.CalculateValues();
@@ -757,11 +759,11 @@ namespace HPTClient
         {
             get
             {
-                return this.horseListSelected;
+                return horseListSelected;
             }
             set
             {
-                this.horseListSelected = value;
+                horseListSelected = value;
                 OnPropertyChanged("HorseListSelected");
             }
         }
@@ -772,21 +774,21 @@ namespace HPTClient
         {
             get
             {
-                if (this.maxPayOut == 0)
+                if (maxPayOut == 0)
                 {
-                    if (this.PayOutListATG != null && this.PayOutListATG.Count > 0)
+                    if (PayOutListATG != null && PayOutListATG.Count > 0)
                     {
-                        this.maxPayOut = this.PayOutListATG
+                        maxPayOut = PayOutListATG
                             .OrderByDescending(po => po.NumberOfCorrect)
                             .First()
                             .TotalAmount;
                     }
                 }
-                return this.maxPayOut;
+                return maxPayOut;
             }
             set
             {
-                this.maxPayOut = value;
+                maxPayOut = value;
             }
         }
 
@@ -796,11 +798,11 @@ namespace HPTClient
         {
             get
             {
-                return this.payOutListATG;
+                return payOutListATG;
             }
             set
             {
-                this.payOutListATG = value;
+                payOutListATG = value;
                 OnPropertyChanged("PayOutListATG");
             }
         }
@@ -809,10 +811,10 @@ namespace HPTClient
         {
             get
             {
-                if (this.PayOutList == null
-                    || this.PayOutList.Count == 0
-                    || this.PayOutList.Max(po => po.PayOutAmount) == 0
-                    || this.PayOutList.Max(po => po.NumberOfWinningRows) == 0)
+                if (PayOutList == null
+                    || PayOutList.Count == 0
+                    || PayOutList.Max(po => po.PayOutAmount) == 0
+                    || PayOutList.Max(po => po.NumberOfWinningRows) == 0)
                 {
                     return false;
                 }
@@ -826,20 +828,20 @@ namespace HPTClient
         {
             get
             {
-                return this.payOutList;
+                return payOutList;
             }
             set
             {
-                this.payOutList = value;
+                payOutList = value;
                 OnPropertyChanged("PayOutList");
             }
         }
 
-        [DataMember(IsRequired = false, EmitDefaultValue = false)]
-        public HPTService.HPTVinstlista WinnerList { get; set; }
+        //[DataMember(IsRequired = false, EmitDefaultValue = false)]
+        //public HPTService.HPTVinstlista WinnerList { get; set; }
 
-        [XmlIgnore]
-        public HPTService.HPTResultMarkingBet ResultMarkingBet { get; set; }
+        //[XmlIgnore]
+        //public HPTService.HPTResultMarkingBet ResultMarkingBet { get; set; }
 
         #endregion
 

@@ -72,8 +72,8 @@ namespace HPTClient
         {
             try
             {
-                if (this.Click != null)
-                    this.Click(this.DataContext, e);
+                if (Click != null)
+                    Click(DataContext, e);
             }
             catch (Exception exc)
             {

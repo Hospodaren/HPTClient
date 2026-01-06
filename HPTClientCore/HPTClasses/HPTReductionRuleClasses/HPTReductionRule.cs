@@ -21,10 +21,10 @@ namespace HPTClient
 
         public virtual ReductionRuleInfo GetReductionRuleInfo(HPTMarkBet markBet)
         {
-            string ruleString = this.ToString(markBet);
+            string ruleString = ToString(markBet);
             ReductionRuleInfo rri = new ReductionRuleInfo()
             {
-                ReductionTypeString = this.ReductionTypeString,
+                ReductionTypeString = ReductionTypeString,
                 ReductionRuleString = ruleString
             };
             return rri;
@@ -44,7 +44,7 @@ namespace HPTClient
 
         public virtual void SetReductionSpecificationString()
         {
-            this.ReductionSpecificationString = string.Empty;
+            ReductionSpecificationString = string.Empty;
         }
 
         public string ReductionSpecificationString { get; set; }
@@ -71,7 +71,7 @@ namespace HPTClient
 
         public virtual bool GetRuleResultForCorrectRow(HPTMarkBet markBet)
         {
-            this.RuleResultForCorrectRow = string.Empty;
+            RuleResultForCorrectRow = string.Empty;
             return true;
         }
 
@@ -267,29 +267,29 @@ namespace HPTClient
 
         internal void InitializeLegSelectionList(int numberOfRaces)
         {
-            this.LegSelectionList = Enumerable
+            LegSelectionList = Enumerable
                 .Range(1, numberOfRaces)
                 .Select(legNumber => new HPTLegSelection() { LegNumber = legNumber, Selected = false })
                 .ToList();
 
-            this.LegSelectionList.ForEach(l => l.PropertyChanged += legSelection_PropertyChanged);
+            LegSelectionList.ForEach(l => l.PropertyChanged += legSelection_PropertyChanged);
         }
 
         void legSelection_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            this.LegList = this.LegSelectionList
+            LegList = LegSelectionList
                 .Where(ls => ls.Selected)
                 .Select(ls => ls.LegNumber)
                 .ToList();
 
             // Skapa lista med de lopp som ingår i regeln
-            if (this.LegList.Count > 0)
+            if (LegList.Count > 0)
             {
-                this.OnlyInSpecifiedLegs = true;
+                OnlyInSpecifiedLegs = true;
             }
             else
             {
-                this.OnlyInSpecifiedLegs = false;
+                OnlyInSpecifiedLegs = false;
             }
 
             //// Fullösning för att dra igång beräkningen...

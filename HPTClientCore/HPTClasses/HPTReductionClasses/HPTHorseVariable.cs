@@ -36,11 +36,11 @@ namespace HPTClient
         {
             get
             {
-                return this.groupReductionInfo;
+                return groupReductionInfo;
             }
             set
             {
-                this.groupReductionInfo = value;
+                groupReductionInfo = value;
                 OnPropertyChanged("GroupReductionInfo");
             }
         }
@@ -53,15 +53,15 @@ namespace HPTClient
         {
             get
             {
-                return this.propertyName;
+                return propertyName;
             }
             set
             {
-                this.propertyName = value;
-                if (this.groupReductionInfo == null || this.HorseProperty == null)
+                propertyName = value;
+                if (groupReductionInfo == null || HorseProperty == null)
                 {
                     //this.propertyName = this.HorseProperty.Name;
-                    this.HorseProperty = typeof(HPTHorse).GetProperty(this.PropertyName);
+                    HorseProperty = typeof(HPTHorse).GetProperty(PropertyName);
 
                     //object[] attributeArray = this.HorseProperty.GetCustomAttributes(typeof(HorseRankAttribute), true);
                     //HorseRankAttribute hra = (HorseRankAttribute)attributeArray[0];
@@ -77,7 +77,7 @@ namespace HPTClient
 
         public override string ToString()
         {
-            return this.GroupReductionInfo.Name;
+            return GroupReductionInfo.Name;
         }
     }
 }

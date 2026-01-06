@@ -14,14 +14,14 @@ namespace HPTClient
 
         private void btnApply_Click(object sender, RoutedEventArgs e)
         {
-            var selectedHorsesFromTips = this.MarkBet.RaceDayInfo.RaceList
+            var selectedHorsesFromTips = MarkBet.RaceDayInfo.RaceList
                 .SelectMany(r => r.HorseList)
                 .Where(h => h.SelectedFromTip)
                 .ToList();
 
-            if ((bool)this.chkClear.IsChecked)
+            if ((bool)chkClear.IsChecked)
             {
-                this.MarkBet.Clear(false, true, true);
+                MarkBet.Clear(false, true, true);
             }
             //if ((bool)this.chkSetRank.IsChecked)
             //{
@@ -34,7 +34,7 @@ namespace HPTClient
             //        horse.Prio = horse.PrioFromTips;
             //    }
             //}
-            if ((bool)this.chkSelect.IsChecked)
+            if ((bool)chkSelect.IsChecked)
             {
                 foreach (var horse in selectedHorsesFromTips)
                 {

@@ -13,19 +13,19 @@ namespace HPTClient
             {
                 singleRow.CalculateValues();
             }
-            return (this.MinSum <= singleRow.StakePercentSum && this.MaxSum >= singleRow.StakePercentSumExact);
+            return (MinSum <= singleRow.StakePercentSum && MaxSum >= singleRow.StakePercentSumExact);
         }
 
         public override bool IncludeRow(HPTMarkBet markBet, HPTHorse[] horseList, int numberOfRacesToTest)
         {
             decimal partialSum = horseList.Take(numberOfRacesToTest).Sum(h => h.StakeDistributionShare * 100M);
-            return this.MaxSum > partialSum;
+            return MaxSum > partialSum;
 
         }
 
         public override bool GetRuleResultForCorrectRow(HPTMarkBet markBet)
         {
-            this.RuleResultForCorrectRow = "Summa " + markBet.CouponCorrector.HorseList.Sum(h => h.StakeDistributionShare).ToString("P2");
+            RuleResultForCorrectRow = "Summa " + markBet.CouponCorrector.HorseList.Sum(h => h.StakeDistributionShare).ToString("P2");
             return true;
         }
 
@@ -42,21 +42,21 @@ namespace HPTClient
             // Create String representation
             StringBuilder sb = new StringBuilder();
             sb.Append("Insatsfördelningssumma: ");
-            sb.Append(this.MinSum);
+            sb.Append(MinSum);
             sb.Append(" - ");
-            sb.Append(this.MaxSum);
+            sb.Append(MaxSum);
             sb.AppendLine();
 
-            if (this.MinPercentSum > 0 || this.MaxPercentSum < 100)
+            if (MinPercentSum > 0 || MaxPercentSum < 100)
             {
                 sb.Append("Procentintervall: ");
-                sb.Append(this.MinPercentSum);
+                sb.Append(MinPercentSum);
                 sb.Append(" - ");
-                sb.Append(this.MaxPercentSum);
+                sb.Append(MaxPercentSum);
                 sb.AppendLine("%");
             }
 
-            this.ClipboardString = this.ReductionTypeString + "\r\n" + sb.ToString();
+            ClipboardString = ReductionTypeString + "\r\n" + sb.ToString();
             return sb.ToString();
         }
     }

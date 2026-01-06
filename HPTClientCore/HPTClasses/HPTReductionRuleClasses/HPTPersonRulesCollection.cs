@@ -17,12 +17,12 @@ namespace HPTClient
             switch (reductionType)
             {
                 case PersonReductionType.Driver:
-                    this.ReductionRuleFactory = CreateNewDriverReductionRule;
-                    this.Text = "Kuskar";
+                    ReductionRuleFactory = CreateNewDriverReductionRule;
+                    Text = "Kuskar";
                     break;
                 case PersonReductionType.Trainer:
-                    this.ReductionRuleFactory = CreateNewTrainerReductionRule;
-                    this.Text = "Tränare";
+                    ReductionRuleFactory = CreateNewTrainerReductionRule;
+                    Text = "Tränare";
                     break;
                 case PersonReductionType.Owner:
                     break;
@@ -37,18 +37,18 @@ namespace HPTClient
         {
             get
             {
-                return this.Text + ": " + this.NumberOfWinnersString + " av " + this.ReductionRuleList.Count(r => r.Use).ToString();
+                return Text + ": " + NumberOfWinnersString + " av " + ReductionRuleList.Count(r => r.Use).ToString();
             }
         }
 
         internal HPTPersonReductionRule CreateNewDriverReductionRule()
         {
-            return new HPTDriverReductionRule(this.NumberOfRaces, true);
+            return new HPTDriverReductionRule(NumberOfRaces, true);
         }
 
         internal HPTPersonReductionRule CreateNewTrainerReductionRule()
         {
-            return new HPTTrainerReductionRule(this.NumberOfRaces, true);
+            return new HPTTrainerReductionRule(NumberOfRaces, true);
         }
         public ObservableCollection<HPTPerson> PersonList { get; set; }
 

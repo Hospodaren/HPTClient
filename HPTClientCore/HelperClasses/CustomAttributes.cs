@@ -9,10 +9,10 @@
 
         public HPTReductionAttribute(string name, string propertyName, bool requiresPRO, int order)
         {
-            this.Name = name;
-            this.PropertyName = propertyName;
-            this.RequiresPRO = requiresPRO;
-            this.Order = order;
+            Name = name;
+            PropertyName = propertyName;
+            RequiresPRO = requiresPRO;
+            Order = order;
         }
 
         public string Name { get; set; }
@@ -33,10 +33,10 @@
 
         public HPTMarkBetTabsToShowAttribute(string name, string propertyName, int order, bool requiresPRO)
         {
-            this.Name = name;
-            this.PropertyName = propertyName;
-            this.Order = order;
-            this.RequiresPRO = requiresPRO;
+            Name = name;
+            PropertyName = propertyName;
+            Order = order;
+            RequiresPRO = requiresPRO;
         }
 
         public string Name { get; set; }
@@ -57,20 +57,20 @@
 
         public HorseDataToShowAttribute(string name, string propertyName, DataToShowUsage usage, int order)
         {
-            this.Name = name;
-            this.PropertyName = propertyName;
-            this.Usage = usage;
-            this.Order = order;
-            this.RequiresPro = false;
+            Name = name;
+            PropertyName = propertyName;
+            Usage = usage;
+            Order = order;
+            RequiresPro = false;
         }
 
         public HorseDataToShowAttribute(string name, string propertyName, DataToShowUsage usage, int order, bool requiresPro)
         {
-            this.Name = name;
-            this.PropertyName = propertyName;
-            this.Usage = usage;
-            this.Order = order;
-            this.RequiresPro = requiresPro;
+            Name = name;
+            PropertyName = propertyName;
+            Usage = usage;
+            Order = order;
+            RequiresPro = requiresPro;
         }
 
         public string Name { get; set; }
@@ -117,39 +117,39 @@
 
         public HorseRankAttribute(string name, int order, bool descending, bool isStatic, HPTRankCategory category, bool sort)
         {
-            this.Name = name;
-            this.Order = order;
-            this.Descending = descending;
-            this.IsStatic = isStatic;
-            this.Category = category;
-            this.Sort = sort;
+            Name = name;
+            Order = order;
+            Descending = descending;
+            IsStatic = isStatic;
+            Category = category;
+            Sort = sort;
         }
 
         public HorseRankAttribute(string name, int order, bool descending, bool isStatic, HPTRankCategory category, bool sort, bool useForBeginner, string nameBeginner)
         {
-            this.Name = name;
-            this.Order = order;
-            this.Descending = descending;
-            this.IsStatic = isStatic;
-            this.Category = category;
-            this.Sort = sort;
-            this.UseForBeginner = useForBeginner;
-            this.NameBeginner = nameBeginner;
+            Name = name;
+            Order = order;
+            Descending = descending;
+            IsStatic = isStatic;
+            Category = category;
+            Sort = sort;
+            UseForBeginner = useForBeginner;
+            NameBeginner = nameBeginner;
         }
 
         public HorseRankAttribute(string name, int order, bool descending, bool isStatic, HPTRankCategory category, bool sort, bool useForBeginner, string nameBeginner, string displayPropertyName, string stringFormat, double valueForMissing)
         {
-            this.Name = name;
-            this.Order = order;
-            this.Descending = descending;
-            this.IsStatic = isStatic;
-            this.Category = category;
-            this.Sort = sort;
-            this.UseForBeginner = useForBeginner;
-            this.NameBeginner = nameBeginner;
-            this.DisplayPropertyName = displayPropertyName;
-            this.StringFormat = stringFormat;
-            this.ValueForMissing = Convert.ToDecimal(valueForMissing);
+            Name = name;
+            Order = order;
+            Descending = descending;
+            IsStatic = isStatic;
+            Category = category;
+            Sort = sort;
+            UseForBeginner = useForBeginner;
+            NameBeginner = nameBeginner;
+            DisplayPropertyName = displayPropertyName;
+            StringFormat = stringFormat;
+            ValueForMissing = Convert.ToDecimal(valueForMissing);
         }
 
         public string Name { get; private set; }
@@ -184,13 +184,13 @@
 
         public GroupReductionAttribute(string name, int order, double minValue, double maxValue, double increment, double defaultMin, double defaultMax)
         {
-            this.Name = name;
-            this.Order = order;
-            this.MinValue = Convert.ToDecimal(minValue);
-            this.MaxValue = Convert.ToDecimal(maxValue);
-            this.Increment = Convert.ToDecimal(increment);
-            this.DefaultMin = Convert.ToDecimal(defaultMin);
-            this.DefaultMax = Convert.ToDecimal(defaultMax);
+            Name = name;
+            Order = order;
+            MinValue = Convert.ToDecimal(minValue);
+            MaxValue = Convert.ToDecimal(maxValue);
+            Increment = Convert.ToDecimal(increment);
+            DefaultMin = Convert.ToDecimal(defaultMin);
+            DefaultMax = Convert.ToDecimal(defaultMax);
         }
 
         public string Name { get; private set; }
@@ -209,7 +209,7 @@
 
         public override string ToString()
         {
-            return this.Name;
+            return Name;
         }
     }
 
@@ -222,10 +222,10 @@
 
         public RandomIntervalAttribute(string name, int minValue, int maxValue, double factor)
         {
-            this.Name = name;
-            this.MinValue = minValue;
-            this.MaxValue = maxValue;
-            this.Factor = Convert.ToDecimal(factor);
+            Name = name;
+            MinValue = minValue;
+            MaxValue = maxValue;
+            Factor = Convert.ToDecimal(factor);
         }
 
         public string Name { get; private set; }
@@ -238,7 +238,7 @@
 
         public override string ToString()
         {
-            return this.Name;
+            return Name;
         }
     }
 
@@ -251,10 +251,10 @@
 
         public CombinationTemplateParameterAttribute(string name, int minValue, int maxValue, double factor)
         {
-            this.Name = name;
-            this.MinValue = minValue;
-            this.MaxValue = maxValue;
-            this.Factor = Convert.ToDecimal(factor);
+            Name = name;
+            MinValue = minValue;
+            MaxValue = maxValue;
+            Factor = Convert.ToDecimal(factor);
         }
 
         public string Name { get; private set; }
@@ -267,7 +267,7 @@
 
         public override string ToString()
         {
-            return this.Name;
+            return Name;
         }
     }
 
@@ -280,10 +280,10 @@
 
         public CombinationTemplateHorseAttribute(string name, int minValue, int maxValue, double factor)
         {
-            this.Name = name;
-            this.MinValue = minValue;
-            this.MaxValue = maxValue;
-            this.Factor = Convert.ToDecimal(factor);
+            Name = name;
+            MinValue = minValue;
+            MaxValue = maxValue;
+            Factor = Convert.ToDecimal(factor);
         }
 
         public string Name { get; private set; }
@@ -296,7 +296,7 @@
 
         public override string ToString()
         {
-            return this.Name;
+            return Name;
         }
     }
 }

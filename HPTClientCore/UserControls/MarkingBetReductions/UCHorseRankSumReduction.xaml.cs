@@ -20,7 +20,7 @@ namespace HPTClient
 
         private void icGroupRule_Checked(object sender, RoutedEventArgs e)
         {
-            this.MarkBet.RecalculateReduction(RecalculateReason.Rank);
+            MarkBet.RecalculateReduction(RecalculateReason.Rank);
         }
 
         private void btnNewGroupRule_Click(object sender, RoutedEventArgs e)
@@ -54,7 +54,7 @@ namespace HPTClient
                 if (rule.ReductionRuleList != null && rule.ReductionRuleList.Count > 0)
                 {
                     rule.ReductionRuleList.Clear();
-                    this.MarkBet.RecalculateReduction(RecalculateReason.Rank);
+                    MarkBet.RecalculateReduction(RecalculateReason.Rank);
                 }
             }
             catch (Exception exc)
@@ -71,7 +71,7 @@ namespace HPTClient
                 var rule = (HPTHorseRankSumReductionRule)iud.DataContext;
                 if (rule.Use)
                 {
-                    this.MarkBet.RecalculateReduction(RecalculateReason.Rank);
+                    MarkBet.RecalculateReduction(RecalculateReason.Rank);
                 }
             }
             catch (Exception exc)
@@ -88,7 +88,7 @@ namespace HPTClient
             //    this.MarkBet.ReductionHorseRank = false;
             //}
             //this.MarkBet.ReductionHorseRank = 
-            this.MarkBet.RecalculateReduction(RecalculateReason.Rank);
+            MarkBet.RecalculateReduction(RecalculateReason.Rank);
         }
 
         private void iudMinNumberOfWinners_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -97,7 +97,7 @@ namespace HPTClient
             {
                 var iud = (IntegerUpDown)sender;
                 var rule = (HPTHorseRankReductionRule)iud.DataContext;
-                this.MarkBet.RecalculateReduction(RecalculateReason.Rank);
+                MarkBet.RecalculateReduction(RecalculateReason.Rank);
             }
             catch (Exception exc)
             {
@@ -107,9 +107,9 @@ namespace HPTClient
 
         private void dudMinValue_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            if (this.MarkBet.ReductionRank)
+            if (MarkBet.ReductionRank)
             {
-                this.MarkBet.RecalculateReduction(RecalculateReason.Rank);
+                MarkBet.RecalculateReduction(RecalculateReason.Rank);
             }
         }
 
@@ -121,7 +121,7 @@ namespace HPTClient
                 var rule = (HPTHorseRankReductionRule)btn.DataContext;
                 rule.ParentHorseRankSumReductionRule.ReductionRuleList.Remove(rule);
                 rule.ParentHorseRankSumReductionRule = null;
-                this.MarkBet.RecalculateReduction(RecalculateReason.Rank);
+                MarkBet.RecalculateReduction(RecalculateReason.Rank);
             }
             catch (Exception exc)
             {
@@ -141,16 +141,16 @@ namespace HPTClient
             {
                 var btn = (Button)sender;
                 var rule = (HPTHorseRankReductionRule)btn.DataContext;
-                if (this.pu == null)
+                if (pu == null)
                 {
-                    this.pu = new System.Windows.Controls.Primitives.Popup()
+                    pu = new System.Windows.Controls.Primitives.Popup()
                     {
                         Placement = System.Windows.Controls.Primitives.PlacementMode.Top,
                         PlacementTarget = btn//,
                         //HorizontalOffset = -10D,
                         //VerticalOffset = -10D
                     };
-                    this.pu.MouseLeave += new MouseEventHandler(pu_MouseLeave);
+                    pu.MouseLeave += new MouseEventHandler(pu_MouseLeave);
                 }
 
                 // Skapa innehållet för popupen
@@ -173,7 +173,7 @@ namespace HPTClient
 
                 //var selectedNumberOfWinners = rule.NumberOfWinnersList.Where(now => now.Selected).Select(now => now.NumberOfWinners);
                 var horseList = new List<HPTHorse>();
-                foreach (var horse in this.MarkBet.RaceDayInfo.HorseListSelected)
+                foreach (var horse in MarkBet.RaceDayInfo.HorseListSelected)
                 {
                     var horseRank = horse.RankList.FirstOrDefault(hr => hr.Name == rule.Name);
                     if (horseRank != null && horseRank.Rank >= rule.LowerBoundary && horseRank.Rank <= rule.UpperBoundary)
@@ -215,9 +215,9 @@ namespace HPTClient
                 };
 
                 // Visa popupen
-                this.pu.DataContext = horseCollection;
-                this.pu.Child = b;
-                this.pu.IsOpen = true;
+                pu.DataContext = horseCollection;
+                pu.Child = b;
+                pu.IsOpen = true;
             }
             catch (Exception exc)
             {
@@ -237,47 +237,47 @@ namespace HPTClient
 
         private void btnSelectTemplate_Click(object sender, RoutedEventArgs e)
         {
-            if (this.cmbHorseRankSumRulesCollection.SelectedItem != null)
+            if (cmbHorseRankSumRulesCollection.SelectedItem != null)
             {
-                if (this.MarkBet.HorseRankSumReductionRuleList == null || this.MarkBet.HorseRankSumReductionRuleList.Count == 0)
+                if (MarkBet.HorseRankSumReductionRuleList == null || MarkBet.HorseRankSumReductionRuleList.Count == 0)
                 {
                     return;
                 }
 
-                var horseRankSumReductionRuleCollection = (HPTHorseRankSumReductionRuleCollection)this.cmbHorseRankSumRulesCollection.SelectedItem;
+                var horseRankSumReductionRuleCollection = (HPTHorseRankSumReductionRuleCollection)cmbHorseRankSumRulesCollection.SelectedItem;
 
-                bool recalculationPaused = this.MarkBet.pauseRecalculation;
-                this.MarkBet.pauseRecalculation = true;
+                bool recalculationPaused = MarkBet.pauseRecalculation;
+                MarkBet.pauseRecalculation = true;
                 foreach (var horseRankSumReductionRule in horseRankSumReductionRuleCollection.RankSumReductionRuleList)
                 {
-                    var ruleToSet = this.MarkBet.HorseRankSumReductionRuleList.FirstOrDefault(r => r.PropertyName == horseRankSumReductionRule.PropertyName);
+                    var ruleToSet = MarkBet.HorseRankSumReductionRuleList.FirstOrDefault(r => r.PropertyName == horseRankSumReductionRule.PropertyName);
                     if (ruleToSet != null)
                     {
                         ruleToSet.ApplyRule(horseRankSumReductionRule);
                         ruleToSet.Use = true;
                     }
                 }
-                this.MarkBet.pauseRecalculation = recalculationPaused;
-                if (this.MarkBet.ReductionHorseRank)
+                MarkBet.pauseRecalculation = recalculationPaused;
+                if (MarkBet.ReductionHorseRank)
                 {
-                    this.MarkBet.RecalculateReduction(RecalculateReason.Other);
+                    MarkBet.RecalculateReduction(RecalculateReason.Other);
                 }
             }
         }
 
         private void btnSaveAsTemplate_Click(object sender, RoutedEventArgs e)
         {
-            string templateName = this.txtNewTemplateName.Text;
+            string templateName = txtNewTemplateName.Text;
             if (string.IsNullOrEmpty(templateName))
             {
                 templateName = "Ny rankreduceringsmall " + DateTime.Now.ToString("yyyy-MM-dd") + " " + DateTime.Now.ToShortTimeString();
-                this.txtNewTemplateName.Text = templateName;
+                txtNewTemplateName.Text = templateName;
             }
-            this.Config.RankSumReductionRuleCollection.Add(new HPTHorseRankSumReductionRuleCollection()
+            Config.RankSumReductionRuleCollection.Add(new HPTHorseRankSumReductionRuleCollection()
             {
-                TypeCategory = this.MarkBet.BetType.TypeCategory,
+                TypeCategory = MarkBet.BetType.TypeCategory,
                 Name = templateName,
-                RankSumReductionRuleList = new System.Collections.ObjectModel.ObservableCollection<HPTHorseRankSumReductionRule>(this.MarkBet.HorseRankSumReductionRuleList.Where(r => r.Use).Select(r => r.Clone()))
+                RankSumReductionRuleList = new System.Collections.ObjectModel.ObservableCollection<HPTHorseRankSumReductionRule>(MarkBet.HorseRankSumReductionRuleList.Where(r => r.Use).Select(r => r.Clone()))
             });
         }
     }

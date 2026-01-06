@@ -30,18 +30,18 @@ namespace HPTClient
                 return;
             }
 
-            this.MarkBet = markBet;
+            MarkBet = markBet;
 
             var firstHorse = horseList.First();
             if (firstHorse.ParentRace != null && firstHorse.ParentRace.ParentRaceDayInfo != null)
             {
-                this.TrackId = firstHorse.ParentRace.ParentRaceDayInfo.TrackId;
-                this.TrackName = firstHorse.ParentRace.ParentRaceDayInfo.Trackname;
-                this.BetTypeCode = firstHorse.ParentRace.ParentRaceDayInfo.BetType.Code;
-                this.RaceDate = firstHorse.ParentRace.ParentRaceDayInfo.RaceDayDate;
+                TrackId = firstHorse.ParentRace.ParentRaceDayInfo.TrackId;
+                TrackName = firstHorse.ParentRace.ParentRaceDayInfo.Trackname;
+                BetTypeCode = firstHorse.ParentRace.ParentRaceDayInfo.BetType.Code;
+                RaceDate = firstHorse.ParentRace.ParentRaceDayInfo.RaceDayDate;
             }
 
-            this.HorseList = new ObservableCollection<HPTHorseLightAnalyzed>(horseList.Select(h => new HPTHorseLightAnalyzed()
+            HorseList = new ObservableCollection<HPTHorseLightAnalyzed>(horseList.Select(h => new HPTHorseLightAnalyzed()
             {
                 Horse = h,
                 LegNr = h.ParentRace.LegNr,
@@ -54,7 +54,7 @@ namespace HPTClient
             }));
 
             var rankVariableList = HPTHorseRankVariable.CreateVariableList();
-            this.RankVariableHorseRankList = new ObservableCollection<HPTRankVariableHorseRankList>(
+            RankVariableHorseRankList = new ObservableCollection<HPTRankVariableHorseRankList>(
                 rankVariableList
                 .Where(rv => rv.PropertyName != "RankOwn" && rv.PropertyName != "RankTip" && rv.PropertyName != "RankABC" && rv.PropertyName != "RankAlternate")
                 .Select(rv => new HPTRankVariableHorseRankList()
@@ -70,7 +70,7 @@ namespace HPTClient
             {
                 int minRank = horse.RankList.Where(r => r.Name != "RankOwn" && r.Name != "RankTip" && r.Name != "RankABC" && r.Name != "RankAlternate").Min(r => r.Rank);
                 int maxRank = horse.RankList.Where(r => r.Name != "RankOwn" && r.Name != "RankTip" && r.Name != "RankABC" && r.Name != "RankAlternate").Max(r => r.Rank);
-                foreach (var rankVariableHorseRank in this.RankVariableHorseRankList)
+                foreach (var rankVariableHorseRank in RankVariableHorseRankList)
                 {
                     var rankVariable = rankVariableList.First(rv => rv.PropertyName == rankVariableHorseRank.PropertyName);
                     var horseRank = horse.RankList.FirstOrDefault(r => r.Name == rankVariableHorseRank.PropertyName);
@@ -88,7 +88,7 @@ namespace HPTClient
             CalculateMeanAndStDev();
 
             // Utdelning för omgången
-            this.PayOutList = new List<HPTPayOut>(markBet.RaceDayInfo.PayOutList);
+            PayOutList = new List<HPTPayOut>(markBet.RaceDayInfo.PayOutList);
         }
 
         internal string CreateRankValueString(HPTHorseRankVariable rankVariable, HPTHorse horse)
@@ -125,9 +125,9 @@ namespace HPTClient
         [OnDeserialized]
         public void SetNonSerializedValues(StreamingContext sc)
         {
-            for (int i = 0; i < this.HorseList.Count; i++)
+            for (int i = 0; i < HorseList.Count; i++)
             {
-                var horseRankList = this.RankVariableHorseRankList.Select(hrl => hrl.HorseRankList.ElementAt(i)).ToList();
+                var horseRankList = RankVariableHorseRankList.Select(hrl => hrl.HorseRankList.ElementAt(i)).ToList();
                 int minRank = horseRankList.Min(r => r.Rank);
                 int maxRank = horseRankList.Max(r => r.Rank);
                 var horseRanksToSetColorOn = horseRankList.Where(r => r.Rank == minRank || r.Rank == maxRank);
@@ -136,7 +136,7 @@ namespace HPTClient
                     horseRank.BackColor = SetBackColorOnHorseRank(horseRank.Rank, minRank, maxRank);
                 }
             }
-            foreach (var rvhr in this.RankVariableHorseRankList)
+            foreach (var rvhr in RankVariableHorseRankList)
             {
 
                 rvhr.BackColor = new SolidColorBrush(Colors.LightGray);
@@ -166,11 +166,11 @@ namespace HPTClient
         {
             get
             {
-                return this.horseList;
+                return horseList;
             }
             set
             {
-                this.horseList = value;
+                horseList = value;
                 OnPropertyChanged("HorseList");
             }
         }
@@ -181,11 +181,11 @@ namespace HPTClient
         {
             get
             {
-                return this.rankVariableHorseRankList;
+                return rankVariableHorseRankList;
             }
             set
             {
-                this.rankVariableHorseRankList = value;
+                rankVariableHorseRankList = value;
                 OnPropertyChanged("RankVariableHorseRankList");
             }
         }
@@ -198,11 +198,11 @@ namespace HPTClient
         {
             get
             {
-                return this.raceDate;
+                return raceDate;
             }
             set
             {
-                this.raceDate = value;
+                raceDate = value;
                 OnPropertyChanged("RaceDate");
             }
         }
@@ -212,11 +212,11 @@ namespace HPTClient
         {
             get
             {
-                return this.dateString;
+                return dateString;
             }
             set
             {
-                this.dateString = value;
+                dateString = value;
                 OnPropertyChanged("DateString");
             }
         }
@@ -227,11 +227,11 @@ namespace HPTClient
         {
             get
             {
-                return this.betTypeCode;
+                return betTypeCode;
             }
             set
             {
-                this.betTypeCode = value;
+                betTypeCode = value;
                 OnPropertyChanged("BetTypeCode");
             }
         }
@@ -242,11 +242,11 @@ namespace HPTClient
         {
             get
             {
-                return this.trackName;
+                return trackName;
             }
             set
             {
-                this.trackName = value;
+                trackName = value;
                 OnPropertyChanged("TrackName");
             }
         }
@@ -257,11 +257,11 @@ namespace HPTClient
         {
             get
             {
-                return this.trackId;
+                return trackId;
             }
             set
             {
-                this.trackId = value;
+                trackId = value;
                 OnPropertyChanged("TrackId");
             }
         }
@@ -272,11 +272,11 @@ namespace HPTClient
         {
             get
             {
-                return this.payOutList;
+                return payOutList;
             }
             set
             {
-                this.payOutList = value;
+                payOutList = value;
                 OnPropertyChanged("PayOutList");
             }
         }
@@ -287,7 +287,7 @@ namespace HPTClient
 
         internal void CalculateMeanAndStDev()
         {
-            foreach (var rankVariableHorseRank in this.RankVariableHorseRankList)
+            foreach (var rankVariableHorseRank in RankVariableHorseRankList)
             {
                 // Snitt och summa
                 rankVariableHorseRank.Mean = Convert.ToDecimal(rankVariableHorseRank.HorseRankList.Select(hr => hr.Rank).Average());
@@ -297,7 +297,7 @@ namespace HPTClient
                 decimal variance = rankVariableHorseRank.HorseRankList.Select(hr => hr.Rank).Average(r => (r - rankVariableHorseRank.Mean) * (r - rankVariableHorseRank.Mean));
                 rankVariableHorseRank.StDev = Convert.ToDecimal(Math.Sqrt(Convert.ToDouble(variance)));
             }
-            var orderedList = this.RankVariableHorseRankList.OrderBy(rv => rv.Mean);
+            var orderedList = RankVariableHorseRankList.OrderBy(rv => rv.Mean);
             orderedList.First().BackColor = new SolidColorBrush(Colors.LightGreen);
             orderedList.Last().BackColor = new SolidColorBrush(Colors.LightCoral);
         }
@@ -350,7 +350,7 @@ namespace HPTClient
         {
             var sb = new StringBuilder();
             sb.Append("Datum\tSpelform\tBana");
-            foreach (var payOut in this.PayOutList.OrderByDescending(po => po.NumberOfCorrect))
+            foreach (var payOut in PayOutList.OrderByDescending(po => po.NumberOfCorrect))
             {
                 sb.Append("\t");
                 sb.Append(payOut.NumberOfCorrect);
@@ -358,19 +358,19 @@ namespace HPTClient
             }
             sb.Append("\r\n\r\n");
 
-            if (this.RankVariableHorseRankList != null && this.RankVariableHorseRankList.Count > 0)
+            if (RankVariableHorseRankList != null && RankVariableHorseRankList.Count > 0)
             {
-                sb.Append(this.RaceDate.ToShortDateString());
+                sb.Append(RaceDate.ToShortDateString());
                 sb.Append("\t");
-                sb.Append(this.BetTypeCode);
+                sb.Append(BetTypeCode);
                 sb.Append("\t");
-                sb.Append(this.TrackName);
+                sb.Append(TrackName);
                 //sb.Append("\t");
                 //sb.Append(0);
                 //sb.Append("\r\n\r\n");
             }
             sb.Append("\t");
-            foreach (var payOut in this.PayOutList.OrderByDescending(po => po.NumberOfCorrect))
+            foreach (var payOut in PayOutList.OrderByDescending(po => po.NumberOfCorrect))
             {
                 sb.Append(payOut.PayOutAmount);
                 sb.Append("\t");
@@ -378,7 +378,7 @@ namespace HPTClient
             sb.Append("\r\n\r\n");
 
             sb.Append("Startnummer\t\t");
-            foreach (var horse in this.HorseList.OrderBy(h => h.LegNr).ToList())
+            foreach (var horse in HorseList.OrderBy(h => h.LegNr).ToList())
             {
                 sb.Append(horse.StartNr);
                 sb.Append("\t");
@@ -386,14 +386,14 @@ namespace HPTClient
             sb.Append("Summa");
             sb.Append("\t\t");
 
-            foreach (var horse in this.HorseList.OrderBy(h => h.LegNr).ToList())
+            foreach (var horse in HorseList.OrderBy(h => h.LegNr).ToList())
             {
                 sb.Append(horse.StartNr);
                 sb.Append("\t");
             }
             sb.Append("\r\n\r\n");
 
-            foreach (var rv in this.RankVariableHorseRankList.OrderBy(rvhr => rvhr.CategoryText).ThenBy(rvhr => rvhr.Name).ToList())
+            foreach (var rv in RankVariableHorseRankList.OrderBy(rvhr => rvhr.CategoryText).ThenBy(rvhr => rvhr.Name).ToList())
             {
                 sb.Append(rv.CategoryText);
                 sb.Append("\t");
@@ -436,13 +436,13 @@ namespace HPTClient
             if (includeHeaders)
             {
                 sb.Append("Datum\tSpelform\tBana");
-                foreach (var payOut in this.PayOutList.OrderByDescending(po => po.NumberOfCorrect))
+                foreach (var payOut in PayOutList.OrderByDescending(po => po.NumberOfCorrect))
                 {
                     sb.Append("\t");
                     sb.Append(payOut.NumberOfCorrect);
                     sb.Append(" rätt");
                 }
-                foreach (var rv in this.RankVariableHorseRankList.OrderBy(rvhr => rvhr.CategoryText).ThenBy(rvhr => rvhr.Name).ToList())
+                foreach (var rv in RankVariableHorseRankList.OrderBy(rvhr => rvhr.CategoryText).ThenBy(rvhr => rvhr.Name).ToList())
                 {
                     sb.Append("\t");
                     sb.Append(rv.Name);
@@ -453,19 +453,19 @@ namespace HPTClient
                 sb.Append("\r\n");
             }
 
-            sb.Append(this.RaceDate.ToShortDateString());
+            sb.Append(RaceDate.ToShortDateString());
             sb.Append("\t");
-            sb.Append(this.BetTypeCode);
+            sb.Append(BetTypeCode);
             sb.Append("\t");
-            sb.Append(this.TrackName);
+            sb.Append(TrackName);
             sb.Append("\t");
-            foreach (var payOut in this.PayOutList.OrderByDescending(po => po.NumberOfCorrect))
+            foreach (var payOut in PayOutList.OrderByDescending(po => po.NumberOfCorrect))
             {
                 sb.Append(payOut.PayOutAmount);
                 sb.Append("\t");
             }
 
-            foreach (var rv in this.RankVariableHorseRankList.OrderBy(rvhr => rvhr.CategoryText).ThenBy(rvhr => rvhr.Name).ToList())
+            foreach (var rv in RankVariableHorseRankList.OrderBy(rvhr => rvhr.CategoryText).ThenBy(rvhr => rvhr.Name).ToList())
             {
                 sb.Append(rv.Mean);
                 sb.Append("\t");
@@ -477,7 +477,7 @@ namespace HPTClient
         {
             var sb = new StringBuilder();
             sb.Append("Datum\tSpelform\tBana\tUtdelning\tAntal");
-            var raFirst = HPTResultAnalyzer.ResultAnalyzerList.FirstOrDefault();
+            var raFirst = ResultAnalyzerList.FirstOrDefault();
             if (raFirst != null && raFirst.RankVariableHorseRankList != null && raFirst.RankVariableHorseRankList.Count > 0)
             {
                 foreach (var rv in raFirst.RankVariableHorseRankList.OrderBy(rvhr => rvhr.CategoryText).ThenBy(rvhr => rvhr.Name).ToList())
@@ -490,7 +490,7 @@ namespace HPTClient
                 }
             }
             sb.Append("\r\n");
-            foreach (var ra in HPTResultAnalyzer.ResultAnalyzerList)
+            foreach (var ra in ResultAnalyzerList)
             {
                 if (ra.RankVariableHorseRankList != null && ra.RankVariableHorseRankList.Count > 0)
                 {
@@ -607,7 +607,7 @@ namespace HPTClient
                     }
                 }
             }
-            HPTResultAnalyzer.SaveResultAnalyzerList();
+            SaveResultAnalyzerList();
         }
 
         #endregion
@@ -622,11 +622,11 @@ namespace HPTClient
         {
             get
             {
-                return this.name;
+                return name;
             }
             set
             {
-                this.name = value;
+                name = value;
                 OnPropertyChanged("Name");
             }
         }
@@ -637,11 +637,11 @@ namespace HPTClient
         {
             get
             {
-                return this.propertyName;
+                return propertyName;
             }
             set
             {
-                this.propertyName = value;
+                propertyName = value;
                 OnPropertyChanged("PropertyName");
             }
         }
@@ -652,11 +652,11 @@ namespace HPTClient
         {
             get
             {
-                return this.categoryText;
+                return categoryText;
             }
             set
             {
-                this.categoryText = value;
+                categoryText = value;
                 OnPropertyChanged("CategoryText");
             }
         }
@@ -667,11 +667,11 @@ namespace HPTClient
         {
             get
             {
-                return this.backColor;
+                return backColor;
             }
             set
             {
-                this.backColor = value;
+                backColor = value;
                 OnPropertyChanged("BackColor");
             }
         }
@@ -682,11 +682,11 @@ namespace HPTClient
         {
             get
             {
-                return this.horseRankList;
+                return horseRankList;
             }
             set
             {
-                this.horseRankList = value;
+                horseRankList = value;
                 OnPropertyChanged("HorseRankList");
             }
         }
@@ -697,11 +697,11 @@ namespace HPTClient
         {
             get
             {
-                return this.sum;
+                return sum;
             }
             set
             {
-                this.sum = value;
+                sum = value;
                 OnPropertyChanged("Sum");
             }
         }
@@ -712,11 +712,11 @@ namespace HPTClient
         {
             get
             {
-                return this.stDev;
+                return stDev;
             }
             set
             {
-                this.stDev = value;
+                stDev = value;
                 OnPropertyChanged("StDev");
             }
         }
@@ -727,11 +727,11 @@ namespace HPTClient
         {
             get
             {
-                return this.mean;
+                return mean;
             }
             set
             {
-                this.mean = value;
+                mean = value;
                 OnPropertyChanged("Mean");
             }
         }

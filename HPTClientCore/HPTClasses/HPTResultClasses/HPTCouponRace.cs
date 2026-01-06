@@ -19,17 +19,17 @@ namespace HPTClient
         {
             get
             {
-                return this.reserv1;
+                return reserv1;
             }
             set
             {
-                this.reserv1 = value;
+                reserv1 = value;
                 OnPropertyChanged("Reserv1");
-                if (this.HorseList != null && this.HorseList.Count > 0)
+                if (HorseList != null && HorseList.Count > 0)
                 {
                     try
                     {
-                        this.Reserv1Horse = this.HorseList.First().ParentRace.HorseList.First(h => h.StartNr == value);
+                        Reserv1Horse = HorseList.First().ParentRace.HorseList.First(h => h.StartNr == value);
                     }
                     catch (Exception exc)
                     {
@@ -45,17 +45,17 @@ namespace HPTClient
         {
             get
             {
-                return this.reserv2;
+                return reserv2;
             }
             set
             {
-                this.reserv2 = value;
+                reserv2 = value;
                 OnPropertyChanged("Reserv2");
-                if (this.HorseList != null && this.HorseList.Count > 0)
+                if (HorseList != null && HorseList.Count > 0)
                 {
                     try
                     {
-                        this.Reserv2Horse = this.HorseList.First().ParentRace.HorseList.First(h => h.StartNr == value);
+                        Reserv2Horse = HorseList.First().ParentRace.HorseList.First(h => h.StartNr == value);
                     }
                     catch (Exception exc)
                     {
@@ -77,7 +77,7 @@ namespace HPTClient
         {
             try
             {
-                List<HPTHorse> selectedScratchedHorses = this.HorseList.Where(h => h.Scratched == true).ToList();
+                List<HPTHorse> selectedScratchedHorses = HorseList.Where(h => h.Scratched == true).ToList();
 
                 if (selectedScratchedHorses.Count() == 0)
                 {
@@ -85,30 +85,30 @@ namespace HPTClient
                 }
 
                 HPTHorse scratchedHorse1 = selectedScratchedHorses[0];
-                if (this.Reserv1 != 0)
+                if (Reserv1 != 0)
                 {
-                    HPTHorse horse = race.GetHorseByNumber(this.Reserv1);
+                    HPTHorse horse = race.GetHorseByNumber(Reserv1);
                     if (horse != null)
                     {
                         if (horse.Scratched == false || horse.Scratched == null)
                         {
-                            this.HorseList.Remove(scratchedHorse1);
-                            this.HorseList.Add(horse);
+                            HorseList.Remove(scratchedHorse1);
+                            HorseList.Add(horse);
                         }
                     }
                 }
                 if (selectedScratchedHorses.Count() > 1)
                 {
                     HPTHorse scratchedHorse2 = selectedScratchedHorses[1];
-                    if (this.Reserv2 != 0)
+                    if (Reserv2 != 0)
                     {
-                        HPTHorse horse = race.GetHorseByNumber(this.Reserv2);
+                        HPTHorse horse = race.GetHorseByNumber(Reserv2);
                         if (horse != null)
                         {
                             if (horse.Scratched == false || horse.Scratched == null)
                             {
-                                this.HorseList.Remove(scratchedHorse2);
-                                this.HorseList.Add(horse);
+                                HorseList.Remove(scratchedHorse2);
+                                HorseList.Add(horse);
                             }
                         }
                     }
@@ -127,11 +127,11 @@ namespace HPTClient
         {
             get
             {
-                if (this.uniqueCode == null)
+                if (uniqueCode == null)
                 {
-                    this.uniqueCode = string.Join(",", this.StartNrList);
+                    uniqueCode = string.Join(",", StartNrList);
                 }
-                return this.uniqueCode;
+                return uniqueCode;
             }
         }
 
@@ -145,11 +145,11 @@ namespace HPTClient
                 //{
                 //    this.startNrList = this.HorseList.Select(h => h.StartNr).ToList();
                 //}
-                return this.startNrList;
+                return startNrList;
             }
             set
             {
-                this.startNrList = value;
+                startNrList = value;
             }
         }
 
@@ -163,11 +163,11 @@ namespace HPTClient
                 //{
                 //    this.horseList = this.StartNrList.Select(h => h.StartNr).ToList();
                 //}
-                return this.horseList;
+                return horseList;
             }
             set
             {
-                this.horseList = value;
+                horseList = value;
                 //if (value != null)
                 //{
                 //    this.startNrList = this.HorseList.Select(h => h.StartNr).ToList();

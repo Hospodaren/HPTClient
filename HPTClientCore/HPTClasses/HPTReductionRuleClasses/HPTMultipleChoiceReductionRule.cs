@@ -8,7 +8,7 @@ namespace HPTClient
     {
         public override bool IncludeRow(HPTMarkBet markBet, HPTMarkBetSingleRow singleRow)
         {
-            if (!this.Use)
+            if (!Use)
             {
                 return false;
             }
@@ -21,45 +21,45 @@ namespace HPTClient
                     numberOfRulesFulfilled++;
                 }
             }
-            return this.NumberOfRulesList.First(nor => nor.NumberOfRules == numberOfRulesFulfilled).Selected;
+            return NumberOfRulesList.First(nor => nor.NumberOfRules == numberOfRulesFulfilled).Selected;
         }
 
         internal void UpdateNumberOfRules(int numberOfRules)
         {
-            if (this.NumberOfRulesList == null)
+            if (NumberOfRulesList == null)
             {
                 IEnumerable<HPTNumberOfRules> norList = Enumerable.Range(1, numberOfRules)
                     .Select(nor => new HPTNumberOfRules()
                     {
                         NumberOfRules = nor
                     });
-                this.NumberOfRulesList = new ObservableCollection<HPTNumberOfRules>(norList);
+                NumberOfRulesList = new ObservableCollection<HPTNumberOfRules>(norList);
             }
-            else if (this.numberOfRulesList.Count == numberOfRules)
+            else if (numberOfRulesList.Count == numberOfRules)
             {
                 return;
             }
-            else if (this.numberOfRulesList.Count < numberOfRules)
+            else if (numberOfRulesList.Count < numberOfRules)
             {
-                int position = this.NumberOfRulesList.Count;
+                int position = NumberOfRulesList.Count;
                 while (position > numberOfRules)
                 {
-                    HPTNumberOfRules nor = this.NumberOfRulesList[position - 1];
+                    HPTNumberOfRules nor = NumberOfRulesList[position - 1];
                     nor.Selected = false;
-                    this.NumberOfRulesList.Remove(nor);
+                    NumberOfRulesList.Remove(nor);
                     position--;
                 }
             }
-            else if (this.numberOfRulesList.Count > numberOfRules)
+            else if (numberOfRulesList.Count > numberOfRules)
             {
-                int position = this.NumberOfRulesList.Count;
+                int position = NumberOfRulesList.Count;
                 while (position < numberOfRules)
                 {
                     HPTNumberOfRules nor = new HPTNumberOfRules()
                     {
                         NumberOfRules = position
                     };
-                    this.NumberOfRulesList.Add(nor);
+                    NumberOfRulesList.Add(nor);
                     position++;
                 }
             }
@@ -71,11 +71,11 @@ namespace HPTClient
         {
             get
             {
-                return this.use;
+                return use;
             }
             set
             {
-                this.use = value;
+                use = value;
                 OnPropertyChanged("Use");
             }
         }
@@ -86,11 +86,11 @@ namespace HPTClient
         {
             get
             {
-                return this.numberOfRulesList;
+                return numberOfRulesList;
             }
             set
             {
-                this.numberOfRulesList = value;
+                numberOfRulesList = value;
                 OnPropertyChanged("NumberOfRulesList");
             }
         }

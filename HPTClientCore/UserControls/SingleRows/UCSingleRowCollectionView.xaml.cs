@@ -14,9 +14,9 @@ namespace HPTClient
     {
         public UCSingleRowCollectionView()
         {
-            this.CMColumnsToShow = new System.Windows.Controls.ContextMenu();
-            this.CMSingleRow = new System.Windows.Controls.ContextMenu();
-            this.SingleRowsObservable = new ObservableCollection<HPTMarkBetSingleRow>();
+            CMColumnsToShow = new ContextMenu();
+            CMSingleRow = new ContextMenu();
+            SingleRowsObservable = new ObservableCollection<HPTMarkBetSingleRow>();
             InitializeComponent();
             //this.MarkBet.RaceDayInfo.RaceList[0].LegNrString
         }
@@ -48,35 +48,35 @@ namespace HPTClient
 
         private void ClearContextMenu()
         {
-            if (this.CMColumnsToShow == null)
+            if (CMColumnsToShow == null)
             {
                 return;
             }
-            var separator = this.CMColumnsToShow.Items.OfType<Separator>().FirstOrDefault();
+            var separator = CMColumnsToShow.Items.OfType<Separator>().FirstOrDefault();
             if (separator != null)
             {
-                while (this.CMColumnsToShow.Items[0] != separator)
+                while (CMColumnsToShow.Items[0] != separator)
                 {
-                    this.CMColumnsToShow.Items.RemoveAt(0);
+                    CMColumnsToShow.Items.RemoveAt(0);
                 }
-                this.CMColumnsToShow.Items.Remove(separator);
+                CMColumnsToShow.Items.Remove(separator);
             }
         }
 
         private void AddContextMenuItem(MenuItem itemToAdd)
         {
             //ClearContextMenu();
-            this.CMColumnsToShow.Items.Insert(0, new Separator());
-            this.CMColumnsToShow.Items.Insert(0, itemToAdd);
+            CMColumnsToShow.Items.Insert(0, new Separator());
+            CMColumnsToShow.Items.Insert(0, itemToAdd);
         }
 
         private void AddContextMenuItems(IEnumerable<MenuItem> itemsToAdd)
         {
             ClearContextMenu();
-            this.CMColumnsToShow.Items.Insert(0, new Separator());
+            CMColumnsToShow.Items.Insert(0, new Separator());
             foreach (var item in itemsToAdd)
             {
-                this.CMColumnsToShow.Items.Insert(0, item);
+                CMColumnsToShow.Items.Insert(0, item);
             }
         }
 
@@ -84,10 +84,10 @@ namespace HPTClient
         private void gvcV6_MouseDown(object sender, MouseButtonEventArgs e)
         {
             ClearContextMenu();
-            if (this.betMultiplierItems == null)
+            if (betMultiplierItems == null)
             {
-                this.betMultiplierItems = new List<MenuItem>();
-                if (this.MarkBet.BetType.Code == "V64" || this.MarkBet.BetType.Code == "V65")
+                betMultiplierItems = new List<MenuItem>();
+                if (MarkBet.BetType.Code == "V64" || MarkBet.BetType.Code == "V65")
                 {
                     var miV6 = new MenuItem()
                     {
@@ -95,18 +95,18 @@ namespace HPTClient
                     };
                     miV6.Click += (o, s) =>
                         {
-                            this.SingleRowsObservable
+                            SingleRowsObservable
                                 .ToList()
                                 .ForEach(sr =>
                                 {
                                     sr.V6 = true;
                                     sr.Edited = true;
                                 });
-                            this.MarkBet.UpdateV6BetMultiplierSingleRows();
-                            this.isSettingV6BetMultiplier = false;
-                            this.MarkBet.UpdateCoupons();
+                            MarkBet.UpdateV6BetMultiplierSingleRows();
+                            isSettingV6BetMultiplier = false;
+                            MarkBet.UpdateCoupons();
                         };
-                    this.betMultiplierItems.Add(miV6);
+                    betMultiplierItems.Add(miV6);
 
                     var miRemoveV6 = new MenuItem()
                     {
@@ -114,18 +114,18 @@ namespace HPTClient
                     };
                     miRemoveV6.Click += (o, s) =>
                     {
-                        this.SingleRowsObservable
+                        SingleRowsObservable
                             .ToList()
                             .ForEach(sr =>
                                 {
                                     sr.V6 = false;
                                     sr.Edited = true;
                                 });
-                        this.MarkBet.UpdateV6BetMultiplierSingleRows();
-                        this.isSettingV6BetMultiplier = false;
-                        this.MarkBet.UpdateCoupons();
+                        MarkBet.UpdateV6BetMultiplierSingleRows();
+                        isSettingV6BetMultiplier = false;
+                        MarkBet.UpdateCoupons();
                     };
-                    this.betMultiplierItems.Add(miRemoveV6);
+                    betMultiplierItems.Add(miRemoveV6);
                 }
                 var miBetMultiplierHeader = new MenuItem()
                 {
@@ -150,17 +150,17 @@ namespace HPTClient
                             try
                             {
                                 isSettingV6BetMultiplier = true;
-                                this.SingleRowsObservable
+                                SingleRowsObservable
                                     .ToList()
                                     .ForEach(sr =>
                                         {
                                             sr.BetMultiplier = Convert.ToInt32(miBetMultiplier.Tag); isSettingV6BetMultiplier = true;
-                                            sr.CreateBetMultiplierList(this.MarkBet);
+                                            sr.CreateBetMultiplierList(MarkBet);
                                             sr.Edited = true;
                                         });
-                                this.MarkBet.UpdateV6BetMultiplierSingleRows();
-                                this.isSettingV6BetMultiplier = false;
-                                this.MarkBet.UpdateCoupons();
+                                MarkBet.UpdateV6BetMultiplierSingleRows();
+                                isSettingV6BetMultiplier = false;
+                                MarkBet.UpdateCoupons();
                             }
                             catch (Exception exc)
                             {
@@ -169,9 +169,9 @@ namespace HPTClient
                             isSettingV6BetMultiplier = false;
                         };
                     });
-                this.betMultiplierItems.Add(miBetMultiplierHeader);
+                betMultiplierItems.Add(miBetMultiplierHeader);
             }
-            AddContextMenuItems(this.betMultiplierItems);
+            AddContextMenuItems(betMultiplierItems);
             e.Handled = true;
         }
 
@@ -190,16 +190,16 @@ namespace HPTClient
 
             ListSortDirection newDir = ListSortDirection.Ascending;
 
-            if (this.lvwSingleRows.Items.SortDescriptions.Count > 0)
+            if (lvwSingleRows.Items.SortDescriptions.Count > 0)
             {
-                SortDescription sd = this.lvwSingleRows.Items.SortDescriptions[0];
+                SortDescription sd = lvwSingleRows.Items.SortDescriptions[0];
                 if (sd.PropertyName == field)
                 {
                     SortDescription sdNew = new SortDescription();
                     sdNew.PropertyName = sd.PropertyName;
                     sdNew.Direction = sd.Direction == ListSortDirection.Ascending ? ListSortDirection.Descending : ListSortDirection.Ascending;
-                    this.lvwSingleRows.Items.SortDescriptions.Clear();
-                    this.lvwSingleRows.Items.SortDescriptions.Add(sdNew);
+                    lvwSingleRows.Items.SortDescriptions.Clear();
+                    lvwSingleRows.Items.SortDescriptions.Add(sdNew);
                     return;
                 }
             }
@@ -216,8 +216,8 @@ namespace HPTClient
                     break;
             }
 
-            this.lvwSingleRows.Items.SortDescriptions.Clear();
-            this.lvwSingleRows.Items.SortDescriptions.Add(new SortDescription(field, newDir));
+            lvwSingleRows.Items.SortDescriptions.Clear();
+            lvwSingleRows.Items.SortDescriptions.Add(new SortDescription(field, newDir));
         }
 
         private void lvwSingleRows_MouseDown(object sender, MouseButtonEventArgs e)
@@ -227,9 +227,9 @@ namespace HPTClient
             //    return;
             //}
 
-            if (!this.CMSingleRow.HasItems)
+            if (!CMSingleRow.HasItems)
             {
-                this.CMSingleRow.Items.Clear();
+                CMSingleRow.Items.Clear();
                 CreateHorseContextMenuVxx();
             }
             //this.lvwSingleRows.ContextMenu = this.CMSingleRow;
@@ -237,9 +237,9 @@ namespace HPTClient
 
         void miSimulateResult_Click(object sender, RoutedEventArgs e)
         {
-            if (this.lvwSingleRows.SelectedItem != null && this.lvwSingleRows.SelectedItem.GetType() == typeof(HPTMarkBetSingleRow))
+            if (lvwSingleRows.SelectedItem != null && lvwSingleRows.SelectedItem.GetType() == typeof(HPTMarkBetSingleRow))
             {
-                var singleRow = (HPTMarkBetSingleRow)this.lvwSingleRows.SelectedItem;
+                var singleRow = (HPTMarkBetSingleRow)lvwSingleRows.SelectedItem;
                 //this.MarkBet.CouponCorrector.CorrectCouponsSimulatedResult();
             }
         }
@@ -272,7 +272,7 @@ namespace HPTClient
                 //    this.MarkBet.CouponCompression = CouponCompression.SingleRows;
                 //}
                 //this.MarkBet.UpdateCoupons();
-                this.MarkBet.UpdateV6BetMultiplierSingleRows();
+                MarkBet.UpdateV6BetMultiplierSingleRows();
             }
             catch (Exception)
             {
@@ -299,19 +299,19 @@ namespace HPTClient
                 var singleRow = (HPTMarkBetSingleRow)iud.DataContext;
                 int betMultiplier = (int)iud.Value;
                 singleRow.BetMultiplier = betMultiplier;
-                singleRow.CreateBetMultiplierList(this.MarkBet);
+                singleRow.CreateBetMultiplierList(MarkBet);
                 singleRow.Edited = true;
 
                 //var selectedRowList = GetSelectedRows();
                 foreach (var sr in selectedRowList)
                 {
                     sr.BetMultiplier = betMultiplier;
-                    sr.CreateBetMultiplierList(this.MarkBet);
+                    sr.CreateBetMultiplierList(MarkBet);
                     sr.Edited = true;
                 }
-                this.MarkBet.UpdateV6BetMultiplierSingleRows();
+                MarkBet.UpdateV6BetMultiplierSingleRows();
                 isSettingV6BetMultiplier = false;
-                this.MarkBet.UpdateCoupons();
+                MarkBet.UpdateCoupons();
             }
             catch (Exception exc)
             {
@@ -321,7 +321,7 @@ namespace HPTClient
 
         private List<HPTMarkBetSingleRow> GetSelectedRows()
         {
-            return this.MarkBet.SingleRowCollection.SingleRows
+            return MarkBet.SingleRowCollection.SingleRows
                 .Where(sr => sr.SelectedForEditing)
                 .ToList();
         }
@@ -383,7 +383,7 @@ namespace HPTClient
             };
 
             // Skapa enskilda val
-            foreach (var bm in this.MarkBet.BetType.BetMultiplierList)
+            foreach (var bm in MarkBet.BetType.BetMultiplierList)
             {
                 MenuItem miBetMultiplier = new MenuItem()
                 {
@@ -411,11 +411,11 @@ namespace HPTClient
             miSimulateResult.Click += new RoutedEventHandler(miSimulateResult_Click);
 
             // Lägg till i kontextmenyn
-            this.CMSingleRow.Items.Add(miSelectMultiple);
-            this.CMSingleRow.Items.Add(miV6);
-            this.CMSingleRow.Items.Add(miV6AndBetMultiplierHeader);
-            this.CMSingleRow.Items.Add(miBetMultiplierHeader);
-            this.CMSingleRow.Items.Add(miSimulateResult);
+            CMSingleRow.Items.Add(miSelectMultiple);
+            CMSingleRow.Items.Add(miV6);
+            CMSingleRow.Items.Add(miV6AndBetMultiplierHeader);
+            CMSingleRow.Items.Add(miBetMultiplierHeader);
+            CMSingleRow.Items.Add(miSimulateResult);
         }
 
         void miSelectMultiple_Click(object sender, RoutedEventArgs e)
@@ -451,15 +451,15 @@ namespace HPTClient
                 singleRow.Edited = true;
                 singleRow.V6 = v6;
                 singleRow.BetMultiplier = betMultiplier;
-                singleRow.CreateBetMultiplierList(this.MarkBet);
+                singleRow.CreateBetMultiplierList(MarkBet);
             }
             //this.MarkBet.UpdateTotalCouponSize();
-            this.MarkBet.UpdateV6BetMultiplierSingleRows();
+            MarkBet.UpdateV6BetMultiplierSingleRows();
         }
 
         private List<HPTMarkBetSingleRow> GetSelectedRowsInListview()
         {
-            return this.lvwSingleRows.SelectedItems
+            return lvwSingleRows.SelectedItems
                 .Cast<HPTMarkBetSingleRow>()
                 .ToList();
         }
@@ -468,21 +468,21 @@ namespace HPTClient
 
         private void miCalculateRowValueWithError_Click(object sender, RoutedEventArgs e)
         {
-            this.MarkBet.CalculateSingleRowsPotential();
+            MarkBet.CalculateSingleRowsPotential();
         }
 
         private void ucSingleRowCollectionView_Loaded(object sender, RoutedEventArgs e)
         {
-            if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
+            if (!DesignerProperties.GetIsInDesignMode(this))
             {
                 // Skapa kontextmeny för att visa/dölja kolumner
                 //if (this.CombBet.DataToShow.CMColumnsToShow == null)
-                if (!this.CMColumnsToShow.HasItems)
+                if (!CMColumnsToShow.HasItems)
                 {
-                    this.CMColumnsToShow = new ContextMenu();
+                    CMColumnsToShow = new ContextMenu();
                     List<HorseDataToShowAttribute> attributeList = HPTConfig.Config.SingleRowDataToShow.GetHorseDataToShowAttributes();
-                    this.CMColumnsToShow.Items.Clear();
-                    this.CMColumnsToShow.DataContext = HPTConfig.Config.SingleRowDataToShow;
+                    CMColumnsToShow.Items.Clear();
+                    CMColumnsToShow.DataContext = HPTConfig.Config.SingleRowDataToShow;
                     foreach (HorseDataToShowAttribute hda in attributeList)
                     {
                         MenuItem mi = new MenuItem()
@@ -493,17 +493,17 @@ namespace HPTClient
                             //IsEnabled = hda.RequiresPro ? HPTConfig.Config.IsPayingCustomer : true
                         };
                         mi.SetBinding(MenuItem.IsCheckedProperty, hda.PropertyName);
-                        this.CMColumnsToShow.Items.Add(mi);
+                        CMColumnsToShow.Items.Add(mi);
                     }
                     HPTConfig.Config.SingleRowDataToShow.PropertyChanged += new PropertyChangedEventHandler(DataToShow_PropertyChanged);
                 }
 
                 // Skapa en lista med alla kolumner i listvyn
-                if (this.ColumnHandlerList == null || this.ColumnHandlerList.Count == 0)
+                if (ColumnHandlerList == null || ColumnHandlerList.Count == 0)
                 {
                     CreateColumnHandlerList();
 
-                    List<string> propertyNamesList = this.ColumnHandlerList.Select(ch => ch.BindingField).ToList();
+                    List<string> propertyNamesList = ColumnHandlerList.Select(ch => ch.BindingField).ToList();
 
                     foreach (string propertyName in propertyNamesList)
                     {
@@ -516,11 +516,11 @@ namespace HPTClient
                     }
                     //SortColumns();
                 }
-                if (this.MarkBet != null && this.MarkBet.SingleRowCollection != null)
+                if (MarkBet != null && MarkBet.SingleRowCollection != null)
                 {
-                    this.MarkBet.SingleRowCollection.PropertyChanged -= SingleRowCollection_PropertyChanged;
-                    this.MarkBet.SingleRowCollection.PropertyChanged += SingleRowCollection_PropertyChanged;
-                    if (this.MarkBet.SingleRowCollection.SingleRows.Count > 0 && this.SingleRowsObservable.Count == 0)
+                    MarkBet.SingleRowCollection.PropertyChanged -= SingleRowCollection_PropertyChanged;
+                    MarkBet.SingleRowCollection.PropertyChanged += SingleRowCollection_PropertyChanged;
+                    if (MarkBet.SingleRowCollection.SingleRows.Count > 0 && SingleRowsObservable.Count == 0)
                     {
                         //Dispatcher.Invoke(FillSingleRows);
                         Dispatcher.Invoke(FilterRows);
@@ -544,10 +544,10 @@ namespace HPTClient
         {
             try
             {
-                this.SingleRowsObservable.Clear();
-                this.MarkBet.SingleRowCollection.SingleRows
+                SingleRowsObservable.Clear();
+                MarkBet.SingleRowCollection.SingleRows
                     .ToList()
-                    .ForEach(sr => this.SingleRowsObservable.Add(sr));
+                    .ForEach(sr => SingleRowsObservable.Add(sr));
             }
             catch (Exception exc)
             {
@@ -558,32 +558,32 @@ namespace HPTClient
         private List<ColumnHandler> ColumnHandlerList;
         private void CreateColumnHandlerList()
         {
-            this.ColumnHandlerList = new List<ColumnHandler>();
+            ColumnHandlerList = new List<ColumnHandler>();
 
-            this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcRowNumber, Name = "gvcRowNumber", Position = 0, BindingField = "ShowRowNumber" });
-            this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcRowValue, Name = "gvcRowValue", Position = 0, BindingField = "ShowRowValue" });
-            this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcV6, Name = "gvcV6", Position = 0, BindingField = "ShowV6" });
-            this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcRowValueV6, Name = "gvcRowValueV6", Position = 0, BindingField = "ShowRowValueV6" });
-            this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcBetMultiplier, Name = "gvcBetMultiplier", Position = 0, BindingField = "ShowBetMultiplier" });
-            this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcRowValueBetMultiplier, Name = "gvcRowValueBetMultiplier", Position = 0, BindingField = "ShowRowValueBetMultiplier" });
-            this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcRowValueOneError, Name = "gvcRowValueOneError", Position = 0, BindingField = "ShowRowValue1And2Errors" });
-            this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcRowValueTwoErrors, Name = "gvcRowValueTwoErrors", Position = 0, BindingField = "ShowRowValue1And2Errors" });
-            this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcStakePercentSum, Name = "gvcStakePercentSum", Position = 0, BindingField = "ShowStakeShareSum" });
-            this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcStartNumberSum, Name = "gvcStartNumberSum", Position = 0, BindingField = "ShowStartNumberSum" });
-            this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcRankSum, Name = "gvcRankSum", Position = 0, BindingField = "ShowRankSum" });
-            this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcOwnProbability, Name = "gvcOwnProbability", Position = 0, BindingField = "ShowOwnProbability" });
+            ColumnHandlerList.Add(new ColumnHandler() { Column = gvcRowNumber, Name = "gvcRowNumber", Position = 0, BindingField = "ShowRowNumber" });
+            ColumnHandlerList.Add(new ColumnHandler() { Column = gvcRowValue, Name = "gvcRowValue", Position = 0, BindingField = "ShowRowValue" });
+            ColumnHandlerList.Add(new ColumnHandler() { Column = gvcV6, Name = "gvcV6", Position = 0, BindingField = "ShowV6" });
+            ColumnHandlerList.Add(new ColumnHandler() { Column = gvcRowValueV6, Name = "gvcRowValueV6", Position = 0, BindingField = "ShowRowValueV6" });
+            ColumnHandlerList.Add(new ColumnHandler() { Column = gvcBetMultiplier, Name = "gvcBetMultiplier", Position = 0, BindingField = "ShowBetMultiplier" });
+            ColumnHandlerList.Add(new ColumnHandler() { Column = gvcRowValueBetMultiplier, Name = "gvcRowValueBetMultiplier", Position = 0, BindingField = "ShowRowValueBetMultiplier" });
+            ColumnHandlerList.Add(new ColumnHandler() { Column = gvcRowValueOneError, Name = "gvcRowValueOneError", Position = 0, BindingField = "ShowRowValue1And2Errors" });
+            ColumnHandlerList.Add(new ColumnHandler() { Column = gvcRowValueTwoErrors, Name = "gvcRowValueTwoErrors", Position = 0, BindingField = "ShowRowValue1And2Errors" });
+            ColumnHandlerList.Add(new ColumnHandler() { Column = gvcStakePercentSum, Name = "gvcStakePercentSum", Position = 0, BindingField = "ShowStakeShareSum" });
+            ColumnHandlerList.Add(new ColumnHandler() { Column = gvcStartNumberSum, Name = "gvcStartNumberSum", Position = 0, BindingField = "ShowStartNumberSum" });
+            ColumnHandlerList.Add(new ColumnHandler() { Column = gvcRankSum, Name = "gvcRankSum", Position = 0, BindingField = "ShowRankSum" });
+            ColumnHandlerList.Add(new ColumnHandler() { Column = gvcOwnProbability, Name = "gvcOwnProbability", Position = 0, BindingField = "ShowOwnProbability" });
 
             // All hästarna på raden
-            this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcAvd1, Name = "gvcAvd1", Position = 0, BindingField = "ShowHorses" });
-            this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcAvd2, Name = "gvcAvd2", Position = 0, BindingField = "ShowHorses" });
-            this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcAvd3, Name = "gvcAvd3", Position = 0, BindingField = "ShowHorses" });
-            this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcAvd4, Name = "gvcAvd4", Position = 0, BindingField = "ShowHorses" });
-            this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcAvd5, Name = "gvcAvd5", Position = 0, BindingField = "ShowHorses" });
-            this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcAvd6, Name = "gvcAvd6", Position = 0, BindingField = "ShowHorses" });
-            this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcAvd7, Name = "gvcAvd7", Position = 0, BindingField = "ShowHorses" });
-            this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcAvd8, Name = "gvcAvd8", Position = 0, BindingField = "ShowHorses" });
+            ColumnHandlerList.Add(new ColumnHandler() { Column = gvcAvd1, Name = "gvcAvd1", Position = 0, BindingField = "ShowHorses" });
+            ColumnHandlerList.Add(new ColumnHandler() { Column = gvcAvd2, Name = "gvcAvd2", Position = 0, BindingField = "ShowHorses" });
+            ColumnHandlerList.Add(new ColumnHandler() { Column = gvcAvd3, Name = "gvcAvd3", Position = 0, BindingField = "ShowHorses" });
+            ColumnHandlerList.Add(new ColumnHandler() { Column = gvcAvd4, Name = "gvcAvd4", Position = 0, BindingField = "ShowHorses" });
+            ColumnHandlerList.Add(new ColumnHandler() { Column = gvcAvd5, Name = "gvcAvd5", Position = 0, BindingField = "ShowHorses" });
+            ColumnHandlerList.Add(new ColumnHandler() { Column = gvcAvd6, Name = "gvcAvd6", Position = 0, BindingField = "ShowHorses" });
+            ColumnHandlerList.Add(new ColumnHandler() { Column = gvcAvd7, Name = "gvcAvd7", Position = 0, BindingField = "ShowHorses" });
+            ColumnHandlerList.Add(new ColumnHandler() { Column = gvcAvd8, Name = "gvcAvd8", Position = 0, BindingField = "ShowHorses" });
 
-            this.ColumnHandlerList.Add(new ColumnHandler() { Column = gvcRowValueWithoutScratchings, Name = "gvcRowValueWithoutScratchings", Position = 0, BindingField = "ShowRowValue" });
+            ColumnHandlerList.Add(new ColumnHandler() { Column = gvcRowValueWithoutScratchings, Name = "gvcRowValueWithoutScratchings", Position = 0, BindingField = "ShowRowValue" });
         }
 
         void DataToShow_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -598,17 +598,17 @@ namespace HPTClient
         private void HandleColumn(string showText, bool show)
         {
             List<ColumnHandler> columnsToHandle =
-                this.ColumnHandlerList.Where(ch => ch.BindingField == showText).ToList();
+                ColumnHandlerList.Where(ch => ch.BindingField == showText).ToList();
             foreach (var columnHandler in columnsToHandle)
             {
                 GridViewColumn gvc = columnHandler.Column;
-                if (show && !this.gvwSingleRows.Columns.Contains(gvc))
+                if (show && !gvwSingleRows.Columns.Contains(gvc))
                 {
-                    this.gvwSingleRows.Columns.Add(gvc);
+                    gvwSingleRows.Columns.Add(gvc);
                 }
-                else if (!show && this.gvwSingleRows.Columns.Contains(gvc))
+                else if (!show && gvwSingleRows.Columns.Contains(gvc))
                 {
-                    this.gvwSingleRows.Columns.Remove(gvc);
+                    gvwSingleRows.Columns.Remove(gvc);
                 }
             }
         }
@@ -623,9 +623,9 @@ namespace HPTClient
         {
             try
             {
-                if (this.MarkBet.OwnProbabilityReductionRule.Use)
+                if (MarkBet.OwnProbabilityReductionRule.Use)
                 {
-                    this.MarkBet.RecalculateReduction(RecalculateReason.All);
+                    MarkBet.RecalculateReduction(RecalculateReason.All);
                 }
             }
             catch (Exception exc)
@@ -644,7 +644,7 @@ namespace HPTClient
 
         private void FilterRows()
         {
-            var selectedHorses = this.MarkBet.RaceDayInfo.HorseListSelected
+            var selectedHorses = MarkBet.RaceDayInfo.HorseListSelected
                 .Where(h => h.SelectedForRowValueCalculation)
                 .GroupBy(h => h.ParentRace.LegNr)
                 .ToList();
@@ -655,7 +655,7 @@ namespace HPTClient
                 return;
             }
 
-            var selectedRows = this.MarkBet.SingleRowCollection.SingleRows.AsParallel();
+            var selectedRows = MarkBet.SingleRowCollection.SingleRows.AsParallel();
 
             selectedHorses
                 .ForEach(h =>
@@ -663,9 +663,9 @@ namespace HPTClient
                     selectedRows = selectedRows.Where(sr => h.Contains(sr.HorseList[h.Key - 1]));
                 });
 
-            this.SingleRowsObservable.Clear();
+            SingleRowsObservable.Clear();
 
-            int numberOfPools = this.MarkBet.BetType.PayOutDummyList.Length;
+            int numberOfPools = MarkBet.BetType.PayOutDummyList.Length;
 
             selectedRows
                 .ToList()
@@ -673,16 +673,16 @@ namespace HPTClient
                 {
                     if (numberOfPools > 1)
                     {
-                        sr.RowValueOneError = this.MarkBet.CouponCorrector.CalculatePayOutOneError(sr.HorseList, this.MarkBet.BetType.PoolShareOneError * this.MarkBet.BetType.RowCost);
+                        sr.RowValueOneError = MarkBet.CouponCorrector.CalculatePayOutOneError(sr.HorseList, MarkBet.BetType.PoolShareOneError * MarkBet.BetType.RowCost);
                         if (numberOfPools > 2)
                         {
-                            sr.RowValueTwoErrors = this.MarkBet.CouponCorrector.CalculatePayOutTwoErrors(sr.HorseList, this.MarkBet.BetType.PoolShareTwoErrors * this.MarkBet.BetType.RowCost);
+                            sr.RowValueTwoErrors = MarkBet.CouponCorrector.CalculatePayOutTwoErrors(sr.HorseList, MarkBet.BetType.PoolShareTwoErrors * MarkBet.BetType.RowCost);
                         }
                     }
-                    this.SingleRowsObservable.Add(sr);
+                    SingleRowsObservable.Add(sr);
                 });
 
-            var orderedPayOutList = this.MarkBet.BetType.PayOutDummyList
+            var orderedPayOutList = MarkBet.BetType.PayOutDummyList
                 .OrderByDescending(po => po.NumberOfCorrect);
 
             try
@@ -715,7 +715,7 @@ namespace HPTClient
 
         private void miSelectAllFiltered_Click(object sender, RoutedEventArgs e)
         {
-            this.SingleRowsObservable.ToList().ForEach(sr =>
+            SingleRowsObservable.ToList().ForEach(sr =>
                 {
                     sr.SelectedForEditing = true;
                 });

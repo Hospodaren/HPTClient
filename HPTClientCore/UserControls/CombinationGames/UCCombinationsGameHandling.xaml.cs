@@ -12,16 +12,16 @@ namespace HPTClient
     {
         public UCCombinationsGameHandling()
         {
-            this.atgUpdateTimer = new System.Threading.Timer(new System.Threading.TimerCallback(UpdateFromATG));
+            atgUpdateTimer = new Timer(new TimerCallback(UpdateFromATG));
 
             InitializeComponent();
 
             // Hantering av gratisanvändare som öppnar fil med icke stödda spelformer
             if (!HPTConfig.Config.IsPayingCustomer)
             {
-                this.btnCreateCoupons.IsEnabled = false;
-                this.btnCreateCouponsAs.IsEnabled = false;
-                this.btnUpdate.IsEnabled = false;
+                btnCreateCoupons.IsEnabled = false;
+                btnCreateCouponsAs.IsEnabled = false;
+                btnUpdate.IsEnabled = false;
             }
         }
 
@@ -29,12 +29,12 @@ namespace HPTClient
 
         private void btnCreateCoupons_Click(object sender, RoutedEventArgs e)
         {
-            string fileName = this.CombBet.SaveDirectory + this.CombBet.ToFileNameString();
-            this.CombBet.SystemFilename = fileName + ".xml";
-            ATGCouponHelper couponHelper = new ATGCouponHelper(this.CombBet);
+            string fileName = CombBet.SaveDirectory + CombBet.ToFileNameString();
+            CombBet.SystemFilename = fileName + ".xml";
+            ATGCouponHelper couponHelper = new ATGCouponHelper(CombBet);
             couponHelper.CreateCoupons();
             couponHelper.CreateATGFile();
-            HPTSerializer.SerializeHPTCombinationSystem(fileName + ".hpt7", this.CombBet);
+            HPTSerializer.SerializeHPTCombinationSystem(fileName + ".hpt7", CombBet);
         }
 
         void sfd_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
@@ -45,11 +45,11 @@ namespace HPTClient
                 {
                     SaveFileDialog sfd = (SaveFileDialog)sender;
                     string fileName = sfd.FileName;
-                    this.CombBet.SystemFilename = fileName;
-                    ATGCouponHelper couponHelper = new ATGCouponHelper(this.CombBet);
+                    CombBet.SystemFilename = fileName;
+                    ATGCouponHelper couponHelper = new ATGCouponHelper(CombBet);
                     couponHelper.CreateCoupons();
                     couponHelper.CreateATGFile();
-                    HPTSerializer.SerializeHPTCombinationSystem(fileName.Replace(".xml", ".hpt7"), this.CombBet);
+                    HPTSerializer.SerializeHPTCombinationSystem(fileName.Replace(".xml", ".hpt7"), CombBet);
                 }
                 catch (Exception exc)
                 {
@@ -60,14 +60,14 @@ namespace HPTClient
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            HPTSerializer.SerializeHPTCombinationSystem(this.CombBet.SaveDirectory + this.CombBet.ToFileNameString() + ".hpt5", this.CombBet);
+            HPTSerializer.SerializeHPTCombinationSystem(CombBet.SaveDirectory + CombBet.ToFileNameString() + ".hpt5", CombBet);
         }
 
         private void btnSaveAs_Click(object sender, RoutedEventArgs e)
         {
             SaveFileDialog sfdSaveHPT = new SaveFileDialog();
-            sfdSaveHPT.InitialDirectory = this.CombBet.SaveDirectory;
-            sfdSaveHPT.FileName = this.CombBet.ToFileNameString() + ".hpt7";
+            sfdSaveHPT.InitialDirectory = CombBet.SaveDirectory;
+            sfdSaveHPT.FileName = CombBet.ToFileNameString() + ".hpt7";
             sfdSaveHPT.Filter = "Hjälp på traven-system|*.hpt7";
             sfdSaveHPT.FileOk += new System.ComponentModel.CancelEventHandler(sfdSaveHPT_FileOk);
             sfdSaveHPT.ShowDialog();
@@ -80,7 +80,7 @@ namespace HPTClient
                 try
                 {
                     SaveFileDialog sfd = (SaveFileDialog)sender;
-                    HPTSerializer.SerializeHPTCombinationSystem(sfd.FileName, this.CombBet);
+                    HPTSerializer.SerializeHPTCombinationSystem(sfd.FileName, CombBet);
                 }
                 catch (Exception exc)
                 {
@@ -105,15 +105,15 @@ namespace HPTClient
 
         private void btnCopy_Click(object sender, RoutedEventArgs e)
         {
-            string systemInfo = this.CombBet.ToClipboardString();
+            string systemInfo = CombBet.ToClipboardString();
             Clipboard.SetDataObject(systemInfo);
         }
 
         private void btnCreateCouponsAs_Click(object sender, RoutedEventArgs e)
         {
             SaveFileDialog sfd = new SaveFileDialog();
-            sfd.InitialDirectory = this.CombBet.SaveDirectory;
-            sfd.FileName = this.CombBet.ToFileNameString() + ".xml";
+            sfd.InitialDirectory = CombBet.SaveDirectory;
+            sfd.FileName = CombBet.ToFileNameString() + ".xml";
             sfd.Filter = "ATG-kupongfiler (*.xml)|*.xml|Alla filer (*.*)|*.*";
             sfd.FileOk += new System.ComponentModel.CancelEventHandler(sfd_FileOk);
             sfd.ShowDialog();
@@ -128,31 +128,31 @@ namespace HPTClient
 
         #region Update handling
 
-        System.Threading.Timer atgUpdateTimer;
+        Timer atgUpdateTimer;
         private void cmbUpdateInterval_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (atgUpdateTimer == null)
             {
-                this.atgUpdateTimer = new System.Threading.Timer(new System.Threading.TimerCallback(UpdateFromATG));
+                atgUpdateTimer = new Timer(new TimerCallback(UpdateFromATG));
             }
-            if (this.cmbUpdateInterval.SelectedItem != null)
+            if (cmbUpdateInterval.SelectedItem != null)
             {
-                ComboBoxItem cbi = (ComboBoxItem)this.cmbUpdateInterval.SelectedItem;
+                ComboBoxItem cbi = (ComboBoxItem)cmbUpdateInterval.SelectedItem;
                 int updatePeriod = Convert.ToInt32(cbi.Tag) * 60 * 1000;
                 if (updatePeriod == 0)
                 {
-                    this.atgUpdateTimer.Change(System.Threading.Timeout.Infinite, System.Threading.Timeout.Infinite);
+                    atgUpdateTimer.Change(Timeout.Infinite, Timeout.Infinite);
                 }
                 else
                 {
-                    this.atgUpdateTimer.Change(0, updatePeriod);
+                    atgUpdateTimer.Change(0, updatePeriod);
                 }
             }
         }
 
         private void UpdateFromATG(object timerData)
         {
-            this.Dispatcher.Invoke(new Action(UpdateFromATG), null);
+            Dispatcher.Invoke(new Action(UpdateFromATG), null);
         }
 
         private void UpdateFromATG()
@@ -162,50 +162,54 @@ namespace HPTClient
                 //Cursor = Cursors.Wait;
 
                 // Deaktivera knappen
-                this.btnUpdate.IsEnabled = false;
+                btnUpdate.IsEnabled = false;
 
                 var serviceConnector = new HPTServiceConnector();
-                serviceConnector.GetRaceDayInfoUpdate(this.CombBet.RaceDayInfo.BetType.Code, this.CombBet.RaceDayInfo.TrackId, this.CombBet.RaceDayInfo.RaceDayDate, UpdateFromATG);
+                // TODO: DD osv i framtiden
+                //serviceConnector.GetRaceDayInfoUpdate(CombBet.RaceDayInfo.BetType.Code, CombBet.RaceDayInfo.TrackId, CombBet.RaceDayInfo.RaceDayDate, UpdateFromATG);
             }
             catch (Exception)
             {
-                this.btnUpdate.IsEnabled = true;
+                btnUpdate.IsEnabled = true;
             }
         }
 
-        public void UpdateFromATG(HPTService.HPTRaceDayInfo rdi)
-        {
-            try
-            {
-                Dispatcher.Invoke(new Action<HPTService.HPTRaceDayInfo>(UpdateFromATGInvoke), rdi);
-            }
-            catch (Exception)
-            {
-                this.btnUpdate.IsEnabled = true;
-            }
-        }
+        // TODO: Ny lösning, i framtiden...
+        //public void UpdateFromATG(HPTService.HPTRaceDayInfo rdi)
+        //{
+        //    try
+        //    {
+        //        // TODO: DD osv i framtiden
+        //        //Dispatcher.Invoke(new Action<HPTService.HPTRaceDayInfo>(UpdateFromATGInvoke), rdi);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        btnUpdate.IsEnabled = true;
+        //    }
+        //}
 
-        private void UpdateFromATGInvoke(HPTService.HPTRaceDayInfo rdi)
-        {
-            try
-            {
-                this.CombBet.RaceDayInfo.Merge(rdi);
-                this.CombBet.TimeStamp = DateTime.Now;
-                DeselectScratchedHorses();
+        // TODO: Ny lösning
+        //private void UpdateFromATGInvoke(HPTService.HPTRaceDayInfo rdi)
+        //{
+        //    try
+        //    {
+        //        CombBet.RaceDayInfo.Merge(rdi);
+        //        CombBet.TimeStamp = DateTime.Now;
+        //        DeselectScratchedHorses();
 
-            }
-            catch (Exception exc)
-            {
-                this.btnUpdate.IsEnabled = true;
-                HPTConfig.AddToErrorLogStatic(exc);
-            }
-            Cursor = Cursors.Arrow;
-            this.btnUpdate.IsEnabled = true;
-        }
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        btnUpdate.IsEnabled = true;
+        //        HPTConfig.AddToErrorLogStatic(exc);
+        //    }
+        //    Cursor = Cursors.Arrow;
+        //    btnUpdate.IsEnabled = true;
+        //}
 
         internal void DeselectScratchedHorses()
         {
-            this.CombBet.RaceDayInfo.RaceList
+            CombBet.RaceDayInfo.RaceList
                 .SelectMany(r => r.HorseList)
                 .Where(h => h.Selected)
                 .Where(h => h.Scratched == true)
@@ -235,7 +239,7 @@ namespace HPTClient
                 int targetReturn = 0;
                 if (int.TryParse(s, out targetReturn))
                 {
-                    this.CombBet.TargetReturn = targetReturn;
+                    CombBet.TargetReturn = targetReturn;
                 }
             }
         }

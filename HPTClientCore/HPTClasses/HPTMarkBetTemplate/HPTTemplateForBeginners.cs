@@ -9,11 +9,11 @@
         {
             get
             {
-                return this.stake;
+                return stake;
             }
             set
             {
-                this.stake = value;
+                stake = value;
                 OnPropertyChanged("Stake");
             }
         }
@@ -23,11 +23,11 @@
         {
             get
             {
-                return this.numberOfSpikes;
+                return numberOfSpikes;
             }
             set
             {
-                this.numberOfSpikes = value;
+                numberOfSpikes = value;
                 OnPropertyChanged("NumberOfSpikes");
             }
         }
@@ -37,11 +37,11 @@
         {
             get
             {
-                return this.reductionRisk;
+                return reductionRisk;
             }
             set
             {
-                this.reductionRisk = value;
+                reductionRisk = value;
                 OnPropertyChanged("ReductionRisk");
             }
         }
@@ -51,11 +51,11 @@
         {
             get
             {
-                return this.desiredProfit;
+                return desiredProfit;
             }
             set
             {
-                this.desiredProfit = value;
+                desiredProfit = value;
                 OnPropertyChanged("DesiredProfit");
             }
         }

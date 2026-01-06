@@ -11,11 +11,11 @@ namespace HPTClient
         {
             get
             {
-                return this.name;
+                return name;
             }
             set
             {
-                this.name = value;
+                name = value;
                 OnPropertyChanged("Name");
             }
         }
@@ -26,11 +26,11 @@ namespace HPTClient
         {
             get
             {
-                return this.startMethodCode;
+                return startMethodCode;
             }
             set
             {
-                this.startMethodCode = value;
+                startMethodCode = value;
                 OnPropertyChanged("StartMethodCode");
             }
         }
@@ -41,11 +41,11 @@ namespace HPTClient
         {
             get
             {
-                return this.distanceCode;
+                return distanceCode;
             }
             set
             {
-                this.distanceCode = value;
+                distanceCode = value;
                 OnPropertyChanged("DistanceCode");
             }
         }
@@ -56,11 +56,11 @@ namespace HPTClient
         {
             get
             {
-                return this.startNumberRankList;
+                return startNumberRankList;
             }
             set
             {
-                this.startNumberRankList = value;
+                startNumberRankList = value;
                 OnPropertyChanged("StartNumberRankList");
             }
         }

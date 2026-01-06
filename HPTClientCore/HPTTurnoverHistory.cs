@@ -24,7 +24,7 @@ namespace HPTClient
             }
             set
             {
-                this._IsSelected = value;
+                _IsSelected = value;
                 OnPropertyChanged("IsSelected");
             }
         }

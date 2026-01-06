@@ -17,8 +17,8 @@ namespace HPTClient
         {
             try
             {
-                this.btnExportToClipboard.IsOpen = false;
-                var resultAnalyzer = (HPTResultAnalyzer)this.DataContext;
+                btnExportToClipboard.IsOpen = false;
+                var resultAnalyzer = (HPTResultAnalyzer)DataContext;
                 if (resultAnalyzer != null)
                 {
                     string analysisData = resultAnalyzer.ExportToExcel();
@@ -33,8 +33,8 @@ namespace HPTClient
 
         private void miOverviewWithHeaders_Click(object sender, RoutedEventArgs e)
         {
-            this.btnExportToClipboard.IsOpen = false;
-            var resultAnalyzer = (HPTResultAnalyzer)this.DataContext;
+            btnExportToClipboard.IsOpen = false;
+            var resultAnalyzer = (HPTResultAnalyzer)DataContext;
             if (resultAnalyzer != null)
             {
                 string analysisData = resultAnalyzer.ExportToExcel(true);
@@ -44,8 +44,8 @@ namespace HPTClient
 
         private void miOverviewWithoutHeaders_Click(object sender, RoutedEventArgs e)
         {
-            this.btnExportToClipboard.IsOpen = false;
-            var resultAnalyzer = (HPTResultAnalyzer)this.DataContext;
+            btnExportToClipboard.IsOpen = false;
+            var resultAnalyzer = (HPTResultAnalyzer)DataContext;
             if (resultAnalyzer != null)
             {
                 string analysisData = resultAnalyzer.ExportToExcel(false);

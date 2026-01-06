@@ -16,7 +16,7 @@ namespace HPTClient
             }
             set
             {
-                this._Place = value;
+                _Place = value;
                 OnPropertyChanged("Place");
             }
         }
@@ -31,7 +31,7 @@ namespace HPTClient
             }
             set
             {
-                this._FinishingPosition = value;
+                _FinishingPosition = value;
                 OnPropertyChanged("FinishingPosition");
             }
         }
@@ -47,7 +47,7 @@ namespace HPTClient
             }
             set
             {
-                this._Earning = value;
+                _Earning = value;
                 OnPropertyChanged("Earning");
             }
         }
@@ -62,7 +62,7 @@ namespace HPTClient
             }
             set
             {
-                this._KmTime = value;
+                _KmTime = value;
                 OnPropertyChanged("KmTime");
             }
         }
@@ -77,7 +77,7 @@ namespace HPTClient
             }
             set
             {
-                this._TotalTime = value;
+                _TotalTime = value;
                 OnPropertyChanged("TotalTime");
             }
         }
@@ -91,7 +91,7 @@ namespace HPTClient
             }
             set
             {
-                this._Disqualified = value;
+                _Disqualified = value;
                 OnPropertyChanged("Disqualified");
             }
         }
@@ -106,7 +106,7 @@ namespace HPTClient
             }
             set
             {
-                this._PlaceString = value;
+                _PlaceString = value;
                 OnPropertyChanged("PlaceString");
             }
         }
@@ -115,37 +115,37 @@ namespace HPTClient
         {
             if (hptHorse.Scratched == true)
             {
-                this.PlaceString = "-";
-                this.FinishingPosition = 50 + hptHorse.StartNr;
+                PlaceString = "-";
+                FinishingPosition = 50 + hptHorse.StartNr;
             }
-            else if (this.Place > 0 && this.Place < 4)
+            else if (Place > 0 && Place < 4)
             {
-                this.PlaceString = this.Place.ToString();
-                if (this.FinishingPosition == 0 || this.FinishingPosition == 999)
+                PlaceString = Place.ToString();
+                if (FinishingPosition == 0 || FinishingPosition == 999)
                 {
-                    this.FinishingPosition = this.Place;
+                    FinishingPosition = Place;
                 }
             }
-            else if (this.FinishingPosition > 0 && this.FinishingPosition < 21) // Diskvalificerad är 41-49 av någon anledning...
+            else if (FinishingPosition > 0 && FinishingPosition < 21) // Diskvalificerad är 41-49 av någon anledning...
             {
-                this.PlaceString = this.FinishingPosition.ToString();
+                PlaceString = FinishingPosition.ToString();
             }
-            else if (this.FinishingPosition > 20 && this.FinishingPosition < 51) // Diskvalificerad är 41-49 av någon anledning...
+            else if (FinishingPosition > 20 && FinishingPosition < 51) // Diskvalificerad är 41-49 av någon anledning...
             {
-                this.PlaceString = "D";
+                PlaceString = "D";
             }
-            else if (this.FinishingPosition > 50 && this.FinishingPosition < 70) // Diskvalificerad är 41-49 av någon anledning...
+            else if (FinishingPosition > 50 && FinishingPosition < 70) // Diskvalificerad är 41-49 av någon anledning...
             {
-                this.PlaceString = "-";
+                PlaceString = "-";
             }
-            else if (this.FinishingPosition == 0 || this.FinishingPosition == 999) // Utländskt lopp som saknar finishingPosition...
+            else if (FinishingPosition == 0 || FinishingPosition == 999) // Utländskt lopp som saknar finishingPosition...
             {
-                this.PlaceString = "-";
-                this.FinishingPosition = 21;
+                PlaceString = "-";
+                FinishingPosition = 21;
             }
             else
             {
-                this.PlaceString = string.Empty;
+                PlaceString = string.Empty;
             }
         }
     }

@@ -35,17 +35,17 @@
 
         public virtual int CompareTo(HPTVersion hv)
         {
-            if (hv.Version != this.Version)
+            if (hv.Version != Version)
             {
-                return this.Version - hv.Version > 0 ? 1 : -1;
+                return Version - hv.Version > 0 ? 1 : -1;
             }
-            if (this.Beta != hv.Beta)
+            if (Beta != hv.Beta)
             {
                 return hv.Beta ? 1 : -1;
             }
-            if (hv.BetaVersion != this.BetaVersion)
+            if (hv.BetaVersion != BetaVersion)
             {
-                return this.BetaVersion - hv.BetaVersion;
+                return BetaVersion - hv.BetaVersion;
             }
             return 0;
         }

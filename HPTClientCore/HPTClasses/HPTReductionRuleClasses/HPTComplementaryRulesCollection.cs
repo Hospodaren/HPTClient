@@ -18,9 +18,9 @@ namespace HPTClient
         {
             get
             {
-                if (this.ReductionRuleList.Count(r => r.Use) > 1)
+                if (ReductionRuleList.Count(r => r.Use) > 1)
                 {
-                    return "UTGÅNGAR: " + this.NumberOfWinnersString + " av " + this.ReductionRuleList.Count(r => r.Use).ToString();
+                    return "UTGÅNGAR: " + NumberOfWinnersString + " av " + ReductionRuleList.Count(r => r.Use).ToString();
                 }
                 return string.Empty;
             }
