@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using ATGDownloader;
+using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -9,6 +10,9 @@ namespace HPTClient
     [DataContract]
     public class HPTBetType : Notifier
     {
+        [DataMember(IsRequired = false, EmitDefaultValue = false)]
+        public string AtgId { get; set; }
+
         [DataMember]
         public string Name { get; set; }
 
@@ -23,6 +27,9 @@ namespace HPTClient
 
         [DataMember]
         public int TrackId { get; set; }
+
+        //[XmlIgnore]
+        public ATGGameInfoBase GameInfoBase { get; set; }
 
         public DateTime NextTime
         {

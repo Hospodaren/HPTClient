@@ -148,13 +148,13 @@ namespace HPTClient
                 try
                 {
                     byte[] baCalendar = DownloadAndCreateByteArray(webserviceURL, "CalendarZip");
-                    string calendarPath = HPTConfig.MyDocumentsPath + "\\HPTCalendar.hptc";
+                    string calendarPath = HPTConfig.MyDocumentsPath + "\\HPT7Calendar.xml";
                     // TODO: Anropa ATGToHPTHelper istället
                     //HPTServiceToHPTHelper.CreateCalendar(CalendarZip, hptCalendar);
                     ATGDownloaderToHPTHelper.UpdateCalendar(hptCalendar);
 
                     // Sätt sökväg och spara ner kalender på disk
-                    HPTSerializer.SerializeHPTCalendar(HPTConfig.MyDocumentsPath + "HPTCalendar.hptc", hptCalendar);
+                    HPTSerializer.SerializeHPTCalendar(HPTConfig.MyDocumentsPath + "HPT7Calendar.xml", hptCalendar);
                     return baCalendar;
                 }
                 catch (Exception exc)
@@ -1109,45 +1109,45 @@ namespace HPTClient
         #region Hämtning från ATGs REST-tjänst
 
         // https://www.atg.se/services/v1/horses/693542/results?stopdate=2015-09-24
-        internal void GetHorseResultListFromATG(HPTHorse horse)
-        {
-            if (horse.ResultList.Count < 5)
-            {
-                return;
-            }
-            var WCATG = new WebClient()
-            {
-                BaseAddress = "https://www.atg.se/services/v1/horses/",
-                Encoding = Encoding.UTF8
-            };
+        //internal void GetHorseResultListFromATG(HPTHorse horse)
+        //{
+        //    if (horse.ResultList.Count < 5)
+        //    {
+        //        return;
+        //    }
+        //    var WCATG = new WebClient()
+        //    {
+        //        BaseAddress = "https://www.atg.se/services/v1/horses/",
+        //        Encoding = Encoding.UTF8
+        //    };
 
-            string requestUrl = horse.ATGId + "/results?stopdate=" + horse.ResultList.Min(hr => hr.Date).AddDays(-1D).ToString("yyyy-MM-dd");
-            string json = WCATG.DownloadString(requestUrl);
-            var recordList = (ATGHorseRecordList)HPTSerializer.DeserializeJson(typeof(ATGHorseRecordList), json);
+        //    string requestUrl = horse.ATGId + "/results?stopdate=" + horse.ResultList.Min(hr => hr.Date).AddDays(-1D).ToString("yyyy-MM-dd");
+        //    string json = WCATG.DownloadString(requestUrl);
+        //    var recordList = (ATGHorseRecordList)HPTSerializer.DeserializeJson(typeof(ATGHorseRecordList), json);
 
-            var resultList = recordList.records.Select(r => new HPTHorseResult()
-            {
-                Date = DateTime.Parse(r.date),
-                Distance = r.start.distance,
-                Driver = r.start.driver.shortName,
-                FirstPrize = r.race.firstPrize / 100,
-                Odds = string.IsNullOrEmpty(r.odds) ? r.oddsCode : r.odds,
-                Place = string.IsNullOrWhiteSpace(r.place) ? 0 : int.Parse(r.place),
-                PlaceString = r.place,
-                Position = r.start.postPosition,
-                StartNr = 0,
-                RaceNr = r.race.number,
-                RaceType = r.race.type,
-                Shoeinfo = CreateHorseShoeInfo(r.start.horse.shoes),
-                TrackCode = EnumHelper.GetTrackCodeFromTrackId(r.track.id),
-                Time = CreateKmTime(r.kmTime)
-            });
+        //    var resultList = recordList.records.Select(r => new HPTHorseResult()
+        //    {
+        //        Date = DateTime.Parse(r.date),
+        //        Distance = r.start.distance,
+        //        Driver = r.start.driver.shortName,
+        //        FirstPrize = r.race.firstPrize / 100,
+        //        Odds = string.IsNullOrEmpty(r.odds) ? r.oddsCode : r.odds,
+        //        Place = string.IsNullOrWhiteSpace(r.place) ? 0 : int.Parse(r.place),
+        //        PlaceString = r.place,
+        //        Position = r.start.postPosition,
+        //        StartNr = 0,
+        //        RaceNr = r.race.number,
+        //        RaceType = r.race.type,
+        //        Shoeinfo = CreateHorseShoeInfo(r.start.horse.shoes),
+        //        TrackCode = EnumHelper.GetTrackCodeFromTrackId(r.track.id),
+        //        Time = CreateKmTime(r.kmTime)
+        //    });
 
-            resultList
-                .OrderByDescending(r => r.Date)
-                .ToList()
-                .ForEach(r => horse.ResultList.Add(r));
-        }
+        //    resultList
+        //        .OrderByDescending(r => r.Date)
+        //        .ToList()
+        //        .ForEach(r => horse.ResultList.Add(r));
+        //}
 
         internal string CreateKmTime(KmTime kmTime)
         {

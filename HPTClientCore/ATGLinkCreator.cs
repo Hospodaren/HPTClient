@@ -1,4 +1,6 @@
-﻿namespace HPTClient
+﻿using System.Text.RegularExpressions;
+
+namespace HPTClient
 {
     class ATGLinkCreator
     {
@@ -59,16 +61,16 @@
 
         internal static string CreateRaceResultLink(HPTHorseResult horseResult)
         {
-            string result = ATGBaseUrl +
-                horseResult.Date.ToString("yyyy-MM-dd") +
-                "/vp/" +
-                EnumHelper.GetTrackNameATGSEFromShortString(horseResult.TrackCode) +
-                "/lopp" +
-                horseResult.RaceNr.ToString() +
-                "/resultat";
+            // TODO: https://www.atg.se/spel/2026-01-03/vinnare/jagersro/lopp/8/resultat
+            // 2025-08-30_18_2
 
-            return result;
-        }
+            var rexRaceParts = new Regex(@"(\d{4}-\d{2}-\d{2})_(\d{1,2})_(\d{1,2})", RegexOptions.IgnoreCase);
+            var result = rexRaceParts.Match(horseResult.ATGId);
+            int trackId = int.Parse(result.Groups[2].Value);
+            string trackName = EnumHelper.GetTrackNameForResultLinkFromTrackId(trackId);
+            
+            return $"{ATGBaseUrl}{result.Groups[1].Value}/vinnare/{trackName}/lopp/{result.Groups[2].Value}/resultat" ;
+        } 
 
         internal static string CreateTrackNameForUrl(HPTRace race)
         {

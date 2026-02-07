@@ -17,12 +17,6 @@ namespace HPTClient
         [DataMember]
         public DateTime ToDate { get; set; }
 
-        //[DataMember]
-        //public string FromDateString { get; set; }
-
-        //[DataMember]
-        //public string ToDateString { get; set; }
-
         [DataMember]
         public ObservableCollection<HPTRaceDayInfo> RaceDayInfoList { get; set; }
 

@@ -1084,6 +1084,8 @@ namespace HPTClient
 
         public void FindHeadToHead()
         {
+            return;
+            // TODO: Så småningom kan det här vara bra att ha...
             IEnumerable<List<HPTHorseResult>> horseResultList = HorseList
                 .SelectMany(h => h.ResultList)
                 .GroupBy(hr => new { hr.Date, hr.RaceNr, hr.TrackCode })

@@ -290,15 +290,16 @@ namespace HPTClient
                 // Deaktivera knappen
                 btnUpdate.IsEnabled = false;
 
-                var serviceConnector = new HPTServiceConnector();
                 // TODO: Använd ATGDownloader
-                //serviceConnector.GetRaceDayInfoUpdate(MarkBet.RaceDayInfo.BetType.Code, MarkBet.RaceDayInfo.TrackId, MarkBet.RaceDayInfo.RaceDayDate, UpdateFromATG);
+                var gameBase = ATGDownloader.ATGObjectGetter.UpdateGame(MarkBet.BetType.GameInfoBase);
+                MarkBet.RaceDayInfo.Merge(gameBase);
             }
             catch (Exception exc)
             {
                 string s = exc.Message;
-                Cursor = Cursors.Arrow;
             }
+            btnUpdate.IsEnabled = true;
+            Cursor = Cursors.Arrow;
         }
 
         // TODO: Använd ATGDownloader

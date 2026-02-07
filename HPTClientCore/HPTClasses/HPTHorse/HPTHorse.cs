@@ -2908,21 +2908,6 @@ namespace HPTClient
                     c = HPTConfig.Config.ColorGood;
                 }
             }
-            //else if (HPTConfig.Config.SetColorFromMarksPercent)
-            //{
-            //    if (this.MarksPercent < HPTConfig.Config.ColorIntervalMarksPercent.LowerBoundary)
-            //    {
-            //        c = HPTConfig.Config.ColorBad;
-            //    }
-            //    else if (this.MarksPercent < HPTConfig.Config.ColorIntervalMarksPercent.UpperBoundary)
-            //    {
-            //        c = HPTConfig.Config.ColorMedium;
-            //    }
-            //    else
-            //    {
-            //        c = HPTConfig.Config.ColorGood;
-            //    }
-            //}
             else if (HPTConfig.Config.SetColorFromStakePercent)
             {
                 if (StakeDistributionPercent < HPTConfig.Config.ColorIntervalStakePercent.LowerBoundary)
@@ -3732,47 +3717,49 @@ namespace HPTClient
             }
         }
 
-        private int daysSinceLastStart;
+        private int daysSinceLastStart = 0;
         [GroupReduction("Dagar sen senaste start", 11, 1D, 365D, 1D, 1D, 365D)]
         public int DaysSinceLastStart
         {
             get
             {
-                if (daysSinceLastStart == 0)
-                {
-                    if (ParentRace != null && ParentRace.ParentRaceDayInfo != null && ResultList.Any())
-                    {
-                        TimeSpan ts = ParentRace.ParentRaceDayInfo.RaceDayDate - ResultList.First().Date;
-                        daysSinceLastStart = Convert.ToInt32(Math.Floor(ts.TotalDays));
-                    }
-                }
+                // TODO: Resultlist är tom
+                //if (daysSinceLastStart == 0)
+                //{
+                //    if (ParentRace != null && ParentRace.ParentRaceDayInfo != null && ResultList.Any())
+                //    {
+                //        TimeSpan ts = ParentRace.ParentRaceDayInfo.RaceDayDate - ResultList.First().Date;
+                //        daysSinceLastStart = Convert.ToInt32(Math.Floor(ts.TotalDays));
+                //    }
+                //}
                 return daysSinceLastStart;
             }
         }
 
-        private string daysBetweenStarts;
+        private string daysBetweenStarts = "0";
         public string DaysBetweenStarts
         {
             get
             {
-                if (string.IsNullOrEmpty(daysBetweenStarts))
-                {
-                    StringBuilder sb = new StringBuilder();
-                    sb.Append("(");
-                    for (int i = 0, j = 1; j < ResultList.Count; i++, j++)
-                    {
-                        TimeSpan ts = ResultList[i].Date - ResultList[j].Date;
-                        int numberOfDays = Convert.ToInt32(ts.TotalDays);
-                        sb.Append(numberOfDays);
-                        sb.Append("-");
-                    }
-                    if (ResultList.Count > 0)
-                    {
-                        sb.Remove(sb.Length - 1, 1);
-                    }
-                    sb.Append(")");
-                    daysBetweenStarts = sb.ToString();
-                }
+                // TODO: ResultList är tom
+                //if (string.IsNullOrEmpty(daysBetweenStarts))
+                //{
+                //    StringBuilder sb = new StringBuilder();
+                //    sb.Append("(");
+                //    for (int i = 0, j = 1; j < ResultList.Count; i++, j++)
+                //    {
+                //        TimeSpan ts = ResultList[i].Date - ResultList[j].Date;
+                //        int numberOfDays = Convert.ToInt32(ts.TotalDays);
+                //        sb.Append(numberOfDays);
+                //        sb.Append("-");
+                //    }
+                //    if (ResultList.Count > 0)
+                //    {
+                //        sb.Remove(sb.Length - 1, 1);
+                //    }
+                //    sb.Append(")");
+                //    daysBetweenStarts = sb.ToString();
+                //}
                 return daysBetweenStarts;
             }
         }

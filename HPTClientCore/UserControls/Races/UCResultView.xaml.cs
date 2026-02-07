@@ -33,45 +33,45 @@ namespace HPTClient
             Process.Start(psi);
         }
 
-        private void btnGetMoreResults_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                var horse = DataContext as HPTHorse;
-                if (horse.ResultList.Count < 5)
-                {
-                    btnGetMoreResults.Visibility = Visibility.Collapsed;
-                    return;
-                }
+        //private void btnGetMoreResults_Click(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        var horse = DataContext as HPTHorse;
+        //        if (horse.ResultList.Count < 5)
+        //        {
+        //            btnGetMoreResults.Visibility = Visibility.Collapsed;
+        //            return;
+        //        }
 
-                var serviceConnector = new HPTServiceConnector();
-                //serviceConnector.GetHorseResultListFromATG(this.DataContext as HPTHorse);
-                serviceConnector.GetHorseStartInformationFromATG(horse);
-                btnGetMoreResults.Visibility = Visibility.Collapsed;
-            }
-            catch (Exception exc)
-            {
-                string s = exc.Message;
-            }
-        }
+        //        var serviceConnector = new HPTServiceConnector();
+        //        //serviceConnector.GetHorseResultListFromATG(this.DataContext as HPTHorse);
+        //        serviceConnector.GetHorseStartInformationFromATG(horse);
+        //        btnGetMoreResults.Visibility = Visibility.Collapsed;
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        string s = exc.Message;
+        //    }
+        //}
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (DataContext.GetType() == typeof(HPTHorse))
-                {
-                    var horse = DataContext as HPTHorse;
-                    if (horse.ResultList.Count != 5)
-                    {
-                        btnGetMoreResults.Visibility = Visibility.Collapsed;
-                    }
-                }
-            }
-            catch (Exception)
-            {
+        //private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        if (DataContext.GetType() == typeof(HPTHorse))
+        //        {
+        //            var horse = DataContext as HPTHorse;
+        //            if (horse.ResultList.Count != 5)
+        //            {
+        //                btnGetMoreResults.Visibility = Visibility.Collapsed;
+        //            }
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
 
-            }
-        }
+        //    }
+        //}
     }
 }

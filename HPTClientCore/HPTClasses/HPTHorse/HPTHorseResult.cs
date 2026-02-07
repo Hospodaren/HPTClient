@@ -84,6 +84,8 @@ namespace HPTClient
             }
         }
 
+        public string ATGId { get; set; }
+
         private Brush backColor;
         [XmlIgnore]
         public Brush BackColor

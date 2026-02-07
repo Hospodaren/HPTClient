@@ -384,7 +384,7 @@ namespace HPTClient
                 {
                     Directory.CreateDirectory(dir);
                 }
-                string archiveDir = dir + "\\" + "Arkiv\\";
+                string archiveDir = Path.Combine(dir, "Arkiv");
                 if (!Directory.Exists(archiveDir))
                 {
                     Directory.CreateDirectory(archiveDir);
@@ -393,7 +393,7 @@ namespace HPTClient
                 {
                     try
                     {
-                        File.Move(CurrentFileName, archiveDir + Path.GetFileName(CurrentFileName));
+                        File.Move(CurrentFileName, Path.Combine(archiveDir, Path.GetFileName(CurrentFileName)));
                     }
                     catch (Exception exc)
                     {
@@ -759,7 +759,7 @@ namespace HPTClient
                     V6 = MarkBet.V6,
                     Date = MarkBet.RaceDayInfo.RaceDayDate,
                     SystemSize = MarkBet.SystemSize,
-                    CouponRaceList = new ObservableCollection<HPTCouponRace>(
+                    CouponRaceList = new (
                         Enumerable.Range(1, MarkBet.RaceDayInfo.RaceList.Count)
                         .Select(i => new HPTCouponRace()
                         {

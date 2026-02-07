@@ -16,15 +16,13 @@ namespace HPTClient
     {
         #region Skapa och hämta konfiguration
 
-        internal static string ConfigFileName = "HPT52Config.hptcon";
-        //internal static string ConfigFileNameOld = "HPT5Config.hptcon";
+        internal static string ConfigFileName = "HPT7Config.xml";
 
         public void SaveConfig()
         {
             try
             {
-                //RemoveDefaultTemplates();
-                HPTSerializer.SerializeHPTConfig(MyDocumentsPath + ConfigFileName, this);
+                HPTSerializer.SerializeHPTConfig(Path.Combine(MyDocumentsPath, ConfigFileName), this);
             }
             catch (Exception exc)
             {
@@ -1559,12 +1557,6 @@ namespace HPTClient
                 UpperBoundary = 1.0M
             };
 
-            ColorIntervalMarksPercent = new HPTColorInterval()
-            {
-                LowerBoundary = 10M,
-                UpperBoundary = 30M
-            };
-
             ColorIntervalPlayability = new HPTColorInterval()
             {
                 LowerBoundary = 1.0M,
@@ -1579,8 +1571,8 @@ namespace HPTClient
 
             ColorIntervalVinnarOdds = new HPTColorInterval()
             {
-                LowerBoundary = 60M,
-                UpperBoundary = 150M
+                LowerBoundary = 600M,
+                UpperBoundary = 1500M
             };
 
             ColorIntervalStakePercent = new HPTColorInterval()
@@ -1650,15 +1642,6 @@ namespace HPTClient
                 UpperBoundary = 1.2M
             };
 
-            ColorIntervalMarksPercent = new HPTColorInterval()
-            {
-                HighColor = ColorBad,
-                MediumColor = ColorMedium,
-                LowColor = ColorGood,
-                LowerBoundary = 20M,
-                UpperBoundary = 50M
-            };
-
             ColorIntervalPlayability = new HPTColorInterval()
             {
                 HighColor = ColorBad,
@@ -1682,8 +1665,8 @@ namespace HPTClient
                 HighColor = ColorBad,
                 MediumColor = ColorMedium,
                 LowColor = ColorGood,
-                LowerBoundary = 50M,
-                UpperBoundary = 120M
+                LowerBoundary = 600M,
+                UpperBoundary = 1500M
             };
 
             ColorIntervalStakePercent = new HPTColorInterval()

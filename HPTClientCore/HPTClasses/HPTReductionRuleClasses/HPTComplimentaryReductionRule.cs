@@ -19,14 +19,10 @@ namespace HPTClient
             Use = use;
             NumberOfRaces = numberOfRaces;
 
-            NumberOfWinnersList = new ObservableCollection<HPTNumberOfWinners>();
-            for (int i = 0; i <= numberOfRaces; i++)
-            {
-                HPTNumberOfWinners now = new HPTNumberOfWinners();
-                now.NumberOfWinners = i;
-                NumberOfWinnersList.Add(now);
-            }
-            NumberOfWinnersList.First(now => now.NumberOfWinners == 0).Selectable = true;
+            var nowList = Enumerable.Range(0, numberOfRaces + 1)
+                .Select(i => new HPTNumberOfWinners({ NumberOfWinners = i});
+            NumberOfWinnersList = new ObservableCollection<HPTNumberOfWinners>(nowList);            
+            NumberOfWinnersList.First(now => now.NumberOfWinners == 0).Selectable = true;   // TODO: Fult!
         }
 
         public override bool IncludeRow(HPTMarkBet markBet, HPTHorse[] horseList, int numberOfRacesToTest)

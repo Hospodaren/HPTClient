@@ -25,146 +25,121 @@ namespace HPTClient
             HorseListSelected = new ObservableCollection<HPTHorse>();
         }
 
-        public void Merge(ATGGameBase rdi)
+        [XmlIgnore]
+        public ATGGameBase GameBase { get; set; }
+
+        //[XmlIgnore]
+        //public ATGGameInfoBase GameInfoBase { get; set; }
+
+        public void Merge(ATGGameBase gameBase)
         {
-            // TODO: Använd ATGGameBase
-            //try
-            //{
-            //    MarksQuantity = rdi.MarksQuantity;
-            //    if (rdi.Turnover != 0)
-            //    {
-            //        Turnover = rdi.Turnover;
-            //    }
 
-            //    // Uppdatera storleken på vinstpotterna
-            //    if (rdi.PayoutList != null)
-            //    {
-            //        if (PayOutListATG == null)
-            //        {
-            //            HPTServiceToHPTHelper.CreatePayOutLists(rdi, this);
-            //        }
-            //        else
-            //        {
-            //            foreach (var payOut in rdi.PayoutList)
-            //            {
-            //                var payOutATG = PayOutListATG.FirstOrDefault(po => po.NumberOfCorrect == payOut.NumberOfCorrect);
-            //                if (payOutATG != null)
-            //                {
-            //                    payOutATG.NumberOfSystems = payOut.NumberOfSystems;
-            //                    payOutATG.PayOutAmount = payOut.PayOutAmount;
-            //                    payOutATG.TotalAmount = payOut.TotalAmount;
-            //                }
-            //            }
-            //        }
-            //        //if (this.PayOutListATG != null && this.PayOutListATG.Count > 0 && this.PayOutListATG.First().TotalAmount == 0)
-            //        if (PayOutListATG != null && PayOutListATG.Count > 0)
-            //        {
-            //            if (BetType.Code == "V4" || BetType.Code == "V5")
-            //            {
-            //                PayOutListATG.First().TotalAmount += Convert.ToInt32(Convert.ToDecimal(Turnover) * BetType.PoolShare);
-            //            }
+            try
+            {
+                Jackpot = gameBase.GameInfo.JackpotAmount;
+                Turnover = Convert.ToInt32(gameBase.Turnover / 10M);
 
-            //            MaxPayOut = PayOutListATG
-            //                .OrderByDescending(po => po.NumberOfCorrect)
-            //                .First()
-            //                .TotalAmount;
-            //        }
-            //    }
-            //    foreach (HPTService.HPTRace race in rdi.LegList)
-            //    {
-            //        HPTRace hptRace = null;
-            //        switch (BetType.TypeCategory)
-            //        {
-            //            case BetTypeCategory.None:
-            //                break;
-            //            case BetTypeCategory.V4:
-            //            case BetTypeCategory.V5:
-            //            case BetTypeCategory.V6X:
-            //            case BetTypeCategory.V75:
-            //            case BetTypeCategory.V86:
-            //            case BetTypeCategory.V85:
-            //            case BetTypeCategory.Double:
-            //                hptRace = RaceList.Where(hr => hr.LegNr == race.LegNr).FirstOrDefault();
-            //                break;
-            //            case BetTypeCategory.Trio:
-            //            case BetTypeCategory.Twin:
-            //                hptRace = RaceList.Where(hr => hr.RaceNr == race.SharedInfo.RaceNr).FirstOrDefault();
-            //                break;
-            //            default:
-            //                break;
-            //        }
 
-            //        if (hptRace != null)
-            //        {
-            //            hptRace.Merge(race);
-            //        }
-            //    }
+                // Uppdatera storleken på vinstpotterna
+                if (gameBase.Payouts != null)
+                {
+                    if (PayOutListATG == null)
+                    {
+                        //HPTServiceToHPTHelper.CreatePayOutLists(rdi, this);
+                    }
+                    else
+                    {
+                        PayOutListATG.ToList().ForEach(p =>
+                        {
+                            var payOutATG = gameBase.Payouts[p.NumberOfCorrect];
+                            if (payOutATG != null)
+                            {
+                                p.NumberOfSystems = payOutATG.NumberOfSystems;
+                                p.PayOutAmount = payOutATG.Payout;
+                                p.TotalAmount = payOutATG.PayoutSum;
+                            }
+                        });
+                    }
+                    // TODO: När det inte blur utdelning på alla rätt på V4/V5
+                    //if (PayOutListATG != null && PayOutListATG.Count > 0)
+                    //{
+                    //    if (BetType.Code == "V4" || BetType.Code == "V5")
+                    //    {
+                    //        PayOutListATG.First().TotalAmount += Convert.ToInt32(Convert.ToDecimal(Turnover) * BetType.PoolShare);
+                    //    }
 
-            //    // Hantera potterna för olika antal rätt
-            //    if (rdi.PayoutList != null)
-            //    {
-            //        IEnumerable<HPTPayOut> payOutList = rdi.PayoutList.Select(po => new HPTPayOut()
-            //        {
-            //            NumberOfCorrect = po.NumberOfCorrect,
-            //            NumberOfSystems = po.NumberOfSystems,
-            //            PayOutAmount = po.PayOutAmount,
-            //            TotalAmount = po.TotalAmount
-            //        });
-            //        PayOutListATG = new ObservableCollection<HPTPayOut>(payOutList);
-            //        if (Jackpot > 0)
-            //        {
-            //            var payOut = PayOutListATG.FirstOrDefault(po => po.NumberOfCorrect == RaceList.Count);
-            //            JackpotFactor = Convert.ToDecimal(payOut.TotalAmount) / Convert.ToDecimal(payOut.TotalAmount - Jackpot);
-            //            if (JackpotFactor > 2M && DateTime.Now < RaceList.First().PostTime)
-            //            {
-            //                JackpotFactor = 2M;
-            //            }
-            //        }
-            //        else
-            //        {
-            //            JackpotFactor = 1M;
-            //        }
-            //        if (BetType.Code == "V4" || BetType.Code == "V5")
-            //        {
-            //            if (PayOutListATG.First().TotalAmount == 0)
-            //            {
-            //                PayOutListATG.First().TotalAmount += Convert.ToInt32(Convert.ToDecimal(Turnover) * BetType.PoolShare);
-            //            }
-            //        }
+                    //    MaxPayOut = PayOutListATG
+                    //        .OrderByDescending(po => po.NumberOfCorrect)
+                    //        .First()
+                    //        .TotalAmount;
+                    //}
 
-            //        SetV6Factor();
-            //    }
+                    if (Jackpot > 0)
+                    {
+                        var payOut = PayOutListATG.FirstOrDefault(po => po.NumberOfCorrect == RaceList.Count);
+                        JackpotFactor = Convert.ToDecimal(payOut.TotalAmount) / Convert.ToDecimal(payOut.TotalAmount - Jackpot);
+                        if (JackpotFactor > 2M && DateTime.Now < RaceList.First().PostTime)
+                        {
+                            JackpotFactor = 2M;
+                        }
+                    }
+                    else
+                    {
+                        JackpotFactor = 1M;
+                    }
+                    if (BetType.Code == "V4" || BetType.Code == "V5")
+                    {
+                        if (PayOutListATG.First().TotalAmount == 0)
+                        {
+                            PayOutListATG.First().TotalAmount += Convert.ToInt32(Convert.ToDecimal(Turnover) * BetType.PoolShare);
+                        }
+                    }
 
-            //    if (rdi.CombinationList != null)
-            //    {
-            //        foreach (HPTService.HPTCombination comb in rdi.CombinationList)
-            //        {
-            //            string uniqueCode = GetUniqueCodeFromCombination(comb);
-            //            var hptComb = CombinationListInfoDouble.CombinationList
-            //                .FirstOrDefault(hc => hc.UniqueCode == uniqueCode);
+                    SetV6Factor();
+                }
 
-            //            if (hptComb != null)
-            //            {
-            //                if (hptComb.Horse1.Scratched == true || hptComb.Horse2.Scratched == true)
-            //                {
-            //                    hptComb.Selected = false;
-            //                    hptComb.Stake = null;
-            //                }
-            //                else
-            //                {
-            //                    hptComb.CombinationOdds = comb.CombinationOdds;
-            //                    hptComb.CombinationOddsExact = comb.CombinationOddsExact;
-            //                    hptComb.CalculateQuotas(BetType.Code);
-            //                }
-            //            }
-            //        }
-            //        SortCombinationValues();
-            //    }
-            //}
-            //catch (Exception exc)
-            //{
-            //    HPTConfig.Config.AddToErrorLog(exc);
-            //}
+                MarksQuantity = gameBase.SystemCount;// TODO?
+
+                foreach (ATGRaceBase race in gameBase.Races)
+                {
+                    var hptRace = RaceList.FirstOrDefault(r => r.RaceNr == race.Number);
+                    if (hptRace != null)
+                    {
+                        hptRace.Merge(race);
+                    }
+                }
+
+                // TODO: Kombinataionsspelen
+                //if (rdi.CombinationList != null)
+                //{
+                //    foreach (HPTService.HPTCombination comb in rdi.CombinationList)
+                //    {
+                //        string uniqueCode = GetUniqueCodeFromCombination(comb);
+                //        var hptComb = CombinationListInfoDouble.CombinationList
+                //            .FirstOrDefault(hc => hc.UniqueCode == uniqueCode);
+
+                //        if (hptComb != null)
+                //        {
+                //            if (hptComb.Horse1.Scratched == true || hptComb.Horse2.Scratched == true)
+                //            {
+                //                hptComb.Selected = false;
+                //                hptComb.Stake = null;
+                //            }
+                //            else
+                //            {
+                //                hptComb.CombinationOdds = comb.CombinationOdds;
+                //                hptComb.CombinationOddsExact = comb.CombinationOddsExact;
+                //                hptComb.CalculateQuotas(BetType.Code);
+                //            }
+                //        }
+                //    }
+                //    SortCombinationValues();
+                //}
+            }
+            catch (Exception exc)
+            {
+                HPTConfig.Config.AddToErrorLog(exc);
+            }
         }
 
         internal void SetV6Factor()
@@ -730,7 +705,6 @@ namespace HPTClient
         internal void CalculateSimulatedRaceValues(HPTMarkBet markBet)
         {
             //decimal tempValue = 0M;
-            decimal numberOfWinningSystems = MarksQuantity;
             var horseList = new HPTHorse[RaceList.Count];
 
             //decimal divisionFactor = 1M;

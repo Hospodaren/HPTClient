@@ -1,4 +1,4 @@
-﻿using ICSharpCode.SharpZipLib.Zip;
+﻿//using ICSharpCode.SharpZipLib.Zip;
 using System.Collections.ObjectModel;
 using System.IO;
 //using System.IO.Compression;
@@ -11,55 +11,14 @@ namespace HPTClient
 {
     class HPTSerializer
     {
-        #region Generell Zip-funktionalitet
-
-        // Lösenord för zip-filer
-        private const string ZipKey = "455807A1-440B-4F50-821F-AA5584D174D3";
-
-        internal static object DeserializeObjectFromStream(Type typeOfObject, Stream stream)
-        {
-            var serializer = new DataContractSerializer(typeOfObject);
-            var response = serializer.ReadObject(stream);
-            return response;
-        }
-
-        internal static Stream SerializeHPTServiceObject(Type objectType, object hptObject)
-        {
-            var ms = new MemoryStream();
-            var serializer = new DataContractSerializer(objectType);
-            serializer.WriteObject(ms, hptObject);
-            ms.Position = 0;
-            return ms;
-        }
-
-        internal static object DeserializeHPTServiceObject(Type typeOfObject, byte[] binaryZip)
-        {
-            var serializer = new DataContractSerializer(typeOfObject);
-            var stream = UnzipAndCreateStream(binaryZip);
-            var response = serializer.ReadObject(stream);
-            return response;
-        }
-
-        internal static object DeserializeHPTServiceObject(Type typeOfObject, Stream stream)
-        {
-            var serializer = new DataContractSerializer(typeOfObject);
-            var response = serializer.ReadObject(stream);
-            return response;
-        }
-
         internal static bool SerializeHPTObject(Type typeOfObject, string fileName, object hptObject)
         {
             try
             {
-                var ms = new MemoryStream();
+                using var fileStream = File.OpenWrite(fileName);
                 var serializer = new DataContractSerializer(typeOfObject);
-                serializer.WriteObject(ms, hptObject);
-                ms.Position = 0;
-                ZipAndCreateFile(ms, fileName);
-                ms.Flush();
-                ms.Close();
-                ms = null;
-
+                serializer.WriteObject(fileStream, hptObject);
+                
                 return true;
             }
             catch (Exception exc)
@@ -69,142 +28,188 @@ namespace HPTClient
             return false;
         }
 
-        internal static object DeserializeHPTObject(Type typeOfObject, byte[] binaryZip)
+        internal static object DeserializeHPTObject(Type typeOfObject, string fileName)
         {
             var serializer = new DataContractSerializer(typeOfObject);
-            var stream = UnzipAndCreateStream(binaryZip);
+            var stream = File.OpenRead(fileName);
             var response = serializer.ReadObject(stream);
             return response;
         }
 
-        internal static object DeserializeHPTObject(Type typeOfObject, string filename)
-        {
-            var serializer = new DataContractSerializer(typeOfObject);
-            var stream = UnzipAndCreateStream(filename);
-            var response = serializer.ReadObject(stream);
-            return response;
-        }
+        #region Generell Zip-funktionalitet
 
-        internal static byte[] SerializeHPTObject(XmlSerializer serializer, object hptObject)
-        {
-            MemoryStream ms = new MemoryStream();
-            serializer.Serialize(ms, hptObject);
-            ms.Position = 0;
-            var baObject = ZipAndCreateBinary(ms);
-            return baObject;
-        }
-        internal static Stream Decompress(string zipFilePath)
-        {
-            var zipInputStream = new ZipInputStream(File.OpenRead(zipFilePath))
-            {
-                Password = ZipKey
-            };
+        //// Lösenord för zip-filer
+        //private const string ZipKey = "455807A1-440B-4F50-821F-AA5584D174D3";
 
-            var entry = zipInputStream.GetNextEntry();
-            byte[] buffer = new byte[entry.Size];
-            zipInputStream.ReadExactly(buffer, 0, buffer.Length);
-            var ms = new MemoryStream(buffer);
-            ms.Position = 0;
+        //internal static object DeserializeObjectFromStream(Type typeOfObject, Stream stream)
+        //{
+        //    var serializer = new DataContractSerializer(typeOfObject);
+        //    var response = serializer.ReadObject(stream);
+        //    return response;
+        //}
 
-            return ms;
-        }
+        //internal static Stream SerializeHPTServiceObject(Type objectType, object hptObject)
+        //{
+        //    var ms = new MemoryStream();
+        //    var serializer = new DataContractSerializer(objectType);
+        //    serializer.WriteObject(ms, hptObject);
+        //    ms.Position = 0;
+        //    return ms;
+        //}
 
-        internal static Stream UnzipAndCreateStream(byte[] binaryZip)
-        {
-            var msIn = new MemoryStream(binaryZip);
-            msIn.Position = 0;
-            var zipInputStream = new ZipInputStream(msIn)
-            {
-                Password = ZipKey
-            };
+        //internal static object DeserializeHPTServiceObject(Type typeOfObject, byte[] binaryZip)
+        //{
+        //    var serializer = new DataContractSerializer(typeOfObject);
+        //    var stream = UnzipAndCreateStream(binaryZip);
+        //    var response = serializer.ReadObject(stream);
+        //    return response;
+        //}
 
-            var entry = zipInputStream.GetNextEntry();
-            byte[] buffer = new byte[entry.Size];
-            zipInputStream.ReadExactly(buffer, 0, buffer.Length);
-            var msOut = new MemoryStream(buffer);
-            msOut.Position = 0;
+        //internal static object DeserializeHPTServiceObject(Type typeOfObject, Stream stream)
+        //{
+        //    var serializer = new DataContractSerializer(typeOfObject);
+        //    var response = serializer.ReadObject(stream);
+        //    return response;
+        //}
 
-            return msOut;
-        }
+        //internal static bool SerializeHPTObject(Type typeOfObject, string fileName, object hptObject)
+        //{
+        //    try
+        //    {
+        //        using var fs = File.OpenWrite(fileName);
+        //        var serializer = new DataContractSerializer(typeOfObject);
+        //        serializer.WriteObject(fs, hptObject);
 
-        internal static byte[] ZipAndCreateBinary(Stream stream)
-        {
-            byte[] bytesIn = new byte[stream.Length];
-            stream.ReadExactly(bytesIn, 0, bytesIn.Length);
-            var ms = new MemoryStream();
-            using (var zipOutputStream = new ZipOutputStream(ms))
-            {
-                zipOutputStream.Password = ZipKey;
-                zipOutputStream.SetLevel(5); // Set compression level (0-9), 5 as a mid-range
-                var entry = new ZipEntry("System"); // Create a new entry for each file
-                zipOutputStream.PutNextEntry(entry);
-                zipOutputStream.Write(bytesIn, 0, bytesIn.Length);
-                zipOutputStream.Finish();
-                ms.Position = 0;
-                byte[] buffer = ms.ToArray();
-                zipOutputStream.Close();
+        //        return true;
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        string s = exc.Message;
+        //    }
+        //    return false;
+        //}
 
-                return buffer;
-            }
-        }
+        //internal static object DeserializeHPTObject(Type typeOfObject, byte[] binaryZip)
+        //{
+        //    var serializer = new DataContractSerializer(typeOfObject);
+        //    var stream = UnzipAndCreateStream(binaryZip);
+        //    var response = serializer.ReadObject(stream);
+        //    return response;
+        //}
 
-        internal static Stream UnzipAndCreateStream(string fileName)
-        {
-            try
-            {
-                return Decompress(fileName);
+        //internal static object DeserializeHPTObject(Type typeOfObject, string filename)
+        //{
+        //    var serializer = new DataContractSerializer(typeOfObject);
+        //    var stream = File.OpenWrite(filename);
+        //    var response = serializer.ReadObject(stream);
+        //    return response;
+        //}
 
-                //Ionic.Zip.ZipFile zf = Ionic.Zip.ZipFile.Read(fileName);
-                //Ionic.Zip.ZipEntry ze = zf.Entries.First();
-                //MemoryStream outputStream = new MemoryStream();
-                //ze.ExtractWithPassword(outputStream, ZipKey);
-                //outputStream.Position = 0;
-                //return outputStream;
-                //return new MemoryStream();
-            }
-            catch (Exception)
-            {
-                var fs = new FileStream(fileName, FileMode.Open);
-                return fs;
-            }
-        }
+        //internal static byte[] SerializeHPTObject(XmlSerializer serializer, object hptObject)
+        //{
+        //    MemoryStream ms = new MemoryStream();
+        //    serializer.Serialize(ms, hptObject);
+        //    ms.Position = 0;
+        //    var baObject = ZipAndCreateBinary(ms);
+        //    return baObject;
+        //}
+        //internal static Stream Decompress(string zipFilePath)
+        //{
+        //    var zipInputStream = new ZipInputStream(File.OpenRead(zipFilePath))
+        //    {
+        //        Password = ZipKey
+        //    };
 
-        internal static bool ZipAndCreateFile(Stream stream, string fileName)
-        {
-            byte[] bytesIn = new byte[stream.Length];
-            stream.ReadExactly(bytesIn, 0, bytesIn.Length);
-            var fs = new FileStream(fileName, FileMode.OpenOrCreate);
-            using (var zipOutputStream = new ZipOutputStream(fs))
-            {
-                zipOutputStream.Password = ZipKey;
-                zipOutputStream.SetLevel(5); // Set compression level (0-9), 5 as a mid-range
-                var entry = new ZipEntry("System"); // Create a new entry for each file
-                zipOutputStream.PutNextEntry(entry);
-                zipOutputStream.Write(bytesIn, 0, bytesIn.Length);
-                zipOutputStream.Finish();
-                //ms.Position = 0;
-                //byte[] buffer = ms.ToArray();
-                zipOutputStream.Close();
+        //    var entry = zipInputStream.GetNextEntry();
+        //    byte[] buffer = new byte[entry.Size];
+        //    zipInputStream.ReadExactly(buffer, 0, buffer.Length);
+        //    var ms = new MemoryStream(buffer);
+        //    ms.Position = 0;
 
-                return true;
-            }
-            //try
-            //{
-            //    Ionic.Zip.ZipFile zf = new Ionic.Zip.ZipFile()
-            //    {
-            //        CompressionLevel = Ionic.Zlib.CompressionLevel.BestCompression,
-            //        Password = ZipKey
-            //    };
+        //    return ms;
+        //}
 
-            //    zf.AddEntry("System", stream);
-            //    zf.Save(fileName);
-            //}
-            //catch (Exception)
-            //{
-            //    return false;
-            //}
-            return true;
-        }
+        //internal static Stream UnzipAndCreateStream(byte[] binaryZip)
+        //{
+        //    var msIn = new MemoryStream(binaryZip);
+        //    msIn.Position = 0;
+        //    var zipInputStream = new ZipInputStream(msIn)
+        //    {
+        //        Password = ZipKey
+        //    };
+
+        //    var entry = zipInputStream.GetNextEntry();
+        //    byte[] buffer = new byte[entry.Size];
+        //    zipInputStream.ReadExactly(buffer, 0, buffer.Length);
+        //    var msOut = new MemoryStream(buffer);
+        //    msOut.Position = 0;
+
+        //    return msOut;
+        //}
+
+        //internal static byte[] ZipAndCreateBinary(Stream stream)
+        //{
+        //    byte[] bytesIn = new byte[stream.Length];
+        //    stream.ReadExactly(bytesIn, 0, bytesIn.Length);
+        //    var ms = new MemoryStream();
+        //    using (var zipOutputStream = new ZipOutputStream(ms))
+        //    {
+        //        zipOutputStream.Password = ZipKey;
+        //        zipOutputStream.SetLevel(5); // Set compression level (0-9), 5 as a mid-range
+        //        var entry = new ZipEntry("System"); // Create a new entry for each file
+        //        zipOutputStream.PutNextEntry(entry);
+        //        zipOutputStream.Write(bytesIn, 0, bytesIn.Length);
+        //        zipOutputStream.Finish();
+        //        ms.Position = 0;
+        //        byte[] buffer = ms.ToArray();
+        //        zipOutputStream.Close();
+
+        //        return buffer;
+        //    }
+        //}
+
+        //internal static Stream UnzipAndCreateStream(string fileName)
+        //{
+        //    try
+        //    {
+        //        return Decompress(fileName);
+
+        //        //Ionic.Zip.ZipFile zf = Ionic.Zip.ZipFile.Read(fileName);
+        //        //Ionic.Zip.ZipEntry ze = zf.Entries.First();
+        //        //MemoryStream outputStream = new MemoryStream();
+        //        //ze.ExtractWithPassword(outputStream, ZipKey);
+        //        //outputStream.Position = 0;
+        //        //return outputStream;
+        //        //return new MemoryStream();
+        //    }
+        //    catch (Exception)
+        //    {
+        //        var fs = new FileStream(fileName, FileMode.Open);
+        //        return fs;
+        //    }
+        //}
+
+        //internal static bool ZipAndCreateFile(Stream stream, string fileName)
+        //{
+        //    byte[] bytesIn = new byte[stream.Length];
+        //    stream.ReadExactly(bytesIn, 0, bytesIn.Length);
+        //    var fs = new FileStream(fileName, FileMode.OpenOrCreate);
+        //    using (var zipOutputStream = new ZipOutputStream(fs))
+        //    {
+        //        zipOutputStream.Password = ZipKey;
+        //        zipOutputStream.SetLevel(5); // Set compression level (0-9), 5 as a mid-range
+        //        var entry = new ZipEntry("System"); // Create a new entry for each file
+        //        zipOutputStream.PutNextEntry(entry);
+        //        zipOutputStream.Write(bytesIn, 0, bytesIn.Length);
+        //        zipOutputStream.Finish();
+        //        //ms.Position = 0;
+        //        //byte[] buffer = ms.ToArray();
+        //        zipOutputStream.Close();
+
+        //        return true;
+        //    }
+        //    return true;
+        //}
 
         #endregion
 
@@ -296,59 +301,40 @@ namespace HPTClient
         internal static HPTConfig DeserializeHPTConfig(string fileName)
         {
             var serializer = new DataContractSerializer(typeof(HPTConfig));
-            var stream = UnzipAndCreateStream(fileName);
+            var stream = File.OpenRead(fileName);
             var response = serializer.ReadObject(stream);
             HPTConfig hptConfig = (HPTConfig)response;
             return hptConfig;
         }
 
-        internal static HPTConfig DeserializeOldHPTConfig(string fileName)
-        {
-            Stream stream = UnzipAndCreateStream(fileName);
-            XmlSerializer serializer = new XmlSerializer(typeof(HPTConfig));
-            XmlTextReader xtr = new XmlTextReader(stream);
-            HPTConfig hptConfig = (HPTConfig)serializer.Deserialize(xtr);
-            xtr.Close();
-            xtr = null;
-            return hptConfig;
-        }
+        //internal static HPTConfig DeserializeOldHPTConfig(string fileName)
+        //{
+        //    Stream stream = UnzipAndCreateStream(fileName);
+        //    XmlSerializer serializer = new XmlSerializer(typeof(HPTConfig));
+        //    XmlTextReader xtr = new XmlTextReader(stream);
+        //    HPTConfig hptConfig = (HPTConfig)serializer.Deserialize(xtr);
+        //    xtr.Close();
+        //    xtr = null;
+        //    return hptConfig;
+        //}
 
         internal static void SerializeHPTConfig(string fileName, HPTConfig hptConfig)
         {
-            //MemoryStream ms = new MemoryStream();
-            //var serializer = new XmlSerializer(typeof(HPTConfig));
-            //serializer.Serialize(ms, hptConfig);
-            //ms.Position = 0;
-            //ZipAndCreateFile(ms, fileName);
             SerializeHPTObject(typeof(HPTConfig), fileName, hptConfig);
         }
 
         internal static HPTMarkBet DeserializeHPTSystem(string fileName)
         {
-            Stream stream = UnzipAndCreateStream(fileName);
+            var stream = File.OpenRead(fileName);
             HPTMarkBet hmb = null;
 
             string fileExtension = Path.GetExtension(fileName).Replace(".", string.Empty);
-            if (fileExtension == "hpt5")
+            if (fileExtension == "hpt7")
             {
                 var serializer = new DataContractSerializer(typeof(HPTMarkBet));
                 hmb = (HPTMarkBet)serializer.ReadObject(stream);
             }
-            else if (fileExtension == "hpt4")
-            {
-                var serializer = new XmlSerializer(typeof(HPTMarkBet));
-                var xtr = new XmlTextReader(stream);
-                hmb = (HPTMarkBet)serializer.Deserialize(xtr);
-                xtr.Close();
-                xtr = null;
-            }
-
             hmb.Config = HPTConfig.Config;
-
-            DateTime dt = DateTime.Now;
-            HPTServiceToHPTHelper.SetNonSerializedValues(hmb);
-            TimeSpan ts = DateTime.Now - dt;
-            string s = ts.TotalMilliseconds.ToString();
 
             return hmb;
         }
@@ -361,7 +347,6 @@ namespace HPTClient
             try
             {
                 ThreadPool.QueueUserWorkItem(new WaitCallback(HPTConfig.Config.UpdateHPTSystemDirectories), ThreadPriority.Normal);
-                //HPTConfig.Config.UpdateHPTSystemDirectories();
             }
             catch (Exception exc)
             {
@@ -369,34 +354,51 @@ namespace HPTClient
             }
         }
 
-        internal static HPTCombBet DeserializeHPTCombinationSystem(string fileName)
+        internal static void SerializeHPTRaceList(HPTMarkBet hmb)
         {
-            Stream stream = UnzipAndCreateStream(fileName);
-            HPTCombBet hcb = null;
-
-            string fileExtension = Path.GetExtension(fileName).Replace(".", string.Empty);
-            if (fileExtension == "hpt5")
+            try
             {
-                var serializer = new DataContractSerializer(typeof(HPTCombBet));
-                hcb = (HPTCombBet)serializer.ReadObject(stream);
+                string dirName = Path.GetDirectoryName(hmb.SystemFilename);
+                dirName = Path.Combine(dirName, "Historik");
+                string fileName = Path.Combine(dirName, $"{hmb.BetType.Code}_{DateTime.Now:yyyyMMddHHmmss.xml}");
+
+                SerializeHPTObject(typeof(IEnumerable<HPTRace>), fileName, hmb.RaceDayInfo.RaceList);
             }
-            else if (fileExtension == "hpt4")
+            catch (Exception exc)
             {
-                var serializer = new XmlSerializer(typeof(HPTCombBet));
-                var xtr = new XmlTextReader(stream);
-                hcb = (HPTCombBet)serializer.Deserialize(xtr);
-                xtr.Close();
-                xtr = null;
+                string s = exc.Message;
             }
-
-            hcb.Config = HPTConfig.Config;
-            HPTServiceToHPTHelper.SetNonSerializedValues(hcb);
-            hcb.IsDeserializing = false;
-            hcb.RecalculateAllRanks();
-            hcb.RecalculateRank();
-
-            return hcb;
         }
+
+        // TODO: Fixa kombinationsspel i framtiden...
+        //internal static HPTCombBet DeserializeHPTCombinationSystem(string fileName)
+        //{
+        //    Stream stream = UnzipAndCreateStream(fileName);
+        //    HPTCombBet hcb = null;
+
+        //    string fileExtension = Path.GetExtension(fileName).Replace(".", string.Empty);
+        //    if (fileExtension == "hpt5")
+        //    {
+        //        var serializer = new DataContractSerializer(typeof(HPTCombBet));
+        //        hcb = (HPTCombBet)serializer.ReadObject(stream);
+        //    }
+        //    else if (fileExtension == "hpt4")
+        //    {
+        //        var serializer = new XmlSerializer(typeof(HPTCombBet));
+        //        var xtr = new XmlTextReader(stream);
+        //        hcb = (HPTCombBet)serializer.Deserialize(xtr);
+        //        xtr.Close();
+        //        xtr = null;
+        //    }
+
+        //    hcb.Config = HPTConfig.Config;
+        //    HPTServiceToHPTHelper.SetNonSerializedValues(hcb);
+        //    hcb.IsDeserializing = false;
+        //    hcb.RecalculateAllRanks();
+        //    hcb.RecalculateRank();
+
+        //    return hcb;
+        //}
 
         internal static void SerializeHPTCombinationSystem(string fileName, HPTCombBet hcb)
         {
@@ -426,7 +428,7 @@ namespace HPTClient
         {
             try
             {
-                var stream = UnzipAndCreateStream(fileName);
+                var stream = File.OpenRead(fileName);
                 var serializer = new DataContractSerializer(typeof(HPTHorseOwnInformationCollection));
                 var response = serializer.ReadObject(stream);
                 var horseOwnInformationCollection = (HPTHorseOwnInformationCollection)response;
@@ -438,7 +440,7 @@ namespace HPTClient
             }
             catch (InvalidOperationException)
             {
-                var stream = UnzipAndCreateStream(fileName);
+                var stream = File.OpenRead(fileName);
                 XmlSerializer serializer = new XmlSerializer(typeof(HPTHorseOwnInformationCollection));
                 XmlTextReader xtr = new XmlTextReader(stream);
                 var hptHorseOwnInformation = (HPTHorseOwnInformationCollection)serializer.Deserialize(xtr);
@@ -465,16 +467,16 @@ namespace HPTClient
             }
         }
 
-        internal static HPTHorseOwnInformationCollection DeserializeHPTHorseOwnInformation(byte[] horseOwnInformationZip)
-        {
-            Stream stream = UnzipAndCreateStream(horseOwnInformationZip);
-            XmlSerializer serializer = new XmlSerializer(typeof(HPTHorseOwnInformationCollection));
-            XmlTextReader xtr = new XmlTextReader(stream);
-            var hptHorseOwnInformation = (HPTHorseOwnInformationCollection)serializer.Deserialize(xtr);
-            xtr.Close();
-            xtr = null;
-            return hptHorseOwnInformation;
-        }
+        //internal static HPTHorseOwnInformationCollection DeserializeHPTHorseOwnInformation(byte[] horseOwnInformationZip)
+        //{
+        //    Stream stream = UnzipAndCreateStream(horseOwnInformationZip);
+        //    XmlSerializer serializer = new XmlSerializer(typeof(HPTHorseOwnInformationCollection));
+        //    XmlTextReader xtr = new XmlTextReader(stream);
+        //    var hptHorseOwnInformation = (HPTHorseOwnInformationCollection)serializer.Deserialize(xtr);
+        //    xtr.Close();
+        //    xtr = null;
+        //    return hptHorseOwnInformation;
+        //}
 
         internal static void SerializeHPTHorseOwnInformation(string fileName, HPTHorseOwnInformationCollection hptHorseOwnInformation)
         {
@@ -497,23 +499,23 @@ namespace HPTClient
         //    }
         //}
 
-        internal static byte[] SerializeHPTRaceDayInfoCommentCollection(HPTRaceDayInfoCommentCollection hptRaceDayInfoCommentCollection)
-        {
-            XmlSerializer serializer = new XmlSerializer(typeof(HPTRaceDayInfoCommentCollection));
-            var binaryZip = SerializeHPTObject(serializer, hptRaceDayInfoCommentCollection);
-            return binaryZip;
-        }
+        //internal static byte[] SerializeHPTRaceDayInfoCommentCollection(HPTRaceDayInfoCommentCollection hptRaceDayInfoCommentCollection)
+        //{
+        //    XmlSerializer serializer = new XmlSerializer(typeof(HPTRaceDayInfoCommentCollection));
+        //    var binaryZip = SerializeHPTObject(serializer, hptRaceDayInfoCommentCollection);
+        //    return binaryZip;
+        //}
 
-        internal static HPTRaceDayInfoCommentCollection DeserializeHPTRaceDayInfoCommentCollection(byte[] raceDayInfoCommentCollection)
-        {
-            Stream stream = UnzipAndCreateStream(raceDayInfoCommentCollection);
-            XmlSerializer serializer = new XmlSerializer(typeof(HPTRaceDayInfoCommentCollection));
-            XmlTextReader xtr = new XmlTextReader(stream);
-            var hptRaceDayInfoCommentCollection = (HPTRaceDayInfoCommentCollection)serializer.Deserialize(xtr);
-            xtr.Close();
-            xtr = null;
-            return hptRaceDayInfoCommentCollection;
-        }
+        //internal static HPTRaceDayInfoCommentCollection DeserializeHPTRaceDayInfoCommentCollection(byte[] raceDayInfoCommentCollection)
+        //{
+        //    Stream stream = UnzipAndCreateStream(raceDayInfoCommentCollection);
+        //    XmlSerializer serializer = new XmlSerializer(typeof(HPTRaceDayInfoCommentCollection));
+        //    XmlTextReader xtr = new XmlTextReader(stream);
+        //    var hptRaceDayInfoCommentCollection = (HPTRaceDayInfoCommentCollection)serializer.Deserialize(xtr);
+        //    xtr.Close();
+        //    xtr = null;
+        //    return hptRaceDayInfoCommentCollection;
+        //}
 
         #endregion
 
@@ -521,7 +523,7 @@ namespace HPTClient
         {
             try
             {
-                string[] hptFiles = Directory.GetFiles(HPTConfig.MyDocumentsPath, "HPTCalendar.hptc");
+                string[] hptFiles = Directory.GetFiles(HPTConfig.MyDocumentsPath, "HPT7Calendar.xml");
                 if (hptFiles.Length > 0)
                 {
                     HPTCalendar hptCalendar = DeserializeHPTCalendar(hptFiles[0]);
@@ -571,7 +573,7 @@ namespace HPTClient
 
         internal static HPTTemplateCollection DeserializeHPTTemplateCollection(string fileName)
         {
-            Stream stream = UnzipAndCreateStream(fileName);
+            Stream stream = File.OpenRead(fileName);
             HPTTemplateCollection templateCollection = null;
 
             string fileExtension = Path.GetExtension(fileName).Replace(".", string.Empty);
@@ -591,16 +593,16 @@ namespace HPTClient
             return templateCollection;
         }
 
-        internal static HPTTemplateCollection DeserializeHPTTemplateCollection(byte[] templateCollectionZip)
-        {
-            Stream stream = UnzipAndCreateStream(templateCollectionZip);
-            XmlSerializer serializer = new XmlSerializer(typeof(HPTTemplateCollection));
-            XmlTextReader xtr = new XmlTextReader(stream);
-            var hptTemplateCollection = (HPTTemplateCollection)serializer.Deserialize(xtr);
-            xtr.Close();
-            xtr = null;
-            return hptTemplateCollection;
-        }
+        //internal static HPTTemplateCollection DeserializeHPTTemplateCollection(byte[] templateCollectionZip)
+        //{
+        //    Stream stream = UnzipAndCreateStream(templateCollectionZip);
+        //    XmlSerializer serializer = new XmlSerializer(typeof(HPTTemplateCollection));
+        //    XmlTextReader xtr = new XmlTextReader(stream);
+        //    var hptTemplateCollection = (HPTTemplateCollection)serializer.Deserialize(xtr);
+        //    xtr.Close();
+        //    xtr = null;
+        //    return hptTemplateCollection;
+        //}
 
         internal static void SerializeHPTTemplateCollection(string fileName, HPTTemplateCollection hptTemplateCollection)
         {
@@ -629,7 +631,7 @@ namespace HPTClient
             try
             {
                 var serializer = new DataContractSerializer(typeof(ObservableCollection<HPTResultAnalyzer>));
-                var stream = UnzipAndCreateStream(fileName);
+                var stream = File.OpenRead(fileName);
                 var response = serializer.ReadObject(stream);
                 var resultAnalyzerList = (ObservableCollection<HPTResultAnalyzer>)response;
                 return resultAnalyzerList;

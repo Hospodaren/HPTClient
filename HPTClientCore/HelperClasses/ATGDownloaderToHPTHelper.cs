@@ -1,4 +1,5 @@
 ﻿using ATGDownloader;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
@@ -11,10 +12,10 @@ namespace HPTClient
     {
         public static void UpdateCalendar(HPTCalendar hptCalendar)
         {
+            DateTime startDate = DateTime.Today.AddDays(-6);
+            DateTime endDate = DateTime.Today.AddDays(6);
             try
             {
-                DateTime startDate = DateTime.Today.AddDays(-6);
-                DateTime endDate = DateTime.Today.AddDays(6);
                 if (hptCalendar.RaceDayInfoList.Any())
                 {
                     startDate = hptCalendar.RaceDayInfoList.Max(rdi => rdi.RaceDayDate.Date);
@@ -28,7 +29,7 @@ namespace HPTClient
                     if (!availableRaceDayDates.Contains(startDate))
                     {
                         var atgCalendar = ATGObjectGetter.GetCalendar(startDate);
-                        atgCalendar.RaceDayList.ToList().ForEach(rd =>
+                        atgCalendar.RaceDayList.OrderBy(rd => rd.StartTime).ToList().ForEach(rd =>
                         {
                             var raceDayInfo = CreateCalendarRaceDayInfo(rd);
                             if (raceDayInfo.BetTypeList.Any())
@@ -42,6 +43,9 @@ namespace HPTClient
                 }
                 hptCalendar.FromDate = startDate;
                 hptCalendar.ToDate = endDate;
+                hptCalendar.RaceDayInfoList
+                    .ToList()
+                    .ForEach(rd => rd.ShowInUI = rd.RaceDayDate >= DateTime.Today);
             }
             catch (Exception exc)
             {
@@ -55,20 +59,22 @@ namespace HPTClient
             var hptRdi = new HPTRaceDayInfo()
             {
                 // Info som behövs för visning i kalendern
-                RaceDayDate = raceDay.StartTime.Date,
+                RaceDayDate = raceDay.StartTime,
                 TrackId = raceDay.Track.TrackId,
                 //Trackcode = gameInfoBase.BetTrack.Trackcode;   // TODO: Ta bort TrackCode?
                 Trackname = raceDay.Track.TrackName,
                 //TrackCondition = gameInfoBase.Races.First().c; // TODO: Skita i det här på annat än loppnivå?
-                BetTypeList = raceDay.GameList.Select(bt => new HPTBetType()
+                BetTypeList = raceDay.GameList.Select(gib => new HPTBetType()
                 {
-                    Code = bt.Code,
-                    Name = bt.Code, // TODO: Ska vara det långa namnet, t ex "Dagens Dubbel"
-                    Jackpot = bt.JackpotAmount > 0, // TODO: Finns detta=
-                    StartTime = bt.StartTime,
+                    AtgId = gib.Id,
+                    Code = gib.Code,
+                    Name = gib.Code, // TODO: Ska vara det långa namnet, t ex "Dagens Dubbel"
+                    Jackpot = gib.JackpotAmount > 0, // TODO: Finns detta=
+                    StartTime = gib.StartTime,
                     //EndTime = bt.EndTime, // TODO: Beräkna utifrån sista loppet?
                     IsEnabled = true,
                     TrackId = raceDay.Track.TrackId,
+                    GameInfoBase = gib,
                 }).ToList()
             };
             hptRdi.BetTypeList.ForEach(bt => bt.CalendarRaceDayInfo = hptRdi);
@@ -87,8 +93,8 @@ namespace HPTClient
                 //hptRdi.Trackcode = gameInfoBase.BetTrack.Trackcode;   // TODO: Ta bort TrackCode?
                 Trackname = gameInfoBase.BetTrack.TrackName,
                 //hptRdi.TrackCondition = gameInfoBase.Races.First().c; // TODO: Skita i det här på annat än loppnivå?
-                Turnover = Convert.ToInt32(gameBase.Turnover / 10M),
                 Jackpot = gameInfoBase.JackpotAmount,
+                //PayOutList = null,
                 BetType = new HPTBetType()
                 {
                     Code = gameBase.GameInfo.Code,
@@ -96,8 +102,14 @@ namespace HPTClient
                 },
                 RaceNumberList = gameBase.Races.Select(r => r.Number).ToList(),
                 RaceList = gameBase.Races.Select(r => CreateRace(r)).ToList(),
-
+                Turnover = Convert.ToInt32(gameBase.Turnover / 10M),
+                GameBase = gameBase,
             };
+
+            hptRdi.RaceList.ToList().ForEach(r =>
+            {
+                r.ParentRaceDayInfo = hptRdi;
+            });
 
             //hptRdi.RaceList = new List<HPTRace>();
 
@@ -273,15 +285,22 @@ namespace HPTClient
                     _ => "M"
                 },
                 RaceNr = race.Number,
-                LegNr = race.Number,    // TODO: Måste räknas fram senare
+                LegNr = race.LegNumber ?? race.Number,    // TODO: Måste räknas fram senare
                 RaceName = race.Name,
                 //MarksQuantity = Convert.ToInt32(race.MarksQuantity);  // TODO: Skita i det här?            
                 RaceShortText = $"Lopp {race.Number}",
                 //RaceInfoShort = race.SharedInfo.RaceInfoShort.Replace("\n", string.Empty);    // TODO: Finns i annan json hos ATG?
                 //RaceInfoLong = race.SharedInfo.RaceInfoLong;    // TODO: Finns i annan json hos ATG?
+                HorseList = race.StartList.Select(x => CreateHorse(x)).ToList(),
+                //ParentRaceDayInfo = 
 
             };
-
+            hptRace.HorseList
+                .ToList()
+                .ForEach(x =>
+                {
+                    x.ParentRace = hptRace;
+                });
 
             hptRace.StartMethodAndDistanceCode = $"{hptRace.DistanceCode}{hptRace.StartMethodCode}";
 
@@ -293,105 +312,6 @@ namespace HPTClient
             //hptRace.TurnoverTrio = race.SharedInfo.TurnoverTrio;
             //hptRace.TrackId = race.TrackId;
             //hptRace.BetTypes = race.SharedInfo.BetTypes.ToArray();    // TODO: Skita i det här?
-
-            if (hptRace.HorseList == null && race.StartList != null)
-            {
-                hptRace.HorseList = race.StartList.Select(s => new HPTHorse()
-                {
-                    Age = s.Horse.Age,
-                    ATGId = s.Horse.Id.ToString(),  // TODO: Byta datatyp?
-                    //Breeder = TODO:,
-                    //BreederName = TODO:,
-                    //CurrentYearStatistics = TODO:,
-                    Distance = s.Distance.ToString(),   // TODO: Ändra till INT?
-                    Driver = new()
-                    {
-                        Name = s.Driver.ShortName,  // TODO: Lägg till fullständigt namn
-                        ShortName = s.Driver.ShortName,
-                    },
-                    //DistanceFromHomeTrack = TODO: Kan jag bara anropa befintlig metod?
-                    DriverId = s.Driver.Id.ToString(),
-                    //DriverInfo = TODO: Varför två upps'ttningar?
-                    DriverName = s.Driver.Name,
-                    DriverNameShort = s.Driver.ShortName,
-                    //EarningsMeanLast3 = TODO:,
-                    //EarningsMeanLast5 = TODO:,
-                    HomeTrack = s.Horse.HomeTrack.TrackName,
-                    //HomeTrackInfo = TODO: Vad är detta?
-                    HorseName = s.Horse.Name,
-                    //HorseResultInfo = TODO:Vad är detta?
-                    //InvestmentPlats = TODO: Skita i det här?
-                    //InvestmentVinnare = TODO: Skita i det här?
-                    //IsHomeTrack = TODO: Sätta längre ner
-                    //MarksPercent = TODO: Byta till decimal och ta bort Exact-varianten
-                    //MarksPercentExact = s.BetDistributionShare, // TODO: Se ovan
-                    //MarksPossibleValue    = TODO: Värden inför nästa lopp?
-                    //MarksQuantity = TODO: Verkar inte finnas längre
-                    //MarksShare
-                    MinPlatsOdds = Convert.ToInt32(s.PlatsOdds),
-                    MaxPlatsOdds = Convert.ToInt32(s.PlatsOdds),
-                    //StakeDistribution = TODO: Summa per häst verkar inte finnas längre
-                    //StakeDistributionPercent = TODO: Ta bort?
-                    StakeDistributionShare = s.BetDistributionShare,
-                    //StakeShareAlternate = TODO: Fixa i ATGDownloader
-                    //StakeShareAlternate2 = TODO: Fixa i ATGDownloader
-                    //StakeShareRounded = TODO: Ta bort
-                    StartNr = s.Number,
-                    //StartPoint = TODO: Ta bort, verkar inte användas längre
-                    //STLink = TODO: Ta bort
-                    //SulkyInfoCurrent = TODO: Fixa i ATGDownloader
-                    //SulkyInfoPrevious = TODO: Fixa i ATGDownloader
-                    Trainer = new()
-                    {
-                        Name = s.Horse.Trainer.ShortName,  // TODO: Lägg till fullständigt namn
-                        ShortName = s.Horse.Trainer.ShortName,
-                    },
-                    TrainerId = s.Horse.Trainer.Id.ToString(),
-                    //TrainerInfo = TODO: Varför dubbla objekt
-                    TrainerName = s.Horse.Trainer.Name,
-                    TrainerNameShort = s.Horse.Trainer.ShortName,
-                    VinnarOdds = Convert.ToInt32(s.VinnarOdds),   // Ta bort?
-                    VinnarOddsExact = s.VinnarOdds / 100M,
-                    ParentRace = hptRace
-                }).ToList();
-
-                hptRace.HorseList.ToList().ForEach(h =>
-                {
-                    // TODO: Flytta in i initieringen ovan?
-                    h.CreateXReductionRuleList();
-                });
-
-                hptRace.SetCorrectStakeDistributionShare();
-
-                // TODO: Vad ska behållas?
-                //var startNumberRankCollection = HPTConfig.Config.StartNumberRankCollectionList.FirstOrDefault(snr => snr.StartMethodCode == hptRace.StartMethodCode);
-                //foreach (var horse in race.StartList)
-                //{
-
-                //    // Sätt Spårrank utifrån Config
-                //    if (startNumberRankCollection != null)
-                //    {
-                //        var startNumberRank = startNumberRankCollection.StartNumberRankList.FirstOrDefault(sr => sr.StartNumber == hptHorse.StartNr);
-                //        if (startNumberRank != null && hptHorse.Scratched != true)
-                //        {
-                //            hptHorse.Selected = startNumberRank.Select;
-                //            hptHorse.RankStartNumber = startNumberRank.Rank;
-                //        }
-                //    }
-                //}
-
-                // TODO: Detta används väl inte längre? Sätt ATG-rank utifrån startpoäng
-                //int rank = 1;
-                //hptRace.HorseList
-                //    .OrderByDescending(h => h.StartPoint)
-                //    .ToList()
-                //    .ForEach(h => h.RankATG = rank++);
-
-                // Sätt korrekt insatsfördelning pga V6
-                //hptRace.SetCorrectStakeDistributionShare();
-                //hptRace.SetCorrectStakeDistributionShareAlt1(); // TODO: Ska detta hämtas i framtiden?
-                //hptRace.SetCorrectStakeDistributionShareAlt2(); // TODO: Ska detta hämtas i framtiden?
-            }
 
             //// TODO: Tvilling
             //if (hptRace.ParentRaceDayInfo.BetType.Code == "TV")
@@ -443,8 +363,8 @@ namespace HPTClient
             //    hptRace.CombinationListInfoTrio.SortCombinationValues();
             //}
 
-            // Inbördes möte hästar emellan
-            hptRace.FindHeadToHead();
+            // TODO: Inbördes möte hästar emellan
+            //hptRace.FindHeadToHead();
 
             return hptRace;
         }
@@ -485,6 +405,8 @@ namespace HPTClient
                 //MarksShare
                 MinPlatsOdds = Convert.ToInt32(start.PlatsOdds),
                 MaxPlatsOdds = Convert.ToInt32(start.PlatsOdds),
+                ResultList = new(ConvertHorseResultList(start.Horse)),
+                Scratched = start.Scratched,
                 //StakeDistribution = TODO: Summa per häst verkar inte finnas längre
                 //StakeDistributionPercent = TODO: Ta bort?
                 StakeDistributionShare = start.BetDistributionShare,
@@ -498,18 +420,21 @@ namespace HPTClient
                 //SulkyInfoPrevious = TODO: Fixa i ATGDownloader
                 Trainer = new()
                 {
-                    Name = start.Horse.Trainer.ShortName,  // TODO: Lägg till fullständigt namn
-                    ShortName = start.Horse.Trainer.ShortName,
+                    Name = start.Horse.Trainer?.ShortName,  // TODO: Lägg till fullständigt namn
+                    ShortName = start.Horse.Trainer?.ShortName,
                 },
-                TrainerId = start.Horse.Trainer.Id.ToString(),
+                TrainerId = start.Horse.Trainer?.Id.ToString(),
                 //TrainerInfo = TODO: Varför dubbla objekt
-                TrainerName = start.Horse.Trainer.Name,
-                TrainerNameShort = start.Horse.Trainer.ShortName,
+                TrainerName = start.Horse.Trainer?.Name,
+                TrainerNameShort = start.Horse.Trainer?.ShortName,
                 VinnarOdds = Convert.ToInt32(start.VinnarOdds),   // Ta bort?
                 VinnarOddsExact = start.VinnarOdds / 100M,
                 //ParentRace = hptRace
             };
 
+            hptHorse.CurrentYearStatistics = ConvertHorseYearStatistics(start.Horse.StatisticsList.FirstOrDefault(s => s.Year == DateTime.Today.Year));
+            hptHorse.PreviousYearStatistics = ConvertHorseYearStatistics(start.Horse.StatisticsList.FirstOrDefault(s => s.Year == DateTime.Today.AddYears(-1).Year));
+            hptHorse.TotalStatistics = ConvertHorseYearStatistics(start.Horse.StatisticsList.FirstOrDefault(s => s.Year is null));
 
 
             //// TODO: Skoinformation
@@ -669,6 +594,42 @@ namespace HPTClient
             //}
 
             return hptHorse;
+        }
+
+        internal static IEnumerable<HPTHorseResult> ConvertHorseResultList(ATGHorseBase horse)
+        {
+            //Resultat
+               var result = horse.ResultList.Select(r => new HPTHorseResult()
+               {
+                   ATGId = r.RaceId,
+                   Date = r.RaceDate,
+                   //DateString = r.DateString,
+                   Distance = r.Distance,
+                   //Driver = r.DriverId,
+                   Earning = r.PrizeMoney,
+                   //FirstPrize = r.FirstPrize,
+                   //Odds = r.vi,
+                   //PlaceString = r.PlaceString,
+                   HorseName = horse.Name,
+                   Place = r.Place,
+                   PlaceString = r.Place switch
+                   {
+                       12 => "D",
+                       10 => "Oplac",
+                       _ => r.Place.ToString()
+                   },
+                   //Position = r.,
+                   //RaceType = r.RaceType,
+                   //RaceNr = r.RaceNr,
+                   StartNr = r.StartNumber,
+                   //Time = r.KmTime,
+                   TrackCode = r.TrackName,
+                   //Shoeinfo = CreateShoeInfo(r.ShoeInfo),
+                   //TimeWeighed = SetWeighedTime(r),
+                   HeadToHeadResultList = new List<HPTHorseResult>()
+               });
+
+            return result;
         }
 
         internal static string FormatRecordTime(string timeToFormat)

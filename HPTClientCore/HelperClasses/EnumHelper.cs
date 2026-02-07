@@ -41,6 +41,26 @@ namespace HPTClient
             }
         }
 
+        public static string GetTrackNameForResultLinkFromTrackId(int trackId)
+        {
+            try
+            {
+                string trackName = ((TrackNameEnum)trackId)
+                    .ToString()
+                    .ToLowerInvariant()
+                    .Replace('å', 'a')
+                    .Replace('ä', 'a')
+                    .Replace('ö', 'o');
+
+                return trackName;
+            }
+            catch (Exception exc)
+            {
+                string s = exc.Message;
+                return "Okänd bana";
+            }
+        }
+
         public static string GetTrackCodeFromTrackId(int trackId)
         {
             try
