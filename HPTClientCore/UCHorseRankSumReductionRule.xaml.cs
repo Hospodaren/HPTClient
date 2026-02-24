@@ -207,7 +207,7 @@ namespace HPTClient
                             ShowPrio = true,
                             ShowVinnarOdds = true,
                             ShowStakeDistributionPercent = true,
-                            ShowMarksPercent = true,
+                            //ShowMarksPercent = true,
                             ShowVinnarOddsShare = true,
                             ShowPlatsOdds = true,
                             ShowRankATG = true,

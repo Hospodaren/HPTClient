@@ -20,7 +20,7 @@ namespace HPTClient
             NumberOfRaces = numberOfRaces;
 
             var nowList = Enumerable.Range(0, numberOfRaces + 1)
-                .Select(i => new HPTNumberOfWinners({ NumberOfWinners = i});
+                .Select(i => new HPTNumberOfWinners{ NumberOfWinners = i, Selectable = i == 0});
             NumberOfWinnersList = new ObservableCollection<HPTNumberOfWinners>(nowList);            
             NumberOfWinnersList.First(now => now.NumberOfWinners == 0).Selectable = true;   // TODO: Fult!
         }

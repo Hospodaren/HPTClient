@@ -483,7 +483,7 @@ namespace HPTClient
                 hmb.RaceDayInfo.DataToShow = Config.DataToShowVxx;
                 Config.AvailableBets.Add(hmb);
 
-                UCMarksGame ucMarksGame = new UCMarksGame(hmb);
+                var ucMarksGame = new UCMarksGame(hmb);
                 UCMarksGameList.Add(ucMarksGame);
                 UCBetTabItemHeader ucItemHeader = new UCBetTabItemHeader();
                 TabItem ti = new TabItem()

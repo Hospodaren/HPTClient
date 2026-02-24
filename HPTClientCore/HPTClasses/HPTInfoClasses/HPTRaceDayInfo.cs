@@ -60,7 +60,7 @@ namespace HPTClient
                             }
                         });
                     }
-                    // TODO: När det inte blur utdelning på alla rätt på V4/V5
+                    // TODO: När det inte blir utdelning på alla rätt på V4/V5
                     //if (PayOutListATG != null && PayOutListATG.Count > 0)
                     //{
                     //    if (BetType.Code == "V4" || BetType.Code == "V5")
@@ -152,15 +152,11 @@ namespace HPTClient
                         .TotalAmount;
 
                 // Ta hänsyn till V6/V7/V8
-                //decimal payoutWithoutJackpot = this.MaxPayOut - (decimal)this.Jackpot;
-                //decimal v6Turnover = payoutWithoutJackpot - minPayOut;
-                //decimal amountToAdd = this.BetType.V6Factor * v6Turnover;
-                //decimal totalAmount = minPayOut + amountToAdd;
-                //this.V6Factor = totalAmount / payoutWithoutJackpot;
-                decimal payoutWithoutJackpot = MaxPayOut - (decimal)Jackpot;
+                // TODO: V6/V7-beräkningen blir inte rätt
+                decimal payoutWithoutJackpot = this.MaxPayOut - (decimal)this.Jackpot;
                 decimal v6Turnover = payoutWithoutJackpot - minPayOut;
-                //decimal amountToAdd = this.BetType.V6Factor * v6Turnover;
-                //decimal totalAmount = minPayOut + amountToAdd;
+                decimal amountToAdd = this.BetType.V6Factor * v6Turnover;
+                decimal totalAmount = minPayOut + amountToAdd;
                 V6Factor = 1M + v6Turnover / payoutWithoutJackpot;
                 if (V6Factor < 1M)
                 {

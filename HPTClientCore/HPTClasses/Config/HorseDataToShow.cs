@@ -146,6 +146,22 @@ namespace HPTClient
             }
         }
 
+        private bool showATGTrend;
+        [HorseDataToShow("ATG-Trend", "ShowATGTrend", DataToShowUsage.Vxx, 3)]
+        [DataMember]
+        public bool ShowATGTrend
+        {
+            get
+            {
+                return showATGTrend;
+            }
+            set
+            {
+                showATGTrend = value;
+                OnPropertyChanged("ShowATGTrend");
+            }
+        }
+
         private bool showDriver;
         [HorseDataToShow("Kusk", "ShowDriver", DataToShowUsage.Everywhere, 3)]
         [DataMember]
@@ -610,21 +626,21 @@ namespace HPTClient
             }
         }
 
-        private bool showRankTip;
-        [HorseDataToShow("Tipsrank", "ShowRankTip", DataToShowUsage.Vxx | DataToShowUsage.ComplementaryRule | DataToShowUsage.Correction, 12, true)]
-        [DataMember]
-        public bool ShowRankTip
-        {
-            get
-            {
-                return showRankTip;
-            }
-            set
-            {
-                showRankTip = value;
-                OnPropertyChanged("ShowRankTip");
-            }
-        }
+        //private bool showRankTip;
+        //[HorseDataToShow("Tipsrank", "ShowRankTip", DataToShowUsage.Vxx | DataToShowUsage.ComplementaryRule | DataToShowUsage.Correction, 12, true)]
+        //[DataMember]
+        //public bool ShowRankTip
+        //{
+        //    get
+        //    {
+        //        return showRankTip;
+        //    }
+        //    set
+        //    {
+        //        showRankTip = value;
+        //        OnPropertyChanged("ShowRankTip");
+        //    }
+        //}
 
         private bool showOwnInformation;
         [HorseDataToShow("Egen info", "ShowOwnInformation", DataToShowUsage.Everywhere, 11, true)]
@@ -723,6 +739,38 @@ namespace HPTClient
             }
         }
 
+        private bool showStakeShareRelativeToFavourite;
+        [HorseDataToShow("Insatsfördelning relativt favoriten", "ShowStakeShareRelativeToFavourite", DataToShowUsage.Vxx, 11, true)]
+        [DataMember]
+        public bool ShowStakeShareRelativeToFavourite
+        {
+            get
+            {
+                return showStakeShareRelativeToFavourite;
+            }
+            set
+            {
+                showStakeShareRelativeToFavourite = value;
+                OnPropertyChanged("ShowStakeShareRelativeToFavourite");
+            }
+        }
+
+        private bool showStakeShareRelativeToNext;
+        [HorseDataToShow("Insatsfördelning relativt föregående- och nästrankad", "ShowStakeShareRelativeToNext", DataToShowUsage.Vxx, 12, true)]
+        [DataMember]
+        public bool ShowStakeShareRelativeToNext
+        {
+            get
+            {
+                return showStakeShareRelativeToNext;
+            }
+            set
+            {
+                showStakeShareRelativeToNext = value;
+                OnPropertyChanged("ShowStakeShareRelativeToNext");
+            }
+        }
+
         private bool showHeadToHead;
         [HorseDataToShow("Inbördes möten", "ShowHeadToHead", DataToShowUsage.Everywhere, 12, true)]
         [DataMember]
@@ -755,37 +803,37 @@ namespace HPTClient
             }
         }
 
-        private bool showRelativeDifferenceVinnare;
-        [HorseDataToShow("Insatsutveckling (V)", "ShowRelativeDifferenceVinnare", DataToShowUsage.Vxx | DataToShowUsage.ComplementaryRule | DataToShowUsage.Correction, 12, true)]
-        [DataMember]
-        public bool ShowRelativeDifferenceVinnare
-        {
-            get
-            {
-                return showRelativeDifferenceVinnare;
-            }
-            set
-            {
-                showRelativeDifferenceVinnare = value;
-                OnPropertyChanged("ShowRelativeDifferenceVinnare");
-            }
-        }
+        //private bool showRelativeDifferenceVinnare;
+        //[HorseDataToShow("Insatsutveckling (V)", "ShowRelativeDifferenceVinnare", DataToShowUsage.Vxx | DataToShowUsage.ComplementaryRule | DataToShowUsage.Correction, 12, true)]
+        //[DataMember]
+        //public bool ShowRelativeDifferenceVinnare
+        //{
+        //    get
+        //    {
+        //        return showRelativeDifferenceVinnare;
+        //    }
+        //    set
+        //    {
+        //        showRelativeDifferenceVinnare = value;
+        //        OnPropertyChanged("ShowRelativeDifferenceVinnare");
+        //    }
+        //}
 
-        private bool showRelativeDifferencePlats;
-        [HorseDataToShow("Insatsutveckling (P)", "ShowRelativeDifferencePlats", DataToShowUsage.Vxx | DataToShowUsage.ComplementaryRule | DataToShowUsage.Correction, 12, true)]
-        [DataMember]
-        public bool ShowRelativeDifferencePlats
-        {
-            get
-            {
-                return showRelativeDifferencePlats;
-            }
-            set
-            {
-                showRelativeDifferencePlats = value;
-                OnPropertyChanged("ShowRelativeDifferencePlats");
-            }
-        }
+        //private bool showRelativeDifferencePlats;
+        //[HorseDataToShow("Insatsutveckling (P)", "ShowRelativeDifferencePlats", DataToShowUsage.Vxx | DataToShowUsage.ComplementaryRule | DataToShowUsage.Correction, 12, true)]
+        //[DataMember]
+        //public bool ShowRelativeDifferencePlats
+        //{
+        //    get
+        //    {
+        //        return showRelativeDifferencePlats;
+        //    }
+        //    set
+        //    {
+        //        showRelativeDifferencePlats = value;
+        //        OnPropertyChanged("ShowRelativeDifferencePlats");
+        //    }
+        //}
 
         private bool showSTHorseLink;
         [HorseDataToShow("Hästinfo på ST", "ShowSTHorseLink", DataToShowUsage.Everywhere, 12, true)]
@@ -856,21 +904,21 @@ namespace HPTClient
 
         #region Obsolete
 
-        private bool showMarksPercent;
-        //[HorseDataToShow("Streckprocent", "ShowMarksPercent", DataToShowUsage.Vxx | DataToShowUsage.ComplementaryRule | DataToShowUsage.Correction, 3)]
-        //[DataMember]
-        public bool ShowMarksPercent
-        {
-            get
-            {
-                return showMarksPercent;
-            }
-            set
-            {
-                showMarksPercent = value;
-                OnPropertyChanged("ShowMarksPercent");
-            }
-        }
+        //private bool showMarksPercent;
+        ////[HorseDataToShow("Streckprocent", "ShowMarksPercent", DataToShowUsage.Vxx | DataToShowUsage.ComplementaryRule | DataToShowUsage.Correction, 3)]
+        ////[DataMember]
+        //public bool ShowMarksPercent
+        //{
+        //    get
+        //    {
+        //        return showMarksPercent;
+        //    }
+        //    set
+        //    {
+        //        showMarksPercent = value;
+        //        OnPropertyChanged("ShowMarksPercent");
+        //    }
+        //}
 
         private bool showMarksShare;
         //[HorseDataToShow("Streckandel", "ShowMarksShare", DataToShowUsage.Vxx | DataToShowUsage.ComplementaryRule | DataToShowUsage.Correction, 3)]

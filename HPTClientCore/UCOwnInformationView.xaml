@@ -156,13 +156,10 @@
                     </GridViewColumn>
 
                     <!--Länk till hästinfo på svensktravsport.se-->
-                    <GridViewColumn x:Name="gvcSTHorseLink">
+                    <!--<GridViewColumn x:Name="gvcSTHorseLink">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <!--<Label Margin="1,0" Padding="1,0">
-                                        <Hyperlink x:Name="hlSTHorseLink" NavigateUri="{Binding Path=STLink}">HPT</Hyperlink>
-                                    </Label>-->
                                     <Label Margin="1,0" Padding="1,0">
                                         <Hyperlink x:Name="hlSTHorseLinkExternal" NavigateUri="{Binding Path=STLink}" RequestNavigate="hlSTHorseLinkExternal_RequestNavigate">Webbläsare</Hyperlink>
                                     </Label>
@@ -171,7 +168,7 @@
                         </GridViewColumn.CellTemplate>
                         <GridViewColumnHeader Tag="ParentRace.LegResult.SystemsLeft" Content="Svensk travsport"                                              
                                     ToolTipService.ToolTip="Hästinformation på ST" MinWidth="100"/>
-                    </GridViewColumn>
+                    </GridViewColumn>-->
 
                     <!--Senaste uppdatering-->
                     <GridViewColumn x:Name="gvcLastUpdate">

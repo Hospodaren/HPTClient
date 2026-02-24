@@ -467,8 +467,6 @@ namespace HPTClient
             List<HPTHorse> highestRowValueHorseList = new List<HPTHorse>();
             List<HPTHorse> lowestRankSumHorseList = new List<HPTHorse>();
             List<HPTHorse> highestRankSumHorseList = new List<HPTHorse>();
-            //List<HPTHorse> lowestMarksPercentHorseList = new List<HPTHorse>();
-            //List<HPTHorse> highestMarksPercentHorseList = new List<HPTHorse>();
             List<HPTHorse> lowestStartNumberSumHorseList = new List<HPTHorse>();
             List<HPTHorse> highestStartNumberSumHorseList = new List<HPTHorse>();
             List<HPTHorse> lowestOddsSumHorseList = new List<HPTHorse>();
@@ -541,16 +539,6 @@ namespace HPTClient
             singleRow.CalculateValues();
             MaxRankSum = Math.Round(singleRow.RankSum + 0.05M, 1);
 
-            //// Lägsta streckprocent
-            //singleRow = new HPTMarkBetSingleRow(lowestMarksPercentHorseList.ToArray());
-            //singleRow.CalculateValues();
-            //this.lowestPercentSum = Convert.ToInt32(Math.Floor(singleRow.PercentSumExact));
-
-            //// Högsta streckprocent
-            //singleRow = new HPTMarkBetSingleRow(highestMarksPercentHorseList.ToArray());
-            //singleRow.CalculateValues();
-            //this.highestPercentSum = Convert.ToInt32(Math.Ceiling(singleRow.PercentSumExact));
-
             // Lägsta startnummersumma
             singleRow = new HPTMarkBetSingleRow(lowestStartNumberSumHorseList.ToArray());
             singleRow.CalculateValues();
@@ -594,8 +582,6 @@ namespace HPTClient
             // Sätt värdena på rätt ställe
             markBet.RowValueReductionRule.LowestSum = lowestEstimatedRowValue;
             markBet.RowValueReductionRule.HighestSum = highestEstimatedRowValue;
-            //this.markBet.PercentSumReductionRule.LowestSum = this.lowestPercentSum;
-            //this.markBet.PercentSumReductionRule.HighestSum = this.highestPercentSum;
             markBet.StakePercentSumReductionRule.LowestSum = lowestStakePercentSum;
             markBet.StakePercentSumReductionRule.HighestSum = highestStakePercentSum;
             markBet.StartNrSumReductionRule.LowestSum = lowestStartNumberSum;
@@ -624,8 +610,6 @@ namespace HPTClient
 
             markBet.RowValueReductionRule.LowestIncludedSum = SingleRows.Min(sr => sr.RowValue);
             markBet.RowValueReductionRule.HighestIncludedSum = SingleRows.Max(sr => sr.RowValue);
-            //this.markBet.PercentSumReductionRule.LowestIncludedSum = this.SingleRows.Min(sr => sr.PercentSum);
-            //this.markBet.PercentSumReductionRule.HighestIncludedSum = this.SingleRows.Max(sr => sr.PercentSum);
             markBet.StakePercentSumReductionRule.LowestIncludedSum = SingleRows.Min(sr => sr.StakePercentSum);
             markBet.StakePercentSumReductionRule.HighestIncludedSum = SingleRows.Max(sr => sr.StakePercentSum);
             markBet.StartNrSumReductionRule.LowestIncludedSum = SingleRows.Min(sr => sr.StartNrSum);

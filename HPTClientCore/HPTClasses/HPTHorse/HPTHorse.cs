@@ -1221,6 +1221,9 @@ namespace HPTClient
         public string ATGId { get; set; }
 
         [DataMember]
+        public decimal ATGTrend { get; set; }
+
+        [DataMember]
         public string DriverName { get; set; }
 
         [DataMember]
@@ -1360,41 +1363,41 @@ namespace HPTClient
             }
         }
 
-        private decimal historyRelativeDifferenceVinnareUnadjusted;
-        //[HorseRank("Trend (V)", 4, true, false, HPTRankCategory.MarksAndOdds, true)]
-        public decimal HistoryRelativeDifferenceVinnareUnadjusted
-        {
-            get
-            {
-                return historyRelativeDifferenceVinnareUnadjusted;
-            }
-            set
-            {
-                historyRelativeDifferenceVinnareUnadjusted = value;
-                OnPropertyChanged("HistoryRelativeDifferenceVinnareUnadjusted");
-            }
-        }
+        //private decimal historyRelativeDifferenceVinnareUnadjusted;
+        ////[HorseRank("Trend (V)", 4, true, false, HPTRankCategory.MarksAndOdds, true)]
+        //public decimal HistoryRelativeDifferenceVinnareUnadjusted
+        //{
+        //    get
+        //    {
+        //        return historyRelativeDifferenceVinnareUnadjusted;
+        //    }
+        //    set
+        //    {
+        //        historyRelativeDifferenceVinnareUnadjusted = value;
+        //        OnPropertyChanged("HistoryRelativeDifferenceVinnareUnadjusted");
+        //    }
+        //}
 
-        private decimal historyRelativeDifferencePlatsUnadjusted;
-        //[HorseRank("Trend (P)", 5, true, false, HPTRankCategory.MarksAndOdds, true)]
-        public decimal HistoryRelativeDifferencePlatsUnadjusted
-        {
-            get
-            {
-                return historyRelativeDifferencePlatsUnadjusted;
-            }
-            set
-            {
-                historyRelativeDifferencePlatsUnadjusted = value;
-                OnPropertyChanged("HistoryRelativeDifferencePlatsUnadjusted");
-            }
-        }
+        //private decimal historyRelativeDifferencePlatsUnadjusted;
+        ////[HorseRank("Trend (P)", 5, true, false, HPTRankCategory.MarksAndOdds, true)]
+        //public decimal HistoryRelativeDifferencePlatsUnadjusted
+        //{
+        //    get
+        //    {
+        //        return historyRelativeDifferencePlatsUnadjusted;
+        //    }
+        //    set
+        //    {
+        //        historyRelativeDifferencePlatsUnadjusted = value;
+        //        OnPropertyChanged("HistoryRelativeDifferencePlatsUnadjusted");
+        //    }
+        //}
 
         internal void SetHistoryRelativeDifferenceUnadjusted()
         {
             HistoryRelativeDifferenceUnadjusted = 0M;
-            HistoryRelativeDifferenceVinnareUnadjusted = 0M;
-            HistoryRelativeDifferencePlatsUnadjusted = 0M;
+            //HistoryRelativeDifferenceVinnareUnadjusted = 0M;
+            //HistoryRelativeDifferencePlatsUnadjusted = 0M;
 
             if (HorseHistoryInfoGroupedList == null || HorseHistoryInfoGroupedList.Length == 0)
             {
@@ -1430,8 +1433,8 @@ namespace HPTClient
             }
 
             HistoryRelativeDifferenceUnadjusted = 0M;
-            HistoryRelativeDifferenceVinnareUnadjusted = 0M;
-            HistoryRelativeDifferencePlatsUnadjusted = 0M;
+            //HistoryRelativeDifferenceVinnareUnadjusted = 0M;
+            //HistoryRelativeDifferencePlatsUnadjusted = 0M;
 
             if (HorseHistoryInfoGroupedList == null || HorseHistoryInfoGroupedList.Length == 0)
             {
@@ -1487,45 +1490,45 @@ namespace HPTClient
             }
         }
 
-        public Brush HistoryRelativeDifferenceVinnareColour
-        {
-            get
-            {
-                var c = Colors.White;
-                if (VinnarOddsShare > 0.03M)
-                {
-                    if (HistoryRelativeDifferenceVinnareUnadjusted > 0.1M)
-                    {
-                        c = HPTConfig.Config.ColorGood;
-                    }
-                    else if (HistoryRelativeDifferenceVinnareUnadjusted < -0.1M)
-                    {
-                        c = HPTConfig.Config.ColorBad;
-                    }
-                }
-                return new SolidColorBrush(c);
-            }
-        }
+        //public Brush HistoryRelativeDifferenceVinnareColour
+        //{
+        //    get
+        //    {
+        //        var c = Colors.White;
+        //        if (VinnarOddsShare > 0.03M)
+        //        {
+        //            if (HistoryRelativeDifferenceVinnareUnadjusted > 0.1M)
+        //            {
+        //                c = HPTConfig.Config.ColorGood;
+        //            }
+        //            else if (HistoryRelativeDifferenceVinnareUnadjusted < -0.1M)
+        //            {
+        //                c = HPTConfig.Config.ColorBad;
+        //            }
+        //        }
+        //        return new SolidColorBrush(c);
+        //    }
+        //}
 
-        public Brush HistoryRelativeDifferencePlatsColour
-        {
-            get
-            {
-                var c = Colors.White;
-                if (PlatsOddsShare > 0.03M)
-                {
-                    if (HistoryRelativeDifferencePlatsUnadjusted > 0.1M)
-                    {
-                        c = HPTConfig.Config.ColorGood;
-                    }
-                    else if (HistoryRelativeDifferencePlatsUnadjusted < -0.1M)
-                    {
-                        c = HPTConfig.Config.ColorBad;
-                    }
-                }
-                return new SolidColorBrush(c);
-            }
-        }
+        //public Brush HistoryRelativeDifferencePlatsColour
+        //{
+        //    get
+        //    {
+        //        var c = Colors.White;
+        //        if (PlatsOddsShare > 0.03M)
+        //        {
+        //            if (HistoryRelativeDifferencePlatsUnadjusted > 0.1M)
+        //            {
+        //                c = HPTConfig.Config.ColorGood;
+        //            }
+        //            else if (HistoryRelativeDifferencePlatsUnadjusted < -0.1M)
+        //            {
+        //                c = HPTConfig.Config.ColorBad;
+        //            }
+        //        }
+        //        return new SolidColorBrush(c);
+        //    }
+        //}
 
         [XmlIgnore]
         public List<HPTHeadToHeadCollection> HeadToHeadResultCollectionList
@@ -2082,7 +2085,7 @@ namespace HPTClient
             }
         }
 
-        public decimal StakeShareRounded { get; set; }
+        //public decimal StakeShareRounded { get; set; }
 
         public decimal StakeShareWithoutScratchings { get; set; }
 
@@ -4004,12 +4007,58 @@ namespace HPTClient
             }
         }
 
+        private decimal stakeShareRelativeToFavourite;
+        [XmlIgnore]
+        public decimal StakeShareRelativeToFavourite
+        {
+            get
+            {
+                return stakeShareRelativeToFavourite;
+            }
+            set
+            {
+                stakeShareRelativeToFavourite = value;
+                OnPropertyChanged("StakeShareRelativeToFavourite");
+            }
+        }
+
+        private decimal stakeShareRelativeToNext;
+        [XmlIgnore]
+        public decimal StakeShareRelativeToNext
+        {
+            get
+            {
+                return stakeShareRelativeToNext;
+            }
+            set
+            {
+                stakeShareRelativeToNext = value;
+                OnPropertyChanged("StakeShareRelativeToNext");
+            }
+        }
+
+        private decimal stakeShareRelativeToPrevious;
+        [XmlIgnore]
+        public decimal StakeShareRelativeToPrevious
+        {
+            get
+            {
+                return stakeShareRelativeToPrevious;
+            }
+            set
+            {
+                stakeShareRelativeToPrevious = value;
+                OnPropertyChanged("StakeShareRelativeToPrevious");
+            }
+        }
+
+        public StartCategoryCode CategoryCode { get; internal set; } = StartCategoryCode.None;
+
         #endregion
 
         public override string ToString()
         {
             return HorseNumberAndName;
-            //return this.StartNr.ToString() + " - " + this.HorseName;
         }
     }
 

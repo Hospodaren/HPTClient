@@ -1,5 +1,5 @@
 ﻿using ATGDownloader;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.Extensions.FileProviders.Physical;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
@@ -100,6 +100,7 @@ namespace HPTClient
                     Code = gameBase.GameInfo.Code,
                     Name = gameBase.GameInfo.Code   // Ska vara långt namn (Dagens Dubbel osv)
                 },
+                //MaxPayOut = gameBase.Payouts.Count,
                 RaceNumberList = gameBase.Races.Select(r => r.Number).ToList(),
                 RaceList = gameBase.Races.Select(r => CreateRace(r)).ToList(),
                 Turnover = Convert.ToInt32(gameBase.Turnover / 10M),
@@ -109,7 +110,12 @@ namespace HPTClient
             hptRdi.RaceList.ToList().ForEach(r =>
             {
                 r.ParentRaceDayInfo = hptRdi;
+                r.CalculateDynamicGameValues();
             });
+
+            // Fyll på utdelningsinformation
+            CreatePayOutLists(gameBase, hptRdi);
+            hptRdi.SetV6Factor();
 
             //hptRdi.RaceList = new List<HPTRace>();
 
@@ -238,6 +244,7 @@ namespace HPTClient
                     PayOutAmount = po.Value.Payout,
                     TotalAmount = po.Value.PayoutSum,
                 });
+                hptRdi.MaxPayOut = payOutList.Max(po => po.TotalAmount);
                 hptRdi.PayOutListATG = new ObservableCollection<HPTPayOut>(payOutList);
                 if (hptRdi.Jackpot > 0)
                 {
@@ -375,9 +382,10 @@ namespace HPTClient
             {
                 Age = start.Horse.Age,
                 ATGId = start.Horse.Id.ToString(),  // TODO: Byta datatyp?
-                                                    //Breeder = TODO:,
-                                                    //BreederName = TODO:,
-                                                    //CurrentYearStatistics = TODO:,
+                ATGTrend = start.Trend,
+                //Breeder = TODO:,
+                //BreederName = TODO:,
+                //CurrentYearStatistics = TODO:,
                 Distance = start.Distance.ToString(),   // TODO: Ändra till INT?
                 Driver = new()
                 {

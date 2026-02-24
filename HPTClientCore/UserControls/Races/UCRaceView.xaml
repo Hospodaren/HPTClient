@@ -195,13 +195,10 @@
                     </GridViewColumn>
 
                     <!--Länk till hästinfo på svensktravsport.se-->
-                    <GridViewColumn x:Name="gvcSTHorseLink">
+                    <!--<GridViewColumn x:Name="gvcSTHorseLink">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <!--<Label Margin="1,0" Padding="1,0">
-                                        <Hyperlink x:Name="hlSTHorseLink" NavigateUri="{Binding Path=STLink}">HPT</Hyperlink>
-                                    </Label>-->
                                     <Label Margin="1,0" Padding="1,0">
                                         <Hyperlink x:Name="hlSTHorseLinkExternal" NavigateUri="{Binding Path=STLink}" RequestNavigate="hlSTHorseLinkExternal_RequestNavigate_1">Webbläsare</Hyperlink>
                                     </Label>
@@ -210,7 +207,7 @@
                         </GridViewColumn.CellTemplate>
                         <GridViewColumnHeader Tag="ParentRace.LegResult.SystemsLeft" Content="Svensk travsport"                                              
                                     ToolTipService.ToolTip="Hästinformation på ST" MinWidth="100"/>
-                    </GridViewColumn>
+                    </GridViewColumn>-->
 
                     <!--Startnummer-->
                     <GridViewColumn x:Name="gvcStartNr">
@@ -529,14 +526,6 @@
                             <DataTemplate>
                                 <TextBlock TextAlignment="Right" FontWeight="Bold" HorizontalAlignment="Right"
                                            Text="{Binding Path=VinnarOddsExact,StringFormat=F2}"/>
-                                <!--<TextBlock TextAlignment="Right" FontWeight="Bold" HorizontalAlignment="Right">
-                                    <TextBlock.Text>
-                                        <MultiBinding StringFormat="{}{0} ({1:##0.00})">
-                                            <Binding Path="VinnarOddsString"/>
-                                            <Binding Path="VinnarOddsExact"/>
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                </TextBlock>-->
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -574,14 +563,50 @@
                             <DataTemplate>
                                 <TextBlock TextAlignment="Right" FontWeight="Bold" HorizontalAlignment="Right"
                                            Text="{Binding Path=StakeDistributionShare,StringFormat=P2}"/>
-                                <!--<TextBlock TextAlignment="Right" FontWeight="Bold" HorizontalAlignment="Right">
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--ATG-Trend-->
+                    <GridViewColumn x:Name="gvcATGTrend">
+                        <GridViewColumnHeader Tag="ATGTrend" Content="ATG-Trend"
+                                    ToolTipService.ToolTip="ATGs trendprocent"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Right" HorizontalAlignment="Right"
+                                           Text="{Binding Path=ATGTrend,StringFormat=P2}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Insatsfördelning relativt till vinnaren-->
+                    <GridViewColumn x:Name="gvcStakeShareRelativeToFavourite">
+                        <GridViewColumnHeader Tag="StakeShareRelativeToFavourite" Content="IF mot favorit"
+                                    ToolTipService.ToolTip="Visar insatsfördelning relativt till vinnaren"
+                                    MouseDown="gvcSpikes_MouseDown"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Right" HorizontalAlignment="Right"
+                                           Text="{Binding Path=StakeShareRelativeToFavourite,StringFormat=F3}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Insatsfördelning relativt till nästrankad-->
+                    <GridViewColumn x:Name="gvcStakeShareRelativeToNext">
+                        <GridViewColumnHeader Tag="StakeShareRelativeToNext" Content="Relativ IF"
+                                    ToolTipService.ToolTip="Visar insatsfördelning relativt föregpende- och nästrankad"
+                                    MouseDown="gvcSpikes_MouseDown"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Right" HorizontalAlignment="Right">
                                     <TextBlock.Text>
-                                        <MultiBinding StringFormat="{}{0} ({1:P2})">
-                                            <Binding Path="StakeDistributionPercent"/>
-                                            <Binding Path="StakeDistributionShare"/>
+                                        <MultiBinding StringFormat="{}{0:F3} / {1:F3}">
+                                            <Binding Path="StakeShareRelativeToPrevious"/>
+                                            <Binding Path="StakeShareRelativeToNext"/>
                                         </MultiBinding>
                                     </TextBlock.Text>
-                                </TextBlock>-->
+                                </TextBlock>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -849,7 +874,7 @@
                     </GridViewColumn>
 
                     <!--Tipsrank-->
-                    <GridViewColumn  x:Name="gvcRankTip">
+                    <!--<GridViewColumn  x:Name="gvcRankTip">
                         <GridViewColumnHeader Tag="RankTip" Content="Tipsrank"
                                     ToolTipService.ToolTip="Rank från inklistrat tips">
                         </GridViewColumnHeader>
@@ -858,7 +883,7 @@
                                 <TextBlock TextAlignment="Right" Text="{Binding RankTip}" HorizontalAlignment="Right"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                    </GridViewColumn>-->
 
                     <!--Nästagångare och noteringar-->
                     <GridViewColumn x:Name="gvcNextTimer">

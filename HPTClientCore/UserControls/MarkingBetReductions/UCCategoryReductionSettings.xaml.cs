@@ -8,9 +8,9 @@ namespace HPTClient
     /// <summary>
     /// Interaction logic for UCABCDReductionSettings.xaml
     /// </summary>
-    public partial class UCABCDReductionSettings : UCMarkBetControl
+    public partial class UCCategoryReductionSettings : UCMarkBetControl
     {
-        public UCABCDReductionSettings()
+        public UCCategoryReductionSettings()
         {
             InitializeComponent();
 
@@ -24,20 +24,20 @@ namespace HPTClient
 
         // Using a DependencyProperty as the backing store for ShowLegList.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ShowLegListProperty =
-            DependencyProperty.Register("ShowLegList", typeof(Visibility), typeof(UCABCDReductionSettings), new PropertyMetadata(Visibility.Collapsed));
+            DependencyProperty.Register("ShowLegList", typeof(Visibility), typeof(UCCategoryReductionSettings), new PropertyMetadata(Visibility.Collapsed));
 
 
 
-        private HPTABCDEFReductionRule abcdefreductionRule;
-        internal HPTABCDEFReductionRule ABCDEFreductionRule
+        private HPTCategoryReductionRuleCollection categoryReductionRuleCollection;
+        internal HPTCategoryReductionRuleCollection CategoryReductionRuleCollection
         {
             get
             {
-                if (abcdefreductionRule == null)
+                if (categoryReductionRuleCollection == null)
                 {
-                    abcdefreductionRule = (HPTABCDEFReductionRule)DataContext;
+                    categoryReductionRuleCollection = (HPTCategoryReductionRuleCollection)DataContext;
                 }
-                return abcdefreductionRule;
+                return categoryReductionRuleCollection;
             }
         }
 
@@ -47,14 +47,7 @@ namespace HPTClient
             {
                 if (!MarkBet.IsDeserializing)
                 {
-                    if (MarkBet.MultiABCDEFReductionRule.Use && ABCDEFreductionRule.Use)
-                    {
-                        MarkBet.RecalculateReduction(RecalculateReason.XReduction);
-                    }
-                    else if (ABCDEFreductionRule == MarkBet.ABCDEFReductionRule && MarkBet.ABCDEFReductionRule.Use)
-                    {
-                        MarkBet.RecalculateReduction(RecalculateReason.XReduction);
-                    }
+                    MarkBet.RecalculateReduction(RecalculateReason.All);
                 }
             }
         }
@@ -67,16 +60,14 @@ namespace HPTClient
                 return;
             }
 
-            TextBlock tb = (TextBlock)sender;
-            HPTXReductionRule rule = (HPTXReductionRule)tb.DataContext;
+            var tb = (TextBlock)sender;
+            var rule = (HPTCategoryReductionRule)tb.DataContext;
             if (pu == null)
             {
                 pu = new System.Windows.Controls.Primitives.Popup()
                 {
                     Placement = System.Windows.Controls.Primitives.PlacementMode.Top,
-                    PlacementTarget = tb//,
-                    //HorizontalOffset = -10D,
-                    //VerticalOffset = -10D
+                    PlacementTarget = tb
                 };
                 pu.MouseLeave += new MouseEventHandler(pu_MouseLeave);
             }
@@ -96,8 +87,9 @@ namespace HPTClient
             };
 
             // Plocka ut hästarna med rätt Prio
-            var orderedHorseList = MarkBet.RaceDayInfo.HorseListSelected
-                .Where(h => h.Prio == rule.Prio)
+            var orderedHorseList = MarkBet.RaceDayInfo.RaceList
+                .SelectMany(r => r.HorseList)
+                .Where(h => h.CategoryCode.HasFlag(rule.CategoryCode))
                 .OrderBy(h => h.ParentRace.LegNr)
                 .ThenBy(h => h.StartNr);
 
@@ -108,10 +100,6 @@ namespace HPTClient
                     .OrderBy(h => h.ParentRace.LegNr)
                     .ThenBy(h => h.StartNr); ;
             }
-
-            //// TEST AV BERÄKNING
-            //string result = this.MarkBet.CalculateBestABCDCombination(orderedHorseList);
-            //Clipboard.SetText(result);
 
             // Skapa en IHorseListContainer med valda hästar
             var horseCollection = new HPTHorseListContainer()
@@ -128,7 +116,8 @@ namespace HPTClient
                         ShowPrio = true,
                         ShowVinnarOdds = true,
                         ShowStakeDistributionPercent = true,
-                        //ShowMarksPercent = true
+                        ShowStakeShareRelativeToFavourite = true,
+                        ShowStakeShareRelativeToNext = true
                     }
                 }
             };

@@ -55,7 +55,6 @@ namespace HPTClient
         {
             get
             {
-                //return this.isPayingCustomer;
                 return true;
             }
             set
@@ -82,7 +81,7 @@ namespace HPTClient
         }
 
         private bool showRacesGrouped;
-        [HPTMarkBetTabsToShow("Poäng", "ShowRacesGrouped", 2, false)]   // KOMMANDE
+        [HPTMarkBetTabsToShow("Poäng", "ShowRacesGrouped", 12, false)]   // KOMMANDE
         [DataMember]
         public bool ShowRacesGrouped
         {
@@ -226,21 +225,6 @@ namespace HPTClient
             }
         }
 
-        //private bool showCoupons;
-        //[HPTMarkBetTabsToShow("Rättning", "ShowCoupons", 7, false)]
-        //public bool ShowCoupons
-        //{
-        //    get
-        //    {
-        //        return showCoupons;
-        //    }
-        //    set
-        //    {
-        //        showCoupons = value;
-        //        OnPropertyChanged("ShowCoupons");
-        //    }
-        //}
-
         private bool showDriverReduction;
         [HPTMarkBetTabsToShow("Kuskar", "ShowDriverReduction", 8, true)]
         [DataMember]
@@ -305,22 +289,6 @@ namespace HPTClient
             }
         }
 
-        private bool showAdvanced;
-        //[HPTMarkBetTabsToShow("Avdelningar", "ShowRaces", 1)]
-        [DataMember]
-        public bool ShowAdvanced
-        {
-            get
-            {
-                return showAdvanced;
-            }
-            set
-            {
-                showAdvanced = value;
-                OnPropertyChanged("ShowAdvanced");
-            }
-        }
-
         private bool showGroupIntervalReduction;
         [HPTMarkBetTabsToShow("Gruppintervall", "ShowGroupIntervalReduction", 11, true)]
         [DataMember]
@@ -354,7 +322,6 @@ namespace HPTClient
         }
 
         private bool showV6BetMultiplier;
-        //[HPTMarkBetTabsToShow("V6/V7/V8/Flerbong", "ShowV6BetMultiplier", 13, true)]
         [HPTMarkBetTabsToShow("V6/Flerbong", "ShowV6BetMultiplier", 13, true)]
         [DataMember]
         public bool ShowV6BetMultiplier
@@ -370,51 +337,19 @@ namespace HPTClient
             }
         }
 
-        private bool showCompanyGambling;
-        //[HPTMarkBetTabsToShow("Bolagsspel", "ShowCompanyGambling", 14, true)]
+        private bool showCategoryCodeReduction;
+        [HPTMarkBetTabsToShow("Kategorireducering", "ShowCategoryCodeReduction", 2, true)]
         [DataMember]
-        public bool ShowCompanyGambling
+        public bool ShowCategoryCodeReduction
         {
             get
             {
-                return showCompanyGambling;
+                return showCategoryCodeReduction;
             }
             set
             {
-                showCompanyGambling = value;
-                OnPropertyChanged("ShowCompanyGambling");
-            }
-        }
-
-        private bool showATGXmlFile;
-        //[HPTMarkBetTabsToShow("XML-kuponger", "ShowATGXmlFile", 15, true)]
-        [DataMember]
-        public bool ShowATGXmlFile
-        {
-            get
-            {
-                return showATGXmlFile;
-            }
-            set
-            {
-                showATGXmlFile = value;
-                OnPropertyChanged("ShowATGXmlFile");
-            }
-        }
-
-        private bool showTemplateWorkshop;
-        [HPTMarkBetTabsToShow("Mallverkstad", "ShowTemplateWorkshop", 16, true)]
-        [DataMember]
-        public bool ShowTemplateWorkshop
-        {
-            get
-            {
-                return showTemplateWorkshop;
-            }
-            set
-            {
-                showTemplateWorkshop = value;
-                OnPropertyChanged("ShowTemplateWorkshop");
+                showCategoryCodeReduction = value;
+                OnPropertyChanged("ShowCategoryCodeReduction");
             }
         }
     }

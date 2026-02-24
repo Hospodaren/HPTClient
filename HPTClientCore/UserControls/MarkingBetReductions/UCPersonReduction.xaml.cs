@@ -68,7 +68,7 @@ namespace HPTClient
                 ShowHorsePopup = true,
                 ShowLegNrText = true,
                 ShowMarkability = true,
-                ShowMarksPercent = true,
+                //ShowMarksPercent = true,
                 ShowMarksQuantity = true,
                 ShowMarksShare = true,
                 ShowName = true,

@@ -91,10 +91,15 @@ namespace HPTClient
             {
                 if (RowShareStake > 0)
                 {
-                    decimal result = markBet.RaceDayInfo.MaxPayOut / (RowShareStake * markBet.RaceDayInfo.NumberOfGambledRowsTotal);
-                    if (result == 0M || markBet.RaceDayInfo.JackpotFactor > 2M)
+                    //decimal result = markBet.RaceDayInfo.MaxPayOut / (RowShareStake * markBet.RaceDayInfo.NumberOfGambledRowsTotal);
+                    decimal result = markBet.BetType.PoolShare * markBet.BetType.RowCost / RowShareStake;
+                    //if (result == 0M || markBet.RaceDayInfo.JackpotFactor > 2M)
+                    //{
+                    //    result = markBet.BetType.PoolShare * markBet.BetType.RowCost / RowShareStake;
+                    //    result *= markBet.RaceDayInfo.JackpotFactor;
+                    //}
+                    if (markBet.RaceDayInfo.JackpotFactor > 2M)
                     {
-                        result = markBet.BetType.PoolShare * markBet.BetType.RowCost / RowShareStake;
                         result *= markBet.RaceDayInfo.JackpotFactor;
                     }
                     result /= markBet.RaceDayInfo.V6Factor;
@@ -289,7 +294,7 @@ namespace HPTClient
                 PrioList[(int)horse.Prio] += 1;
 
                 // KOMMANDE
-                rowShareStakeRounded *= horse.StakeShareRounded;
+                //rowShareStakeRounded *= horse.StakeShareRounded;
                 rowShareOwnProbability *= Convert.ToDecimal(horse.OwnProbability);
             }
             ATGRankSum = atgRankSum;

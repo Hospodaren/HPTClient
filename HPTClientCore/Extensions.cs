@@ -19,5 +19,35 @@
             }
             return (decimal)ret;
         }
+
+        public static string GetString(this StartCategoryCode categoryCode)
+        {
+
+            switch (categoryCode)
+            {
+                case StartCategoryCode.None:
+                    return "Ingen";
+                case StartCategoryCode.Favorit:
+                    return "Favoriter";
+                case StartCategoryCode.Storfavorit:
+                    return "Storfavoriter";
+                case StartCategoryCode.EjStorfavorit:
+                    return "Ej storfavoriter";
+                case StartCategoryCode.Megafavorit:
+                    return "Megafavoriter";
+                case StartCategoryCode.EjMegafavorit:
+                    return "Ej megafavoriter";
+                case StartCategoryCode.KnappFavorit:
+                    return "Knappa favoriter";
+                case StartCategoryCode.Overraskning:
+                    return "Överraskning";
+                case StartCategoryCode.Skrall:
+                    return "Skräll";
+                case StartCategoryCode.Storskrall:
+                    return "Storskräll";
+                default:
+                    return string.Empty;
+            }
+        }
     }
 }

@@ -560,7 +560,7 @@ namespace HPTClient
                             {
                                 IsCheckable = true,
                                 Header = hda.Name,
-                                IsEnabled = true    // hda.RequiresPro ? HPTConfig.Config.IsPayingCustomer : true
+                                IsEnabled = true
                             };
                             mi.SetBinding(MenuItem.IsCheckedProperty, hda.PropertyName);
                             CMColumnsToShow.Items.Add(mi);
@@ -635,7 +635,7 @@ namespace HPTClient
             ColumnHandlerList.Add(new ColumnHandler() { Column = gvcTrainer, Name = "gvcTrainer", Position = 0, BindingField = "ShowTrainer" });
             ColumnHandlerList.Add(new ColumnHandler() { Column = gvcBreeder, Name = "gvcBreeder", Position = 0, BindingField = "ShowBreeder" });
             ColumnHandlerList.Add(new ColumnHandler() { Column = gvcOwner, Name = "gvcOwner", Position = 0, BindingField = "ShowOwner" });
-            ColumnHandlerList.Add(new ColumnHandler() { Column = gvcSTHorseLink, Name = "gvcSTHorseLink", Position = 0, BindingField = "ShowSTHorseLink" });
+            //ColumnHandlerList.Add(new ColumnHandler() { Column = gvcSTHorseLink, Name = "gvcSTHorseLink", Position = 0, BindingField = "ShowSTHorseLink" });
 
             // Trio
             ColumnHandlerList.Add(new ColumnHandler() { Column = gvcTrio1, Name = "gvcTrio1", Position = 0, BindingField = "ShowTrio" });
@@ -645,13 +645,16 @@ namespace HPTClient
 
             // Spelinfo
             ColumnHandlerList.Add(new ColumnHandler() { Column = gvcStakeDistributionPercent, Name = "gvcStakeDistributionPercent", Position = 0, BindingField = "ShowStakeDistributionPercent" });
+            ColumnHandlerList.Add(new ColumnHandler() { Column = gvcATGTrend, Name = "gvcATGTrend", Position = 0, BindingField = "ShowATGTrend" });
             ColumnHandlerList.Add(new ColumnHandler() { Column = gvcRelativeDifference, Name = "gvcRelativeDifference", Position = 0, BindingField = "ShowRelativeDifference" });
             ColumnHandlerList.Add(new ColumnHandler() { Column = gvcStakeDistributionShareAccumulated, Name = "gvcStakeDistributionShareAccumulated", Position = 0, BindingField = "ShowStakeDistributionShareAccumulated" });
             ColumnHandlerList.Add(new ColumnHandler() { Column = gvcMarkability, Name = "gvcMarkability", Position = 0, BindingField = "ShowMarkability" });
+            ColumnHandlerList.Add(new ColumnHandler() { Column = gvcStakeShareRelativeToFavourite, Name = "gvcStakeShareRelativeToFavourite", Position = 0, BindingField = "ShowStakeShareRelativeToFavourite" });
+            ColumnHandlerList.Add(new ColumnHandler() { Column = gvcStakeShareRelativeToNext, Name = "gvcStakeShareRelativeToNext", Position = 0, BindingField = "ShowStakeShareRelativeToNext" });
 
             // Rank
             ColumnHandlerList.Add(new ColumnHandler() { Column = gvcRankMean, Name = "gvcRankMean", Position = 0, BindingField = "ShowRankMean" });
-            ColumnHandlerList.Add(new ColumnHandler() { Column = gvcRankTip, Name = "gvcRankTip", Position = 0, BindingField = "ShowRankTip" });
+            //ColumnHandlerList.Add(new ColumnHandler() { Column = gvcRankTip, Name = "gvcRankTip", Position = 0, BindingField = "ShowRankTip" });
 
             // Egna inställningar
             ColumnHandlerList.Add(new ColumnHandler() { Column = gvcLocked, Name = "gvcLocked", Position = 0, BindingField = "ShowLocked" });

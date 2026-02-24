@@ -210,6 +210,7 @@ namespace HPTClient
             {
                 ABCDEFReductionRuleList = new ObservableCollection<HPTABCDEFReductionRule>() { ABCDEFReductionRule }
             };
+            CategoryCodeReductionRuleCollection = new HPTCategoryReductionRuleCollection(this);
             TrainerRulesCollection = new HPTPersonRulesCollection(NumberOfRaces, false, PersonReductionType.Trainer);
             DriverRulesCollection = new HPTPersonRulesCollection(NumberOfRaces, false, PersonReductionType.Driver);
 
@@ -1450,7 +1451,7 @@ namespace HPTClient
 
         public void RecalculateNumberOfX()
         {
-            foreach (HPTXReductionRule rule in ABCDEFReductionRule.XReductionRuleList)
+            foreach (var rule in ABCDEFReductionRule.XReductionRuleList)
             {
                 // Antal hästar med viss Prio
                 rule.NumberOfX = RaceDayInfo.HorseListSelected.Count(h => h.Prio == rule.Prio);
@@ -1461,8 +1462,10 @@ namespace HPTClient
                     .GroupBy(h => h.ParentRace.LegNr)
                     .Count();
 
-                List<HPTXReductionRule> multiABCDXReductionList = MultiABCDEFReductionRule.ABCDEFReductionRuleList
-                    .SelectMany(ar => ar.XReductionRuleList).Where(xr => xr.Prio == rule.Prio).ToList();
+                var multiABCDXReductionList = MultiABCDEFReductionRule.ABCDEFReductionRuleList
+                    .SelectMany(ar => ar.XReductionRuleList)
+                    .Where(xr => xr.Prio == rule.Prio)
+                    .ToList();
 
                 foreach (var hptxReductionRule in multiABCDXReductionList)
                 {
@@ -1498,6 +1501,31 @@ namespace HPTClient
             {
                 SetSuperfluousFlag(abcdefReductionRule, numberOfRacesWithXReduction);
             }
+
+            // Beräkna samm för kategorireduceringarna
+            var allHorses = RaceDayInfo.RaceList
+                .SelectMany(r => r.HorseList)
+                .ToList();
+
+            foreach (var rule in CategoryCodeReductionRuleCollection.CCReductionRuleList)
+            {
+                // Antal hästar med viss Prio
+                rule.NumberOfX = allHorses
+                    .Count(h => h.CategoryCode.HasFlag(rule.CategoryCode));
+
+                // Antal lopp med hästar som har viss Prio
+                rule.NumberOfRacesWithX = allHorses
+                    .Where(h => h.CategoryCode.HasFlag(rule.CategoryCode))
+                    .GroupBy(h => h.ParentRace.LegNr)
+                    .Count();
+
+                foreach (HPTNumberOfWinners now in rule.NumberOfWinnersList)
+                {
+                    now.Selectable = now.NumberOfWinners <= rule.NumberOfRacesWithX;
+                    now.IsSuperfluous = false;
+                }
+            }
+
         }
 
         internal void SetSuperfluousFlag(HPTABCDEFReductionRule rule, int numberOfRacesWithXReduction)
@@ -2180,12 +2208,13 @@ namespace HPTClient
                 {
                     markBetTemplateList = new ObservableCollection<HPTMarkBetTemplate>();
                 }
-                if (markBetTemplateList.Count == 0)
-                {
-                    SetAvailableMarkBetTemplates();
-                    Config.MarkBetTemplateABCDList.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(MarkBetTemplateABCDList_CollectionChanged);
-                    Config.MarkBetTemplateRankList.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(MarkBetTemplateABCDList_CollectionChanged);
-                }
+                // TODO: Skita i det här?
+                //if (markBetTemplateList.Count == 0)
+                //{
+                //    SetAvailableMarkBetTemplates();
+                //    Config.MarkBetTemplateABCDList.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(MarkBetTemplateABCDList_CollectionChanged);
+                //    Config.MarkBetTemplateRankList.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(MarkBetTemplateABCDList_CollectionChanged);
+                //}
                 return markBetTemplateList;
             }
         }
@@ -2216,32 +2245,33 @@ namespace HPTClient
             // Rensa listan
             markBetTemplateList.Clear();
 
-            // Lista med de ABCD-grupper som ska finnas tillgängliga i denna instans av HPTMarkBet
-            IEnumerable<HPTPrio> priosToUse = ABCDEFReductionRule.XReductionRuleList
-                .Where(xr => xr.Use)
-                .Select(xr => xr.Prio);
+            //// Lista med de ABCD-grupper som ska finnas tillgängliga i denna instans av HPTMarkBet
+            //IEnumerable<HPTPrio> priosToUse = ABCDEFReductionRule.XReductionRuleList
+            //    .Where(xr => xr.Use)
+            //    .Select(xr => xr.Prio);
 
+            // TODO: Skita i det här?
             // Vilka ABCD-mallar som går att tillämpa
-            IEnumerable<HPTMarkBetTemplate> tempListABCD =
-                Config.MarkBetTemplateABCDList.Where(
-                    mbt => mbt.TypeCategory == BetType.TypeCategory
-                        && mbt.PriosToUse
-                        .Intersect(priosToUse)
-                        .Count() == mbt.PriosToUse.Count()
-                        );
+            //IEnumerable<HPTMarkBetTemplate> tempListABCD =
+            //    Config.MarkBetTemplateABCDList.Where(
+            //        mbt => mbt.TypeCategory == BetType.TypeCategory
+            //            && mbt.PriosToUse
+            //            .Intersect(priosToUse)
+            //            .Count() == mbt.PriosToUse.Count()
+            //            );
 
-            IEnumerable<HPTMarkBetTemplate> tempListRank =
-                Config.MarkBetTemplateRankList.Where(
-                    mbt => mbt.TypeCategory == BetType.TypeCategory);
+            //IEnumerable<HPTMarkBetTemplate> tempListRank =
+            //    Config.MarkBetTemplateRankList.Where(
+            //        mbt => mbt.TypeCategory == BetType.TypeCategory);
 
-            foreach (var template in tempListABCD)
-            {
-                markBetTemplateList.Add(template);
-            }
-            foreach (var template in tempListRank)
-            {
-                markBetTemplateList.Add(template);
-            }
+            //foreach (var template in tempListABCD)
+            //{
+            //    markBetTemplateList.Add(template);
+            //}
+            //foreach (var template in tempListRank)
+            //{
+            //    markBetTemplateList.Add(template);
+            //}
         }
 
         private HPTMarkBetTemplateABCD markBetTemplateABCD;
@@ -2525,6 +2555,10 @@ namespace HPTClient
         [HPTReduction("Multi-ABCD", "MultiABCDEFReductionRule.Use", true, 1)]
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public HPTMultiABCDEFReductionRule MultiABCDEFReductionRule { get; set; }
+
+        [HPTReduction("Kategorier", "CategoryCodeReductionRuleCollection.Use", false, 1)]
+        [DataMember(IsRequired = false, EmitDefaultValue = false)]
+        public HPTCategoryReductionRuleCollection CategoryCodeReductionRuleCollection { get; set; }
 
         #endregion
 

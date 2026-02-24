@@ -656,7 +656,7 @@ namespace HPTClient
 
             // Rank
             ColumnHandlerList.Add(new ColumnHandler() { Column = gvcRankMean, Name = "gvcRankMean", Position = 0, BindingField = "ShowRankMean" });
-            ColumnHandlerList.Add(new ColumnHandler() { Column = gvcRankTip, Name = "gvcRankTip", Position = 0, BindingField = "ShowRankTip" });
+            //ColumnHandlerList.Add(new ColumnHandler() { Column = gvcRankTip, Name = "gvcRankTip", Position = 0, BindingField = "ShowRankTip" });
 
             // Egna inställningar
             ColumnHandlerList.Add(new ColumnHandler() { Column = gvcLocked, Name = "gvcLocked", Position = 0, BindingField = "ShowLocked" });

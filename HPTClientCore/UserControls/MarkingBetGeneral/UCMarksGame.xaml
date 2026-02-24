@@ -793,33 +793,7 @@
                                     <ComboBoxItem Content="Nästa rank (icke valda hästar)" Tag="11"/>
                                 </ComboBox>
                             </Grid>
-                            <!--<Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                        <CheckBox x:Name="chkCouponCompression" Grid.Row="2" Margin="2,2,10,2"
-                                      IsChecked="{Binding Path=MarkBet.CompressCoupons}"
-                                      VerticalAlignment="Center" HorizontalAlignment="Left">
-                            <TextBlock Text="Kupongkomprimering" Style="{StaticResource tbStyle}" VerticalAlignment="Center"
-                                       ToolTip="Välj hur kuponger för inlämning till ATG ska skapas"/>
-                        </CheckBox>
-
-                        <ComboBox x:Name="cmbCouponCompression" Margin="2" MinWidth="100" IsEditable="False" 
-                                      IsReadOnly="False" SelectionChanged="cmbCouponCompression_SelectionChanged" HorizontalAlignment="Stretch" Grid.Column="1">
-                            <ComboBoxItem Content="Standard" Tag="0" 
-                                              ToolTip="Programmet väljer hur kupongerna skapas utifrån valda reduceringsvillkor och systemstorlek"/>
-                            <ComboBoxItem Content="Snabbast" Tag="1"
-                                              ToolTip="Programmet väljer snabbaste sätt att skapa kupongerna utifrån valda reduceringsvillkor och systemstorlek"/>
-                            <ComboBoxItem Content="Minst antal kuponger" Tag="2"
-                                              ToolTip="Programmet skapar så få och stora kuponger som möjligt (kan vara långsamt vid stora system)."/>
-                            <ComboBoxItem Content="Ingen (enkelrader)" Tag="3"
-                                              ToolTip="Ingen komprimering till kuponger sker. Varje enkelrad blir en egen kupong."/>
-                            <ComboBoxItem Content="Flertrådad (V6/flerbong)" Tag="4"
-                                              ToolTip="Komprimering sker i flera parallella trådar. Ger snabbare komprimering om man använder V6/flerbong för enkelrader, eller om man har väldigt stora system (större än 20 000 rader)."/>
-                        </ComboBox>
-</Grid>-->
-
+                            
                             <CheckBox x:Name="chkV6" Grid.Row="3" Margin="2" VerticalAlignment="Center" HorizontalAlignment="Left"
                                   Visibility="{Binding Path=MarkBet.V6Visibility}" IsChecked="{Binding Path=MarkBet.V6}"
                                   ToolTip="Kryssa för om du enbart vill delta i potten för alla rätt">
@@ -907,19 +881,6 @@
             </Grid>
         </Expander>
 
-        <!--Inställning för profil-->
-        <!--<Border x:Name="bdrGUIProfile"  BorderBrush="Red" BorderThickness="1" Background="{StaticResource BackgroundBrush}" Grid.Row="5" Visibility="Collapsed">
-            <StackPanel Orientation="Horizontal" Margin="3">
-                <TextBlock Style="{StaticResource ResourceKey=tbMediumStyle}" Foreground="{StaticResource SelectedBrush}" Text="Just nu visas förenklat gränssnitt, vill du ändra?"/>
-                <ComboBox x:Name="cmbGUIProfile" Text="Gränssnitt" Width="100" HorizontalAlignment="Stretch" Margin="2" SelectionChanged="cmbGUIProfile_SelectionChanged">
-                    <ComboBoxItem Content="Förenklat" Tag="0"/>
-                    <ComboBoxItem Content="Standard" Tag="1"/>
-                    <ComboBoxItem Content="Komplett" Tag="2"/>
-                </ComboBox>
-                <Button x:Name="btnSelectGUIProfile" Content="Välj" Margin="1" Padding="3,1" Click="btnSelectGUIProfile_Click"/>
-                <Button x:Name="btnIgnoreGUIProfileSelection" Content="Ignorera" Margin="1" Padding="3,1" Click="btnIgnoreGUIProfileSelection_Click"/>
-            </StackPanel>
-        </Border>-->
 
     </Grid>
 </HPT:UCMarkBetControl>

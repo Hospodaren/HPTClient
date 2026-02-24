@@ -1,3 +1,5 @@
+using ATGDownloader.Calendar;
+
 namespace HPTClient
 {
     public enum GUIProfile
@@ -289,6 +291,40 @@ namespace HPTClient
         E = 5,
         F = 6
     }
+
+    [Flags]
+    public enum StartCategoryCode
+    {
+        None = 0,
+        Favorit = 1,
+        Storfavorit = 2,
+        EjStorfavorit = 4,
+        Megafavorit = 8,
+        EjMegafavorit = 16,
+        KnappFavorit = 32,
+        Overraskning = 64,
+        Skrall = 128,
+        Storskrall = 256,
+        //EgetDrag,
+        //Overspelad,
+        //Underspelad,
+        //TrendarUpp,
+        //TrendarNer,
+        //Own1,
+        //Own2,
+        //Own3,
+        //Own4,
+        //Own5
+    }
+    //public static class Extensions
+    //{
+    //    public static Grades minPassing = Grades.D;
+
+    //    public static bool Passing(this Grades grade)
+    //    {
+    //        return grade >= minPassing;
+    //    }
+    //}
 
     public enum DragDropTypeEnabled
     {

@@ -39,94 +39,159 @@ namespace HPTClient
         public void Merge(ATGRaceBase race)
         {
             // TODO: Använd ATGRaceBase istället
-            //try
+
+
+            try
+            {
+                if (race.Number == RaceNr)
+                {
+                    // TODO: Fixa i ATGHelper
+                    //TurnoverPlats = race.TurnoverPlats > 0 ? race.SharedInfo.TurnoverPlats : TurnoverPlats;
+                    //TurnoverTvilling = race.SharedInfo.TurnoverTvilling > 0 ? race.SharedInfo.TurnoverTvilling : TurnoverTvilling;
+                    //TurnoverVinnare = race.SharedInfo.TurnoverVinnare > 0 ? race.SharedInfo.TurnoverVinnare : TurnoverVinnare;
+
+                    NumberOfStartingHorses = 0;
+                    foreach (var start in race.StartList)
+                    {
+                        var hptHorse = GetHorseByNumber((int)start.Number);
+                        hptHorse.Merge(start.Horse);
+                        hptHorse.SetColors();
+                    }
+                    switch (ParentRaceDayInfo.BetType.Code)
+                    {
+                        case "T":
+                            CombinationListInfoTrio.CalculatePercentages(HorseList);
+                            break;
+                        //case "TV":
+                        //    this.CombinationListInfoTvilling.CalculatePercentages(this.HorseList);
+                        //    break;
+                        case "DD":
+                        case "LD":
+                            // Hantera eventuellt strukna hästar
+                            HorseList
+                                .Where(h => h.Selected && h.Scratched == true)
+                                .ToList()
+                                .ForEach(h => h.Selected = false);
+                            break;
+                        default:
+                            break;
+                    }
+
+                    //PerformCalculations();
+                    SetCorrectStakeDistributionShare();
+                    // TODO: Fixa i ATGHelper
+                    //SetCorrectStakeDistributionShareAlt1();
+                    //SetCorrectStakeDistributionShareAlt2();
+                    CalculateDynamicGameValues();
+
+                    // TODO: Fixa i ATGHelper
+                    //    if (race.SharedInfo.TvillingCombinationList != null && CombinationListInfoTvilling.CombinationList != null)
+                    //    {
+                    //        // Hantera eventuellt strukna hästar
+                    //        var selectedScratchedHorses = HorseList.Where(h => h.Selected && h.Scratched == true).ToList();
+                    //        selectedScratchedHorses.ForEach(h =>
+                    //            {
+                    //                h.Selected = false;
+                    //                CombinationListInfoTvilling.CombinationList
+                    //                    .Where(c => c.Horse1 == h || c.Horse2 == h)
+                    //                    .ToList()
+                    //                    .ForEach(c =>
+                    //                    {
+                    //                        c.Selected = false;
+                    //                        c.Stake = null;
+                    //                    });
+                    //            });
+
+                    //        // Uppdatera alla kombinationer
+                    //        foreach (HPTService.HPTCombination comb in race.SharedInfo.TvillingCombinationList)
+                    //        {
+                    //            var hptComb = CombinationListInfoTvilling.CombinationList.First(c => c.UniqueCode == CombinationListInfoTvilling.GetUniqueCodeFromCombination(comb));
+                    //            hptComb.CombinationOdds = comb.CombinationOdds;
+                    //            hptComb.CombinationOddsExact = comb.CombinationOddsExact;
+                    //            hptComb.CalculateQuotas("TV");
+                    //        }
+                    //        CombinationListInfoTvilling.SortCombinationValues();
+                    //    }
+
+                    //    if (race.SharedInfo.TrioCombinationList != null && CombinationListInfoTrio.CombinationList != null)
+                    //    {
+                    //        CreateAllTrioCombinations(race.SharedInfo.TrioCombinationList);
+                    //        CombinationListInfoTrio.SortCombinationValues();
+                    //    }
+                    //}
+                }
+            }
+            catch (Exception exc)
+            {
+                string s = exc.Message;
+            }
+        }
+
+        internal void CalculateDynamicGameValues()
+        {
+            //decimal quotient = favourite.StakeDistributionShare / runnerUp.StakeDistributionShare;
+
+            //StartCategoryCode categoryCode = (favourite.StakeDistributionShare, quotient) switch
             //{
-            //    if (race.SharedInfo.RaceNr == RaceNr)
-            //    {
-            //        TurnoverPlats = race.SharedInfo.TurnoverPlats > 0 ? race.SharedInfo.TurnoverPlats : TurnoverPlats;
-            //        TurnoverTvilling = race.SharedInfo.TurnoverTvilling > 0 ? race.SharedInfo.TurnoverTvilling : TurnoverTvilling;
-            //        TurnoverVinnare = race.SharedInfo.TurnoverVinnare > 0 ? race.SharedInfo.TurnoverVinnare : TurnoverVinnare;
+            //    (_, < 1.2m) => StartCategoryCode.KnappFavorit,
+            //    ( > 0.55m, > 3m) => StartCategoryCode.Megafavorit,
+            //    ( > 0.45m, > 2m) => StartCategoryCode.Storfavorit,
+            //    //(_, > 1.5m) => StartCategoryCode.KlarFavorit,
+            //    (_, _) => StartCategoryCode.None
+            //};
+            //favourite.CategoryCode |= categoryCode;
 
-            //        NumberOfStartingHorses = 0;
-            //        foreach (HPTService.HPTHorse horse in race.HorseList)
-            //        {
-            //            var hptHorse = GetHorseByNumber((int)horse.StartNr);
-            //            hptHorse.Merge(horse);
-            //            hptHorse.SetColors();
-            //        }
-            //        switch (ParentRaceDayInfo.BetType.Code)
-            //        {
-            //            case "V4":
-            //            case "V5":
-            //            case "V64":
-            //            case "V65":
-            //            case "V75":
-            //            case "V85":
-            //            case "GS75":
-            //            case "V86":
-            //                break;
-            //            case "T":
-            //                CombinationListInfoTrio.CalculatePercentages(HorseList);
-            //                break;
-            //            //case "TV":
-            //            //    this.CombinationListInfoTvilling.CalculatePercentages(this.HorseList);
-            //            //    break;
-            //            case "DD":
-            //            case "LD":
-            //                // Hantera eventuellt strukna hästar
-            //                HorseList
-            //                    .Where(h => h.Selected && h.Scratched == true)
-            //                    .ToList()
-            //                    .ForEach(h => h.Selected = false);
-            //                break;
-            //            default:
-            //                break;
-            //        }
+            // Nya expreimentella fält
+            var orderedArray = HorseList
+                .Where(h => h.Scratched != true)
+                .OrderByDescending(h => h.StakeDistributionShare)
+                .ToArray();
 
-            //        //PerformCalculations();
-            //        SetCorrectStakeDistributionShare();
-            //        SetCorrectStakeDistributionShareAlt1();
-            //        SetCorrectStakeDistributionShareAlt2();
+            var favourite = orderedArray[0];
+            var runnerUp = orderedArray[1];
+            favourite.CategoryCode |= StartCategoryCode.Favorit;
 
-            //        if (race.SharedInfo.TvillingCombinationList != null && CombinationListInfoTvilling.CombinationList != null)
-            //        {
-            //            // Hantera eventuellt strukna hästar
-            //            var selectedScratchedHorses = HorseList.Where(h => h.Selected && h.Scratched == true).ToList();
-            //            selectedScratchedHorses.ForEach(h =>
-            //                {
-            //                    h.Selected = false;
-            //                    CombinationListInfoTvilling.CombinationList
-            //                        .Where(c => c.Horse1 == h || c.Horse2 == h)
-            //                        .ToList()
-            //                        .ForEach(c =>
-            //                        {
-            //                            c.Selected = false;
-            //                            c.Stake = null;
-            //                        });
-            //                });
+            Enumerable.Range(0, orderedArray.Length)
+                .ToList()
+                .ForEach(i =>
+                {
+                    var horse = orderedArray[i];
+                    horse.StakeShareRelativeToFavourite = horse.StakeDistributionShare / favourite.StakeDistributionShare;
+                    if (i < orderedArray.Length - 1)
+                    {
+                        var secondHorse = orderedArray[i + 1];
+                        horse.StakeShareRelativeToNext = horse.StakeDistributionShare / secondHorse.StakeDistributionShare;
+                        secondHorse.StakeShareRelativeToPrevious = secondHorse.StakeDistributionShare / horse.StakeDistributionShare;
+                    }
+                    else
+                    {
+                        horse.StakeShareRelativeToNext = 0M;
+                    }
+                });
 
-            //            // Uppdatera alla kombinationer
-            //            foreach (HPTService.HPTCombination comb in race.SharedInfo.TvillingCombinationList)
-            //            {
-            //                var hptComb = CombinationListInfoTvilling.CombinationList.First(c => c.UniqueCode == CombinationListInfoTvilling.GetUniqueCodeFromCombination(comb));
-            //                hptComb.CombinationOdds = comb.CombinationOdds;
-            //                hptComb.CombinationOddsExact = comb.CombinationOddsExact;
-            //                hptComb.CalculateQuotas("TV");
-            //            }
-            //            CombinationListInfoTvilling.SortCombinationValues();
-            //        }
+            favourite.CategoryCode |= favourite.StakeShareRelativeToNext > 2M ? StartCategoryCode.Storfavorit : StartCategoryCode.EjStorfavorit;
+            favourite.CategoryCode |= favourite.StakeShareRelativeToNext > 3M ? StartCategoryCode.Megafavorit : StartCategoryCode.EjMegafavorit;
+            if (favourite.StakeShareRelativeToNext < 1.2M)
+            {
+                favourite.CategoryCode |= StartCategoryCode.KnappFavorit;
+            }
 
-            //        if (race.SharedInfo.TrioCombinationList != null && CombinationListInfoTrio.CombinationList != null)
-            //        {
-            //            CreateAllTrioCombinations(race.SharedInfo.TrioCombinationList);
-            //            CombinationListInfoTrio.SortCombinationValues();
-            //        }
-            //    }
-            //}
-            //catch (Exception exc)
-            //{
-            //    string s = exc.Message;
-            //}
+
+            // Rangornding utifrån insatsfördelning
+            HorseList
+                .ToList()
+                .ForEach(h =>
+                {
+                    StartCategoryCode categoryCode = h.StakeDistributionShare switch
+                    {
+                        < 0.015m => StartCategoryCode.Storskrall,
+                        < 0.04m => StartCategoryCode.Skrall,
+                        < 0.1m => StartCategoryCode.Overraskning,
+                        _ => StartCategoryCode.None
+                    };
+                    h.CategoryCode |= categoryCode;
+                });
+
         }
 
         public void ConvertRace(ATGRaceBase race)
@@ -1008,10 +1073,10 @@ namespace HPTClient
                         if (shareSum > 0)
                         {
                             horse.StakeDistributionShare /= shareSum;
-                            horse.StakeShareRounded = Math.Round(horse.StakeDistributionShare, 3);
+                            //horse.StakeShareRounded = Math.Round(horse.StakeDistributionShare, 3);
                             if (horse.OwnProbability == null || horse.OwnProbability == 0M)
                             {
-                                horse.OwnProbability = horse.StakeShareRounded;
+                                horse.OwnProbability = Math.Round(horse.StakeDistributionShare, 3);
                             }
                             horse.StakeShareWithoutScratchings = horse.StakeDistributionShare / shareSumWithoutScratchingsQuota;
                         }
@@ -1022,10 +1087,9 @@ namespace HPTClient
                     decimal shareSumWithoutScratchingsVx = HorseList.Where(h => h.Scratched != true).Sum(h => h.StakeDistributionShare);
                     foreach (var horse in HorseList)
                     {
-                        horse.StakeShareRounded = Math.Round(horse.StakeDistributionShare, 3);
                         if (horse.OwnProbability == null || horse.OwnProbability == 0M)
                         {
-                            horse.OwnProbability = horse.StakeShareRounded;
+                            horse.OwnProbability = Math.Round(horse.StakeDistributionShare, 3);
                         }
                         if (shareSumWithoutScratchingsVx > 0)
                         {

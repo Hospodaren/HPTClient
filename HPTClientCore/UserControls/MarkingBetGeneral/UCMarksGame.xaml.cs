@@ -760,23 +760,23 @@ namespace HPTClient
                     expanderMarksgame.IsExpanded = false;
                 }
 
-                // Ladda XML-fil till ATG
-                if (ti.Name == "tiXmlFile")
-                {
-                    try
-                    {
-                        MarkBet.CouponCorrector.CouponHelper.OnlyCreateTempFile = true;
-                        MarkBet.CouponCorrector.CouponHelper.CreateATGFile();
-                        MarkBet.SystemFilename = MarkBet.CouponCorrector.CouponHelper.TempFileName;
-                        var encodedUrl = "file:///" + MarkBet.CouponCorrector.CouponHelper.TempFileName.Replace("\\", "/");
-                        wbXmlFile.Navigate(new Uri(encodedUrl));
-                    }
-                    catch (Exception exc)
-                    {
-                        string s = exc.Message;
-                    }
-                    MarkBet.CouponCorrector.CouponHelper.OnlyCreateTempFile = false;
-                }
+                //// Ladda XML-fil till ATG
+                //if (ti.Name == "tiXmlFile")
+                //{
+                //    try
+                //    {
+                //        MarkBet.CouponCorrector.CouponHelper.OnlyCreateTempFile = true;
+                //        MarkBet.CouponCorrector.CouponHelper.CreateATGFile();
+                //        MarkBet.SystemFilename = MarkBet.CouponCorrector.CouponHelper.TempFileName;
+                //        var encodedUrl = "file:///" + MarkBet.CouponCorrector.CouponHelper.TempFileName.Replace("\\", "/");
+                //        wbXmlFile.Navigate(new Uri(encodedUrl));
+                //    }
+                //    catch (Exception exc)
+                //    {
+                //        string s = exc.Message;
+                //    }
+                //    MarkBet.CouponCorrector.CouponHelper.OnlyCreateTempFile = false;
+                //}
             }
             catch (Exception exc)
             {
@@ -969,11 +969,6 @@ namespace HPTClient
                     try
                     {
                         MarkBet.CouponCorrector.CouponHelper.CreateATGFile();
-                        if (HPTConfig.Config.MarkBetTabsToShow.ShowATGXmlFile)
-                        {
-                            var encodedUrl = "file:///" + MarkBet.SystemFilename.Replace("\\", "/");
-                            wbXmlFile.Navigate(new Uri(encodedUrl));
-                        }
                     }
                     catch (Exception atgExc)
                     {
@@ -1024,24 +1019,6 @@ namespace HPTClient
                 return;
             }
             SaveFiles(true, true, true);
-            //Cursor = Cursors.Wait;
-            //try
-            //{
-            //    PrepareForSave();
-            //    this.MarkBet.CouponCorrector.CouponHelper.CreateATGFile();
-            //    HPTSerializer.SerializeHPTSystem(this.MarkBet.MailSender.HPT3FileName, this.MarkBet);
-            //    if (HPTConfig.Config.MarkBetTabsToShow.ShowATGXmlFile)
-            //    {
-            //        var encodedUrl = "file:///" + this.MarkBet.SystemFilename.Replace("\\", "/");
-            //        this.wbXmlFile.Navigate(new Uri(encodedUrl));
-            //    }
-            //}
-            //catch (Exception exc)
-            //{
-            //    HPTConfig.Config.AddToErrorLog(exc);
-            //    MessageBox.Show("Något gick fel vid sparning av system och/eller kupongfil. Kontrollera fellogg för detaljer", "Fel vid sparning", MessageBoxButton.OK, MessageBoxImage.Warning);
-            //}
-            //Cursor = Cursors.Arrow;
         }
 
         private void btnCreateCouponsAs_Click(object sender, RoutedEventArgs e)
@@ -1737,14 +1714,6 @@ namespace HPTClient
 
         #endregion
 
-        //private void chkUseABCD_Checked(object sender, RoutedEventArgs e)
-        //{
-        //    if (gbReductionList == null || this.gbReductionList.Visibility != System.Windows.Visibility.Visible)
-        //    {
-        //        this.MarkBet.RecalculateReduction(RecalculateReason.All);
-        //    }
-        //}
-
         #region Skapa tabbar
 
         internal void CreateTabsToShow()
@@ -1961,41 +1930,17 @@ namespace HPTClient
             }
             HandleTabItemOrder(tiCorrection, "tiCorrection");
 
-            //// Bolagsspel
-            //if (HPTConfig.Config.MarkBetTabsToShow.ShowCompanyGambling && (this.tiCompanyGambling == null || !this.tcMarksGame.Items.Contains(this.tiCompanyGambling)))
-            //{
-            //    CreateCompanyGamblingTabItem();
-            //}
-            //else if (!HPTConfig.Config.MarkBetTabsToShow.ShowCompanyGambling && this.tiCompanyGambling != null)
-            //{
-            //    this.tcMarksGame.Items.Remove(this.tiCompanyGambling);
-            //    this.tiCompanyGambling = null;
-            //}
-            //HandleTabItemOrder(this.tiCompanyGambling, "tiCompanyGambling");
-
-            //// XML-fil
-            //if (HPTConfig.Config.MarkBetTabsToShow.ShowATGXmlFile && (this.tiXmlFile == null || !this.tcMarksGame.Items.Contains(this.tiXmlFile)))
-            //{
-            //    CreateXmlFileTabItem();
-            //}
-            //else if (!HPTConfig.Config.MarkBetTabsToShow.ShowATGXmlFile && this.tiXmlFile != null)
-            //{
-            //    this.tcMarksGame.Items.Remove(this.tiXmlFile);
-            //    this.tiXmlFile = null;
-            //}
-            //HandleTabItemOrder(this.tiXmlFile, "tiXmlFile");
-
-            // Mallverkstad
-            if (HPTConfig.Config.MarkBetTabsToShow.ShowTemplateWorkshop && (tiTemplateWorkshop == null || !tcMarksGame.Items.Contains(tiTemplateWorkshop)))
+            // Kategorireducering
+            if (HPTConfig.Config.MarkBetTabsToShow.ShowCategoryCodeReduction && (tiCategoryCodeReduction == null || !tcMarksGame.Items.Contains(tiCategoryCodeReduction)))
             {
-                CreateTemplateWorkshopTabItem();
+                CreateCategoryCodeReductionTabItem();
             }
-            else if (!HPTConfig.Config.MarkBetTabsToShow.ShowTemplateWorkshop && tiTemplateWorkshop != null)
+            else if (!HPTConfig.Config.MarkBetTabsToShow.ShowCategoryCodeReduction && tiCategoryCodeReduction != null)
             {
-                tcMarksGame.Items.Remove(tiTemplateWorkshop);
-                tiTemplateWorkshop = null;
+                tcMarksGame.Items.Remove(tiCategoryCodeReduction);
+                tiCategoryCodeReduction = null;
             }
-            HandleTabItemOrder(tiTemplateWorkshop, "tiTemplateWorkshop");
+            HandleTabItemOrder(tiCategoryCodeReduction, "tiCategoryCodeReduction");
 
             // Sortera tabbarna
             foreach (var tabName in HPTConfig.Config.MarkBetTabsToShow.ColumnsInOrder)
@@ -2344,7 +2289,6 @@ namespace HPTClient
                 Header = new UCTabItemHeader()
                 {
                     ToolTip = "Flik för att spela V6/Flerbong utifrån en eller flera hästar",
-                    //Text = "V6/V7/V8/Flerbong",
                     Text = "V6/Flerbong",
                     TextColor = new SolidColorBrush(Colors.DarkBlue)
                 },
@@ -2378,117 +2322,117 @@ namespace HPTClient
             };
         }
 
-        //public TabItem tiCompanyGambling { get; set; }
-        //internal void CreateCompanyGamblingTabItem()
-        //{
-        //    this.tiCompanyGambling = new TabItem()
-        //    {
-        //        Name = "tiCompanyGambling",
-        //        Header = new UCTabItemHeader()
-        //        {
-        //            ToolTip = "Flik med funktionalitet för att skicka mail och ladda upp system till HPTs server.",
-        //            Text = "Bolagsspel",
-        //            TextColor = new SolidColorBrush(Colors.DarkRed)
-        //        },
-        //        Content = new UCSendMail()
-        //        {
-        //            MarkBet = this.MarkBet,
-        //            DataContext = this.MarkBet,
-        //            Name = "ucSendMail"
-        //        }
-        //    };
-        //}
-
-        public TabItem tiXmlFile { get; set; }
-        internal WebBrowser wbXmlFile;
-        internal void CreateXmlFileTabItem()
+        public TabItem tiCategoryCodeReduction { get; set; }
+        internal void CreateCategoryCodeReductionTabItem()
         {
-            var grid = new Grid();
-            grid.RowDefinitions.Add(new RowDefinition()
+            tiCategoryCodeReduction = new TabItem()
             {
-                Height = GridLength.Auto
-            });
-            grid.RowDefinitions.Add(new RowDefinition());
-
-            var tb = new TextBlock();
-            tb.SetValue(Grid.RowProperty, 0);
-            tb.SetBinding(TextBlock.TextProperty, "MarkBet.SystemFilename");
-            grid.Children.Add(tb);
-
-            wbXmlFile = new WebBrowser();
-            wbXmlFile.SetValue(Grid.RowProperty, 1);
-            grid.Children.Add(wbXmlFile);
-
-            tiXmlFile = new TabItem()
-            {
-                Name = "tiXmlFile",
+                Name = "tiCategoryCodeReduction",
                 Header = new UCTabItemHeader()
                 {
-                    ToolTip = "Flik där du kan titta på den råa XML-filen som laddas upp till ATG.",
-                    Text = "XML-fil till ATG",
-                    TextColor = new SolidColorBrush(Colors.DarkRed)
+                    ToolTip = "Flik för kategorireducering (fördefinierade utgångar)",
+                    Text = "Kategorivillkor",
+                    TextColor = new SolidColorBrush(Colors.DarkBlue)
                 },
-                Content = grid
-            };
-        }
-
-        public TabItem tiTemplateWorkshop { get; set; }
-        internal void CreateTemplateWorkshopTabItem()
-        {
-            tiTemplateWorkshop = new TabItem()
-            {
-                Name = "tiTemplateWorkshop",
-                Header = new UCTabItemHeader()
-                {
-                    ToolTip = "Flik där man kan tweaka rankvariabelmallar och direkt se hur det slår igenom på valda hästar",
-                    Text = "Mallverkstad",
-                    TextColor = new SolidColorBrush(Colors.DarkRed)
-                },
-                Content = new UCTemplateWorkshop()
+                Content = new UCCategoryReductionSettings()
                 {
                     MarkBet = MarkBet,
-                    DataContext = MarkBet
+                    DataContext = MarkBet.CategoryCodeReductionRuleCollection,
+                    Name = "ucCategoryReductionSettings"
                 }
             };
         }
 
-        public TabItem tiATG { get; set; }
-        internal WebBrowser wbATG;
-        internal void CreateATGTabItem()
-        {
-            wbATG = new WebBrowser();
-            tiATG = new TabItem()
-            {
-                Name = "tiATG",
-                Header = new UCTabItemHeader()
-                {
-                    ToolTip = "Flik där du kan titta på resultat och video på atg.se",
-                    Text = "ATG",
-                    TextColor = new SolidColorBrush(Colors.DarkBlue)
-                },
-                Content = wbATG
-            };
-            tcMarksGame.Items.Add(tiATG);
-        }
+        //public TabItem tiXmlFile { get; set; }
+        //internal WebBrowser wbXmlFile;
+        //internal void CreateXmlFileTabItem()
+        //{
+        //    var grid = new Grid();
+        //    grid.RowDefinitions.Add(new RowDefinition()
+        //    {
+        //        Height = GridLength.Auto
+        //    });
+        //    grid.RowDefinitions.Add(new RowDefinition());
 
-        public TabItem tiST { get; set; }
-        internal WebBrowser wbST;
-        internal void CreateSTTabItem()
-        {
-            wbST = new WebBrowser();
-            tiST = new TabItem()
-            {
-                Name = "tiST",
-                Header = new UCTabItemHeader()
-                {
-                    ToolTip = "Flik där du kan titta på hästinformation på svensktravsport.se",
-                    Text = "Svensk Travsport",
-                    TextColor = new SolidColorBrush(Colors.DarkBlue)
-                },
-                Content = wbST
-            };
-            tcMarksGame.Items.Add(tiST);
-        }
+        //    var tb = new TextBlock();
+        //    tb.SetValue(Grid.RowProperty, 0);
+        //    tb.SetBinding(TextBlock.TextProperty, "MarkBet.SystemFilename");
+        //    grid.Children.Add(tb);
+
+        //    wbXmlFile = new WebBrowser();
+        //    wbXmlFile.SetValue(Grid.RowProperty, 1);
+        //    grid.Children.Add(wbXmlFile);
+
+        //    tiXmlFile = new TabItem()
+        //    {
+        //        Name = "tiXmlFile",
+        //        Header = new UCTabItemHeader()
+        //        {
+        //            ToolTip = "Flik där du kan titta på den råa XML-filen som laddas upp till ATG.",
+        //            Text = "XML-fil till ATG",
+        //            TextColor = new SolidColorBrush(Colors.DarkRed)
+        //        },
+        //        Content = grid
+        //    };
+        //}
+
+        //public TabItem tiTemplateWorkshop { get; set; }
+        //internal void CreateTemplateWorkshopTabItem()
+        //{
+        //    tiTemplateWorkshop = new TabItem()
+        //    {
+        //        Name = "tiTemplateWorkshop",
+        //        Header = new UCTabItemHeader()
+        //        {
+        //            ToolTip = "Flik där man kan tweaka rankvariabelmallar och direkt se hur det slår igenom på valda hästar",
+        //            Text = "Mallverkstad",
+        //            TextColor = new SolidColorBrush(Colors.DarkRed)
+        //        },
+        //        Content = new UCTemplateWorkshop()
+        //        {
+        //            MarkBet = MarkBet,
+        //            DataContext = MarkBet
+        //        }
+        //    };
+        //}
+
+        //public TabItem tiATG { get; set; }
+        //internal WebBrowser wbATG;
+        //internal void CreateATGTabItem()
+        //{
+        //    wbATG = new WebBrowser();
+        //    tiATG = new TabItem()
+        //    {
+        //        Name = "tiATG",
+        //        Header = new UCTabItemHeader()
+        //        {
+        //            ToolTip = "Flik där du kan titta på resultat och video på atg.se",
+        //            Text = "ATG",
+        //            TextColor = new SolidColorBrush(Colors.DarkBlue)
+        //        },
+        //        Content = wbATG
+        //    };
+        //    tcMarksGame.Items.Add(tiATG);
+        //}
+
+        //public TabItem tiST { get; set; }
+        //internal WebBrowser wbST;
+        //internal void CreateSTTabItem()
+        //{
+        //    wbST = new WebBrowser();
+        //    tiST = new TabItem()
+        //    {
+        //        Name = "tiST",
+        //        Header = new UCTabItemHeader()
+        //        {
+        //            ToolTip = "Flik där du kan titta på hästinformation på svensktravsport.se",
+        //            Text = "Svensk Travsport",
+        //            TextColor = new SolidColorBrush(Colors.DarkBlue)
+        //        },
+        //        Content = wbST
+        //    };
+        //    tcMarksGame.Items.Add(tiST);
+        //}
 
         #endregion
 
@@ -2682,32 +2626,32 @@ namespace HPTClient
         {
             try
             {
-                var hl = (Hyperlink)e.OriginalSource;
-                string url = hl.NavigateUri.AbsoluteUri;
+                //var hl = (Hyperlink)e.OriginalSource;
+                //string url = hl.NavigateUri.AbsoluteUri;
 
-                // Länk till atg.se, normalt sett resultat
-                if (url.Contains("atg.se"))
-                {
-                    if (wbATG == null)
-                    {
-                        CreateATGTabItem();
-                    }
-                    wbATG.Navigate(hl.NavigateUri);
-                    tcMarksGame.SelectedItem = tiATG;
-                    return;
-                }
+                //// Länk till atg.se, normalt sett resultat
+                //if (url.Contains("atg.se"))
+                //{
+                //    if (wbATG == null)
+                //    {
+                //        CreateATGTabItem();
+                //    }
+                //    wbATG.Navigate(hl.NavigateUri);
+                //    tcMarksGame.SelectedItem = tiATG;
+                //    return;
+                //}
 
-                // Länk till utökad hästinformation på 
-                if (url.Contains("travsport.se"))
-                {
-                    if (wbST == null)
-                    {
-                        CreateSTTabItem();
-                    }
-                    wbST.Navigate(hl.NavigateUri);
-                    tcMarksGame.SelectedItem = tiST;
-                    return;
-                }
+                //// Länk till utökad hästinformation på 
+                //if (url.Contains("travsport.se"))
+                //{
+                //    if (wbST == null)
+                //    {
+                //        CreateSTTabItem();
+                //    }
+                //    wbST.Navigate(hl.NavigateUri);
+                //    tcMarksGame.SelectedItem = tiST;
+                //    return;
+                //}
             }
             catch (Exception exc)
             {
@@ -2719,15 +2663,15 @@ namespace HPTClient
         {
             try
             {
-                btnCreateCoupons.IsOpen = false;
-                SaveFiles(true, true, true);
-                Clipboard.SetDataObject(MarkBet.SystemFilename);
-                if (wbATG == null)
-                {
-                    CreateATGTabItem();
-                }
-                wbATG.Navigate("https://www.atg.se/spel/fil");
-                tcMarksGame.SelectedItem = tiATG;
+                //btnCreateCoupons.IsOpen = false;
+                //SaveFiles(true, true, true);
+                //Clipboard.SetDataObject(MarkBet.SystemFilename);
+                //if (wbATG == null)
+                //{
+                //    CreateATGTabItem();
+                //}
+                //wbATG.Navigate("https://www.atg.se/spel/fil");
+                //tcMarksGame.SelectedItem = tiATG;
             }
             catch (Exception exc)
             {

@@ -29,6 +29,7 @@ namespace HPTClient
         public int TrackId { get; set; }
 
         //[XmlIgnore]
+        [DataMember]
         public ATGGameInfoBase GameInfoBase { get; set; }
 
         public DateTime NextTime

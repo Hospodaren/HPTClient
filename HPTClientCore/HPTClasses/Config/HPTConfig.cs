@@ -2491,7 +2491,7 @@ namespace HPTClient
                 ShowVinnarOdds = true,
                 ShowPrio = true,
                 ShowStakeDistributionPercent = true,
-                ShowMarksPercent = true
+                //ShowMarksPercent = true
             };
 
             DataToShowTrainerPopup = new HPTHorseDataToShow()
@@ -2504,7 +2504,7 @@ namespace HPTClient
                 ShowVinnarOdds = true,
                 ShowPrio = true,
                 ShowStakeDistributionPercent = true,
-                ShowMarksPercent = true
+                //ShowMarksPercent = true
             };
 
         }
@@ -2533,6 +2533,8 @@ namespace HPTClient
                     dataToShow.ShowPrio = true;
                     dataToShow.ShowSystemCoverage = true;
                     dataToShow.ShowDriver = true;
+                    dataToShow.ShowStakeShareRelativeToFavourite = true;
+                    dataToShow.ShowStakeShareRelativeToNext = true;
                     if (profile == GUIProfile.Normal || profile == GUIProfile.Advanced)
                     {
                         dataToShow.ShowComments = true;
@@ -2564,7 +2566,7 @@ namespace HPTClient
                             dataToShow.ShowMarkability = true;
                             dataToShow.ShowMarksQuantity = true;
                             dataToShow.ShowOwner = true;
-                            dataToShow.ShowRankTip = true;
+                            //dataToShow.ShowRankTip = true;
                             dataToShow.ShowRecord = true;
                             dataToShow.ShowResultRow = true;
                             dataToShow.ShowShoeInfo = true;
@@ -2685,7 +2687,7 @@ namespace HPTClient
                 case DataToShowUsage.ComplementaryRule:
                     dataToShow.ShowLegNrText = true;
                     dataToShow.ShowComplimentaryRuleSelect = true;
-                    dataToShow.ShowMarksPercent = true;
+                    //dataToShow.ShowMarksPercent = true;
                     dataToShow.ShowStakeDistributionPercent = true;
                     dataToShow.ShowPrio = true;
                     dataToShow.ShowSystemCoverage = true;
@@ -2721,7 +2723,7 @@ namespace HPTClient
                             dataToShow.ShowMarkability = true;
                             dataToShow.ShowMarksQuantity = true;
                             dataToShow.ShowOwner = true;
-                            dataToShow.ShowRankTip = true;
+                            //dataToShow.ShowRankTip = true;
                             dataToShow.ShowRecord = true;
                             dataToShow.ShowResultRow = true;
                             dataToShow.ShowShoeInfo = true;
@@ -2739,7 +2741,7 @@ namespace HPTClient
                     dataToShow.ShowSystemValue = true;
                     dataToShow.ShowATGResultLink = true;
                     dataToShow.ShowLegNrText = true;
-                    dataToShow.ShowMarksPercent = true;
+                    //dataToShow.ShowMarksPercent = true;
                     dataToShow.ShowStakeDistributionPercent = true;
                     dataToShow.ShowPrio = true;
                     dataToShow.ShowSystemCoverage = true;
@@ -2775,7 +2777,7 @@ namespace HPTClient
                             dataToShow.ShowMarkability = true;
                             dataToShow.ShowMarksQuantity = true;
                             dataToShow.ShowOwner = true;
-                            dataToShow.ShowRankTip = true;
+                            //dataToShow.ShowRankTip = true;
                             dataToShow.ShowRecord = true;
                             dataToShow.ShowResultRow = true;
                             dataToShow.ShowShoeInfo = true;
@@ -3371,7 +3373,7 @@ namespace HPTClient
                         ShowVinnarOdds = true,
                         ShowPrio = true,
                         ShowStakeDistributionPercent = true,
-                        ShowMarksPercent = true
+                        //ShowMarksPercent = true
                     };
                 }
                 return dataToShowDriverPopup;
@@ -3401,7 +3403,7 @@ namespace HPTClient
                         ShowVinnarOdds = true,
                         ShowPrio = true,
                         ShowStakeDistributionPercent = true,
-                        ShowMarksPercent = true
+                        //ShowMarksPercent = true
                     };
                 }
                 return dataToShowTrainerPopup;
@@ -3461,7 +3463,8 @@ namespace HPTClient
                 GUIProfile = profile,
                 ShowCorrection = true,
                 ShowOverview = true,
-                ShowRaces = true
+                ShowRaces = true,
+                ShowCategoryCodeReduction = true,
             };
             if (profile == GUIProfile.Normal || profile == GUIProfile.Advanced)
             {
@@ -3475,9 +3478,9 @@ namespace HPTClient
                 if (profile == GUIProfile.Advanced)
                 {
                     markBetTabsToShow.ShowComments = false;
-                    markBetTabsToShow.ShowCompanyGambling = false;
+                    //markBetTabsToShow.ShowCompanyGambling = false;
                     markBetTabsToShow.ShowRankOverview = true;
-                    markBetTabsToShow.ShowTemplateWorkshop = true;
+                    //markBetTabsToShow.ShowTemplateWorkshop = true;
                     markBetTabsToShow.ShowTrainerReduction = true;
                     markBetTabsToShow.ShowTrends = true;
                     markBetTabsToShow.ShowV6BetMultiplier = true;
