@@ -37,7 +37,7 @@ namespace HPTClient
             SetDefaultColorIntervals();
             HPTSystemDirectories = new ObservableCollection<HPTSystemDirectory>();
             RecentFileList = new ObservableCollection<HPTSystemFile>();
-            MarkBetSystemList = new ObservableCollection<HPTRaceDayInfoLight>();
+            //MarkBetSystemList = new ObservableCollection<HPTRaceDayInfoLight>();
             AvailableBets = new List<HPTBet>();
             // MailListCollection = new ObservableCollection<HPTMailList>();
             GroupIntervalRulesCollectionList = new();
@@ -93,7 +93,7 @@ namespace HPTClient
                 }
                 else    // Konfigurationsfilen finns och ska laddas in
                 {
-                    hptConfig = HPTSerializer.DeserializeHPTConfig(MyDocumentsPath + ConfigFileName);
+                    hptConfig = HPTSerializer.DeserializeHPTConfig(Path.Combine(MyDocumentsPath, ConfigFileName));
                     config = hptConfig;
                 }
                 hptConfig.SetRankTemplates();
@@ -134,7 +134,7 @@ namespace HPTClient
 
             hptConfig.HPTSystemDirectories = new ObservableCollection<HPTSystemDirectory>();
             hptConfig.RecentFileList = new ObservableCollection<HPTSystemFile>();
-            hptConfig.MarkBetSystemList = new ObservableCollection<HPTRaceDayInfoLight>();
+            //hptConfig.MarkBetSystemList = new ObservableCollection<HPTRaceDayInfoLight>();
 
             return hptConfig;
         }
@@ -1021,8 +1021,8 @@ namespace HPTClient
             }
         }
 
-        [XmlIgnore]
-        public ObservableCollection<HPTRaceDayInfoLight> MarkBetSystemList { get; set; }
+        //[XmlIgnore]
+        //public ObservableCollection<HPTRaceDayInfoLight> MarkBetSystemList { get; set; }
 
         #region Felloggning
 
@@ -1610,8 +1610,8 @@ namespace HPTClient
             UseF = false;
 
             // Övriga inställningar
-            CopyCouponsToClipboard = true;
-            CopySingleRowsToClipboard = true;
+            CopyCouponsToClipboard = false;
+            CopySingleRowsToClipboard = false;
             ThreadedRecalculation = true;
             UseDefaultRankTemplate = true;
         }
@@ -2519,7 +2519,11 @@ namespace HPTClient
                 ShowName = true,
                 ShowStartNr = true,
                 ShowVinnarOdds = true,
-                ShowStakeDistributionPercent = true
+                ShowStakeDistributionPercent = true,
+                ShowTrends = true,
+                ShowStakeShareRelativeToFavourite = true,
+                ShowStakeShareRelativeToNext = true,
+                ShowATGTrend = true
             };
 
             switch (usage)
@@ -2533,8 +2537,6 @@ namespace HPTClient
                     dataToShow.ShowPrio = true;
                     dataToShow.ShowSystemCoverage = true;
                     dataToShow.ShowDriver = true;
-                    dataToShow.ShowStakeShareRelativeToFavourite = true;
-                    dataToShow.ShowStakeShareRelativeToNext = true;
                     if (profile == GUIProfile.Normal || profile == GUIProfile.Advanced)
                     {
                         dataToShow.ShowComments = true;
@@ -3482,7 +3484,7 @@ namespace HPTClient
                     markBetTabsToShow.ShowRankOverview = true;
                     //markBetTabsToShow.ShowTemplateWorkshop = true;
                     markBetTabsToShow.ShowTrainerReduction = true;
-                    markBetTabsToShow.ShowTrends = true;
+                    //markBetTabsToShow.ShowTrends = true;
                     markBetTabsToShow.ShowV6BetMultiplier = true;
                 }
             }
@@ -3687,33 +3689,33 @@ namespace HPTClient
             }
             guiElementsToShow = new HPTGUIElementsToShow()
             {
-                GUIProfile = guiProfile
+                GUIProfile = guiProfile,
+                ShowReductionPercentage = true,
+                ShowCopy = true,
+                ShowAutomaticCalculation = true,
+                ShowRowValueInterval = true,
+                ShowCouponCompression = true,
             };
             if (guiProfile == GUIProfile.Normal || guiProfile == GUIProfile.Advanced)
             {
                 guiElementsToShow.ShowBeginner = true;
                 guiElementsToShow.ShowClear = true;
-                guiElementsToShow.ShowCopy = true;
                 guiElementsToShow.ShowCouponInfo = true;
                 guiElementsToShow.ShowLiveCalculation = true;
                 guiElementsToShow.ShowNumberOfGambledRows = true;
                 guiElementsToShow.ShowOverview = true;
                 guiElementsToShow.ShowPrint = true;
                 guiElementsToShow.ShowReductionList = true;
-                guiElementsToShow.ShowReductionPercentage = true;
                 guiElementsToShow.ShowReservHandling = true;
                 guiElementsToShow.ShowSaveAs = true;
                 guiElementsToShow.ShowTemplates = true;
-                guiElementsToShow.ShowUpload = true;
+                //guiElementsToShow.ShowUpload = true;
                 guiElementsToShow.ShowV6 = true;
 
                 if (guiProfile == GUIProfile.Advanced)
                 {
-                    guiElementsToShow.ShowAutomaticCalculation = true;
                     guiElementsToShow.ShowBetMultiplier = true;
-                    guiElementsToShow.ShowCouponCompression = true;
                     guiElementsToShow.ShowRaceLock = true;
-                    guiElementsToShow.ShowRowValueInterval = true;
                     guiElementsToShow.ShowSystemCostChange = true;
                 }
             }

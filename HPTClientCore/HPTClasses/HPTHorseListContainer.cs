@@ -1,6 +1,6 @@
 ﻿namespace HPTClient
 {
-    class HPTHorseListContainer : Notifier, IHorseListContainer
+    public class HPTHorseListContainer : Notifier, IHorseListContainer
     {
         public HPTRaceDayInfo ParentRaceDayInfo { get; set; }
 

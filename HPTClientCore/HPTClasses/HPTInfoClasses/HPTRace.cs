@@ -53,9 +53,12 @@ namespace HPTClient
                     NumberOfStartingHorses = 0;
                     foreach (var start in race.StartList)
                     {
-                        var hptHorse = GetHorseByNumber((int)start.Number);
-                        hptHorse.Merge(start.Horse);
-                        hptHorse.SetColors();
+                        var hptHorse = HorseList.FirstOrDefault(h => h.StartNr == start.Number);
+                        if (hptHorse != null)
+                        {
+                            hptHorse.Merge(start);
+                            hptHorse.SetColors(); 
+                        }
                     }
                     switch (ParentRaceDayInfo.BetType.Code)
                     {
@@ -77,12 +80,14 @@ namespace HPTClient
                             break;
                     }
 
-                    //PerformCalculations();
+                    // Gör beräkningar och klassificeringar
                     SetCorrectStakeDistributionShare();
+                    CalculateDynamicGameValues();
+
+                    //PerformCalculations();
                     // TODO: Fixa i ATGHelper
                     //SetCorrectStakeDistributionShareAlt1();
                     //SetCorrectStakeDistributionShareAlt2();
-                    CalculateDynamicGameValues();
 
                     // TODO: Fixa i ATGHelper
                     //    if (race.SharedInfo.TvillingCombinationList != null && CombinationListInfoTvilling.CombinationList != null)
@@ -129,8 +134,6 @@ namespace HPTClient
 
         internal void CalculateDynamicGameValues()
         {
-            //decimal quotient = favourite.StakeDistributionShare / runnerUp.StakeDistributionShare;
-
             //StartCategoryCode categoryCode = (favourite.StakeDistributionShare, quotient) switch
             //{
             //    (_, < 1.2m) => StartCategoryCode.KnappFavorit,
@@ -139,7 +142,6 @@ namespace HPTClient
             //    //(_, > 1.5m) => StartCategoryCode.KlarFavorit,
             //    (_, _) => StartCategoryCode.None
             //};
-            //favourite.CategoryCode |= categoryCode;
 
             // Nya expreimentella fält
             var orderedArray = HorseList
@@ -177,7 +179,7 @@ namespace HPTClient
             }
 
 
-            // Rangornding utifrån insatsfördelning
+            // Sätt övriga kategorier
             HorseList
                 .ToList()
                 .ForEach(h =>
@@ -190,6 +192,23 @@ namespace HPTClient
                         _ => StartCategoryCode.None
                     };
                     h.CategoryCode |= categoryCode;
+
+                    if (h.ParentRace.TrackName == h.HomeTrack)
+                    {
+                        h.CategoryCode |= StartCategoryCode.Hemmahast;
+                    }
+                    if (!string.IsNullOrWhiteSpace(h.Nationality))
+                    {
+                        h.CategoryCode |= StartCategoryCode.Utlandshast;
+                    }
+                    if (h.ATGTrend > 0.01M)
+                    {
+                        h.CategoryCode |= StartCategoryCode.TrendarUppATG;
+                    }
+                    if (h.ATGTrend < -0.01M)
+                    {
+                        h.CategoryCode |= StartCategoryCode.TrendarNerATG;
+                    }
                 });
 
         }
@@ -1207,10 +1226,10 @@ namespace HPTClient
             //}
         }
 
-        internal HPTHorse GetHorseByNumber(int startNr)
-        {
-            return HorseList.Where(h => h.StartNr == startNr).FirstOrDefault();
-        }
+        //internal HPTHorse GetHorseByNumber(int startNr)
+        //{
+        //    return HorseList.Where(h => h.StartNr == startNr).FirstOrDefault();
+        //}
 
         internal HPTHorse GetHorseByName(string name)
         {

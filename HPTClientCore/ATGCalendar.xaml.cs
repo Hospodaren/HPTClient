@@ -17,7 +17,6 @@ namespace HPTClient
     /// </summary>
     public partial class ATGCalendar : Window
     {
-        //public byte[] CalendarZip { get; set; }
         private HPTCalendar? hptCalendar;
         public ObservableCollection<HPTGUIMessage> LoadingInfoList { get; set; }
         public ObservableCollection<HPTGUIMessage> MessageList { get; set; }
@@ -113,28 +112,7 @@ namespace HPTClient
                     ATGDownloaderToHPTHelper.UpdateCalendar(hptCalendar);
                     HPTSerializer.SerializeHPTCalendar(calendarFileName, hptCalendar);
                 }
-
-                //// Hantera om vi inte får kalender från servern
-                //if (CalendarZip == null)  // Hämta kalender från disk
-                //{
-                //    _hptCalendar = HPTSerializer.DeserializeHPTCalendar(HPTConfig.MyDocumentsPath + "HPTCalendar.hptc");
-
-                //    if (_hptCalendar != null && _hptCalendar.RaceDayInfoList != null && _hptCalendar.RaceDayInfoList.Count > 0)
-                //    {
-                //        _hptCalendar.RaceDayInfoList
-                //                        .Where(rdi => rdi.RaceDayDate.Date >= DateTime.Today)
-                //                        .ToList()
-                //                        .ForEach(rdi => rdi.ShowInUI = true);
-
-                //        BindingOperations.GetBindingExpression(lvwCalenda, ListView.ItemsSourceProperty).UpdateTarget();
-                //    }
-                //}
-                //else
-                //{
-                //    _hptCalendar = new HPTCalendar();
-                //    ThreadPool.QueueUserWorkItem(new WaitCallback(GetCalendar), ThreadPriority.Normal);
-                //}
-            }
+                            }
             catch (Exception exc)
             {
                 MessageBox.Show(exc.ToString());
@@ -330,7 +308,9 @@ namespace HPTClient
                     hptRdi.DataToShow = HPTConfig.Config.DataToShowVxx;
                     HPTMarkBet hmb = new HPTMarkBet(hptRdi, hptRdi.BetType);
                     ATGDownloaderToHPTHelper.SetNonSerializedValues(hmb);
-                    hmb.SaveDirectory = raceDayDirectory + "\\";
+                    hmb.SaveDirectory = raceDayDirectory + "\\";    // TODO: Fult, använd Path.Combine
+                    HPTSerializer.GetTrendsFromDisk(hmb);   // TODO: Använda skiten också
+                    HPTSerializer.SerializeHPTRaceDayInfoHistory(hmb);
                     Dispatcher.Invoke(new Action<HPTMarkBet>(AddTabItem), hmb);
                     break;
                 case "DD":

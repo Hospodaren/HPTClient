@@ -104,6 +104,11 @@
     <Compile Update="atg_filebetting_1_8_6.cs">
       <DependentUpon>atg_filebetting_1_8_6.xsd</DependentUpon>
     </Compile>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Update="atg_filebetting_1_8_2.xsd">
@@ -114,6 +119,10 @@
     </None>
     <None Update="HorseRecordList.xsd">
       <SubType>Designer</SubType>
+    </None>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
@@ -266,37 +275,38 @@
     <WCFMetadataStorage Include="Service References\HPTService\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="ATGDownloader" Version="1.0.17" />
+    <PackageReference Include="ATGDownloader" Version="1.0.19" />
     <PackageReference Include="Extended.Wpf.Toolkit" Version="5.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Connections.Abstractions" Version="10.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel.Core" Version="2.3.6" />
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="10.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="10.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="10.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="10.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="10.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="10.0.1" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Diagnostics.Abstractions" Version="10.0.1" />
-    <PackageReference Include="Microsoft.Extensions.FileSystemGlobbing" Version="10.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="10.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.1" />
-    <PackageReference Include="Microsoft.Extensions.ObjectPool" Version="10.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="10.0.1" />
-    <PackageReference Include="Microsoft.Extensions.WebEncoders" Version="10.0.1" />
-    <PackageReference Include="Microsoft.IdentityModel.Protocols.WsFederation" Version="8.15.0" />
-    <PackageReference Include="Microsoft.IdentityModel.Tokens.Saml" Version="8.15.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Connections.Abstractions" Version="10.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel.Core" Version="2.3.9" />
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="10.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="10.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="10.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="10.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="10.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="10.0.3" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.Abstractions" Version="10.0.3" />
+    <PackageReference Include="Microsoft.Extensions.FileSystemGlobbing" Version="10.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="10.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.3" />
+    <PackageReference Include="Microsoft.Extensions.ObjectPool" Version="10.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="10.0.3" />
+    <PackageReference Include="Microsoft.Extensions.WebEncoders" Version="10.0.3" />
+    <PackageReference Include="Microsoft.IdentityModel.Protocols.WsFederation" Version="8.16.0" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens.Saml" Version="8.16.0" />
     <PackageReference Include="Microsoft.NETCore.Platforms" Version="7.0.4" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
-    <PackageReference Include="System.DirectoryServices.Protocols" Version="10.0.1" />
+    <PackageReference Include="System.DirectoryServices.Protocols" Version="10.0.3" />
     <PackageReference Include="System.Net.WebSockets.WebSocketProtocol" Version="5.1.3" />
     <PackageReference Include="System.Web.Services.Description" Version="10.0.652802" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Properties\DataSources\" />
     <Folder Include="Service References\" />
   </ItemGroup>
 </Project>

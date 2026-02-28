@@ -103,7 +103,7 @@ namespace HPTClient
                 //MaxPayOut = gameBase.Payouts.Count,
                 RaceNumberList = gameBase.Races.Select(r => r.Number).ToList(),
                 RaceList = gameBase.Races.Select(r => CreateRace(r)).ToList(),
-                Turnover = Convert.ToInt32(gameBase.Turnover / 10M),
+                Turnover = Convert.ToInt32(gameBase.Turnover / 100M),
                 GameBase = gameBase,
             };
 
@@ -298,6 +298,7 @@ namespace HPTClient
                 RaceShortText = $"Lopp {race.Number}",
                 //RaceInfoShort = race.SharedInfo.RaceInfoShort.Replace("\n", string.Empty);    // TODO: Finns i annan json hos ATG?
                 //RaceInfoLong = race.SharedInfo.RaceInfoLong;    // TODO: Finns i annan json hos ATG?
+                TrackId = race.Track.TrackId,                
                 HorseList = race.StartList.Select(x => CreateHorse(x)).ToList(),
                 //ParentRaceDayInfo = 
 
@@ -307,6 +308,7 @@ namespace HPTClient
                 .ForEach(x =>
                 {
                     x.ParentRace = hptRace;
+                    x.IsHomeTrack = x.HomeTrack == hptRace.TrackName;
                 });
 
             hptRace.StartMethodAndDistanceCode = $"{hptRace.DistanceCode}{hptRace.StartMethodCode}";
@@ -413,6 +415,7 @@ namespace HPTClient
                 //MarksShare
                 MinPlatsOdds = Convert.ToInt32(start.PlatsOdds),
                 MaxPlatsOdds = Convert.ToInt32(start.PlatsOdds),
+                Nationality = start.Horse.Nationality,
                 ResultList = new(ConvertHorseResultList(start.Horse)),
                 Scratched = start.Scratched,
                 //StakeDistribution = TODO: Summa per häst verkar inte finnas längre
@@ -1260,6 +1263,22 @@ namespace HPTClient
         {
             try
             {
+                if (gameResult.Status is "ongoing" or "results")
+                {
+                    // TODO: Konvertera till LegResult osv...                    
+                    foreach (var race in gameResult.Races)
+                    {
+                        if (race.Winners is not null && race.Winners.Any())
+                        {
+
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                }
+
                 // TODO: Använd ATGGameBase istället
                 //if (!setValues)
                 //{
@@ -1520,8 +1539,8 @@ namespace HPTClient
                     {
                         hptComb.ParentRace = hptRace;
                         hptComb.ParentRaceDayInfo = hcb.RaceDayInfo;
-                        hptComb.Horse1 = hptRace.GetHorseByNumber(hptComb.Horse1Nr);
-                        hptComb.Horse2 = hptRace.GetHorseByNumber(hptComb.Horse2Nr);
+                        hptComb.Horse1 = hptRace.HorseList.First(h => h.StartNr == hptComb.Horse1Nr);
+                        hptComb.Horse2 = hptRace.HorseList.First(h => h.StartNr == hptComb.Horse2Nr);
                     }
                     hptRace.CombinationListInfoTvilling.UpdateCombinationsToShow();
                 }
@@ -1531,9 +1550,9 @@ namespace HPTClient
                     {
                         hptComb.ParentRace = hptRace;
                         hptComb.ParentRaceDayInfo = hcb.RaceDayInfo;
-                        hptComb.Horse1 = hptRace.GetHorseByNumber(hptComb.Horse1Nr);
-                        hptComb.Horse2 = hptRace.GetHorseByNumber(hptComb.Horse2Nr);
-                        hptComb.Horse3 = hptRace.GetHorseByNumber(hptComb.Horse3Nr);
+                        hptComb.Horse1 = hptRace.HorseList.First(h => h.StartNr == hptComb.Horse1Nr);
+                        hptComb.Horse2 = hptRace.HorseList.First(h => h.StartNr == hptComb.Horse2Nr);
+                        hptComb.Horse3 = hptRace.HorseList.First(h => h.StartNr == hptComb.Horse3Nr);
                     }
                     hptRace.CombinationListInfoTrio.UpdateCombinationsToShow();
                 }
@@ -1544,8 +1563,8 @@ namespace HPTClient
                 foreach (HPTCombination comb in hcb.RaceDayInfo.CombinationListInfoDouble.CombinationList)
                 {
                     comb.ParentRaceDayInfo = hcb.RaceDayInfo;
-                    comb.Horse1 = hcb.RaceDayInfo.RaceList[0].GetHorseByNumber(comb.Horse1Nr);
-                    comb.Horse2 = hcb.RaceDayInfo.RaceList[1].GetHorseByNumber(comb.Horse2Nr);
+                    comb.Horse1 = hcb.RaceDayInfo.RaceList[0].HorseList.First(h => h.StartNr == comb.Horse1Nr);
+                    comb.Horse2 = hcb.RaceDayInfo.RaceList[1].HorseList.First(h => h.StartNr == comb.Horse2Nr);
                     string uniqueCode = comb.Horse1.HexCode + comb.Horse2.HexCode;
                 }
                 hcb.RaceDayInfo.CombinationListInfoDouble.UpdateCombinationsToShow();

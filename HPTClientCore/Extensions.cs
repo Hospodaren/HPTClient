@@ -45,6 +45,14 @@
                     return "Skräll";
                 case StartCategoryCode.Storskrall:
                     return "Storskräll";
+                case StartCategoryCode.Hemmahast:
+                    return "Hemmahästar";
+                case StartCategoryCode.Utlandshast:
+                    return "Utländska hästar";
+                case StartCategoryCode.TrendarUppATG:
+                    return "Trendar uppåt (ATG)";
+                case StartCategoryCode.TrendarNerATG:
+                    return "Trendar neråt (ATG)";
                 default:
                     return string.Empty;
             }

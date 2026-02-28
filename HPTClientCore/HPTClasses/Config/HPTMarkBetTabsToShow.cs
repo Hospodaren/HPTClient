@@ -112,21 +112,21 @@ namespace HPTClient
             }
         }
 
-        private bool showTrends;
-        [HPTMarkBetTabsToShow("Trender", "ShowTrends", 3, false)]
-        [DataMember]
-        public bool ShowTrends
-        {
-            get
-            {
-                return showTrends;
-            }
-            set
-            {
-                showTrends = value;
-                OnPropertyChanged("ShowTrends");
-            }
-        }
+        //private bool showTrends;
+        //[HPTMarkBetTabsToShow("Trender", "ShowTrends", 3, false)]
+        //[DataMember]
+        //public bool ShowTrends
+        //{
+        //    get
+        //    {
+        //        return showTrends;
+        //    }
+        //    set
+        //    {
+        //        showTrends = value;
+        //        OnPropertyChanged("ShowTrends");
+        //    }
+        //}
 
         private bool showComments;
         [HPTMarkBetTabsToShow("Kommentarer", "ShowComments", 3, true)]

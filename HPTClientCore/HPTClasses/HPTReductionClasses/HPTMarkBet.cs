@@ -208,7 +208,7 @@ namespace HPTClient
             ABCDEFReductionRule = new HPTABCDEFReductionRule(this);
             MultiABCDEFReductionRule = new HPTMultiABCDEFReductionRule()
             {
-                ABCDEFReductionRuleList = new ObservableCollection<HPTABCDEFReductionRule>() { ABCDEFReductionRule }
+                ABCDEFReductionRuleList = new ObservableCollection<HPTABCDEFReductionRule>([ABCDEFReductionRule])
             };
             CategoryCodeReductionRuleCollection = new HPTCategoryReductionRuleCollection(this);
             TrainerRulesCollection = new HPTPersonRulesCollection(NumberOfRaces, false, PersonReductionType.Trainer);
@@ -2328,7 +2328,6 @@ namespace HPTClient
                     foreach (var xReductionRule in abcdReductionRule.XReductionRuleList)
                     {
                         xReductionRule.SetSkipRule();
-                        //CalculateBestABCDCombination(xReductionRule);
                     }
                 }
             }
@@ -2338,12 +2337,17 @@ namespace HPTClient
                 foreach (var xReductionRule in ABCDEFReductionRule.XReductionRuleList)
                 {
                     xReductionRule.SetSkipRule();
-                    //CalculateBestABCDCombination(xReductionRule);
                 }
 
                 string header = Enumerable.Range(0, NumberOfRaces + 1)
                 .Select(nr => nr.ToString())
                 .Aggregate((nr, next) => nr + "\t" + next);
+            }
+
+            // Den nya häftiga kategorireduceringen
+            if (CategoryCodeReductionRuleCollection.Use)
+            {
+                reductionRulesToApply.Add(CategoryCodeReductionRuleCollection);
             }
 
             // Kusk och tränare

@@ -579,6 +579,30 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
+                    <!--Långsiktigt trend-->
+                    <GridViewColumn x:Name="gvcLongTrend">
+                        <GridViewColumnHeader Tag="LongTrend" Content="Lång trend"
+                                    ToolTipService.ToolTip="Relativ trendprocent"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Right" HorizontalAlignment="Right"
+                                           Text="{Binding Path=LongTrend,StringFormat=P2}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--Kortsiktigt trend-->
+                    <GridViewColumn x:Name="gvcShortTrend">
+                        <GridViewColumnHeader Tag="LongTrend" Content="Kort trend"
+                                    ToolTipService.ToolTip="Relativ trendprocent"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Right" HorizontalAlignment="Right"
+                                           Text="{Binding Path=ShortTrend,StringFormat=P2}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
                     <!--Insatsfördelning relativt till vinnaren-->
                     <GridViewColumn x:Name="gvcStakeShareRelativeToFavourite">
                         <GridViewColumnHeader Tag="StakeShareRelativeToFavourite" Content="IF mot favorit"

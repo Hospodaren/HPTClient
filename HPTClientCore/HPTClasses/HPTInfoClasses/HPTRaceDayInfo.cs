@@ -37,7 +37,7 @@ namespace HPTClient
             try
             {
                 Jackpot = gameBase.GameInfo.JackpotAmount;
-                Turnover = Convert.ToInt32(gameBase.Turnover / 10M);
+                Turnover = Convert.ToInt32(gameBase.Turnover / 100M);
 
 
                 // Uppdatera storleken på vinstpotterna

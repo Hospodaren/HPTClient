@@ -646,6 +646,8 @@ namespace HPTClient
             // Spelinfo
             ColumnHandlerList.Add(new ColumnHandler() { Column = gvcStakeDistributionPercent, Name = "gvcStakeDistributionPercent", Position = 0, BindingField = "ShowStakeDistributionPercent" });
             ColumnHandlerList.Add(new ColumnHandler() { Column = gvcATGTrend, Name = "gvcATGTrend", Position = 0, BindingField = "ShowATGTrend" });
+            ColumnHandlerList.Add(new ColumnHandler() { Column = gvcLongTrend, Name = "gvcLongTrend", Position = 0, BindingField = "ShowTrends" });
+            ColumnHandlerList.Add(new ColumnHandler() { Column = gvcShortTrend, Name = "gvcShortTrend", Position = 0, BindingField = "ShowTrends" });
             ColumnHandlerList.Add(new ColumnHandler() { Column = gvcRelativeDifference, Name = "gvcRelativeDifference", Position = 0, BindingField = "ShowRelativeDifference" });
             ColumnHandlerList.Add(new ColumnHandler() { Column = gvcStakeDistributionShareAccumulated, Name = "gvcStakeDistributionShareAccumulated", Position = 0, BindingField = "ShowStakeDistributionShareAccumulated" });
             ColumnHandlerList.Add(new ColumnHandler() { Column = gvcMarkability, Name = "gvcMarkability", Position = 0, BindingField = "ShowMarkability" });

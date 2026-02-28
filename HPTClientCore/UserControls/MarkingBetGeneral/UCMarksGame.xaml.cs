@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Xps.Packaging;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace HPTClient
 {
@@ -30,89 +31,47 @@ namespace HPTClient
 
                 rdi = markBet.RaceDayInfo;
                 RaceList = new ObservableCollection<HPTRace>(markBet.RaceDayInfo.RaceList);
-                atgUpdateTimer = new Timer(new TimerCallback(UpdateFromATG));
+
+                atgUpdateTimer = new Timer(new TimerCallback(UpdateTrendsFromATG));
+                ChangeUpdateTimer();
 
                 InitializeComponent();
 
-                // Hantering av gratisanvändare som öppnar fil med V3, V4 eller V5
-                //if (!HPTConfig.Config.IsPayingCustomer)
-                //{
-                //    if (this.MarkBet.BetType.Code == "V3" || this.MarkBet.BetType.Code == "V75" || this.MarkBet.BetType.Code == "V5" || this.MarkBet.BetType.Code == "GS75")
-                //    {
-                //        this.btnCreateCoupons.IsEnabled = false;
-                //    }
-
-                //    // Spara som
-                //    this.btnCreateCouponsAs.IsEnabled = false;
-                //    this.miSaveATGFileAs.IsEnabled = false;
-                //    this.miSaveHPT4FileAs.IsEnabled = false;
-
-                //    // Skriv ut
-                //    this.btnPrint.IsEnabled = false;
-                //    this.miPrintText.IsEnabled = false;
-                //    this.miPrintXPS.IsEnabled = false;
-
-                //    // Ladda upp
-                //    this.btnUploadSystem.IsEnabled = false;
-                //    this.miCopySystemGUIDToClipboard.IsEnabled = false;
-                //    //this.miMailSystemInfoToOwnMail.IsEnabled = false;
-                //    this.miOpenCorrectionURL.IsEnabled = false;
-                //    //this.miUploadCompleteSystem.IsEnabled = false;
-
-                //    // Nybörjarwizard
-                //    this.btnBeginnerWizard.IsEnabled = false;
-
-                //    this.txtBetMultiplier.Foreground = new SolidColorBrush(Colors.Gray);
-                //    this.iudBetMultiplier.IsEnabled = false;
-                //    this.chkV6.IsEnabled = false;
-                //    //this.chkCouponCompression.IsEnabled = false;
-                //    //this.cmbCouponCompression.IsEnabled = false;
-
-                //    // Kopiera
-                //    this.btnCopy.IsEnabled = false;
-                //    this.miCopyCoupons.IsEnabled = false;
-                //    this.miCopyHorseRank.IsEnabled = false;
-                //    this.miCopyOwnRank.IsEnabled = false;
-                //    this.miCopySingleRows.IsEnabled = false;
-                //    this.miCopySystem.IsEnabled = false;
-
-                //    // Spara
-                //    this.miSaveATGFile.IsEnabled = false;
-                //    this.miSaveHPT4File.IsEnabled = false;
-
-                //    //// Automatisk omberäkning
-                //    //this.chkAutomaticRecalculation.IsEnabled = false;
-
-                //    //// Uppdatering
-                //    //this.btnUpdate.IsEnabled = false;
-                //    //this.cmbUpdateInterval.IsEnabled = false;
-                //}
                 ReductionCheckBoxList = new ObservableCollection<CheckBox>();
                 CMMarkBetTabsToShow = new ContextMenu();
-
-                //if (HPTConfig.Config.FirstTimeHPT5User)
-                //{
-                //    HPTConfig.Config.FirstTimeHPT5User = false;
-                //    this.bdrGUIProfile.Visibility = System.Windows.Visibility.Visible;
-                //    this.GUIElementsToShow = HPTConfig.Config.GetElementsToShow(GUIProfile.Simple);
-                //    ApplyGUIElementsToShow(this.GUIElementsToShow);
-                //    ApplyProfile(GUIProfile.Simple);
-                //}
-                //else
-                //{
-                //    ApplyGUIElementsToShow(HPTConfig.Config.GUIElementsToShow);
-                //}
 
                 ApplyGUIElementsToShow(HPTConfig.Config.GUIElementsToShow);
 
                 // Skapa valen på expressnybörjarsystem
-                CreateBeginnerSystemSizesMenu();
+                //CreateBeginnerSystemSizesMenu();
 
                 // Skapa de tabbar man valt att visa
                 CreateTabsToShow();
                 HPTConfig.Config.MarkBetTabsToShow.PropertyChanged += new PropertyChangedEventHandler(MarkBetTabsToShow_PropertyChanged);
                 HPTConfig.Config.GUIElementsToShow.PropertyChanged += new PropertyChangedEventHandler(GUIElementsToShow_PropertyChanged);
             }
+        }
+
+        internal void ChangeUpdateTimer()
+        {
+            if (MarkBet.RaceDayInfo.RaceDayDate < DateTime.Now)
+            {
+                atgUpdateTimer.Change(Timeout.Infinite, Timeout.Infinite);
+                return;
+            }
+            if (_triggerTimes is null)
+            {
+                var startTime = DateTime.Today.AddHours(8D).AddMinutes(1);  // Första hämtning 08:01 på morgonen
+                var endTime = MarkBet.RaceDayInfo.RaceDayDate.AddMinutes(-5D);  // Sista hämtning fem minuter innan spelstopp
+                _triggerTimes = CreateTriggerTimes(startTime, endTime, 10, 1.5D);
+            }
+            _triggerTimes = _triggerTimes
+                .Where(tt => tt > DateTime.Now)
+                .ToList();
+
+            var nextUpdate = _triggerTimes.OrderBy(tt => tt).First();
+            var timeToNext = nextUpdate - DateTime.Now;
+            atgUpdateTimer.Change(timeToNext, timeToNext);
         }
 
         void GUIElementsToShow_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -160,115 +119,115 @@ namespace HPTClient
         //    }
         //}
 
-        internal void CreateBeginnerSystemSizesMenu()
-        {
-            var spBeginnerSizes = new StackPanel();
-            var beginneSizesList = new List<MenuItem>();
+        //internal void CreateBeginnerSystemSizesMenu()
+        //{
+        //    var spBeginnerSizes = new StackPanel();
+        //    var beginneSizesList = new List<MenuItem>();
 
-            foreach (int beginnerSize in HPTConfig.Config.BeginnerSizesToShow)
-            {
-                var miBeginnerSize = new MenuItem()
-                {
-                    Header = "Spela för " + beginnerSize.ToString() + " kr",
-                    Tag = beginnerSize
-                };
-                miBeginnerSize.Click += miBeginnerSize_Click;
-                spBeginnerSizes.Children.Add(miBeginnerSize);
-                //beginneSizesList.Add(miBeginnerSize);
-            }
+        //    foreach (int beginnerSize in HPTConfig.Config.BeginnerSizesToShow)
+        //    {
+        //        var miBeginnerSize = new MenuItem()
+        //        {
+        //            Header = "Spela för " + beginnerSize.ToString() + " kr",
+        //            Tag = beginnerSize
+        //        };
+        //        miBeginnerSize.Click += miBeginnerSize_Click;
+        //        spBeginnerSizes.Children.Add(miBeginnerSize);
+        //        //beginneSizesList.Add(miBeginnerSize);
+        //    }
 
-            btnBeginnerWizard.DropDownContent = spBeginnerSizes;
-        }
+        //    btnBeginnerWizard.DropDownContent = spBeginnerSizes;
+        //}
 
-        void miBeginnerSize_Click(object sender, RoutedEventArgs e)
-        {
-            btnBeginnerWizard.IsOpen = false;
-            if (MarkBet.RaceDayInfo.HorseListSelected.Count > 0)
-            {
-                var result = MessageBox.Show("Du har redan valt hästar, vill du behålla dessa på ditt system?", "Behåll valda hästar?", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (result == MessageBoxResult.Yes)
-                {
-                    foreach (var horse in MarkBet.RaceDayInfo.HorseListSelected)
-                    {
-                        horse.Locked = true;
-                    }
-                }
-                else
-                {
-                    MarkBet.ClearAll();
-                }
-            }
-            Cursor = Cursors.Wait;
-            try
-            {
-                var fe = (FrameworkElement)sender;
-                int systemStake = (int)fe.Tag;
-                int numberOfSpikes = 1;
+        //void miBeginnerSize_Click(object sender, RoutedEventArgs e)
+        //{
+        //    btnBeginnerWizard.IsOpen = false;
+        //    if (MarkBet.RaceDayInfo.HorseListSelected.Count > 0)
+        //    {
+        //        var result = MessageBox.Show("Du har redan valt hästar, vill du behålla dessa på ditt system?", "Behåll valda hästar?", MessageBoxButton.YesNo, MessageBoxImage.Question);
+        //        if (result == MessageBoxResult.Yes)
+        //        {
+        //            foreach (var horse in MarkBet.RaceDayInfo.HorseListSelected)
+        //            {
+        //                horse.Locked = true;
+        //            }
+        //        }
+        //        else
+        //        {
+        //            MarkBet.ClearAll();
+        //        }
+        //    }
+        //    Cursor = Cursors.Wait;
+        //    try
+        //    {
+        //        var fe = (FrameworkElement)sender;
+        //        int systemStake = (int)fe.Tag;
+        //        int numberOfSpikes = 1;
 
-                switch (MarkBet.BetType.Code)
-                {
-                    case "V4":
-                        if (systemStake > 100)
-                        {
-                            numberOfSpikes = 0;
-                        }
-                        break;
-                    case "V5":
-                        if (systemStake > 300)
-                        {
-                            numberOfSpikes = 0;
-                        }
-                        break;
-                    case "V64":
-                    case "V65":
-                        if (systemStake < 200)
-                        {
-                            numberOfSpikes = 2;
-                        }
-                        break;
-                    case "V75":
-                    case "GS75":
-                        if (systemStake < 300)
-                        {
-                            numberOfSpikes = 2;
-                        }
-                        break;
-                    case "V86":
-                    case "V85":
-                        if (systemStake < 400)
-                        {
-                            numberOfSpikes = 2;
-                        }
-                        else if (systemStake < 200)
-                        {
-                            numberOfSpikes = 3;
-                        }
-                        break;
-                    default:
-                        break;
-                }
+        //        switch (MarkBet.BetType.Code)
+        //        {
+        //            case "V4":
+        //                if (systemStake > 100)
+        //                {
+        //                    numberOfSpikes = 0;
+        //                }
+        //                break;
+        //            case "V5":
+        //                if (systemStake > 300)
+        //                {
+        //                    numberOfSpikes = 0;
+        //                }
+        //                break;
+        //            case "V64":
+        //            case "V65":
+        //                if (systemStake < 200)
+        //                {
+        //                    numberOfSpikes = 2;
+        //                }
+        //                break;
+        //            case "V75":
+        //            case "GS75":
+        //                if (systemStake < 300)
+        //                {
+        //                    numberOfSpikes = 2;
+        //                }
+        //                break;
+        //            case "V86":
+        //            case "V85":
+        //                if (systemStake < 400)
+        //                {
+        //                    numberOfSpikes = 2;
+        //                }
+        //                else if (systemStake < 200)
+        //                {
+        //                    numberOfSpikes = 3;
+        //                }
+        //                break;
+        //            default:
+        //                break;
+        //        }
 
-                // Skapa nybörjarmall med defaultvärden
-                MarkBet.TemplateForBeginners = new HPTTemplateForBeginners()
-                {
-                    DesiredProfit = HPTDesiredProfit.Medium,
-                    HorseRankVariableList = HPTConfig.Config.DefaultRankTemplate.HorseRankVariableList.Where(rv => rv.Use).ToList(),
-                    NumberOfSpikes = numberOfSpikes,
-                    ReductionRisk = HPTReductionRisk.Medium,
-                    Stake = systemStake
-                };
+        //        // Skapa nybörjarmall med defaultvärden
+        //        MarkBet.TemplateForBeginners = new HPTTemplateForBeginners()
+        //        {
+        //            DesiredProfit = HPTDesiredProfit.Medium,
+        //            HorseRankVariableList = HPTConfig.Config.DefaultRankTemplate.HorseRankVariableList.Where(rv => rv.Use).ToList(),
+        //            NumberOfSpikes = numberOfSpikes,
+        //            ReductionRisk = HPTReductionRisk.Medium,
+        //            Stake = systemStake
+        //        };
 
-                Cursor = Cursors.Wait;
-                // Skapa systemförslag utifrån valen...
-                MarkBet.SelectFromBeginnerTemplate();
-            }
-            catch (Exception exc)
-            {
-                string s = exc.Message;
-            }
+        //        Cursor = Cursors.Wait;
+        //        // Skapa systemförslag utifrån valen...
+        //        MarkBet.SelectFromBeginnerTemplate();
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        string s = exc.Message;
+        //    }
 
-            Cursor = Cursors.Arrow;
-        }
+        //    Cursor = Cursors.Arrow;
+        //}
 
         #region Button clicks
 
@@ -293,6 +252,11 @@ namespace HPTClient
                 // TODO: Använd ATGDownloader
                 var gameBase = ATGDownloader.ATGObjectGetter.UpdateGame(MarkBet.BetType.GameInfoBase);
                 MarkBet.RaceDayInfo.Merge(gameBase);
+                HPTSerializer.GetTrendsFromDisk(MarkBet);
+                //HPTSerializer.SerializeHPTRaceDayInfoHistory(MarkBet);
+                MarkBet.TimeStamp = DateTime.Now;
+                btnUpdate.Content = $" Uppdatera ({MarkBet.TimeStamp:HH:mm:ss})";
+                atgUpdateTimer.Change(TimeSpan.FromMinutes(20), TimeSpan.FromMinutes(20));
             }
             catch (Exception exc)
             {
@@ -300,6 +264,40 @@ namespace HPTClient
             }
             btnUpdate.IsEnabled = true;
             Cursor = Cursors.Arrow;
+        }
+
+        private void UpdateTrendsFromATG()
+        {
+            try
+            {
+                var gameBase = ATGDownloader.ATGObjectGetter.UpdateGame(MarkBet.BetType.GameInfoBase);
+                string fileName = HPTSerializer.SerializeHPTRaceDayInfoHistory(gameBase, MarkBet.SaveDirectory);
+                ChangeUpdateTimer();
+            }
+            catch (Exception exc)
+            {
+                string s = exc.Message;
+            }
+        }
+
+        internal IEnumerable<DateTime> CreateTriggerTimes(DateTime startTime, DateTime endTime, int numberOfTimes, double factor)
+        {
+            var totalSeconds = (startTime - endTime).TotalSeconds;
+            var totalSum = Enumerable.Range(1, numberOfTimes)
+                .Select(n => Math.Pow(factor, n))
+                .Sum();
+
+            var secondsToAdd = totalSeconds / totalSum;
+            var triggerTimes = new List<DateTime>();
+            var timeToAdd = endTime;
+
+            while (timeToAdd >= startTime)
+            {
+                triggerTimes.Add(timeToAdd);
+                secondsToAdd *= factor;
+                timeToAdd = timeToAdd.AddSeconds(secondsToAdd);
+            }
+            return triggerTimes;
         }
 
         // TODO: Använd ATGDownloader
@@ -381,11 +379,17 @@ namespace HPTClient
             dt.Start();
         }
 
+        IEnumerable<DateTime> _triggerTimes;
         Timer atgUpdateTimer;
         private void UpdateFromATG(object timerData)
         {
             Dispatcher.Invoke(new Action(UpdateFromATG), null);
         }
+        private void UpdateTrendsFromATG(object timerData)
+        {
+            Dispatcher.Invoke(new Action(UpdateTrendsFromATG), null);
+        }
+
 
         #endregion
 
@@ -443,22 +447,22 @@ namespace HPTClient
             }
         }
 
-        private void cmbUpdateInterval_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (cmbUpdateInterval.SelectedItem != null)
-            {
-                ComboBoxItem cbi = (ComboBoxItem)cmbUpdateInterval.SelectedItem;
-                int updatePeriod = Convert.ToInt32(cbi.Tag) * 60 * 1000;
-                if (updatePeriod == 0)
-                {
-                    atgUpdateTimer.Change(Timeout.Infinite, Timeout.Infinite);
-                }
-                else
-                {
-                    atgUpdateTimer.Change(updatePeriod, updatePeriod);
-                }
-            }
-        }
+        //private void cmbUpdateInterval_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    if (cmbUpdateInterval.SelectedItem != null)
+        //    {
+        //        ComboBoxItem cbi = (ComboBoxItem)cmbUpdateInterval.SelectedItem;
+        //        int updatePeriod = Convert.ToInt32(cbi.Tag) * 60 * 1000;
+        //        if (updatePeriod == 0)
+        //        {
+        //            atgUpdateTimer.Change(Timeout.Infinite, Timeout.Infinite);
+        //        }
+        //        else
+        //        {
+        //            atgUpdateTimer.Change(updatePeriod, updatePeriod);
+        //        }
+        //    }
+        //}
 
         private bool isLoaded;
         private void ucMarksGame_Loaded(object sender, RoutedEventArgs e)
@@ -581,34 +585,34 @@ namespace HPTClient
                                     break;
                             }
 
-                            // Hantera standarduppdateringsfrekvens
-                            switch (HPTConfig.Config.DefaultUpdateInterval)
-                            {
-                                case 3:
-                                    cmbUpdateInterval.SelectedIndex = 1;
-                                    break;
-                                case 5:
-                                    cmbUpdateInterval.SelectedIndex = 2;
-                                    break;
-                                case 10:
-                                    cmbUpdateInterval.SelectedIndex = 3;
-                                    break;
-                                case 15:
-                                    cmbUpdateInterval.SelectedIndex = 4;
-                                    break;
-                                case 20:
-                                    cmbUpdateInterval.SelectedIndex = 5;
-                                    break;
-                                case 30:
-                                    cmbUpdateInterval.SelectedIndex = 6;
-                                    break;
-                                case 60:
-                                    cmbUpdateInterval.SelectedIndex = 7;
-                                    break;
-                                default:
-                                    cmbUpdateInterval.SelectedIndex = 0;
-                                    break;
-                            }
+                            //// Hantera standarduppdateringsfrekvens
+                            //switch (HPTConfig.Config.DefaultUpdateInterval)
+                            //{
+                            //    case 3:
+                            //        cmbUpdateInterval.SelectedIndex = 1;
+                            //        break;
+                            //    case 5:
+                            //        cmbUpdateInterval.SelectedIndex = 2;
+                            //        break;
+                            //    case 10:
+                            //        cmbUpdateInterval.SelectedIndex = 3;
+                            //        break;
+                            //    case 15:
+                            //        cmbUpdateInterval.SelectedIndex = 4;
+                            //        break;
+                            //    case 20:
+                            //        cmbUpdateInterval.SelectedIndex = 5;
+                            //        break;
+                            //    case 30:
+                            //        cmbUpdateInterval.SelectedIndex = 6;
+                            //        break;
+                            //    case 60:
+                            //        cmbUpdateInterval.SelectedIndex = 7;
+                            //        break;
+                            //    default:
+                            //        cmbUpdateInterval.SelectedIndex = 0;
+                            //        break;
+                            //}
                         }
 
 
@@ -749,33 +753,15 @@ namespace HPTClient
                     return;
                 }
 
-                var ti = (TabItem)e.AddedItems[0];
-                // Expandera/fäll ihop delen med inställningar
-                if (ti.Name == "tiRaces" || ti.Name == "tiRacesGrouped")
-                {
-                    expanderMarksgame.IsExpanded = true;
-                }
-                else
-                {
-                    expanderMarksgame.IsExpanded = false;
-                }
-
-                //// Ladda XML-fil till ATG
-                //if (ti.Name == "tiXmlFile")
+                //var ti = (TabItem)e.AddedItems[0];
+                //// Expandera/fäll ihop delen med inställningar
+                //if (ti.Name == "tiRaces" || ti.Name == "tiRacesGrouped")
                 //{
-                //    try
-                //    {
-                //        MarkBet.CouponCorrector.CouponHelper.OnlyCreateTempFile = true;
-                //        MarkBet.CouponCorrector.CouponHelper.CreateATGFile();
-                //        MarkBet.SystemFilename = MarkBet.CouponCorrector.CouponHelper.TempFileName;
-                //        var encodedUrl = "file:///" + MarkBet.CouponCorrector.CouponHelper.TempFileName.Replace("\\", "/");
-                //        wbXmlFile.Navigate(new Uri(encodedUrl));
-                //    }
-                //    catch (Exception exc)
-                //    {
-                //        string s = exc.Message;
-                //    }
-                //    MarkBet.CouponCorrector.CouponHelper.OnlyCreateTempFile = false;
+                //    expanderMarksgame.IsExpanded = true;
+                //}
+                //else
+                //{
+                //    expanderMarksgame.IsExpanded = false;
                 //}
             }
             catch (Exception exc)
@@ -1354,20 +1340,20 @@ namespace HPTClient
         {
             try
             {
-                var bmp = new RenderTargetBitmap((int)fe.ActualWidth * 2, (int)fe.ActualHeight * 2, 192, 192, PixelFormats.Pbgra32);
-                bmp.Render(fe);
-                var img = new Image()
-                {
-                    Source = bmp
-                };
+                //var bmp = new RenderTargetBitmap((int)fe.ActualWidth * 2, (int)fe.ActualHeight * 2, 192, 192, PixelFormats.Pbgra32);
+                //bmp.Render(fe);
+                //var img = new Image()
+                //{
+                //    Source = bmp
+                //};
 
-                var enc = new PngBitmapEncoder();
-                enc.Frames.Add(BitmapFrame.Create(bmp));
+                //var enc = new PngBitmapEncoder();
+                //enc.Frames.Add(BitmapFrame.Create(bmp));
 
-                using (var stm = System.IO.File.Create(fileName))
-                {
-                    enc.Save(stm);
-                }
+                //using (var stm = System.IO.File.Create(fileName))
+                //{
+                //    enc.Save(stm);
+                //}
 
             }
             catch (Exception exc)
@@ -1798,17 +1784,17 @@ namespace HPTClient
             }
             HandleTabItemOrder(tiTrainers, "tiTrainers");
 
-            // Trender
-            if (HPTConfig.Config.MarkBetTabsToShow.ShowTrends && (tiTrends == null || !tcMarksGame.Items.Contains(tiTrends)))
-            {
-                CreateTrendsTabItem();
-            }
-            else if (!HPTConfig.Config.MarkBetTabsToShow.ShowTrends && tiTrends != null)
-            {
-                tcMarksGame.Items.Remove(tiTrends);
-                tiTrends = null;
-            }
-            HandleTabItemOrder(tiTrends, "tiTrends");
+            //// Trender
+            //if (HPTConfig.Config.MarkBetTabsToShow.ShowTrends && (tiTrends == null || !tcMarksGame.Items.Contains(tiTrends)))
+            //{
+            //    CreateTrendsTabItem();
+            //}
+            //else if (!HPTConfig.Config.MarkBetTabsToShow.ShowTrends && tiTrends != null)
+            //{
+            //    tcMarksGame.Items.Remove(tiTrends);
+            //    tiTrends = null;
+            //}
+            //HandleTabItemOrder(tiTrends, "tiTrends");
 
             // Villkorsstatistik
             if (HPTConfig.Config.MarkBetTabsToShow.ShowReductionStatistics && (tiReductionStatistics == null || !tcMarksGame.Items.Contains(tiReductionStatistics)))

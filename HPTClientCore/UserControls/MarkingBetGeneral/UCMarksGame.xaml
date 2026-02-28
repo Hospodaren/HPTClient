@@ -305,7 +305,7 @@
 
         <HPT:UCMarkBetWarnings MarkBet="{Binding Path=MarkBet}" Grid.Row="3"/>
 
-        <Expander x:Name="expanderMarksgame" Collapsed="Expander_Collapsed" IsExpanded="True" ExpandDirection="Up" 
+        <Expander x:Name="expanderMarksgame" Collapsed="Expander_Collapsed" IsExpanded="False" ExpandDirection="Up" 
                   Background="{StaticResource BackgroundBrush}" Grid.Row="4" BorderBrush="Black" BorderThickness="1"
                   ToolTip="Klicka för att öka eller minska utrymmet för de olika flikarna längst upp på skärmen" Height="Auto">
 
@@ -552,7 +552,10 @@
                                 </Style>
                             </Grid.Resources>
 
-                            <xctk:SplitButton x:Name="btnBeginnerWizard" Grid.ColumnSpan="3" Content="Skapa ett expressystem" TextElement.FontWeight="Bold" Click="btnBeginnerWizard_Click"/>
+                            <Button x:Name="btnUpdate" Grid.ColumnSpan="3" ToolTip="Hämtar senaste odds- och streckinformationen från ATG" Click="btnUpdate_Click" 
+                                    Content="Uppdatera"
+                                Height="25" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="2" TextElement.FontWeight="Bold" TextElement.FontSize="14"/>
+                            <!--<xctk:SplitButton x:Name="btnBeginnerWizard" Grid.ColumnSpan="3" Content="Skapa ett expressystem" TextElement.FontWeight="Bold" Click="btnBeginnerWizard_Click"/>-->
 
                             <WrapPanel Orientation="Horizontal" Grid.Row="1" MaxWidth="300">
 
@@ -617,11 +620,15 @@
                                     <xctk:SplitButton.DropDownContent>
                                         <StackPanel Orientation="Vertical">
                                             <MenuItem x:Name="miCopySystemGUIDToClipboard" Header="Kopiera rättningslänk till klippbordet" Click="miCopySystemGUIDToClipboard_Click"/>
-                                            --><!--<MenuItem x:Name="miMailSystemInfoToOwnMail" Header="Maila adress och system till dig själv" Click="miMailSystemInfoToOwnMail_Click"/>--><!--
+                                            -->
+                                <!--<MenuItem x:Name="miMailSystemInfoToOwnMail" Header="Maila adress och system till dig själv" Click="miMailSystemInfoToOwnMail_Click"/>-->
+                                <!--
                                             <MenuItem x:Name="miOpenCorrectionURL" Header="Öppna rättningssida i webbläsaren" Click="miOpenCorrectionURL_Click"/>
-                                            --><!--<MenuItem x:Name="miUploadCompleteSystem" Header="Ladda upp komplett system" Click="miUploadCompleteSystem_Click"/>-->
-                                            <!--<MenuItem x:Name="miUploadOnlineSystem" Header="Ladda upp system till HPT Online" Click="miUploadOnlineSystem_Click"/>-->
-                                            <!--<MenuItem x:Name="miUploadCompleteSystem" Header="Skapa rättningslänk" Click="btnUploadSystem_Click"/>--><!--
+                                            -->
+                                <!--<MenuItem x:Name="miUploadCompleteSystem" Header="Ladda upp komplett system" Click="miUploadCompleteSystem_Click"/>-->
+                                <!--<MenuItem x:Name="miUploadOnlineSystem" Header="Ladda upp system till HPT Online" Click="miUploadOnlineSystem_Click"/>-->
+                                <!--<MenuItem x:Name="miUploadCompleteSystem" Header="Skapa rättningslänk" Click="btnUploadSystem_Click"/>-->
+                                <!--
                                         </StackPanel>
                                     </xctk:SplitButton.DropDownContent>
                                 </xctk:SplitButton>-->
@@ -671,7 +678,7 @@
                                             <ColumnDefinition Width="24"/>
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
-                                        
+
                                         <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="14" FontWeight="SemiBold" Foreground="Black" Text="{Binding LegNrString}" Grid.Column="0" Padding="2,0,3,0"/>
 
                                         <ItemsControl x:Name="icHorseList" ItemsSource="{Binding HorseList}" ItemTemplate="{StaticResource CheckBoxSystemTemplate}"                                                 
@@ -682,7 +689,7 @@
                                                 </ItemsPanelTemplate>
                                             </ItemsControl.ItemsPanel>
                                         </ItemsControl>
-                                        
+
                                         <!--<ItemsControl x:Name="icHorseList" ItemsSource="{Binding HorseList}" ItemTemplate="{StaticResource CheckBoxSystemTemplate}"                                                 
                                                       Grid.Column="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" MinWidth="360">
                                             <ItemsControl.ItemsPanel>
@@ -754,7 +761,7 @@
 
                                 <TextBlock Text="{Binding MarkBet.TimeStampString}" VerticalAlignment="Center" Style="{StaticResource tbStyle}"/>
 
-                                <ComboBox x:Name="cmbUpdateInterval" Text="Uppdateringsintervall" HorizontalAlignment="Stretch" 
+                                <!--<ComboBox x:Name="cmbUpdateInterval" Text="Uppdateringsintervall" HorizontalAlignment="Stretch" 
                                         Margin="2" SelectionChanged="cmbUpdateInterval_SelectionChanged" Grid.Column="1">
                                     <ComboBoxItem Content="Aldrig" Tag="0"/>
                                     <ComboBoxItem Content="Var 3:e minut" Tag="3"/>
@@ -764,10 +771,9 @@
                                     <ComboBoxItem Content="Var 20:e minut" Tag="20"/>
                                     <ComboBoxItem Content="En gång i halvtimmen" Tag="30"/>
                                     <ComboBoxItem Content="En gång i timmen" Tag="60"/>
-                                </ComboBox>
+                                </ComboBox>-->
 
-                                <Button x:Name="btnUpdate" ToolTip="Hämtar senaste odds- och streckinformationen från ATG" Click="btnUpdate_Click" 
-                                        Content="Uppdatera" Width="Auto" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="2" Grid.Column="2"/>
+
                             </Grid>
 
                             <Grid>
@@ -793,7 +799,7 @@
                                     <ComboBoxItem Content="Nästa rank (icke valda hästar)" Tag="11"/>
                                 </ComboBox>
                             </Grid>
-                            
+
                             <CheckBox x:Name="chkV6" Grid.Row="3" Margin="2" VerticalAlignment="Center" HorizontalAlignment="Left"
                                   Visibility="{Binding Path=MarkBet.V6Visibility}" IsChecked="{Binding Path=MarkBet.V6}"
                                   ToolTip="Kryssa för om du enbart vill delta i potten för alla rätt">

@@ -83,9 +83,9 @@ namespace HPTClient
         {
             base.Reset();
             rulesToUse = null;
-            LowestMax = RulesToUse
-                .OrderBy(rr => rr.MaxNumberOfX)
-                .First().MaxNumberOfX;
+            //LowestMax = RulesToUse
+            //    .OrderBy(rr => rr.MaxNumberOfX)
+            //    .First().MaxNumberOfX;
 
             foreach (var reductionRule in CCReductionRuleList)
             {
@@ -108,7 +108,7 @@ namespace HPTClient
             }
         }
 
-        private bool use;
+        private bool use = true;
         [DataMember]
         public bool Use
         {

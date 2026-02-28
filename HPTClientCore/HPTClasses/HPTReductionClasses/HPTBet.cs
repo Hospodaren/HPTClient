@@ -106,7 +106,7 @@ namespace HPTClient
             set
             {
                 timeStamp = value;
-                TimeStampString = "Uppdatering (" + timeStamp.ToShortTimeString() + ")";
+                //TimeStampString = "Uppdatering (" + timeStamp.ToShortTimeString() + ")";
                 OnPropertyChanged("TimeStamp");
             }
         }

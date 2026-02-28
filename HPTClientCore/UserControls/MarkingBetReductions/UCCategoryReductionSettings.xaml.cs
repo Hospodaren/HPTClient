@@ -28,6 +28,20 @@ namespace HPTClient
 
 
 
+
+        public HPTHorseListContainer HorseListContainer
+        {
+            get { return (HPTHorseListContainer)GetValue(HorseListContainerProperty); }
+            set { SetValue(HorseListContainerProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for HorseListContainer.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty HorseListContainerProperty =
+            DependencyProperty.Register(nameof(HorseListContainer), typeof(HPTHorseListContainer), typeof(UCCategoryReductionSettings), new PropertyMetadata(null));
+
+
+
+
         private HPTCategoryReductionRuleCollection categoryReductionRuleCollection;
         internal HPTCategoryReductionRuleCollection CategoryReductionRuleCollection
         {
@@ -52,7 +66,7 @@ namespace HPTClient
             }
         }
 
-        private System.Windows.Controls.Primitives.Popup pu;
+        //private System.Windows.Controls.Primitives.Popup pu;
         private void TextBlock_MouseUp(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton != MouseButton.Left)
@@ -62,15 +76,15 @@ namespace HPTClient
 
             var tb = (TextBlock)sender;
             var rule = (HPTCategoryReductionRule)tb.DataContext;
-            if (pu == null)
-            {
-                pu = new System.Windows.Controls.Primitives.Popup()
-                {
-                    Placement = System.Windows.Controls.Primitives.PlacementMode.Top,
-                    PlacementTarget = tb
-                };
-                pu.MouseLeave += new MouseEventHandler(pu_MouseLeave);
-            }
+            //if (pu == null)
+            //{
+            //    pu = new System.Windows.Controls.Primitives.Popup()
+            //    {
+            //        Placement = System.Windows.Controls.Primitives.PlacementMode.Top,
+            //        PlacementTarget = tb
+            //    };
+            //    pu.MouseLeave += new MouseEventHandler(pu_MouseLeave);
+            //}
 
             // Skapa innehållet för popupen
             Border b = new Border()
@@ -117,15 +131,19 @@ namespace HPTClient
                         ShowVinnarOdds = true,
                         ShowStakeDistributionPercent = true,
                         ShowStakeShareRelativeToFavourite = true,
-                        ShowStakeShareRelativeToNext = true
+                        ShowStakeShareRelativeToNext = true,
+                        ShowATGTrend = true,
                     }
                 }
             };
 
-            // Visa popupen
-            pu.DataContext = horseCollection;
-            pu.Child = b;
-            pu.IsOpen = true;
+            HorseListContainer = horseCollection;
+            gbCategoryRaceView.Header = rule.CategoryCode.GetString();
+
+            //// Visa popupen
+            //pu.DataContext = horseCollection;
+            //pu.Child = b;
+            //pu.IsOpen = true;
         }
 
         private void chkUseABCDRule_Checked(object sender, RoutedEventArgs e)

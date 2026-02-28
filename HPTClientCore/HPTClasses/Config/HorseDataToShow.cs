@@ -162,6 +162,22 @@ namespace HPTClient
             }
         }
 
+        private bool showTrends;
+        [HorseDataToShow("Trender", "ShowTrends", DataToShowUsage.Vxx, 3)]
+        [DataMember]
+        public bool ShowTrends
+        {
+            get
+            {
+                return showTrends;
+            }
+            set
+            {
+                showTrends = value;
+                OnPropertyChanged("ShowTrends");
+            }
+        }
+
         private bool showDriver;
         [HorseDataToShow("Kusk", "ShowDriver", DataToShowUsage.Everywhere, 3)]
         [DataMember]

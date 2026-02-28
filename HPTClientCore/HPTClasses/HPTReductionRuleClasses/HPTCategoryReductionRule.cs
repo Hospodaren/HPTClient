@@ -41,7 +41,7 @@ namespace HPTClient
             }
             if (!OnlyInSpecifiedLegs)
             {
-                int numberOfX = singleRow.HorseList.Count(h => h.CategoryCode == CategoryCode);
+                int numberOfX = singleRow.HorseList.Count(h => h.CategoryCode.HasFlag(CategoryCode));
                 return NumberOfWinnersList[numberOfX].Selected;
             }
             else
@@ -49,7 +49,7 @@ namespace HPTClient
                 int numberOfX = 0;
                 foreach (var legNumber in LegList)
                 {
-                    numberOfX += singleRow.HorseList[legNumber - 1].CategoryCode == CategoryCode ? 1 : 0;
+                    numberOfX += singleRow.HorseList[legNumber - 1].CategoryCode.HasFlag(CategoryCode) ? 1 : 0;
                 }
                 return NumberOfWinnersList[numberOfX].Selected;
             }
@@ -64,7 +64,7 @@ namespace HPTClient
 
             if (!OnlyInSpecifiedLegs)
             {
-                int numberOfX = horseList.Take(numberOfRacesToTest).Count(h => h.CategoryCode == CategoryCode);
+                int numberOfX = horseList.Take(numberOfRacesToTest).Count(h => h.CategoryCode.HasFlag(CategoryCode));
                 if (numberOfX > MaxNumberOfX)  // Högsta antal har överskridits redan innan alla lopp kontrollerats
                 {
                     return false;
@@ -80,7 +80,7 @@ namespace HPTClient
                 int numberOfX = 0;
                 foreach (var legNumber in LegList.Where(ln => ln <= numberOfRacesToTest))
                 {
-                    numberOfX += horseList[legNumber - 1].CategoryCode == CategoryCode ? 1 : 0;
+                    numberOfX += horseList[legNumber - 1].CategoryCode.HasFlag(CategoryCode) ? 1 : 0;
                 }
                 return numberOfX <= MaxNumberOfX;
             }

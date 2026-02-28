@@ -87,7 +87,7 @@ namespace HPTClient
                 HPTHorse scratchedHorse1 = selectedScratchedHorses[0];
                 if (Reserv1 != 0)
                 {
-                    HPTHorse horse = race.GetHorseByNumber(Reserv1);
+                    HPTHorse horse = race.HorseList.First(h => h.StartNr == Reserv1);
                     if (horse != null)
                     {
                         if (horse.Scratched == false || horse.Scratched == null)
@@ -102,7 +102,7 @@ namespace HPTClient
                     HPTHorse scratchedHorse2 = selectedScratchedHorses[1];
                     if (Reserv2 != 0)
                     {
-                        HPTHorse horse = race.GetHorseByNumber(Reserv2);
+                        HPTHorse horse = race.HorseList.First(h => h.StartNr == Reserv2);
                         if (horse != null)
                         {
                             if (horse.Scratched == false || horse.Scratched == null)

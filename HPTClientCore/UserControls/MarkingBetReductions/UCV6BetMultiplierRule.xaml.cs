@@ -154,7 +154,6 @@ namespace HPTClient
                 if (V6BetMultiplierRule != null && V6BetMultiplierRule.Use && MarkBet != null)
                 {
                     MarkBet.UpdateV6BetMultiplierSingleRows();
-                    //this.MarkBet.SetV6BetMultiplierSingleRows();
                 }
             }
             catch (Exception exc)

@@ -45,7 +45,7 @@ namespace HPTClient
 
         #region Conversion
 
-        public void Merge(ATGHorseBase horse)
+        public void Merge(ATGStartBase start)
         {
             // TODO: Uppdatera ALLT i den här metoden...
             //// Sen kuskändring
@@ -56,30 +56,30 @@ namespace HPTClient
             //    this.DriverNameShort = horse.NewDriverNameShort;
             //}
 
-            //// Streck
+            // Streck
             //this.MarksPossibleValue = horse.MarksPossibleValue > 0 ? horse.MarksPossibleValue : this.MarksPossibleValue;
 
-            //// Insatsfördelning
-            //this.StakeDistribution = horse.StakeDistribution > 0 ? horse.StakeDistribution : this.StakeDistribution;
-            //this.StakeDistributionPercent = horse.StakeDistributionPercent > 0 ? horse.StakeDistributionPercent : this.StakeDistributionPercent;
+            // Insatsfördelning
+            this.StakeDistributionShare = start.BetDistributionShare > 0 ? start.BetDistributionShare : this.StakeDistributionShare;
+            this.ATGTrend = start.Trend;
 
-            //// Sen strykning
-            //if (horse.Scratched == true)
-            //{
-            //    this.Scratched = horse.Scratched;
-            //    //this.VinnaroddsColor = new SolidColorBrush(Colors.Gray);
-            //}
+            // Sen strykning
+            if (start.Scratched == true)
+            {
+                this.Scratched = start.Scratched;
+                this.VinnaroddsColor = new SolidColorBrush(Colors.Gray);
+            }
 
-            //// Vinnare
-            //this.VinnarOdds = horse.VPInfo.VinnarOdds > 0 ? horse.VPInfo.VinnarOdds : this.VinnarOdds;  // Bakåtkompatibilitet
+            // Vinnare
+            this.VinnarOddsExact = start.VinnarOdds > 0 ? start.VinnarOdds : this.VinnarOdds;  // Bakåtkompatibilitet
             //this.VinnarOddsExact = horse.VPInfo.VinnarOddsExact > 0M ? horse.VPInfo.VinnarOddsExact : this.VinnarOddsExact;
             //this.InvestmentVinnare = horse.VPInfo.InvestmentVinnare;
 
-            //// Plats
+            // Plats
             //this.MinPlatsOdds = horse.VPInfo.MinPlatsOdds > 0 ? horse.VPInfo.MinPlatsOdds : this.MinPlatsOdds;
             //this.MaxPlatsOdds = horse.VPInfo.MaxPlatsOdds > 0 ? horse.VPInfo.MaxPlatsOdds : this.MaxPlatsOdds;
-            //this.MinPlatsOddsExact = horse.VPInfo.MinPlatsOddsExact > 0M ? horse.VPInfo.MinPlatsOddsExact : this.MinPlatsOddsExact;
-            //this.MaxPlatsOddsExact = horse.VPInfo.MaxPlatsOddsExact > 0M ? horse.VPInfo.MaxPlatsOddsExact : this.MaxPlatsOddsExact;
+            this.MinPlatsOddsExact = start.PlatsOdds > 0M ? start.PlatsOdds : this.MinPlatsOddsExact;
+            this.MaxPlatsOddsExact = this.MinPlatsOddsExact;
             //this.InvestmentPlats = horse.VPInfo.InvestmentPlats;
 
             //// Shareinfo
@@ -272,8 +272,8 @@ namespace HPTClient
             CalculateDerivedValues();
         }
 
-        public void Merge(ATGStartBase start)
-        {
+        //public void Merge(ATGStartBase start)
+        //{
             // TODO: Uppdatera med ATGStartBase istället
             //// Sen kuskändring
             //DriverChanged = !string.IsNullOrWhiteSpace(start.NewDriverName);
@@ -497,7 +497,7 @@ namespace HPTClient
 
             //// Beräkna härledda variabler
             //CalculateDerivedValues();
-        }
+        //}
 
         public void ConvertHorse(ATGStartBase start)
         {
@@ -1221,7 +1221,41 @@ namespace HPTClient
         public string ATGId { get; set; }
 
         [DataMember]
+        public string Nationality { get; set; }
+
+        [DataMember]
         public decimal ATGTrend { get; set; }
+
+        [DataMember]
+        private decimal shortTrend;
+        public decimal ShortTrend
+        {
+            get
+            {
+                return shortTrend;
+            }
+            set
+            {
+                shortTrend = value;
+                OnPropertyChanged("ShortTrend");
+            }
+        }
+
+        [DataMember]
+        private decimal longTrend;
+        public decimal LongTrend
+        {
+            get
+            {
+                return longTrend;
+            }
+            set
+            {
+                longTrend = value;
+                OnPropertyChanged("LongTrend");
+            }
+        }
+
 
         [DataMember]
         public string DriverName { get; set; }

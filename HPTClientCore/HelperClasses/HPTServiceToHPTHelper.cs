@@ -1324,8 +1324,8 @@ namespace HPTClient
                     {
                         hptComb.ParentRace = hptRace;
                         hptComb.ParentRaceDayInfo = hcb.RaceDayInfo;
-                        hptComb.Horse1 = hptRace.GetHorseByNumber(hptComb.Horse1Nr);
-                        hptComb.Horse2 = hptRace.GetHorseByNumber(hptComb.Horse2Nr);
+                        hptComb.Horse1 = hptRace.HorseList.First(h => h.StartNr == hptComb.Horse1Nr);
+                        hptComb.Horse2 = hptRace.HorseList.First(h => h.StartNr == hptComb.Horse2Nr);
                     }
                     hptRace.CombinationListInfoTvilling.UpdateCombinationsToShow();
                 }
@@ -1335,9 +1335,9 @@ namespace HPTClient
                     {
                         hptComb.ParentRace = hptRace;
                         hptComb.ParentRaceDayInfo = hcb.RaceDayInfo;
-                        hptComb.Horse1 = hptRace.GetHorseByNumber(hptComb.Horse1Nr);
-                        hptComb.Horse2 = hptRace.GetHorseByNumber(hptComb.Horse2Nr);
-                        hptComb.Horse3 = hptRace.GetHorseByNumber(hptComb.Horse3Nr);
+                        hptComb.Horse1 = hptRace.HorseList.First(h => h.StartNr == hptComb.Horse1Nr);
+                        hptComb.Horse2 = hptRace.HorseList.First(h => h.StartNr == hptComb.Horse2Nr);
+                        hptComb.Horse3 = hptRace.HorseList.First(h => h.StartNr == hptComb.Horse3Nr);
                     }
                     hptRace.CombinationListInfoTrio.UpdateCombinationsToShow();
                 }
@@ -1348,8 +1348,8 @@ namespace HPTClient
                 foreach (HPTCombination comb in hcb.RaceDayInfo.CombinationListInfoDouble.CombinationList)
                 {
                     comb.ParentRaceDayInfo = hcb.RaceDayInfo;
-                    comb.Horse1 = hcb.RaceDayInfo.RaceList[0].GetHorseByNumber(comb.Horse1Nr);
-                    comb.Horse2 = hcb.RaceDayInfo.RaceList[1].GetHorseByNumber(comb.Horse2Nr);
+                    comb.Horse1 = hcb.RaceDayInfo.RaceList[0].HorseList.First(h => h.StartNr == comb.Horse1Nr);
+                    comb.Horse2 = hcb.RaceDayInfo.RaceList[1].HorseList.First(h => h.StartNr == comb.Horse2Nr);
                     string uniqueCode = comb.Horse1.HexCode + comb.Horse2.HexCode;
                 }
                 hcb.RaceDayInfo.CombinationListInfoDouble.UpdateCombinationsToShow();

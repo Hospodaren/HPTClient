@@ -10,19 +10,23 @@
     </UserControl.Resources>
 
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <GroupBox Background="{StaticResource BackgroundBrush}" Grid.Column="0" HeaderTemplate="{StaticResource GroupBoxHeaderTemplate}" Header="Kategorier" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="Black">
+            <ItemsControl ItemsSource="{Binding Path=CCReductionRuleList}" ToggleButton.Checked="ItemsControl_Checked" ToggleButton.Unchecked="ItemsControl_Checked">
 
-        <ItemsControl ItemsSource="{Binding Path=CCReductionRuleList}" ToggleButton.Checked="ItemsControl_Checked" ToggleButton.Unchecked="ItemsControl_Checked">
-
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel Orientation="Vertical"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <CheckBox x:Name="chkUseCategoryReduction" Margin="3" IsChecked="{Binding Path=Use}"/>
-                        <TextBlock Style="{StaticResource tbMediumStyle}" Padding="1,0,1,2" Width="200" MouseUp="TextBlock_MouseUp">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox x:Name="chkUseCategoryReduction" Margin="3" IsChecked="{Binding Path=Use}"/>
+                            <TextBlock Style="{StaticResource tbMediumStyle}" Padding="1,0,1,2" Width="200" MouseUp="TextBlock_MouseUp">
                                 <TextBlock.Text>
                                     <MultiBinding StringFormat="{}{2} ({0}/{1})">
                                         <Binding Path="NumberOfRacesWithX"/>
@@ -70,10 +74,17 @@
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
-                    </StackPanel>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </GroupBox>
+
+        <GroupBox x:Name="gbCategoryRaceView" Grid.Column="1" Background="{StaticResource BackgroundBrush}" HeaderTemplate="{StaticResource GroupBoxHeaderTemplate}" Header="Hästar" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="Black">
+            <HPT:UCRaceView x:Name="ucRaceView" DataContext="{Binding Path=HorseListContainer,ElementName=ucCategoryReductionSettings}"
+                            MarkBet="{Binding Path=MarkBet,ElementName=ucCategoryReductionSettings}">
+            </HPT:UCRaceView>
+        </GroupBox>
 
     </Grid>
 </HPT:UCMarkBetControl>
