@@ -1513,7 +1513,7 @@ namespace HPTClient
                 rule.NumberOfX = allHorses
                     .Count(h => h.CategoryCode.HasFlag(rule.CategoryCode));
 
-                // Antal lopp med hästar som har viss Prio
+                // Antal lopp med hästar som har viss CategoryCode
                 rule.NumberOfRacesWithX = allHorses
                     .Where(h => h.CategoryCode.HasFlag(rule.CategoryCode))
                     .GroupBy(h => h.ParentRace.LegNr)
@@ -1526,6 +1526,33 @@ namespace HPTClient
                 }
             }
 
+        }
+
+        public void RecalculateCategoryCodes()
+        {
+            // Beräkna samm för kategorireduceringarna
+            var allHorses = RaceDayInfo.RaceList
+                .SelectMany(r => r.HorseList)
+                .ToList();
+
+            foreach (var rule in CategoryCodeReductionRuleCollection.CCReductionRuleList)
+            {
+                // Antal hästar med viss Prio
+                rule.NumberOfX = allHorses
+                    .Count(h => h.CategoryCode.HasFlag(rule.CategoryCode));
+
+                // Antal lopp med hästar som har viss CategoryCode
+                rule.NumberOfRacesWithX = allHorses
+                    .Where(h => h.CategoryCode.HasFlag(rule.CategoryCode))
+                    .GroupBy(h => h.ParentRace.LegNr)
+                    .Count();
+
+                foreach (HPTNumberOfWinners now in rule.NumberOfWinnersList)
+                {
+                    now.Selectable = now.NumberOfWinners <= rule.NumberOfRacesWithX;
+                    now.IsSuperfluous = false;
+                }
+            }
         }
 
         internal void SetSuperfluousFlag(HPTABCDEFReductionRule rule, int numberOfRacesWithXReduction)

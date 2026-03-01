@@ -275,7 +275,7 @@
     <WCFMetadataStorage Include="Service References\HPTService\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="ATGDownloader" Version="1.0.19" />
+    <PackageReference Include="ATGDownloader" Version="1.0.20" />
     <PackageReference Include="Extended.Wpf.Toolkit" Version="5.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Connections.Abstractions" Version="10.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel.Core" Version="2.3.9" />

@@ -134,16 +134,7 @@ namespace HPTClient
 
         internal void CalculateDynamicGameValues()
         {
-            //StartCategoryCode categoryCode = (favourite.StakeDistributionShare, quotient) switch
-            //{
-            //    (_, < 1.2m) => StartCategoryCode.KnappFavorit,
-            //    ( > 0.55m, > 3m) => StartCategoryCode.Megafavorit,
-            //    ( > 0.45m, > 2m) => StartCategoryCode.Storfavorit,
-            //    //(_, > 1.5m) => StartCategoryCode.KlarFavorit,
-            //    (_, _) => StartCategoryCode.None
-            //};
-
-            // Nya expreimentella fält
+            // Nya experimentella fält
             var orderedArray = HorseList
                 .Where(h => h.Scratched != true)
                 .OrderByDescending(h => h.StakeDistributionShare)
@@ -208,6 +199,14 @@ namespace HPTClient
                     if (h.ATGTrend < -0.01M)
                     {
                         h.CategoryCode |= StartCategoryCode.TrendarNerATG;
+                    }
+                    if (h.LongTrend > 0.1M && h.ShortTrend > 0.05M)
+                    {
+                        h.CategoryCode |= StartCategoryCode.TrendarUppHPT;
+                    }
+                    if (h.LongTrend < -0.1M && h.ShortTrend < -0.05M)
+                    {
+                        h.CategoryCode |= StartCategoryCode.TrendarNerHPT;
                     }
                 });
 

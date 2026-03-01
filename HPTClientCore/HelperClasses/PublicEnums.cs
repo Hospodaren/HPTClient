@@ -309,6 +309,8 @@ namespace HPTClient
         Utlandshast = 1024,
         TrendarUppATG = 2048,
         TrendarNerATG = 4096,
+        TrendarUppHPT = 8192,
+        TrendarNerHPT = 16384,
         //EgetDrag,
         //Overspelad,
         //Underspelad,

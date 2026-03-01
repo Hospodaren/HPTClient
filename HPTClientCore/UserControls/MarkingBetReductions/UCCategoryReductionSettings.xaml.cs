@@ -133,6 +133,7 @@ namespace HPTClient
                         ShowStakeShareRelativeToFavourite = true,
                         ShowStakeShareRelativeToNext = true,
                         ShowATGTrend = true,
+                        ShowTrends = true,
                     }
                 }
             };

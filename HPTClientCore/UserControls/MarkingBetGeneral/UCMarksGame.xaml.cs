@@ -253,10 +253,11 @@ namespace HPTClient
                 var gameBase = ATGDownloader.ATGObjectGetter.UpdateGame(MarkBet.BetType.GameInfoBase);
                 MarkBet.RaceDayInfo.Merge(gameBase);
                 HPTSerializer.GetTrendsFromDisk(MarkBet);
-                //HPTSerializer.SerializeHPTRaceDayInfoHistory(MarkBet);
+                HPTSerializer.SerializeHPTRaceDayInfoHistory(MarkBet);
                 MarkBet.TimeStamp = DateTime.Now;
+                MarkBet.RecalculateCategoryCodes();
                 btnUpdate.Content = $" Uppdatera ({MarkBet.TimeStamp:HH:mm:ss})";
-                atgUpdateTimer.Change(TimeSpan.FromMinutes(20), TimeSpan.FromMinutes(20));
+                ChangeUpdateTimer();
             }
             catch (Exception exc)
             {

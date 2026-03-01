@@ -404,6 +404,7 @@ namespace HPTClient
                         h.ShortTrend = h.StakeDistributionShare / horseShort.StakeShare - 1M;
 
                     });
+                    r.CalculateDynamicGameValues();
                 });
             }
 

@@ -311,6 +311,7 @@ namespace HPTClient
                     hmb.SaveDirectory = raceDayDirectory + "\\";    // TODO: Fult, använd Path.Combine
                     HPTSerializer.GetTrendsFromDisk(hmb);   // TODO: Använda skiten också
                     HPTSerializer.SerializeHPTRaceDayInfoHistory(hmb);
+                    hmb.RecalculateCategoryCodes();
                     Dispatcher.Invoke(new Action<HPTMarkBet>(AddTabItem), hmb);
                     break;
                 case "DD":

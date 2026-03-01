@@ -53,6 +53,10 @@
                     return "Trendar uppåt (ATG)";
                 case StartCategoryCode.TrendarNerATG:
                     return "Trendar neråt (ATG)";
+                case StartCategoryCode.TrendarUppHPT:
+                    return "Trendar uppåt (HPT)";
+                case StartCategoryCode.TrendarNerHPT:
+                    return "Trendar neråt (HPT)";
                 default:
                     return string.Empty;
             }
