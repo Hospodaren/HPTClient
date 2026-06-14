@@ -164,7 +164,7 @@ namespace HPTClient
                 // Deaktivera knappen
                 btnUpdate.IsEnabled = false;
 
-                var serviceConnector = new HPTServiceConnector();
+                //var serviceConnector = new HPTServiceConnector();
                 // TODO: DD osv i framtiden
                 //serviceConnector.GetRaceDayInfoUpdate(CombBet.RaceDayInfo.BetType.Code, CombBet.RaceDayInfo.TrackId, CombBet.RaceDayInfo.RaceDayDate, UpdateFromATG);
             }

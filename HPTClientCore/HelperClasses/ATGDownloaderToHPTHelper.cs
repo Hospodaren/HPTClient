@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
+using Xceed.Wpf.Toolkit.Core.Converters;
 using AD = ATGDownloader.ATG;
 
 namespace HPTClient
@@ -112,6 +113,8 @@ namespace HPTClient
                 r.ParentRaceDayInfo = hptRdi;
                 r.CalculateDynamicGameValues();
             });
+
+            CreateResultMarkingBet(gameBase, hptRdi);
 
             // Fyll på utdelningsinformation
             CreatePayOutLists(gameBase, hptRdi);
@@ -237,7 +240,7 @@ namespace HPTClient
         {
             if (game.Payouts is not null)
             {
-                var payOutList = game.Payouts.Select(po => new HPTPayOut()
+                var payOutList = game.Payouts.OrderByDescending(po => po.Key).Select(po => new HPTPayOut()
                 {
                     NumberOfCorrect = po.Key,
                     NumberOfSystems = po.Value.NumberOfSystems,
@@ -446,6 +449,19 @@ namespace HPTClient
             hptHorse.CurrentYearStatistics = ConvertHorseYearStatistics(start.Horse.StatisticsList.FirstOrDefault(s => s.Year == DateTime.Today.Year));
             hptHorse.PreviousYearStatistics = ConvertHorseYearStatistics(start.Horse.StatisticsList.FirstOrDefault(s => s.Year == DateTime.Today.AddYears(-1).Year));
             hptHorse.TotalStatistics = ConvertHorseYearStatistics(start.Horse.StatisticsList.FirstOrDefault(s => s.Year is null));
+            if (start.Result != null)
+            {
+                hptHorse.HorseResultInfo = new HPTHorseResultInfo()
+                {
+                    Disqualified = start.Result.Disqualified,
+                    Earning = start.Result.PrizeMoney,
+                    FinishingPosition = start.Result.FinishOrder,
+                    KmTime = start.Result.KmTime,
+                    Place = start.Result.Place,
+                    //TotalTime = start.Result.TotalTime
+                };
+                hptHorse.HorseResultInfo.SetPlaceString(hptHorse);
+            }
 
 
             //// TODO: Skoinformation
@@ -827,6 +843,16 @@ namespace HPTClient
 
         internal static void SetWeighedTime(HPTHorseResult hptHorseResult)
         {
+            //decimal secondsToAdd = (horseResult.StartMethod, horseResult.Distance) switch
+            //{
+            //    ("volte", < 1800) => 2.3M,
+            //    ("volte", < 2600) => 0.9M,
+            //    ("volte", _) => -0.1M,
+            //    ("auto", < 1800) => 1.0M,
+            //    ("auto", < 2600) => 0M,
+            //    ("auto", _) => -0.1M,
+            //    _ => 0M
+            //};
             try
             {
                 string startMethodAndDistanceCode = hptHorseResult.Time.EndsWith("a") ? "A" : string.Empty;
@@ -1259,23 +1285,51 @@ namespace HPTClient
 
         #endregion
 
-        public static void ConvertResultMarkingBet(ATGGameBase gameResult, HPTRaceDayInfo hptRaceDayInfo, bool setValues)
+        public static void CreateResultMarkingBet(ATGGameBase gameResult, HPTRaceDayInfo hptRaceDayInfo)
         {
             try
             {
+                hptRaceDayInfo.NumberOfFinishedRaces = 0;
                 if (gameResult.Status is "ongoing" or "results")
                 {
-                    // TODO: Konvertera till LegResult osv...                    
-                    foreach (var race in gameResult.Races)
-                    {
-                        if (race.Winners is not null && race.Winners.Any())
-                        {
+                    hptRaceDayInfo.ResultComplete = gameResult.Status == "results";
 
+                    var pairedRaces = hptRaceDayInfo.RaceList
+                        //.Join(gameResult.Races, ri => ri.RaceNr, ro => ro.Number, (ri, ro) => new { LocalRace = ri, RetrievedRace = ro });
+                        .Join(gameResult.Races, ri => ri.LegNr, ro => ro.LegNumber, (ri, ro) => new { LocalRace = ri, RetrievedRace = ro });
+
+                    foreach (var racePair in pairedRaces)
+                    {
+                        if (racePair.RetrievedRace.Winners is not null && racePair.RetrievedRace.Winners.Any())
+                        {
+                            hptRaceDayInfo.NumberOfFinishedRaces++;                                                        
+                            racePair.LocalRace.LegResult = new()
+                            {
+                                LegNr = hptRaceDayInfo.NumberOfFinishedRaces,
+                                Winners = racePair.RetrievedRace.Winners,
+                                SystemsLeft = racePair.RetrievedRace.SystemsRemaining,
+                                Value = racePair.RetrievedRace.ValueAmount,
+                                //WinnerList = TODO: Göra någon annan lösning kanske?
+                            };
                         }
                         else
                         {
                             break;
                         }
+                    }
+                    if (gameResult.Payouts != null)
+                    {
+                        var payOuts = gameResult.Payouts
+                            .OrderByDescending(po => po.Key)
+                            .Select(po =>
+                                new HPTPayOut()
+                                {
+                                    NumberOfCorrect = po.Value.NumberOfCorrect,
+                                    NumberOfSystems = po.Value.NumberOfSystems,
+                                    PayOutAmount = po.Value.Payout,
+                                    TotalAmount = po.Value.PayoutSum,
+                                });
+                        hptRaceDayInfo.PayOutList = new(payOuts);
                     }
                 }
 

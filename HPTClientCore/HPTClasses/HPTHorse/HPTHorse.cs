@@ -71,7 +71,7 @@ namespace HPTClient
             }
 
             // Vinnare
-            this.VinnarOddsExact = start.VinnarOdds > 0 ? start.VinnarOdds : this.VinnarOdds;  // Bakåtkompatibilitet
+            this.VinnarOddsExact = start.VinnarOdds > 0 ? start.VinnarOdds / 100M : this.VinnarOdds;  // Bakåtkompatibilitet
             //this.VinnarOddsExact = horse.VPInfo.VinnarOddsExact > 0M ? horse.VPInfo.VinnarOddsExact : this.VinnarOddsExact;
             //this.InvestmentVinnare = horse.VPInfo.InvestmentVinnare;
 

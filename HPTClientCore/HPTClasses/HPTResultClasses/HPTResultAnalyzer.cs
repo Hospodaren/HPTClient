@@ -576,9 +576,9 @@ namespace HPTClient
                         {
                             if (!markBet.RaceDayInfo.ResultComplete)
                             {
-                                var connector = new HPTServiceConnector();
-                                connector.GetRaceDayInfoUpdate(markBet.RaceDayInfo);
-                                connector.GetResultMarkingBetByTrackAndDate(markBet.RaceDayInfo.BetType.Code, markBet.RaceDayInfo.TrackId, markBet.RaceDayInfo.RaceDayDate, markBet.RaceDayInfo, true);
+                                //var connector = new HPTServiceConnector(); // TODO?
+                                //connector.GetRaceDayInfoUpdate(markBet.RaceDayInfo);
+                                //connector.GetResultMarkingBetByTrackAndDate(markBet.RaceDayInfo.BetType.Code, markBet.RaceDayInfo.TrackId, markBet.RaceDayInfo.RaceDayDate, markBet.RaceDayInfo, true);
                             }
 
                             var horseList = new HPTHorse[markBet.RaceDayInfo.RaceList.Count];

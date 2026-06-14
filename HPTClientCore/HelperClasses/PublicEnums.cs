@@ -1,4 +1,4 @@
-using ATGDownloader.Calendar;
+//using ATGDownloader.Calendar;
 
 namespace HPTClient
 {
@@ -305,12 +305,14 @@ namespace HPTClient
         Overraskning = 64,
         Skrall = 128,
         Storskrall = 256,
-        Hemmahast = 512,
-        Utlandshast = 1024,
+        AndraTredjeeHandare = 512,
+        Mellanspelade = 1024,
         TrendarUppATG = 2048,
         TrendarNerATG = 4096,
         TrendarUppHPT = 8192,
         TrendarNerHPT = 16384,
+        Hemmahast = 32768,
+        Utlandshast = 65536,
         //EgetDrag,
         //Overspelad,
         //Underspelad,

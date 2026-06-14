@@ -57,6 +57,10 @@
                     return "Trendar uppåt (HPT)";
                 case StartCategoryCode.TrendarNerHPT:
                     return "Trendar neråt (HPT)";
+                case StartCategoryCode.AndraTredjeeHandare:
+                    return "2- och 3-handare";
+                case StartCategoryCode.Mellanspelade:
+                    return "Mellanspelade";
                 default:
                     return string.Empty;
             }

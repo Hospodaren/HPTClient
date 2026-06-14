@@ -79,6 +79,7 @@ namespace HPTClient
         {
             try
             {
+                Cursor = Cursors.Wait;
                 numberOfFinishedRaces = 0;
                 AutoCorrectOptimized();
                 //UpdateResult();
@@ -88,6 +89,7 @@ namespace HPTClient
                 MessageBox.Show("Problem vid rättning av kuponger:\r\nObservera att endast V4, V5, V64, V65 och V75 som är mindre än en vecka gamla kan automaträttas i nuläget.\r\n" + exc.Message, "Rättning av kuponger misslyckades", MessageBoxButton.OK, MessageBoxImage.Error);
                 HPTConfig.Config.AddToErrorLog(exc);
             }
+            Cursor = Cursors.Arrow;
         }
 
         private void UserControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -183,7 +185,7 @@ namespace HPTClient
                 chkSimulate.IsChecked = false;
                 Thread.Sleep(200);
             }
-            isSneakCorrection = false;
+            //isSneakCorrection = false;
             numberOfFinishedRaces = MarkBet.RaceDayInfo.NumberOfFinishedRaces;
             if (MarkBet.RaceDayInfo.ResultComplete && MarkBet.RaceDayInfo.PayOutList.Count > 0)// && winnerList == null)    // Vafan gör jag här...?
             {
@@ -192,9 +194,15 @@ namespace HPTClient
             }
             else
             {
-                HPTServiceConnector connector = new HPTServiceConnector();
+                //HPTServiceConnector connector = new HPTServiceConnector();
                 // TODO: Ny lösning
                 //connector.GetResultMarkingBetByTrackAndDate(CouponCorrector.RaceDayInfo.BetType.Code, CouponCorrector.RaceDayInfo.TrackId, CouponCorrector.RaceDayInfo.RaceDayDate, ReceiveResult);
+                if (!MarkBet.RaceDayInfo.ResultComplete)
+                {
+                    MarkBet.RaceDayInfo.GameBase = ATGDownloader.ATGObjectGetter.GetGame(MarkBet.RaceDayInfo.GameBase.GameInfo);
+                }
+                ATGDownloaderToHPTHelper.CreateResultMarkingBet(MarkBet.RaceDayInfo.GameBase, MarkBet.RaceDayInfo);
+                Correct();
             }
         }
 
@@ -242,10 +250,10 @@ namespace HPTClient
                 //}
 
                 // Hämta info om strykningar och resultat utan att uppdatera insatsfördelning etc.
-                var serviceConnector = new HPTServiceConnector();
+                //var serviceConnector = new HPTServiceConnector();
                 // TODO: Använd ATGDonloader
                 //var rdi = serviceConnector.GetRaceDayInfoUpdateNoMerge(MarkBet.RaceDayInfo);
-                var rdi = new HPTRaceDayInfo();
+                //var rdi = new HPTRaceDayInfo();
 
                 // Om alla resultat är klar ska vi aktiver nästagångsknappen
                 //if (this.MarkBet.RaceDayInfo.AllResultsComplete)
@@ -260,14 +268,14 @@ namespace HPTClient
                 //    HandleScratchedHorsesInCoupons(rdi);
                 //    BindingOperations.GetBindingExpression(lvwCoupons, ListView.ItemsSourceProperty).UpdateTarget();
                 //}
-                if (chkSimulate.IsChecked != true && !isSneakCorrection)
+                if (chkSimulate.IsChecked != true)
                 {
-                    if (numberOfFinishedRaces < MarkBet.RaceDayInfo.NumberOfFinishedRaces && (bool)chkPlaySound.IsChecked)
-                    {
-                        var stream = HPTConfig.Config.GetEmbeddedResource("HPTClient.Sounds.horse.wav");
-                        var player = new System.Media.SoundPlayer(stream);
-                        player.Play();
-                    }
+                    //if (numberOfFinishedRaces < MarkBet.RaceDayInfo.NumberOfFinishedRaces && (bool)chkPlaySound.IsChecked)
+                    //{
+                    //    var stream = HPTConfig.Config.GetEmbeddedResource("HPTClient.Sounds.horse.wav");
+                    //    var player = new System.Media.SoundPlayer(stream);
+                    //    player.Play();
+                    //}
                     numberOfFinishedRaces = MarkBet.RaceDayInfo.NumberOfFinishedRaces;
                     CouponCorrector.CorrectCoupons(numberOfFinishedRaces);
                     SortByNumberOfCorrect();
@@ -323,17 +331,14 @@ namespace HPTClient
 
                     // Text med informtion medan rättningen pågår
                     var numberOfCorrect = MarkBet.RaceDayInfo.NumberOfFinishedRaces;
-                    StringBuilder sb = new StringBuilder();
+                    var sb = new StringBuilder();
 
                     var numberOfCorrectRows = MarkBet.SingleRowCollection.SingleRows
                         .Count(sr => sr.HorseList
                             .Intersect(MarkBet.CouponCorrector.HorseList)
                             .Count() == numberOfCorrect);
 
-                    sb.Append(numberOfCorrectRows);
-                    sb.Append(" rader med ");
-                    sb.Append(numberOfCorrect);
-                    sb.Append(" rätt");
+                    sb.Append($"{numberOfCorrectRows} rader med {numberOfCorrect} rätt");
 
                     // Ett fel
                     if (MarkBet.BetType.PoolShareOneError > 0M && numberOfFinishedRaces > 0)
@@ -342,10 +347,7 @@ namespace HPTClient
                         sb.AppendLine();
                         numberOfCorrectRows = MarkBet.SingleRowCollection.SingleRows
                             .Count(sr => sr.HorseList.Intersect(MarkBet.CouponCorrector.HorseList).Count() == numberOfCorrect);
-                        sb.Append(numberOfCorrectRows);
-                        sb.Append(" rader med ");
-                        sb.Append(numberOfCorrect);
-                        sb.Append(" rätt");
+                        sb.Append($"{numberOfCorrectRows} rader med {numberOfCorrect} rätt");
                     }
 
                     // Två fel
@@ -355,10 +357,17 @@ namespace HPTClient
                         sb.AppendLine();
                         numberOfCorrectRows = MarkBet.SingleRowCollection.SingleRows
                             .Count(sr => sr.HorseList.Intersect(MarkBet.CouponCorrector.HorseList).Count() == numberOfCorrect);
-                        sb.Append(numberOfCorrectRows);
-                        sb.Append(" rader med ");
-                        sb.Append(numberOfCorrect);
-                        sb.Append(" rätt");
+                        sb.Append($"{numberOfCorrectRows} rader med {numberOfCorrect} rätt");
+                    }
+
+                    // Tre fel
+                    if (MarkBet.BetType.PoolShareThreeErrors > 0M && numberOfFinishedRaces > 1)
+                    {
+                        numberOfCorrect--;
+                        sb.AppendLine();
+                        numberOfCorrectRows = MarkBet.SingleRowCollection.SingleRows
+                            .Count(sr => sr.HorseList.Intersect(MarkBet.CouponCorrector.HorseList).Count() == numberOfCorrect);
+                        sb.Append($"{numberOfCorrectRows} rader med {numberOfCorrect} rätt");
                     }
                     txtRowStatus.Text = sb.ToString();
 
@@ -436,44 +445,44 @@ namespace HPTClient
             MarkBet.SetSerializerValues();
         }
 
-        private bool isSneakCorrection = false;
-        private void btnSneak_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Button btn = (Button)sender;
-                int racesToCorrect = (int)btn.Tag;
+        //private bool isSneakCorrection = false;
+        //private void btnSneak_Click(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        Button btn = (Button)sender;
+        //        int racesToCorrect = (int)btn.Tag;
 
-                if (racesToCorrect == MarkBet.BetType.NumberOfRaces)
-                {
-                    // TODO; Ny lösning
-                    //HPTServiceToHPTHelper.ConvertResultMarkingBet(MarkBet.RaceDayInfo.ResultMarkingBet, CouponCorrector.RaceDayInfo, true);
-                }
-                numberOfFinishedRaces = racesToCorrect;
-                CouponCorrector.CorrectCoupons(racesToCorrect);
-                isSneakCorrection = true;
-                Correct();
-                SortByNumberOfCorrect();
-                CalculateWorstCaseScenario();
-                CalculateBestCaseScenario();
-            }
-            catch (Exception exc)
-            {
-                HPTConfig.AddToErrorLogStatic(exc);
-            }
-        }
+        //        if (racesToCorrect == MarkBet.BetType.NumberOfRaces)
+        //        {
+        //            // TODO; Ny lösning
+        //            //HPTServiceToHPTHelper.ConvertResultMarkingBet(MarkBet.RaceDayInfo.ResultMarkingBet, CouponCorrector.RaceDayInfo, true);
+        //        }
+        //        numberOfFinishedRaces = racesToCorrect;
+        //        CouponCorrector.CorrectCoupons(racesToCorrect);
+        //        isSneakCorrection = true;
+        //        Correct();
+        //        SortByNumberOfCorrect();
+        //        CalculateWorstCaseScenario();
+        //        CalculateBestCaseScenario();
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        HPTConfig.AddToErrorLogStatic(exc);
+        //    }
+        //}
 
-        private void btnRetrieveResult_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                CouponCorrector.RetrieveResult(false);
-            }
-            catch (Exception exc)
-            {
-                HPTConfig.AddToErrorLogStatic(exc);
-            }
-        }
+        //private void btnRetrieveResult_Click(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        CouponCorrector.RetrieveResult(false);
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        HPTConfig.AddToErrorLogStatic(exc);
+        //    }
+        //}
 
         //private bool selectionInProgress = false;
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -487,7 +496,7 @@ namespace HPTClient
                 if (e.AddedItems.Count > 0)
                 {
                     //selectionInProgress = true;
-                    HPTHorse horse = (HPTHorse)e.AddedItems[0];
+                    var horse = (HPTHorse)e.AddedItems[0];
                     horse.Correct = true;
                     HPTHorse removedHorse = null;
                     if (e.RemovedItems.Count > 0)
@@ -569,7 +578,7 @@ namespace HPTClient
                 {
                     race.LegResult.Value = null;
                     race.LegResult.Winners = null;
-                    race.LegResult.WinnerList = new HPTHorse[] { null };
+                    race.LegResult.WinnerList = [null];
                     race.LegResult = null;
                     race.HasResult = false;
                     race.SplitVictory = false;
@@ -581,7 +590,7 @@ namespace HPTClient
                 CouponCorrector.RaceDayInfo.PayOutList.Clear();
             }
             MarkBet.RaceDayInfo.NumberOfFinishedRaces = 0;
-            MarkBet.RaceDayInfo.ResultComplete = false;
+            //MarkBet.RaceDayInfo.ResultComplete = false;
             numberOfFinishedRaces = 0;
             CouponCorrector.RaceDayInfo.HasResult = false;
             CouponCorrector.HorseList.Clear();
@@ -844,27 +853,27 @@ namespace HPTClient
 
         // TODO: Finns väl inte på atg.se?
         //private HPTService.HPTVinstlista winnerList;
-        private void btnWinnerList_Click(object sender, RoutedEventArgs e)
-        {
-            //if (winnerList != null)
-            //{
-            //    var wndWinnerList = new Window()
-            //    {
-            //        Content = new UCWinnerList()
-            //        {
-            //            DataContext = winnerList
-            //        },
-            //        Title = "Vinstlista",
-            //        SizeToContent = SizeToContent.Width,
-            //        MaxHeight = HPTConfig.Config.ApplicationHeight,
-            //        ShowInTaskbar = false,
-            //        ResizeMode = ResizeMode.NoResize,
-            //        Owner = App.Current.MainWindow
-            //    };
+        //private void btnWinnerList_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (winnerList != null)
+        //    {
+        //        var wndWinnerList = new Window()
+        //        {
+        //            Content = new UCWinnerList()
+        //            {
+        //                DataContext = winnerList
+        //            },
+        //            Title = "Vinstlista",
+        //            SizeToContent = SizeToContent.Width,
+        //            MaxHeight = HPTConfig.Config.ApplicationHeight,
+        //            ShowInTaskbar = false,
+        //            ResizeMode = ResizeMode.NoResize,
+        //            Owner = App.Current.MainWindow
+        //        };
 
-            //    wndWinnerList.ShowDialog();
-            //}
-        }
+        //        wndWinnerList.ShowDialog();
+        //    }
+        //}
 
         private void CalculateWorstCaseScenario()
         {
@@ -966,7 +975,7 @@ namespace HPTClient
                 if (numberOfPools > 1)
                 {
                     // Utdelning på ett fel i bästa fall
-                    bestRow.RowValueOneError = MarkBet.CouponCorrector.CalculatePayOutOneError(bestRow.HorseList, MarkBet.BetType.PoolShareOneError * MarkBet.BetType.RowCost);
+                    bestRow.RowValueOneError = (int)MarkBet.CouponCorrector.CalculatePayOutOneError(bestRow.HorseList, MarkBet.BetType.PoolShareOneError * MarkBet.BetType.RowCost);
 
                     // Blir bara vinst om utdelningen överstiger jackpottgränsen
                     if (bestRow.RowValueOneErrorFinalStakeShare >= MarkBet.BetType.JackpotLimit)
@@ -983,7 +992,7 @@ namespace HPTClient
                         if (numberOfPools > 2)
                         {
                             // Utdelning på två fel i bästa fall
-                            bestRow.RowValueTwoErrors = MarkBet.CouponCorrector.CalculatePayOutTwoErrors(bestRow.HorseList, MarkBet.BetType.PoolShareTwoErrors * MarkBet.BetType.RowCost);
+                            bestRow.RowValueTwoErrors = (int)MarkBet.CouponCorrector.CalculatePayOutTwoErrors(bestRow.HorseList, MarkBet.BetType.PoolShareTwoErrors * MarkBet.BetType.RowCost);
 
                             if (bestRow.RowValueTwoErrorsFinalStakeShare >= MarkBet.BetType.JackpotLimit)
                             {
@@ -999,7 +1008,7 @@ namespace HPTClient
                                 if (numberOfPools > 3)
                                 {
                                     // Utdelning på två fel i bästa fall
-                                    bestRow.RowValueThreeErrors = MarkBet.CouponCorrector.CalculatePayOutTwoErrors(bestRow.HorseList, MarkBet.BetType.PoolShareTwoErrors * MarkBet.BetType.RowCost);
+                                    bestRow.RowValueThreeErrors = (int)MarkBet.CouponCorrector.CalculatePayOutTwoErrors(bestRow.HorseList, MarkBet.BetType.PoolShareTwoErrors * MarkBet.BetType.RowCost);
 
                                     if (bestRow.RowValueTwoErrorsFinalStakeShare >= MarkBet.BetType.JackpotLimit)
                                     {

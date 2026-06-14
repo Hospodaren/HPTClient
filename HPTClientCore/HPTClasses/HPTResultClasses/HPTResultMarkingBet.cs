@@ -42,9 +42,9 @@ namespace HPTClient
             }
         }
 
-        private int systemsLeft;
+        private decimal? systemsLeft;
         [DataMember]
-        public int SystemsLeft
+        public decimal? SystemsLeft
         {
             get
             {
@@ -109,9 +109,9 @@ namespace HPTClient
             }
         }
 
-        private int payOutAmount;
+        private decimal payOutAmount;
         [DataMember]
-        public int PayOutAmount
+        public decimal PayOutAmount
         {
             get
             {

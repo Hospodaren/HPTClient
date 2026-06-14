@@ -32,10 +32,18 @@ namespace HPTClient
 
         internal static object DeserializeHPTObject(Type typeOfObject, string fileName)
         {
-            var serializer = new DataContractSerializer(typeOfObject);
-            var stream = File.OpenRead(fileName);
-            var response = serializer.ReadObject(stream);
-            return response;
+            try
+            {
+                var serializer = new DataContractSerializer(typeOfObject);
+                var stream = File.OpenRead(fileName);
+                var response = serializer.ReadObject(stream);
+                return response;
+            }
+            catch (Exception exc)
+            {
+                HPTConfig.AddToErrorLogStatic(exc);
+            }
+            return null;
         }
 
         #region Serialisering/deserialisering av vanliga HPT-objekt
@@ -382,7 +390,9 @@ namespace HPTClient
                 decimal shortDiff = 0.667M;
                 decimal longDiff = 0.333M;
 
-                var allRaceDayInfoHistory = trendFiles.Select(tf => (HPTRaceDayInfoHistory)DeserializeHPTObject(typeof(HPTRaceDayInfoHistory), tf.FileName));
+                var allRaceDayInfoHistory = trendFiles
+                    .Select(tf => (HPTRaceDayInfoHistory)DeserializeHPTObject(typeof(HPTRaceDayInfoHistory), tf.FileName))
+                    .Where(h => h != null);
                 var raceDayInfoHistoryLongTrend = allRaceDayInfoHistory
                     .OrderBy(rdi => Math.Abs(rdi.Turnover / markBet.RaceDayInfo.Turnover - longDiff))
                     .First();

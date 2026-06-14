@@ -601,7 +601,7 @@ namespace HPTClient
             try
             {
                 RaceDayInfo.NumberOfFinishedRaces = 0;
-                RaceDayInfo.ResultComplete = false;
+                //RaceDayInfo.ResultComplete = false;
                 RaceDayInfo.PayOutList?.Clear();
             }
             catch (Exception exc)
@@ -1035,8 +1035,8 @@ namespace HPTClient
 
             foreach (var singleRow in SingleRowCollection.SingleRows)
             {
-                var payOutListOneError = new List<int>();
-                var payOutListTwoErrors = new List<int>();
+                var payOutListOneError = new List<decimal>();
+                var payOutListTwoErrors = new List<decimal>();
                 var horseListToCalculate = singleRow.HorseList.ToArray();
                 for (int i = 0; i < singleRow.HorseList.Count(); i++)
                 {
@@ -1048,7 +1048,7 @@ namespace HPTClient
                     if (horseToCalculateOn != null)
                     {
                         horseListToCalculate[i] = horseToCalculateOn;
-                        int payOut = CouponCorrector.CalculatePayOutOneError(horseListToCalculate, RaceDayInfo.BetType.PoolShareOneError * RaceDayInfo.BetType.RowCost);
+                        var payOut = CouponCorrector.CalculatePayOutOneError(horseListToCalculate, RaceDayInfo.BetType.PoolShareOneError * RaceDayInfo.BetType.RowCost);
                         payOutListOneError.Add(payOut);
 
                         for (int j = i + 1; j < singleRow.HorseList.Count(); j++)
@@ -1061,7 +1061,7 @@ namespace HPTClient
                             if (horseToCalculateOn2 != null)
                             {
                                 horseListToCalculate[j] = horseToCalculateOn2;
-                                int payOut2 = CouponCorrector.CalculatePayOutTwoErrors(horseListToCalculate, RaceDayInfo.BetType.PoolShareTwoErrors * RaceDayInfo.BetType.RowCost);
+                                var payOut2 = CouponCorrector.CalculatePayOutTwoErrors(horseListToCalculate, RaceDayInfo.BetType.PoolShareTwoErrors * RaceDayInfo.BetType.RowCost);
                                 payOutListTwoErrors.Add(payOut2);
                                 horseListToCalculate[j] = horseToExchange2;
                             }
@@ -1069,10 +1069,10 @@ namespace HPTClient
                         horseListToCalculate[i] = horseToExchange;
                     }
                 }
-                singleRow.RowValueOneErrorLower = payOutListOneError.Min();
-                singleRow.RowValueOneErrorUpper = payOutListOneError.Max();
-                singleRow.RowValueTwoErrorsLower = payOutListTwoErrors.Min();
-                singleRow.RowValueTwoErrorsUpper = payOutListTwoErrors.Max();
+                singleRow.RowValueOneErrorLower = (int)payOutListOneError.Min();
+                singleRow.RowValueOneErrorUpper = (int)payOutListOneError.Max();
+                singleRow.RowValueTwoErrorsLower = (int)payOutListTwoErrors.Min();
+                singleRow.RowValueTwoErrorsUpper = (int)payOutListTwoErrors.Max();
                 //singleRow.RowValueThreeErrorsLower = payOutListTwoErrors.Min();   // TODO
                 //singleRow.RowValueThreeErrorsUpper= payOutListTwoErrors.Max();
             }
@@ -1087,8 +1087,8 @@ namespace HPTClient
 
             foreach (var singleRow in SingleRowCollection.SingleRows)
             {
-                var payOutListOneError = new List<int>();
-                var payOutListTwoErrors = new List<int>();
+                var payOutListOneError = new List<decimal>();
+                var payOutListTwoErrors = new List<decimal>();
                 var horseListToCalculate = singleRow.HorseList.ToArray();
                 for (int i = 0; i < singleRow.HorseList.Count(); i++)
                 {
@@ -1100,7 +1100,7 @@ namespace HPTClient
                     if (horseToCalculateOn != null)
                     {
                         horseListToCalculate[i] = horseToCalculateOn;
-                        int payOut = CouponCorrector.CalculatePayOutOneError(horseListToCalculate, RaceDayInfo.BetType.PoolShareOneError * RaceDayInfo.BetType.RowCost);
+                        var payOut = CouponCorrector.CalculatePayOutOneError(horseListToCalculate, RaceDayInfo.BetType.PoolShareOneError * RaceDayInfo.BetType.RowCost);
                         payOutListOneError.Add(payOut);
 
                         for (int j = i + 1; j < singleRow.HorseList.Count(); j++)
@@ -1113,7 +1113,7 @@ namespace HPTClient
                             if (horseToCalculateOn2 != null)
                             {
                                 horseListToCalculate[j] = horseToCalculateOn2;
-                                int payOut2 = CouponCorrector.CalculatePayOutTwoErrors(horseListToCalculate, RaceDayInfo.BetType.PoolShareTwoErrors * RaceDayInfo.BetType.RowCost);
+                                var payOut2 = CouponCorrector.CalculatePayOutTwoErrors(horseListToCalculate, RaceDayInfo.BetType.PoolShareTwoErrors * RaceDayInfo.BetType.RowCost);
                                 payOutListTwoErrors.Add(payOut2);
                                 horseListToCalculate[j] = horseToExchange2;
                             }
@@ -1121,10 +1121,10 @@ namespace HPTClient
                         horseListToCalculate[i] = horseToExchange;
                     }
                 }
-                singleRow.RowValueOneErrorLower = payOutListOneError.Min();
-                singleRow.RowValueOneErrorUpper = payOutListOneError.Max();
-                singleRow.RowValueTwoErrorsLower = payOutListTwoErrors.Min();
-                singleRow.RowValueTwoErrorsUpper = payOutListTwoErrors.Max();
+                singleRow.RowValueOneErrorLower = (int)payOutListOneError.Min();
+                singleRow.RowValueOneErrorUpper = (int)payOutListOneError.Max();
+                singleRow.RowValueTwoErrorsLower = (int)payOutListTwoErrors.Min();
+                singleRow.RowValueTwoErrorsUpper = (int)payOutListTwoErrors.Max();
             }
         }
 
@@ -5958,7 +5958,7 @@ namespace HPTClient
                         var singleRow = new HPTMarkBetSingleRow(calculationHorseDictionary.Values.ToArray());
                         singleRow.CalculateValues();
 
-                        int calculatedPayout = 0;
+                        decimal calculatedPayout = 0;
                         if (numberOfRowsUnderRowValue.Count == 1)  // V65
                         {
                             calculatedPayout = CouponCorrector.CalculatePayOutOneError(singleRow.HorseList, RaceDayInfo.BetType.PoolShareOneError * RaceDayInfo.BetType.RowCost);
@@ -5981,7 +5981,7 @@ namespace HPTClient
                         var singleRow = new HPTMarkBetSingleRow(calculationHorseDictionary.Values.ToArray());
                         singleRow.CalculateValues();
 
-                        int oneErrorPayout = CouponCorrector.CalculatePayOutOneError(singleRow.HorseList, RaceDayInfo.BetType.PoolShareOneError * RaceDayInfo.BetType.RowCost);
+                        var oneErrorPayout = CouponCorrector.CalculatePayOutOneError(singleRow.HorseList, RaceDayInfo.BetType.PoolShareOneError * RaceDayInfo.BetType.RowCost);
                         if (oneErrorPayout < RaceDayInfo.BetType.JackpotLimit)
                         {
                             numberOfRowsUnderRowValue[1] += 1;
@@ -5993,7 +5993,7 @@ namespace HPTClient
                         }
                         else if (numberOfRowsUnderRowValue.Count > 1)
                         {
-                            int twoErrorsPayout = CouponCorrector.CalculatePayOutTwoErrors(singleRow.HorseList, RaceDayInfo.BetType.PoolShareTwoErrors * RaceDayInfo.BetType.RowCost);
+                            var twoErrorsPayout = CouponCorrector.CalculatePayOutTwoErrors(singleRow.HorseList, RaceDayInfo.BetType.PoolShareTwoErrors * RaceDayInfo.BetType.RowCost);
                             if (twoErrorsPayout < RaceDayInfo.BetType.JackpotLimit)
                             {
                                 numberOfRowsUnderRowValue[2] += 1;

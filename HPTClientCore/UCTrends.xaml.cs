@@ -66,7 +66,7 @@ namespace HPTClient
                 // Deaktivera knappen så man inte ska kunna göra parallella anrop
                 btnGetRaceDayInfoHistory.IsEnabled = false;
 
-                var connector = new HPTServiceConnector();
+                //var connector = new HPTServiceConnector();
                 // TODO: Ny lösning
                 //connector.GetRaceDayInfoHistoryGrouped(MarkBet.RaceDayInfo.BetType.Code, MarkBet.RaceDayInfo.TrackId, MarkBet.RaceDayInfo.RaceDayDate, GetRaceDayInfoHistory);
             }

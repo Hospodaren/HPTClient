@@ -2491,8 +2491,8 @@ namespace HPTClient
             try
             {
                 Cursor = Cursors.Wait;
-                var connector = new HPTServiceConnector();
-                var raceDayInfoHistory = connector.GetRaceDayInfoHistoryGrouped(MarkBet.RaceDayInfo);
+                //var connector = new HPTServiceConnector();
+                //var raceDayInfoHistory = connector.GetRaceDayInfoHistoryGrouped(MarkBet.RaceDayInfo);
 
                 MarkBet.RaceDayInfo.RaceList
                     .ForEach(r =>
@@ -2627,8 +2627,8 @@ namespace HPTClient
             if (fe.DataContext.GetType() == typeof(HPTHorse))
             {
                 var horse = fe.DataContext as HPTHorse;
-                var serviceConnector = new HPTServiceConnector();
-                serviceConnector.GetHorseStartInformationFromATG(horse);
+                //var serviceConnector = new HPTServiceConnector(); // TODO?
+                //serviceConnector.GetHorseStartInformationFromATG(horse);
 
                 if (horse.DriverInfo != null)
                 {
@@ -2656,8 +2656,8 @@ namespace HPTClient
             if (fe.DataContext.GetType() == typeof(HPTHorse))
             {
                 var horse = fe.DataContext as HPTHorse;
-                var serviceConnector = new HPTServiceConnector();
-                serviceConnector.GetHorseStartInformationFromATG(horse);
+                //var serviceConnector = new HPTServiceConnector();
+                //serviceConnector.GetHorseStartInformationFromATG(horse);
 
                 if (horse.TrainerInfo != null)
                 {

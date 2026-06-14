@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>HPTClient</RootNamespace>
     <AssemblyName>HPTrav5</AssemblyName>
-    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -152,7 +152,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ATGDriverInformation.cs" />
-    <Compile Include="ATGHorseInformation.cs" />
     <Compile Include="ATGHorseStartInformation.cs" />
     <Compile Include="ATGLinkCreator.cs" />
     <Compile Include="atg_filebetting_1_8_6.cs">
@@ -160,7 +159,6 @@
     </Compile>
     <Compile Include="BetTypeToImageConverter.cs" />
     <Compile Include="DBHelper.cs" />
-    <Compile Include="Extensions.cs" />
     <Compile Include="HelperClasses\CustomAttributes.cs" />
     <Compile Include="HPTAlternateRankSumReductionRule.cs" />
     <Compile Include="HPTClasses\Config\CombinationDataToShow.cs" />
@@ -242,7 +240,6 @@
     <Compile Include="HPTClasses\HPTHorseListContainer.cs" />
     <Compile Include="HPTClasses\HPTReductionRuleClasses\HPTMultipleChoiceReductionRule.cs" />
     <Compile Include="HPTClasses\HPTReductionRuleClasses\HPTABCDEFReductionRule.cs" />
-    <Compile Include="HPTClasses\HPTUserData\HPTUserSystem.cs" />
     <Compile Include="HPTClasses\HPTUserData\HPTUserSystemCollection.cs" />
     <Compile Include="HPTEnumValueConverter.cs" />
     <Compile Include="HPTHorseNextStart.cs" />
@@ -251,7 +248,6 @@
     <Compile Include="ATGHorseRecordList.cs" />
     <Compile Include="HPTHorseTrioInfo.cs" />
     <Compile Include="HPTRowValueInterval.cs" />
-    <Compile Include="HPTSingleRowsRowValueInterval.cs" />
     <Compile Include="HPTStartNumberRank.cs" />
     <Compile Include="HPTStartNumberRankCollection.cs" />
     <Compile Include="HPTTipsParser.cs" />

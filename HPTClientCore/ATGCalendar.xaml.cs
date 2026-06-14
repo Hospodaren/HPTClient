@@ -119,7 +119,7 @@ namespace HPTClient
             }
 
             // Sätt versionstext som ska synas i föstret
-            Config.VersionText = $"Hjälp på Traven Open Source Stand Alone-Preview 1. Inga garantier, ingen support, ingen kostnad.";
+            Config.VersionText = $"Hjälp på Traven Open Source Stand Alone-Preview 2. Inga garantier, ingen support, ingen kostnad.";
             VersionText = Config.VersionText;
         }
 
@@ -981,7 +981,7 @@ namespace HPTClient
             try
             {
                 Cursor = Cursors.Wait;
-                var serviceConnector = new HPTServiceConnector();
+                //var serviceConnector = new HPTServiceConnector(); // TODO?
                 if (hptCalendar.RaceDayInfoList != null)
                 {
                     hptCalendar.RaceDayInfoList.Clear();
@@ -1229,6 +1229,7 @@ namespace HPTClient
 
         internal void GetOldRaceDayInfos()
         {
+            // TODO: Skita i det här?
             string raceDayInfoList = Clipboard.GetText();
             var sr = new StringReader(raceDayInfoList);
             var sb = new StringBuilder();
@@ -1244,12 +1245,12 @@ namespace HPTClient
                     sb.Append("\t");
                     sb.Append(raceDayData[2]);
                     sb.Append("\t");
-                    var connector = new HPTServiceConnector();
-                    var hptRdi = connector.GetRaceDayInfoByTrackAndDate(raceDayData[0], raceDayData[1], raceDayData[2]);
-                    connector.GetResultMarkingBetByTrackAndDate(raceDayData[0], raceDayData[1], raceDayData[2], hptRdi);
-                    var markBet = new HPTMarkBet(hptRdi, hptRdi.BetType);
-                    markBet.PrepareForSave();
-                    markBet.SuggestNextTimers();
+                    //var connector = new HPTServiceConnector(); // TODO?
+                    //var hptRdi = connector.GetRaceDayInfoByTrackAndDate(raceDayData[0], raceDayData[1], raceDayData[2]);
+                    //connector.GetResultMarkingBetByTrackAndDate(raceDayData[0], raceDayData[1], raceDayData[2], hptRdi);
+                    //var markBet = new HPTMarkBet(hptRdi, hptRdi.BetType);
+                    //markBet.PrepareForSave();
+                    //markBet.SuggestNextTimers();
 
                     //// Faktisk utdelning
                     //foreach (var payOut in hptRdi.PayOutList)
@@ -1284,8 +1285,8 @@ namespace HPTClient
                     //    sb.Append("DÖTT LOPP");
                     //}
 
-                    string fileName = @"c:\Temp\GamlaSystem\" + raceDayData[1] + "_" + markBet.RaceDayInfo.TracknameFile + "_" + raceDayData[0] + ".hpt7";
-                    HPTSerializer.SerializeHPTSystem(fileName, markBet);
+                    //string fileName = @"c:\Temp\GamlaSystem\" + raceDayData[1] + "_" + markBet.RaceDayInfo.TracknameFile + "_" + raceDayData[0] + ".hpt7";
+                    //HPTSerializer.SerializeHPTSystem(fileName, markBet);
                 }
                 catch (Exception exc)
                 {
@@ -1351,8 +1352,8 @@ namespace HPTClient
 
                         if (hmb.RaceDayInfo.PayOutListATG == null || hmb.RaceDayInfo.PayOutListATG.Count == 0 || hmb.RaceDayInfo.PayOutListATG.Sum(po => po.PayOutAmount) == 0)
                         {
-                            var serviceConnector = new HPTServiceConnector();
-                            serviceConnector.GetResultMarkingBetByTrackAndDate(hmb.BetType.Code, hmb.RaceDayInfo.TrackId, hmb.RaceDayInfo.RaceDayDate, hmb.RaceDayInfo, true);
+                            //var serviceConnector = new HPTServiceConnector(); // TODO?
+                            //serviceConnector.GetResultMarkingBetByTrackAndDate(hmb.BetType.Code, hmb.RaceDayInfo.TrackId, hmb.RaceDayInfo.RaceDayDate, hmb.RaceDayInfo, true);
                         }
 
                         // Utdelning på streckspel med minst två vinstpooler

@@ -31,8 +31,10 @@ namespace HPTClient
 
         public void SetStakeAndNumberOfSelected()
         {
-            int numberOfSelected = CombinationList.Where(c => c.Selected).Count();
-            int totalStake = CombinationList.Where(c => c.Selected && c.Stake != null).Sum(c => (int)c.Stake);
+            int numberOfSelected = CombinationList.Count(c => c.Selected);
+            int totalStake = CombinationList
+                .Where(c => c.Selected && c.Stake != null)
+                .Sum(c => (int)c.Stake);
 
             if (NumberOfSelectedCombinations != numberOfSelected)
             {

@@ -66,9 +66,9 @@ namespace HPTClient
             if (fe.DataContext.GetType() == typeof(HPTHorse))
             {
                 var horse = fe.DataContext as HPTHorse;
-                var serviceConnector = new HPTServiceConnector();
+                //var serviceConnector = new HPTServiceConnector(); // TODO?
                 //serviceConnector.GetDriverInfoFromATG(horse);
-                serviceConnector.GetHorseStartInformationFromATG(horse);
+                //serviceConnector.GetHorseStartInformationFromATG(horse);
 
                 if (horse.DriverInfo != null)
                 {

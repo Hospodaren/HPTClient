@@ -98,15 +98,15 @@ namespace HPTClient
                     SetV6Factor();
                 }
 
-                MarksQuantity = gameBase.SystemCount;// TODO?
+                //MarksQuantity = gameBase.SystemCount;// TODO?
 
-                foreach (ATGRaceBase race in gameBase.Races)
+
+                var pairedRaces = RaceList
+                    .Join(gameBase.Races, ri => ri.RaceNr, ro => ro.Number, (ri, ro) => new { LocalRace = ri, RetrievedRace = ro });
+
+                foreach (var racePair in pairedRaces)
                 {
-                    var hptRace = RaceList.FirstOrDefault(r => r.RaceNr == race.Number);
-                    if (hptRace != null)
-                    {
-                        hptRace.Merge(race);
-                    }
+                    racePair.LocalRace.Merge(racePair.RetrievedRace);
                 }
 
                 // TODO: Kombinataionsspelen

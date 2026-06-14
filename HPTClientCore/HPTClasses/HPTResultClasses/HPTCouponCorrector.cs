@@ -27,17 +27,6 @@ namespace HPTClient
                 HPTLegResult legResult = hptRace.LegResult;
                 if (legResult != null)
                 {
-                    // TODO: Ta bort smygen?
-                    //// Hämta värdet vid Smygen...
-                    //if (legResult.Value == 0 && RaceDayInfo.ResultMarkingBet != null)
-                    //{
-                    //    var serviceLegResult = RaceDayInfo.ResultMarkingBet.LegResultList.FirstOrDefault(lr => lr.LegNr == legResult.LegNr);
-                    //    if (serviceLegResult != null)
-                    //    {
-                    //        legResult.SystemsLeft = serviceLegResult.SystemsLeft;
-                    //        legResult.Value = serviceLegResult.Value;
-                    //    }
-                    //}
                     legResult.LegNrString = RaceDayInfo.BetType.Code + "-" + legResult.LegNr.ToString();
                     legResult.WinnerStrings = new string[legResult.Winners.Length];
 
@@ -52,7 +41,7 @@ namespace HPTClient
 
                     for (int i = 0; i < legResult.Winners.Length; i++)
                     {
-                        HPTHorse horse = hptRace.HorseList.FirstOrDefault(h => h.StartNr == legResult.Winners[i]);
+                        var horse = hptRace.HorseList.FirstOrDefault(h => h.StartNr == legResult.Winners[i]);
                         if (horse == null)
                         {
                             return;
@@ -80,7 +69,7 @@ namespace HPTClient
             CouponHelper.TotalNumberOfOneError = 0;
             CouponHelper.TotalNumberOfTwoErrors = 0;
             CouponHelper.TotalNumberOfThreeErrors = 0;
-            foreach (HPTCoupon coupon in CouponHelper.CouponList)
+            foreach (var coupon in CouponHelper.CouponList)
             {
                 coupon.CorrectCoupon(RaceDayInfo, racesToCorrect);
                 CouponHelper.TotalNumberOfAllCorrect += coupon.NumberOfAllCorrect * coupon.BetMultiplier;
@@ -89,17 +78,17 @@ namespace HPTClient
                 CouponHelper.TotalNumberOfThreeErrors += coupon.NumberOfThreeErrors * coupon.BetMultiplier;
                 if (RaceDayInfo.ResultComplete && racesToCorrect == RaceDayInfo.RaceList.Count)
                 {
-                    CouponHelper.TotalWinnings += RaceDayInfo.PayOutList[0].PayOutAmount * coupon.NumberOfAllCorrect * coupon.BetMultiplier;
+                    CouponHelper.TotalWinnings += (int)Math.Floor(RaceDayInfo.PayOutList[0].PayOutAmount) * coupon.NumberOfAllCorrect * coupon.BetMultiplier;
                     switch (coupon.BetType)
                     {
                         case "V65":
                             if (coupon.V6)  // 2 ggr vinsten, men bara utdelning på alla rätt
                             {
-                                CouponHelper.TotalWinnings += RaceDayInfo.PayOutList[0].PayOutAmount * coupon.NumberOfAllCorrect * coupon.BetMultiplier;
+                                CouponHelper.TotalWinnings += (int)Math.Floor(RaceDayInfo.PayOutList[0].PayOutAmount) * coupon.NumberOfAllCorrect * coupon.BetMultiplier;
                             }
                             else
                             {
-                                CouponHelper.TotalWinnings += RaceDayInfo.PayOutList[1].PayOutAmount * coupon.NumberOfOneError * coupon.BetMultiplier;
+                                CouponHelper.TotalWinnings += (int)Math.Floor(RaceDayInfo.PayOutList[1].PayOutAmount) * coupon.NumberOfOneError * coupon.BetMultiplier;
                             }
                             break;
                         case "V64":
@@ -112,21 +101,21 @@ namespace HPTClient
                             }
                             else
                             {
-                                CouponHelper.TotalWinnings += RaceDayInfo.PayOutList[1].PayOutAmount * coupon.NumberOfOneError * coupon.BetMultiplier;
-                                CouponHelper.TotalWinnings += RaceDayInfo.PayOutList[2].PayOutAmount * coupon.NumberOfTwoErrors * coupon.BetMultiplier;
+                                CouponHelper.TotalWinnings += (int)Math.Floor(RaceDayInfo.PayOutList[1].PayOutAmount) * coupon.NumberOfOneError * coupon.BetMultiplier;
+                                CouponHelper.TotalWinnings += (int)Math.Floor(RaceDayInfo.PayOutList[2].PayOutAmount) * coupon.NumberOfTwoErrors * coupon.BetMultiplier;
                             }
                             break;
                         case "V85":
 
-                            CouponHelper.TotalWinnings += RaceDayInfo.PayOutList[1].PayOutAmount * coupon.NumberOfOneError * coupon.BetMultiplier;
-                            CouponHelper.TotalWinnings += RaceDayInfo.PayOutList[2].PayOutAmount * coupon.NumberOfTwoErrors * coupon.BetMultiplier;
-                            CouponHelper.TotalWinnings += RaceDayInfo.PayOutList[3].PayOutAmount * coupon.NumberOfThreeErrors * coupon.BetMultiplier;
+                            CouponHelper.TotalWinnings += (int)Math.Floor(RaceDayInfo.PayOutList[1].PayOutAmount) * coupon.NumberOfOneError * coupon.BetMultiplier;
+                            CouponHelper.TotalWinnings += (int)Math.Floor(RaceDayInfo.PayOutList[2].PayOutAmount) * coupon.NumberOfTwoErrors * coupon.BetMultiplier;
+                            CouponHelper.TotalWinnings += (int)Math.Floor(RaceDayInfo.PayOutList[3].PayOutAmount) * coupon.NumberOfThreeErrors * coupon.BetMultiplier;
                             break;
                         case "V4":
                         case "V5":
                             if (RaceDayInfo.PayOutList[0].NumberOfCorrect == RaceDayInfo.BetType.NumberOfRaces - 1)
                             {
-                                CouponHelper.TotalWinnings += RaceDayInfo.PayOutList[0].PayOutAmount * coupon.NumberOfOneError * coupon.BetMultiplier;
+                                CouponHelper.TotalWinnings += (int)Math.Floor(RaceDayInfo.PayOutList[0].PayOutAmount) * coupon.NumberOfOneError * coupon.BetMultiplier;
                                 if (coupon.NumberOfOneError > 0)
                                 {
                                     coupon.NumberOfCorrectsColor = new System.Windows.Media.SolidColorBrush(HPTConfig.Config.ColorGood);
@@ -263,17 +252,17 @@ namespace HPTClient
 
                 foreach (HPTCoupon coupon in CouponHelper.CouponList)
                 {
-                    CouponHelper.TotalWinnings += RaceDayInfo.PayOutList[0].PayOutAmount * coupon.NumberOfAllCorrect * coupon.BetMultiplier;
+                    CouponHelper.TotalWinnings += (int)Math.Floor(RaceDayInfo.PayOutList[0].PayOutAmount) * coupon.NumberOfAllCorrect * coupon.BetMultiplier;
                     switch (coupon.BetType)
                     {
                         case "V65":
                             if (coupon.V6)  // 2 ggr vinsten, men bara utdelning på alla rätt
                             {
-                                CouponHelper.TotalWinnings += RaceDayInfo.PayOutList[0].PayOutAmount * coupon.NumberOfAllCorrect * coupon.BetMultiplier;
+                                CouponHelper.TotalWinnings += (int)Math.Floor(RaceDayInfo.PayOutList[0].PayOutAmount) * coupon.NumberOfAllCorrect * coupon.BetMultiplier;
                             }
                             else
                             {
-                                CouponHelper.TotalWinnings += RaceDayInfo.PayOutList[1].PayOutAmount * coupon.NumberOfOneError * coupon.BetMultiplier;
+                                CouponHelper.TotalWinnings += (int)Math.Floor(RaceDayInfo.PayOutList[1].PayOutAmount) * coupon.NumberOfOneError * coupon.BetMultiplier;
                             }
                             break;
                         case "V64":
@@ -286,14 +275,14 @@ namespace HPTClient
                             }
                             else
                             {
-                                CouponHelper.TotalWinnings += RaceDayInfo.PayOutList[1].PayOutAmount * coupon.NumberOfOneError * coupon.BetMultiplier;
-                                CouponHelper.TotalWinnings += RaceDayInfo.PayOutList[2].PayOutAmount * coupon.NumberOfTwoErrors * coupon.BetMultiplier;
+                                CouponHelper.TotalWinnings += (int)Math.Floor(RaceDayInfo.PayOutList[1].PayOutAmount) * coupon.NumberOfOneError * coupon.BetMultiplier;
+                                CouponHelper.TotalWinnings += (int)Math.Floor(RaceDayInfo.PayOutList[2].PayOutAmount) * coupon.NumberOfTwoErrors * coupon.BetMultiplier;
                             }
                             break;
                         case "V85":
-                            CouponHelper.TotalWinnings += RaceDayInfo.PayOutList[1].PayOutAmount * coupon.NumberOfOneError * coupon.BetMultiplier;
-                            CouponHelper.TotalWinnings += RaceDayInfo.PayOutList[2].PayOutAmount * coupon.NumberOfTwoErrors * coupon.BetMultiplier;
-                            CouponHelper.TotalWinnings += RaceDayInfo.PayOutList[3].PayOutAmount * coupon.NumberOfThreeErrors * coupon.BetMultiplier;    // TODO
+                            CouponHelper.TotalWinnings += (int)Math.Floor(RaceDayInfo.PayOutList[1].PayOutAmount) * coupon.NumberOfOneError * coupon.BetMultiplier;
+                            CouponHelper.TotalWinnings += (int)Math.Floor(RaceDayInfo.PayOutList[2].PayOutAmount) * coupon.NumberOfTwoErrors * coupon.BetMultiplier;
+                            CouponHelper.TotalWinnings += (int)Math.Floor(RaceDayInfo.PayOutList[3].PayOutAmount) * coupon.NumberOfThreeErrors * coupon.BetMultiplier;    // TODO
                             break;
                         default:
                             break;
@@ -330,7 +319,7 @@ namespace HPTClient
             return Convert.ToInt32(result);
         }
 
-        internal int CalculatePayOutOneError(IEnumerable<HPTHorse> horseList, decimal factor)
+        internal decimal CalculatePayOutOneError(IEnumerable<HPTHorse> horseList, decimal factor)
         {
             decimal totalStakeShare = 0M;
             decimal rowStakeShare = horseList
@@ -341,11 +330,10 @@ namespace HPTClient
             {
                 totalStakeShare += (rowStakeShare / horse.StakeDistributionShare * (1M - horse.StakeDistributionShare));
             }
-            decimal result = factor / totalStakeShare;
-            return Convert.ToInt32(Math.Floor(result));
+            return factor / totalStakeShare;
         }
 
-        internal int CalculatePayOutTwoErrors(IEnumerable<HPTHorse> horseList, decimal factor)
+        internal decimal CalculatePayOutTwoErrors(IEnumerable<HPTHorse> horseList, decimal factor)
         {
             var horseArray = horseList.ToArray();
             decimal totalStakeShare = 0M;
@@ -366,11 +354,10 @@ namespace HPTClient
                     totalStakeShare += (rowStakeShare / stakeFactor * invertedStakeFactor);
                 }
             }
-            decimal result = factor / totalStakeShare;
-            return Convert.ToInt32(Math.Floor(result));
+            return factor / totalStakeShare;
         }
 
-        internal int CalculatePayOutThreeErrors(IEnumerable<HPTHorse> horseList, decimal factor)
+        internal decimal CalculatePayOutThreeErrors(IEnumerable<HPTHorse> horseList, decimal factor)
         {
             var horseArray = horseList.ToArray();
             decimal totalStakeShare = 0M;
@@ -399,8 +386,7 @@ namespace HPTClient
                     }
                 }
             }
-            decimal result = factor / totalStakeShare;
-            return Convert.ToInt32(Math.Floor(result));
+            return factor / totalStakeShare;
         }
 
         internal int CalculatePayOutOneErrorFinalStakeShare(IEnumerable<HPTHorse> horseList, decimal factor)
@@ -483,8 +469,8 @@ namespace HPTClient
         {
             try
             {
-                var serviceConnector = new HPTServiceConnector();
-                serviceConnector.GetResultMarkingBetByTrackAndDate(RaceDayInfo.BetType.Code, RaceDayInfo.TrackId, RaceDayInfo.RaceDayDate, RaceDayInfo, setValue);
+                //var serviceConnector = new HPTServiceConnector();
+                //serviceConnector.GetResultMarkingBetByTrackAndDate(RaceDayInfo.BetType.Code, RaceDayInfo.TrackId, RaceDayInfo.RaceDayDate, RaceDayInfo, setValue);
                 ReplaceScratchedHorses();
                 CorrectCoupons(racesToCorrect);
             }
@@ -496,8 +482,8 @@ namespace HPTClient
 
         public void RetrieveResult(bool setValues)
         {
-            var serviceConnector = new HPTServiceConnector();
-            serviceConnector.GetResultMarkingBetByTrackAndDate(RaceDayInfo.BetType.Code, RaceDayInfo.TrackId, RaceDayInfo.RaceDayDate, RaceDayInfo, setValues);
+            //var serviceConnector = new HPTServiceConnector();
+            //serviceConnector.GetResultMarkingBetByTrackAndDate(RaceDayInfo.BetType.Code, RaceDayInfo.TrackId, RaceDayInfo.RaceDayDate, RaceDayInfo, setValues);
             ReplaceScratchedHorses();
         }
 

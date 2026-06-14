@@ -673,10 +673,10 @@ namespace HPTClient
                 {
                     if (numberOfPools > 1)
                     {
-                        sr.RowValueOneError = MarkBet.CouponCorrector.CalculatePayOutOneError(sr.HorseList, MarkBet.BetType.PoolShareOneError * MarkBet.BetType.RowCost);
+                        sr.RowValueOneError = (int)MarkBet.CouponCorrector.CalculatePayOutOneError(sr.HorseList, MarkBet.BetType.PoolShareOneError * MarkBet.BetType.RowCost);
                         if (numberOfPools > 2)
                         {
-                            sr.RowValueTwoErrors = MarkBet.CouponCorrector.CalculatePayOutTwoErrors(sr.HorseList, MarkBet.BetType.PoolShareTwoErrors * MarkBet.BetType.RowCost);
+                            sr.RowValueTwoErrors = (int)MarkBet.CouponCorrector.CalculatePayOutTwoErrors(sr.HorseList, MarkBet.BetType.PoolShareTwoErrors * MarkBet.BetType.RowCost);
                         }
                     }
                     SingleRowsObservable.Add(sr);

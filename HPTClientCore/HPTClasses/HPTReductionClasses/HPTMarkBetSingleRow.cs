@@ -74,18 +74,17 @@ namespace HPTClient
 
         public decimal RowShare { get; set; }
 
-        // NY LÖSNING MED INSATSFÖRDELNING
         public int EstimateRowValue(HPTMarkBet markBet)
         {
-            // Egen chansvärdering med hänsyn taget till jackpott och spelavdrag
-            try
-            {
-                OwnProbabilityEV = OwnProbabilityQuota * markBet.RaceDayInfo.JackpotFactor * markBet.BetType.GamblerReturnPercentage;
-            }
-            catch (Exception exc)
-            {
-                string s = exc.Message;
-            }
+            //// TODO: Egen chansvärdering med hänsyn taget till jackpott och spelavdrag
+            //try
+            //{
+            //    OwnProbabilityEV = OwnProbabilityQuota * markBet.RaceDayInfo.JackpotFactor * markBet.BetType.GamblerReturnPercentage;
+            //}
+            //catch (Exception exc)
+            //{
+            //    string s = exc.Message;
+            //}
 
             try
             {
@@ -270,8 +269,8 @@ namespace HPTClient
             int stakePercentSum = 0;
             decimal rowShareStakeWithoutScratchings = 1M;
             decimal rowShareStake = 1M;
-            StringBuilder sbUniqueCode = new StringBuilder();
-            StringBuilder sbABCDRankCode = new StringBuilder();
+            var sbUniqueCode = new StringBuilder();
+            var sbABCDRankCode = new StringBuilder();
 
             // KOMMANDE
             decimal rowShareStakeRounded = 1M;

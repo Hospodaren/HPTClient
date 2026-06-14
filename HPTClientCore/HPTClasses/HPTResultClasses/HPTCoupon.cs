@@ -78,8 +78,8 @@ namespace HPTClient
                 HPTRace hptRace = raceDayInfo.RaceList.First(r => r.LegNr == raceNumber);
                 if (hptRace.LegResult != null && hptRace.LegResult.WinnerList != null)
                 {
-                    HPTLegResult hptLegResult = hptRace.LegResult;
-                    HPTCouponRace couponRace = CouponRaceList.First(cr => cr.LegNr == raceNumber);
+                    var hptLegResult = hptRace.LegResult;
+                    var couponRace = CouponRaceList.First(cr => cr.LegNr == raceNumber);
                     int correctNumbersOnCouponRace = couponRace.StartNrList.Intersect(hptLegResult.Winners).Count();
                     NumberOfCorrect += correctNumbersOnCouponRace == 0 ? 0 : 1;
                 }

@@ -39,8 +39,8 @@ namespace HPTClient
         {
             try
             {
-                var serviceConnector = new HPTServiceConnector();
-                serviceConnector.GetHorseNextStartList();
+                //var serviceConnector = new HPTServiceConnector(); // TODO?
+                //serviceConnector.GetHorseNextStartList();
 
                 HPTConfig.Config.HorseOwnInformationCollection.CleanUpOldNextStarts();
             }

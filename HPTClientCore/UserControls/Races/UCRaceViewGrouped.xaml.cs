@@ -2434,8 +2434,8 @@ namespace HPTClient
             try
             {
                 Cursor = Cursors.Wait;
-                var connector = new HPTServiceConnector();
-                var raceDayInfoHistory = connector.GetRaceDayInfoHistoryGrouped(MarkBet.RaceDayInfo);
+                //var connector = new HPTServiceConnector(); // TODO?
+                //var raceDayInfoHistory = connector.GetRaceDayInfoHistoryGrouped(MarkBet.RaceDayInfo);
 
                 MarkBet.RaceDayInfo.RaceList
                     .ForEach(r =>
