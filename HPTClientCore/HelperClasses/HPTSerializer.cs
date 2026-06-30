@@ -112,6 +112,10 @@ namespace HPTClient
 
         internal static void SerializeHPTRaceDayInfoHistory(HPTMarkBet hmb)
         {
+            if (hmb.RaceDayInfo.RaceDayDate.Date > DateTime.Today)
+            {
+                return;
+            }
             try
             {
                 var raceDayInfoHistory = new HPTRaceDayInfoHistory()
@@ -376,7 +380,7 @@ namespace HPTClient
                 {
                     if (rexTimestampFromFileName.IsMatch(f))
                     {
-                        DateTime fileTimeStamp = DateTime.ParseExact(rexTimestampFromFileName.Match(f).Groups[1].Value, "yyyyMMddHHmmss", null);
+                        var fileTimeStamp = DateTime.ParseExact(rexTimestampFromFileName.Match(f).Groups[1].Value, "yyyyMMddHHmmss", null);
                         // TODO: ShortTrend ska åtminstone vara en stund (30 minuter?) gammal
                         if (fileTimeStamp.Date == markBet.RaceDayInfo.RaceDayDate.Date)
                         {

@@ -3,12 +3,15 @@
   "WorkspaceRootPath": "C:\\Users\\johan\\source\\repos\\HPTClient\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A694C247-97CF-3243-9EA1-098F13D9C818}|HPTClientCore\\HPTClientCore.csproj|c:\\users\\johan\\source\\repos\\hptclient\\hptclientcore\\hptclientcore.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
-      "RelativeMoniker": "D:0:0:{A694C247-97CF-3243-9EA1-098F13D9C818}|HPTClientCore\\HPTClientCore.csproj|solutionrelative:hptclientcore\\hptclientcore.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files\\dotnet\\sdk\\10.0.301\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.Sdk.DefaultItems.targets||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A694C247-97CF-3243-9EA1-098F13D9C818}|HPTClientCore\\HPTClientCore.csproj|c:\\users\\johan\\source\\repos\\hptclient\\hptclientcore\\atgcalendar.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A694C247-97CF-3243-9EA1-098F13D9C818}|HPTClientCore\\HPTClientCore.csproj|solutionrelative:hptclientcore\\atgcalendar.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A694C247-97CF-3243-9EA1-098F13D9C818}|HPTClientCore\\HPTClientCore.csproj|c:\\users\\johan\\source\\repos\\hptclient\\hptclientcore\\hptclientcore.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
+      "RelativeMoniker": "D:0:0:{A694C247-97CF-3243-9EA1-098F13D9C818}|HPTClientCore\\HPTClientCore.csproj|solutionrelative:hptclientcore\\hptclientcore.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A694C247-97CF-3243-9EA1-098F13D9C818}|HPTClientCore\\HPTClientCore.csproj|c:\\users\\johan\\source\\repos\\hptclient\\hptclientcore\\helperclasses\\hptserializer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -268,15 +271,23 @@
       "DocumentGroups": [
         {
           "DockedWidth": 201,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "HPTClientCore",
+              "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClientCore.csproj",
+              "RelativeDocumentMoniker": "HPTClientCore\\HPTClientCore.csproj",
+              "ToolTip": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClientCore.csproj",
+              "RelativeToolTip": "HPTClientCore\\HPTClientCore.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-06-17T15:37:56.598Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "PublicEnums.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HelperClasses\\PublicEnums.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HelperClasses\\PublicEnums.cs",
@@ -288,20 +299,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "HPTClientCore.csproj",
-              "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClientCore.csproj",
-              "RelativeDocumentMoniker": "HPTClientCore\\HPTClientCore.csproj",
-              "ToolTip": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClientCore.csproj",
-              "RelativeToolTip": "HPTClientCore\\HPTClientCore.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAATAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2026-03-25T17:10:29.213Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "Extensions.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\Extensions.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\Extensions.cs",
@@ -313,7 +311,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "HPTSerializer.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HelperClasses\\HPTSerializer.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HelperClasses\\HPTSerializer.cs",
@@ -321,12 +319,11 @@
               "RelativeToolTip": "HPTClientCore\\HelperClasses\\HPTSerializer.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAADAAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-25T10:27:08.189Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-25T10:27:08.189Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "HPTResultMarkingBet.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\HPTResultClasses\\HPTResultMarkingBet.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTClasses\\HPTResultClasses\\HPTResultMarkingBet.cs",
@@ -338,7 +335,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "HPTRaceDayInfo.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\HPTInfoClasses\\HPTRaceDayInfo.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTClasses\\HPTInfoClasses\\HPTRaceDayInfo.cs",
@@ -350,7 +347,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "HPTHorse.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\HPTHorse\\HPTHorse.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTClasses\\HPTHorse\\HPTHorse.cs",
@@ -362,7 +359,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "ATGDownloaderToHPTHelper.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HelperClasses\\ATGDownloaderToHPTHelper.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HelperClasses\\ATGDownloaderToHPTHelper.cs",
@@ -374,7 +371,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "HPTMarkBet.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\HPTReductionClasses\\HPTMarkBet.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTClasses\\HPTReductionClasses\\HPTMarkBet.cs",
@@ -386,7 +383,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 20,
               "Title": "UCCorrectionMarkingBet.xaml",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UserControls\\Correction\\UCCorrectionMarkingBet.xaml",
               "RelativeDocumentMoniker": "HPTClientCore\\UserControls\\Correction\\UCCorrectionMarkingBet.xaml",
@@ -397,7 +394,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 30,
               "Title": "HPTServiceConnector.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HelperClasses\\HPTServiceConnector.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HelperClasses\\HPTServiceConnector.cs",
@@ -409,7 +406,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 31,
               "Title": "HPTServiceToHPTHelper.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HelperClasses\\HPTServiceToHPTHelper.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HelperClasses\\HPTServiceToHPTHelper.cs",
@@ -421,7 +418,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 36,
               "Title": "HPTCategoryReductionRule.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\HPTReductionRuleClasses\\HPTCategoryReductionRule.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTClasses\\HPTReductionRuleClasses\\HPTCategoryReductionRule.cs",
@@ -433,7 +430,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 38,
               "Title": "UCCategoryReductionSettings.xaml.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UserControls\\MarkingBetReductions\\UCCategoryReductionSettings.xaml.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\UserControls\\MarkingBetReductions\\UCCategoryReductionSettings.xaml.cs",
@@ -445,7 +442,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 41,
               "Title": "UCMarksGame.xaml",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UserControls\\MarkingBetGeneral\\UCMarksGame.xaml",
               "RelativeDocumentMoniker": "HPTClientCore\\UserControls\\MarkingBetGeneral\\UCMarksGame.xaml",
@@ -456,7 +453,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 47,
               "Title": "HPTHorseListContainer.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\HPTHorseListContainer.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTClasses\\HPTHorseListContainer.cs",
@@ -468,7 +465,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 49,
+              "DocumentIndex": 50,
               "Title": "HPTCouponRace.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\HPTResultClasses\\HPTCouponRace.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTClasses\\HPTResultClasses\\HPTCouponRace.cs",
@@ -480,7 +477,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 51,
+              "DocumentIndex": 52,
               "Title": "HPTABCDEFReductionRule.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\HPTReductionRuleClasses\\HPTABCDEFReductionRule.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTClasses\\HPTReductionRuleClasses\\HPTABCDEFReductionRule.cs",
@@ -492,7 +489,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 52,
+              "DocumentIndex": 53,
               "Title": "UCABCDReductionSettings.xaml",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UserControls\\MarkingBetReductions\\UCABCDReductionSettings.xaml",
               "RelativeDocumentMoniker": "HPTClientCore\\UserControls\\MarkingBetReductions\\UCABCDReductionSettings.xaml",
@@ -503,7 +500,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 59,
+              "DocumentIndex": 60,
               "Title": "HPTXReductionRule.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\HPTReductionRuleClasses\\HPTXReductionRule.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTClasses\\HPTReductionRuleClasses\\HPTXReductionRule.cs",
@@ -515,7 +512,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 63,
+              "DocumentIndex": 64,
               "Title": "ATGJsonParser.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\ATGHelper\\ATGDownloader\\ATGJsonParser.cs",
               "RelativeDocumentMoniker": "..\\ATGHelper\\ATGDownloader\\ATGJsonParser.cs",
@@ -529,7 +526,7 @@
         },
         {
           "DockedWidth": 189,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -540,12 +537,21 @@
               "Name": "ST:130:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{c6f34f0d-7ae5-4f3a-be61-fe0c21ae9eb8}"
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Microsoft.NET.Sdk.DefaultItems.targets",
+              "DocumentMoniker": "C:\\Program Files\\dotnet\\sdk\\10.0.301\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.Sdk.DefaultItems.targets",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Program Files\\dotnet\\sdk\\10.0.301\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.Sdk.DefaultItems.targets",
+              "ToolTip": "C:\\Program Files\\dotnet\\sdk\\10.0.301\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.Sdk.DefaultItems.targets",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\Program Files\\dotnet\\sdk\\10.0.301\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.Sdk.DefaultItems.targets",
+              "ViewState": "AgIAAIAAAAAAAAAAAAAUwJwAAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
+              "WhenOpened": "2026-06-17T15:41:00.531Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "HPTRace.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\HPTInfoClasses\\HPTRace.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTClasses\\HPTInfoClasses\\HPTRace.cs",
@@ -557,7 +563,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "HPTRaceDayInfoHistory.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\HPTInfoClasses\\HPTRaceDayInfoHistory.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTClasses\\HPTInfoClasses\\HPTRaceDayInfoHistory.cs",
@@ -575,14 +581,14 @@
               "RelativeDocumentMoniker": "HPTClientCore\\ATGCalendar.xaml.cs",
               "ToolTip": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\ATGCalendar.xaml.cs",
               "RelativeToolTip": "HPTClientCore\\ATGCalendar.xaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACMAAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-23T12:04:34.535Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "UCCorrectionMarkingBet.xaml.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UserControls\\Correction\\UCCorrectionMarkingBet.xaml.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\UserControls\\Correction\\UCCorrectionMarkingBet.xaml.cs",
@@ -594,7 +600,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "HPTMarkBetSingleRow.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\HPTReductionClasses\\HPTMarkBetSingleRow.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTClasses\\HPTReductionClasses\\HPTMarkBetSingleRow.cs",
@@ -606,7 +612,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "HPTMarkBetSingleRowCollection.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\HPTReductionClasses\\HPTMarkBetSingleRowCollection.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTClasses\\HPTReductionClasses\\HPTMarkBetSingleRowCollection.cs",
@@ -618,7 +624,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "UCSingleRowCollectionView.xaml.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UserControls\\SingleRows\\UCSingleRowCollectionView.xaml.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\UserControls\\SingleRows\\UCSingleRowCollectionView.xaml.cs",
@@ -630,7 +636,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "ATGCouponHelper.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\HPTResultClasses\\ATGCouponHelper.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTClasses\\HPTResultClasses\\ATGCouponHelper.cs",
@@ -642,7 +648,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "HPTCouponCorrector.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\HPTResultClasses\\HPTCouponCorrector.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTClasses\\HPTResultClasses\\HPTCouponCorrector.cs",
@@ -654,7 +660,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 19,
               "Title": "HPTBetType.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\HPTInfoClasses\\HPTBetType.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTClasses\\HPTInfoClasses\\HPTBetType.cs",
@@ -666,7 +672,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 23,
               "Title": "UCTvillingGame.xaml",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UserControls\\CombinationGames\\UCTvillingGame.xaml",
               "RelativeDocumentMoniker": "HPTClientCore\\UserControls\\CombinationGames\\UCTvillingGame.xaml",
@@ -677,7 +683,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 22,
               "Title": "HPTCombBet.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\HPTReductionClasses\\HPTCombBet.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTClasses\\HPTReductionClasses\\HPTCombBet.cs",
@@ -689,7 +695,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 21,
               "Title": "HPTCombinationListInfo.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\HPTReductionClasses\\HPTCombinationListInfo.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTClasses\\HPTReductionClasses\\HPTCombinationListInfo.cs",
@@ -701,7 +707,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 24,
               "Title": "UCCombinationsGameHandling.xaml",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UserControls\\CombinationGames\\UCCombinationsGameHandling.xaml",
               "RelativeDocumentMoniker": "HPTClientCore\\UserControls\\CombinationGames\\UCCombinationsGameHandling.xaml",
@@ -712,7 +718,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 27,
               "Title": "HPTResultAnalyzer.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\HPTResultClasses\\HPTResultAnalyzer.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTClasses\\HPTResultClasses\\HPTResultAnalyzer.cs",
@@ -724,7 +730,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 28,
               "Title": "UCOwnInformationView.xaml.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UCOwnInformationView.xaml.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\UCOwnInformationView.xaml.cs",
@@ -736,7 +742,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 26,
               "Title": "UCRaceViewGrouped.xaml.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UserControls\\Races\\UCRaceViewGrouped.xaml.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\UserControls\\Races\\UCRaceViewGrouped.xaml.cs",
@@ -748,7 +754,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 25,
               "Title": "UCRaceView.xaml.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UserControls\\Races\\UCRaceView.xaml.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\UserControls\\Races\\UCRaceView.xaml.cs",
@@ -760,7 +766,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 29,
               "Title": "UCCompactHorse.xaml.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UserControls\\Overview\\UCCompactHorse.xaml.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\UserControls\\Overview\\UCCompactHorse.xaml.cs",
@@ -772,7 +778,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 33,
               "Title": "UCRaceView.xaml",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UserControls\\Races\\UCRaceView.xaml",
               "RelativeDocumentMoniker": "HPTClientCore\\UserControls\\Races\\UCRaceView.xaml",
@@ -783,7 +789,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 32,
               "Title": "HPTHorseResultInfo.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\HPTHorse\\HPTHorseResultInfo.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTClasses\\HPTHorse\\HPTHorseResultInfo.cs",
@@ -795,7 +801,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 34,
               "Title": "HPTCoupon.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\HPTResultClasses\\HPTCoupon.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTClasses\\HPTResultClasses\\HPTCoupon.cs",
@@ -807,7 +813,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 35,
               "Title": "UCMarksGame.xaml.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UserControls\\MarkingBetGeneral\\UCMarksGame.xaml.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\UserControls\\MarkingBetGeneral\\UCMarksGame.xaml.cs",
@@ -819,7 +825,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 37,
               "Title": "UCCategoryReductionSettings.xaml",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UserControls\\MarkingBetReductions\\UCCategoryReductionSettings.xaml",
               "RelativeDocumentMoniker": "HPTClientCore\\UserControls\\MarkingBetReductions\\UCCategoryReductionSettings.xaml",
@@ -830,7 +836,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 39,
               "Title": "UCPrintAndCopySettings.xaml",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UCPrintAndCopySettings.xaml",
               "RelativeDocumentMoniker": "HPTClientCore\\UCPrintAndCopySettings.xaml",
@@ -841,7 +847,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 40,
               "Title": "UCSettings.xaml",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UserControls\\Settings\\UCSettings.xaml",
               "RelativeDocumentMoniker": "HPTClientCore\\UserControls\\Settings\\UCSettings.xaml",
@@ -852,7 +858,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 44,
               "Title": "HPTBet.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\HPTReductionClasses\\HPTBet.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTClasses\\HPTReductionClasses\\HPTBet.cs",
@@ -864,7 +870,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 43,
               "Title": "HPTMarkBetTabsToShow.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\Config\\HPTMarkBetTabsToShow.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTClasses\\Config\\HPTMarkBetTabsToShow.cs",
@@ -876,7 +882,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 42,
               "Title": "HorseDataToShow.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\Config\\HorseDataToShow.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTClasses\\Config\\HorseDataToShow.cs",
@@ -888,7 +894,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 48,
+              "DocumentIndex": 49,
               "Title": "HPTRaceLight.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\HPTInfoClasses\\HPTRaceLight.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTClasses\\HPTInfoClasses\\HPTRaceLight.cs",
@@ -900,7 +906,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 45,
               "Title": "UCHeadToHeadRace.xaml",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UserControls\\Horse\\UCHeadToHeadRace.xaml",
               "RelativeDocumentMoniker": "HPTClientCore\\UserControls\\Horse\\UCHeadToHeadRace.xaml",
@@ -911,7 +917,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 45,
+              "DocumentIndex": 46,
               "Title": "ATGCalendar.xaml",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\ATGCalendar.xaml",
               "RelativeDocumentMoniker": "HPTClientCore\\ATGCalendar.xaml",
@@ -922,7 +928,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 47,
+              "DocumentIndex": 48,
               "Title": "UCV6BetMultiplierRule.xaml.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UserControls\\MarkingBetReductions\\UCV6BetMultiplierRule.xaml.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\UserControls\\MarkingBetReductions\\UCV6BetMultiplierRule.xaml.cs",
@@ -934,7 +940,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 50,
+              "DocumentIndex": 51,
               "Title": "HPTCategoryReductionRuleCollection.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClasses\\HPTReductionRuleClasses\\HPTCategoryReductionRuleCollection.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTClasses\\HPTReductionRuleClasses\\HPTCategoryReductionRuleCollection.cs",
@@ -946,7 +952,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 57,
+              "DocumentIndex": 58,
               "Title": "UCOwnRankSumReduction.xaml.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UCOwnRankSumReduction.xaml.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\UCOwnRankSumReduction.xaml.cs",
@@ -958,7 +964,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 55,
+              "DocumentIndex": 56,
               "Title": "UCPersonReduction.xaml.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UserControls\\MarkingBetReductions\\UCPersonReduction.xaml.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\UserControls\\MarkingBetReductions\\UCPersonReduction.xaml.cs",
@@ -970,7 +976,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 54,
+              "DocumentIndex": 55,
               "Title": "UCHorseRankSumReduction.xaml.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UserControls\\MarkingBetReductions\\UCHorseRankSumReduction.xaml.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\UserControls\\MarkingBetReductions\\UCHorseRankSumReduction.xaml.cs",
@@ -982,7 +988,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 53,
+              "DocumentIndex": 54,
               "Title": "UCHorseRankSumReductionRule.xaml.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UCHorseRankSumReductionRule.xaml.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\UCHorseRankSumReductionRule.xaml.cs",
@@ -994,7 +1000,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 58,
+              "DocumentIndex": 59,
               "Title": "UCGroupIntervalReduction.xaml.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UserControls\\MarkingBetReductions\\UCGroupIntervalReduction.xaml.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\UserControls\\MarkingBetReductions\\UCGroupIntervalReduction.xaml.cs",
@@ -1006,7 +1012,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 56,
+              "DocumentIndex": 57,
               "Title": "UCABCDReductionSettings.xaml.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UserControls\\MarkingBetReductions\\UCABCDReductionSettings.xaml.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\UserControls\\MarkingBetReductions\\UCABCDReductionSettings.xaml.cs",
@@ -1018,7 +1024,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 60,
+              "DocumentIndex": 61,
               "Title": "UCMultiABCD.xaml",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UserControls\\MarkingBetReductions\\UCMultiABCD.xaml",
               "RelativeDocumentMoniker": "HPTClientCore\\UserControls\\MarkingBetReductions\\UCMultiABCD.xaml",
@@ -1029,7 +1035,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 61,
+              "DocumentIndex": 62,
               "Title": "UCRaceViewGrouped.xaml",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UserControls\\Races\\UCRaceViewGrouped.xaml",
               "RelativeDocumentMoniker": "HPTClientCore\\UserControls\\Races\\UCRaceViewGrouped.xaml",
@@ -1040,7 +1046,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 62,
+              "DocumentIndex": 63,
               "Title": "UCOwnInformationView.xaml",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UCOwnInformationView.xaml",
               "RelativeDocumentMoniker": "HPTClientCore\\UCOwnInformationView.xaml",
@@ -1051,7 +1057,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 64,
+              "DocumentIndex": 65,
               "Title": "ATGDownloadHelper.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\ATGHelper\\ATGDownloader\\ATGDownloadHelper.cs",
               "RelativeDocumentMoniker": "..\\ATGHelper\\ATGDownloader\\ATGDownloadHelper.cs",

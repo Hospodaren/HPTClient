@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
 VisualStudioVersion = 18.1.11312.151 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HPTClient", "HPTClient-GS75\HPTClient.csproj", "{AC0D4907-7ACA-443B-9900-BA7E895C6182}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3E4C574F-FAF6-4349-BDFA-FB09595E3BC0}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
@@ -13,20 +11,28 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HPTClientCore", "HPTClientCore\HPTClientCore.csproj", "{A694C247-97CF-3243-9EA1-098F13D9C818}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HPTHistoryDownloaderService", "HPTHistoryDownloaderService\HPTHistoryDownloaderService.csproj", "{4E12E6AD-942E-4744-8D03-87AA20213F12}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HPT.Data", "HPT.Data\HPT.Data.csproj", "{D49C2DC3-044D-4EDD-B8A8-7390EE772321}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AC0D4907-7ACA-443B-9900-BA7E895C6182}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AC0D4907-7ACA-443B-9900-BA7E895C6182}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AC0D4907-7ACA-443B-9900-BA7E895C6182}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AC0D4907-7ACA-443B-9900-BA7E895C6182}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A694C247-97CF-3243-9EA1-098F13D9C818}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A694C247-97CF-3243-9EA1-098F13D9C818}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A694C247-97CF-3243-9EA1-098F13D9C818}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A694C247-97CF-3243-9EA1-098F13D9C818}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E12E6AD-942E-4744-8D03-87AA20213F12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E12E6AD-942E-4744-8D03-87AA20213F12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E12E6AD-942E-4744-8D03-87AA20213F12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E12E6AD-942E-4744-8D03-87AA20213F12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D49C2DC3-044D-4EDD-B8A8-7390EE772321}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D49C2DC3-044D-4EDD-B8A8-7390EE772321}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D49C2DC3-044D-4EDD-B8A8-7390EE772321}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D49C2DC3-044D-4EDD-B8A8-7390EE772321}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

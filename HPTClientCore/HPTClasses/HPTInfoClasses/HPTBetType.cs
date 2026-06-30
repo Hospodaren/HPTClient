@@ -176,7 +176,7 @@ namespace HPTClient
                             poolShare = 0.26m;
                             break;
                         case "V85":
-                            poolShare = 0.2275m;
+                            poolShare = 0.195m;    // TODO: Ändra till 0.195 när ATG ändrar
                             break;
                         case "V65":
                             poolShare = 0.325m;
@@ -257,7 +257,7 @@ namespace HPTClient
                             poolShareOneError = 0.13m;
                             break;
                         case "V85":
-                            poolShareOneError = 0.0975m;
+                            poolShareOneError = 0.13m;    //TODO: Ändra till 0.13 när ATG ändrar
                             break;
                         case "V65":
                             poolShareOneError = 0.325m;
