@@ -23,13 +23,13 @@ namespace HPTClient
             CombBet = combBet;
             RaceList = new ObservableCollection<HPTRace>(combBet.RaceDayInfo.RaceList);
 
-            foreach (HPTRace hptRace in RaceList)
+            foreach (var hptRace in RaceList)
             {
-                int numberOfSelectedHorses = hptRace.HorseList.Count(h => h.Selected);
+                var numberOfSelectedHorses = hptRace.HorseList.Count(h => h.Selected);
 
                 if (numberOfSelectedHorses == 0)
                 {
-                    foreach (HPTHorse horse in hptRace.HorseList.Where(h => h.Scratched == null || h.Scratched == false))
+                    foreach (var horse in hptRace.HorseList.Where(h => h.Scratched == null || h.Scratched == false))
                     {
                         horse.Selected = true;
                     }
@@ -108,7 +108,7 @@ namespace HPTClient
             // Dra igång nedräknare om tävlingen är idag
             if (upcomingRace != null && upcomingRace.PostTime.Date == DateTime.Today)
             {
-                TimeSpan ts = upcomingRace.PostTime - DateTime.Now;
+                var ts = upcomingRace.PostTime - DateTime.Now;
                 Countdown(ts, cur =>
                 {
                     if ((int)cur.TotalSeconds == 600)
@@ -118,7 +118,7 @@ namespace HPTClient
                     }
                     txtCountdownTimer.Text = cur.ToString(@"hh\:mm\:ss");
                 });
-                txtCountdownInfo.Text = upcomingRace.LegNrString + ":";
+                txtCountdownInfo.Text = $"{upcomingRace.LegNrString}:";
             }
             else
             {
@@ -129,12 +129,12 @@ namespace HPTClient
 
         void Countdown(TimeSpan timeLeft, Action<TimeSpan> ts)
         {
-            int count = (int)timeLeft.TotalSeconds;
+            var count = (int)timeLeft.TotalSeconds;
             var dt = new System.Windows.Threading.DispatcherTimer();
             dt.Interval = TimeSpan.FromSeconds(1D);
             dt.Tick += (_, a) =>
             {
-                TimeSpan tsTemp = upcomingRace.PostTime - DateTime.Now;
+                var tsTemp = upcomingRace.PostTime - DateTime.Now;
 
                 if (tsTemp.TotalSeconds < 1D)
                 {
@@ -173,7 +173,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
     }

@@ -10,16 +10,16 @@ namespace HPTClient
         public static List<HPTHorseVariable> CreateVariableList()
         {
             SortedVariableList = new SortedList<string, HPTHorseVariable>();
-            List<HPTHorseVariable> variableList = new List<HPTHorseVariable>();
+            var variableList = new List<HPTHorseVariable>();
 
-            foreach (PropertyInfo pi in (typeof(HPTHorse)).GetProperties())
+            foreach (var pi in (typeof(HPTHorse)).GetProperties())
             {
-                foreach (object o in pi.GetCustomAttributes(true))
+                foreach (var o in pi.GetCustomAttributes(true))
                 {
                     if (o.GetType() == typeof(GroupReductionAttribute))
                     {
-                        GroupReductionAttribute gra = (GroupReductionAttribute)o;
-                        HPTHorseVariable variable = new HPTHorseVariable();
+                        var gra = (GroupReductionAttribute)o;
+                        var variable = new HPTHorseVariable();
                         variable.GroupReductionInfo = gra;
                         variable.PropertyName = pi.Name;
                         variableList.Add(variable);
@@ -48,16 +48,12 @@ namespace HPTClient
         [XmlIgnore]
         public PropertyInfo HorseProperty { get; set; }
 
-        private string propertyName;
         public string PropertyName
         {
-            get
-            {
-                return propertyName;
-            }
+            get;
             set
             {
-                propertyName = value;
+                field = value;
                 if (groupReductionInfo == null || HorseProperty == null)
                 {
                     //this.propertyName = this.HorseProperty.Name;

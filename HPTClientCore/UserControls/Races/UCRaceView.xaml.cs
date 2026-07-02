@@ -39,7 +39,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -139,7 +139,7 @@ namespace HPTClient
         {
             try
             {
-                HPTRace race = (HPTRace)DataContext;
+                var race = (HPTRace)DataContext;
                 if (e.PropertyName == "UseA" || e.PropertyName == "UseB" || e.PropertyName == "UseC" || e.PropertyName == "UseD" || e.PropertyName == "UseE" || e.PropertyName == "UseF")
                 {
                     if (double.IsNaN(gvcABCD.Width) && race.ParentRaceDayInfo.DataToShow.ShowPrio)
@@ -151,16 +151,16 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string fel = exc.Message;
+                var fel = exc.Message;
             }
         }
 
         private bool HandleUpDown_KeyUp(object sender, KeyEventArgs e)
         {
             var fe = e.OriginalSource as FrameworkElement;
-            object horse = fe.DataContext;
+            var horse = fe.DataContext;
 
-            int indexChange = 0;
+            var indexChange = 0;
             switch (e.Key)
             {
                 case Key.PageDown:
@@ -199,8 +199,8 @@ namespace HPTClient
             }
 
             var container = lvwLopp.ItemContainerGenerator.ContainerFromItem(horse);
-            int containerIndex = lvwLopp.ItemContainerGenerator.IndexFromContainer(container);
-            int newIndex = containerIndex + indexChange;
+            var containerIndex = lvwLopp.ItemContainerGenerator.IndexFromContainer(container);
+            var newIndex = containerIndex + indexChange;
             if (newIndex == -1)
             {
                 newIndex = lvwLopp.Items.Count - 1;
@@ -283,7 +283,7 @@ namespace HPTClient
                 if ((container as FrameworkElement).Name == name) return container;
             }
             var ccount = VisualTreeHelper.GetChildrenCount(container);
-            for (int i = 0; i < ccount; i++)
+            for (var i = 0; i < ccount; i++)
             {
                 var child = VisualTreeHelper.GetChild(container, i);
                 var target = FindNamedChild(child, name);
@@ -299,7 +299,7 @@ namespace HPTClient
         {
             if (lvwLopp.SelectedItem != null)
             {
-                HPTHorse horse = (HPTHorse)lvwLopp.SelectedItem;
+                var horse = (HPTHorse)lvwLopp.SelectedItem;
                 if (horse.Scratched == true)
                 {
                     e.Handled = false;
@@ -381,26 +381,26 @@ namespace HPTClient
         private void GridViewColumnHeader_Click(object sender, RoutedEventArgs e)
         {
             //var gd = new PropertyGroupDescription("ParentRace.LegNrString");
-            GridViewColumnHeader column = e.OriginalSource as GridViewColumnHeader;
+            var column = e.OriginalSource as GridViewColumnHeader;
             if (column == null)
             {
                 return;
             }
 
-            String field = column.Tag as String;
+            var field = column.Tag as String;
             if (string.IsNullOrEmpty(field))
             {
                 return;
             }
 
-            ListSortDirection newDir = ListSortDirection.Ascending;
+            var newDir = ListSortDirection.Ascending;
 
             if (lvwLopp.Items.SortDescriptions.Count > 0)
             {
                 var sd = lvwLopp.Items.SortDescriptions[0];
                 if (sd.PropertyName == field)
                 {
-                    SortDescription sdNew = new SortDescription();
+                    var sdNew = new SortDescription();
                     sdNew.PropertyName = sd.PropertyName;
                     sdNew.Direction = sd.Direction == ListSortDirection.Ascending
                                           ? ListSortDirection.Descending
@@ -489,16 +489,16 @@ namespace HPTClient
 
             //this.gvwVxxSpel.Columns.Clear();
 
-            for (int i = 0; i < HorseListContainer.ParentRaceDayInfo.DataToShow.ColumnsInOrder.Count; i++)
+            for (var i = 0; i < HorseListContainer.ParentRaceDayInfo.DataToShow.ColumnsInOrder.Count; i++)
             {
-                string columnName = HorseListContainer.ParentRaceDayInfo.DataToShow.ColumnsInOrder[i];
-                ColumnHandler columnHandler = ColumnHandlerList.FirstOrDefault(ch => columnName == ch.Name);
+                var columnName = HorseListContainer.ParentRaceDayInfo.DataToShow.ColumnsInOrder[i];
+                var columnHandler = ColumnHandlerList.FirstOrDefault(ch => columnName == ch.Name);
                 if (columnHandler != null)
                 {
-                    int currentPosition = gvwVxxSpel.Columns.IndexOf(columnHandler.Column);
+                    var currentPosition = gvwVxxSpel.Columns.IndexOf(columnHandler.Column);
                     if (currentPosition != -1)
                     {
-                        int newPosition = i;
+                        var newPosition = i;
                         if (i >= gvwVxxSpel.Columns.Count)
                         {
                             newPosition = gvwVxxSpel.Columns.Count - 1;
@@ -518,9 +518,9 @@ namespace HPTClient
         private void SaveColumnOrder()
         {
             HorseListContainer.ParentRaceDayInfo.DataToShow.ColumnsInOrder = new List<string>();
-            for (int i = 0; i < gvwVxxSpel.Columns.Count; i++)
+            for (var i = 0; i < gvwVxxSpel.Columns.Count; i++)
             {
-                ColumnHandler columnHandler = ColumnHandlerList.First(ch => ch.Column == gvwVxxSpel.Columns[i]);
+                var columnHandler = ColumnHandlerList.First(ch => ch.Column == gvwVxxSpel.Columns[i]);
                 columnHandler.Position = i;
                 HorseListContainer.ParentRaceDayInfo.DataToShow.ColumnsInOrder.Add(columnHandler.Name);
             }
@@ -534,7 +534,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -551,12 +551,12 @@ namespace HPTClient
                     if (!CMColumnsToShow.HasItems)
                     {
                         //this.CMColumnsToShow = new ContextMenu();
-                        List<HorseDataToShowAttribute> attributeList = HorseListContainer.ParentRaceDayInfo.DataToShow.GetHorseDataToShowAttributes();
+                        var attributeList = HorseListContainer.ParentRaceDayInfo.DataToShow.GetHorseDataToShowAttributes();
                         CMColumnsToShow.Items.Clear();
                         CMColumnsToShow.DataContext = HorseListContainer.ParentRaceDayInfo.DataToShow;
-                        foreach (HorseDataToShowAttribute hda in attributeList)
+                        foreach (var hda in attributeList)
                         {
-                            MenuItem mi = new MenuItem()
+                            var mi = new MenuItem()
                             {
                                 IsCheckable = true,
                                 Header = hda.Name,
@@ -572,12 +572,12 @@ namespace HPTClient
                     {
                         CreateColumnHandlerList();
 
-                        List<string> propertyNamesList = ColumnHandlerList.Select(ch => ch.BindingField).ToList();
+                        var propertyNamesList = ColumnHandlerList.Select(ch => ch.BindingField).ToList();
 
-                        foreach (string propertyName in propertyNamesList)
+                        foreach (var propertyName in propertyNamesList)
                         {
                             // Ta bort de kolumner man inte vill visa
-                            bool show = (bool)HorseListContainer.ParentRaceDayInfo
+                            var show = (bool)HorseListContainer.ParentRaceDayInfo
                                 .DataToShow.GetType().GetProperty(propertyName)
                                 .GetValue(HorseListContainer.ParentRaceDayInfo.DataToShow, null);
 
@@ -596,11 +596,11 @@ namespace HPTClient
 
         private void HandleColumn(string showText, bool show)
         {
-            List<ColumnHandler> columnsToHandle =
+            var columnsToHandle =
                 ColumnHandlerList.Where(ch => ch.BindingField == showText).ToList();
             foreach (var columnHandler in columnsToHandle)
             {
-                GridViewColumn gvc = columnHandler.Column;
+                var gvc = columnHandler.Column;
                 if (show && !gvwVxxSpel.Columns.Contains(gvc))
                 {
                     gvwVxxSpel.Columns.Add(gvc);
@@ -711,7 +711,7 @@ namespace HPTClient
         void DataToShow_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             var hdts = (HPTHorseDataToShow)sender;
-            bool show = (bool)hdts.GetType().GetProperty(e.PropertyName).GetValue(hdts, null);
+            var show = (bool)hdts.GetType().GetProperty(e.PropertyName).GetValue(hdts, null);
             HandleColumn(e.PropertyName, show);
         }
 
@@ -780,7 +780,7 @@ namespace HPTClient
             MarkBet.Clear(false, true, false);
             if (rankVariableName == "RankWeighted")
             {
-                List<HPTHorse> horseListBestRankWeighted = new List<HPTHorse>();
+                var horseListBestRankWeighted = new List<HPTHorse>();
                 foreach (var race in MarkBet.RaceDayInfo.RaceList)
                 {
                     var horse = race.HorseList.OrderBy(h => h.RankWeighted).First();
@@ -793,7 +793,7 @@ namespace HPTClient
             }
             if (rankVariableName == "RankMean")
             {
-                List<HPTHorse> horseListBestRankMean = new List<HPTHorse>();
+                var horseListBestRankMean = new List<HPTHorse>();
                 foreach (var race in MarkBet.RaceDayInfo.RaceList)
                 {
                     //var horse = race.HorseList.OrderBy(h => h.RankMean).First();
@@ -852,13 +852,13 @@ namespace HPTClient
                 return;
             }
 
-            GridViewColumnHeader column = sender as GridViewColumnHeader;
+            var column = sender as GridViewColumnHeader;
             if (column == null)
             {
                 return;
             }
 
-            String field = column.Tag as String;
+            var field = column.Tag as String;
             if (string.IsNullOrEmpty(field))
             {
                 return;
@@ -928,11 +928,11 @@ namespace HPTClient
                         Header = "Spikar",
                         Tag = field
                     };
-                    for (int i = 1; i < 5; i++)
+                    for (var i = 1; i < 5; i++)
                     {
-                        MenuItem miSelectSpikes = new MenuItem()
+                        var miSelectSpikes = new MenuItem()
                         {
-                            Header = i.ToString() + " spik" + (i == 1 ? string.Empty : "ar"),
+                            Header = $"{i} spik{(i == 1 ? string.Empty : "ar")}",
                             Tag = field
                         };
                         spikeMenuItem.Items.Add(miSelectSpikes);
@@ -958,9 +958,9 @@ namespace HPTClient
 
                     foreach (var numberOfRows in HPTConfig.Config.SystemSizesToShow)
                     {
-                        MenuItem miABC = new MenuItem()
+                        var miABC = new MenuItem()
                         {
-                            Header = numberOfRows.ToString() + " rader",
+                            Header = $"{numberOfRows} rader",
                             Tag = numberOfRows
                         };
                         abcSelectAndSetMenuItem.Items.Add(miABC);
@@ -982,9 +982,9 @@ namespace HPTClient
                     };
                     foreach (var numberOfRows in HPTConfig.Config.SystemSizesToShow)
                     {
-                        MenuItem miSystem = new MenuItem()
+                        var miSystem = new MenuItem()
                         {
-                            Header = numberOfRows.ToString() + " rader",
+                            Header = $"{numberOfRows} rader",
                             Tag = numberOfRows
                         };
                         systemMenuItem.Items.Add(miSystem);
@@ -1008,9 +1008,9 @@ namespace HPTClient
                     var reductionPercentagesArray = new int[] { 55, 60, 65, 70, 75, 80, 85 };
                     foreach (var reductionPercentage in reductionPercentagesArray)
                     {
-                        MenuItem miSetABC = new MenuItem()
+                        var miSetABC = new MenuItem()
                         {
-                            Header = reductionPercentage.ToString() + "%",
+                            Header = $"{reductionPercentage}%",
                             Tag = reductionPercentage
                         };
                         abcSetMenuItem.Items.Add(miSetABC);
@@ -1056,14 +1056,14 @@ namespace HPTClient
 
         void rankTemplateMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            MenuItem mi = (MenuItem)e.OriginalSource;
+            var mi = (MenuItem)e.OriginalSource;
             var rankTemplate = (HPTRankTemplate)mi.DataContext;
             horseListContainer.ParentRaceDayInfo.SetRankTemplateChanged(rankTemplate);
         }
 
         IEnumerable<HPTHorse> SelectHorses(string field, int systemSize)
         {
-            IEnumerable<HPTHorse> horseList = MarkBet.RaceDayInfo.RaceList
+            var horseList = MarkBet.RaceDayInfo.RaceList
                 .Where(r => !r.Locked)
                 .SelectMany(r => r.HorseList)
                 .Where(h => h.Scratched == false || h.Scratched == null);
@@ -1109,11 +1109,11 @@ namespace HPTClient
             try
             {
                 MarkBet.Clear(false, false, true);
-                HPTHorse[] orderedHorseArray = orderedHorseList.ToArray();
-                int rankPosition = 0;
+                var orderedHorseArray = orderedHorseList.ToArray();
+                var rankPosition = 0;
                 while (MarkBet.SystemSize < systemSize && rankPosition < orderedHorseArray.Count())
                 {
-                    HPTHorse horse = orderedHorseArray[rankPosition];
+                    var horse = orderedHorseArray[rankPosition];
                     horse.Selected = true;
                     rankPosition++;
                 }
@@ -1134,20 +1134,20 @@ namespace HPTClient
         {
             try
             {
-                IEnumerable<HPTRace> raceList = MarkBet.RaceDayInfo.RaceList.Where(r => !r.Locked);
+                var raceList = MarkBet.RaceDayInfo.RaceList.Where(r => !r.Locked);
                 foreach (var race in raceList)
                 {
                     orderedHorseList.First(h => h.ParentRace == race).HorseXReductionList.First(x => x.Prio == HPTPrio.A).Selected = true;
                 }
 
-                int numberOfHorsesToTake = (orderedHorseList.Count() - raceList.Count()) / 2;
-                IEnumerable<HPTHorse> horseListB = orderedHorseList.Where(h => h.Prio != HPTPrio.A && !h.ParentRace.Locked).Take(numberOfHorsesToTake);
+                var numberOfHorsesToTake = (orderedHorseList.Count() - raceList.Count()) / 2;
+                var horseListB = orderedHorseList.Where(h => h.Prio != HPTPrio.A && !h.ParentRace.Locked).Take(numberOfHorsesToTake);
                 foreach (var horse in horseListB)
                 {
                     horse.HorseXReductionList.First(x => x.Prio == HPTPrio.B).Selected = true;
                 }
 
-                IEnumerable<HPTHorse> horseListC = orderedHorseList.Where(h => h.Prio != HPTPrio.B && h.Prio != HPTPrio.A && !h.ParentRace.Locked);
+                var horseListC = orderedHorseList.Where(h => h.Prio != HPTPrio.B && h.Prio != HPTPrio.A && !h.ParentRace.Locked);
                 foreach (var horse in horseListC)
                 {
                     horse.HorseXReductionList.First(x => x.Prio == HPTPrio.C).Selected = true;
@@ -1161,14 +1161,14 @@ namespace HPTClient
 
         void miSystem_Click(object sender, RoutedEventArgs e)
         {
-            bool recalculationPaused = MarkBet.pauseRecalculation;
+            var recalculationPaused = MarkBet.pauseRecalculation;
             MarkBet.pauseRecalculation = true;
 
             var item = (MenuItem)sender;
             var field = (string)((MenuItem)item.Parent).Tag;
             var systemSize = Convert.ToInt32(item.Tag);
 
-            IEnumerable<HPTHorse> orderedHorseList = SelectHorses(field, systemSize);
+            var orderedHorseList = SelectHorses(field, systemSize);
             MarkBet.pauseRecalculation = recalculationPaused;
             MarkBet.RecalculateReduction(RecalculateReason.Other);
         }
@@ -1181,7 +1181,7 @@ namespace HPTClient
             var field = (string)((MenuItem)item.Parent).Tag;
             var systemSize = Convert.ToInt32(item.Tag);
 
-            IEnumerable<HPTHorse> horseList = SelectHorses(field, systemSize);
+            var horseList = SelectHorses(field, systemSize);
             if (horseList != null)
             {
                 SelectABC(horseList);
@@ -1198,7 +1198,7 @@ namespace HPTClient
                 return;
             }
 
-            bool recalculationPaused = MarkBet.pauseRecalculation;
+            var recalculationPaused = MarkBet.pauseRecalculation;
             MarkBet.pauseRecalculation = true;
 
             var item = (MenuItem)sender;
@@ -1266,7 +1266,7 @@ namespace HPTClient
             var header = (string)item.Header;
             var numberOfSpikes = Convert.ToInt32(header.First().ToString());
 
-            IEnumerable<HPTHorse> rankedFirstHorseList = SelectSpikes(field, numberOfSpikes);
+            var rankedFirstHorseList = SelectSpikes(field, numberOfSpikes);
             IEnumerable<HPTHorse> orderedHorseList = null;
 
             #region Sortering
@@ -1337,20 +1337,20 @@ namespace HPTClient
             }
             if (reservMenuItems == null)
             {
-                MenuItem miClearReservRace = new MenuItem()
+                var miClearReservRace = new MenuItem()
                 {
                     Header = "Rensa reserver"//,
                     //IsEnabled = string.IsNullOrEmpty(this.GroupDescriptionName)
                 };
                 miClearReservRace.Click += new RoutedEventHandler(miClearReservRace_Click);
 
-                MenuItem miClearReservAll = new MenuItem()
+                var miClearReservAll = new MenuItem()
                 {
                     Header = "Rensa alla reserver"
                 };
                 miClearReservAll.Click += new RoutedEventHandler(miClearReservAll_Click);
 
-                MenuItem miSetReservRank = new MenuItem()
+                var miSetReservRank = new MenuItem()
                 {
                     Header = "Sätt reserver efter snittrank"
                 };
@@ -1373,7 +1373,7 @@ namespace HPTClient
         {
             foreach (var race in HorseListContainer.ParentRaceDayInfo.RaceList)
             {
-                List<HPTHorse> horsesNotSelected = race.HorseList
+                var horsesNotSelected = race.HorseList
                     .Where(h => !h.Selected)
                     .OrderBy(h => h.RankWeighted)
                     .Take(2)
@@ -1397,13 +1397,13 @@ namespace HPTClient
 
         void ClearReservRace(IEnumerable<HPTHorse> horseList)
         {
-            HPTHorse reserv1 = horseList.FirstOrDefault(h => h.Reserv1 == true);
+            var reserv1 = horseList.FirstOrDefault(h => h.Reserv1 == true);
             if (reserv1 != null)
             {
                 reserv1.Reserv1 = null;
             }
 
-            HPTHorse reserv2 = horseList.FirstOrDefault(h => h.Reserv2 == true);
+            var reserv2 = horseList.FirstOrDefault(h => h.Reserv2 == true);
             if (reserv2 != null)
             {
                 reserv2.Reserv2 = null;
@@ -1414,22 +1414,21 @@ namespace HPTClient
 
         #region Popup handling
 
-        private System.Windows.Controls.Primitives.Popup pu;
         public System.Windows.Controls.Primitives.Popup PU
         {
             get
             {
-                if (pu == null)
+                if (field == null)
                 {
-                    pu = new System.Windows.Controls.Primitives.Popup()
+                    field = new System.Windows.Controls.Primitives.Popup()
                     {
                         Placement = System.Windows.Controls.Primitives.PlacementMode.MousePoint,
                         HorizontalOffset = -10D,
                         VerticalOffset = -10D
                     };
-                    pu.MouseLeave += new MouseEventHandler(pu_MouseLeave);
+                    field.MouseLeave += new MouseEventHandler(pu_MouseLeave);
                 }
-                return pu;
+                return field;
             }
         }
 
@@ -1438,7 +1437,7 @@ namespace HPTClient
             //if (e.ChangedButton == MouseButton.Left && HPTConfig.Config.IsPayingCustomer)
             if (e.ChangedButton == MouseButton.Left)
             {
-                TextBlock tb = (TextBlock)sender;
+                var tb = (TextBlock)sender;
                 PU.DataContext = tb.DataContext;
                 PU.Child = new UCResultView();
                 PU.IsOpen = true;
@@ -1447,7 +1446,7 @@ namespace HPTClient
 
         void pu_MouseLeave(object sender, MouseEventArgs e)
         {
-            System.Windows.Controls.Primitives.Popup pu = (System.Windows.Controls.Primitives.Popup)sender;
+            var pu = (System.Windows.Controls.Primitives.Popup)sender;
             pu.Child = null;
             pu.IsOpen = false;
         }
@@ -1459,10 +1458,10 @@ namespace HPTClient
             {
                 return;
             }
-            TextBlock tb = (TextBlock)sender;
-            HPTHorse horse = (HPTHorse)tb.DataContext;
+            var tb = (TextBlock)sender;
+            var horse = (HPTHorse)tb.DataContext;
 
-            Border b = new Border()
+            var b = new Border()
             {
                 BorderBrush = new SolidColorBrush(Colors.Black),
                 BorderThickness = new Thickness(1D),
@@ -1485,10 +1484,10 @@ namespace HPTClient
             {
                 return;
             }
-            TextBlock tb = (TextBlock)sender;
-            HPTHorse horse = (HPTHorse)tb.DataContext;
+            var tb = (TextBlock)sender;
+            var horse = (HPTHorse)tb.DataContext;
 
-            Border b = new Border()
+            var b = new Border()
             {
                 BorderBrush = new SolidColorBrush(Colors.Black),
                 BorderThickness = new Thickness(1D),
@@ -1534,19 +1533,19 @@ namespace HPTClient
             }
             if (selectAllMenuItems == null && DataContext != null && DataContext.GetType() == typeof(HPTRace))
             {
-                MenuItem miSelectAll = new MenuItem()
+                var miSelectAll = new MenuItem()
                 {
                     Header = "Välj alla"
                 };
                 miSelectAll.Click += new RoutedEventHandler(miSelectAll_Click);
 
-                MenuItem miDeselectAll = new MenuItem()
+                var miDeselectAll = new MenuItem()
                 {
                     Header = "Ta bort alla"
                 };
                 miDeselectAll.Click += new RoutedEventHandler(miDeselectAll_Click);
 
-                MenuItem miLockAllSelected = new MenuItem()
+                var miLockAllSelected = new MenuItem()
                 {
                     Header = "Lås alla valda"
                 };
@@ -1570,12 +1569,12 @@ namespace HPTClient
         {
             try
             {
-                HPTRace race = (HPTRace)DataContext;
+                var race = (HPTRace)DataContext;
                 race.SelectAll(true);
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -1583,13 +1582,13 @@ namespace HPTClient
         {
             try
             {
-                HPTRace race = (HPTRace)DataContext;
+                var race = (HPTRace)DataContext;
                 race.SelectAll(false);
                 //race.Locked = false;
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -1600,7 +1599,7 @@ namespace HPTClient
             e.Handled = true;
             var btn = (Button)sender;
 
-            Border b = new Border()
+            var b = new Border()
             {
                 BorderBrush = new SolidColorBrush(Colors.Black),
                 BorderThickness = new Thickness(1D),
@@ -1628,14 +1627,14 @@ namespace HPTClient
             }
             if (abcdMenuItems == null)
             {
-                MenuItem miClearABCD = new MenuItem()
+                var miClearABCD = new MenuItem()
                 {
                     Header = "Rensa ABCD"//,
                     //IsEnabled = string.IsNullOrEmpty(this.GroupDescriptionName)
                 };
                 miClearABCD.Click += MiClearAbcdOnClick;
 
-                MenuItem miClearAllABCD = new MenuItem()
+                var miClearAllABCD = new MenuItem()
                 {
                     Header = "Rensa alla ABCD"
                 };
@@ -1653,7 +1652,7 @@ namespace HPTClient
 
         private void MiClearAbcdOnClick(object sender, RoutedEventArgs routedEventArgs)
         {
-            HPTRace race = (HPTRace)DataContext;
+            var race = (HPTRace)DataContext;
             race.ClearABCDRace();
         }
 
@@ -1674,7 +1673,7 @@ namespace HPTClient
             {
                 return;
             }
-            TextBlock tb = (TextBlock)sender;
+            var tb = (TextBlock)sender;
 
             PU.DataContext = tb.DataContext;
             PU.Child = new UCHeadToHeadRace();
@@ -1690,19 +1689,19 @@ namespace HPTClient
             }
             if (nextTimerMenuItems == null)
             {
-                MenuItem miSelectNextTimer = new MenuItem()
+                var miSelectNextTimer = new MenuItem()
                 {
                     Header = "Välj"
                 };
                 miSelectNextTimer.Click += MiSelectNextTimerOnClick;
 
-                MenuItem miSelectNextTimerAsSpikes = new MenuItem()
+                var miSelectNextTimerAsSpikes = new MenuItem()
                 {
                     Header = "Välj som lås"
                 };
                 miSelectNextTimerAsSpikes.Click += new RoutedEventHandler(miSelectNextTimerAsSpikes_Click);
 
-                MenuItem miSelectNextTimerAsA = new MenuItem()
+                var miSelectNextTimerAsA = new MenuItem()
                 {
                     Header = "Välj som A-Hästar"
                 };
@@ -1716,11 +1715,11 @@ namespace HPTClient
 
         private void MiSelectNextTimerAsAOnClick(object sender, RoutedEventArgs routedEventArgs)
         {
-            IEnumerable<HPTHorse> nextTimerHorseList = MarkBet.RaceDayInfo.RaceList
+            var nextTimerHorseList = MarkBet.RaceDayInfo.RaceList
                 .SelectMany(r => r.HorseList)
                 .Where(h => h.OwnInformation != null && h.OwnInformation.NextTimer == true);
 
-            bool recalculationPaused = MarkBet.pauseRecalculation;
+            var recalculationPaused = MarkBet.pauseRecalculation;
             MarkBet.pauseRecalculation = true;
             foreach (var horse in nextTimerHorseList)
             {
@@ -1734,7 +1733,7 @@ namespace HPTClient
 
         void miSelectNextTimerAsSpikes_Click(object sender, RoutedEventArgs e)
         {
-            IEnumerable<HPTHorse> nextTimerHorseList = MarkBet.RaceDayInfo.RaceList
+            var nextTimerHorseList = MarkBet.RaceDayInfo.RaceList
                 .SelectMany(r => r.HorseList)
                 .Where(h => h.OwnInformation != null && h.OwnInformation.NextTimer == true);
 
@@ -1751,11 +1750,11 @@ namespace HPTClient
 
         private void MiSelectNextTimerOnClick(object sender, RoutedEventArgs routedEventArgs)
         {
-            IEnumerable<HPTHorse> nextTimerHorseList = MarkBet.RaceDayInfo.RaceList
+            var nextTimerHorseList = MarkBet.RaceDayInfo.RaceList
                 .SelectMany(r => r.HorseList)
                 .Where(h => h.OwnInformation != null && h.OwnInformation.NextTimer == true);
 
-            bool recalculationPaused = MarkBet.pauseRecalculation;
+            var recalculationPaused = MarkBet.pauseRecalculation;
             MarkBet.pauseRecalculation = true;
             foreach (var horse in nextTimerHorseList)
             {
@@ -1858,7 +1857,7 @@ namespace HPTClient
             // Skapa enskilda val
             foreach (var bm in MarkBet.BetType.BetMultiplierList)
             {
-                MenuItem miBetMultiplier = new MenuItem()
+                var miBetMultiplier = new MenuItem()
                 {
                     Header = bm.ToString(),
                     Tag = bm.ToString()
@@ -1866,10 +1865,10 @@ namespace HPTClient
                 miBetMultiplier.Click += new RoutedEventHandler(miV6Betmultiplier_Click);
                 miBetMultiplierHeader.Items.Add(miBetMultiplier);
 
-                MenuItem miV6BetMultiplier = new MenuItem()
+                var miV6BetMultiplier = new MenuItem()
                 {
                     Header = bm.ToString(),
-                    Tag = "V6-" + bm.ToString()
+                    Tag = $"V6-{bm}"
                 };
                 miV6BetMultiplier.Click += new RoutedEventHandler(miV6Betmultiplier_Click);
                 miV6AndBetMultiplierHeader.Items.Add(miV6BetMultiplier);
@@ -1942,7 +1941,7 @@ namespace HPTClient
             {
                 horse.Selected = true;
             }
-            List<HPTCombination> combinationList = GetDoubleCombinationsForHorse(horse);
+            var combinationList = GetDoubleCombinationsForHorse(horse);
 
             foreach (var comb in combinationList.Where(c => c.OddsQuota > 1.2M))
             {
@@ -1958,7 +1957,7 @@ namespace HPTClient
             {
                 horse.Selected = true;
             }
-            List<HPTCombination> combinationList = GetDoubleCombinationsForHorse(horse);
+            var combinationList = GetDoubleCombinationsForHorse(horse);
 
             foreach (var comb in combinationList.Where(c => c.Playability < 1M))
             {
@@ -1974,7 +1973,7 @@ namespace HPTClient
             {
                 horse.Selected = true;
             }
-            List<HPTCombination> combinationList = GetDoubleCombinationsForHorse(horse);
+            var combinationList = GetDoubleCombinationsForHorse(horse);
 
             foreach (var comb in combinationList)
             {
@@ -2041,7 +2040,7 @@ namespace HPTClient
             {
                 horse.Selected = true;
             }
-            List<HPTCombination> combinationList = GetTvillingCombinationsForHorse(horse);
+            var combinationList = GetTvillingCombinationsForHorse(horse);
 
             foreach (var comb in combinationList.Where(c => c.OddsQuota > 1.2M))
             {
@@ -2057,7 +2056,7 @@ namespace HPTClient
             {
                 horse.Selected = true;
             }
-            List<HPTCombination> combinationList = GetTvillingCombinationsForHorse(horse);
+            var combinationList = GetTvillingCombinationsForHorse(horse);
 
             foreach (var comb in combinationList.Where(c => c.Playability < 1M))
             {
@@ -2073,7 +2072,7 @@ namespace HPTClient
             {
                 horse.Selected = true;
             }
-            List<HPTCombination> combinationList = GetTvillingCombinationsForHorse(horse);
+            var combinationList = GetTvillingCombinationsForHorse(horse);
 
             foreach (var comb in combinationList)
             {
@@ -2109,7 +2108,7 @@ namespace HPTClient
 
             if (rule == null)
             {
-                int maxRuleNumber = 0;
+                var maxRuleNumber = 0;
                 if (MarkBet.V6BetMultiplierRuleList.Count > 0)
                 {
                     maxRuleNumber = MarkBet.V6BetMultiplierRuleList.Max(r => r.RuleNumber);
@@ -2126,8 +2125,8 @@ namespace HPTClient
             }
 
             // Koll om flerbong
-            int betMultiplier = 1;
-            string bmString = itemTag;
+            var betMultiplier = 1;
+            var bmString = itemTag;
             if (itemTag.Contains("-"))
             {
                 bmString = itemTag.Split('-')[1];
@@ -2225,7 +2224,7 @@ namespace HPTClient
                     };
                     var tbRankVariableName = new TextBlock()
                     {
-                        Text = rankVariable.Text + " (" + rankVariable.CategoryText + ")",
+                        Text = $"{rankVariable.Text} ({rankVariable.CategoryText})",
                         FontWeight = horseRank.Use ? FontWeights.Bold : FontWeights.Normal,
                         Width = 200D
                     };
@@ -2234,7 +2233,7 @@ namespace HPTClient
                     // Text för hästens variabelrank
                     var tbRankValue = new TextBlock()
                     {
-                        Text = horseRank.Rank.ToString() + " (" + horseRank.RankWeighted.ToString() + ")",
+                        Text = $"{horseRank.Rank} ({horseRank.RankWeighted})",
                         Width = 50D,
                         FontWeight = horseRank.Use ? FontWeights.Bold : FontWeights.Normal,
                         Background = horseRank.BackColor,
@@ -2252,11 +2251,11 @@ namespace HPTClient
                     {
                         displayValue = Convert.ToString(horse.GetType().GetProperty(rankVariable.DisplayPropertyName).GetValue(horse, null));
                     }
-                    decimal propertyValue = 0M;
-                    bool isNumber = decimal.TryParse(displayValue, out propertyValue);
+                    var propertyValue = 0M;
+                    var isNumber = decimal.TryParse(displayValue, out propertyValue);
 
                     // Lägg i strängvariabel och formatera om det behövs
-                    string textToShow = displayValue;
+                    var textToShow = displayValue;
                     if (!isNumber)
                     {
                     }
@@ -2311,7 +2310,7 @@ namespace HPTClient
                 //    return;
                 //}
 
-                bool select = true;
+                var select = true;
 
                 horseListSorted.ForEach(h =>
                 {
@@ -2327,7 +2326,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
             e.Handled = true;
         }
@@ -2389,7 +2388,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -2402,7 +2401,7 @@ namespace HPTClient
             var tb = (TextBlock)sender;
             var horse = (HPTHorse)tb.DataContext;
 
-            Border b = new Border()
+            var b = new Border()
             {
                 BorderBrush = new SolidColorBrush(Colors.Black),
                 BorderThickness = new Thickness(1D),
@@ -2503,7 +2502,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
             Cursor = Cursors.Arrow;
         }
@@ -2563,7 +2562,7 @@ namespace HPTClient
                                 try
                                 {
                                     var miProbability = (MenuItem)s;
-                                    string tagValue = miProbability.Tag as string;
+                                    var tagValue = miProbability.Tag as string;
                                     var horseProperty = (typeof(HPTHorse)).GetProperty(tagValue);
                                     MarkBet.RaceDayInfo.RaceList
                                         .SelectMany(r => r.HorseList)
@@ -2749,7 +2748,7 @@ namespace HPTClient
                     {
                         return;
                     }
-                    bool recalculationPaused = MarkBet.pauseRecalculation;
+                    var recalculationPaused = MarkBet.pauseRecalculation;
                     MarkBet.pauseRecalculation = true;
                     if (targetHorse.RankOwn > sourceHorse.RankOwn)
                     {
@@ -2808,7 +2807,7 @@ namespace HPTClient
                     {
                         return;
                     }
-                    bool recalculationPaused = MarkBet.pauseRecalculation;
+                    var recalculationPaused = MarkBet.pauseRecalculation;
                     MarkBet.pauseRecalculation = true;
                     if (targetHorse.RankAlternate > sourceHorse.RankAlternate)
                     {

@@ -47,12 +47,12 @@ namespace HPTClient
         {
             try
             {
-                string rankExport = MarkBet.ExportHorseRanksToExcelFormat();
+                var rankExport = MarkBet.ExportHorseRanksToExcelFormat();
                 Clipboard.SetDataObject(rankExport);
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
     }

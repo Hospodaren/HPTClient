@@ -25,7 +25,7 @@ namespace HPTClient
             var singleRow = new HPTMarkBetSingleRow(markBet.CouponCorrector.HorseList.ToArray());
             singleRow.CalculateValues();
             singleRow.EstimateRowValue(markBet);
-            RuleResultForCorrectRow = "Radvärde " + singleRow.RowValue.ToString("## ### ###");
+            RuleResultForCorrectRow = $"Radvärde {singleRow.RowValue:## ### ###}";
             return true;
         }
 
@@ -39,13 +39,13 @@ namespace HPTClient
 
         public override void SetReductionSpecificationString()
         {
-            ReductionSpecificationString = "Radvärde " + MinSum.ToString() + " kr - " + MaxSum.ToString() + " kr";
+            ReductionSpecificationString = $"Radvärde {MinSum} kr - {MaxSum} kr";
         }
 
         public override string ToString(HPTMarkBet markBet)
         {
             // Create String representation
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.Append("Beräknat radvärde: ");
             sb.Append(MinSum);
             sb.Append(" - ");
@@ -61,7 +61,7 @@ namespace HPTClient
                 sb.AppendLine("%");
             }
 
-            ClipboardString = ReductionTypeString + "\r\n" + sb.ToString();
+            ClipboardString = $"{ReductionTypeString}\r\n{sb}";
             return sb.ToString();
         }
     }

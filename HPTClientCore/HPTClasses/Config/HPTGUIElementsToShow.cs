@@ -7,32 +7,24 @@ namespace HPTClient
     {
         #region Översikt
 
-        private bool showOverview = true;
         [DataMember]
         public bool ShowOverview
         {
-            get
-            {
-                return showOverview;
-            }
+            get;
             set
             {
-                showOverview = value;
+                field = value;
                 OnPropertyChanged();
             }
-        }
+        } = true;
 
-        private bool showRaceLock;
         [DataMember]
         public bool ShowRaceLock
         {
-            get
-            {
-                return showRaceLock;
-            }
+            get;
             set
             {
-                showRaceLock = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -41,385 +33,285 @@ namespace HPTClient
 
         #region Inställningar
 
-        private bool showUpdateHandling = true;
         [DataMember]
         public bool ShowUpdateHandling
         {
-            get
-            {
-                return showUpdateHandling;
-            }
+            get;
             set
             {
-                showUpdateHandling = value;
+                field = value;
                 OnPropertyChanged();
             }
-        }
+        } = true;
 
-        private bool showReservHandling;
         [DataMember]
         public bool ShowReservHandling
         {
-            get
-            {
-                return showReservHandling;
-            }
+            get;
             set
             {
-                showReservHandling = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showCouponCompression;
         [DataMember]
         public bool ShowCouponCompression
         {
-            get
-            {
-                return showCouponCompression;
-            }
+            get;
             set
             {
-                showCouponCompression = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showV6;
         [DataMember]
         public bool ShowV6
         {
-            get
-            {
-                return showV6;
-            }
+            get;
             set
             {
-                showV6 = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showBetMultiplier;
         [DataMember]
         public bool ShowBetMultiplier
         {
-            get
-            {
-                return showBetMultiplier;
-            }
+            get;
             set
             {
-                showBetMultiplier = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showAutomaticCalculation;
         [DataMember]
         public bool ShowAutomaticCalculation
         {
-            get
-            {
-                return showAutomaticCalculation;
-            }
+            get;
             set
             {
-                showAutomaticCalculation = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
         #endregion
 
-        private bool showTemplates;
         [DataMember]
         public bool ShowTemplates
         {
-            get
-            {
-                return showTemplates;
-            }
+            get;
             set
             {
-                showTemplates = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
         #region Systeminformation
 
-        private bool showSystemSize = true;
         [DataMember]
         public bool ShowSystemSize
         {
-            get
-            {
-                return showSystemSize;
-            }
+            get;
             set
             {
-                showSystemSize = value;
+                field = value;
                 OnPropertyChanged();
             }
-        }
+        } = true;
 
-        private bool showReducedSize = true;
         [DataMember]
         public bool ShowReducedSize
         {
-            get
-            {
-                return showReducedSize;
-            }
+            get;
             set
             {
-                showReducedSize = value;
+                field = value;
                 OnPropertyChanged();
             }
-        }
+        } = true;
 
-        private bool showReductionPercentage = true;
         [DataMember]
         public bool ShowReductionPercentage
         {
-            get
-            {
-                return showReductionPercentage;
-            }
+            get;
             set
             {
-                showReductionPercentage = value;
+                field = value;
                 OnPropertyChanged();
             }
-        }
+        } = true;
 
-        private bool showCouponInfo;
         [DataMember]
         public bool ShowCouponInfo
         {
-            get
-            {
-                return showCouponInfo;
-            }
+            get;
             set
             {
-                showCouponInfo = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showNumberOfSystems;
         [DataMember]
         public bool ShowNumberOfSystems
         {
-            get
-            {
-                return showNumberOfSystems;
-            }
+            get;
             set
             {
-                showNumberOfSystems = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showSystemCost = true;
         [DataMember]
         public bool ShowSystemCost
         {
-            get
-            {
-                return showSystemCost;
-            }
+            get;
             set
             {
-                showSystemCost = value;
+                field = value;
                 OnPropertyChanged();
             }
-        }
+        } = true;
 
-        private bool showSystemCostChange;
         [DataMember]
         public bool ShowSystemCostChange
         {
-            get
-            {
-                return showSystemCostChange;
-            }
+            get;
             set
             {
-                showSystemCostChange = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showNumberOfGambledRows;
         [DataMember]
         public bool ShowNumberOfGambledRows
         {
-            get
-            {
-                return showNumberOfGambledRows;
-            }
+            get;
             set
             {
-                showNumberOfGambledRows = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showRowValueInterval;
         [DataMember]
         public bool ShowRowValueInterval
         {
-            get
-            {
-                return showRowValueInterval;
-            }
+            get;
             set
             {
-                showRowValueInterval = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showLiveCalculation;
         [DataMember]
         public bool ShowLiveCalculation
         {
-            get
-            {
-                return showLiveCalculation;
-            }
+            get;
             set
             {
-                showLiveCalculation = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
         #endregion
 
-        private bool showReductionList;
         [DataMember]
         public bool ShowReductionList
         {
-            get
-            {
-                return showReductionList;
-            }
+            get;
             set
             {
-                showReductionList = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
         #region Fil
 
-        private bool showBeginner = true;
         [DataMember]
         public bool ShowBeginner
         {
-            get
-            {
-                return showBeginner;
-            }
+            get;
             set
             {
-                showBeginner = value;
+                field = value;
                 OnPropertyChanged();
             }
-        }
+        } = true;
 
-        private bool showSave = true;
         [DataMember]
         public bool ShowSave
         {
-            get
-            {
-                return showSave;
-            }
+            get;
             set
             {
-                showSave = value;
+                field = value;
                 OnPropertyChanged();
             }
-        }
+        } = true;
 
-        private bool showSaveAs;
         [DataMember]
         public bool ShowSaveAs
         {
-            get
-            {
-                return showSaveAs;
-            }
+            get;
             set
             {
-                showSaveAs = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showCopy = true;
         [DataMember]
         public bool ShowCopy
         {
-            get
-            {
-                return showCopy;
-            }
+            get;
             set
             {
-                showCopy = value;
+                field = value;
                 OnPropertyChanged();
             }
-        }
+        } = true;
 
-        private bool showPrint;
         [DataMember]
         public bool ShowPrint
         {
-            get
-            {
-                return showPrint;
-            }
+            get;
             set
             {
-                showPrint = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showClear = true;
         [DataMember]
         public bool ShowClear
         {
-            get
-            {
-                return showClear;
-            }
+            get;
             set
             {
-                showClear = value;
+                field = value;
                 OnPropertyChanged();
             }
-        }
+        } = true;
 
-        private bool showUpload;
         [DataMember]
         public bool ShowUpload
         {
-            get
-            {
-                return showUpload;
-            }
+            get;
             set
             {
-                showUpload = value;
+                field = value;
                 OnPropertyChanged();
             }
         }

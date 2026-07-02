@@ -5,16 +5,12 @@ namespace HPTClient
     [DataContract]
     public class HPTPerson : Notifier, IHorseListContainer
     {
-        private string name;
         public string Name
         {
-            get
-            {
-                return name;
-            }
+            get;
             set
             {
-                name = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -23,30 +19,29 @@ namespace HPTClient
         {
             get
             {
-                int numberOfSelected = HorseList.Count(h => h.Selected);
+                var numberOfSelected = HorseList.Count(h => h.Selected);
                 return numberOfSelected;
             }
         }
 
         public void SetNameAndNumberOfHorse()
         {
-            NameAndNumberOfHorses = Name + " (" + NumberOfSelectedHorse.ToString() + "/" + HorseList.Count.ToString() + ")";
+            NameAndNumberOfHorses = $"{Name} ({NumberOfSelectedHorse}/{HorseList.Count})";
         }
 
-        private string nameAndNumberOfHorses;
         public string NameAndNumberOfHorses
         {
             get
             {
-                if (nameAndNumberOfHorses == null || nameAndNumberOfHorses == string.Empty)
+                if (field == null || field == string.Empty)
                 {
                     SetNameAndNumberOfHorse();
                 }
-                return nameAndNumberOfHorses;
+                return field;
             }
             set
             {
-                nameAndNumberOfHorses = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -57,16 +52,12 @@ namespace HPTClient
 
         public ICollection<HPTHorse> HorseList { get; set; }
 
-        private bool selected;
         public bool Selected
         {
-            get
-            {
-                return selected;
-            }
+            get;
             set
             {
-                selected = value;
+                field = value;
                 OnPropertyChanged();
             }
         }

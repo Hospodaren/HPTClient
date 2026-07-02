@@ -5,62 +5,46 @@ namespace HPTClient
     [DataContract]
     public class HPTRowValueInterval : Notifier
     {
-        private int? lowerLimit;
         [DataMember]
         public int? LowerLimit
         {
-            get
-            {
-                return lowerLimit;
-            }
+            get;
             set
             {
-                lowerLimit = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int? upperLimit;
         [DataMember]
         public int? UpperLimit
         {
-            get
-            {
-                return upperLimit;
-            }
+            get;
             set
             {
-                upperLimit = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int numberOfRows;
         [DataMember]
         public int NumberOfRows
         {
-            get
-            {
-                return numberOfRows;
-            }
+            get;
             set
             {
-                numberOfRows = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private decimal percentageOfRows;
         [DataMember]
         public decimal PercentageOfRows
         {
-            get
-            {
-                return percentageOfRows;
-            }
+            get;
             set
             {
-                percentageOfRows = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -69,47 +53,35 @@ namespace HPTClient
     [DataContract]
     public class HPTRowValuePercentile : Notifier
     {
-        private decimal percentile;
         [DataMember]
         public decimal Percentile
         {
-            get
-            {
-                return percentile;
-            }
+            get;
             set
             {
-                percentile = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private string description;
         [DataMember]
         public string Description
         {
-            get
-            {
-                return description;
-            }
+            get;
             set
             {
-                description = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int rowValue;
         [DataMember]
         public int RowValue
         {
-            get
-            {
-                return rowValue;
-            }
+            get;
             set
             {
-                rowValue = value;
+                field = value;
                 OnPropertyChanged();
             }
         }

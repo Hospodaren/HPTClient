@@ -43,16 +43,16 @@ namespace HPTClient
         public void UpdateSelectable(ICollection<HPTHorse> horseList)
         {
             NumberOfSelected = 0;
-            int[] raceNumbers = new int[horseList.Count];
-            for (int i = 0; i < horseList.Count; i++)
+            var raceNumbers = new int[horseList.Count];
+            for (var i = 0; i < horseList.Count; i++)
             {
                 //raceNumbers[i] = horseList[i].ParentRace.LegNr;
                 raceNumbers[i] = horseList.ElementAt(i).ParentRace.LegNr;
             }
-            int antal = raceNumbers.Distinct().Count();
-            for (int i = 0; i <= NumberOfRaces; i++)
+            var antal = raceNumbers.Distinct().Count();
+            for (var i = 0; i <= NumberOfRaces; i++)
             {
-                HPTNumberOfWinners hptNow = NumberOfWinnersList.First(now => now.NumberOfWinners == i);
+                var hptNow = NumberOfWinnersList.First(now => now.NumberOfWinners == i);
                 if (hptNow.NumberOfWinners > antal)
                 {
                     hptNow.Selectable = false;
@@ -68,10 +68,10 @@ namespace HPTClient
 
         public void SetShortDescriptionString()
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.Append("-");
             sb.Append(": ");
-            foreach (HPTPerson person in PersonList)
+            foreach (var person in PersonList)
             {
                 sb.Append(person.ShortName);
                 sb.Append(", ");
@@ -79,94 +79,82 @@ namespace HPTClient
             ShortDescription = sb.ToString();
         }
 
-        private string shortDescription;
         [DataMember]
         public string ShortDescription
         {
-            get
-            {
-                return shortDescription;
-            }
+            get;
             set
             {
-                shortDescription = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private List<string> personShortNameList;
         [DataMember]
         public List<string> PersonShortNameList
         {
             get
             {
-                if (personShortNameList == null)
+                if (field == null)
                 {
-                    personShortNameList = new List<string>();
+                    field = new List<string>();
                 }
-                foreach (HPTPerson person in PersonList)
+
+                foreach (var person in PersonList)
                 {
-                    for (int i = 0; i < personShortNameList.Count; i++)
+                    for (var i = 0; i < field.Count; i++)
                     {
-                        if (personShortNameList[i] == person.ShortName)
+                        if (field[i] == person.ShortName)
                         {
-                            personShortNameList.RemoveAt(i);
+                            field.RemoveAt(i);
                             i--;
                         }
                     }
-                    personShortNameList.Add(person.ShortName);
+
+                    field.Add(person.ShortName);
                 }
 
-                return personShortNameList;
+                return field;
             }
-            set
-            {
-                personShortNameList = value;
-            }
+            set;
         }
 
-        private List<string> personNameList;
         [DataMember]
         public List<string> PersonNameList
         {
             get
             {
-                if (personNameList == null)
+                if (field == null)
                 {
-                    personNameList = new List<string>();
+                    field = new List<string>();
                 }
-                foreach (HPTPerson person in PersonList)
+
+                foreach (var person in PersonList)
                 {
-                    for (int i = 0; i < personNameList.Count; i++)
+                    for (var i = 0; i < field.Count; i++)
                     {
-                        if (personNameList[i] == person.Name)
+                        if (field[i] == person.Name)
                         {
-                            personNameList.RemoveAt(i);
+                            field.RemoveAt(i);
                             i--;
                         }
                     }
-                    personNameList.Add(person.Name);
+
+                    field.Add(person.Name);
                 }
 
-                return personNameList;
+                return field;
             }
-            set
-            {
-                personNameList = value;
-            }
+            set;
         }
 
-        private ObservableCollection<HPTPerson> personList;
         [XmlIgnore]
         public ObservableCollection<HPTPerson> PersonList
         {
-            get
-            {
-                return personList;
-            }
+            get;
             set
             {
-                personList = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -194,7 +182,7 @@ namespace HPTClient
             {
                 return true;
             }
-            int numberOfHorses = HorseList.Intersect(singleRow.HorseList).Count();
+            var numberOfHorses = HorseList.Intersect(singleRow.HorseList).Count();
             return NumberOfWinnersList.First(now => now.NumberOfWinners == numberOfHorses).Selected;
         }
 
@@ -205,7 +193,7 @@ namespace HPTClient
                 return true;
             }
 
-            int numberOfHorses = horseList.Take(numberOfRacesToTest).Intersect(horseList).Count();
+            var numberOfHorses = horseList.Take(numberOfRacesToTest).Intersect(horseList).Count();
             if (numberOfHorses > MaxNumberOfX) // Maxantalet har redan överskridits innan alla lopp kontrollerats
             {
                 return false;
@@ -222,11 +210,11 @@ namespace HPTClient
             // Skapa dictionary för att kontrollera hur många vinstrader villkoret skulle gett
             if (markBet.RaceDayInfo.ResultComplete)
             {
-                int numberOfCorrectHorses = markBet.CouponCorrector.HorseList
+                var numberOfCorrectHorses = markBet.CouponCorrector.HorseList
                     .Intersect(HorseList)
                     .Count();
 
-                RuleResultForCorrectRow = numberOfCorrectHorses.ToString() + " Häst(ar)";
+                RuleResultForCorrectRow = $"{numberOfCorrectHorses} Häst(ar)";
             }
             return true;
         }

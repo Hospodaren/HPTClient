@@ -12,77 +12,57 @@ namespace HPTClient
         [DataMember]
         public int[] Winners { get; set; }
 
-        private string[] winnerStrings;
         [XmlIgnore]
         public string[] WinnerStrings
         {
-            get
-            {
-                return winnerStrings;
-            }
+            get;
             set
             {
-                winnerStrings = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int? value;
         [DataMember]
         public int? Value
         {
-            get
-            {
-                return value;
-            }
+            get;
             set
             {
-                this.value = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private decimal? systemsLeft;
         [DataMember]
         public decimal? SystemsLeft
         {
-            get
-            {
-                return systemsLeft;
-            }
+            get;
             set
             {
-                systemsLeft = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool hasResult;
         [DataMember]
         public bool HasResult
         {
-            get
-            {
-                return hasResult;
-            }
+            get;
             set
             {
-                hasResult = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private HPTHorse[] winnerList;
         [XmlIgnore]
         public HPTHorse[] WinnerList
         {
-            get
-            {
-                return winnerList;
-            }
+            get;
             set
             {
-                winnerList = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -94,32 +74,24 @@ namespace HPTClient
     [DataContract]
     public class HPTPayOut : Notifier
     {
-        private int numberOfCorrect;
         [DataMember]
         public int NumberOfCorrect
         {
-            get
-            {
-                return numberOfCorrect;
-            }
+            get;
             set
             {
-                numberOfCorrect = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private decimal payOutAmount;
         [DataMember]
         public decimal PayOutAmount
         {
-            get
-            {
-                return payOutAmount;
-            }
+            get;
             set
             {
-                payOutAmount = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -130,60 +102,44 @@ namespace HPTClient
         //[DataMember]
         //public int TotalAmount { get; set; }
 
-        private int totalAmount;
         [DataMember]
         public int TotalAmount
         {
-            get
-            {
-                return totalAmount;
-            }
+            get;
             set
             {
-                totalAmount = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int numberOfWinningRows;
         [DataMember]
         public int NumberOfWinningRows
         {
-            get
-            {
-                return numberOfWinningRows;
-            }
+            get;
             set
             {
-                numberOfWinningRows = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int minRowValue;
         public int MinRowValue
         {
-            get
-            {
-                return minRowValue;
-            }
+            get;
             set
             {
-                minRowValue = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int maxRowValue;
         public int MaxRowValue
         {
-            get
-            {
-                return maxRowValue;
-            }
+            get;
             set
             {
-                maxRowValue = value;
+                field = value;
                 OnPropertyChanged();
             }
         }

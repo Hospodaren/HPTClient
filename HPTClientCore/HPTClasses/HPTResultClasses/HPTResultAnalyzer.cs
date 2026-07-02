@@ -17,7 +17,7 @@ namespace HPTClient
 
         #endregion
 
-        internal static string ResultAnalyzerFileName = HPTConfig.MyDocumentsPath + "HPTResultAnalyzerList.hptral";
+        internal static string ResultAnalyzerFileName = $"{HPTConfig.MyDocumentsPath}HPTResultAnalyzerList.hptral";
 
         public HPTResultAnalyzer()
         {
@@ -68,8 +68,8 @@ namespace HPTClient
 
             foreach (var horse in horseList)
             {
-                int minRank = horse.RankList.Where(r => r.Name != "RankOwn" && r.Name != "RankTip" && r.Name != "RankABC" && r.Name != "RankAlternate").Min(r => r.Rank);
-                int maxRank = horse.RankList.Where(r => r.Name != "RankOwn" && r.Name != "RankTip" && r.Name != "RankABC" && r.Name != "RankAlternate").Max(r => r.Rank);
+                var minRank = horse.RankList.Where(r => r.Name != "RankOwn" && r.Name != "RankTip" && r.Name != "RankABC" && r.Name != "RankAlternate").Min(r => r.Rank);
+                var maxRank = horse.RankList.Where(r => r.Name != "RankOwn" && r.Name != "RankTip" && r.Name != "RankABC" && r.Name != "RankAlternate").Max(r => r.Rank);
                 foreach (var rankVariableHorseRank in RankVariableHorseRankList)
                 {
                     var rankVariable = rankVariableList.First(rv => rv.PropertyName == rankVariableHorseRank.PropertyName);
@@ -103,11 +103,11 @@ namespace HPTClient
             {
                 displayValue = Convert.ToString(horse.GetType().GetProperty(rankVariable.DisplayPropertyName).GetValue(horse, null));
             }
-            decimal propertyValue = 0M;
-            bool isNumber = decimal.TryParse(displayValue, out propertyValue);
+            var propertyValue = 0M;
+            var isNumber = decimal.TryParse(displayValue, out propertyValue);
 
             // Lägg i strängvariabel och formatera om det behövs
-            string textToShow = displayValue;
+            var textToShow = displayValue;
             if (!isNumber)
             {
             }
@@ -125,11 +125,11 @@ namespace HPTClient
         [OnDeserialized]
         public void SetNonSerializedValues(StreamingContext sc)
         {
-            for (int i = 0; i < HorseList.Count; i++)
+            for (var i = 0; i < HorseList.Count; i++)
             {
                 var horseRankList = RankVariableHorseRankList.Select(hrl => hrl.HorseRankList.ElementAt(i)).ToList();
-                int minRank = horseRankList.Min(r => r.Rank);
-                int maxRank = horseRankList.Max(r => r.Rank);
+                var minRank = horseRankList.Min(r => r.Rank);
+                var maxRank = horseRankList.Max(r => r.Rank);
                 var horseRanksToSetColorOn = horseRankList.Where(r => r.Rank == minRank || r.Rank == maxRank);
                 foreach (var horseRank in horseRanksToSetColorOn)
                 {
@@ -160,123 +160,91 @@ namespace HPTClient
             return new SolidColorBrush(c);
         }
 
-        private ObservableCollection<HPTHorseLightAnalyzed> horseList;
         [DataMember]
         public ObservableCollection<HPTHorseLightAnalyzed> HorseList
         {
-            get
-            {
-                return horseList;
-            }
+            get;
             set
             {
-                horseList = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private ObservableCollection<HPTRankVariableHorseRankList> rankVariableHorseRankList;
         [DataMember]
         public ObservableCollection<HPTRankVariableHorseRankList> RankVariableHorseRankList
         {
-            get
-            {
-                return rankVariableHorseRankList;
-            }
+            get;
             set
             {
-                rankVariableHorseRankList = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
         #region Informationsvariabler
 
-        private DateTime raceDate;
         [DataMember]
         public DateTime RaceDate
         {
-            get
-            {
-                return raceDate;
-            }
+            get;
             set
             {
-                raceDate = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private string dateString;
         public string DateString
         {
-            get
-            {
-                return dateString;
-            }
+            get;
             set
             {
-                dateString = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private string betTypeCode;
         [DataMember]
         public string BetTypeCode
         {
-            get
-            {
-                return betTypeCode;
-            }
+            get;
             set
             {
-                betTypeCode = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private string trackName;
         [DataMember]
         public string TrackName
         {
-            get
-            {
-                return trackName;
-            }
+            get;
             set
             {
-                trackName = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int trackId;
         [DataMember]
         public int TrackId
         {
-            get
-            {
-                return trackId;
-            }
+            get;
             set
             {
-                trackId = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private List<HPTPayOut> payOutList;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public List<HPTPayOut> PayOutList
         {
-            get
-            {
-                return payOutList;
-            }
+            get;
             set
             {
-                payOutList = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -294,7 +262,7 @@ namespace HPTClient
                 rankVariableHorseRank.Sum = rankVariableHorseRank.HorseRankList.Sum(hr => hr.Rank);
 
                 // Standardavvikelse
-                decimal variance = rankVariableHorseRank.HorseRankList.Select(hr => hr.Rank).Average(r => (r - rankVariableHorseRank.Mean) * (r - rankVariableHorseRank.Mean));
+                var variance = rankVariableHorseRank.HorseRankList.Select(hr => hr.Rank).Average(r => (r - rankVariableHorseRank.Mean) * (r - rankVariableHorseRank.Mean));
                 rankVariableHorseRank.StDev = Convert.ToDecimal(Math.Sqrt(Convert.ToDouble(variance)));
             }
             var orderedList = RankVariableHorseRankList.OrderBy(rv => rv.Mean);
@@ -401,7 +369,7 @@ namespace HPTClient
                 sb.Append("\t");
                 var sbValues = new StringBuilder();
 
-                for (int i = 0; i < rv.HorseRankList.Count; i++)
+                for (var i = 0; i < rv.HorseRankList.Count; i++)
                 {
                     var horseRank = rv.HorseRankList.ElementAt(i);
                     if (horseRank != null)
@@ -584,17 +552,17 @@ namespace HPTClient
                             var horseList = new HPTHorse[markBet.RaceDayInfo.RaceList.Count];
                             try
                             {
-                                for (int i = 0; i < markBet.RaceDayInfo.RaceList.Count; i++)
+                                for (var i = 0; i < markBet.RaceDayInfo.RaceList.Count; i++)
                                 {
                                     var leg = markBet.RaceDayInfo.RaceList[i];
-                                    int startNr = leg.LegResult.Winners[0];
+                                    var startNr = leg.LegResult.Winners[0];
                                     var horse = leg.HorseList.First(h => h.StartNr == startNr);
                                     horseList[i] = horse;
                                 }
                             }
                             catch (Exception excInner)
                             {
-                                string s = excInner.Message;
+                                var s = excInner.Message;
                             }
                             //var resultAnalyzer = new HPTResultAnalyzer(horseList, markBet);
                             ResultAnalyzerAdded(horseList, markBet);
@@ -603,7 +571,7 @@ namespace HPTClient
                     }
                     catch (Exception exc)
                     {
-                        string s = exc.Message;
+                        var s = exc.Message;
                     }
                 }
             }
@@ -616,122 +584,90 @@ namespace HPTClient
     [DataContract]
     public class HPTRankVariableHorseRankList : Notifier
     {
-        private string name;
         [DataMember]
         public string Name
         {
-            get
-            {
-                return name;
-            }
+            get;
             set
             {
-                name = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private string propertyName;
         [DataMember]
         public string PropertyName
         {
-            get
-            {
-                return propertyName;
-            }
+            get;
             set
             {
-                propertyName = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private string categoryText;
         [DataMember]
         public string CategoryText
         {
-            get
-            {
-                return categoryText;
-            }
+            get;
             set
             {
-                categoryText = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private SolidColorBrush backColor;
         [XmlIgnore]
         public SolidColorBrush BackColor
         {
-            get
-            {
-                return backColor;
-            }
+            get;
             set
             {
-                backColor = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private ObservableCollection<HPTHorseRank> horseRankList;
         [DataMember]
         public ObservableCollection<HPTHorseRank> HorseRankList
         {
-            get
-            {
-                return horseRankList;
-            }
+            get;
             set
             {
-                horseRankList = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private decimal sum;
         [DataMember]
         public decimal Sum
         {
-            get
-            {
-                return sum;
-            }
+            get;
             set
             {
-                sum = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private decimal stDev;
         [DataMember]
         public decimal StDev
         {
-            get
-            {
-                return stDev;
-            }
+            get;
             set
             {
-                stDev = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private decimal mean;
         [DataMember]
         public decimal Mean
         {
-            get
-            {
-                return mean;
-            }
+            get;
             set
             {
-                mean = value;
+                field = value;
                 OnPropertyChanged();
             }
         }

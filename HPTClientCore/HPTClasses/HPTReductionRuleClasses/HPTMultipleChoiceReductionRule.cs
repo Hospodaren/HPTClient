@@ -13,7 +13,7 @@ namespace HPTClient
                 return false;
             }
 
-            int numberOfRulesFulfilled = 0;
+            var numberOfRulesFulfilled = 0;
             foreach (var reductionRule in markBet.ReductionRulesToApply)
             {
                 if (reductionRule.IncludeRow(markBet, singleRow))
@@ -28,7 +28,7 @@ namespace HPTClient
         {
             if (NumberOfRulesList == null)
             {
-                IEnumerable<HPTNumberOfRules> norList = Enumerable.Range(1, numberOfRules)
+                var norList = Enumerable.Range(1, numberOfRules)
                     .Select(nor => new HPTNumberOfRules()
                     {
                         NumberOfRules = nor
@@ -41,10 +41,10 @@ namespace HPTClient
             }
             else if (numberOfRulesList.Count < numberOfRules)
             {
-                int position = NumberOfRulesList.Count;
+                var position = NumberOfRulesList.Count;
                 while (position > numberOfRules)
                 {
-                    HPTNumberOfRules nor = NumberOfRulesList[position - 1];
+                    var nor = NumberOfRulesList[position - 1];
                     nor.Selected = false;
                     NumberOfRulesList.Remove(nor);
                     position--;
@@ -52,10 +52,10 @@ namespace HPTClient
             }
             else if (numberOfRulesList.Count > numberOfRules)
             {
-                int position = NumberOfRulesList.Count;
+                var position = NumberOfRulesList.Count;
                 while (position < numberOfRules)
                 {
-                    HPTNumberOfRules nor = new HPTNumberOfRules()
+                    var nor = new HPTNumberOfRules()
                     {
                         NumberOfRules = position
                     };
@@ -65,17 +65,13 @@ namespace HPTClient
             }
         }
 
-        private bool use;
         [DataMember]
         public bool Use
         {
-            get
-            {
-                return use;
-            }
+            get;
             set
             {
-                use = value;
+                field = value;
                 OnPropertyChanged();
             }
         }

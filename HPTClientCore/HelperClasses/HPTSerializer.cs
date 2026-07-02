@@ -25,7 +25,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
             return false;
         }
@@ -84,7 +84,7 @@ namespace HPTClient
             var stream = File.OpenRead(fileName);
             HPTMarkBet hmb = null;
 
-            string fileExtension = Path.GetExtension(fileName).Replace(".", string.Empty);
+            var fileExtension = Path.GetExtension(fileName).Replace(".", string.Empty);
             if (fileExtension == "hpt7")
             {
                 var serializer = new DataContractSerializer(typeof(HPTMarkBet));
@@ -142,19 +142,19 @@ namespace HPTClient
                     })
                 };
 
-                string dirName = Path.GetDirectoryName(hmb.SaveDirectory);
+                var dirName = Path.GetDirectoryName(hmb.SaveDirectory);
                 dirName = Path.Combine(dirName, "Historik");
                 if (!Directory.Exists(dirName))
                 {
                     Directory.CreateDirectory(dirName);
                 }
-                string fileName = Path.Combine(dirName, $"{hmb.BetType.Code}_{DateTime.Now:yyyyMMddHHmmss}.xml");
+                var fileName = Path.Combine(dirName, $"{hmb.BetType.Code}_{DateTime.Now:yyyyMMddHHmmss}.xml");
 
                 SerializeHPTObject(typeof(HPTRaceDayInfoHistory), fileName, raceDayInfoHistory);
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -186,12 +186,12 @@ namespace HPTClient
                     })
                 };
 
-                string dirName = Path.Combine(saveDirectory, "Historik");
+                var dirName = Path.Combine(saveDirectory, "Historik");
                 if (!Directory.Exists(dirName))
                 {
                     Directory.CreateDirectory(dirName);
                 }
-                string fileName = Path.Combine(dirName, $"{game.GameInfo.Code}_{DateTime.Now:yyyyMMddHHmmss}.xml");
+                var fileName = Path.Combine(dirName, $"{game.GameInfo.Code}_{DateTime.Now:yyyyMMddHHmmss}.xml");
 
                 SerializeHPTObject(typeof(HPTRaceDayInfoHistory), fileName, raceDayInfoHistory);
                 return fileName;
@@ -241,7 +241,7 @@ namespace HPTClient
         {
             try
             {
-                object o = DeserializeHPTObject(typeof(HPTCalendar), fileName);
+                var o = DeserializeHPTObject(typeof(HPTCalendar), fileName);
                 var hptCalendar = (HPTCalendar)o;
                 return hptCalendar;
             }
@@ -273,8 +273,8 @@ namespace HPTClient
             catch (InvalidOperationException)
             {
                 var stream = File.OpenRead(fileName);
-                XmlSerializer serializer = new XmlSerializer(typeof(HPTHorseOwnInformationCollection));
-                XmlTextReader xtr = new XmlTextReader(stream);
+                var serializer = new XmlSerializer(typeof(HPTHorseOwnInformationCollection));
+                var xtr = new XmlTextReader(stream);
                 var hptHorseOwnInformation = (HPTHorseOwnInformationCollection)serializer.Deserialize(xtr);
                 xtr.Close();
                 return hptHorseOwnInformation;
@@ -285,7 +285,7 @@ namespace HPTClient
                 {
                     try
                     {
-                        File.Copy(fileName, fileName + ".OLD", true);
+                        File.Copy(fileName, $"{fileName}.OLD", true);
                     }
                     catch (Exception)
                     {
@@ -310,15 +310,15 @@ namespace HPTClient
         {
             try
             {
-                string[] hptFiles = Directory.GetFiles(HPTConfig.MyDocumentsPath, "HPT7Calendar.xml");
+                var hptFiles = Directory.GetFiles(HPTConfig.MyDocumentsPath, "HPT7Calendar.xml");
                 if (hptFiles.Length > 0)
                 {
-                    HPTCalendar hptCalendar = DeserializeHPTCalendar(hptFiles[0]);
+                    var hptCalendar = DeserializeHPTCalendar(hptFiles[0]);
 
                     // Ta bort gamla tävlingar och sortera stigande efter datum
                     if (hptCalendar.RaceDayInfoList != null)
                     {
-                        IOrderedEnumerable<HPTRaceDayInfo> orderedRaceDayInfoList = hptCalendar.RaceDayInfoList
+                        var orderedRaceDayInfoList = hptCalendar.RaceDayInfoList
                             .Where(rdi => rdi.RaceDayDate > DateTime.Now.AddHours(-14))
                             .OrderBy(rdi => rdi.RaceDayDate);
 
@@ -334,7 +334,7 @@ namespace HPTClient
                         //}
 
                         // Ta bara med de tävlingar där det finns spelbara spelformer
-                        IEnumerable<HPTRaceDayInfo> finalRaceDayInfoList = orderedRaceDayInfoList
+                        var finalRaceDayInfoList = orderedRaceDayInfoList
                             .Where(rdi => rdi.BetTypeList.Count > 0);
 
                         hptCalendar.RaceDayInfoList = new ObservableCollection<HPTRaceDayInfo>(finalRaceDayInfoList);
@@ -372,7 +372,7 @@ namespace HPTClient
                 return trendFiles;
             }
 
-            var rexTimestampFromFileName = new Regex(markBet.BetType.Code + @"_(\d{14})");
+            var rexTimestampFromFileName = new Regex($@"{markBet.BetType.Code}_(\d{{14}})");
 
             Directory.GetFiles(historyDir, $"{markBet.BetType.Code}*.xml")
                 .ToList()
@@ -391,8 +391,8 @@ namespace HPTClient
 
             if (trendFiles.Any())
             {
-                decimal shortDiff = 0.667M;
-                decimal longDiff = 0.333M;
+                var shortDiff = 0.667M;
+                var longDiff = 0.333M;
 
                 var allRaceDayInfoHistory = trendFiles
                     .Select(tf => (HPTRaceDayInfoHistory)DeserializeHPTObject(typeof(HPTRaceDayInfoHistory), tf.FileName))
@@ -434,7 +434,7 @@ namespace HPTClient
             Stream stream = File.OpenRead(fileName);
             HPTTemplateCollection templateCollection = null;
 
-            string fileExtension = Path.GetExtension(fileName).Replace(".", string.Empty);
+            var fileExtension = Path.GetExtension(fileName).Replace(".", string.Empty);
             if (fileExtension == "hpt5m")
             {
                 var serializer = new DataContractSerializer(typeof(HPTTemplateCollection));
@@ -496,7 +496,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
             return null;
         }
@@ -517,7 +517,7 @@ namespace HPTClient
             jsonSerializer.WriteObject(ms, o);
             ms.Position = 0;
             var sr = new StreamReader(ms);
-            string jsonString = sr.ReadToEnd();
+            var jsonString = sr.ReadToEnd();
             return jsonString;
         }
 
@@ -533,7 +533,7 @@ namespace HPTClient
             sw.Write(json);
             sw.Flush();
             ms.Position = 0;
-            object o = jsonSerializer.ReadObject(ms);
+            var o = jsonSerializer.ReadObject(ms);
 
             return o;
         }

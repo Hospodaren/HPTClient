@@ -24,32 +24,31 @@ namespace HPTClient
         public static readonly DependencyProperty ConfigProperty =
             DependencyProperty.Register("Config", typeof(HPTConfig), typeof(UCGroupIntervalTemplate), new UIPropertyMetadata(HPTConfig.Config));
 
-        private HPTGroupIntervalRulesCollection groupIntervalRulesCollection;
         internal HPTGroupIntervalRulesCollection GroupIntervalRulesCollection
         {
             get
             {
-                if (groupIntervalRulesCollection == null || groupIntervalRulesCollection != (HPTGroupIntervalRulesCollection)DataContext)
+                if (field == null || field != (HPTGroupIntervalRulesCollection)DataContext)
                 {
-                    groupIntervalRulesCollection = (HPTGroupIntervalRulesCollection)DataContext;
+                    field = (HPTGroupIntervalRulesCollection)DataContext;
                 }
-                return groupIntervalRulesCollection;
+                return field;
             }
         }
 
         private void btnRemove_Click(object sender, RoutedEventArgs e)
         {
-            Button btn = (Button)sender;
-            HPTGroupIntervalReductionRule rule = (HPTGroupIntervalReductionRule)btn.DataContext;
+            var btn = (Button)sender;
+            var rule = (HPTGroupIntervalReductionRule)btn.DataContext;
             //this.GroupIntervalRulesCollection.GroupIntervalReductionRuleList.Remove(rule);
             GroupIntervalRulesCollection.ReductionRuleList.Remove(rule);
         }
 
         private void cmbVariable_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ComboBox cmb = (ComboBox)sender;
-            HPTGroupIntervalReductionRule rule = (HPTGroupIntervalReductionRule)cmb.Tag;
-            HPTHorseVariable hv = (HPTHorseVariable)cmb.SelectedItem;
+            var cmb = (ComboBox)sender;
+            var rule = (HPTGroupIntervalReductionRule)cmb.Tag;
+            var hv = (HPTHorseVariable)cmb.SelectedItem;
             if (rule.HorseVariable == null || rule.HorseVariable.PropertyName != hv.PropertyName)
             {
                 rule.HorseVariable = hv;
@@ -61,12 +60,12 @@ namespace HPTClient
         private void btnNewRule_Click(object sender, RoutedEventArgs e)
         {
             // TODO: Antal beroende på speltyp
-            HPTGroupIntervalReductionRule rule = new HPTGroupIntervalReductionRule(NumberOfRaces, false)
+            var rule = new HPTGroupIntervalReductionRule(NumberOfRaces, false)
             {
                 Use = true
             };
             GroupIntervalRulesCollection.ReductionRuleList.Add(rule);
-            string s = DataContext.ToString();
+            var s = DataContext.ToString();
         }
 
         private void btnRemoveAll_Click(object sender, RoutedEventArgs e)
@@ -124,10 +123,10 @@ namespace HPTClient
                 {
                     if (groupIntervalReductionRule.NumberOfWinnersList != null && groupIntervalReductionRule.NumberOfWinnersList.Count > 0)
                     {
-                        int maxNumberOfWinners = groupIntervalReductionRule.NumberOfWinnersList.Max(now => now.NumberOfWinners);
+                        var maxNumberOfWinners = groupIntervalReductionRule.NumberOfWinnersList.Max(now => now.NumberOfWinners);
                         if (maxNumberOfWinners > NumberOfRaces)
                         {
-                            List<HPTNumberOfWinners> numberOfWinnersToRemove = groupIntervalReductionRule.NumberOfWinnersList
+                            var numberOfWinnersToRemove = groupIntervalReductionRule.NumberOfWinnersList
                                 .Where(now => now.NumberOfWinners > NumberOfRaces).ToList();
 
                             foreach (var numberOfWinners in numberOfWinnersToRemove)
@@ -138,7 +137,7 @@ namespace HPTClient
                         }
                         else if (maxNumberOfWinners < NumberOfRaces)
                         {
-                            for (int i = maxNumberOfWinners + 1; i <= NumberOfRaces; i++)
+                            for (var i = maxNumberOfWinners + 1; i <= NumberOfRaces; i++)
                             {
                                 var numberOfWinners = new HPTNumberOfWinners()
                                 {
@@ -164,7 +163,7 @@ namespace HPTClient
                 new HPTGroupIntervalRulesCollection(GroupIntervalRulesCollection.NumberOfRaces,
                                                     GroupIntervalRulesCollection.Use);
 
-            clonedGroupIntervalRulesCollection.Name = GroupIntervalRulesCollection.Name + " (kopia)";
+            clonedGroupIntervalRulesCollection.Name = $"{GroupIntervalRulesCollection.Name} (kopia)";
             clonedGroupIntervalRulesCollection.TypeCategory = GroupIntervalRulesCollection.TypeCategory;
 
             var clonedRules =

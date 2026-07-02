@@ -17,48 +17,36 @@ namespace HPTClient
             };
         }
 
-        private string name;
         public string Name
         {
-            get
-            {
-                return name;
-            }
+            get;
             set
             {
-                name = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private string rankTemplatename;
         public string RankTemplateName
         {
-            get
-            {
-                return rankTemplatename;
-            }
+            get;
             set
             {
-                rankTemplatename = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private HPTRankTemplate rankTemplate;
         [XmlIgnore]
         public HPTRankTemplate RankTemplate
         {
-            get
-            {
-                return rankTemplate;
-            }
+            get;
             set
             {
-                rankTemplate = value;
+                field = value;
                 if (value != null)
                 {
-                    RankTemplateName = rankTemplate.Name;
+                    RankTemplateName = field.Name;
                 }
                 OnPropertyChanged();
             }

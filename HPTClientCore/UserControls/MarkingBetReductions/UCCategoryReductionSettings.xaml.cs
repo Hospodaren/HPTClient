@@ -40,18 +40,15 @@ namespace HPTClient
             DependencyProperty.Register(nameof(HorseListContainer), typeof(HPTHorseListContainer), typeof(UCCategoryReductionSettings), new PropertyMetadata(null));
 
 
-
-
-        private HPTCategoryReductionRuleCollection categoryReductionRuleCollection;
         internal HPTCategoryReductionRuleCollection CategoryReductionRuleCollection
         {
             get
             {
-                if (categoryReductionRuleCollection == null)
+                if (field == null)
                 {
-                    categoryReductionRuleCollection = (HPTCategoryReductionRuleCollection)DataContext;
+                    field = (HPTCategoryReductionRuleCollection)DataContext;
                 }
-                return categoryReductionRuleCollection;
+                return field;
             }
         }
 
@@ -87,7 +84,7 @@ namespace HPTClient
             //}
 
             // Skapa innehållet för popupen
-            Border b = new Border()
+            var b = new Border()
             {
                 BorderBrush = new SolidColorBrush(Colors.Black),
                 BorderThickness = new Thickness(1D),
@@ -157,7 +154,7 @@ namespace HPTClient
 
         void pu_MouseLeave(object sender, MouseEventArgs e)
         {
-            System.Windows.Controls.Primitives.Popup pu = (System.Windows.Controls.Primitives.Popup)sender;
+            var pu = (System.Windows.Controls.Primitives.Popup)sender;
             pu.Child = null;
             pu.IsOpen = false;
         }

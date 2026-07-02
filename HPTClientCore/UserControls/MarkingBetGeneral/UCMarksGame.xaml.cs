@@ -261,7 +261,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
             btnUpdate.IsEnabled = true;
             Cursor = Cursors.Arrow;
@@ -272,12 +272,12 @@ namespace HPTClient
             try
             {
                 var gameBase = ATGDownloader.ATGObjectGetter.UpdateGame(MarkBet.BetType.GameInfoBase);
-                string fileName = HPTSerializer.SerializeHPTRaceDayInfoHistory(gameBase, MarkBet.SaveDirectory);
+                var fileName = HPTSerializer.SerializeHPTRaceDayInfoHistory(gameBase, MarkBet.SaveDirectory);
                 ChangeUpdateTimer();
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -358,12 +358,12 @@ namespace HPTClient
 
         void Countdown(TimeSpan timeLeft, Action<TimeSpan> ts)
         {
-            int count = (int)timeLeft.TotalSeconds;
+            var count = (int)timeLeft.TotalSeconds;
             var dt = new System.Windows.Threading.DispatcherTimer();
             dt.Interval = TimeSpan.FromSeconds(1D);
             dt.Tick += (_, a) =>
             {
-                TimeSpan tsTemp = upcomingRace.PostTime - DateTime.Now;
+                var tsTemp = upcomingRace.PostTime - DateTime.Now;
 
                 if (tsTemp.TotalSeconds < 1D)
                 {
@@ -442,7 +442,7 @@ namespace HPTClient
             if (cmbTemplateResults.SelectedItem != null)
             {
                 Cursor = Cursors.Wait;
-                HPTMarkBetTemplateResult tr = (HPTMarkBetTemplateResult)cmbTemplateResults.SelectedItem;
+                var tr = (HPTMarkBetTemplateResult)cmbTemplateResults.SelectedItem;
                 MarkBet.ApplyTemplateResult(tr);
                 Cursor = Cursors.Arrow;
             }
@@ -482,7 +482,7 @@ namespace HPTClient
                         chkV6.Visibility = MarkBet.V6Visibility;
 
                         // Hur breda ska raderna i översikten vara?
-                        int maxNumberOfHorses = MarkBet.RaceDayInfo.RaceList.Max(r => r.HorseList.Count);
+                        var maxNumberOfHorses = MarkBet.RaceDayInfo.RaceList.Max(r => r.HorseList.Count);
                         OverviewMinWidth = maxNumberOfHorses * 24D;
 
                         // Se till att ingen beräkning sker
@@ -496,9 +496,9 @@ namespace HPTClient
                         MarkBet.SetEventHandlers();
 
                         // Skapa listan med reduceringsalternativ utifrå om man är betalande kund eller ej.
-                        List<HPTReductionAttribute> attributeList = MarkBet.GetReductionAttributes();
+                        var attributeList = MarkBet.GetReductionAttributes();
                         ReductionCheckBoxList.Clear();
-                        foreach (HPTReductionAttribute ra in attributeList.OrderBy(a => a.Order))
+                        foreach (var ra in attributeList.OrderBy(a => a.Order))
                         {
                             var chk = new CheckBox()
                             {
@@ -638,12 +638,12 @@ namespace HPTClient
         internal void CreateMarkBetTabsToShowContextMenu()
         {
             // Skapa context menu för vilk flikar man vill visa
-            List<HPTMarkBetTabsToShowAttribute> tabsToShowAttributeList = HPTConfig.Config.MarkBetTabsToShow.GetMarkBetTabsToShowAttributes();
+            var tabsToShowAttributeList = HPTConfig.Config.MarkBetTabsToShow.GetMarkBetTabsToShowAttributes();
             CMMarkBetTabsToShow.Items.Clear();
             CMMarkBetTabsToShow.DataContext = HPTConfig.Config.MarkBetTabsToShow;
-            foreach (HPTMarkBetTabsToShowAttribute hda in tabsToShowAttributeList)
+            foreach (var hda in tabsToShowAttributeList)
             {
-                MenuItem mi = new MenuItem()
+                var mi = new MenuItem()
                 {
                     IsCheckable = true,
                     Header = hda.Name,
@@ -670,7 +670,7 @@ namespace HPTClient
             // Dra igång nedräknare om tävlingen är idag
             if (upcomingRace != null && upcomingRace.PostTime.Date == DateTime.Today)
             {
-                TimeSpan ts = upcomingRace.PostTime - DateTime.Now;
+                var ts = upcomingRace.PostTime - DateTime.Now;
                 Countdown(ts, cur =>
                     {
                         if ((int)cur.TotalSeconds == 600)
@@ -680,7 +680,7 @@ namespace HPTClient
                         }
                         txtCountdownTimer.Text = cur.ToString(@"hh\:mm\:ss");
                     });
-                txtCountdownInfo.Text = upcomingRace.LegNrString + ":";
+                txtCountdownInfo.Text = $"{upcomingRace.LegNrString}:";
             }
             else
             {
@@ -727,7 +727,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
             MarkBet.CompressCoupons = true;//couponsCompressed;
             Cursor = Cursors.Arrow;
@@ -737,7 +737,7 @@ namespace HPTClient
         {
             try
             {
-                System.Diagnostics.Process.Start("explorer.exe", "/select, \"" + MarkBet.SystemFilename + "\"");
+                System.Diagnostics.Process.Start("explorer.exe", $"/select, \"{MarkBet.SystemFilename}\"");
             }
             catch (Exception exc)
             {
@@ -767,7 +767,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -780,8 +780,8 @@ namespace HPTClient
         {
             if (e.AddedItems.Count > 0)
             {
-                ComboBoxItem cbi = (ComboBoxItem)e.AddedItems[0];
-                ReservHandling rh = (ReservHandling)Convert.ToInt32(cbi.Tag);
+                var cbi = (ComboBoxItem)e.AddedItems[0];
+                var rh = (ReservHandling)Convert.ToInt32(cbi.Tag);
                 MarkBet.ReservHandling = rh;
                 MarkBet.CouponCorrector.CouponHelper.HandleReserverForCoupons(MarkBet.ReservHandling);
             }
@@ -826,23 +826,23 @@ namespace HPTClient
                     }
                     if (e.SystemKey == Key.C)
                     {
-                        string result = MarkBet.CalculateBestABCDCombination();
+                        var result = MarkBet.CalculateBestABCDCombination();
                         Clipboard.SetDataObject(result);
                     }
                     if (e.SystemKey == Key.D)
                     {
-                        string result = MarkBet.CalculateBestAPlusBPlusCCombinations();
+                        var result = MarkBet.CalculateBestAPlusBPlusCCombinations();
                         Clipboard.SetDataObject(result);
                     }
                     if (e.SystemKey == Key.A)
                     {
                         //string result = this.MarkBet.CalculateDifficulty();
-                        string result = MarkBet.CalculateDifficultyAlt();
+                        var result = MarkBet.CalculateDifficultyAlt();
                         Clipboard.SetDataObject(result);
                     }
                     if (e.SystemKey == Key.J)
                     {
-                        string result = MarkBet.CalculateJackpotRows();
+                        var result = MarkBet.CalculateJackpotRows();
                         Clipboard.SetDataObject(result);
                     }
                     break;
@@ -884,7 +884,7 @@ namespace HPTClient
 
         private void HandlePastedText()
         {
-            string tips = Clipboard.GetText();
+            var tips = Clipboard.GetText();
             if (MarkBet.ParseTips(tips))
             {
                 ShowTipsWindow();
@@ -1015,9 +1015,9 @@ namespace HPTClient
             // Varna för att det är fler kuponger än tillåtet
             MarkBet.HandleTooManyCoupons();
 
-            SaveFileDialog sfd = new SaveFileDialog();
+            var sfd = new SaveFileDialog();
             sfd.InitialDirectory = MarkBet.SaveDirectory;
-            sfd.FileName = MarkBet.ToFileNameString() + ".hpt7";
+            sfd.FileName = $"{MarkBet.ToFileNameString()}.hpt7";
             sfd.Filter = "Hjälp på traven-system|*.hpt7";
             sfd.FileOk += new CancelEventHandler(sfd_FileOk);
             sfd.ShowDialog();
@@ -1032,10 +1032,10 @@ namespace HPTClient
 
             if (setFileNames)
             {
-                string fileName = MarkBet.SaveDirectory + MarkBet.ToFileNameString();
-                MarkBet.SystemFilename = fileName + ".xml";
+                var fileName = MarkBet.SaveDirectory + MarkBet.ToFileNameString();
+                MarkBet.SystemFilename = $"{fileName}.xml";
 
-                string hpt3Filename = fileName + ".hpt7";
+                var hpt3Filename = $"{fileName}.hpt7";
                 MarkBet.MailSender.HPT3FileName = hpt3Filename;
             }
             try
@@ -1051,10 +1051,10 @@ namespace HPTClient
 
         void sfd_FileOk(object sender, CancelEventArgs e)
         {
-            SaveFileDialog sfd = (SaveFileDialog)sender;
-            string fileName = sfd.FileName;
+            var sfd = (SaveFileDialog)sender;
+            var fileName = sfd.FileName;
             MarkBet.SystemFilename = fileName;
-            string hpt4Filename = fileName.Replace(".xml", ".hpt7");
+            var hpt4Filename = fileName.Replace(".xml", ".hpt7");
             MarkBet.MailSender.HPT3FileName = hpt4Filename;
             SaveFiles(true, true, false);
         }
@@ -1071,7 +1071,7 @@ namespace HPTClient
             //PrepareForSave(false);
             var sfdHPT4 = new SaveFileDialog();
             sfdHPT4.InitialDirectory = MarkBet.SaveDirectory;
-            sfdHPT4.FileName = MarkBet.ToFileNameString() + ".hpt7";
+            sfdHPT4.FileName = $"{MarkBet.ToFileNameString()}.hpt7";
             sfdHPT4.Filter = "Hjälp på traven-system|*.hpt7";
             sfdHPT4.FileOk += new CancelEventHandler(sfdHPT4_FileOk);
             sfdHPT4.ShowDialog();
@@ -1079,8 +1079,8 @@ namespace HPTClient
 
         void sfdHPT4_FileOk(object sender, CancelEventArgs e)
         {
-            SaveFileDialog sfd = (SaveFileDialog)sender;
-            string fileName = sfd.FileName;
+            var sfd = (SaveFileDialog)sender;
+            var fileName = sfd.FileName;
             MarkBet.MailSender.HPT3FileName = fileName;
             SaveFiles(true, false, false);
         }
@@ -1091,7 +1091,7 @@ namespace HPTClient
             //PrepareForSave();
             var sfdATG = new SaveFileDialog();
             sfdATG.InitialDirectory = MarkBet.SaveDirectory;
-            sfdATG.FileName = MarkBet.ToFileNameString() + ".xml";
+            sfdATG.FileName = $"{MarkBet.ToFileNameString()}.xml";
             sfdATG.Filter = "ATG kupongfil (*.xml)|*.xml|Alla filer (*.*)|*.*";
             sfdATG.FileOk += new CancelEventHandler(sfdATG_FileOk);
             sfdATG.ShowDialog();
@@ -1099,8 +1099,8 @@ namespace HPTClient
 
         void sfdATG_FileOk(object sender, CancelEventArgs e)
         {
-            SaveFileDialog sfd = (SaveFileDialog)sender;
-            string fileName = sfd.FileName;
+            var sfd = (SaveFileDialog)sender;
+            var fileName = sfd.FileName;
             MarkBet.SystemFilename = fileName;
             SaveFiles(false, true, false);
             Cursor = Cursors.Arrow;
@@ -1118,7 +1118,7 @@ namespace HPTClient
         internal string CopySystemInformationToClipboard()
         {
             MarkBet.SetReductionRuleString();
-            string systemInfo = MarkBet.ToClipboardString();
+            var systemInfo = MarkBet.ToClipboardString();
             if (HPTConfig.Config.CopyCouponsToClipboard)
             {
                 systemInfo += MarkBet.CouponCorrector.CouponHelper.ToCouponsString();
@@ -1142,7 +1142,7 @@ namespace HPTClient
         {
             btnCopy.IsOpen = false;
             MarkBet.SetReductionRuleString();
-            string systemInfo = MarkBet.ToClipboardString();
+            var systemInfo = MarkBet.ToClipboardString();
             try
             {
                 Clipboard.SetDataObject(systemInfo);
@@ -1250,18 +1250,18 @@ namespace HPTClient
             // Skapa utskriftsytan
             btnPrint.IsOpen = false;
             MarkBet.SetReductionRuleString();
-            string systemInfo = MarkBet.ToClipboardString();
+            var systemInfo = MarkBet.ToClipboardString();
             PrintUsingDocumentCondensed(systemInfo, "HPT-uskrift text");
         }
 
         private void PrintUsingDocumentCondensed(string text, string printCaption = "")
         {
             //Create the document, passing a new paragraph and new run using text
-            FlowDocument doc = new FlowDocument(new Paragraph(new Run(text)));
+            var doc = new FlowDocument(new Paragraph(new Run(text)));
             doc.PagePadding = new Thickness(100);
             //Creates margin around the page
 
-            PrintDialog diag = new PrintDialog();
+            var diag = new PrintDialog();
             //Used to perform printing
 
             //Send the document to the printer
@@ -1271,9 +1271,9 @@ namespace HPTClient
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
             MarkBet.SetReductionRuleString();
-            UCMarkingBetSystemDocument uc = new UCMarkingBetSystemDocument();
+            var uc = new UCMarkingBetSystemDocument();
             uc.DataContext = MarkBet;
-            PrintDialog pd = new PrintDialog();
+            var pd = new PrintDialog();
             if ((bool)pd.ShowDialog().GetValueOrDefault())
             {
                 uc.Measure(new Size(816, 1500));
@@ -1288,7 +1288,7 @@ namespace HPTClient
             // Skapa utskriftsytan
             btnPrint.IsOpen = false;
             MarkBet.SetReductionRuleString();
-            UCMarkingBetSystemDocument uc = new UCMarkingBetSystemDocument();
+            var uc = new UCMarkingBetSystemDocument();
             uc.DataContext = MarkBet;
             uc.Measure(new Size(816, 1500));
             uc.Arrange(new Rect(new Size(816, 1300)));
@@ -1304,7 +1304,7 @@ namespace HPTClient
             ((System.Windows.Markup.IAddChild)pageContent).AddChild(fixedPage);
             fixedDoc.Pages.Add(pageContent);
 
-            string fileName = MarkBet.SaveDirectory + MarkBet.ToFileNameString() + ".xps";
+            var fileName = $"{MarkBet.SaveDirectory}{MarkBet.ToFileNameString()}.xps";
             var xpsDoc = new XpsDocument(fileName, System.IO.FileAccess.ReadWrite);
             var xw = XpsDocument.CreateXpsDocumentWriter(xpsDoc);
             xw.Write(fixedDoc);
@@ -1324,7 +1324,7 @@ namespace HPTClient
 
                 uc.UpdateLayout();
 
-                string fileName = MarkBet.SaveDirectory + MarkBet.ToFileNameString() + ".png";
+                var fileName = $"{MarkBet.SaveDirectory}{MarkBet.ToFileNameString()}.png";
                 //string fileName = this.MarkBet.SaveDirectory + this.MarkBet.ToFileNameString() + ".jpg";
 
                 CreateImageFromVisual(uc, fileName);
@@ -1333,7 +1333,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -1359,7 +1359,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -1374,7 +1374,7 @@ namespace HPTClient
         {
             try
             {
-                bool automaticRecalculation = (bool)chkAutomaticRecalculation.IsChecked;
+                var automaticRecalculation = (bool)chkAutomaticRecalculation.IsChecked;
                 MarkBet.pauseRecalculation = !automaticRecalculation;
                 if (automaticRecalculation)
                 {
@@ -1383,7 +1383,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -1461,7 +1461,7 @@ namespace HPTClient
 
         private string GetSubject()
         {
-            return MarkBet.BetType.Code + " " + MarkBet.RaceDayInfo.RaceDayDate.ToString("yyyy-MM-dd") + ", " + MarkBet.ReducedSize.ToString() + " rader.";
+            return $"{MarkBet.BetType.Code} {MarkBet.RaceDayInfo.RaceDayDate:yyyy-MM-dd}, {MarkBet.ReducedSize} rader.";
         }
 
         private void miCopySystemGUIDToClipboard_Click(object sender, RoutedEventArgs e)
@@ -1552,7 +1552,7 @@ namespace HPTClient
             }
 
             // Skapa innehållet för popupen
-            Border b = new Border()
+            var b = new Border()
             {
                 BorderBrush = new SolidColorBrush(Colors.Black),
                 BorderThickness = new Thickness(1D),
@@ -1576,7 +1576,7 @@ namespace HPTClient
 
         void pu_MouseLeave(object sender, MouseEventArgs e)
         {
-            System.Windows.Controls.Primitives.Popup pu = (System.Windows.Controls.Primitives.Popup)sender;
+            var pu = (System.Windows.Controls.Primitives.Popup)sender;
             pu.Child = null;
             pu.IsOpen = false;
         }
@@ -1603,7 +1603,7 @@ namespace HPTClient
             if (e.AddedItems.Count > 0)
             {
                 var cbi = (ComboBoxItem)e.AddedItems[0];
-                GUIProfile gp = (GUIProfile)Convert.ToInt32(cbi.Tag);
+                var gp = (GUIProfile)Convert.ToInt32(cbi.Tag);
                 Profile = gp;
                 GUIElementsToShow = HPTConfig.Config.GetElementsToShow(Profile);
                 ApplyGUIElementsToShow(GUIElementsToShow);
@@ -1934,7 +1934,7 @@ namespace HPTClient
             {
                 if (!string.IsNullOrEmpty(tabName))
                 {
-                    object o = GetType().GetProperty(tabName)?.GetValue(this);
+                    var o = GetType().GetProperty(tabName)?.GetValue(this);
 
                     if (o != null && o.GetType() == typeof(TabItem))
                     {
@@ -2448,7 +2448,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -2466,7 +2466,7 @@ namespace HPTClient
             try
             {
                 Cursor = Cursors.Wait;
-                string result = MarkBet.CalculateJackpotRows();
+                var result = MarkBet.CalculateJackpotRows();
                 MessageBox.Show(result, "Jackpottrisk", MessageBoxButton.OK);
             }
             catch (Exception)
@@ -2481,7 +2481,7 @@ namespace HPTClient
             try
             {
                 Cursor = Cursors.Wait;
-                int result = MarkBet.CalculateNumberOfSingleRows();
+                var result = MarkBet.CalculateNumberOfSingleRows();
                 MessageBox.Show(result.ToString(), " ensamma rader", MessageBoxButton.OK);
             }
             catch (Exception)
@@ -2504,7 +2504,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -2528,7 +2528,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -2547,10 +2547,10 @@ namespace HPTClient
                 if (!tabItemTarget.Equals(tabItemSource))
                 {
                     var tabControl = tabItemTarget.Parent as TabControl;
-                    int sourceIndex = tabControl.Items.IndexOf(tabItemSource);
+                    var sourceIndex = tabControl.Items.IndexOf(tabItemSource);
 
                     tabControl.Items.Remove(tabItemSource);
-                    int targetIndex = tabControl.Items.IndexOf(tabItemTarget);
+                    var targetIndex = tabControl.Items.IndexOf(tabItemTarget);
                     if (targetIndex >= sourceIndex)
                     {
                         targetIndex++;
@@ -2566,7 +2566,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -2642,7 +2642,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -2662,7 +2662,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string fel = exc.Message;
+                var fel = exc.Message;
             }
         }
 

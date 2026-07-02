@@ -13,14 +13,14 @@ namespace HPTClient
 
         public List<HPTMarkBetTabsToShowAttribute> GetMarkBetTabsToShowAttributes()
         {
-            List<HPTMarkBetTabsToShowAttribute> attributeList = new List<HPTMarkBetTabsToShowAttribute>();
-            foreach (PropertyInfo pi in (typeof(HPTMarkBetTabsToShow)).GetProperties())
+            var attributeList = new List<HPTMarkBetTabsToShowAttribute>();
+            foreach (var pi in (typeof(HPTMarkBetTabsToShow)).GetProperties())
             {
-                foreach (object o in pi.GetCustomAttributes(true))
+                foreach (var o in pi.GetCustomAttributes(true))
                 {
                     if (o.GetType() == typeof(HPTMarkBetTabsToShowAttribute))
                     {
-                        HPTMarkBetTabsToShowAttribute mta = (HPTMarkBetTabsToShowAttribute)o;
+                        var mta = (HPTMarkBetTabsToShowAttribute)o;
                         attributeList.Add(mta);
                     }
                 }
@@ -34,20 +34,16 @@ namespace HPTClient
         [DataMember]
         public List<string> ColumnsInOrder { get; set; }
 
-        private GUIProfile guiProfile = GUIProfile.Normal;
         [DataMember]
         public GUIProfile GUIProfile
         {
-            get
-            {
-                return guiProfile;
-            }
+            get;
             set
             {
-                guiProfile = value;
+                field = value;
                 OnPropertyChanged();
             }
-        }
+        } = GUIProfile.Normal;
 
         private bool isPayingCustomer;
         [XmlIgnore]
@@ -64,50 +60,38 @@ namespace HPTClient
             }
         }
 
-        private bool showRaces;
         [HPTMarkBetTabsToShow("Avdelningar", "ShowRaces", 1, false)]
         [DataMember]
         public bool ShowRaces
         {
-            get
-            {
-                return showRaces;
-            }
+            get;
             set
             {
-                showRaces = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showRacesGrouped;
-        [HPTMarkBetTabsToShow("Poäng", "ShowRacesGrouped", 12, false)]   // KOMMANDE
+        [HPTMarkBetTabsToShow("Poäng", "ShowRacesGrouped", 12, false)] // KOMMANDE
         [DataMember]
         public bool ShowRacesGrouped
         {
-            get
-            {
-                return showRacesGrouped;
-            }
+            get;
             set
             {
-                showRacesGrouped = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showOverview;
         [HPTMarkBetTabsToShow("Översikt", "ShowOverview", 3, false)]
         [DataMember]
         public bool ShowOverview
         {
-            get
-            {
-                return showOverview;
-            }
+            get;
             set
             {
-                showOverview = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -128,227 +112,171 @@ namespace HPTClient
         //    }
         //}
 
-        private bool showComments;
         [HPTMarkBetTabsToShow("Kommentarer", "ShowComments", 3, true)]
         [DataMember]
         public bool ShowComments
         {
-            get
-            {
-                return showComments;
-            }
+            get;
             set
             {
-                showComments = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showRankReduction;
         [HPTMarkBetTabsToShow("Rankreducering", "ShowRankReduction", 4, true)]
         [DataMember]
         public bool ShowRankReduction
         {
-            get
-            {
-                return showRankReduction;
-            }
+            get;
             set
             {
-                showRankReduction = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showRankOverview;
         [HPTMarkBetTabsToShow("Ranköversikt", "ShowRankOverview", 4, true)]
         [DataMember]
         public bool ShowRankOverview
         {
-            get
-            {
-                return showRankOverview;
-            }
+            get;
             set
             {
-                showRankOverview = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showSingleRows;
         [HPTMarkBetTabsToShow("Enkelrader", "ShowSingleRows", 5, true)]
         [DataMember]
         public bool ShowSingleRows
         {
-            get
-            {
-                return showSingleRows;
-            }
+            get;
             set
             {
-                showSingleRows = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showComplimentaryRules;
         [HPTMarkBetTabsToShow("Utgångar", "ShowComplimentaryRules", 6, true)]
         [DataMember]
         public bool ShowComplimentaryRules
         {
-            get
-            {
-                return showComplimentaryRules;
-            }
+            get;
             set
             {
-                showComplimentaryRules = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
 
-        private bool showIntervalReduction;
         [HPTMarkBetTabsToShow("Intervall", "ShowIntervalReduction", 7, true)]
         [DataMember]
         public bool ShowIntervalReduction
         {
-            get
-            {
-                return showIntervalReduction;
-            }
+            get;
             set
             {
-                showIntervalReduction = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showDriverReduction;
         [HPTMarkBetTabsToShow("Kuskar", "ShowDriverReduction", 8, true)]
         [DataMember]
         public bool ShowDriverReduction
         {
-            get
-            {
-                return showDriverReduction;
-            }
+            get;
             set
             {
-                showDriverReduction = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showTrainerReduction;
         [HPTMarkBetTabsToShow("Tränare", "ShowTrainerReduction", 9, true)]
         [DataMember]
         public bool ShowTrainerReduction
         {
-            get
-            {
-                return showTrainerReduction;
-            }
+            get;
             set
             {
-                showTrainerReduction = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showCorrection;
         [HPTMarkBetTabsToShow("Rättning", "ShowCorrection", 10, false)]
         [DataMember]
         public bool ShowCorrection
         {
-            get
-            {
-                return showCorrection;
-            }
+            get;
             set
             {
-                showCorrection = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showReductionStatistics;
         [HPTMarkBetTabsToShow("Villkorsstatistik", "ShowReductionStatistics", 4, true)]
         [DataMember]
         public bool ShowReductionStatistics
         {
-            get
-            {
-                return showReductionStatistics;
-            }
+            get;
             set
             {
-                showReductionStatistics = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showGroupIntervalReduction;
         [HPTMarkBetTabsToShow("Gruppintervall", "ShowGroupIntervalReduction", 11, true)]
         [DataMember]
         public bool ShowGroupIntervalReduction
         {
-            get
-            {
-                return showGroupIntervalReduction;
-            }
+            get;
             set
             {
-                showGroupIntervalReduction = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showMultiABCD;
         [HPTMarkBetTabsToShow("Multi-ABCD", "ShowMultiABCD", 12, true)]
         [DataMember]
         public bool ShowMultiABCD
         {
-            get
-            {
-                return showMultiABCD;
-            }
+            get;
             set
             {
-                showMultiABCD = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showV6BetMultiplier;
         [HPTMarkBetTabsToShow("V6/Flerbong", "ShowV6BetMultiplier", 13, true)]
         [DataMember]
         public bool ShowV6BetMultiplier
         {
-            get
-            {
-                return showV6BetMultiplier;
-            }
+            get;
             set
             {
-                showV6BetMultiplier = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showCategoryCodeReduction;
         [HPTMarkBetTabsToShow("Kategorireducering", "ShowCategoryCodeReduction", 2, true)]
         [DataMember]
         public bool ShowCategoryCodeReduction
         {
-            get
-            {
-                return showCategoryCodeReduction;
-            }
+            get;
             set
             {
-                showCategoryCodeReduction = value;
+                field = value;
                 OnPropertyChanged();
             }
         }

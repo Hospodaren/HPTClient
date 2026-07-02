@@ -5,8 +5,6 @@
 /// </summary>
 internal class HPTVersion : IEquatable<HPTVersion>
 {
-    private static HPTVersion? s_oldestAllowedVersion;
-
     /// <summary>
     /// Gets the oldest version of HPT data files still supported.
     /// </summary>
@@ -14,16 +12,16 @@ internal class HPTVersion : IEquatable<HPTVersion>
     {
         get
         {
-            if (s_oldestAllowedVersion is null)
+            if (field is null)
             {
-                s_oldestAllowedVersion = new HPTVersion
+                field = new HPTVersion
                 {
                     Beta = false,
                     BetaVersion = 0,
                     Version = 3.63m
                 };
             }
-            return s_oldestAllowedVersion;
+            return field;
         }
     }
 

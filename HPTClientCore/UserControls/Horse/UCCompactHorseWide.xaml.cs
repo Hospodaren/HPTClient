@@ -21,7 +21,7 @@ namespace HPTClient
             {
                 return;
             }
-            TextBlock tb = (TextBlock)sender;
+            var tb = (TextBlock)sender;
             if (pu == null)
             {
                 pu = new System.Windows.Controls.Primitives.Popup()
@@ -39,7 +39,7 @@ namespace HPTClient
 
         void pu_MouseLeave(object sender, MouseEventArgs e)
         {
-            System.Windows.Controls.Primitives.Popup pu = (System.Windows.Controls.Primitives.Popup)sender;
+            var pu = (System.Windows.Controls.Primitives.Popup)sender;
             pu.Child = null;
             pu.IsOpen = false;
         }

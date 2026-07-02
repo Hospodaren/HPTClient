@@ -6,88 +6,68 @@ namespace HPTClient
     [DataContract]
     public class HPTNumberOfWinners : Notifier
     {
-        private int numberOfWinners;
         [DataMember]
         public int NumberOfWinners
         {
-            get
-            {
-                return numberOfWinners;
-            }
+            get;
             set
             {
-                numberOfWinners = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool selected;
         [DataMember]
         public bool Selected
         {
-            get
-            {
-                return selected;
-            }
+            get;
             set
             {
-                if (selected == value)
+                if (field == value)
                 {
                     return;
                 }
-                selected = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool selectable;
         [DataMember]
         public bool Selectable
         {
-            get
-            {
-                return selectable;
-            }
+            get;
             set
             {
                 if (!value && Selected)
                 {
                     Selected = false;
                 }
-                if (selectable == value)
+                if (field == value)
                 {
                     return;
                 }
-                selectable = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private decimal probability;
         public decimal Probability
         {
-            get
-            {
-                return probability;
-            }
+            get;
             set
             {
-                probability = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool isSuperfluous;
         [XmlIgnore]
         public bool IsSuperfluous
         {
-            get
-            {
-                return isSuperfluous;
-            }
+            get;
             set
             {
-                isSuperfluous = value;
+                field = value;
                 OnPropertyChanged();
             }
         }

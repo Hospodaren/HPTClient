@@ -31,8 +31,8 @@ namespace HPTClient
 
         public void SetStakeAndNumberOfSelected()
         {
-            int numberOfSelected = CombinationList.Count(c => c.Selected);
-            int totalStake = CombinationList
+            var numberOfSelected = CombinationList.Count(c => c.Selected);
+            var totalStake = CombinationList
                 .Where(c => c.Selected && c.Stake != null)
                 .Sum(c => (int)c.Stake);
 
@@ -46,30 +46,22 @@ namespace HPTClient
             }
         }
 
-        private int numberOfSelectedCombinations;
         public int NumberOfSelectedCombinations
         {
-            get
-            {
-                return numberOfSelectedCombinations;
-            }
+            get;
             set
             {
-                numberOfSelectedCombinations = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int totalStake;
         public int TotalStake
         {
-            get
-            {
-                return totalStake;
-            }
+            get;
             set
             {
-                totalStake = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -78,14 +70,14 @@ namespace HPTClient
         {
             if (CombinationList != null)
             {
-                List<HPTCombination> orderedCombinations = CombinationList.OrderBy(c => c.CombinationOddsExact).ToList();
-                for (int i = 0; i < orderedCombinations.Count(); i++)
+                var orderedCombinations = CombinationList.OrderBy(c => c.CombinationOddsExact).ToList();
+                for (var i = 0; i < orderedCombinations.Count(); i++)
                 {
                     orderedCombinations[i].CombinationOddsRank = i + 1;
                 }
 
                 orderedCombinations = CombinationList.OrderBy(c => c.CombinationOddsExact).ToList();
-                for (int i = 0; i < CombinationList.Count; i++)
+                for (var i = 0; i < CombinationList.Count; i++)
                 {
                     orderedCombinations[i].MultipliedOddsRank = i + 1;
                 }

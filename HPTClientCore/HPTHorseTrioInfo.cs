@@ -5,62 +5,46 @@ namespace HPTClient
     [DataContract]
     public class HPTHorseTrioInfo : Notifier
     {
-        private int? trioIndex;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public int? TrioIndex
         {
-            get
-            {
-                return trioIndex;
-            }
+            get;
             set
             {
-                trioIndex = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private HPTHorseTrioPlaceInfo placeInfo1;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public HPTHorseTrioPlaceInfo PlaceInfo1
         {
-            get
-            {
-                return placeInfo1;
-            }
+            get;
             set
             {
-                placeInfo1 = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private HPTHorseTrioPlaceInfo placeInfo2;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public HPTHorseTrioPlaceInfo PlaceInfo2
         {
-            get
-            {
-                return placeInfo2;
-            }
+            get;
             set
             {
-                placeInfo2 = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private HPTHorseTrioPlaceInfo placeInfo3;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public HPTHorseTrioPlaceInfo PlaceInfo3
         {
-            get
-            {
-                return placeInfo3;
-            }
+            get;
             set
             {
-                placeInfo3 = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -89,61 +73,45 @@ namespace HPTClient
     {
         public int Place { get; set; }
 
-        private int investment;
         [DataMember]
         public int Investment
         {
-            get
-            {
-                return investment;
-            }
+            get;
             set
             {
-                investment = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private decimal investmentShare;
         public decimal InvestmentShare
         {
-            get
-            {
-                return investmentShare;
-            }
+            get;
             set
             {
-                investmentShare = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int percent;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public int Percent
         {
-            get
-            {
-                return percent;
-            }
+            get;
             set
             {
-                percent = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool selected;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public bool Selected
         {
-            get
-            {
-                return selected;
-            }
+            get;
             set
             {
-                selected = value;
+                field = value;
                 OnPropertyChanged();
             }
         }

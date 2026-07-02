@@ -49,7 +49,6 @@ namespace HPTClient
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public string Time { get; set; }
 
-        private decimal timeWeighed;
         [XmlIgnore]
         public decimal TimeWeighed
         {
@@ -60,12 +59,9 @@ namespace HPTClient
                 //{
                 //    HPTServiceToHPTHelper.SetWeighedTime(this);
                 //}
-                return timeWeighed;
+                return field;
             }
-            set
-            {
-                timeWeighed = value;
-            }
+            set;
         }
 
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
@@ -86,15 +82,14 @@ namespace HPTClient
 
         public string ATGId { get; set; }
 
-        private Brush backColor;
         [XmlIgnore]
         public Brush BackColor
         {
             get
             {
-                if (backColor == null)
+                if (field == null)
                 {
-                    Color c = Colors.White;
+                    var c = Colors.White;
                     if (Place == 1)
                     {
                         //c = Colors.LightGreen;
@@ -111,9 +106,9 @@ namespace HPTClient
                         c = HPTConfig.Config.ColorBad;
                     }
                     //backColor = new LinearGradientBrush(c, Colors.White, 90.0);
-                    backColor = new SolidColorBrush(c);
+                    field = new SolidColorBrush(c);
                 }
-                return backColor;
+                return field;
             }
         }
     }

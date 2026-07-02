@@ -29,12 +29,12 @@ namespace HPTClient
 
         private void btnCreateCoupons_Click(object sender, RoutedEventArgs e)
         {
-            string fileName = CombBet.SaveDirectory + CombBet.ToFileNameString();
-            CombBet.SystemFilename = fileName + ".xml";
-            ATGCouponHelper couponHelper = new ATGCouponHelper(CombBet);
+            var fileName = CombBet.SaveDirectory + CombBet.ToFileNameString();
+            CombBet.SystemFilename = $"{fileName}.xml";
+            var couponHelper = new ATGCouponHelper(CombBet);
             couponHelper.CreateCoupons();
             couponHelper.CreateATGFile();
-            HPTSerializer.SerializeHPTCombinationSystem(fileName + ".hpt7", CombBet);
+            HPTSerializer.SerializeHPTCombinationSystem($"{fileName}.hpt7", CombBet);
         }
 
         void sfd_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
@@ -43,31 +43,31 @@ namespace HPTClient
             {
                 try
                 {
-                    SaveFileDialog sfd = (SaveFileDialog)sender;
-                    string fileName = sfd.FileName;
+                    var sfd = (SaveFileDialog)sender;
+                    var fileName = sfd.FileName;
                     CombBet.SystemFilename = fileName;
-                    ATGCouponHelper couponHelper = new ATGCouponHelper(CombBet);
+                    var couponHelper = new ATGCouponHelper(CombBet);
                     couponHelper.CreateCoupons();
                     couponHelper.CreateATGFile();
                     HPTSerializer.SerializeHPTCombinationSystem(fileName.Replace(".xml", ".hpt7"), CombBet);
                 }
                 catch (Exception exc)
                 {
-                    string error = exc.Message;
+                    var error = exc.Message;
                 }
             }
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            HPTSerializer.SerializeHPTCombinationSystem(CombBet.SaveDirectory + CombBet.ToFileNameString() + ".hpt5", CombBet);
+            HPTSerializer.SerializeHPTCombinationSystem($"{CombBet.SaveDirectory}{CombBet.ToFileNameString()}.hpt5", CombBet);
         }
 
         private void btnSaveAs_Click(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog sfdSaveHPT = new SaveFileDialog();
+            var sfdSaveHPT = new SaveFileDialog();
             sfdSaveHPT.InitialDirectory = CombBet.SaveDirectory;
-            sfdSaveHPT.FileName = CombBet.ToFileNameString() + ".hpt7";
+            sfdSaveHPT.FileName = $"{CombBet.ToFileNameString()}.hpt7";
             sfdSaveHPT.Filter = "Hjälp på traven-system|*.hpt7";
             sfdSaveHPT.FileOk += new System.ComponentModel.CancelEventHandler(sfdSaveHPT_FileOk);
             sfdSaveHPT.ShowDialog();
@@ -79,12 +79,12 @@ namespace HPTClient
             {
                 try
                 {
-                    SaveFileDialog sfd = (SaveFileDialog)sender;
+                    var sfd = (SaveFileDialog)sender;
                     HPTSerializer.SerializeHPTCombinationSystem(sfd.FileName, CombBet);
                 }
                 catch (Exception exc)
                 {
-                    string error = exc.Message;
+                    var error = exc.Message;
                 }
             }
         }
@@ -105,15 +105,15 @@ namespace HPTClient
 
         private void btnCopy_Click(object sender, RoutedEventArgs e)
         {
-            string systemInfo = CombBet.ToClipboardString();
+            var systemInfo = CombBet.ToClipboardString();
             Clipboard.SetDataObject(systemInfo);
         }
 
         private void btnCreateCouponsAs_Click(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog sfd = new SaveFileDialog();
+            var sfd = new SaveFileDialog();
             sfd.InitialDirectory = CombBet.SaveDirectory;
-            sfd.FileName = CombBet.ToFileNameString() + ".xml";
+            sfd.FileName = $"{CombBet.ToFileNameString()}.xml";
             sfd.Filter = "ATG-kupongfiler (*.xml)|*.xml|Alla filer (*.*)|*.*";
             sfd.FileOk += new System.ComponentModel.CancelEventHandler(sfd_FileOk);
             sfd.ShowDialog();
@@ -137,8 +137,8 @@ namespace HPTClient
             }
             if (cmbUpdateInterval.SelectedItem != null)
             {
-                ComboBoxItem cbi = (ComboBoxItem)cmbUpdateInterval.SelectedItem;
-                int updatePeriod = Convert.ToInt32(cbi.Tag) * 60 * 1000;
+                var cbi = (ComboBoxItem)cmbUpdateInterval.SelectedItem;
+                var updatePeriod = Convert.ToInt32(cbi.Tag) * 60 * 1000;
                 if (updatePeriod == 0)
                 {
                     atgUpdateTimer.Change(Timeout.Infinite, Timeout.Infinite);
@@ -234,9 +234,9 @@ namespace HPTClient
         {
             if (e.AddedItems.Count > 0)
             {
-                ComboBoxItem cbi = (ComboBoxItem)e.AddedItems[0];
-                string s = (string)cbi.Content;
-                int targetReturn = 0;
+                var cbi = (ComboBoxItem)e.AddedItems[0];
+                var s = (string)cbi.Content;
+                var targetReturn = 0;
                 if (int.TryParse(s, out targetReturn))
                 {
                     CombBet.TargetReturn = targetReturn;

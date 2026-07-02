@@ -20,19 +20,19 @@ namespace HPTClient
         {
             get
             {
-                return "Tränarvillkor: " + NumberOfWinnersString + " vinnare";
+                return $"Tränarvillkor: {NumberOfWinnersString} vinnare";
             }
         }
 
         public override string ToString(HPTMarkBet markBet)
         {
             // Create String representation
-            StringBuilder sb = new StringBuilder();
-            foreach (string person in PersonNameList)
+            var sb = new StringBuilder();
+            foreach (var person in PersonNameList)
             {
                 sb.AppendLine(person);
             }
-            ClipboardString = ReductionTypeString + "\r\n" + sb.ToString();
+            ClipboardString = $"{ReductionTypeString}\r\n{sb}";
             return sb.ToString();
         }
     }

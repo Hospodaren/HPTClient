@@ -52,10 +52,10 @@ namespace HPTClient
 
         private void GridViewColumnHeader_Click(object sender, RoutedEventArgs e)
         {
-            GridViewColumnHeader column = sender as GridViewColumnHeader;
-            String field = column.Tag as String;
+            var column = sender as GridViewColumnHeader;
+            var field = column.Tag as String;
 
-            ListSortDirection newDir = ListSortDirection.Ascending;
+            var newDir = ListSortDirection.Ascending;
 
             switch (field)
             {
@@ -86,7 +86,8 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                MessageBox.Show("Problem vid rättning av kuponger:\r\nObservera att endast V4, V5, V64, V65 och V75 som är mindre än en vecka gamla kan automaträttas i nuläget.\r\n" + exc.Message, "Rättning av kuponger misslyckades", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(
+                    $"Problem vid rättning av kuponger:\r\nObservera att endast V4, V5, V64, V65 och V75 som är mindre än en vecka gamla kan automaträttas i nuläget.\r\n{exc.Message}", "Rättning av kuponger misslyckades", MessageBoxButton.OK, MessageBoxImage.Error);
                 HPTConfig.Config.AddToErrorLog(exc);
             }
             Cursor = Cursors.Arrow;
@@ -100,7 +101,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -150,7 +151,7 @@ namespace HPTClient
                             .ForEach(h =>
                             {
                                 h.NumberOfRowsWithAllCorrect = h.NumberOfCoveredRows;
-                                h.NumberOfRowsWithPossibility = "(" + h.NumberOfRowsWithAllCorrect.ToString();
+                                h.NumberOfRowsWithPossibility = $"({h.NumberOfRowsWithAllCorrect}";
                                 if (h.Selected)
                                 {
                                     if (MarkBet.BetType.PayOutDummyList.Length > 1)
@@ -172,7 +173,7 @@ namespace HPTClient
                 }
                 catch (Exception exc)
                 {
-                    string s = exc.Message;
+                    var s = exc.Message;
                 }
             }
         }
@@ -406,7 +407,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
                 HPTConfig.AddToErrorLogStatic(exc);
             }
         }
@@ -433,14 +434,14 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
         private void PrepareForSave()
         {
-            string fileName = MarkBet.SaveDirectory + MarkBet.ToFileNameString();
-            string hpt3Filename = fileName + ".hpt7";
+            var fileName = MarkBet.SaveDirectory + MarkBet.ToFileNameString();
+            var hpt3Filename = $"{fileName}.hpt7";
             MarkBet.MailSender.HPT3FileName = hpt3Filename;
             MarkBet.SetSerializerValues();
         }
@@ -521,7 +522,7 @@ namespace HPTClient
                         CouponCorrector.RaceDayInfo.CalculateSimulatedRaceValues(MarkBet);
                     }
 
-                    HPTLegResult legResult = horse.ParentRace.LegResult;
+                    var legResult = horse.ParentRace.LegResult;
                     if (legResult.Winners is null || legResult.Winners.Count() == 0)
                     {
                         legResult.Winners = [horse.StartNr];
@@ -558,7 +559,7 @@ namespace HPTClient
 
         private void ClearSimulatedCorrection()
         {
-            foreach (HPTHorse horse in CouponCorrector.HorseList)
+            foreach (var horse in CouponCorrector.HorseList)
             {
                 horse.Correct = false;
                 //if (horse.ParentRace.LegResult != null && horse.ParentRace.LegResult.WinnerList != null)
@@ -661,7 +662,7 @@ namespace HPTClient
             // TODO: Använd ATGGameBase istället
             //var serviceConnector = new HPTServiceConnector();
             //var rdi = serviceConnector.GetRaceDayInfoUpdateNoMerge(this.MarkBet.RaceDayInfo);
-            bool reserverReplaced = false;
+            var reserverReplaced = false;
             foreach (var leg in game.Races)
             {
                 //var scratchedHorses = leg.HorseList
@@ -756,7 +757,7 @@ namespace HPTClient
                 {
                     if (chkAutomaticCorrection.IsChecked == true)
                     {
-                        TimeSpan nextCorrectionTime = MarkBet.RaceDayInfo.RaceList.Min(r => r.PostTime).AddMinutes(4D) - DateTime.Now;
+                        var nextCorrectionTime = MarkBet.RaceDayInfo.RaceList.Min(r => r.PostTime).AddMinutes(4D) - DateTime.Now;
                         tmrCorrection.Change(nextCorrectionTime, new TimeSpan(0, 0, 30));
                     }
                     return;
@@ -789,7 +790,7 @@ namespace HPTClient
                         if (nextRace != null)
                         {
                             // Kör fyra minuter efter att nästa lopp startat
-                            TimeSpan nextCorrectionTime = nextRace.PostTime.AddMinutes(4D) - DateTime.Now;
+                            var nextCorrectionTime = nextRace.PostTime.AddMinutes(4D) - DateTime.Now;
                             tmrCorrection.Change(nextCorrectionTime, new TimeSpan(0, 0, 30));
                         }
                         else if (!MarkBet.RaceDayInfo.AllResultsComplete)
@@ -896,7 +897,7 @@ namespace HPTClient
                 sr.EstimateRowValueFinalStakeShare(MarkBet);
 
                 // Antal vinstgrupper
-                int numberOfPools = MarkBet.BetType.PayOutDummyList.Length;
+                var numberOfPools = MarkBet.BetType.PayOutDummyList.Length;
                 MarkBet.BetType.PayOutDummyList[0].PayOutAmount = sr.RowValueFinalStakeShare;
                 if (numberOfPools > 1)
                 {
@@ -939,11 +940,11 @@ namespace HPTClient
                     .First();
 
                 // Antal fel på raden med bäst potential
-                int numberOfCorrect = bestRow.HorseList.Intersect(correctHorses).Count();
-                int numberOfErrors = numberOfFinishedRaces - numberOfCorrect;
+                var numberOfCorrect = bestRow.HorseList.Intersect(correctHorses).Count();
+                var numberOfErrors = numberOfFinishedRaces - numberOfCorrect;
 
                 // Antal vinstgrupper
-                int numberOfPools = MarkBet.BetType.PayOutDummyList.Length;
+                var numberOfPools = MarkBet.BetType.PayOutDummyList.Length;
 
                 // Man kan inte vinna några pengar alls
                 if (numberOfErrors >= numberOfPools)
@@ -970,7 +971,7 @@ namespace HPTClient
                     .ToList();
 
                 // Hur mycket kommer man kunna vinna i bästa fall
-                int totalPotentialWinnings = rowsWith0Errors.Sum(sr => sr.RowValueFinalStakeShare * sr.BetMultiplier);
+                var totalPotentialWinnings = rowsWith0Errors.Sum(sr => sr.RowValueFinalStakeShare * sr.BetMultiplier);
 
                 if (numberOfPools > 1)
                 {
@@ -1072,7 +1073,7 @@ namespace HPTClient
                 .ForEach(h =>
                 {
                     h.NumberOfRowsWithAllCorrect = rowsWithAllCorrect.Count(sr => sr.HorseList.Contains(h));
-                    h.NumberOfRowsWithPossibility = "(" + h.NumberOfRowsWithAllCorrect.ToString();
+                    h.NumberOfRowsWithPossibility = $"({h.NumberOfRowsWithAllCorrect}";
                 });
 
             if (numberOfFinishedRaces > 0 && MarkBet.BetType.PayOutDummyList.Length > 1)
@@ -1086,7 +1087,7 @@ namespace HPTClient
                     .ForEach(h =>
                     {
                         h.NumberOfRowsWithOneError = rowsWithOneError.Count(sr => sr.HorseList.Contains(h));
-                        h.NumberOfRowsWithPossibility += "/" + h.NumberOfRowsWithOneError.ToString();
+                        h.NumberOfRowsWithPossibility += $"/{h.NumberOfRowsWithOneError}";
                     });
             }
 
@@ -1101,7 +1102,7 @@ namespace HPTClient
                     .ForEach(h =>
                     {
                         h.NumberOfRowsWithTwoErrors = rowsWithTwoErrors.Count(sr => sr.HorseList.Contains(h));
-                        h.NumberOfRowsWithPossibility += "/" + h.NumberOfRowsWithTwoErrors.ToString();
+                        h.NumberOfRowsWithPossibility += $"/{h.NumberOfRowsWithTwoErrors}";
                     });
             }
 

@@ -5,62 +5,46 @@ namespace HPTClient
     [DataContract]
     public class HPTHorseNextStart : Notifier, IComparable
     {
-        private DateTime _StartDate;
         [DataMember]
         public DateTime StartDate
         {
-            get
-            {
-                return _StartDate;
-            }
+            get;
             set
             {
-                _StartDate = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int _RaceNumber;
         [DataMember]
         public int RaceNumber
         {
-            get
-            {
-                return _RaceNumber;
-            }
+            get;
             set
             {
-                _RaceNumber = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int _TrackId;
         [DataMember]
         public int TrackId
         {
-            get
-            {
-                return _TrackId;
-            }
+            get;
             set
             {
-                _TrackId = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private List<string> _BetTypes;
         [DataMember]
         public List<string> BetTypes
         {
-            get
-            {
-                return _BetTypes;
-            }
+            get;
             set
             {
-                _BetTypes = value;
+                field = value;
                 OnPropertyChanged();
             }
         }

@@ -21,40 +21,32 @@ namespace HPTClient // KOMMANDE
             return true;
         }
 
-        private bool use;
         [DataMember]
         public bool Use
         {
-            get
-            {
-                return use;
-            }
+            get;
             set
             {
-                if (use == value)
+                if (field == value)
                 {
                     return;
                 }
-                use = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private decimal minProbability;
         [DataMember]
         public decimal MinProbability
         {
-            get
-            {
-                return minProbability;
-            }
+            get;
             set
             {
-                if (minProbability == value)
+                if (field == value)
                 {
                     return;
                 }
-                minProbability = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -69,7 +61,7 @@ namespace HPTClient // KOMMANDE
 
         public override void SetReductionSpecificationString()
         {
-            ReductionSpecificationString = "Värderad sannolikhet över " + MinProbability.ToString("P1");
+            ReductionSpecificationString = $"Värderad sannolikhet över {MinProbability:P1}";
         }
 
         public override string ToString(HPTMarkBet markBet)

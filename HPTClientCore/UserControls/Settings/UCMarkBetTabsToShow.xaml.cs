@@ -16,13 +16,12 @@ namespace HPTClient
             InitializeComponent();
         }
 
-        private HPTMarkBetTabsToShow markBetTabsToShow;
         internal HPTMarkBetTabsToShow MarkBetTabsToShow
         {
             get
             {
-                markBetTabsToShow = (HPTMarkBetTabsToShow)DataContext;
-                return markBetTabsToShow;
+                field = (HPTMarkBetTabsToShow)DataContext;
+                return field;
             }
         }
 
@@ -40,13 +39,13 @@ namespace HPTClient
         {
             try
             {
-                object o = DataContext;
+                var o = DataContext;
                 //ATGCalendar ac = (ATGCalendar)this.DataContext;
                 //this.DataContext = ac.Config.MarkBetTabsToShow;
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -77,12 +76,12 @@ namespace HPTClient
 
         private void CreateMarkBetTabsToShowList()
         {
-            List<HPTMarkBetTabsToShowAttribute> tabsToShowAttributeList =
+            var tabsToShowAttributeList =
                     HPTConfig.Config.MarkBetTabsToShow.GetMarkBetTabsToShowAttributes();
             MarkBetTabsToShowList.Clear();
-            foreach (HPTMarkBetTabsToShowAttribute hda in tabsToShowAttributeList)
+            foreach (var hda in tabsToShowAttributeList)
             {
-                CheckBox chk = new CheckBox()
+                var chk = new CheckBox()
                 {
                     IsChecked = (bool)MarkBetTabsToShow.GetType().GetProperty(hda.PropertyName).GetValue(MarkBetTabsToShow, null),
                     Content = hda.Name

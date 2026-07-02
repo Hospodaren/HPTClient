@@ -37,7 +37,7 @@ namespace HPTClient
 
         public virtual void SetSkipRule()
         {
-            int numberOfSelected = NumberOfWinnersList.Count(now => now.Selected);
+            var numberOfSelected = NumberOfWinnersList.Count(now => now.Selected);
             SkipRule = numberOfSelected == 0 || numberOfSelected == NumberOfWinnersList.Count;
             if (LegSelectionList == null || LegSelectionList.Count == 0)
             {
@@ -54,62 +54,46 @@ namespace HPTClient
             }
         }
 
-        private int numberOfRaces;
         [DataMember]
         public int NumberOfRaces
         {
-            get
-            {
-                return numberOfRaces;
-            }
+            get;
             set
             {
-                numberOfRaces = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool use;
         [DataMember]
         public bool Use
         {
-            get
-            {
-                return use;
-            }
+            get;
             set
             {
-                use = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private string name;
         [DataMember]
         public string Name
         {
-            get
-            {
-                return name;
-            }
+            get;
             set
             {
-                name = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int numberOfSelected;
         [DataMember]
         public int NumberOfSelected
         {
-            get
-            {
-                return numberOfSelected;
-            }
+            get;
             set
             {
-                numberOfSelected = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -176,7 +160,7 @@ namespace HPTClient
                 return numberOfWinnersList
                     .Where(now => now.Selected)
                     .Select(now => now.NumberOfWinners.ToString())
-                    .Aggregate((now, next) => now + ", " + next);
+                    .Aggregate((now, next) => $"{now}, {next}");
             }
         }
 
@@ -184,15 +168,15 @@ namespace HPTClient
         {
             get
             {
-                return "Avd " + LegList
+                return $"Avd {LegList
                     .Select(l => l.ToString())
-                    .Aggregate((l, next) => l + ", " + next);
+                    .Aggregate((l, next) => $"{l}, {next}")}";
             }
         }
 
         public void SelectInterval(int start, int length, bool selected)
         {
-            for (int i = start; i < start + length; i++)
+            for (var i = start; i < start + length; i++)
             {
                 var hptNow = NumberOfWinnersList.FirstOrDefault(now => now.NumberOfWinners == i);
                 if (hptNow != null)
@@ -204,7 +188,7 @@ namespace HPTClient
 
         public void SetSelectable(int upperBoundary)
         {
-            for (int i = 0; i <= upperBoundary; i++)
+            for (var i = 0; i <= upperBoundary; i++)
             {
                 var hptNow = NumberOfWinnersList.FirstOrDefault(now => now.NumberOfWinners == i);
                 if (hptNow != null)

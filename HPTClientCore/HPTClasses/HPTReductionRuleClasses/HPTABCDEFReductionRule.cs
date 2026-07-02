@@ -25,17 +25,13 @@ namespace HPTClient
 
         }
 
-        private ObservableCollection<HPTXReductionRule> xReductionRuleList;
         [DataMember]
         public ObservableCollection<HPTXReductionRule> XReductionRuleList
         {
-            get
-            {
-                return xReductionRuleList;
-            }
+            get;
             set
             {
-                xReductionRuleList = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -91,32 +87,24 @@ namespace HPTClient
             }
         }
 
-        private int lowestMax;
         [DataMember]
         public int LowestMax
         {
-            get
-            {
-                return lowestMax;
-            }
+            get;
             set
             {
-                lowestMax = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool use;
         [DataMember]
         public bool Use
         {
-            get
-            {
-                return use;
-            }
+            get;
             set
             {
-                use = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -152,7 +140,7 @@ namespace HPTClient
         public override string ToString(HPTMarkBet markBet)
         {
             // Create String representation
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             //sb.AppendLine("ABCD-Villkor");
 
             XReductionRuleList

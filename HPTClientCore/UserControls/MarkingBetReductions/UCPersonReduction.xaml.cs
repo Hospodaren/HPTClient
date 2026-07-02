@@ -22,16 +22,15 @@ namespace HPTClient
             SetRaceDayInfo();
         }
 
-        private HPTPersonRulesCollection personRulesCollection;
         public HPTPersonRulesCollection PersonRulesCollection
         {
             get
             {
-                if (personRulesCollection == null)
+                if (field == null)
                 {
-                    personRulesCollection = (HPTPersonRulesCollection)DataContext;
+                    field = (HPTPersonRulesCollection)DataContext;
                 }
-                return personRulesCollection;
+                return field;
             }
         }
 
@@ -89,17 +88,17 @@ namespace HPTClient
             {
                 return;
             }
-            bool recalculationPaused = MarkBet.pauseRecalculation;
+            var recalculationPaused = MarkBet.pauseRecalculation;
             MarkBet.pauseRecalculation = true;
-            CheckBox chk = (CheckBox)sender;
-            HPTPerson person = (HPTPerson)chk.DataContext;
+            var chk = (CheckBox)sender;
+            var person = (HPTPerson)chk.DataContext;
             if ((bool)chk.IsChecked)
             {
                 if (CurrentReductionRule == null)
                 {
                     CurrentReductionRule = PersonRulesCollection.ReductionRuleFactory();
                 }
-                foreach (HPTHorse horse in person.HorseList)
+                foreach (var horse in person.HorseList)
                 {
                     if (!HorseList.Contains(horse))
                     {
@@ -117,7 +116,7 @@ namespace HPTClient
             }
             else
             {
-                foreach (HPTHorse horse in person.HorseList)
+                foreach (var horse in person.HorseList)
                 {
                     HorseList.Remove(horse);
                 }
@@ -154,11 +153,11 @@ namespace HPTClient
                 {
                     PersonRulesCollection.ReductionRuleList.Remove(CurrentReductionRule);
                 }
-                HPTPersonReductionRule rule = PersonRulesCollection.ReductionRuleFactory();
+                var rule = PersonRulesCollection.ReductionRuleFactory();
                 CurrentReductionRule = rule;
                 PersonRulesCollection.ReductionRuleList.Add(rule);
 
-                foreach (HPTPerson person in PersonList.Where(p => p.Selected))
+                foreach (var person in PersonList.Where(p => p.Selected))
                 {
                     person.Selected = false;
                 }
@@ -183,16 +182,16 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
         private void btnClearRule_Click(object sender, RoutedEventArgs e)
         {
-            bool recalculationPaused = MarkBet.pauseRecalculation;
+            var recalculationPaused = MarkBet.pauseRecalculation;
             MarkBet.pauseRecalculation = true;
             ResetPersonList(CurrentReductionRule.PersonList);
-            foreach (HPTPerson person in PersonList)
+            foreach (var person in PersonList)
             {
                 if (person.Selected)
                 {
@@ -231,7 +230,7 @@ namespace HPTClient
         {
             MarkBet.pauseRecalculation = true;
             ResetPersonList(personList);
-            foreach (HPTPerson person in personList)
+            foreach (var person in personList)
             {
                 PersonRulesCollection.PersonList.First(p => p.ShortName == person.ShortName).Selected = true;
             }
@@ -240,7 +239,7 @@ namespace HPTClient
 
         private void ResetPersonList(IEnumerable<HPTPerson> personList)
         {
-            foreach (HPTPerson person in PersonList
+            foreach (var person in PersonList
                 .Where(p => p.Selected && !personList.Contains(p)))
             {
                 person.Selected = false;
@@ -249,8 +248,8 @@ namespace HPTClient
 
         private void btnRemove_Click(object sender, RoutedEventArgs e)
         {
-            Button btn = (Button)sender;
-            HPTPersonReductionRule rule = (HPTPersonReductionRule)btn.DataContext;
+            var btn = (Button)sender;
+            var rule = (HPTPersonReductionRule)btn.DataContext;
             PersonRulesCollection.ReductionRuleList.Remove(rule);
             if (rule == CurrentReductionRule)
             {
@@ -283,16 +282,16 @@ namespace HPTClient
 
         private void UpdatePersonList()
         {
-            bool onlyWithSelected = (bool)chkOnlyWithSelected.IsChecked;
-            bool onlyTwoOrMore = (bool)chkOnlyTwoOrMore.IsChecked;
+            var onlyWithSelected = (bool)chkOnlyWithSelected.IsChecked;
+            var onlyTwoOrMore = (bool)chkOnlyTwoOrMore.IsChecked;
             PersonList.Clear();
 
-            IOrderedEnumerable<HPTPerson> orderedPersonList = PersonRulesCollection.PersonList
+            var orderedPersonList = PersonRulesCollection.PersonList
                 .Where(p => ((onlyWithSelected && p.NumberOfSelectedHorse > 0) || !onlyWithSelected)
                     && ((onlyTwoOrMore && p.HorseList.Count > 1) || !onlyTwoOrMore))
                     .OrderBy(p => p.ShortName);
 
-            foreach (HPTPerson person in orderedPersonList)
+            foreach (var person in orderedPersonList)
             {
                 PersonList.Add(person);
             }
@@ -333,12 +332,12 @@ namespace HPTClient
             try
             {
                 var btn = (Button)sender;
-                HPTPersonReductionRule rule = (HPTPersonReductionRule)btn.DataContext;
+                var rule = (HPTPersonReductionRule)btn.DataContext;
                 CurrentReductionRule = rule;
                 ResetPersonList(rule.PersonList);
                 SelectPersons(rule.PersonList);
                 HorseList.Clear();
-                foreach (HPTHorse horse in CurrentReductionRule.PersonList.SelectMany(p => p.HorseList))
+                foreach (var horse in CurrentReductionRule.PersonList.SelectMany(p => p.HorseList))
                 {
                     HorseList.Add(horse);
                 }

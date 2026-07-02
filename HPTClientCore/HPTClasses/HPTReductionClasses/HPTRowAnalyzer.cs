@@ -39,7 +39,7 @@
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -57,7 +57,7 @@
                     }
                     return;
                 }
-                HPTMarkBetSingleRow singleRow = new HPTMarkBetSingleRow(HorseList);
+                var singleRow = new HPTMarkBetSingleRow(HorseList);
                 AnalyzeRow(singleRow);
                 numberOfAnalyzedRows++;
                 return;
@@ -69,7 +69,7 @@
                     return;
                 }
             }
-            foreach (HPTHorse horse in HorseListToAnalyze.Where(h => h.ParentRace.LegNr == raceNumber + 1))
+            foreach (var horse in HorseListToAnalyze.Where(h => h.ParentRace.LegNr == raceNumber + 1))
             {
                 HorseList[raceNumber] = horse;
                 MakeSingleRowCollection(raceNumber + 1);

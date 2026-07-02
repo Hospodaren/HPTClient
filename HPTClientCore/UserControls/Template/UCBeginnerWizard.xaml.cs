@@ -48,7 +48,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
             Cursor = Cursors.Arrow;
 

@@ -164,7 +164,7 @@ namespace HPTClient
                             }
                             catch (Exception exc)
                             {
-                                string s2 = exc.Message;
+                                var s2 = exc.Message;
                             }
                             isSettingV6BetMultiplier = false;
                         };
@@ -185,17 +185,17 @@ namespace HPTClient
 
         private void gvcRowSingleRow_Click(object sender, RoutedEventArgs e)
         {
-            GridViewColumnHeader column = sender as GridViewColumnHeader;
-            String field = column.Tag as String;
+            var column = sender as GridViewColumnHeader;
+            var field = column.Tag as String;
 
-            ListSortDirection newDir = ListSortDirection.Ascending;
+            var newDir = ListSortDirection.Ascending;
 
             if (lvwSingleRows.Items.SortDescriptions.Count > 0)
             {
-                SortDescription sd = lvwSingleRows.Items.SortDescriptions[0];
+                var sd = lvwSingleRows.Items.SortDescriptions[0];
                 if (sd.PropertyName == field)
                 {
-                    SortDescription sdNew = new SortDescription();
+                    var sdNew = new SortDescription();
                     sdNew.PropertyName = sd.PropertyName;
                     sdNew.Direction = sd.Direction == ListSortDirection.Ascending ? ListSortDirection.Descending : ListSortDirection.Ascending;
                     lvwSingleRows.Items.SortDescriptions.Clear();
@@ -257,7 +257,7 @@ namespace HPTClient
             {
                 var chk = (CheckBox)sender;
                 var singleRow = (HPTMarkBetSingleRow)chk.DataContext;
-                bool v6 = (bool)chk.IsChecked;
+                var v6 = (bool)chk.IsChecked;
                 singleRow.V6 = v6;
                 singleRow.Edited = true;
 
@@ -297,7 +297,7 @@ namespace HPTClient
             {
                 var iud = (IntegerUpDown)sender;
                 var singleRow = (HPTMarkBetSingleRow)iud.DataContext;
-                int betMultiplier = (int)iud.Value;
+                var betMultiplier = (int)iud.Value;
                 singleRow.BetMultiplier = betMultiplier;
                 singleRow.CreateBetMultiplierList(MarkBet);
                 singleRow.Edited = true;
@@ -315,7 +315,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -385,7 +385,7 @@ namespace HPTClient
             // Skapa enskilda val
             foreach (var bm in MarkBet.BetType.BetMultiplierList)
             {
-                MenuItem miBetMultiplier = new MenuItem()
+                var miBetMultiplier = new MenuItem()
                 {
                     Header = bm.ToString(),
                     Tag = bm.ToString()
@@ -393,10 +393,10 @@ namespace HPTClient
                 miBetMultiplier.Click += new RoutedEventHandler(miV6Betmultiplier_Click);
                 miBetMultiplierHeader.Items.Add(miBetMultiplier);
 
-                MenuItem miV6BetMultiplier = new MenuItem()
+                var miV6BetMultiplier = new MenuItem()
                 {
                     Header = bm.ToString(),
-                    Tag = "V6-" + bm.ToString()
+                    Tag = $"V6-{bm}"
                 };
                 miV6BetMultiplier.Click += new RoutedEventHandler(miV6Betmultiplier_Click);
                 miV6AndBetMultiplierHeader.Items.Add(miV6BetMultiplier);
@@ -433,11 +433,11 @@ namespace HPTClient
             var itemTag = (string)item.Tag;
 
             // Koll om V6/V7/V8
-            bool v6 = itemTag.StartsWith("V6");
+            var v6 = itemTag.StartsWith("V6");
 
             // Koll om flerbong
-            int betMultiplier = 1;
-            string bmString = itemTag;
+            var betMultiplier = 1;
+            var bmString = itemTag;
             if (itemTag.Contains("-"))
             {
                 bmString = itemTag.Split('-')[1];
@@ -480,12 +480,12 @@ namespace HPTClient
                 if (!CMColumnsToShow.HasItems)
                 {
                     CMColumnsToShow = new ContextMenu();
-                    List<HorseDataToShowAttribute> attributeList = HPTConfig.Config.SingleRowDataToShow.GetHorseDataToShowAttributes();
+                    var attributeList = HPTConfig.Config.SingleRowDataToShow.GetHorseDataToShowAttributes();
                     CMColumnsToShow.Items.Clear();
                     CMColumnsToShow.DataContext = HPTConfig.Config.SingleRowDataToShow;
-                    foreach (HorseDataToShowAttribute hda in attributeList)
+                    foreach (var hda in attributeList)
                     {
-                        MenuItem mi = new MenuItem()
+                        var mi = new MenuItem()
                         {
                             IsCheckable = true,
                             Header = hda.Name,
@@ -503,12 +503,12 @@ namespace HPTClient
                 {
                     CreateColumnHandlerList();
 
-                    List<string> propertyNamesList = ColumnHandlerList.Select(ch => ch.BindingField).ToList();
+                    var propertyNamesList = ColumnHandlerList.Select(ch => ch.BindingField).ToList();
 
-                    foreach (string propertyName in propertyNamesList)
+                    foreach (var propertyName in propertyNamesList)
                     {
                         // Ta bort de kolumner man inte vill visa
-                        bool show = (bool)HPTConfig.Config
+                        var show = (bool)HPTConfig.Config
                             .SingleRowDataToShow.GetType().GetProperty(propertyName)
                             .GetValue(HPTConfig.Config.SingleRowDataToShow, null);
 
@@ -551,7 +551,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -590,18 +590,18 @@ namespace HPTClient
         {
             if (sender.GetType().BaseType == typeof(HPTDataToShow))
             {
-                bool show = (bool)sender.GetType().GetProperty(e.PropertyName).GetValue(sender, null);
+                var show = (bool)sender.GetType().GetProperty(e.PropertyName).GetValue(sender, null);
                 HandleColumn(e.PropertyName, show);
             }
         }
 
         private void HandleColumn(string showText, bool show)
         {
-            List<ColumnHandler> columnsToHandle =
+            var columnsToHandle =
                 ColumnHandlerList.Where(ch => ch.BindingField == showText).ToList();
             foreach (var columnHandler in columnsToHandle)
             {
-                GridViewColumn gvc = columnHandler.Column;
+                var gvc = columnHandler.Column;
                 if (show && !gvwSingleRows.Columns.Contains(gvc))
                 {
                     gvwSingleRows.Columns.Add(gvc);
@@ -630,7 +630,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -665,7 +665,7 @@ namespace HPTClient
 
             SingleRowsObservable.Clear();
 
-            int numberOfPools = MarkBet.BetType.PayOutDummyList.Length;
+            var numberOfPools = MarkBet.BetType.PayOutDummyList.Length;
 
             selectedRows
                 .ToList()
@@ -707,7 +707,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 

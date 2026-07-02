@@ -5,108 +5,80 @@ namespace HPTClient
     [DataContract]
     public class HPTHorseResultInfo : Notifier
     {
-
-        private int _Place;
         [DataMember]
         public int Place
         {
-            get
-            {
-                return _Place;
-            }
+            get;
             set
             {
-                _Place = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int _FinishingPosition;
         [DataMember]
         public int FinishingPosition
         {
-            get
-            {
-                return _FinishingPosition;
-            }
+            get;
             set
             {
-                _FinishingPosition = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
 
-        private int _Earning;
         [DataMember]
         public int Earning
         {
-            get
-            {
-                return _Earning;
-            }
+            get;
             set
             {
-                _Earning = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private TimeSpan _KmTime;
         [DataMember]
         public TimeSpan KmTime
         {
-            get
-            {
-                return _KmTime;
-            }
+            get;
             set
             {
-                _KmTime = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private TimeSpan _TotalTime;
         [DataMember]
         public TimeSpan TotalTime
         {
-            get
-            {
-                return _TotalTime;
-            }
+            get;
             set
             {
-                _TotalTime = value;
-                OnPropertyChanged();
-            }
-        }
-        private bool _Disqualified;
-        [DataMember]
-        public bool Disqualified
-        {
-            get
-            {
-                return _Disqualified;
-            }
-            set
-            {
-                _Disqualified = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _PlaceString;
+        [DataMember]
+        public bool Disqualified
+        {
+            get;
+            set
+            {
+                field = value;
+                OnPropertyChanged();
+            }
+        }
+
         [DataMember]
         public string PlaceString
         {
-            get
-            {
-                return _PlaceString;
-            }
+            get;
             set
             {
-                _PlaceString = value;
+                field = value;
                 OnPropertyChanged();
             }
         }

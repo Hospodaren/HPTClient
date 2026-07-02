@@ -33,17 +33,13 @@ namespace HPTClient
             HorseRankVariableList = HPTHorseRankVariable.CreateVariableList();
         }
 
-        private string name;
         [DataMember]
         public string Name
         {
-            get
-            {
-                return name;
-            }
+            get;
             set
             {
-                name = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -72,118 +68,109 @@ namespace HPTClient
         {
             if (HorseRankVariableList != null)
             {
-                IEnumerable<HPTHorseRankVariable> tempList = HorseRankVariableList.Where(hrv => hrv.Category == category);
+                var tempList = HorseRankVariableList.Where(hrv => hrv.Category == category);
                 return new ObservableCollection<HPTHorseRankVariable>(tempList);
             }
             return new ObservableCollection<HPTHorseRankVariable>();
         }
 
-        private List<HPTHorseRankVariable> horseRankVariableList;
         [DataMember]
         public List<HPTHorseRankVariable> HorseRankVariableList
         {
-            get
-            {
-                return horseRankVariableList;
-            }
+            get;
             set
             {
-                horseRankVariableList = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private ObservableCollection<HPTHorseRankVariable> horseRankVariableListMarksAndOdds;
         [XmlIgnore]
         public ObservableCollection<HPTHorseRankVariable> HorseRankVariableListMarksAndOdds
         {
             get
             {
-                if (horseRankVariableListMarksAndOdds == null)
+                if (field == null)
                 {
-                    horseRankVariableListMarksAndOdds = CreateRankVariableList(HPTRankCategory.MarksAndOdds);
+                    field = CreateRankVariableList(HPTRankCategory.MarksAndOdds);
                 }
-                return horseRankVariableListMarksAndOdds;
+                return field;
             }
             set
             {
-                horseRankVariableListMarksAndOdds = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private ObservableCollection<HPTHorseRankVariable> horseRankVariableListRecords;
         [XmlIgnore]
         public ObservableCollection<HPTHorseRankVariable> HorseRankVariableListRecords
         {
             get
             {
-                if (horseRankVariableListRecords == null)
+                if (field == null)
                 {
-                    horseRankVariableListRecords = CreateRankVariableList(HPTRankCategory.Record);
+                    field = CreateRankVariableList(HPTRankCategory.Record);
                 }
-                return horseRankVariableListRecords;
+                return field;
             }
             set
             {
-                horseRankVariableListRecords = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private ObservableCollection<HPTHorseRankVariable> horseRankVariableListWinning;
         [XmlIgnore]
         public ObservableCollection<HPTHorseRankVariable> HorseRankVariableListWinning
         {
             get
             {
-                if (horseRankVariableListWinning == null)
+                if (field == null)
                 {
-                    horseRankVariableListWinning = CreateRankVariableList(HPTRankCategory.Winnings);
+                    field = CreateRankVariableList(HPTRankCategory.Winnings);
                 }
-                return horseRankVariableListWinning;
+                return field;
             }
             set
             {
-                horseRankVariableListWinning = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private ObservableCollection<HPTHorseRankVariable> horseRankVariableListPlace;
         [XmlIgnore]
         public ObservableCollection<HPTHorseRankVariable> HorseRankVariableListPlace
         {
             get
             {
-                if (horseRankVariableListPlace == null)
+                if (field == null)
                 {
-                    horseRankVariableListPlace = CreateRankVariableList(HPTRankCategory.Place);
+                    field = CreateRankVariableList(HPTRankCategory.Place);
                 }
-                return horseRankVariableListPlace;
+                return field;
             }
             set
             {
-                horseRankVariableListPlace = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private ObservableCollection<HPTHorseRankVariable> horseRankVariableListRest;
         [XmlIgnore]
         public ObservableCollection<HPTHorseRankVariable> HorseRankVariableListRest
         {
             get
             {
-                if (horseRankVariableListRest == null)
+                if (field == null)
                 {
-                    horseRankVariableListRest = CreateRankVariableList(HPTRankCategory.Rest);
+                    field = CreateRankVariableList(HPTRankCategory.Rest);
                 }
-                return horseRankVariableListRest;
+                return field;
             }
             set
             {
-                horseRankVariableListRest = value;
+                field = value;
                 OnPropertyChanged();
             }
         }

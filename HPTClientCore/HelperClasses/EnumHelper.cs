@@ -15,13 +15,13 @@ namespace HPTClient
                 case HPTRankCategory.Record:
                     return "Rekord";
                 case HPTRankCategory.Winnings:
-                    return "Intjänat";
+                    return "Intjï¿½nat";
                 case HPTRankCategory.Place:
                     return "Placering";
                 case HPTRankCategory.Top3:
                     return "Plats";
                 case HPTRankCategory.Rest:
-                    return "Övrigt";
+                    return "ï¿½vrigt";
                 default:
                     return string.Empty;
             }
@@ -31,12 +31,12 @@ namespace HPTClient
         {
             try
             {
-                string trackName = ((TrackNameEnum)trackId).ToString();
+                var trackName = ((TrackNameEnum)trackId).ToString();
                 return trackName;
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
                 return string.Empty;
             }
         }
@@ -45,19 +45,19 @@ namespace HPTClient
         {
             try
             {
-                string trackName = ((TrackNameEnum)trackId)
+                var trackName = ((TrackNameEnum)trackId)
                     .ToString()
                     .ToLowerInvariant()
-                    .Replace('å', 'a')
-                    .Replace('ä', 'a')
-                    .Replace('ö', 'o');
+                    .Replace('ï¿½', 'a')
+                    .Replace('ï¿½', 'a')
+                    .Replace('ï¿½', 'o');
 
                 return trackName;
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
-                return "Okänd bana";
+                var s = exc.Message;
+                return "Okï¿½nd bana";
             }
         }
 
@@ -65,20 +65,20 @@ namespace HPTClient
         {
             try
             {
-                string trackCode = ((TrackCodeEnum)trackId).ToString();
+                var trackCode = ((TrackCodeEnum)trackId).ToString();
                 return trackCode;
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
                 return string.Empty;
             }
         }
 
         public static List<TrackNameEnum> GetSwedishTracks()
         {
-            List<TrackNameEnum> trackNameList = new List<TrackNameEnum>();
-            for (int i = 5; i < 50; i++)
+            var trackNameList = new List<TrackNameEnum>();
+            for (var i = 5; i < 50; i++)
             {
                 switch (i)
                 {
@@ -99,8 +99,8 @@ namespace HPTClient
 
         public static List<BetTypeEnum> GetSupportedBetTypes()
         {
-            List<BetTypeEnum> betTypeList = new List<BetTypeEnum>();
-            for (int i = 0; i < 13; i++)
+            var betTypeList = new List<BetTypeEnum>();
+            for (var i = 0; i < 13; i++)
             {
                 switch ((BetTypeEnum)i)
                 {
@@ -122,20 +122,20 @@ namespace HPTClient
         {
             if (trackCode.Length > 2)
             {
-                string trackName = trackCode.ToLower();
-                trackName = trackName.Replace("å", "a");
-                trackName = trackName.Replace("ä", "a");
-                trackName = trackName.Replace("ö", "o");
+                var trackName = trackCode.ToLower();
+                trackName = trackName.Replace("ï¿½", "a");
+                trackName = trackName.Replace("ï¿½", "a");
+                trackName = trackName.Replace("ï¿½", "o");
                 return trackName;
             }
-            for (int i = 1; i < 99; i++)
+            for (var i = 1; i < 99; i++)
             {
                 if (((TrackCodeEnum)i).ToString() == trackCode)
                 {
-                    string trackName = ((TrackNameEnum)i).ToString().ToLower();
-                    trackName = trackName.Replace("å", "a");
-                    trackName = trackName.Replace("ä", "a");
-                    trackName = trackName.Replace("ö", "o");
+                    var trackName = ((TrackNameEnum)i).ToString().ToLower();
+                    trackName = trackName.Replace("ï¿½", "a");
+                    trackName = trackName.Replace("ï¿½", "a");
+                    trackName = trackName.Replace("ï¿½", "o");
                     return trackName;
                 }
             }
@@ -144,21 +144,21 @@ namespace HPTClient
 
         public static TrackNameEnum GetTrackNameFromShortString(string trackCode)
         {
-            for (int i = 1; i < 99; i++)
+            for (var i = 1; i < 99; i++)
             {
                 if (((TrackCodeEnum)i).ToString() == trackCode)
                 {
                     return (TrackNameEnum)i;
                 }
             }
-            for (int i = 1; i < 99; i++)
+            for (var i = 1; i < 99; i++)
             {
                 if (((TrackNameEnum)i).ToString() == trackCode)
                 {
                     return (TrackNameEnum)i;
                 }
             }
-            return TrackNameEnum.Okänd;
+            return TrackNameEnum.Okï¿½nd;
         }
 
         public static string GetTrackNameATGSEFromId(int trackId)
@@ -167,16 +167,16 @@ namespace HPTClient
             //{                
             //    return string.Empty;
             //}
-            string trackName = ((TrackNameEnum)trackId).ToString().ToLower();
-            trackName = trackName.Replace("å", "a");
-            trackName = trackName.Replace("ä", "a");
-            trackName = trackName.Replace("ö", "o");
+            var trackName = ((TrackNameEnum)trackId).ToString().ToLower();
+            trackName = trackName.Replace("ï¿½", "a");
+            trackName = trackName.Replace("ï¿½", "a");
+            trackName = trackName.Replace("ï¿½", "o");
             return trackName;
         }
 
         public static TrackCodeEnum GetTrackCodeFromShortString(string trackCode)
         {
-            for (int i = 1; i < 99; i++)
+            for (var i = 1; i < 99; i++)
             {
                 if (((TrackCodeEnum)i).ToString() == trackCode)
                 {
@@ -193,7 +193,7 @@ namespace HPTClient
 
         public static BetTypeEnum GetBetTypeFromString(string betTypeString)
         {
-            for (int i = 0; i < 12; i++)
+            for (var i = 0; i < 12; i++)
             {
                 if (((BetTypeEnum)i).ToString() == betTypeString)
                 {
@@ -237,7 +237,7 @@ namespace HPTClient
 
         public static ABCDPriorityEnum GetPriorityFromShortString(string priorityString)
         {
-            for (int i = 0; i < 5; i++)
+            for (var i = 0; i < 5; i++)
             {
                 if (((ABCDPriorityEnum)i).ToString() == priorityString)
                 {
@@ -262,12 +262,12 @@ namespace HPTClient
                 default:
                     return betType.ToString();
             }
-            //return "Okänd";
+            //return "Okï¿½nd";
         }
 
         public static string GetStringFromSpeltyp(BetTypeEnum betType)
         {
-            for (int i = 0; i < 12; i++)
+            for (var i = 0; i < 12; i++)
             {
                 if ((BetTypeEnum)i == betType)
                 {

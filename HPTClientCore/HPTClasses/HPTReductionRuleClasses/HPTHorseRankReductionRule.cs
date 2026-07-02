@@ -15,7 +15,7 @@ namespace HPTClient
         public HPTHorseRankReductionRule(int numberOfRaces, bool use)
             : base(numberOfRaces, use)
         {
-            foreach (HPTNumberOfWinners now in NumberOfWinnersList)
+            foreach (var now in NumberOfWinnersList)
             {
                 now.Selectable = true;
             }
@@ -59,7 +59,7 @@ namespace HPTClient
 
             if (!OnlyInSpecifiedLegs)
             {
-                int numberInInterval = rankList.Count(r => r >= LowerBoundary && r <= UpperBoundary);
+                var numberInInterval = rankList.Count(r => r >= LowerBoundary && r <= UpperBoundary);
                 if (!NumberOfWinnersList.First(now => now.NumberOfWinners == numberInInterval).Selected)
                 {
                     return false;
@@ -67,10 +67,10 @@ namespace HPTClient
             }
             else
             {
-                int numberOfX = 0;
+                var numberOfX = 0;
                 foreach (var legNumber in LegList)
                 {
-                    int rankValue = rankList[legNumber - 1];
+                    var rankValue = rankList[legNumber - 1];
                     numberOfX += rankValue >= LowerBoundary && rankValue <= UpperBoundary ? 1 : 0;
                 }
                 if (!NumberOfWinnersList[numberOfX].Selected)
@@ -81,32 +81,24 @@ namespace HPTClient
             return true;
         }
 
-        private int lowerBoundary;
         [DataMember]
         public int LowerBoundary
         {
-            get
-            {
-                return lowerBoundary;
-            }
+            get;
             set
             {
-                lowerBoundary = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int upperBoundary;
         [DataMember]
         public int UpperBoundary
         {
-            get
-            {
-                return upperBoundary;
-            }
+            get;
             set
             {
-                upperBoundary = value;
+                field = value;
                 OnPropertyChanged();
             }
         }

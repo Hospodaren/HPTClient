@@ -82,7 +82,7 @@ namespace HPTClient
 
         internal void SetRank()
         {
-            int rankToSet = 1;
+            var rankToSet = 1;
             HorseList.ForEach(uc =>
                 {
                     try
@@ -116,18 +116,18 @@ namespace HPTClient
             {
                 var tb = (TextBlock)fe;
 
-                bool recalculationPaused = MarkBet.pauseRecalculation;
+                var recalculationPaused = MarkBet.pauseRecalculation;
                 try
                 {
                     MarkBet.pauseRecalculation = true;
                     // Startnummer
-                    int startNumber = 0;
-                    bool isStartNumber = int.TryParse(tb.Text, out startNumber);
+                    var startNumber = 0;
+                    var isStartNumber = int.TryParse(tb.Text, out startNumber);
                     if (isStartNumber && startNumber > 0 && startNumber < 21)
                     {
                         if (HorseList != null)
                         {
-                            bool select = true;
+                            var select = true;
                             HorseList.ForEach(h =>
                                 {
                                     if (h.Horse.Scratched != true)
@@ -152,7 +152,7 @@ namespace HPTClient
                     {
                         if (HorseList != null)
                         {
-                            bool select = true;
+                            var select = true;
                             HorseList.ForEach(h =>
                             {
                                 if (h.Horse.Scratched != true)
@@ -277,11 +277,11 @@ namespace HPTClient
                 {
                     return;
                 }
-                bool recalculationPaused = MarkBet.pauseRecalculation;
+                var recalculationPaused = MarkBet.pauseRecalculation;
                 MarkBet.pauseRecalculation = true;
                 if (ucTarget.Horse.RankOwn > ucSource.Horse.RankOwn)
                 {
-                    List<HPTHorse> horsesToAlter = ucTarget.Horse.ParentRace.HorseList
+                    var horsesToAlter = ucTarget.Horse.ParentRace.HorseList
                         .Where(h => h.StartNr != ucSource.Horse.StartNr
                                 && h.StartNr != ucTarget.Horse.StartNr
                                 && h.RankOwn > ucSource.Horse.RankOwn
@@ -296,7 +296,7 @@ namespace HPTClient
                 }
                 else if (ucTarget.Horse.RankOwn < ucSource.Horse.RankOwn)
                 {
-                    List<HPTHorse> horsesToAlter = ucTarget.Horse.ParentRace.HorseList
+                    var horsesToAlter = ucTarget.Horse.ParentRace.HorseList
                         .Where(h => h.StartNr != ucSource.Horse.StartNr
                                 && h.StartNr != ucTarget.Horse.StartNr
                                 && h.RankOwn <= ucSource.Horse.RankOwn
@@ -424,7 +424,7 @@ namespace HPTClient
                     return -1;
                 }
 
-                decimal exactDiff = h1.Horse.StakeDistributionShare - h2.Horse.StakeDistributionShare;
+                var exactDiff = h1.Horse.StakeDistributionShare - h2.Horse.StakeDistributionShare;
                 if (exactDiff < 0)
                 {
                     return 1;
@@ -458,7 +458,7 @@ namespace HPTClient
                     return -1;
                 }
 
-                int exactDiff = h1.Horse.StartNr - h2.Horse.StartNr;
+                var exactDiff = h1.Horse.StartNr - h2.Horse.StartNr;
                 if (exactDiff < 0)
                 {
                     return -1;
@@ -492,7 +492,7 @@ namespace HPTClient
                     return -1;
                 }
 
-                int exactDiff = h1.Horse.RankOwn - h2.Horse.RankOwn;
+                var exactDiff = h1.Horse.RankOwn - h2.Horse.RankOwn;
                 if (exactDiff < 0)
                 {
                     return -1;
@@ -526,7 +526,7 @@ namespace HPTClient
                     return -1;
                 }
 
-                int exactDiff = (int)h1.Horse.RankTip - (int)h2.Horse.RankTip;
+                var exactDiff = (int)h1.Horse.RankTip - (int)h2.Horse.RankTip;
                 if (exactDiff < 0)
                 {
                     return -1;
@@ -560,7 +560,7 @@ namespace HPTClient
                     return -1;
                 }
 
-                decimal exactDiff = h1.Horse.RankWeighted - h2.Horse.RankWeighted;
+                var exactDiff = h1.Horse.RankWeighted - h2.Horse.RankWeighted;
                 if (exactDiff < 0M)
                 {
                     return -1;
@@ -594,7 +594,7 @@ namespace HPTClient
                     return -1;
                 }
 
-                decimal exactDiff = h1.Horse.VinnarOddsShare - h2.Horse.VinnarOddsShare;
+                var exactDiff = h1.Horse.VinnarOddsShare - h2.Horse.VinnarOddsShare;
                 if (exactDiff < 0)
                 {
                     return 1;

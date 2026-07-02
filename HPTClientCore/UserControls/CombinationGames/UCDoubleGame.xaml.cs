@@ -118,7 +118,7 @@ namespace HPTClient
             // Dra igång nedräknare om tävlingen är idag
             if (upcomingRace != null && upcomingRace.PostTime.Date == DateTime.Today)
             {
-                TimeSpan ts = upcomingRace.PostTime - DateTime.Now;
+                var ts = upcomingRace.PostTime - DateTime.Now;
                 Countdown(ts, cur =>
                 {
                     if ((int)cur.TotalSeconds == 600)
@@ -128,7 +128,7 @@ namespace HPTClient
                     }
                     txtCountdownTimer.Text = cur.ToString(@"hh\:mm\:ss");
                 });
-                txtCountdownInfo.Text = upcomingRace.LegNrString + ":";
+                txtCountdownInfo.Text = $"{upcomingRace.LegNrString}:";
             }
             else
             {
@@ -139,7 +139,7 @@ namespace HPTClient
 
         void Countdown(TimeSpan timeLeft, Action<TimeSpan> ts)
         {
-            int count = (int)timeLeft.TotalSeconds;
+            var count = (int)timeLeft.TotalSeconds;
             var dt = new System.Windows.Threading.DispatcherTimer();
             dt.Interval = TimeSpan.FromSeconds(1D);
             dt.Tick += (_, a) =>
@@ -152,7 +152,7 @@ namespace HPTClient
                 }
                 else
                 {
-                    TimeSpan tsTemp = upcomingRace.PostTime - DateTime.Now;
+                    var tsTemp = upcomingRace.PostTime - DateTime.Now;
                     ts(tsTemp);
                 }
             };

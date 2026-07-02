@@ -7,9 +7,9 @@ namespace HPTClient
         public void InitializeTemplate(IEnumerable<HPTPrio> priosToUse)
         {
             ABCDTemplateSettingsList = new ObservableCollection<ABCDTemplateSettings>();
-            foreach (HPTPrio prio in HPTConfig.Config.PrioList.Keys)
+            foreach (var prio in HPTConfig.Config.PrioList.Keys)
             {
-                ABCDTemplateSettings settings = new ABCDTemplateSettings()
+                var settings = new ABCDTemplateSettings()
                 {
                     Prio = prio,
                     Selected = priosToUse.Contains(prio)
@@ -35,16 +35,12 @@ namespace HPTClient
             return template;
         }
 
-        private ObservableCollection<ABCDTemplateSettings> abcdTemplateSettingsList;
         public ObservableCollection<ABCDTemplateSettings> ABCDTemplateSettingsList
         {
-            get
-            {
-                return abcdTemplateSettingsList;
-            }
+            get;
             set
             {
-                abcdTemplateSettingsList = value;
+                field = value;
                 OnPropertyChanged();
             }
         }

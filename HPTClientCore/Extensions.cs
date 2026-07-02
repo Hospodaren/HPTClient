@@ -14,15 +14,15 @@ public static class Extensions
     public static decimal StdDev(this IEnumerable<decimal> values)
     {
         decimal count = 0;
-        decimal mean = 0m;
-        decimal m2 = 0m;
+        var mean = 0m;
+        var m2 = 0m;
 
-        foreach (decimal value in values)
+        foreach (var value in values)
         {
             count++;
-            decimal delta = value - mean;
+            var delta = value - mean;
             mean += delta / count;
-            decimal delta2 = value - mean;
+            var delta2 = value - mean;
             m2 += delta * delta2;
         }
 

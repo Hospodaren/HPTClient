@@ -34,32 +34,24 @@ namespace HPTClient
         [DataMember]
         public int Horse3Nr { get; set; }
 
-        private decimal multipliedOdds;
         [DataMember]
         public decimal MultipliedOdds
         {
-            get
-            {
-                return multipliedOdds;
-            }
+            get;
             set
             {
-                multipliedOdds = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private decimal multipliedPlatsOdds;
         [DataMember]
         public decimal MultipliedPlatsOdds
         {
-            get
-            {
-                return multipliedPlatsOdds;
-            }
+            get;
             set
             {
-                multipliedPlatsOdds = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -84,17 +76,13 @@ namespace HPTClient
             }
         }
 
-        private decimal _CombinationOddsExact;
         [DataMember]
         public decimal CombinationOddsExact
         {
-            get
-            {
-                return _CombinationOddsExact;
-            }
+            get;
             set
             {
-                _CombinationOddsExact = value;
+                field = value;
                 OnPropertyChanged();
                 if (CombinationOddsExact > 0M && ParentRaceDayInfo != null)
                 {
@@ -103,244 +91,180 @@ namespace HPTClient
             }
         }
 
-        private decimal calculatedOdds;
         [DataMember]
         public decimal CalculatedOdds
         {
-            get
-            {
-                return calculatedOdds;
-            }
+            get;
             set
             {
-                calculatedOdds = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private decimal calculatedOddsQuota;
         [DataMember]
         public decimal CalculatedOddsQuota
         {
-            get
-            {
-                return calculatedOddsQuota;
-            }
+            get;
             set
             {
-                calculatedOddsQuota = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
         //public string MultipliedOddsString { get; set; }
 
-        private decimal oddsQuota;
         [DataMember]
         public decimal OddsQuota
         {
-            get
-            {
-                return oddsQuota;
-            }
+            get;
             set
             {
-                oddsQuota = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private decimal vOdds;
         [DataMember]
         public decimal VOdds
         {
-            get
-            {
-                return vOdds;
-            }
+            get;
             set
             {
-                vOdds = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private decimal vQuota;
         [DataMember]
         public decimal VQuota
         {
-            get
-            {
-                return vQuota;
-            }
+            get;
             set
             {
-                vQuota = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private decimal pOdds;
         [DataMember]
         public decimal POdds
         {
-            get
-            {
-                return pOdds;
-            }
+            get;
             set
             {
-                pOdds = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private decimal pQuota;
         [DataMember]
         public decimal PQuota
         {
-            get
-            {
-                return pQuota;
-            }
+            get;
             set
             {
-                pQuota = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private decimal vpOdds;
         [DataMember]
         public decimal VPOdds
         {
-            get
-            {
-                return vpOdds;
-            }
+            get;
             set
             {
-                vpOdds = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private decimal vpQuota;
         [DataMember]
         public decimal VPQuota
         {
-            get
-            {
-                return vpQuota;
-            }
+            get;
             set
             {
-                vpQuota = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private decimal opQuota;
         [DataMember]
         public decimal OPQuota
         {
-            get
-            {
-                return opQuota;
-            }
+            get;
             set
             {
-                opQuota = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private decimal tvQuota;
         [DataMember]
         public decimal TVQuota
         {
-            get
-            {
-                return tvQuota;
-            }
+            get;
             set
             {
-                tvQuota = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private decimal? tQuota;
         [DataMember]
         public decimal? TQuota
         {
-            get
-            {
-                return tQuota;
-            }
+            get;
             set
             {
-                tQuota = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private decimal? dQuota;
         [DataMember]
         public decimal? DQuota
         {
-            get
-            {
-                return dQuota;
-            }
+            get;
             set
             {
-                dQuota = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private decimal? stakeQuota;
         [DataMember]
         public decimal? StakeQuota
         {
-            get
-            {
-                return stakeQuota;
-            }
+            get;
             set
             {
-                stakeQuota = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool selected;
         [DataMember]
         public bool Selected
         {
-            get
-            {
-                return selected;
-            }
+            get;
             set
             {
-                selected = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int? stake;
         [DataMember]
         public int? Stake
         {
-            get
-            {
-                return stake;
-            }
+            get;
             set
             {
-                stake = value;
+                field = value;
                 OnPropertyChanged();
                 if (value == null)
                 {
@@ -348,98 +272,78 @@ namespace HPTClient
                 }
                 if (CombinationOdds == 9999 && CalculatedOdds != 0M)
                 {
-                    Profit = Convert.ToInt32(stake * CalculatedOdds);
+                    Profit = Convert.ToInt32(field * CalculatedOdds);
                 }
                 else
                 {
                     //this.Profit = Convert.ToInt32(this.stake * this.CombinationOdds / 10);
-                    Profit = Convert.ToInt32(stake * CombinationOddsExact);
+                    Profit = Convert.ToInt32(field * CombinationOddsExact);
                 }
             }
         }
 
-        private int profit;
         [DataMember]
         public int Profit
         {
-            get
-            {
-                return profit;
-            }
+            get;
             set
             {
-                profit = value;
-                switch (profit)
+                field = value;
+                switch (field)
                 {
                     case 0:
                         ProfitString = string.Empty;
                         break;
                     default:
-                        ProfitString = string.Format("{0:## ### ###}", profit); ;
+                        ProfitString = string.Format("{0:## ### ###}", field); ;
                         break;
                 }
                 OnPropertyChanged();
             }
         }
 
-        private string profitString;
         [DataMember]
         public string ProfitString
         {
-            get
-            {
-                return profitString;
-            }
+            get;
             set
             {
-                profitString = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
         public decimal CombinationOddsShare { get; set; }
 
-        private int multipliedOddsRank;
         [DataMember]
         public int MultipliedOddsRank
         {
-            get
-            {
-                return multipliedOddsRank;
-            }
+            get;
             set
             {
-                multipliedOddsRank = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int combinationOddsRank;
         [DataMember]
         public int CombinationOddsRank
         {
-            get
-            {
-                return combinationOddsRank;
-            }
+            get;
             set
             {
-                combinationOddsRank = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private decimal playability;
         [DataMember]
         public decimal Playability
         {
-            get
-            {
-                return playability;
-            }
+            get;
             set
             {
-                playability = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -516,15 +420,15 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
         public void CalculateQuotasTvilling()
         {
             // Andel kombinationer i förhållande till totalantal om det varit DD/LD istället
-            int numberOfStartingHorse = ParentRace.HorseList.Count(h => h.Scratched == null || h.Scratched == false);
-            decimal numberOfCombinationsQuota =
+            var numberOfStartingHorse = ParentRace.HorseList.Count(h => h.Scratched == null || h.Scratched == false);
+            var numberOfCombinationsQuota =
                 Convert.ToDecimal(numberOfStartingHorse * (numberOfStartingHorse - 1) * 0.5M) /
                 Convert.ToDecimal(numberOfStartingHorse * numberOfStartingHorse);
 
@@ -535,31 +439,31 @@ namespace HPTClient
             {
                 //decimal vinnarOddsQuota = this.CombinationOdds / 10 / numberOfCombinationsQuota / this.MultipliedOdds;
                 //decimal platsOddsQuota = this.CombinationOdds / 10 / this.MultipliedPlatsOdds;
-                decimal vinnarOddsQuota = CombinationOddsExact / numberOfCombinationsQuota / MultipliedOdds;
-                decimal platsOddsQuota = CombinationOddsExact / MultipliedPlatsOdds;
+                var vinnarOddsQuota = CombinationOddsExact / numberOfCombinationsQuota / MultipliedOdds;
+                var platsOddsQuota = CombinationOddsExact / MultipliedPlatsOdds;
                 OddsQuota = vinnarOddsQuota;
                 Playability = Convert.ToDecimal(Math.Sqrt(decimal.ToDouble(MultipliedOdds + MultipliedPlatsOdds))) / (OddsQuota * OddsQuota * platsOddsQuota * platsOddsQuota);
             }
 
             // NYA MÅTT
-            decimal adjustedCombinationShare = CombinationOddsShare * numberOfCombinationsQuota;
+            var adjustedCombinationShare = CombinationOddsShare * numberOfCombinationsQuota;
             if (CombinationOddsShare > 0M && adjustedCombinationShare > 0M)
             {
-                decimal vpShare = (Horse1.VinnarOddsShare * Horse2.PlatsOddsShare) + (Horse1.PlatsOddsShare * Horse2.VinnarOddsShare);
+                var vpShare = (Horse1.VinnarOddsShare * Horse2.PlatsOddsShare) + (Horse1.PlatsOddsShare * Horse2.VinnarOddsShare);
                 if (vpShare > 0M)
                 {
                     VPQuota = vpShare / adjustedCombinationShare / 2M;
                     VPOdds = CombinationOdds / VPQuota;
                 }
 
-                decimal vShare = Horse1.VinnarOddsShare * Horse2.VinnarOddsShare;
+                var vShare = Horse1.VinnarOddsShare * Horse2.VinnarOddsShare;
                 if (vShare > 0M)
                 {
                     VQuota = vShare / adjustedCombinationShare;
                     VOdds = CombinationOdds / VQuota;
                 }
 
-                decimal pShare = Horse1.PlatsOddsShare * Horse2.PlatsOddsShare;
+                var pShare = Horse1.PlatsOddsShare * Horse2.PlatsOddsShare;
                 if (pShare > 0M)
                 {
                     PQuota = pShare / adjustedCombinationShare;
@@ -606,7 +510,7 @@ namespace HPTClient
                     CalculatedOddsQuota = CalculatedOdds / CombinationOdds * 10M;
 
                     // Beräkna vad oddset "borde" varit utifrån VP
-                    decimal vpShare = Horse1.VinnarOddsShare * Horse2.PlatsOddsShare * Horse3.PlatsOddsShare;
+                    var vpShare = Horse1.VinnarOddsShare * Horse2.PlatsOddsShare * Horse3.PlatsOddsShare;
                     if (vpShare > 0M)
                     {
                         VPOdds = 0.7M / vpShare * 10M;
@@ -614,7 +518,7 @@ namespace HPTClient
                     }
 
                     // Beräkna vad oddset "borde" varit utifrån Vinnare
-                    decimal vShare = Horse1.VinnarOddsShare * Horse2.VinnarOddsShare * Horse3.VinnarOddsShare;
+                    var vShare = Horse1.VinnarOddsShare * Horse2.VinnarOddsShare * Horse3.VinnarOddsShare;
                     if (vShare > 0M)
                     {
                         VOdds = 0.7M / vShare * 10M;
@@ -622,7 +526,7 @@ namespace HPTClient
                     }
 
                     // Beräkna vad oddset "borde" varit utifrån Plats
-                    decimal pShare = Horse1.PlatsOddsShare * Horse2.PlatsOddsShare * Horse3.PlatsOddsShare;
+                    var pShare = Horse1.PlatsOddsShare * Horse2.PlatsOddsShare * Horse3.PlatsOddsShare;
                     if (pShare > 0M)
                     {
                         POdds = 0.7M / pShare * 10M;
@@ -632,13 +536,13 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
         private void SetColorsDD()
         {
-            Color c = Colors.White;
+            var c = Colors.White;
             if (VQuota > 1.2M)
             {
                 c = HPTConfig.Config.ColorGood;
@@ -657,7 +561,7 @@ namespace HPTClient
         private void SetColorsTvilling()
         {
             // Färg för oddskvot
-            Color c = Colors.White;
+            var c = Colors.White;
             if (VPQuota > 1.2M)
             {
                 c = HPTConfig.Config.ColorGood;
@@ -676,7 +580,7 @@ namespace HPTClient
         private void SetColorsTrio()
         {
             // Färg för oddskvot
-            Color c = Colors.White;
+            var c = Colors.White;
             if (VPQuota > 1.2M)
             {
                 c = HPTConfig.Config.ColorGood;
@@ -729,7 +633,7 @@ namespace HPTClient
         {
             get
             {
-                StringBuilder sb = new StringBuilder();
+                var sb = new StringBuilder();
                 sb.Append(Horse1.StartNr);
                 sb.Append(" - ");
                 sb.Append(Horse1.HorseName);
@@ -744,13 +648,12 @@ namespace HPTClient
             }
         }
 
-        private Brush oddsQuotaColor;
         [XmlIgnore]
         public Brush OddsQuotaColor
         {
             get
             {
-                if (oddsQuotaColor == null)
+                if (field == null)
                 {
                     switch (ParentRaceDayInfo.BetType.Code)
                     {
@@ -768,22 +671,21 @@ namespace HPTClient
                             break;
                     }
                 }
-                return oddsQuotaColor;
+                return field;
             }
             set
             {
-                oddsQuotaColor = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private Brush rankDiffColor;
         [XmlIgnore]
         public Brush RankDiffColor
         {
             get
             {
-                if (rankDiffColor == null)
+                if (field == null)
                 {
                     switch (ParentRaceDayInfo.BetType.Code)
                     {
@@ -801,22 +703,21 @@ namespace HPTClient
                             break;
                     }
                 }
-                return rankDiffColor;
+                return field;
             }
             set
             {
-                rankDiffColor = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private Brush playabilityColor;
         [XmlIgnore]
         public Brush PlayabilityColor
         {
             get
             {
-                if (playabilityColor == null)
+                if (field == null)
                 {
                     switch (ParentRaceDayInfo.BetType.Code)
                     {
@@ -834,11 +735,11 @@ namespace HPTClient
                             break;
                     }
                 }
-                return playabilityColor;
+                return field;
             }
             set
             {
-                playabilityColor = value;
+                field = value;
                 OnPropertyChanged();
             }
         }

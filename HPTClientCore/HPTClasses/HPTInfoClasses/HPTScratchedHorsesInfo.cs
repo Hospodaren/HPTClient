@@ -16,7 +16,7 @@ namespace HPTClient
 
         public void DeSelectAll()
         {
-            foreach (HPTHorse horse in HorseList)
+            foreach (var horse in HorseList)
             {
                 horse.Selected = false;
             }
@@ -29,30 +29,22 @@ namespace HPTClient
         [DataMember]
         public ObservableCollection<HPTHorse> HorseListAllScratched { get; set; }
 
-        private HPTRaceDayInfo parentRaceDayInfo;
         public HPTRaceDayInfo ParentRaceDayInfo
         {
-            get
-            {
-                return parentRaceDayInfo;
-            }
+            get;
             set
             {
-                parentRaceDayInfo = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool haveSelectedScratchedHorse;
         public bool HaveSelectedScratchedHorse
         {
-            get
-            {
-                return haveSelectedScratchedHorse;
-            }
+            get;
             set
             {
-                haveSelectedScratchedHorse = value;
+                field = value;
                 OnPropertyChanged();
             }
         }

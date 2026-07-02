@@ -5,210 +5,166 @@ namespace HPTClient
     [DataContract]
     public class HPTIntervalReductionRule : HPTReductionRule
     {
-        private bool use;
         [DataMember]
         public bool Use
         {
-            get
-            {
-                return use;
-            }
+            get;
             set
             {
-                if (use == value)
+                if (field == value)
                 {
                     return;
                 }
-                use = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int minSum;
         [DataMember]
         public int MinSum
         {
-            get
-            {
-                return minSum;
-            }
+            get;
             set
             {
-                if (minSum == value)
+                if (field == value)
                 {
                     return;
                 }
-                minSum = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int maxSum;
         [DataMember]
         public int MaxSum
         {
-            get
-            {
-                return maxSum;
-            }
+            get;
             set
             {
-                if (maxSum == value)
+                if (field == value)
                 {
                     return;
                 }
-                maxSum = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int minPercentSum;
         [DataMember]
         public int MinPercentSum
         {
-            get
-            {
-                return minPercentSum;
-            }
+            get;
             set
             {
-                if (minPercentSum == value)
+                if (field == value)
                 {
                     return;
                 }
-                minPercentSum = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int maxPercentSum;
         [DataMember]
         public int MaxPercentSum
         {
-            get
-            {
-                return maxPercentSum;
-            }
+            get;
             set
             {
-                if (maxPercentSum == value)
+                if (field == value)
                 {
                     return;
                 }
-                maxPercentSum = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int lowestSum;
         [DataMember]
         public int LowestSum
         {
-            get
-            {
-                return lowestSum;
-            }
+            get;
             set
             {
-                if (value == lowestSum)
+                if (value == field)
                 {
                     return;
                 }
-                lowestSum = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int highestSum;
         [DataMember]
         public int HighestSum
         {
-            get
-            {
-                return highestSum;
-            }
+            get;
             set
             {
-                if (value == highestSum)
+                if (value == field)
                 {
                     return;
                 }
-                highestSum = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int lowestIncludedSum;
         [DataMember]
         public int LowestIncludedSum
         {
-            get
-            {
-                return lowestIncludedSum;
-            }
+            get;
             set
             {
-                if (value == lowestIncludedSum)
+                if (value == field)
                 {
                     return;
                 }
-                lowestIncludedSum = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int highestIncludedSum;
         [DataMember]
         public int HighestIncludedSum
         {
-            get
-            {
-                return highestIncludedSum;
-            }
+            get;
             set
             {
-                if (value == highestIncludedSum)
+                if (value == field)
                 {
                     return;
                 }
-                highestIncludedSum = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int incrementLower;
         [DataMember]
         public int IncrementLower
         {
-            get
-            {
-                return incrementLower;
-            }
+            get;
             set
             {
-                incrementLower = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int incrementUpper;
         [DataMember]
         public int IncrementUpper
         {
-            get
-            {
-                return incrementUpper;
-            }
+            get;
             set
             {
-                incrementUpper = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
         public override void SetReductionSpecificationString()
         {
-            ReductionSpecificationString = "Summa " + MinSum.ToString() + " - " + MaxSum.ToString();
+            ReductionSpecificationString = $"Summa {MinSum} - {MaxSum}";
         }
 
     }

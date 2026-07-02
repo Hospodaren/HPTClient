@@ -13,8 +13,8 @@ namespace HPTClient
     {
         public static void UpdateCalendar(HPTCalendar hptCalendar)
         {
-            DateTime startDate = DateTime.Today.AddDays(-6);
-            DateTime endDate = DateTime.Today.AddDays(6);
+            var startDate = DateTime.Today.AddDays(-6);
+            var endDate = DateTime.Today.AddDays(6);
             try
             {
                 if (hptCalendar.RaceDayInfoList.Any())
@@ -665,7 +665,7 @@ namespace HPTClient
             {
                 return timeToFormat;
             }
-            string formattedTime = timeToFormat;
+            var formattedTime = timeToFormat;
             var rexTime = new Regex(@"\d\.\d\.\d");
             if (rexTime.IsMatch(formattedTime))
             {
@@ -699,11 +699,11 @@ namespace HPTClient
             }
             else
             {
-                Regex rexKmTime = new Regex(@"\d\.(\d{1,2}\.\d)");
+                var rexKmTime = new Regex(@"\d\.(\d{1,2}\.\d)");
                 if (rexKmTime.IsMatch(hptHorse.Record.Time))
                 {
-                    string kmTimeString = rexKmTime.Match(hptHorse.Record.Time).Groups[1].Value;
-                    CultureInfo ci = new CultureInfo("en-US");
+                    var kmTimeString = rexKmTime.Match(hptHorse.Record.Time).Groups[1].Value;
+                    var ci = new CultureInfo("en-US");
                     hptHorse.RecordTime = Convert.ToDecimal(kmTimeString, ci.NumberFormat);
                 }
                 else
@@ -855,7 +855,7 @@ namespace HPTClient
             //};
             try
             {
-                string startMethodAndDistanceCode = hptHorseResult.Time.EndsWith("a") ? "A" : string.Empty;
+                var startMethodAndDistanceCode = hptHorseResult.Time.EndsWith("a") ? "A" : string.Empty;
                 if (hptHorseResult.Distance < 1800)
                 {
                     startMethodAndDistanceCode += "K";
@@ -869,7 +869,7 @@ namespace HPTClient
                     startMethodAndDistanceCode += "M";
                 }
 
-                decimal secondsToAdd = 0M;
+                var secondsToAdd = 0M;
                 switch (startMethodAndDistanceCode)
                 {
                     case "K":
@@ -895,13 +895,13 @@ namespace HPTClient
                 }
                 if (rexTime.IsMatch(hptHorseResult.Time))
                 {
-                    decimal time = decimal.Parse(rexTime.Match(hptHorseResult.Time).Value, swedishCulture);
+                    var time = decimal.Parse(rexTime.Match(hptHorseResult.Time).Value, swedishCulture);
                     hptHorseResult.TimeWeighed = time + secondsToAdd;
                 }
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
                 hptHorseResult.TimeWeighed = 30M;
             }
         }
@@ -1382,7 +1382,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -1392,23 +1392,23 @@ namespace HPTClient
 
             markBet.DriverRulesCollection.PersonList = new ObservableCollection<HPTPerson>();
 
-            HPTRaceDayInfo driverRdi = new HPTRaceDayInfo()
+            var driverRdi = new HPTRaceDayInfo()
             {
                 DataToShow = HPTConfig.Config.DataToShowDriverPopup
             };
 
-            IEnumerable<HPTHorse> allHorses = markBet.RaceDayInfo.RaceList
+            var allHorses = markBet.RaceDayInfo.RaceList
                 .SelectMany(r => r.HorseList);
 
-            IEnumerable<string> allDrivers = allHorses
+            var allDrivers = allHorses
                 .Select(h => h.DriverNameShort)
                 .Distinct();
 
             foreach (var driverNameShort in allDrivers)
             {
-                IEnumerable<HPTHorse> driverHorseList = allHorses.Where(h => h.DriverNameShort == driverNameShort);
-                HPTHorse firstHorse = driverHorseList.First();
-                HPTPerson driver = new HPTPerson()
+                var driverHorseList = allHorses.Where(h => h.DriverNameShort == driverNameShort);
+                var firstHorse = driverHorseList.First();
+                var driver = new HPTPerson()
                 {
                     Name = firstHorse.DriverName,
                     ParentRaceDayInfo = driverRdi,
@@ -1427,12 +1427,12 @@ namespace HPTClient
 
             #region Trainer
 
-            HPTRaceDayInfo trainerRdi = new HPTRaceDayInfo()
+            var trainerRdi = new HPTRaceDayInfo()
             {
                 DataToShow = HPTConfig.Config.DataToShowTrainerPopup
             };
 
-            IEnumerable<string> allTrainers = allHorses
+            var allTrainers = allHorses
                 .Select(h => h.TrainerNameShort)
                 .Distinct();
 
@@ -1440,9 +1440,9 @@ namespace HPTClient
 
             foreach (var trainerNameShort in allTrainers)
             {
-                IEnumerable<HPTHorse> trainerHorseList = allHorses.Where(h => h.TrainerNameShort == trainerNameShort);
-                HPTHorse firstHorse = trainerHorseList.First();
-                HPTPerson trainer = new HPTPerson()
+                var trainerHorseList = allHorses.Where(h => h.TrainerNameShort == trainerNameShort);
+                var firstHorse = trainerHorseList.First();
+                var trainer = new HPTPerson()
                 {
                     Name = firstHorse.TrainerName,
                     ParentRaceDayInfo = trainerRdi,
@@ -1464,7 +1464,7 @@ namespace HPTClient
         {
             try
             {
-                HPTTrackDistance trackDistance = HPTTrackDistance.TrackDistanceArray.FirstOrDefault(td => (int)td.TrackName == (int)raceDayInfo.TrackId);
+                var trackDistance = HPTTrackDistance.TrackDistanceArray.FirstOrDefault(td => (int)td.TrackName == (int)raceDayInfo.TrackId);
                 if (trackDistance == null)
                 {
                     foreach (var race in raceDayInfo.RaceList)
@@ -1474,21 +1474,21 @@ namespace HPTClient
                 }
                 else
                 {
-                    IEnumerable<HPTHorse> allHorses = raceDayInfo.RaceList.SelectMany(r => r.HorseList);
+                    var allHorses = raceDayInfo.RaceList.SelectMany(r => r.HorseList);
                     foreach (var horse in allHorses)
                     {
                         horse.HomeTrackInfo = horse.HomeTrack;
                         if (trackDistance != null)
                         {
                             horse.DistanceFromHomeTrack = trackDistance.GetDistance(EnumHelper.GetTrackNameFromShortString(horse.HomeTrack));
-                            horse.HomeTrackInfo += (horse.DistanceFromHomeTrack == 0 ? string.Empty : " (" + horse.DistanceFromHomeTrack.ToString() + " km)");
+                            horse.HomeTrackInfo += (horse.DistanceFromHomeTrack == 0 ? string.Empty : $" ({horse.DistanceFromHomeTrack} km)");
                         }
                     }
                 }
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -1502,7 +1502,7 @@ namespace HPTClient
                 }
                 return;
             }
-            HPTTrackDistance trackDistance = HPTTrackDistance.TrackDistanceArray.FirstOrDefault(td => (int)td.TrackName == (int)race.TrackId);
+            var trackDistance = HPTTrackDistance.TrackDistanceArray.FirstOrDefault(td => (int)td.TrackName == (int)race.TrackId);
             if (trackDistance != null)
             {
                 foreach (var horse in race.HorseList)
@@ -1511,7 +1511,7 @@ namespace HPTClient
                     if (trackDistance != null)
                     {
                         horse.DistanceFromHomeTrack = trackDistance.GetDistance(EnumHelper.GetTrackNameFromShortString(horse.HomeTrack));
-                        horse.HomeTrackInfo += (horse.DistanceFromHomeTrack == 0 ? string.Empty : " (" + horse.DistanceFromHomeTrack.ToString() + " km)");
+                        horse.HomeTrackInfo += (horse.DistanceFromHomeTrack == 0 ? string.Empty : $" ({horse.DistanceFromHomeTrack} km)");
                     }
                 }
             }
@@ -1520,7 +1520,7 @@ namespace HPTClient
         public static void SetNonSerializedValues(HPTCombBet hcb)
         {
             // Undik onödig uppläsning av egen hästinformation
-            bool horseOwnInformationShows = false;
+            var horseOwnInformationShows = false;
             switch (hcb.BetType.Code)
             {
                 case "DD":
@@ -1537,7 +1537,7 @@ namespace HPTClient
                     break;
             }
 
-            foreach (HPTRace hptRace in hcb.RaceDayInfo.RaceList)
+            foreach (var hptRace in hcb.RaceDayInfo.RaceList)
             {
                 hptRace.ParentRaceDayInfo = hcb.RaceDayInfo;
 
@@ -1545,17 +1545,17 @@ namespace HPTClient
                 switch (hcb.BetType.Code)
                 {
                     case "TV":
-                        hptRace.LegNrString = "Lopp " + hptRace.LegNr.ToString();
+                        hptRace.LegNrString = $"Lopp {hptRace.LegNr}";
                         break;
                     case "T":
-                        hptRace.LegNrString = "Trio" + "-" + hptRace.LegNr.ToString();
+                        hptRace.LegNrString = $"Trio-{hptRace.LegNr}";
                         break;
                     default:
-                        hptRace.LegNrString = hcb.BetType.Code + "-" + hptRace.LegNr.ToString();
+                        hptRace.LegNrString = $"{hcb.BetType.Code}-{hptRace.LegNr}";
                         break;
                 }
 
-                foreach (HPTHorse hptHorse in hptRace.HorseList)
+                foreach (var hptHorse in hptRace.HorseList)
                 {
                     // Sätt parent
                     hptHorse.ParentRace = hptRace;
@@ -1589,7 +1589,7 @@ namespace HPTClient
                 }
                 if (hcb.BetType.Code == "TV")   // Tvilling
                 {
-                    foreach (HPTCombination hptComb in hptRace.CombinationListInfoTvilling.CombinationList)
+                    foreach (var hptComb in hptRace.CombinationListInfoTvilling.CombinationList)
                     {
                         hptComb.ParentRace = hptRace;
                         hptComb.ParentRaceDayInfo = hcb.RaceDayInfo;
@@ -1600,7 +1600,7 @@ namespace HPTClient
                 }
                 if (hcb.BetType.Code == "T")    // Trio
                 {
-                    foreach (HPTCombination hptComb in hptRace.CombinationListInfoTrio.CombinationList)
+                    foreach (var hptComb in hptRace.CombinationListInfoTrio.CombinationList)
                     {
                         hptComb.ParentRace = hptRace;
                         hptComb.ParentRaceDayInfo = hcb.RaceDayInfo;
@@ -1614,12 +1614,12 @@ namespace HPTClient
 
             if (hcb.BetType.Code == "DD" || hcb.BetType.Code == "LD")
             {
-                foreach (HPTCombination comb in hcb.RaceDayInfo.CombinationListInfoDouble.CombinationList)
+                foreach (var comb in hcb.RaceDayInfo.CombinationListInfoDouble.CombinationList)
                 {
                     comb.ParentRaceDayInfo = hcb.RaceDayInfo;
                     comb.Horse1 = hcb.RaceDayInfo.RaceList[0].HorseList.First(h => h.StartNr == comb.Horse1Nr);
                     comb.Horse2 = hcb.RaceDayInfo.RaceList[1].HorseList.First(h => h.StartNr == comb.Horse2Nr);
-                    string uniqueCode = comb.Horse1.HexCode + comb.Horse2.HexCode;
+                    var uniqueCode = comb.Horse1.HexCode + comb.Horse2.HexCode;
                 }
                 hcb.RaceDayInfo.CombinationListInfoDouble.UpdateCombinationsToShow();
             }
@@ -1628,12 +1628,12 @@ namespace HPTClient
             {
                 if (!Directory.Exists(hcb.SaveDirectory))
                 {
-                    hcb.SaveDirectory = HPTConfig.MyDocumentsPath + hcb.RaceDayInfo.ToDateAndTrackString() + "\\";
+                    hcb.SaveDirectory = $"{HPTConfig.MyDocumentsPath}{hcb.RaceDayInfo.ToDateAndTrackString()}\\";
                 }
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
 
             // Sätt avstån till hemmabanan för alla hästar
@@ -1671,17 +1671,17 @@ namespace HPTClient
             //}
 
             // Undvik onödig uppläsning av HorseOwnInformation
-            bool horseOwnInformationShows = HPTConfig.Config.DataToShowVxx.ShowOwnInformation || HPTConfig.Config.DataToShowComplementaryRules.ShowOwnInformation || HPTConfig.Config.DataToShowCorrection.ShowOwnInformation || HPTConfig.Config.MarkBetTabsToShow.ShowComments;
+            var horseOwnInformationShows = HPTConfig.Config.DataToShowVxx.ShowOwnInformation || HPTConfig.Config.DataToShowComplementaryRules.ShowOwnInformation || HPTConfig.Config.DataToShowCorrection.ShowOwnInformation || HPTConfig.Config.MarkBetTabsToShow.ShowComments;
 
             // Ta hänsyn till V6/V7/V8
             hmb.RaceDayInfo.SetV6Factor();
 
-            foreach (HPTRace hptRace in hmb.RaceDayInfo.RaceList)
+            foreach (var hptRace in hmb.RaceDayInfo.RaceList)
             {
                 hptRace.ParentRaceDayInfo = hmb.RaceDayInfo;
                 hptRace.HorseListSelected = new List<HPTHorse>();
 
-                foreach (HPTHorse hptHorse in hptRace.HorseList)
+                foreach (var hptHorse in hptRace.HorseList)
                 {
                     // Skapa listor som måste finnas
 
@@ -1731,19 +1731,19 @@ namespace HPTClient
                 switch (hmb.BetType.Code)
                 {
                     case "TV":
-                        hptRace.LegNrString = "Lopp " + hptRace.LegNr.ToString();
+                        hptRace.LegNrString = $"Lopp {hptRace.LegNr}";
                         break;
                     case "T":
-                        hptRace.LegNrString = "Trio" + "-" + hptRace.LegNr.ToString();
+                        hptRace.LegNrString = $"Trio-{hptRace.LegNr}";
                         break;
                     default:
-                        hptRace.LegNrString = hmb.BetType.Code + "-" + hptRace.LegNr.ToString();
+                        hptRace.LegNrString = $"{hmb.BetType.Code}-{hptRace.LegNr}";
                         break;
                 }
 
                 // Grupperingsnamn för reserver i GUIt
-                hptRace.Reserv1GroupName = hptRace.LegNr.ToString() + "-" + "1";
-                hptRace.Reserv2GroupName = hptRace.LegNr.ToString() + "-" + "2";
+                hptRace.Reserv1GroupName = $"{hptRace.LegNr}-1";
+                hptRace.Reserv2GroupName = $"{hptRace.LegNr}-2";
             }
             SetTrainerAndDriver(hmb);
 
@@ -1765,7 +1765,7 @@ namespace HPTClient
             foreach (HPTPersonReductionRule rule in hmb.DriverRulesCollection.ReductionRuleList)
             {
                 rule.PersonList = new ObservableCollection<HPTPerson>();
-                foreach (string personName in rule.PersonShortNameList)
+                foreach (var personName in rule.PersonShortNameList)
                 {
                     var person = hmb.DriverRulesCollection.PersonList.FirstOrDefault(p => p.ShortName.ToLower() == personName.ToLower());
                     if (person != null && !rule.PersonList.Contains(person))
@@ -1781,7 +1781,7 @@ namespace HPTClient
             foreach (HPTPersonReductionRule rule in hmb.TrainerRulesCollection.ReductionRuleList)
             {
                 rule.PersonList = new ObservableCollection<HPTPerson>();
-                foreach (string personName in rule.PersonShortNameList)
+                foreach (var personName in rule.PersonShortNameList)
                 {
                     var person = hmb.TrainerRulesCollection.PersonList.FirstOrDefault(p => p.ShortName == personName);
                     if (person != null && !rule.PersonList.Contains(person))
@@ -1802,7 +1802,7 @@ namespace HPTClient
                     rule.HorseList = new ObservableCollection<HPTHorse>();
                     foreach (var horseLight in rule.HorseLightList)
                     {
-                        HPTHorse horse = hmb.RaceDayInfo.HorseListSelected
+                        var horse = hmb.RaceDayInfo.HorseListSelected
                             .FirstOrDefault(h => h.ParentRace.LegNr == horseLight.LegNr && h.StartNr == horseLight.StartNr);
 
                         if (horse != null)
@@ -1815,7 +1815,7 @@ namespace HPTClient
             }
 
             // V6BetMultiplierRule
-            int ruleNumber = 1;
+            var ruleNumber = 1;
             foreach (var v6BetMultiplierRule in hmb.V6BetMultiplierRuleList)
             {
                 //v6BetMultiplierRule.HorseList = new ObservableCollection<HPTHorse>();
@@ -1823,12 +1823,12 @@ namespace HPTClient
                 v6BetMultiplierRule.BetMultiplierList = hmb.BetType.BetMultiplierList;
                 v6BetMultiplierRule.MarkBet = hmb;
 
-                List<HPTHorseLightSelectable> horseLightSelectableList = v6BetMultiplierRule.RaceList
+                var horseLightSelectableList = v6BetMultiplierRule.RaceList
                     .SelectMany(r => r.HorseList).ToList();
 
                 foreach (var horseLightSelectable in horseLightSelectableList)
                 {
-                    HPTHorse horse = hmb.RaceDayInfo.RaceList.SelectMany(r => r.HorseList)
+                    var horse = hmb.RaceDayInfo.RaceList.SelectMany(r => r.HorseList)
                         .FirstOrDefault(h => h.StartNr == horseLightSelectable.StartNr && h.ParentRace.LegNr == horseLightSelectable.LegNr);
 
                     horseLightSelectable.Horse = horse;
@@ -1855,7 +1855,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
 
             hmb.SingleRowCollection = new HPTMarkBetSingleRowCollection(hmb);
@@ -1917,7 +1917,7 @@ namespace HPTClient
                 }
                 catch (Exception exc)
                 {
-                    string s = exc.Message;
+                    var s = exc.Message;
                 }
             }
 
@@ -1925,7 +1925,7 @@ namespace HPTClient
             {
                 if (!Directory.Exists(hmb.SaveDirectory))
                 {
-                    hmb.SaveDirectory = HPTConfig.MyDocumentsPath + hmb.RaceDayInfo.ToDateAndTrackString() + "\\";
+                    hmb.SaveDirectory = $"{HPTConfig.MyDocumentsPath}{hmb.RaceDayInfo.ToDateAndTrackString()}\\";
                 }
             }
             catch (Exception exc)

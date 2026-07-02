@@ -108,7 +108,7 @@ namespace HPTClient
             {
                 return true;
             }
-            DateTime dt = DateTime.Now;
+            var dt = DateTime.Now;
             if (dt > lastRequestedRecalculation)
             {
                 lastRequestedRecalculation = dt;
@@ -132,7 +132,7 @@ namespace HPTClient
                 StopCalculation = true;
             }
 
-            int i = 0;
+            var i = 0;
             while ((CalculationInProgress || CompressionInProgress)
                 && i < 50)
             {
@@ -156,7 +156,7 @@ namespace HPTClient
             singleRows.Clear();
 
             orderedRaceHorseList = new List<HPTHorse>[markBet.RaceDayInfo.RaceList.Count];
-            for (int i = 0; i < markBet.RaceDayInfo.RaceList.Count; i++)
+            for (var i = 0; i < markBet.RaceDayInfo.RaceList.Count; i++)
             {
                 if (markBet.ABCDEFReductionRule.Use || markBet.MultiABCDEFReductionRule.Use)
                 {
@@ -261,11 +261,11 @@ namespace HPTClient
                 }
                 else
                 {
-                    DateTime dtSTart = DateTime.Now;
+                    var dtSTart = DateTime.Now;
                     RemoveWithRowDifferenceSlow(); // Ny version att testa
-                    TimeSpan ts = DateTime.Now - dtSTart;
-                    string s = ts.TotalSeconds.ToString();
-                    string n = markBet.ReducedSize.ToString();
+                    var ts = DateTime.Now - dtSTart;
+                    var s = ts.TotalSeconds.ToString();
+                    var n = markBet.ReducedSize.ToString();
                 }
             }
 
@@ -314,7 +314,7 @@ namespace HPTClient
             AnalyzedRowsShare = 0M;
 
             rowNumber = 1;
-            foreach (HPTMarkBetSingleRow singleRow in AllRows)
+            foreach (var singleRow in AllRows)
             {
                 AnalyzeRow(singleRow);
             }
@@ -332,7 +332,7 @@ namespace HPTClient
                 {
                     throw new Exception();
                 }
-                HPTMarkBetSingleRow singleRow = new HPTMarkBetSingleRow(horseList);
+                var singleRow = new HPTMarkBetSingleRow(horseList);
                 if (SaveAllRows)
                 {
                     AllRows[numberOfAnalyzedRows] = singleRow;
@@ -351,7 +351,7 @@ namespace HPTClient
                     return;
                 }
             }
-            foreach (HPTHorse horse in orderedRaceHorseList[raceNumber])
+            foreach (var horse in orderedRaceHorseList[raceNumber])
             {
                 horseList[raceNumber] = horse;
                 MakeSingleRowCollection(raceNumber + 1);
@@ -363,11 +363,11 @@ namespace HPTClient
         {
             foreach (var reductionRule in reductionRulesToApply)
             {
-                bool include = reductionRule.IncludeRow(markBet, horseList, numberOfRacesToTest);
+                var include = reductionRule.IncludeRow(markBet, horseList, numberOfRacesToTest);
                 if (!include)
                 {
                     // Hur många rader slipper vi kontrollera tack vare tidigt avbrott
-                    int numberOfRowsCalculated = markBet.RaceDayInfo.RaceList
+                    var numberOfRowsCalculated = markBet.RaceDayInfo.RaceList
                         .Where(r => r.LegNr > numberOfRacesToTest)
                         .Select(r => r.NumberOfSelectedHorses)
                         .Aggregate((numberOfChosen, next) => numberOfChosen * next);
@@ -423,7 +423,7 @@ namespace HPTClient
             totalCouponSize += singleRow.BetMultiplier;
 
             // Lägg till radtäckning för varje häst
-            foreach (HPTHorse horse in singleRow.HorseList)
+            foreach (var horse in singleRow.HorseList)
             {
                 lock (horse)
                 {
@@ -444,7 +444,7 @@ namespace HPTClient
         private bool TestRules(HPTMarkBetSingleRow singleRow)
         {
             // Kör igenom alla regler
-            foreach (HPTReductionRule rule in reductionRulesToApply)
+            foreach (var rule in reductionRulesToApply)
             {
                 if (!rule.IncludeRow(markBet, singleRow))
                 {
@@ -460,27 +460,27 @@ namespace HPTClient
             {
                 return;
             }
-            bool recalculationPaused = markBet.pauseRecalculation;
+            var recalculationPaused = markBet.pauseRecalculation;
             markBet.pauseRecalculation = true;
 
-            List<HPTHorse> lowestRowValueHorseList = new List<HPTHorse>();
-            List<HPTHorse> highestRowValueHorseList = new List<HPTHorse>();
-            List<HPTHorse> lowestRankSumHorseList = new List<HPTHorse>();
-            List<HPTHorse> highestRankSumHorseList = new List<HPTHorse>();
-            List<HPTHorse> lowestStartNumberSumHorseList = new List<HPTHorse>();
-            List<HPTHorse> highestStartNumberSumHorseList = new List<HPTHorse>();
-            List<HPTHorse> lowestOddsSumHorseList = new List<HPTHorse>();
-            List<HPTHorse> highestOddsSumHorseList = new List<HPTHorse>();
-            List<HPTHorse> lowestATGRankSumHorseList = new List<HPTHorse>();
-            List<HPTHorse> highestATGRankSumHorseList = new List<HPTHorse>();
-            List<HPTHorse> lowestOwnRankSumHorseList = new List<HPTHorse>();
-            List<HPTHorse> highestOwnRankSumHorseList = new List<HPTHorse>();
+            var lowestRowValueHorseList = new List<HPTHorse>();
+            var highestRowValueHorseList = new List<HPTHorse>();
+            var lowestRankSumHorseList = new List<HPTHorse>();
+            var highestRankSumHorseList = new List<HPTHorse>();
+            var lowestStartNumberSumHorseList = new List<HPTHorse>();
+            var highestStartNumberSumHorseList = new List<HPTHorse>();
+            var lowestOddsSumHorseList = new List<HPTHorse>();
+            var highestOddsSumHorseList = new List<HPTHorse>();
+            var lowestATGRankSumHorseList = new List<HPTHorse>();
+            var highestATGRankSumHorseList = new List<HPTHorse>();
+            var lowestOwnRankSumHorseList = new List<HPTHorse>();
+            var highestOwnRankSumHorseList = new List<HPTHorse>();
 
             foreach (var race in markBet.RaceDayInfo.RaceList)
             {
                 if (race.HorseListSelected.Count > 0)
                 {
-                    IOrderedEnumerable<HPTHorse> horseListByStakeShare = race.HorseListSelected.OrderByDescending(h => h.StakeDistributionShare);
+                    var horseListByStakeShare = race.HorseListSelected.OrderByDescending(h => h.StakeDistributionShare);
                     lowestRowValueHorseList.Add(horseListByStakeShare.First());
                     highestRowValueHorseList.Add(horseListByStakeShare.Last());
 
@@ -488,7 +488,7 @@ namespace HPTClient
                     //lowestRankSumHorseList.Add(horseListByRank.First());
                     //highestRankSumHorseList.Add(horseListByRank.Last());
 
-                    IOrderedEnumerable<HPTHorse> horseListByRank = race.HorseListSelected.OrderBy(h => h.RankWeighted);
+                    var horseListByRank = race.HorseListSelected.OrderBy(h => h.RankWeighted);
                     lowestRankSumHorseList.Add(horseListByRank.First());
                     highestRankSumHorseList.Add(horseListByRank.Last());
 
@@ -496,26 +496,26 @@ namespace HPTClient
                     //lowestMarksPercentHorseList.Add(horseListByMarksPercent.First());
                     //highestMarksPercentHorseList.Add(horseListByMarksPercent.Last());
 
-                    IOrderedEnumerable<HPTHorse> horseListByStartNumber = race.HorseListSelected.OrderBy(h => h.StartNr);
+                    var horseListByStartNumber = race.HorseListSelected.OrderBy(h => h.StartNr);
                     lowestStartNumberSumHorseList.Add(horseListByStartNumber.First());
                     highestStartNumberSumHorseList.Add(horseListByStartNumber.Last());
 
-                    IOrderedEnumerable<HPTHorse> horseListByOdds = race.HorseListSelected.OrderBy(h => h.VinnarOdds);
+                    var horseListByOdds = race.HorseListSelected.OrderBy(h => h.VinnarOdds);
                     lowestOddsSumHorseList.Add(horseListByOdds.First());
                     highestOddsSumHorseList.Add(horseListByOdds.Last());
 
-                    IOrderedEnumerable<HPTHorse> horseListByATGRank = race.HorseListSelected.OrderBy(h => h.RankATG);
+                    var horseListByATGRank = race.HorseListSelected.OrderBy(h => h.RankATG);
                     lowestATGRankSumHorseList.Add(horseListByATGRank.First());
                     highestATGRankSumHorseList.Add(horseListByATGRank.Last());
 
-                    IOrderedEnumerable<HPTHorse> horseListByOwnRank = race.HorseListSelected.OrderBy(h => h.RankOwn);
+                    var horseListByOwnRank = race.HorseListSelected.OrderBy(h => h.RankOwn);
                     lowestOwnRankSumHorseList.Add(horseListByOwnRank.First());
                     highestOwnRankSumHorseList.Add(horseListByOwnRank.Last());
                 }
             }
 
             // Lägsta radvärde och högsta insatsfördelningsprocent
-            HPTMarkBetSingleRow singleRow = new HPTMarkBetSingleRow(lowestRowValueHorseList.ToArray());
+            var singleRow = new HPTMarkBetSingleRow(lowestRowValueHorseList.ToArray());
             singleRow.CalculateValues();
             singleRow.EstimateRowValue(markBet);
             lowestEstimatedRowValue = singleRow.RowValue;
@@ -658,44 +658,32 @@ namespace HPTClient
 
         #region Properties
 
-        private int currentCouponNumber;
         public int CurrentCouponNumber
         {
-            get
-            {
-                return currentCouponNumber;
-            }
+            get;
             set
             {
-                currentCouponNumber = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int numberOfCoveredRows;
         public int NumberOfCoveredRows
         {
-            get
-            {
-                return numberOfCoveredRows;
-            }
+            get;
             set
             {
-                numberOfCoveredRows = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private decimal coveredRowsShare;
         public decimal CoveredRowsShare
         {
-            get
-            {
-                return coveredRowsShare;
-            }
+            get;
             set
             {
-                coveredRowsShare = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -714,16 +702,12 @@ namespace HPTClient
             }
         }
 
-        private decimal analyzedRowsShare;
         public decimal AnalyzedRowsShare
         {
-            get
-            {
-                return analyzedRowsShare;
-            }
+            get;
             set
             {
-                analyzedRowsShare = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -772,7 +756,7 @@ namespace HPTClient
             CompressToCouponsBetmultiplierSingleRows(rowsWithV6);
             CompressToCouponsBetmultiplierSingleRows(rowsWithoutV6);
 
-            int depth = 1;
+            var depth = 1;
             while (rowsWithoutV6.Count > 0 || rowsWithV6.Count > 0)
             {
                 rowsWithV6 = SingleRows
@@ -791,7 +775,7 @@ namespace HPTClient
                 depth++;
             }
 
-            int couponId = 1;
+            var couponId = 1;
             foreach (var coupon in CompressedCoupons)
             {
                 coupon.CouponNumber = couponId++;
@@ -846,9 +830,9 @@ namespace HPTClient
                 return;
             }
 
-            bool v6 = rowsToCompress.First().V6;
+            var v6 = rowsToCompress.First().V6;
 
-            foreach (int betMultiplier in markBet.BetType.BetMultiplierList)
+            foreach (var betMultiplier in markBet.BetType.BetMultiplierList)
             {
                 var betMultiplierRowsToCompress = rowsToCompress
                     .Where(r => r.BetMultiplier == betMultiplier)
@@ -882,7 +866,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -901,7 +885,7 @@ namespace HPTClient
                 //    }
                 //}
 
-                int i = 0;
+                var i = 0;
                 while ((CalculationInProgress || CompressionInProgress)
                     && i < 50)
                 {
@@ -1025,17 +1009,17 @@ namespace HPTClient
                     .OrderByDescending(h => h.SystemCoverage)
                     .ToList();
 
-                foreach (HPTHorse horse in remainingHorsesList)
+                foreach (var horse in remainingHorsesList)
                 {
                     rowCombination.AddHorseNew(horse);
-                    bool includeHorse = rowCombination.CheckAddedRow(rowsToCompress, CurrentCouponNumber + 1);
+                    var includeHorse = rowCombination.CheckAddedRow(rowsToCompress, CurrentCouponNumber + 1);
                 }
                 CurrentCouponNumber++;
 
                 AddRowCombination(rowCombination, betMultiplier, v6);
             }
-            TimeSpan ts = DateTime.Now - dt;
-            string s = ts.TotalSeconds.ToString();
+            var ts = DateTime.Now - dt;
+            var s = ts.TotalSeconds.ToString();
         }
 
         #endregion
@@ -1046,16 +1030,16 @@ namespace HPTClient
                 .OrderBy(sr => sr.RankSum)
                 .ToList();
 
-            decimal factor = Convert.ToDecimal(templateRank.DesiredSystemSize) / (1.0M - templateRank.ReductionPercentage / 100.0M) / Convert.ToDecimal(singleRows.Count);
-            int minPos = Convert.ToInt32(singleRows.Count * templateRank.LowerPercentageLimit / 100 * factor) - 1;
-            int maxPos = Convert.ToInt32(singleRows.Count * templateRank.UpperPercentageLimit / 100 * factor) - 1;
+            var factor = Convert.ToDecimal(templateRank.DesiredSystemSize) / (1.0M - templateRank.ReductionPercentage / 100.0M) / Convert.ToDecimal(singleRows.Count);
+            var minPos = Convert.ToInt32(singleRows.Count * templateRank.LowerPercentageLimit / 100 * factor) - 1;
+            var maxPos = Convert.ToInt32(singleRows.Count * templateRank.UpperPercentageLimit / 100 * factor) - 1;
             templateRank.MinRankValue = Math.Round(singleRows[minPos].RankSum, 1);
             templateRank.MaxRankValue = Math.Round(singleRows[maxPos].RankSum, 1);
         }
 
         private int CompareRankSum(HPTMarkBetSingleRow sr1, HPTMarkBetSingleRow sr2)
         {
-            decimal result = sr1.RankSum - sr2.RankSum;
+            var result = sr1.RankSum - sr2.RankSum;
             if (result < 0)
             {
                 return -1;
@@ -1136,7 +1120,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
                 //ResetValues();
                 //throw exc;
             }
@@ -1161,7 +1145,7 @@ namespace HPTClient
                         numberOfRowsForTestedRule++;
                         if (numberOfCorrectDictionary != null)
                         {
-                            int numberOfCorrect = markBet.CouponCorrector.HorseList.Intersect(horseList).Count();
+                            var numberOfCorrect = markBet.CouponCorrector.HorseList.Intersect(horseList).Count();
                             if (numberOfCorrectDictionary.ContainsKey(numberOfCorrect))
                             {
                                 numberOfCorrectDictionary[numberOfCorrect] += 1;
@@ -1185,7 +1169,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
             return;
         }
@@ -1195,30 +1179,22 @@ namespace HPTClient
 
         #region Intervallreduceringar
 
-        private decimal minRankSum;
         public decimal MinRankSum
         {
-            get
-            {
-                return minRankSum;
-            }
+            get;
             set
             {
-                minRankSum = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private decimal maxRankSum;
         public decimal MaxRankSum
         {
-            get
-            {
-                return maxRankSum;
-            }
+            get;
             set
             {
-                maxRankSum = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -1255,9 +1231,9 @@ namespace HPTClient
         {
             if (markBet.ReductionRank && (markBet.MinRankSumPercent > 0 || markBet.MaxRankSumPercent < 100))
             {
-                IOrderedEnumerable<HPTMarkBetSingleRow> orderedRows = AllRows.OrderBy(singleRow => singleRow.RankSum);
-                int lowerPos = Convert.ToInt32(Convert.ToDecimal(markBet.MinRankSumPercent) / 100M * AllRows.Length);
-                int upperPos = Convert.ToInt32(Convert.ToDecimal(markBet.MaxRankSumPercent) / 100M * AllRows.Length);
+                var orderedRows = AllRows.OrderBy(singleRow => singleRow.RankSum);
+                var lowerPos = Convert.ToInt32(Convert.ToDecimal(markBet.MinRankSumPercent) / 100M * AllRows.Length);
+                var upperPos = Convert.ToInt32(Convert.ToDecimal(markBet.MaxRankSumPercent) / 100M * AllRows.Length);
                 RemoveSingleRows(lowerPos, upperPos, orderedRows);
             }
         }
@@ -1266,9 +1242,9 @@ namespace HPTClient
         {
             if (markBet.RowValueReductionRule.Use && (markBet.RowValueReductionRule.MinPercentSum > 0 || markBet.RowValueReductionRule.MaxPercentSum < 100))
             {
-                IOrderedEnumerable<HPTMarkBetSingleRow> orderedRows = AllRows.OrderBy(singleRow => singleRow.RowValue);
-                int lowerPos = Convert.ToInt32(Convert.ToDecimal(markBet.RowValueReductionRule.MinPercentSum) / 100M * AllRows.Length);
-                int upperPos = Convert.ToInt32(Convert.ToDecimal(markBet.RowValueReductionRule.MaxPercentSum) / 100M * AllRows.Length);
+                var orderedRows = AllRows.OrderBy(singleRow => singleRow.RowValue);
+                var lowerPos = Convert.ToInt32(Convert.ToDecimal(markBet.RowValueReductionRule.MinPercentSum) / 100M * AllRows.Length);
+                var upperPos = Convert.ToInt32(Convert.ToDecimal(markBet.RowValueReductionRule.MaxPercentSum) / 100M * AllRows.Length);
                 RemoveSingleRows(lowerPos, upperPos, orderedRows);
             }
         }
@@ -1277,9 +1253,9 @@ namespace HPTClient
         {
             if (markBet.StakePercentSumReductionRule.Use && (markBet.StakePercentSumReductionRule.MinPercentSum > 0 || markBet.StakePercentSumReductionRule.MaxPercentSum < 100))
             {
-                IOrderedEnumerable<HPTMarkBetSingleRow> orderedRows = AllRows.OrderBy(singleRow => singleRow.StakePercentSum);
-                int lowerPos = Convert.ToInt32(Convert.ToDecimal(markBet.StakePercentSumReductionRule.MinPercentSum) / 100M * AllRows.Length);
-                int upperPos = Convert.ToInt32(Convert.ToDecimal(markBet.StakePercentSumReductionRule.MaxPercentSum) / 100M * AllRows.Length);
+                var orderedRows = AllRows.OrderBy(singleRow => singleRow.StakePercentSum);
+                var lowerPos = Convert.ToInt32(Convert.ToDecimal(markBet.StakePercentSumReductionRule.MinPercentSum) / 100M * AllRows.Length);
+                var upperPos = Convert.ToInt32(Convert.ToDecimal(markBet.StakePercentSumReductionRule.MaxPercentSum) / 100M * AllRows.Length);
                 RemoveSingleRows(lowerPos, upperPos, orderedRows);
             }
         }
@@ -1288,25 +1264,25 @@ namespace HPTClient
         {
             if (markBet.StartNrSumReductionRule.Use && (markBet.StartNrSumReductionRule.MinPercentSum > 0 || markBet.StartNrSumReductionRule.MaxPercentSum < 100))
             {
-                IOrderedEnumerable<HPTMarkBetSingleRow> orderedRows = AllRows.OrderBy(singleRow => singleRow.StartNrSum);
-                int lowerPos = Convert.ToInt32(Convert.ToDecimal(markBet.StartNrSumReductionRule.MinPercentSum) / 100M * AllRows.Length);
-                int upperPos = Convert.ToInt32(Convert.ToDecimal(markBet.StartNrSumReductionRule.MaxPercentSum) / 100M * AllRows.Length);
+                var orderedRows = AllRows.OrderBy(singleRow => singleRow.StartNrSum);
+                var lowerPos = Convert.ToInt32(Convert.ToDecimal(markBet.StartNrSumReductionRule.MinPercentSum) / 100M * AllRows.Length);
+                var upperPos = Convert.ToInt32(Convert.ToDecimal(markBet.StartNrSumReductionRule.MaxPercentSum) / 100M * AllRows.Length);
                 RemoveSingleRows(lowerPos, upperPos, orderedRows);
             }
         }
 
         private void RemoveSingleRows(int lowerPos, int upperPos, IOrderedEnumerable<HPTMarkBetSingleRow> orderedRows)
         {
-            HPTMarkBetSingleRow[] orderedArray = orderedRows.ToArray();
-            for (int i = 0; i < lowerPos; i++)
+            var orderedArray = orderedRows.ToArray();
+            for (var i = 0; i < lowerPos; i++)
             {
-                HPTMarkBetSingleRow row = SingleRows.FirstOrDefault(r => r.UniqueCode == orderedArray[i].UniqueCode);
+                var row = SingleRows.FirstOrDefault(r => r.UniqueCode == orderedArray[i].UniqueCode);
                 if (row != null)
                 {
                     SingleRows.Remove(row);
                 }
             }
-            for (int i = upperPos; i < AllRows.Length; i++)
+            for (var i = upperPos; i < AllRows.Length; i++)
             {
                 var row = SingleRows
                     .FirstOrDefault(r => r.UniqueCode == orderedArray[i].UniqueCode);
@@ -1323,9 +1299,9 @@ namespace HPTClient
             {
                 return string.Empty;
             }
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.AppendLine("Enkelrader:");
-            foreach (HPTMarkBetSingleRow singleRow in SingleRows.OrderBy(sr => sr.RowNumber))
+            foreach (var singleRow in SingleRows.OrderBy(sr => sr.RowNumber))
             {
                 sb.AppendLine(singleRow.ToString());
             }
@@ -1334,9 +1310,9 @@ namespace HPTClient
 
         public string ToCouponsString()
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             // TODO: Använd HPTCoupon istället och ta med reserverna
-            foreach (HPTMarkBetSingleRowCombination rowCombination in CompressedCoupons)
+            foreach (var rowCombination in CompressedCoupons)
             {
                 sb.AppendLine(rowCombination.ToCouponString());
             }
@@ -1428,7 +1404,7 @@ namespace HPTClient
                     var originalHorse = horseList[horse.ParentRace.LegNr];
                     horseList[horse.ParentRace.LegNr] = horse;
 
-                    string uniqueCode = horseList.Values
+                    var uniqueCode = horseList.Values
                         .Select(h => h.HexCode)
                         .Aggregate((h, next) => h + next);
 
@@ -1482,8 +1458,8 @@ namespace HPTClient
                 //    .OrderByDescending(sr => sr.HorseList.Sum(h => h.NumberOfCoveredRows))
                 //    .First();
 
-                int maxCoveredRows = markBet.SystemSize - 1;
-                int maxCoveredRows2 = markBet.SystemSize - 1;
+                var maxCoveredRows = markBet.SystemSize - 1;
+                var maxCoveredRows2 = markBet.SystemSize - 1;
                 HPTMarkBetSingleRow singleRow = null;
 
                 while (selectedRowsDictionary.Count > 0)  // Så länge inte alla rader är täckta
@@ -1494,8 +1470,8 @@ namespace HPTClient
                     }
 
                     // Bästa resultatet i loopen nedan
-                    int mostCoveredRows = 0;
-                    int leastCoveredRows2 = 0;
+                    var mostCoveredRows = 0;
+                    var leastCoveredRows2 = 0;
 
                     //foreach (var row in rowsToSelectFrom.Values)
                     foreach (var row in rowsToSelectFromTemp)
@@ -1503,12 +1479,12 @@ namespace HPTClient
                         //if (this.markBet.NumberOfToleratedErrors == 1)
                         if (markBet.NumberOfToleratedErrors < 3)
                         {
-                            int numberOfDiff1 = 0;
-                            int numberOfDiff2 = 0;
+                            var numberOfDiff1 = 0;
+                            var numberOfDiff2 = 0;
                             //foreach (var innerRow in rowsToSelectFrom.Values)
                             foreach (var innerRow in selectedRowsDictionary.Values)
                             {
-                                int numberOfDiff = innerRow.RowDifference(row, 2);
+                                var numberOfDiff = innerRow.RowDifference(row, 2);
                                 if (numberOfDiff == 1)
                                 {
                                     numberOfDiff1++;
@@ -1612,7 +1588,7 @@ namespace HPTClient
                     var originalHorse = horseList[horse.ParentRace.LegNr];
                     horseList[horse.ParentRace.LegNr] = horse;
 
-                    string uniqueCode = horseList.Values
+                    var uniqueCode = horseList.Values
                         .Select(h => h.HexCode)
                         .Aggregate((h, next) => h + next);
 
@@ -1645,11 +1621,11 @@ namespace HPTClient
         internal void SetBetMultiplierToReachTarget()
         {
             RecalculateTotalCouponSize();
-            decimal systemCost = totalCouponSize * markBet.BetType.RowCost;
+            var systemCost = totalCouponSize * markBet.BetType.RowCost;
             if (markBet.BetMultiplierRowAddition && markBet.BetMultiplierRowAdditionTarget > systemCost)
             {
-                int numberOfRowsToDouble = Convert.ToInt32((markBet.BetMultiplierRowAdditionTarget - systemCost) /
-                                          markBet.BetType.RowCost);
+                var numberOfRowsToDouble = Convert.ToInt32((markBet.BetMultiplierRowAdditionTarget - systemCost) /
+                                                           markBet.BetType.RowCost);
 
                 var rowsToDouble = singleRows.Where(sr => sr.BetMultiplier == 1).OrderBy(sr => sr.RowValue).Take(numberOfRowsToDouble);
                 foreach (var singleRow in rowsToDouble)
@@ -1667,12 +1643,12 @@ namespace HPTClient
 
         internal void RemoveOwnProbabilityRowsToReachTarget()
         {
-            decimal systemCost = totalCouponSize * markBet.BetType.RowCost;
+            var systemCost = totalCouponSize * markBet.BetType.RowCost;
 
             if (markBet.OwnProbabilityCost && markBet.OwnProbabilityCostTarget < systemCost)
             {
-                int numberOfRowsToRemove = Convert.ToInt32((systemCost - markBet.OwnProbabilityCostTarget) /
-                                          markBet.BetType.RowCost);
+                var numberOfRowsToRemove = Convert.ToInt32((systemCost - markBet.OwnProbabilityCostTarget) /
+                                                           markBet.BetType.RowCost);
 
                 var singleRowsArray = singleRows
                     .OrderBy(sr => sr.OwnProbabilityQuota)
@@ -1689,23 +1665,23 @@ namespace HPTClient
 
         internal void RemoveRandomRowsToReachTarget()
         {
-            decimal systemCost = totalCouponSize * markBet.BetType.RowCost;
+            var systemCost = totalCouponSize * markBet.BetType.RowCost;
 
             if (markBet.RandomRowReduction && markBet.RandomRowReductionTarget < systemCost)
             {
-                int numberOfRowsToRemove = Convert.ToInt32((systemCost - markBet.RandomRowReductionTarget) /
-                                          markBet.BetType.RowCost);
-                int couponSizeToReach = totalCouponSize - numberOfRowsToRemove;
-                int upperLimit = singleRows.Count - 1;
+                var numberOfRowsToRemove = Convert.ToInt32((systemCost - markBet.RandomRowReductionTarget) /
+                                                           markBet.BetType.RowCost);
+                var couponSizeToReach = totalCouponSize - numberOfRowsToRemove;
+                var upperLimit = singleRows.Count - 1;
                 var singleRowsArray = singleRows.ToArray();
                 var rnd = new Random();
-                for (int i = 0; i < numberOfRowsToRemove; i++)
+                for (var i = 0; i < numberOfRowsToRemove; i++)
                 {
                     if (StopCalculation)
                     {
                         return;
                     }
-                    int position = rnd.Next(upperLimit);
+                    var position = rnd.Next(upperLimit);
                     var singleRowToRemove = singleRowsArray[position];
                     SingleRows.Remove(singleRowToRemove);
                     singleRowsArray[position] = singleRowsArray[upperLimit];

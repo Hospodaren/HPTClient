@@ -13,7 +13,7 @@
 
         public ABCDTemplateSettings Clone()
         {
-            ABCDTemplateSettings abcdTemplateSettings = new ABCDTemplateSettings();
+            var abcdTemplateSettings = new ABCDTemplateSettings();
 
             abcdTemplateSettings.MaxNumberOfSelectedPerRace = MaxNumberOfSelectedPerRace;
             abcdTemplateSettings.MinNumberOfSelectedPerRace = MinNumberOfSelectedPerRace;

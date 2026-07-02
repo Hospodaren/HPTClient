@@ -24,16 +24,15 @@ namespace HPTClient
         public static readonly DependencyProperty ConfigProperty =
             DependencyProperty.Register("Config", typeof(HPTConfig), typeof(UCHorseRankSumReductionTemplate), new UIPropertyMetadata(HPTConfig.Config));
 
-        private HPTHorseRankSumReductionRuleCollection horseRankSumReductionRuleCollection;
         internal HPTHorseRankSumReductionRuleCollection HorseRankSumReductionRuleCollection
         {
             get
             {
-                if (horseRankSumReductionRuleCollection == null || horseRankSumReductionRuleCollection != (HPTHorseRankSumReductionRuleCollection)DataContext)
+                if (field == null || field != (HPTHorseRankSumReductionRuleCollection)DataContext)
                 {
-                    horseRankSumReductionRuleCollection = (HPTHorseRankSumReductionRuleCollection)DataContext;
+                    field = (HPTHorseRankSumReductionRuleCollection)DataContext;
                 }
-                return horseRankSumReductionRuleCollection;
+                return field;
             }
         }
 
@@ -127,10 +126,10 @@ namespace HPTClient
                     {
                         if (horseRankReductionRule.NumberOfWinnersList != null && horseRankReductionRule.NumberOfWinnersList.Count > 0)
                         {
-                            int maxNumberOfWinners = horseRankReductionRule.NumberOfWinnersList.Max(now => now.NumberOfWinners);
+                            var maxNumberOfWinners = horseRankReductionRule.NumberOfWinnersList.Max(now => now.NumberOfWinners);
                             if (maxNumberOfWinners > NumberOfRaces)
                             {
-                                List<HPTNumberOfWinners> numberOfWinnersToRemove = horseRankReductionRule.NumberOfWinnersList
+                                var numberOfWinnersToRemove = horseRankReductionRule.NumberOfWinnersList
                                     .Where(now => now.NumberOfWinners > NumberOfRaces).ToList();
 
                                 foreach (var numberOfWinners in numberOfWinnersToRemove)
@@ -141,7 +140,7 @@ namespace HPTClient
                             }
                             else if (maxNumberOfWinners < NumberOfRaces)
                             {
-                                for (int i = maxNumberOfWinners + 1; i <= NumberOfRaces; i++)
+                                for (var i = maxNumberOfWinners + 1; i <= NumberOfRaces; i++)
                                 {
                                     var numberOfWinners = new HPTNumberOfWinners()
                                     {
@@ -174,7 +173,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -182,7 +181,7 @@ namespace HPTClient
         {
             var clonedHorseRankSumReductionRuleCollection = new HPTHorseRankSumReductionRuleCollection()
             {
-                Name = HorseRankSumReductionRuleCollection.Name + " (kopia)",
+                Name = $"{HorseRankSumReductionRuleCollection.Name} (kopia)",
                 RankSumReductionRuleList = new ObservableCollection<HPTHorseRankSumReductionRule>(HorseRankSumReductionRuleCollection.RankSumReductionRuleList.Select(r => r.Clone())),
                 TypeCategory = TypeCategory
             };

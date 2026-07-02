@@ -36,14 +36,13 @@ namespace HPTClient
 
         public HPTGroupIntervalRulesCollection GroupIntervalRulesCollectionV86 { get; set; }
 
-        private ObservableCollection<HPTGroupIntervalRulesCollection> groupIntervalRulesCollectionList;
         public ObservableCollection<HPTGroupIntervalRulesCollection> GroupIntervalRulesCollection
         {
             get
             {
-                if (groupIntervalRulesCollectionList == null)
+                if (field == null)
                 {
-                    groupIntervalRulesCollectionList = new ObservableCollection<HPTGroupIntervalRulesCollection>()
+                    field = new ObservableCollection<HPTGroupIntervalRulesCollection>()
                     {
                         GroupIntervalRulesCollectionV4,
                         GroupIntervalRulesCollectionV5,
@@ -52,7 +51,7 @@ namespace HPTClient
                         GroupIntervalRulesCollectionV86
                     };
                 }
-                return groupIntervalRulesCollectionList;
+                return field;
             }
         }
     }

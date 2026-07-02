@@ -21,16 +21,12 @@ namespace HPTClient
 
         public bool Edited { get; set; }
 
-        private bool selectedForEditing;
         public bool SelectedForEditing
         {
-            get
-            {
-                return selectedForEditing;
-            }
+            get;
             set
             {
-                selectedForEditing = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -39,16 +35,12 @@ namespace HPTClient
 
         public int CouponNumber { get; set; }
 
-        private bool v6;
         public bool V6
         {
-            get
-            {
-                return v6;
-            }
+            get;
             set
             {
-                v6 = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -91,7 +83,7 @@ namespace HPTClient
                 if (RowShareStake > 0)
                 {
                     //decimal result = markBet.RaceDayInfo.MaxPayOut / (RowShareStake * markBet.RaceDayInfo.NumberOfGambledRowsTotal);
-                    decimal result = markBet.BetType.PoolShare * markBet.BetType.RowCost / RowShareStake;
+                    var result = markBet.BetType.PoolShare * markBet.BetType.RowCost / RowShareStake;
                     //if (result == 0M || markBet.RaceDayInfo.JackpotFactor > 2M)
                     //{
                     //    result = markBet.BetType.PoolShare * markBet.BetType.RowCost / RowShareStake;
@@ -102,8 +94,8 @@ namespace HPTClient
                         result *= markBet.RaceDayInfo.JackpotFactor;
                     }
                     result /= markBet.RaceDayInfo.V6Factor;
-                    decimal resultV6 = result;
-                    decimal resultWithoutScratchings = result * (RowShareStake / RowShareStakeWithoutScratchings);
+                    var resultV6 = result;
+                    var resultWithoutScratchings = result * (RowShareStake / RowShareStakeWithoutScratchings);
                     if (V6 || markBet.V6)
                     {
                         resultV6 *= markBet.BetType.V6Factor;
@@ -124,7 +116,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
 
             return 0;
@@ -134,18 +126,18 @@ namespace HPTClient
         {
             try
             {
-                decimal rowShareFinalStakeShare = HorseList
+                var rowShareFinalStakeShare = HorseList
                         .Select(h => (decimal)h.StakeDistributionShareFinal)
                         .Aggregate((sd, next) => sd * next);
 
-                decimal result = markBet.RaceDayInfo.MaxPayOut / (rowShareFinalStakeShare * markBet.RaceDayInfo.NumberOfGambledRowsTotal);
+                var result = markBet.RaceDayInfo.MaxPayOut / (rowShareFinalStakeShare * markBet.RaceDayInfo.NumberOfGambledRowsTotal);
                 if (result == 0M || markBet.RaceDayInfo.JackpotFactor > 2M)
                 {
                     result = markBet.BetType.PoolShare * markBet.BetType.RowCost / rowShareFinalStakeShare;
                     result *= markBet.RaceDayInfo.JackpotFactor;
                 }
                 result /= markBet.RaceDayInfo.V6Factor;
-                decimal resultV6 = result;
+                var resultV6 = result;
                 if (V6 || markBet.V6)
                 {
                     resultV6 *= markBet.BetType.V6Factor;
@@ -164,63 +156,47 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
             return 0;
         }
 
-        private int rowValue;
         public int RowValue
         {
-            get
-            {
-                return rowValue;
-            }
+            get;
             set
             {
-                rowValue = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int rowValueWithoutScratchings;
         public int RowValueWithoutScratchings
         {
-            get
-            {
-                return rowValueWithoutScratchings;
-            }
+            get;
             set
             {
-                rowValueWithoutScratchings = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int rowValueV6;
         public int RowValueV6
         {
-            get
-            {
-                return rowValueV6;
-            }
+            get;
             set
             {
-                rowValueV6 = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int rowValueBetMultiplier;
         public int RowValueBetMultiplier
         {
-            get
-            {
-                return rowValueBetMultiplier;
-            }
+            get;
             set
             {
-                rowValueBetMultiplier = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -233,16 +209,12 @@ namespace HPTClient
 
         public int RowValueThreeErrorsFinalStakeShare { get; set; }
 
-        private int betMultiplier;
         public int BetMultiplier
         {
-            get
-            {
-                return betMultiplier;
-            }
+            get;
             set
             {
-                betMultiplier = value;
+                field = value;
                 OnPropertyChanged();
                 RowValueBetMultiplier = RowValueV6 * value;
             }
@@ -259,24 +231,24 @@ namespace HPTClient
         internal bool ValuesCalculated = false;
         internal void CalculateValues()
         {
-            int atgRankSum = 0;
-            int ownRankSum = 0;
-            int alternateRankSum = 0;
-            int oddsSum = 0;
-            int startNrSum = 0;
-            decimal stakePercentSumExact = 0M;
-            decimal rankSum = 0M;
-            int stakePercentSum = 0;
-            decimal rowShareStakeWithoutScratchings = 1M;
-            decimal rowShareStake = 1M;
+            var atgRankSum = 0;
+            var ownRankSum = 0;
+            var alternateRankSum = 0;
+            var oddsSum = 0;
+            var startNrSum = 0;
+            var stakePercentSumExact = 0M;
+            var rankSum = 0M;
+            var stakePercentSum = 0;
+            var rowShareStakeWithoutScratchings = 1M;
+            var rowShareStake = 1M;
             var sbUniqueCode = new StringBuilder();
             var sbABCDRankCode = new StringBuilder();
 
             // KOMMANDE
-            decimal rowShareStakeRounded = 1M;
-            decimal rowShareOwnProbability = 1M;
+            var rowShareStakeRounded = 1M;
+            var rowShareOwnProbability = 1M;
 
-            foreach (HPTHorse horse in HorseList)
+            foreach (var horse in HorseList)
             {
                 atgRankSum += horse.RankATG;
                 ownRankSum += horse.RankOwn;
@@ -344,130 +316,94 @@ namespace HPTClient
 
         public decimal[] CurrentGroupIntervalValues { get; set; }
 
-        private int rowValueOneError;
         public int RowValueOneError
         {
-            get
-            {
-                return rowValueOneError;
-            }
+            get;
             set
             {
-                rowValueOneError = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int rowValueTwoErrors;
         public int RowValueTwoErrors
         {
-            get
-            {
-                return rowValueTwoErrors;
-            }
+            get;
             set
             {
-                rowValueTwoErrors = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int rowValueThreeErrors;
         public int RowValueThreeErrors
         {
-            get
-            {
-                return rowValueThreeErrors;
-            }
+            get;
             set
             {
-                rowValueThreeErrors = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int? rowValueOneErrorLower;
         public int? RowValueOneErrorLower
         {
-            get
-            {
-                return rowValueOneErrorLower;
-            }
+            get;
             set
             {
-                rowValueOneErrorLower = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int? rowValueOneErrorUpper;
         public int? RowValueOneErrorUpper
         {
-            get
-            {
-                return rowValueOneErrorUpper;
-            }
+            get;
             set
             {
-                rowValueOneErrorUpper = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int? rowValueTwoErrorsLower;
         public int? RowValueTwoErrorsLower
         {
-            get
-            {
-                return rowValueTwoErrorsLower;
-            }
+            get;
             set
 
             {
-                rowValueTwoErrorsLower = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int? rowValueTwoErrorsUpper;
         public int? RowValueTwoErrorsUpper
         {
-            get
-            {
-                return rowValueTwoErrorsUpper;
-            }
+            get;
             set
             {
-                rowValueTwoErrorsUpper = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int? rowValueThreeErrorsLower;
         public int? RowValueThreeErrorsLower
         {
-            get
-            {
-                return rowValueThreeErrorsLower;
-            }
+            get;
             set
 
             {
-                rowValueThreeErrorsLower = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int? rowValueThreeErrorsUpper;
         public int? RowValueThreeErrorsUpper
         {
-            get
-            {
-                return rowValueThreeErrorsUpper;
-            }
+            get;
             set
             {
-                rowValueThreeErrorsUpper = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -506,8 +442,8 @@ namespace HPTClient
             }
 
             // kontrollera båda varianterna av V6-gräns
-            bool v6RowValue = markBet.V6SingleRows && RowValue < markBet.V6UpperBoundary;
-            bool v6OwnRank = markBet.V6OwnRank && AlternateRankSum <= markBet.V6OwnRankMax;
+            var v6RowValue = markBet.V6SingleRows && RowValue < markBet.V6UpperBoundary;
+            var v6OwnRank = markBet.V6OwnRank && AlternateRankSum <= markBet.V6OwnRankMax;
 
             // Värden från radvärdesregler i andra hand
             if (v6RowValue || v6OwnRank)
@@ -526,7 +462,7 @@ namespace HPTClient
 
             if (markBet.SingleRowBetMultiplier && RowValueV6 > 0)
             {
-                decimal exactMultiplier = Convert.ToDecimal(markBet.SingleRowTargetProfit) / Convert.ToDecimal(RowValueV6);
+                var exactMultiplier = Convert.ToDecimal(markBet.SingleRowTargetProfit) / Convert.ToDecimal(RowValueV6);
                 BetMultiplier = Convert.ToInt32(Math.Ceiling(exactMultiplier));
                 BetMultiplier = BetMultiplier == 0 ? 1 : BetMultiplier;
             }
@@ -559,11 +495,11 @@ namespace HPTClient
         public void CreateBetMultiplierList(HPTMarkBet markBet)
         {
             BetMultiplierList = new List<int>();
-            int tempMultiplier = BetMultiplier;
+            var tempMultiplier = BetMultiplier;
 
             while (tempMultiplier > 0)
             {
-                int partialMultiplier = markBet.BetType.BetMultiplierList.Where(bm => bm <= tempMultiplier).Max();
+                var partialMultiplier = markBet.BetType.BetMultiplierList.Where(bm => bm <= tempMultiplier).Max();
                 BetMultiplierList.Add(partialMultiplier);
                 tempMultiplier -= partialMultiplier;
             }
@@ -573,8 +509,8 @@ namespace HPTClient
 
         public void SetGroupingCode(params int[] racesToRemove)
         {
-            StringBuilder sb = new StringBuilder();
-            foreach (HPTHorse horse in HorseList)
+            var sb = new StringBuilder();
+            foreach (var horse in HorseList)
             {
                 if (!racesToRemove.Contains(horse.ParentRace.LegNr))
                 {
@@ -593,10 +529,10 @@ namespace HPTClient
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.Append(RowNumber);
             sb.Append(": ");
-            for (int i = 0; i < HorseList.Length; i++)
+            for (var i = 0; i < HorseList.Length; i++)
             {
                 sb.Append(HorseList[i].StartNr);
                 sb.Append(", ");
@@ -639,27 +575,24 @@ namespace HPTClient
 
         //public int[] StartNrList { get; set; }
 
-        private int[] startNrList;
         public int[] StartNrList
         {
             get
             {
-                if (startNrList == null && HorseList != null)
+                if (field == null && HorseList != null)
                 {
-                    startNrList = HorseList.Select(h => h.StartNr).ToArray();
+                    field = HorseList.Select(h => h.StartNr).ToArray();
                 }
-                return startNrList;
+
+                return field;
             }
-            set
-            {
-                startNrList = value;
-            }
+            set;
         }
 
         internal bool HasRowDifference(HPTMarkBetSingleRow singleRow, int difference)
         {
-            int numberOfDifferent = 0;
-            for (int i = 0; i < StartNrList.Length; i++)
+            var numberOfDifferent = 0;
+            for (var i = 0; i < StartNrList.Length; i++)
             {
                 numberOfDifferent += StartNrList[i] == singleRow.StartNrList[i] ? 0 : 1;
                 if (numberOfDifferent > difference)
@@ -684,8 +617,8 @@ namespace HPTClient
 
         internal int RowDifference(HPTMarkBetSingleRow singleRow)
         {
-            int numberOfDifferent = 0;
-            for (int i = 0; i < StartNrList.Length; i++)
+            var numberOfDifferent = 0;
+            for (var i = 0; i < StartNrList.Length; i++)
             {
                 numberOfDifferent += StartNrList[i] == singleRow.StartNrList[i] ? 0 : 1;
             }
@@ -694,8 +627,8 @@ namespace HPTClient
 
         internal int RowDifference(HPTMarkBetSingleRow singleRow, int max)
         {
-            int numberOfDifferent = 0;
-            for (int i = 0; i < StartNrList.Length; i++)
+            var numberOfDifferent = 0;
+            for (var i = 0; i < StartNrList.Length; i++)
             {
                 numberOfDifferent += StartNrList[i] == singleRow.StartNrList[i] ? 0 : 1;
                 if (numberOfDifferent > max)
@@ -708,8 +641,8 @@ namespace HPTClient
 
         internal bool RowDifferenceInInterval(HPTMarkBetSingleRow singleRow, int min, int max)
         {
-            int numberOfDifferent = 0;
-            for (int i = 0; i < StartNrList.Length; i++)
+            var numberOfDifferent = 0;
+            for (var i = 0; i < StartNrList.Length; i++)
             {
                 numberOfDifferent += StartNrList[i] == singleRow.StartNrList[i] ? 0 : 1;
                 if (numberOfDifferent > max)

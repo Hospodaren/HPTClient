@@ -16,32 +16,24 @@ namespace HPTClient
             //this.ARow = new int[this.NumberOfRaces];
         }
 
-        private int betMultiplier;
         [DataMember]
         public int BetMultiplier
         {
-            get
-            {
-                return betMultiplier;
-            }
+            get;
             set
             {
-                betMultiplier = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int numberOfCorrect;
         [DataMember]
         public int NumberOfCorrect
         {
-            get
-            {
-                return numberOfCorrect;
-            }
+            get;
             set
             {
-                numberOfCorrect = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -73,14 +65,14 @@ namespace HPTClient
                 racesToCorrect = raceDayInfo.NumberOfFinishedRaces;
             }
             NumberOfCorrect = 0;
-            for (int raceNumber = 1; raceNumber <= racesToCorrect; raceNumber++)
+            for (var raceNumber = 1; raceNumber <= racesToCorrect; raceNumber++)
             {
-                HPTRace hptRace = raceDayInfo.RaceList.First(r => r.LegNr == raceNumber);
+                var hptRace = raceDayInfo.RaceList.First(r => r.LegNr == raceNumber);
                 if (hptRace.LegResult != null && hptRace.LegResult.WinnerList != null)
                 {
                     var hptLegResult = hptRace.LegResult;
                     var couponRace = CouponRaceList.First(cr => cr.LegNr == raceNumber);
-                    int correctNumbersOnCouponRace = couponRace.StartNrList.Intersect(hptLegResult.Winners).Count();
+                    var correctNumbersOnCouponRace = couponRace.StartNrList.Intersect(hptLegResult.Winners).Count();
                     NumberOfCorrect += correctNumbersOnCouponRace == 0 ? 0 : 1;
                 }
             }
@@ -95,14 +87,14 @@ namespace HPTClient
             NumberOfFinishedLegs = raceDayInfo.NumberOfFinishedRaces;
 
             NumberOfCorrect = 0;
-            for (int raceNumber = 1; raceNumber <= raceDayInfo.RaceList.Count; raceNumber++)
+            for (var raceNumber = 1; raceNumber <= raceDayInfo.RaceList.Count; raceNumber++)
             {
-                HPTRace hptRace = raceDayInfo.RaceList.First(r => r.LegNr == raceNumber);
+                var hptRace = raceDayInfo.RaceList.First(r => r.LegNr == raceNumber);
                 if (hptRace.LegResult != null && hptRace.LegResult.WinnerList != null)
                 {
-                    HPTLegResult hptLegResult = hptRace.LegResult;
-                    HPTCouponRace couponRace = CouponRaceList.First(cr => cr.LegNr == raceNumber);
-                    int correctNumbersOnCouponRace = couponRace.StartNrList.Intersect(hptLegResult.Winners).Count();
+                    var hptLegResult = hptRace.LegResult;
+                    var couponRace = CouponRaceList.First(cr => cr.LegNr == raceNumber);
+                    var correctNumbersOnCouponRace = couponRace.StartNrList.Intersect(hptLegResult.Winners).Count();
                     NumberOfCorrect += correctNumbersOnCouponRace == 0 ? 0 : 1;
                 }
             }
@@ -121,62 +113,46 @@ namespace HPTClient
         [DataMember]
         public ObservableCollection<HPTCouponRace> CouponRaceList { get; set; }
 
-        private int numberOfAllCorrect;
         [DataMember]
         public int NumberOfAllCorrect
         {
-            get
-            {
-                return numberOfAllCorrect;
-            }
+            get;
             set
             {
-                numberOfAllCorrect = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int numberOfOneError;
         [DataMember]
         public int NumberOfOneError
         {
-            get
-            {
-                return numberOfOneError;
-            }
+            get;
             set
             {
-                numberOfOneError = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int numberOfTwoErrors;
         [DataMember]
         public int NumberOfTwoErrors
         {
-            get
-            {
-                return numberOfTwoErrors;
-            }
+            get;
             set
             {
-                numberOfTwoErrors = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int numberOfThreeErrors;
         [DataMember]
         public int NumberOfThreeErrors
         {
-            get
-            {
-                return numberOfThreeErrors;
-            }
+            get;
             set
             {
-                numberOfThreeErrors = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -196,21 +172,20 @@ namespace HPTClient
             }
         }
 
-        private int couponIdFile;
         [DataMember]
         public int CouponIdFile
         {
             get
             {
-                if (couponIdFile == 0)
+                if (field == 0)
                 {
                     return CouponId;
                 }
-                return couponIdFile;
+                return field;
             }
             set
             {
-                couponIdFile = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -224,68 +199,52 @@ namespace HPTClient
         //    }
         //}
 
-        private DateTime date;
         [DataMember]
         public DateTime Date
         {
-            get
-            {
-                return date;
-            }
+            get;
             set
             {
-                date = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private string trackCode;
         [DataMember]
         public string TrackCode
         {
-            get
-            {
-                return trackCode;
-            }
+            get;
             set
             {
-                trackCode = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool v6;
         [DataMember]
         public bool V6
         {
-            get
-            {
-                return v6;
-            }
+            get;
             set
             {
-                v6 = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool canWin;
         public bool CanWin
         {
-            get
-            {
-                return canWin;
-            }
+            get;
             set
             {
-                canWin = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
         private void SetNumberOfCorrectsColor()
         {
-            Color c = Colors.White;
+            var c = Colors.White;
             if (NumberOfFinishedLegs > 0)
             {
                 if (NumberOfAllCorrect > 0)
@@ -357,32 +316,24 @@ namespace HPTClient
             NumberOfCorrectsColor = new SolidColorBrush(c);
         }
 
-        private Brush numberOfCorrectsColor;
         [XmlIgnore]
         public Brush NumberOfCorrectsColor
         {
-            get
-            {
-                return numberOfCorrectsColor;
-            }
+            get;
             set
             {
-                numberOfCorrectsColor = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int systemSize;
         [DataMember]
         public int SystemSize
         {
-            get
-            {
-                return systemSize;
-            }
+            get;
             set
             {
-                systemSize = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -410,17 +361,13 @@ namespace HPTClient
             }
         }
 
-        private int payOutAmount;
         [DataMember]
         public int PayOutAmount
         {
-            get
-            {
-                return payOutAmount;
-            }
+            get;
             set
             {
-                payOutAmount = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -440,21 +387,21 @@ namespace HPTClient
 
         private void SetNumberOfWinningRows(int legNr)
         {
-            HPTCouponRace couponRace = CouponRaceList.First(cr => cr.LegNr == legNr);
-            foreach (int startNr in couponRace.StartNrList)
+            var couponRace = CouponRaceList.First(cr => cr.LegNr == legNr);
+            foreach (var startNr in couponRace.StartNrList)
             {
                 ARow[legNr - 1] = startNr;
                 if (legNr == NumberOfFinishedLegs)
                 {
-                    int numberOfErrors = 0;
-                    for (int i = 1; i <= NumberOfFinishedLegs; i++)
+                    var numberOfErrors = 0;
+                    for (var i = 1; i <= NumberOfFinishedLegs; i++)
                     {
-                        HPTRace race = raceDayInfo.RaceList.First(r => r.LegNr == i);
+                        var race = raceDayInfo.RaceList.First(r => r.LegNr == i);
                         if (race.LegResult != null && race.LegResult.WinnerList != null && race.LegResult.WinnerList[0] != null)
                         {
                             //HPTLegResult legResult = race.LegResult;
-                            int winner = race.LegResult.Winners[0];
-                            bool correct = winner == ARow[i - 1];
+                            var winner = race.LegResult.Winners[0];
+                            var correct = winner == ARow[i - 1];
 
                             if (!correct && race.LegResult.Winners.Length > 1)
                             {
@@ -510,9 +457,9 @@ namespace HPTClient
 
         public string ToCouponString()
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
 
-            sb.Append("Kupong " + couponId.ToString());
+            sb.Append($"Kupong {couponId}");
 
             if (V6 || BetMultiplier > 1)
             {
@@ -549,7 +496,7 @@ namespace HPTClient
             }
             sb.AppendLine();
 
-            IOrderedEnumerable<HPTCouponRace> orderedRaceList = CouponRaceList.OrderBy(cr => cr.LegNr);
+            var orderedRaceList = CouponRaceList.OrderBy(cr => cr.LegNr);
 
             foreach (var hptCouponRace in orderedRaceList)
             {
@@ -557,10 +504,10 @@ namespace HPTClient
                 sb.Append(hptCouponRace.LegNr);
                 sb.Append(": ");
 
-                string startNumberString = hptCouponRace.StartNrList
+                var startNumberString = hptCouponRace.StartNrList
                     .OrderBy(sn => sn)
                     .Select(sn => sn.ToString())
-                    .Aggregate((s, next) => s + ", " + next);
+                    .Aggregate((s, next) => $"{s}, {next}");
 
                 sb.Append(startNumberString);
 

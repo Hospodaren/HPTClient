@@ -146,17 +146,17 @@ namespace HPTClient
         {
             try
             {
-                int minPayOut = PayOutListATG
+                var minPayOut = PayOutListATG
                         .OrderBy(po => po.NumberOfCorrect)
                         .First()
                         .TotalAmount;
 
                 // Ta hänsyn till V6/V7/V8
                 // TODO: V6/V7-beräkningen blir inte rätt
-                decimal payoutWithoutJackpot = this.MaxPayOut - (decimal)this.Jackpot;
-                decimal v6Turnover = payoutWithoutJackpot - minPayOut;
-                decimal amountToAdd = this.BetType.V6Factor * v6Turnover;
-                decimal totalAmount = minPayOut + amountToAdd;
+                var payoutWithoutJackpot = this.MaxPayOut - (decimal)this.Jackpot;
+                var v6Turnover = payoutWithoutJackpot - minPayOut;
+                var amountToAdd = this.BetType.V6Factor * v6Turnover;
+                var totalAmount = minPayOut + amountToAdd;
                 V6Factor = 1M + v6Turnover / payoutWithoutJackpot;
                 if (V6Factor < 1M)
                 {
@@ -195,13 +195,13 @@ namespace HPTClient
         public void SortCombinationValues()
         {
             CombinationListInfoDouble.CombinationList.Sort(CompareCombinationOddsRank);
-            for (int i = 0; i < CombinationListInfoDouble.CombinationList.Count; i++)
+            for (var i = 0; i < CombinationListInfoDouble.CombinationList.Count; i++)
             {
                 CombinationListInfoDouble.CombinationList[i].CombinationOddsRank = i + 1;
             }
 
             CombinationListInfoDouble.CombinationList.Sort(CompareMultipliedOddsRank);
-            for (int i = 0; i < CombinationListInfoDouble.CombinationList.Count; i++)
+            for (var i = 0; i < CombinationListInfoDouble.CombinationList.Count; i++)
             {
                 CombinationListInfoDouble.CombinationList[i].MultipliedOddsRank = i + 1;
             }
@@ -256,17 +256,13 @@ namespace HPTClient
         //}
 
         // Config property
-        private HPTHorseDataToShow dataToShow;
         [XmlIgnore]
         public HPTHorseDataToShow DataToShow
         {
-            get
-            {
-                return dataToShow;
-            }
+            get;
             set
             {
-                dataToShow = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -292,32 +288,24 @@ namespace HPTClient
         [DataMember]
         public int TrackId { get; set; }
 
-        private string trackCondition;
         [DataMember]
         public string TrackCondition
         {
-            get
-            {
-                return trackCondition;
-            }
+            get;
             set
             {
-                trackCondition = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private DateTime raceDayDate;
         [DataMember]
         public DateTime RaceDayDate
         {
-            get
-            {
-                return raceDayDate;
-            }
+            get;
             set
             {
-                raceDayDate = value;
+                field = value;
                 OnPropertyChanged();
                 if (value == DateTime.MinValue)
                 {
@@ -332,17 +320,13 @@ namespace HPTClient
             }
         }
 
-        private bool showInUI;
         [XmlIgnore]
         public bool ShowInUI
         {
-            get
-            {
-                return showInUI;
-            }
+            get;
             set
             {
-                showInUI = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -402,25 +386,21 @@ namespace HPTClient
             }
         }
 
-        private int turnover;
         [DataMember]
         public int Turnover
         {
-            get
-            {
-                return turnover;
-            }
+            get;
             set
             {
-                turnover = value;
+                field = value;
                 OnPropertyChanged();
                 if (marksQuantity > 0)
                 {
-                    MeanSystemCost = Convert.ToDecimal(turnover) / Convert.ToDecimal(marksQuantity);
+                    MeanSystemCost = Convert.ToDecimal(field) / Convert.ToDecimal(marksQuantity);
                 }
-                if (turnover > 0 && BetType.RowCost > 0M)
+                if (field > 0 && BetType.RowCost > 0M)
                 {
-                    NumberOfGambledRowsTotal = turnover / BetType.RowCost;
+                    NumberOfGambledRowsTotal = field / BetType.RowCost;
                 }
             }
         }
@@ -441,16 +421,12 @@ namespace HPTClient
         //    }
         //}
 
-        private decimal meanSystemCost;
         public decimal MeanSystemCost
         {
-            get
-            {
-                return meanSystemCost;
-            }
+            get;
             set
             {
-                meanSystemCost = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -464,39 +440,35 @@ namespace HPTClient
         [XmlIgnore]
         public decimal V6Factor { get; set; }
 
-        private decimal correlationFactor;
         [XmlIgnore]
         public decimal CorrelationFactor
         {
             get
             {
-                if (correlationFactor == 0)
+                if (field == 0)
                 {
-                    correlationFactor = Convert.ToDecimal(Math.Pow(1.1D, RaceList.Count));
+                    field = Convert.ToDecimal(Math.Pow(1.1D, RaceList.Count));
                 }
-                return correlationFactor;
+                return field;
             }
         }
 
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public HPTCombinationListInfo CombinationListInfoDouble { get; set; }
 
-        private HPTScratchedHorsesInfo scratchedHorseInfo;
         [XmlIgnore]
         public HPTScratchedHorsesInfo ScratchedHorseInfo
         {
             get
             {
-                if (scratchedHorseInfo == null)
+                if (field == null)
                 {
-                    scratchedHorseInfo = new HPTScratchedHorsesInfo(this);
+                    field = new HPTScratchedHorsesInfo(this);
                 }
-                return scratchedHorseInfo;
+
+                return field;
             }
-            set
-            {
-                scratchedHorseInfo = value;
-            }
+            set;
         }
 
         #endregion
@@ -588,7 +560,7 @@ namespace HPTClient
 
         public string ToDateAndTrackString()
         {
-            return RaceDayDateString + " " + TracknameFile;
+            return $"{RaceDayDateString} {TracknameFile}";
         }
 
         internal void ActivateABCDChanged()
@@ -617,32 +589,24 @@ namespace HPTClient
 
         #region Result
 
-        private bool hasResult;
         [DataMember]
         public bool HasResult
         {
-            get
-            {
-                return hasResult;
-            }
+            get;
             set
             {
-                hasResult = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool resultComplete;
         [DataMember]
         public bool ResultComplete
         {
-            get
-            {
-                return resultComplete;
-            }
+            get;
             set
             {
-                resultComplete = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -658,7 +622,7 @@ namespace HPTClient
                 }
 
                 // Utdelning klar, men kanske inte samtliga resultat för loppet
-                int numberOfHorsesWithResultInfoInLastRace = RaceList
+                var numberOfHorsesWithResultInfoInLastRace = RaceList
                     .OrderByDescending(r => r.RaceNr)
                     .First()
                     .HorseList
@@ -673,7 +637,7 @@ namespace HPTClient
             get
             {
                 // Utdelning klar, men kanske inte samtliga resultat för loppet
-                int numberOfHorsesWithResultInfo = RaceList
+                var numberOfHorsesWithResultInfo = RaceList
                     .OrderBy(r => r.RaceNr)
                     .First()
                     .HorseList
@@ -683,17 +647,13 @@ namespace HPTClient
             }
         }
 
-        private int numberOfFinishedRaces;
         [DataMember]
         public int NumberOfFinishedRaces
         {
-            get
-            {
-                return numberOfFinishedRaces;
-            }
+            get;
             set
             {
-                numberOfFinishedRaces = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -705,7 +665,7 @@ namespace HPTClient
 
             //decimal divisionFactor = 1M;
             //decimal percentageToAdd = 0.05M;
-            for (int i = 0; i < RaceList.Count; i++)
+            for (var i = 0; i < RaceList.Count; i++)
             {
                 var race = RaceList[i];
                 if (race.LegResult != null && race.LegResult.WinnerList != null && race.LegResult.WinnerList.Count() > 0)
@@ -738,41 +698,34 @@ namespace HPTClient
             }
         }
 
-        private int maxPayOut;
         [XmlIgnore]
         public int MaxPayOut
         {
             get
             {
-                if (maxPayOut == 0)
+                if (field == 0)
                 {
                     if (PayOutListATG != null && PayOutListATG.Count > 0)
                     {
-                        maxPayOut = PayOutListATG
+                        field = PayOutListATG
                             .OrderByDescending(po => po.NumberOfCorrect)
                             .First()
                             .TotalAmount;
                     }
                 }
-                return maxPayOut;
+
+                return field;
             }
-            set
-            {
-                maxPayOut = value;
-            }
+            set;
         }
 
-        private ObservableCollection<HPTPayOut> payOutListATG;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public ObservableCollection<HPTPayOut> PayOutListATG
         {
-            get
-            {
-                return payOutListATG;
-            }
+            get;
             set
             {
-                payOutListATG = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -792,17 +745,13 @@ namespace HPTClient
             }
         }
 
-        private ObservableCollection<HPTPayOut> payOutList;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public ObservableCollection<HPTPayOut> PayOutList
         {
-            get
-            {
-                return payOutList;
-            }
+            get;
             set
             {
-                payOutList = value;
+                field = value;
                 OnPropertyChanged();
             }
         }

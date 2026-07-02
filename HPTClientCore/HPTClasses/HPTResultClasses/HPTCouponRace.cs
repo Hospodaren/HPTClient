@@ -13,17 +13,13 @@ namespace HPTClient
         [DataMember]
         public int LegNr { get; set; }
 
-        private int reserv1;
         [DataMember]
         public int Reserv1
         {
-            get
-            {
-                return reserv1;
-            }
+            get;
             set
             {
-                reserv1 = value;
+                field = value;
                 OnPropertyChanged();
                 if (HorseList != null && HorseList.Count > 0)
                 {
@@ -33,23 +29,19 @@ namespace HPTClient
                     }
                     catch (Exception exc)
                     {
-                        string s = exc.Message;
+                        var s = exc.Message;
                     }
                 }
             }
         }
 
-        private int reserv2;
         [DataMember]
         public int Reserv2
         {
-            get
-            {
-                return reserv2;
-            }
+            get;
             set
             {
-                reserv2 = value;
+                field = value;
                 OnPropertyChanged();
                 if (HorseList != null && HorseList.Count > 0)
                 {
@@ -59,7 +51,7 @@ namespace HPTClient
                     }
                     catch (Exception exc)
                     {
-                        string s = exc.Message;
+                        var s = exc.Message;
                     }
                 }
             }
@@ -77,17 +69,17 @@ namespace HPTClient
         {
             try
             {
-                List<HPTHorse> selectedScratchedHorses = HorseList.Where(h => h.Scratched == true).ToList();
+                var selectedScratchedHorses = HorseList.Where(h => h.Scratched == true).ToList();
 
                 if (selectedScratchedHorses.Count() == 0)
                 {
                     return false;
                 }
 
-                HPTHorse scratchedHorse1 = selectedScratchedHorses[0];
+                var scratchedHorse1 = selectedScratchedHorses[0];
                 if (Reserv1 != 0)
                 {
-                    HPTHorse horse = race.HorseList.First(h => h.StartNr == Reserv1);
+                    var horse = race.HorseList.First(h => h.StartNr == Reserv1);
                     if (horse != null)
                     {
                         if (horse.Scratched == false || horse.Scratched == null)
@@ -99,10 +91,10 @@ namespace HPTClient
                 }
                 if (selectedScratchedHorses.Count() > 1)
                 {
-                    HPTHorse scratchedHorse2 = selectedScratchedHorses[1];
+                    var scratchedHorse2 = selectedScratchedHorses[1];
                     if (Reserv2 != 0)
                     {
-                        HPTHorse horse = race.HorseList.First(h => h.StartNr == Reserv2);
+                        var horse = race.HorseList.First(h => h.StartNr == Reserv2);
                         if (horse != null)
                         {
                             if (horse.Scratched == false || horse.Scratched == null)
@@ -122,20 +114,18 @@ namespace HPTClient
             return true;
         }
 
-        private string uniqueCode;
         public string UniqueCode
         {
             get
             {
-                if (uniqueCode == null)
+                if (field == null)
                 {
-                    uniqueCode = string.Join(",", StartNrList);
+                    field = string.Join(",", StartNrList);
                 }
-                return uniqueCode;
+                return field;
             }
         }
 
-        private List<int> startNrList;
         [DataMember]
         public List<int> StartNrList
         {
@@ -145,15 +135,11 @@ namespace HPTClient
                 //{
                 //    this.startNrList = this.HorseList.Select(h => h.StartNr).ToList();
                 //}
-                return startNrList;
+                return field;
             }
-            set
-            {
-                startNrList = value;
-            }
+            set;
         }
 
-        private List<HPTHorse> horseList;
         [XmlIgnore]
         public List<HPTHorse> HorseList
         {
@@ -163,16 +149,9 @@ namespace HPTClient
                 //{
                 //    this.horseList = this.StartNrList.Select(h => h.StartNr).ToList();
                 //}
-                return horseList;
+                return field;
             }
-            set
-            {
-                horseList = value;
-                //if (value != null)
-                //{
-                //    this.startNrList = this.HorseList.Select(h => h.StartNr).ToList();
-                //}
-            }
+            set;
         }
 
         //[XmlIgnore]

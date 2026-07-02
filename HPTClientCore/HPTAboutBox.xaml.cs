@@ -16,7 +16,7 @@ namespace HPTClient
 
         private void hlHomePage_Click(object sender, RoutedEventArgs e)
         {
-            Hyperlink hl = (Hyperlink)sender;
+            var hl = (Hyperlink)sender;
             GoToUrl(hl.NavigateUri.OriginalString);
             //System.Diagnostics.Process.Start(hl.NavigateUri.OriginalString);
         }
@@ -28,7 +28,7 @@ namespace HPTClient
 
         private void hlATGSpelAnsvar_Click(object sender, RoutedEventArgs e)
         {
-            Hyperlink hl = (Hyperlink)sender;
+            var hl = (Hyperlink)sender;
             GoToUrl(hl.NavigateUri.OriginalString);
             //System.Diagnostics.Process.Start(hl.NavigateUri.OriginalString);
         }

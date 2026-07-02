@@ -7,307 +7,238 @@ namespace HPTClient
     {
         #region Combination settings
 
-        private bool showCombinationOdds;
         [HorseDataToShow("Odds", "ShowCombinationOdds", DataToShowUsage.None, 3)]
         [DataMember]
         public bool ShowCombinationOdds
         {
-            get
-            {
-                return showCombinationOdds;
-            }
+            get;
             set
             {
-                showCombinationOdds = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showCombinationOddsRank;
-        [HorseDataToShow("Oddsrank", "ShowCombinationOddsRank", DataToShowUsage.Tvilling | DataToShowUsage.Trio | DataToShowUsage.Double, 3)]
+        [HorseDataToShow("Oddsrank", "ShowCombinationOddsRank",
+            DataToShowUsage.Tvilling | DataToShowUsage.Trio | DataToShowUsage.Double, 3)]
         [DataMember]
         public bool ShowCombinationOddsRank
         {
-            get
-            {
-                return showCombinationOddsRank;
-            }
+            get;
             set
             {
-                showCombinationOddsRank = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showMultipliedOdds;
-        [HorseDataToShow("Multiplicerat odds", "ShowMultipliedOdds", DataToShowUsage.Tvilling | DataToShowUsage.Double, 3)]
+        [HorseDataToShow("Multiplicerat odds", "ShowMultipliedOdds", DataToShowUsage.Tvilling | DataToShowUsage.Double,
+            3)]
         [DataMember]
         public bool ShowMultipliedOdds
         {
-            get
-            {
-                return showMultipliedOdds;
-            }
+            get;
             set
             {
-                showMultipliedOdds = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showMultipliedOddsRank;
-        [HorseDataToShow("Rank multiplicerat odds", "ShowMultipliedOddsRank", DataToShowUsage.Tvilling | DataToShowUsage.Double, 3)]
+        [HorseDataToShow("Rank multiplicerat odds", "ShowMultipliedOddsRank",
+            DataToShowUsage.Tvilling | DataToShowUsage.Double, 3)]
         [DataMember]
         public bool ShowMultipliedOddsRank
         {
-            get
-            {
-                return showMultipliedOddsRank;
-            }
+            get;
             set
             {
-                showMultipliedOddsRank = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showPlayability;
-        [HorseDataToShow("Spelbarhet", "ShowPlayability", DataToShowUsage.Tvilling | DataToShowUsage.Trio | DataToShowUsage.Double, 3)]
+        [HorseDataToShow("Spelbarhet", "ShowPlayability",
+            DataToShowUsage.Tvilling | DataToShowUsage.Trio | DataToShowUsage.Double, 3)]
         //[HorseDataToShow("Spelbarhet", "ShowPlayability", DataToShowUsage.None, 3)]
         [DataMember]
         public bool ShowPlayability
         {
-            get
-            {
-                return showPlayability;
-            }
+            get;
             set
             {
-                showPlayability = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showOddsQuota;
         [HorseDataToShow("Oddskvot", "ShowOddsQuota", DataToShowUsage.None, 3)]
         [DataMember]
         public bool ShowOddsQuota
         {
-            get
-            {
-                return showOddsQuota;
-            }
+            get;
             set
             {
-                showOddsQuota = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showProfit;
-        [HorseDataToShow("Vinst", "ShowProfit", DataToShowUsage.Tvilling | DataToShowUsage.Trio | DataToShowUsage.Double, 3)]
+        [HorseDataToShow("Vinst", "ShowProfit",
+            DataToShowUsage.Tvilling | DataToShowUsage.Trio | DataToShowUsage.Double, 3)]
         [DataMember]
         public bool ShowProfit
         {
-            get
-            {
-                return showProfit;
-            }
+            get;
             set
             {
-                showProfit = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showSelected;
         [HorseDataToShow("Vald", "ShowSelected", DataToShowUsage.None, 3)]
         [DataMember]
         public bool ShowSelected
         {
-            get
-            {
-                return showSelected;
-            }
+            get;
             set
             {
-                showSelected = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showStake;
         [HorseDataToShow("Insats", "ShowStake", DataToShowUsage.None, 3)]
         [DataMember]
         public bool ShowStake
         {
-            get
-            {
-                return showStake;
-            }
+            get;
             set
             {
-                showStake = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showStartNr1;
         [HorseDataToShow("Häst 1", "ShowStartNr1", DataToShowUsage.None, 3)]
         [DataMember]
         public bool ShowStartNr1
         {
-            get
-            {
-                return showStartNr1;
-            }
+            get;
             set
             {
-                showStartNr1 = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showStartNr2;
         [HorseDataToShow("Häst 2", "ShowStartNr2", DataToShowUsage.None, 3)]
         [DataMember]
         public bool ShowStartNr2
         {
-            get
-            {
-                return showStartNr2;
-            }
+            get;
             set
             {
-                showStartNr2 = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showStartNr3;
         [HorseDataToShow("Häst 3", "ShowStartNr3", DataToShowUsage.None, 3)]
         [DataMember]
         public bool ShowStartNr3
         {
-            get
-            {
-                return showStartNr3;
-            }
+            get;
             set
             {
-                showStartNr3 = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showStakeQuota;
         [HorseDataToShow("Vxx-kvot", "ShowStakeQuota", DataToShowUsage.Double | DataToShowUsage.Tvilling, 3)]
         [DataMember]
         public bool ShowStakeQuota
         {
-            get
-            {
-                return showStakeQuota;
-            }
+            get;
             set
             {
-                showStakeQuota = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showVPQuota;
         [HorseDataToShow("VP-kvot", "ShowVPQuota", DataToShowUsage.Trio | DataToShowUsage.Tvilling, 3)]
         [DataMember]
         public bool ShowVPQuota
         {
-            get
-            {
-                return showVPQuota;
-            }
+            get;
             set
             {
-                showVPQuota = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showVQuota;
-        [HorseDataToShow("V-kvot", "ShowVQuota", DataToShowUsage.Trio | DataToShowUsage.Double | DataToShowUsage.Tvilling, 3)]
+        [HorseDataToShow("V-kvot", "ShowVQuota",
+            DataToShowUsage.Trio | DataToShowUsage.Double | DataToShowUsage.Tvilling, 3)]
         [DataMember]
         public bool ShowVQuota
         {
-            get
-            {
-                return showVQuota;
-            }
+            get;
             set
             {
-                showVQuota = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showPQuota;
-        [HorseDataToShow("P-kvot", "ShowPQuota", DataToShowUsage.Trio | DataToShowUsage.Double | DataToShowUsage.Tvilling, 3)]
+        [HorseDataToShow("P-kvot", "ShowPQuota",
+            DataToShowUsage.Trio | DataToShowUsage.Double | DataToShowUsage.Tvilling, 3)]
         [DataMember]
         public bool ShowPQuota
         {
-            get
-            {
-                return showPQuota;
-            }
+            get;
             set
             {
-                showPQuota = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showOPQuota;
         [HorseDataToShow("Chansvärderingskvot", "ShowOPQuota", DataToShowUsage.Double | DataToShowUsage.Tvilling, 3)]
         [DataMember]
         public bool ShowOPQuota
         {
-            get
-            {
-                return showOPQuota;
-            }
+            get;
             set
             {
-                showOPQuota = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showTVQuota;
         [HorseDataToShow("Tvilling-kvot", "ShowTVQuota", DataToShowUsage.Double, 3)]
         [DataMember]
         public bool ShowTVQuota
         {
-            get
-            {
-                return showTVQuota;
-            }
+            get;
             set
             {
-                showTVQuota = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showDQuota;
         [HorseDataToShow("DD/LD-kvot", "ShowDQuota", DataToShowUsage.Tvilling, 3)]
         [DataMember]
         public bool ShowDQuota
         {
-            get
-            {
-                return showDQuota;
-            }
+            get;
             set
             {
-                showDQuota = value;
+                field = value;
                 OnPropertyChanged();
             }
         }

@@ -77,7 +77,7 @@ namespace HPTClient
                 return;
             }
 
-            String field = column.Tag as String;
+            var field = column.Tag as String;
             if (string.IsNullOrEmpty(field))
             {
                 return;
@@ -90,7 +90,7 @@ namespace HPTClient
                 var sd = lvwOwnInformationList.Items.SortDescriptions[0];
                 if (sd.PropertyName == field)
                 {
-                    SortDescription sdNew = new SortDescription();
+                    var sdNew = new SortDescription();
                     sdNew.PropertyName = sd.PropertyName;
                     sdNew.Direction = sd.Direction == ListSortDirection.Ascending
                                           ? ListSortDirection.Descending
@@ -132,22 +132,21 @@ namespace HPTClient
 
         #region Popup handling
 
-        private System.Windows.Controls.Primitives.Popup pu;
         public System.Windows.Controls.Primitives.Popup PU
         {
             get
             {
-                if (pu == null)
+                if (field == null)
                 {
-                    pu = new System.Windows.Controls.Primitives.Popup()
+                    field = new System.Windows.Controls.Primitives.Popup()
                     {
                         Placement = System.Windows.Controls.Primitives.PlacementMode.MousePoint,
                         HorizontalOffset = -10D,
                         VerticalOffset = -10D
                     };
-                    pu.MouseLeave += new MouseEventHandler(pu_MouseLeave);
+                    field.MouseLeave += new MouseEventHandler(pu_MouseLeave);
                 }
-                return pu;
+                return field;
             }
         }
 
@@ -156,7 +155,7 @@ namespace HPTClient
             //if (e.ChangedButton == MouseButton.Left && HPTConfig.Config.IsPayingCustomer)
             if (e.ChangedButton == MouseButton.Left)
             {
-                TextBlock tb = (TextBlock)sender;
+                var tb = (TextBlock)sender;
                 PU.DataContext = tb.DataContext;
                 PU.Child = new UCResultView();
                 PU.IsOpen = true;
@@ -165,7 +164,7 @@ namespace HPTClient
 
         void pu_MouseLeave(object sender, MouseEventArgs e)
         {
-            System.Windows.Controls.Primitives.Popup pu = (System.Windows.Controls.Primitives.Popup)sender;
+            var pu = (System.Windows.Controls.Primitives.Popup)sender;
             pu.Child = null;
             pu.IsOpen = false;
         }
@@ -214,7 +213,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -280,7 +279,7 @@ namespace HPTClient
         public bool FilterOwnInformation(object obj)
         {
             var oi = obj as HPTHorseOwnInformation;
-            bool showOwnInformation = true;
+            var showOwnInformation = true;
             if (chkShowOnlyWithNextStart.IsChecked == true)
             {
                 showOwnInformation = oi.NextStart != null && oi.NextStart.StartDate > DateTime.Now;
@@ -302,7 +301,7 @@ namespace HPTClient
             var ownInformation = (HPTHorseOwnInformation)fe.DataContext;
             var ownInformationsToRemove = new List<HPTHorseOwnInformation>() { ownInformation };
 
-            RemoveNextTimersFromCollection("Ta bort " + ownInformation.Name + "?", ownInformationsToRemove);
+            RemoveNextTimersFromCollection($"Ta bort {ownInformation.Name}?", ownInformationsToRemove);
         }
 
         private void btnRemoveWithoutNextStart_Click(object sender, RoutedEventArgs e)

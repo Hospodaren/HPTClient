@@ -6,47 +6,35 @@ namespace HPTClient
     [DataContract]
     public class HPTHorseXReduction : Notifier
     {
-        private HPTHorse horse;
         [XmlIgnore]
         public HPTHorse Horse
         {
-            get
-            {
-                return horse;
-            }
+            get;
             set
             {
-                horse = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private HPTPrio prio;
         [DataMember]
         public HPTPrio Prio
         {
-            get
-            {
-                return prio;
-            }
+            get;
             set
             {
-                prio = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool selected;
         [DataMember]
         public bool Selected
         {
-            get
-            {
-                return selected;
-            }
+            get;
             set
             {
-                selected = value;
+                field = value;
                 if (Horse != null)
                 {
                     Horse.HandlePrioChange(this);
@@ -69,17 +57,13 @@ namespace HPTClient
             }
         }
 
-        private bool selectable;
         [DataMember]
         public bool Selectable
         {
-            get
-            {
-                return selectable;
-            }
+            get;
             set
             {
-                selectable = value;
+                field = value;
                 if (!value && Selected)
                 {
                     Selected = false;

@@ -8,7 +8,7 @@ namespace HPTClient
     {
         public void Clone(HPTDataToShow dataToShow)
         {
-            foreach (PropertyInfo pi in (dataToShow.GetType()).GetProperties())
+            foreach (var pi in (dataToShow.GetType()).GetProperties())
             {
                 if (pi.PropertyType == typeof(bool))
                 {
@@ -17,18 +17,11 @@ namespace HPTClient
             }
         }
 
-        [DataMember]
-        private DataToShowUsage usage;
+        [field: DataMember]
         public DataToShowUsage Usage
         {
-            get
-            {
-                return usage;
-            }
-            set
-            {
-                usage = value;
-            }
+            get { return field; }
+            set;
         }
 
         [DataMember]
@@ -39,14 +32,14 @@ namespace HPTClient
 
         public List<HorseDataToShowAttribute> GetHorseDataToShowAttributes()
         {
-            List<HorseDataToShowAttribute> attributeList = new List<HorseDataToShowAttribute>();
-            foreach (PropertyInfo pi in (GetType()).GetProperties())
+            var attributeList = new List<HorseDataToShowAttribute>();
+            foreach (var pi in (GetType()).GetProperties())
             {
-                foreach (object o in pi.GetCustomAttributes(true))
+                foreach (var o in pi.GetCustomAttributes(true))
                 {
                     if (o.GetType() == typeof(HorseDataToShowAttribute))
                     {
-                        HorseDataToShowAttribute hda = (HorseDataToShowAttribute)o;
+                        var hda = (HorseDataToShowAttribute)o;
                         //if (hda.PropertyName == "ShowReserv")
                         //{
                         //    string s = string.Empty;
@@ -64,20 +57,15 @@ namespace HPTClient
         [DataMember]
         public List<string> ColumnsInOrder { get; set; }
 
-        private GUIProfile guiProfile = GUIProfile.Normal;
         [DataMember]
         public GUIProfile GUIProfile
         {
-            get
-            {
-                return guiProfile;
-            }
+            get;
             set
             {
-                guiProfile = value;
+                field = value;
                 OnPropertyChanged();
             }
-        }
-
+        } = GUIProfile.Normal;
     }
 }

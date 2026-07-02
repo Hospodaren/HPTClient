@@ -63,14 +63,14 @@ namespace HPTClient
                 .ToList();
 
             // Beräkna summan
-            int rankSum = rankList.Sum();
+            var rankSum = rankList.Sum();
             if (rankSum >= MinSum && rankSum <= MaxSum)
             {
                 foreach (var rule in ReductionRuleList)
                 {
                     if (!rule.OnlyInSpecifiedLegs)
                     {
-                        int numberInInterval = rankList.Count(r => r >= rule.LowerBoundary && r <= rule.UpperBoundary);
+                        var numberInInterval = rankList.Count(r => r >= rule.LowerBoundary && r <= rule.UpperBoundary);
                         if (!rule.NumberOfWinnersList.First(now => now.NumberOfWinners == numberInInterval).Selected)
                         {
                             return false;
@@ -78,10 +78,10 @@ namespace HPTClient
                     }
                     else
                     {
-                        int numberOfX = 0;
+                        var numberOfX = 0;
                         foreach (var legNumber in rule.LegList)
                         {
-                            int rankValue = rankList[legNumber - 1];
+                            var rankValue = rankList[legNumber - 1];
                             numberOfX += rankValue >= rule.LowerBoundary && rankValue <= rule.UpperBoundary ? 1 : 0;
                         }
                         if (!rule.NumberOfWinnersList[numberOfX].Selected)
@@ -110,47 +110,35 @@ namespace HPTClient
         //    this.Use = false;
         //}
 
-        private string propertyName;
         [DataMember]
         public string PropertyName
         {
-            get
-            {
-                return propertyName;
-            }
+            get;
             set
             {
-                propertyName = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private HPTHorseRankVariable horseRankVariable;
         [XmlIgnore]
         public HPTHorseRankVariable HorseRankVariable
         {
-            get
-            {
-                return horseRankVariable;
-            }
+            get;
             set
             {
-                horseRankVariable = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private ObservableCollection<HPTHorseRankReductionRule> reductionRuleList;
         [DataMember]
         public ObservableCollection<HPTHorseRankReductionRule> ReductionRuleList
         {
-            get
-            {
-                return reductionRuleList;
-            }
+            get;
             set
             {
-                reductionRuleList = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -159,7 +147,7 @@ namespace HPTClient
         {
             get
             {
-                return "RANKPOÄNGSVILLKOR: " + HorseRankVariable.CategoryText + " - " + HorseRankVariable.Text;
+                return $"RANKPOÄNGSVILLKOR: {HorseRankVariable.CategoryText} - {HorseRankVariable.Text}";
             }
         }
 
@@ -179,7 +167,7 @@ namespace HPTClient
             }
             sb.AppendLine();
 
-            ClipboardString = ReductionTypeString + "\r\n" + sb.ToString();
+            ClipboardString = $"{ReductionTypeString}\r\n{sb}";
             return sb.ToString();
         }
     }

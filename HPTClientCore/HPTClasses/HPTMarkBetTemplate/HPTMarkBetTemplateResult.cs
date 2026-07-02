@@ -13,9 +13,9 @@ namespace HPTClient
             XReductionRuleList = new ObservableCollection<HPTXReductionRule>();
             if (markBet.ABCDEFReductionRule.Use)
             {
-                foreach (HPTXReductionRule rule in markBet.ABCDEFReductionRule.XReductionRuleList)
+                foreach (var rule in markBet.ABCDEFReductionRule.XReductionRuleList)
                 {
-                    HPTXReductionRule clonedRule = rule.Clone();
+                    var clonedRule = rule.Clone();
                     clonedRule.Reset();
                     XReductionRuleList.Add(clonedRule);
                 }
@@ -50,12 +50,12 @@ namespace HPTClient
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.Append(ReducedSize);
             sb.Append(" rader (");
             if (useABCD)
             {
-                foreach (HPTXReductionRule rule in XReductionRuleList)
+                foreach (var rule in XReductionRuleList)
                 {
                     if (rule.Use && rule.MaxNumberOfX > 0)
                     {

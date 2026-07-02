@@ -49,15 +49,15 @@ namespace HPTClient
 
             if (!OnlyInSpecifiedLegs)
             {
-                int horsesInInterval = singleRow.CurrentGroupIntervalValues.Count(d => d >= LowerBoundary && d <= UpperBoundary);
+                var horsesInInterval = singleRow.CurrentGroupIntervalValues.Count(d => d >= LowerBoundary && d <= UpperBoundary);
                 return NumberOfWinnersList[horsesInInterval].Selected;
             }
             else
             {
-                int numberOfX = 0;
+                var numberOfX = 0;
                 foreach (var legNumber in LegList)
                 {
-                    decimal horseValue = singleRow.CurrentGroupIntervalValues[legNumber - 1];
+                    var horseValue = singleRow.CurrentGroupIntervalValues[legNumber - 1];
                     numberOfX += horseValue >= LowerBoundary && horseValue <= UpperBoundary ? 1 : 0;
                 }
                 return NumberOfWinnersList[numberOfX].Selected;
@@ -73,21 +73,21 @@ namespace HPTClient
 
             if (!OnlyInSpecifiedLegs)
             {
-                int horsesInInterval = 0;
-                foreach (HPTHorse horse in horseList)
+                var horsesInInterval = 0;
+                foreach (var horse in horseList)
                 {
-                    decimal horseValue = Convert.ToDecimal(HorseVariable.HorseProperty.GetValue(horse, null));
+                    var horseValue = Convert.ToDecimal(HorseVariable.HorseProperty.GetValue(horse, null));
                     horsesInInterval += IsInInterval(horseValue) ? 1 : 0;
                 }
                 return MaxNumberOfX >= horsesInInterval;
             }
             else if (numberOfRacesToTest >= LegList.Max())
             {
-                int numberOfX = 0;
+                var numberOfX = 0;
                 foreach (var legNumber in LegList.Where(l => l <= numberOfRacesToTest))
                 {
                     var horse = horseList[legNumber - 1];
-                    decimal horseValue = Convert.ToDecimal(HorseVariable.HorseProperty.GetValue(horse, null));
+                    var horseValue = Convert.ToDecimal(HorseVariable.HorseProperty.GetValue(horse, null));
                     numberOfX += horseValue >= LowerBoundary && horseValue <= UpperBoundary ? 1 : 0;
                 }
                 return NumberOfWinnersList
@@ -106,49 +106,41 @@ namespace HPTClient
             if (!OnlyInSpecifiedLegs)
             {
 
-                int horsesInInterval = currentGroupIntervalValues.Count(d => d >= LowerBoundary && d <= UpperBoundary);
-                RuleResultForCorrectRow = horsesInInterval.ToString() + " Hästar";
+                var horsesInInterval = currentGroupIntervalValues.Count(d => d >= LowerBoundary && d <= UpperBoundary);
+                RuleResultForCorrectRow = $"{horsesInInterval} Hästar";
                 return true;
             }
             else
             {
-                int numberOfX = 0;
+                var numberOfX = 0;
                 foreach (var legNumber in LegList)
                 {
-                    decimal horseValue = currentGroupIntervalValues[legNumber - 1];
+                    var horseValue = currentGroupIntervalValues[legNumber - 1];
                     numberOfX += horseValue >= LowerBoundary && horseValue <= UpperBoundary ? 1 : 0;
                 }
-                RuleResultForCorrectRow = numberOfX.ToString() + " Hästar";
+                RuleResultForCorrectRow = $"{numberOfX} Hästar";
                 return true;
             }
         }
 
-        private decimal lowerBoundary;
         [DataMember]
         public decimal LowerBoundary
         {
-            get
-            {
-                return lowerBoundary;
-            }
+            get;
             set
             {
-                lowerBoundary = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private decimal upperBoundary;
         [DataMember]
         public decimal UpperBoundary
         {
-            get
-            {
-                return upperBoundary;
-            }
+            get;
             set
             {
-                upperBoundary = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -170,20 +162,16 @@ namespace HPTClient
             }
         }
 
-        private HPTHorseVariable horseVariable;
         [XmlIgnore]
         public HPTHorseVariable HorseVariable
         {
-            get
-            {
-                return horseVariable;
-            }
+            get;
             set
             {
-                horseVariable = value;
-                if (horseVariable != null)
+                field = value;
+                if (field != null)
                 {
-                    PropertyName = horseVariable.PropertyName;
+                    PropertyName = field.PropertyName;
                 }
                 OnPropertyChanged();
             }
@@ -227,7 +215,7 @@ namespace HPTClient
             sb.Append(NumberOfWinnersString);
             sb.AppendLine(" vinnare");
 
-            ClipboardString = ReductionTypeString + "\r\n" + sb.ToString();
+            ClipboardString = $"{ReductionTypeString}\r\n{sb}";
             return sb.ToString();
         }
     }

@@ -22,11 +22,11 @@ namespace HPTClient
                     }
                     else
                     {
-                        string completeArgs = e.Args.Aggregate((s, next) => s + " " + next);
+                        var completeArgs = e.Args.Aggregate((s, next) => $"{s} {next}");
                         var rexFilename = new Regex(@"\w:[\w\\\.\s_-]+?\.hpt7", RegexOptions.IgnoreCase);
                         if (rexFilename.IsMatch(completeArgs))
                         {
-                            Match m = rexFilename.Match(completeArgs);
+                            var m = rexFilename.Match(completeArgs);
                             FileToOpen = m.Value;
                         }
                     }

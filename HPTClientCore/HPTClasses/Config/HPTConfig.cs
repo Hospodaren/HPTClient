@@ -26,7 +26,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -62,7 +62,7 @@ namespace HPTClient
 
         public static HPTConfig ResetHPTConfig()
         {
-            string fileName = MyDocumentsPath + ConfigFileName;
+            var fileName = MyDocumentsPath + ConfigFileName;
             if (File.Exists(fileName))
             {
                 File.Delete(fileName);
@@ -142,9 +142,9 @@ namespace HPTClient
         internal void SetNonSerializedValues()
         {
             // Katalogen för mallar saknas
-            if (!Directory.Exists(MyDocumentsPath + "Mallar"))
+            if (!Directory.Exists($"{MyDocumentsPath}Mallar"))
             {
-                Directory.CreateDirectory(MyDocumentsPath + "Mallar");
+                Directory.CreateDirectory($"{MyDocumentsPath}Mallar");
             }
 
             //CreateRankVariableLists();
@@ -170,7 +170,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -186,7 +186,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -194,13 +194,13 @@ namespace HPTClient
         {
             try
             {
-                string templateDirectory = MyDocumentsPath + @"Mallar\";
+                var templateDirectory = $@"{MyDocumentsPath}Mallar\";
 
                 Config.RankTemplateList
                     .ToList()
                     .ForEach(r =>
                     {
-                        string fullPath = templateDirectory + CreateFilename(r.Name, "hptrvm");
+                        var fullPath = templateDirectory + CreateFilename(r.Name, "hptrvm");
                         HPTSerializer.SerializeHPTObject(typeof(HPTRankTemplate), fullPath, r);
                     });
 
@@ -208,7 +208,7 @@ namespace HPTClient
                     .ToList()
                     .ForEach(r =>
                     {
-                        string fullPath = templateDirectory + CreateFilename(r.Name + "_" + r.TypeCategory.ToString(), "hptgim");
+                        var fullPath = templateDirectory + CreateFilename($"{r.Name}_{r.TypeCategory}", "hptgim");
                         HPTSerializer.SerializeHPTObject(typeof(HPTGroupIntervalRulesCollection), fullPath, r);
                     });
 
@@ -216,7 +216,7 @@ namespace HPTClient
                     .ToList()
                     .ForEach(r =>
                     {
-                        string fullPath = templateDirectory + CreateFilename(r.Name + "_" + r.TypeCategory.ToString(), "hptam");
+                        var fullPath = templateDirectory + CreateFilename($"{r.Name}_{r.TypeCategory}", "hptam");
                         HPTSerializer.SerializeHPTObject(typeof(HPTMarkBetTemplateABCD), fullPath, r);
                     });
 
@@ -224,7 +224,7 @@ namespace HPTClient
                     .ToList()
                     .ForEach(r =>
                     {
-                        string fullPath = templateDirectory + CreateFilename(r.Name + "_" + r.TypeCategory.ToString(), "hptrm");
+                        var fullPath = templateDirectory + CreateFilename($"{r.Name}_{r.TypeCategory}", "hptrm");
                         HPTSerializer.SerializeHPTObject(typeof(HPTMarkBetTemplateRank), fullPath, r);
                     });
 
@@ -232,7 +232,7 @@ namespace HPTClient
                     .ToList()
                     .ForEach(r =>
                     {
-                        string fullPath = templateDirectory + CreateFilename(r.Name + "_" + r.TypeCategory.ToString(), "hptrsm");
+                        var fullPath = templateDirectory + CreateFilename($"{r.Name}_{r.TypeCategory}", "hptrsm");
                         HPTSerializer.SerializeHPTObject(typeof(HPTHorseRankSumReductionRuleCollection), fullPath, r);
                     });
                 return templateDirectory;
@@ -246,13 +246,13 @@ namespace HPTClient
 
         internal static string CreateFilename(string name, string extension)
         {
-            string filename = name.Replace("\\", "_");
+            var filename = name.Replace("\\", "_");
             filename = filename.Replace("/", "_");
-            foreach (char c in Path.GetInvalidPathChars())
+            foreach (var c in Path.GetInvalidPathChars())
             {
                 filename = filename.Replace(c, '_');
             }
-            return filename + "." + extension;
+            return $"{filename}.{extension}";
         }
 
         internal static void ImportTemplates(IEnumerable<string> filenameList)
@@ -314,7 +314,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -329,12 +329,12 @@ namespace HPTClient
                 var existingRankTemplate = Config.RankTemplateList.FirstOrDefault(rt => rt.Name == rankTemplate.Name);
                 if (existingRankTemplate != null)
                 {
-                    int rankTemplateNumber = 1;
-                    string templateName = rankTemplate.Name;
+                    var rankTemplateNumber = 1;
+                    var templateName = rankTemplate.Name;
                     while (existingRankTemplate != null)
                     {
                         rankTemplateNumber++;
-                        templateName = rankTemplate.Name + " (" + rankTemplateNumber.ToString() + ")";
+                        templateName = $"{rankTemplate.Name} ({rankTemplateNumber})";
                         existingRankTemplate = Config.RankTemplateList.FirstOrDefault(rt => rt.Name == templateName);
                     }
                     ChangeRankTemplateReference(templateCollection.MarkBetTemplateABCDList, rankTemplate.Name, templateName);
@@ -352,12 +352,12 @@ namespace HPTClient
                 var existingTemplate = Config.MarkBetTemplateABCDList.FirstOrDefault(t => t.Name == markBetABCDTemplate.Name);
                 if (existingTemplate != null)
                 {
-                    int templateNumber = 1;
-                    string templateName = markBetABCDTemplate.Name;
+                    var templateNumber = 1;
+                    var templateName = markBetABCDTemplate.Name;
                     while (existingTemplate != null)
                     {
                         templateNumber++;
-                        templateName = markBetABCDTemplate.Name + " (" + templateNumber.ToString() + ")";
+                        templateName = $"{markBetABCDTemplate.Name} ({templateNumber})";
                         existingTemplate = Config.MarkBetTemplateABCDList.FirstOrDefault(t => t.Name == templateName);
                     }
                     markBetABCDTemplate.Name = templateName;   // Sätt namn med löpnummer efter
@@ -374,12 +374,12 @@ namespace HPTClient
                 var existingTemplate = Config.MarkBetTemplateRankList.FirstOrDefault(t => t.Name == markBetRankTemplate.Name);
                 if (existingTemplate != null)
                 {
-                    int templateNumber = 1;
-                    string templateName = markBetRankTemplate.Name;
+                    var templateNumber = 1;
+                    var templateName = markBetRankTemplate.Name;
                     while (existingTemplate != null)
                     {
                         templateNumber++;
-                        templateName = markBetRankTemplate.Name + " (" + templateNumber.ToString() + ")";
+                        templateName = $"{markBetRankTemplate.Name} ({templateNumber})";
                         existingTemplate = Config.MarkBetTemplateRankList.FirstOrDefault(t => t.Name == templateName);
                     }
                     markBetRankTemplate.Name = templateName;   // Sätt namn med löpnummer efter
@@ -396,12 +396,12 @@ namespace HPTClient
                 var existingTemplate = Config.GroupIntervalRulesCollectionList.FirstOrDefault(t => t.Name == groupIntervalRulesCollection.Name);
                 if (existingTemplate != null)
                 {
-                    int templateNumber = 1;
-                    string templateName = groupIntervalRulesCollection.Name;
+                    var templateNumber = 1;
+                    var templateName = groupIntervalRulesCollection.Name;
                     while (existingTemplate != null)
                     {
                         templateNumber++;
-                        templateName = groupIntervalRulesCollection.Name + " (" + templateNumber.ToString() + ")";
+                        templateName = $"{groupIntervalRulesCollection.Name} ({templateNumber})";
                         existingTemplate = Config.GroupIntervalRulesCollectionList.FirstOrDefault(t => t.Name == templateName);
                     }
                     groupIntervalRulesCollection.Name = templateName;   // Sätt namn med löpnummer efter
@@ -423,12 +423,12 @@ namespace HPTClient
                 var existingTemplate = Config.RankSumReductionRuleCollection.FirstOrDefault(t => t.Name == rankSumReductionCollection.Name);
                 if (existingTemplate != null)
                 {
-                    int templateNumber = 1;
-                    string templateName = rankSumReductionCollection.Name;
+                    var templateNumber = 1;
+                    var templateName = rankSumReductionCollection.Name;
                     while (existingTemplate != null)
                     {
                         templateNumber++;
-                        templateName = rankSumReductionCollection.Name + " (" + templateNumber.ToString() + ")";
+                        templateName = $"{rankSumReductionCollection.Name} ({templateNumber})";
                         existingTemplate = Config.RankSumReductionRuleCollection.FirstOrDefault(t => t.Name == templateName);
                     }
                     rankSumReductionCollection.Name = templateName;   // Sätt namn med löpnummer efter
@@ -633,7 +633,7 @@ namespace HPTClient
         {
             if (DefaultRankTemplate != null && DefaultRankTemplate.HorseRankVariableList != null)
             {
-                List<HPTHorseRankVariable> tempList = DefaultRankTemplate.HorseRankVariableList.Where(hrv => hrv.Category == category).ToList();
+                var tempList = DefaultRankTemplate.HorseRankVariableList.Where(hrv => hrv.Category == category).ToList();
                 return tempList;
             }
             return new List<HPTHorseRankVariable>();
@@ -642,34 +642,33 @@ namespace HPTClient
         [DataMember]
         public bool UseDefaultRankTemplate { get; set; }
 
-        private HPTRankTemplate defaultRankTemplate;
         [XmlIgnore]
         public HPTRankTemplate DefaultRankTemplate
         {
             get
             {
-                if (defaultRankTemplate == null)
+                if (field == null)
                 {
                     if (RankTemplateList != null)
                     {
-                        defaultRankTemplate = RankTemplateList.FirstOrDefault(rt => rt.IsDefault);
+                        field = RankTemplateList.FirstOrDefault(rt => rt.IsDefault);
                     }
-                    if (defaultRankTemplate == null)
+                    if (field == null)
                     {
-                        defaultRankTemplate = CreateDefaultRankTemplate();
+                        field = CreateDefaultRankTemplate();
                     }
                 }
-                return defaultRankTemplate;
+                return field;
             }
             set
             {
-                defaultRankTemplate = value;
+                field = value;
                 if (value != null)
                 {
-                    defaultRankTemplate.IsDefault = true;
+                    field.IsDefault = true;
                     if (RankTemplateList != null)
                     {
-                        foreach (var rankTemplate in RankTemplateList.Where(rt => rt != defaultRankTemplate))
+                        foreach (var rankTemplate in RankTemplateList.Where(rt => rt != field))
                         {
                             rankTemplate.IsDefault = false;
                         }
@@ -682,34 +681,33 @@ namespace HPTClient
         [DataMember]
         public bool UseDefaultRankTemplateDouble { get; set; }
 
-        private HPTRankTemplate defaultRankTemplateDouble;
         [XmlIgnore]
         public HPTRankTemplate DefaultRankTemplateDouble
         {
             get
             {
-                if (defaultRankTemplateDouble == null)
+                if (field == null)
                 {
                     if (RankTemplateList != null)
                     {
-                        defaultRankTemplateDouble = RankTemplateList.FirstOrDefault(rt => rt.IsDefaultDouble);
+                        field = RankTemplateList.FirstOrDefault(rt => rt.IsDefaultDouble);
                     }
-                    if (defaultRankTemplateDouble == null)
+                    if (field == null)
                     {
-                        defaultRankTemplateDouble = CreateDefaultRankTemplateDouble();
+                        field = CreateDefaultRankTemplateDouble();
                     }
                 }
-                return defaultRankTemplateDouble;
+                return field;
             }
             set
             {
-                defaultRankTemplateDouble = value;
+                field = value;
                 if (value != null)
                 {
-                    defaultRankTemplateDouble.IsDefaultDouble = true;
+                    field.IsDefaultDouble = true;
                     if (RankTemplateList != null)
                     {
-                        foreach (var rankTemplate in RankTemplateList.Where(rt => rt != defaultRankTemplateDouble))
+                        foreach (var rankTemplate in RankTemplateList.Where(rt => rt != field))
                         {
                             rankTemplate.IsDefaultDouble = false;
                         }
@@ -722,34 +720,33 @@ namespace HPTClient
         [DataMember]
         public bool UseDefaultRankTemplateTvilling { get; set; }
 
-        private HPTRankTemplate defaultRankTemplateTvilling;
         [XmlIgnore]
         public HPTRankTemplate DefaultRankTemplateTvilling
         {
             get
             {
-                if (defaultRankTemplateTvilling == null)
+                if (field == null)
                 {
                     if (RankTemplateList != null)
                     {
-                        defaultRankTemplateTvilling = RankTemplateList.FirstOrDefault(rt => rt.IsDefaultTvilling);
+                        field = RankTemplateList.FirstOrDefault(rt => rt.IsDefaultTvilling);
                     }
-                    if (defaultRankTemplateTvilling == null)
+                    if (field == null)
                     {
-                        defaultRankTemplateTvilling = CreateDefaultRankTemplateTvilling();
+                        field = CreateDefaultRankTemplateTvilling();
                     }
                 }
-                return defaultRankTemplateTvilling;
+                return field;
             }
             set
             {
-                defaultRankTemplateTvilling = value;
+                field = value;
                 if (value != null)
                 {
-                    defaultRankTemplateTvilling.IsDefaultTvilling = true;
+                    field.IsDefaultTvilling = true;
                     if (RankTemplateList != null)
                     {
-                        foreach (var rankTemplate in RankTemplateList.Where(rt => rt != defaultRankTemplateTvilling))
+                        foreach (var rankTemplate in RankTemplateList.Where(rt => rt != field))
                         {
                             rankTemplate.IsDefaultTvilling = false;
                         }
@@ -762,34 +759,33 @@ namespace HPTClient
         [DataMember]
         public bool UseDefaultRankTemplateTrio { get; set; }
 
-        private HPTRankTemplate defaultRankTemplateTrio;
         [XmlIgnore]
         public HPTRankTemplate DefaultRankTemplateTrio
         {
             get
             {
-                if (defaultRankTemplateTrio == null)
+                if (field == null)
                 {
                     if (RankTemplateList != null)
                     {
-                        defaultRankTemplateTrio = RankTemplateList.FirstOrDefault(rt => rt.IsDefaultTrio);
+                        field = RankTemplateList.FirstOrDefault(rt => rt.IsDefaultTrio);
                     }
-                    if (defaultRankTemplateTrio == null)
+                    if (field == null)
                     {
-                        defaultRankTemplateTrio = CreateDefaultRankTemplateTrio();
+                        field = CreateDefaultRankTemplateTrio();
                     }
                 }
-                return defaultRankTemplateTrio;
+                return field;
             }
             set
             {
-                defaultRankTemplateTrio = value;
+                field = value;
                 if (value != null)
                 {
-                    defaultRankTemplateTrio.IsDefaultTrio = true;
+                    field.IsDefaultTrio = true;
                     if (RankTemplateList != null)
                     {
-                        foreach (var rankTemplate in RankTemplateList.Where(rt => rt != defaultRankTemplateTrio))
+                        foreach (var rankTemplate in RankTemplateList.Where(rt => rt != field))
                         {
                             rankTemplate.IsDefaultTrio = false;
                         }
@@ -843,15 +839,15 @@ namespace HPTClient
 
         #endregion
 
-        private HPTHorseOwnInformationCollection horseOwnInformationCollection;
         [XmlIgnore]
         public HPTHorseOwnInformationCollection HorseOwnInformationCollection
         {
             get
             {
-                if (horseOwnInformationCollection == null)
+                if (field == null)
                 {
-                    horseOwnInformationCollection = HPTSerializer.DeserializeHPTHorseOwnInformation(MyDocumentsPath + "HorseOwnInformationList.hptinfo");
+                    field = HPTSerializer.DeserializeHPTHorseOwnInformation(
+                        $"{MyDocumentsPath}HorseOwnInformationList.hptinfo");
                     //string dir = HPTConfig.MyDocumentsPath + "OwnHorseInformation\\";
                     //if (!Directory.Exists(dir))
                     //{
@@ -866,7 +862,7 @@ namespace HPTClient
                     //        });
                     //}
                 }
-                return horseOwnInformationCollection;
+                return field;
             }
         }
 
@@ -895,8 +891,8 @@ namespace HPTClient
                 var sizeStringArray = systemSizesToShowString.Split(new String[] { "\r\n" }, StringSplitOptions.None);
                 foreach (var s in sizeStringArray)
                 {
-                    int number = 0;
-                    bool result = int.TryParse(s, out number);
+                    var number = 0;
+                    var result = int.TryParse(s, out number);
                     if (result)
                     {
                         systemSizesToShow.Add(number);
@@ -926,33 +922,32 @@ namespace HPTClient
             }
         }
 
-        private string beginnerSizesToShowString;
         [DataMember]
         public string BeginnerSizesToShowString
         {
             get
             {
-                if (string.IsNullOrEmpty(beginnerSizesToShowString) || systemSizesToShowString.Contains("r"))
+                if (string.IsNullOrEmpty(field) || systemSizesToShowString.Contains("r"))
                 {
-                    beginnerSizesToShowString = "50\r\n100\r\n200\r\n300\r\n400\r\n500\r\n700\r\n1000\r\n2000";
+                    field = "50\r\n100\r\n200\r\n300\r\n400\r\n500\r\n700\r\n1000\r\n2000";
                 }
-                return beginnerSizesToShowString;
+                return field;
             }
             set
             {
-                beginnerSizesToShowString = value;
+                field = value;
                 if (string.IsNullOrEmpty(systemSizesToShowString))
                 {
-                    beginnerSizesToShowString = "50\r\n100\r\n200\r\n300\r\n400\r\n500\r\n700\r\n1000\r\n2000";
+                    field = "50\r\n100\r\n200\r\n300\r\n400\r\n500\r\n700\r\n1000\r\n2000";
                 }
                 OnPropertyChanged("SystemSizesToShowString");
 
                 beginnerSizesToShow = new ObservableCollection<int>();
-                var sizeStringArray = beginnerSizesToShowString.Split(new String[] { "\r\n" }, StringSplitOptions.None);
+                var sizeStringArray = field.Split(new String[] { "\r\n" }, StringSplitOptions.None);
                 foreach (var s in sizeStringArray)
                 {
-                    int number = 0;
-                    bool result = int.TryParse(s, out number);
+                    var number = 0;
+                    var result = int.TryParse(s, out number);
                     if (result)
                     {
                         beginnerSizesToShow.Add(number);
@@ -983,40 +978,32 @@ namespace HPTClient
         }
 
 
-        private ObservableCollection<HPTSystemDirectory> hptSystemDirectories;
         [XmlIgnore]
         public ObservableCollection<HPTSystemDirectory> HPTSystemDirectories
         {
-            get
-            {
-                return hptSystemDirectories;
-            }
+            get;
             set
             {
-                hptSystemDirectories = value;
+                field = value;
                 OnPropertyChanged();
 
                 // 10 senaste filerna
                 RecentFileList = new ObservableCollection<HPTSystemFile>(
                     HPTSystemDirectories
-                    .SelectMany(hsd => hsd.FileList)
-                    .OrderByDescending(hsf => hsf.CreationTime)
-                    .Take(10)
-                    );
+                        .SelectMany(hsd => hsd.FileList)
+                        .OrderByDescending(hsf => hsf.CreationTime)
+                        .Take(10)
+                );
             }
         }
 
-        [XmlIgnore]
-        private ObservableCollection<HPTSystemFile> recentFileList;
+        [field: XmlIgnore]
         public ObservableCollection<HPTSystemFile> RecentFileList
         {
-            get
-            {
-                return recentFileList;
-            }
+            get;
             set
             {
-                recentFileList = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -1035,16 +1022,16 @@ namespace HPTClient
             {
                 return;
             }
-            MailMessage mail = new MailMessage();
+            var mail = new MailMessage();
 
             mail.To.Add("hjalp.pa.traven@gmail.com");
-            mail.Subject = "Felrapport " + DateTime.Now.ToShortTimeString();
+            mail.Subject = $"Felrapport {DateTime.Now.ToShortTimeString()}";
 
             mail.From = new MailAddress("hpt.travsystem@gmail.com", "Hjälp på Traven-system");
             mail.Sender = new MailAddress("hpt.travsystem@gmail.com", "Hjälp på Traven-system");
             mail.IsBodyHtml = false;
 
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
 
             if (EMailAddress != null && EMailAddress != string.Empty)
             {
@@ -1052,12 +1039,12 @@ namespace HPTClient
                 sb.AppendLine(EMailAddress);
             }
 
-            foreach (Exception exc in ErrorLog)
+            foreach (var exc in ErrorLog)
             {
                 sb.AppendLine(exc.Message);
                 sb.AppendLine(exc.StackTrace);
                 sb.AppendLine();
-                Exception innerExc = exc.InnerException;
+                var innerExc = exc.InnerException;
 
                 while (innerExc != null)
                 {
@@ -1070,8 +1057,8 @@ namespace HPTClient
 
             mail.Body = sb.ToString();
 
-            System.Net.NetworkCredential cred = new System.Net.NetworkCredential("hpt.travsystem", "Brickleberry2");
-            SmtpClient smtp = new SmtpClient("smtp.gmail.com");
+            var cred = new System.Net.NetworkCredential("hpt.travsystem", "Brickleberry2");
+            var smtp = new SmtpClient("smtp.gmail.com");
             smtp.UseDefaultCredentials = false;
             smtp.EnableSsl = true;
             smtp.Credentials = cred;
@@ -1079,23 +1066,22 @@ namespace HPTClient
             smtp.Send(mail);
         }
 
-        private SortedList<HPTPrio, bool> prioList;
         [XmlIgnore]
         public SortedList<HPTPrio, bool> PrioList
         {
             get
             {
-                if (prioList == null)
+                if (field == null)
                 {
-                    prioList = new SortedList<HPTPrio, bool>();
-                    prioList.Add(HPTPrio.A, UseA);
-                    prioList.Add(HPTPrio.B, UseB);
-                    prioList.Add(HPTPrio.C, UseC);
-                    prioList.Add(HPTPrio.D, UseD);
-                    prioList.Add(HPTPrio.E, UseE);
-                    prioList.Add(HPTPrio.F, UseF);
+                    field = new SortedList<HPTPrio, bool>();
+                    field.Add(HPTPrio.A, UseA);
+                    field.Add(HPTPrio.B, UseB);
+                    field.Add(HPTPrio.C, UseC);
+                    field.Add(HPTPrio.D, UseD);
+                    field.Add(HPTPrio.E, UseE);
+                    field.Add(HPTPrio.F, UseF);
                 }
-                return prioList;
+                return field;
             }
         }
 
@@ -1108,14 +1094,14 @@ namespace HPTClient
                 return;
             }
 
-            string directoryPath = MyDocumentsPath + @"Logg\";
+            var directoryPath = $@"{MyDocumentsPath}Logg\";
             if (!Directory.Exists(directoryPath))
             {
                 Directory.CreateDirectory(directoryPath);
             }
             if (string.IsNullOrEmpty(logFilePath))
             {
-                logFilePath = directoryPath + "Logg " + DateTime.Now.ToString("yyyy-MM-dd") + ".txt";
+                logFilePath = $"{directoryPath}Logg {DateTime.Now:yyyy-MM-dd}.txt";
             }
             var sw = new StreamWriter(logFilePath, true);
             var sb = new StringBuilder();
@@ -1139,14 +1125,14 @@ namespace HPTClient
                 return;
             }
 
-            string directoryPath = MyDocumentsPath + @"Logg\";
+            var directoryPath = $@"{MyDocumentsPath}Logg\";
             if (!Directory.Exists(directoryPath))
             {
                 Directory.CreateDirectory(directoryPath);
             }
             if (string.IsNullOrEmpty(logFilePath))
             {
-                logFilePath = directoryPath + "Logg " + DateTime.Now.ToString("yyyy-MM-dd") + ".txt";
+                logFilePath = $"{directoryPath}Logg {DateTime.Now:yyyy-MM-dd}.txt";
             }
             var sw = new StreamWriter(logFilePath, true);
             var sb = new StringBuilder();
@@ -1240,12 +1226,12 @@ namespace HPTClient
 
         public void UpdateHPTSystemDirectories()
         {
-            DirectoryInfo di = new DirectoryInfo(MyDocumentsPath);
+            var di = new DirectoryInfo(MyDocumentsPath);
 
             // Kataloger som är automatgenererade för att innehålla filer för olika tävlingar
-            Regex rexSystemDirectory = new Regex("\\d{4}-\\d{2}-\\d{2}\\s[\\w\\s]+?");
+            var rexSystemDirectory = new Regex("\\d{4}-\\d{2}-\\d{2}\\s[\\w\\s]+?");
 
-            List<HPTSystemDirectory> hptSystemDirectories = di.GetDirectories()
+            var hptSystemDirectories = di.GetDirectories()
                 .Where(diSystemDir => rexSystemDirectory.IsMatch(diSystemDir.Name))
                 .Select(diSystemDir => new HPTSystemDirectory()
                 {
@@ -1290,9 +1276,9 @@ namespace HPTClient
 
         private string CreateFileDisplayName(string fileName, DateTime creationDate)
         {
-            string displayName = Path.GetFileNameWithoutExtension(fileName);
+            var displayName = Path.GetFileNameWithoutExtension(fileName);
             displayName = displayName.Replace("_", "-");
-            displayName += " (" + creationDate.ToString("yyyy-MM-dd H:mm") + ")";
+            displayName += $" ({creationDate:yyyy-MM-dd H:mm})";
 
             return displayName;
         }
@@ -1541,9 +1527,9 @@ namespace HPTClient
 
             #region Color intervals
 
-            Brush bGreen = CreateBrush(Colors.LightGreen);
-            Brush bYellow = CreateBrush(Colors.LightYellow);
-            Brush bRed = CreateBrush(Colors.LightCoral);
+            var bGreen = CreateBrush(Colors.LightGreen);
+            var bYellow = CreateBrush(Colors.LightYellow);
+            var bRed = CreateBrush(Colors.LightCoral);
 
             ColorIntervalDoubleOdds = new HPTColorInterval()
             {
@@ -2085,7 +2071,7 @@ namespace HPTClient
 
         private static Brush CreateBrush(Color c)
         {
-            SolidColorBrush scb = new SolidColorBrush(c);
+            var scb = new SolidColorBrush(c);
             return scb;
         }
 
@@ -2093,7 +2079,7 @@ namespace HPTClient
         {
             get
             {
-                return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\HPT Travsystem\\";
+                return $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\HPT Travsystem\\";
             }
         }
 
@@ -2101,7 +2087,7 @@ namespace HPTClient
         {
             get
             {
-                return MyDocumentsPath + "Temp\\";
+                return $"{MyDocumentsPath}Temp\\";
             }
         }
 
@@ -2221,16 +2207,12 @@ namespace HPTClient
         [DataMember]
         public string LastIPAddress { get; set; }
 
-        private bool isEligibleForPro;
         public bool IsEligibleForPro
         {
-            get
-            {
-                return isEligibleForPro;
-            }
+            get;
             set
             {
-                isEligibleForPro = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -2241,17 +2223,13 @@ namespace HPTClient
 
         public bool FirstTimeHPT5User { get; set; }
 
-        private string versionText;
         [XmlIgnore]
         public string VersionText
         {
-            get
-            {
-                return versionText;
-            }
+            get;
             set
             {
-                versionText = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -2263,53 +2241,48 @@ namespace HPTClient
         public ObservableCollection<HPTMarkBetTemplateRank> MarkBetTemplateRankList { get; set; }
 
         // KOMMANDE
-        private ObservableCollection<HPTHorseRankSumReductionRuleCollection> rankSumReductionRuleCollection;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public ObservableCollection<HPTHorseRankSumReductionRuleCollection> RankSumReductionRuleCollection
         {
             get
             {
-                if (rankSumReductionRuleCollection == null)
+                if (field == null)
                 {
-                    rankSumReductionRuleCollection = new ObservableCollection<HPTHorseRankSumReductionRuleCollection>();
+                    field = new ObservableCollection<HPTHorseRankSumReductionRuleCollection>();
                 }
-                return rankSumReductionRuleCollection;
+
+                return field;
             }
-            set
-            {
-                rankSumReductionRuleCollection = value;
-            }
+            set;
         }
 
-        private BetTypeCategory[] betTypeCategoryList;
         [DataMember]
         public BetTypeCategory[] BetTypeCategoryList
         {
             get
             {
-                if (betTypeCategoryList == null)
+                if (field == null)
                 {
-                    betTypeCategoryList = new BetTypeCategory[] { BetTypeCategory.V4, BetTypeCategory.V5, BetTypeCategory.V6X, BetTypeCategory.V75, BetTypeCategory.V75, BetTypeCategory.V86, BetTypeCategory.V85 };
+                    field = new BetTypeCategory[] { BetTypeCategory.V4, BetTypeCategory.V5, BetTypeCategory.V6X, BetTypeCategory.V75, BetTypeCategory.V75, BetTypeCategory.V86, BetTypeCategory.V85 };
                 }
-                return betTypeCategoryList;
+                return field;
             }
         }
 
-        private decimal zoom;
         [DataMember]
         public decimal Zoom
         {
             get
             {
-                if (zoom == 0M)
+                if (field == 0M)
                 {
-                    zoom = 1M;
+                    field = 1M;
                 }
-                return zoom;
+                return field;
             }
             set
             {
-                zoom = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -2357,7 +2330,7 @@ namespace HPTClient
             }
             set
             {
-                bool temp = value;
+                var temp = value;
             }
         }
 
@@ -2462,7 +2435,7 @@ namespace HPTClient
 
         internal void ResetDataToShow(HPTHorseDataToShow horseDataToShow, HPTHorseDataToShow horseDataToShowClone)
         {
-            foreach (PropertyInfo pi in (horseDataToShow.GetType()).GetProperties())
+            foreach (var pi in (horseDataToShow.GetType()).GetProperties())
             {
                 if (pi.PropertyType == typeof(bool))
                 {
@@ -2956,17 +2929,13 @@ namespace HPTClient
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public List<HPTHorseDataToShow> DataToShowVxxList { get; set; }
         //public HPTHorseDataToShow DataToShowVxx { get; set; }
-        private HPTHorseDataToShow dataToShowVxx;
         [XmlIgnore]
         public HPTHorseDataToShow DataToShowVxx
         {
-            get
-            {
-                return dataToShowVxx;
-            }
+            get;
             set
             {
-                dataToShowVxx = value;
+                field = value;
                 OnPropertyChanged();
 
                 // Uppdatera alla DataToShow när en ändras
@@ -2976,7 +2945,7 @@ namespace HPTClient
 
         void DataToShowVxx_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            object o = DataToShowVxx.GetType().GetProperty(e.PropertyName).GetValue(DataToShowVxx);
+            var o = DataToShowVxx.GetType().GetProperty(e.PropertyName).GetValue(DataToShowVxx);
             if (o.GetType() == typeof(bool))
             {
                 DataToShowComplementaryRules.GetType().GetProperty(e.PropertyName).SetValue(DataToShowComplementaryRules, o);
@@ -3358,14 +3327,13 @@ namespace HPTClient
 
         //[DataMember(IsRequired = false, EmitDefaultValue = false)]
         //public HPTHorseDataToShow DataToShowDriverPopupList { get; set; }
-        private HPTHorseDataToShow dataToShowDriverPopup;
         public HPTHorseDataToShow DataToShowDriverPopup
         {
             get
             {
-                if (dataToShowDriverPopup == null)
+                if (field == null)
                 {
-                    dataToShowDriverPopup = new HPTHorseDataToShow()
+                    field = new HPTHorseDataToShow()
                     {
                         Usage = DataToShowUsage.None,
                         ShowTrainer = true,
@@ -3378,24 +3346,21 @@ namespace HPTClient
                         //ShowMarksPercent = true
                     };
                 }
-                return dataToShowDriverPopup;
+
+                return field;
             }
-            set
-            {
-                dataToShowDriverPopup = value;
-            }
+            set;
         }
 
         //[DataMember(IsRequired = false, EmitDefaultValue = false)]
         //public HPTHorseDataToShow DataToShowTrainerPopupList { get; set; }
-        private HPTHorseDataToShow dataToShowTrainerPopup;
         public HPTHorseDataToShow DataToShowTrainerPopup
         {
             get
             {
-                if (dataToShowTrainerPopup == null)
+                if (field == null)
                 {
-                    dataToShowTrainerPopup = new HPTHorseDataToShow()
+                    field = new HPTHorseDataToShow()
                     {
                         Usage = DataToShowUsage.None,
                         ShowDriver = true,
@@ -3408,12 +3373,10 @@ namespace HPTClient
                         //ShowMarksPercent = true
                     };
                 }
-                return dataToShowTrainerPopup;
+
+                return field;
             }
-            set
-            {
-                dataToShowTrainerPopup = value;
-            }
+            set;
         }
 
         [DataMember]
@@ -3425,15 +3388,14 @@ namespace HPTClient
         [DataMember]
         public HPTCombinationDataToShow CombinationDataToShowTrio { get; set; }
 
-        private HPTSingleRowDataToShow singleRowDataToShow;
         [DataMember]
         public HPTSingleRowDataToShow SingleRowDataToShow
         {
             get
             {
-                if (singleRowDataToShow == null)
+                if (field == null)
                 {
-                    singleRowDataToShow = new HPTSingleRowDataToShow()
+                    field = new HPTSingleRowDataToShow()
                     {
                         EnableConfiguration = true,
                         ShowBetMultiplier = true,
@@ -3450,12 +3412,10 @@ namespace HPTClient
                         Usage = DataToShowUsage.Everywhere
                     };
                 }
-                return singleRowDataToShow;
+
+                return field;
             }
-            set
-            {
-                singleRowDataToShow = value;
-            }
+            set;
         }
 
         internal static HPTMarkBetTabsToShow CreateMarkBetTabsToShow(GUIProfile profile)
@@ -3597,34 +3557,32 @@ namespace HPTClient
         [DataMember]
         public HPTBetTypesToShow BetTypesToShow { get; set; }
 
-        private List<HPTHorseRankVariableBase> horseRankVariablesToShow;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public List<HPTHorseRankVariableBase> HorseRankVariablesToShow
         {
             get
             {
                 var allHorseRankVariables = HPTHorseRankVariableBase.CreateVariableBaseList();
-                if (horseRankVariablesToShow == null)
+                if (field == null)
                 {
-                    horseRankVariablesToShow = allHorseRankVariables;
+                    field = allHorseRankVariables;
                 }
-                if (horseRankVariablesToShow.Count < allHorseRankVariables.Count)
+
+                if (field.Count < allHorseRankVariables.Count)
                 {
                     var allProperties = allHorseRankVariables.Select(hrv => hrv.PropertyName);
-                    var currentProperties = horseRankVariablesToShow.Select(hrv => hrv.PropertyName);
+                    var currentProperties = field.Select(hrv => hrv.PropertyName);
                     var newProperties = allProperties.Except(currentProperties);
                     foreach (var newProperty in newProperties)
                     {
                         var newHorseRankVariable = allHorseRankVariables.First(hrv => hrv.PropertyName == newProperty);
-                        horseRankVariablesToShow.Add(newHorseRankVariable);
+                        field.Add(newHorseRankVariable);
                     }
                 }
-                return horseRankVariablesToShow;
+
+                return field;
             }
-            set
-            {
-                horseRankVariablesToShow = value;
-            }
+            set;
         }
 
         #endregion
@@ -3734,78 +3692,74 @@ namespace HPTClient
 
         #region Data till klippbordet/utskriften
 
-        private bool? copyStakeShare;
         [DataMember]
         public bool? CopyStakeShare
         {
             get
             {
-                if (copyStakeShare == null)
+                if (field == null)
                 {
-                    copyStakeShare = true;
+                    field = true;
                 }
-                return copyStakeShare;
+                return field;
             }
             set
             {
-                copyStakeShare = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool? copyOwnRank;
         [DataMember]
         public bool? CopyOwnRank
         {
             get
             {
-                if (copyOwnRank == null)
+                if (field == null)
                 {
-                    copyOwnRank = false;
+                    field = false;
                 }
-                return copyOwnRank;
+                return field;
             }
             set
             {
-                copyOwnRank = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool? copyRankMean;
         [DataMember]
         public bool? CopyRankMean
         {
             get
             {
-                if (copyRankMean == null)
+                if (field == null)
                 {
-                    copyRankMean = false;
+                    field = false;
                 }
-                return copyRankMean;
+                return field;
             }
             set
             {
-                copyRankMean = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool? copyAlternateRank;
         [DataMember]
         public bool? CopyAlternateRank
         {
             get
             {
-                if (copyAlternateRank == null)
+                if (field == null)
                 {
-                    copyAlternateRank = false;
+                    field = false;
                 }
-                return copyAlternateRank;
+                return field;
             }
             set
             {
-                copyAlternateRank = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -3909,97 +3863,73 @@ namespace HPTClient
 
         #region ABCDEF-val
 
-        private bool useA;
         [DataMember]
         public bool UseA
         {
-            get
-            {
-                return useA;
-            }
+            get;
             set
             {
-                useA = value;
+                field = value;
                 PrioList[HPTPrio.A] = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool useB;
         [DataMember]
         public bool UseB
         {
-            get
-            {
-                return useB;
-            }
+            get;
             set
             {
-                useB = value;
+                field = value;
                 PrioList[HPTPrio.B] = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool useC;
         [DataMember]
         public bool UseC
         {
-            get
-            {
-                return useC;
-            }
+            get;
             set
             {
-                useC = value;
+                field = value;
                 PrioList[HPTPrio.C] = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool useD;
         [DataMember]
         public bool UseD
         {
-            get
-            {
-                return useD;
-            }
+            get;
             set
             {
-                useD = value;
+                field = value;
                 PrioList[HPTPrio.D] = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool useE;
         [DataMember]
         public bool UseE
         {
-            get
-            {
-                return useE;
-            }
+            get;
             set
             {
-                useE = value;
+                field = value;
                 PrioList[HPTPrio.E] = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool useF;
         [DataMember]
         public bool UseF
         {
-            get
-            {
-                return useF;
-            }
+            get;
             set
             {
-                useF = value;
+                field = value;
                 PrioList[HPTPrio.F] = value;
                 OnPropertyChanged();
             }
@@ -4110,107 +4040,79 @@ namespace HPTClient
 
         #region Color handling
 
-        private Color colorGood;
         [DataMember]
         public Color ColorGood
         {
-            get
-            {
-                return colorGood;
-            }
+            get;
             set
             {
-                colorGood = value;
+                field = value;
                 BrushGood = CreateBrush(value);
                 OnPropertyChanged();
             }
         }
 
-        private Color colorMedium;
         [DataMember]
         public Color ColorMedium
         {
-            get
-            {
-                return colorMedium;
-            }
+            get;
             set
             {
-                colorMedium = value;
+                field = value;
                 BrushMedium = CreateBrush(value);
                 OnPropertyChanged();
             }
         }
 
-        private Color colorBad;
         [DataMember]
         public Color ColorBad
         {
-            get
-            {
-                return colorBad;
-            }
+            get;
             set
             {
-                colorBad = value;
+                field = value;
                 BrushBad = CreateBrush(value);
                 OnPropertyChanged();
             }
         }
 
-        private Brush brushGood;
         [XmlIgnore]
         public Brush BrushGood
         {
-            get
-            {
-                return brushGood;
-            }
+            get;
             set
             {
-                brushGood = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private Brush brushMedium;
         [XmlIgnore]
         public Brush BrushMedium
         {
-            get
-            {
-                return brushMedium;
-            }
+            get;
             set
             {
-                brushMedium = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private Brush brushBad;
         [XmlIgnore]
         public Brush BrushBad
         {
-            get
-            {
-                return brushBad;
-            }
+            get;
             set
             {
-                brushBad = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool setColorFromVinnarOdds;
         [DataMember]
         public bool SetColorFromVinnarOdds
         {
-            get
-            {
-                return setColorFromVinnarOdds;
-            }
+            get;
             set
             {
                 if (value)
@@ -4219,19 +4121,15 @@ namespace HPTClient
                     SetColorFromMarkability = false;
                     SetColorFromStakePercent = false;
                 }
-                setColorFromVinnarOdds = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool setColorFromMarksPercent;
         [DataMember]
         public bool SetColorFromMarksPercent
         {
-            get
-            {
-                return setColorFromMarksPercent;
-            }
+            get;
             set
             {
                 if (value)
@@ -4240,19 +4138,15 @@ namespace HPTClient
                     SetColorFromMarkability = false;
                     SetColorFromStakePercent = false;
                 }
-                setColorFromMarksPercent = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool setColorFromMarkability;
         [DataMember]
         public bool SetColorFromMarkability
         {
-            get
-            {
-                return setColorFromMarkability;
-            }
+            get;
             set
             {
                 if (value)
@@ -4261,19 +4155,15 @@ namespace HPTClient
                     SetColorFromVinnarOdds = false;
                     SetColorFromStakePercent = false;
                 }
-                setColorFromMarkability = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool setColorFromStakePercent;
         [DataMember]
         public bool SetColorFromStakePercent
         {
-            get
-            {
-                return setColorFromStakePercent;
-            }
+            get;
             set
             {
                 if (value)
@@ -4282,7 +4172,7 @@ namespace HPTClient
                     SetColorFromVinnarOdds = false;
                     SetColorFromMarkability = false;
                 }
-                setColorFromStakePercent = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -4358,7 +4248,7 @@ namespace HPTClient
             var di = new DirectoryInfo(MyDocumentsPath);
 
             // Kataloger som är automatgenererade för att innehålla filer för olika tävlingar
-            Regex rexSystemDirectory = new Regex("\\d{4}-\\d{2}-\\d{2}\\s[\\w\\s]+?");
+            var rexSystemDirectory = new Regex("\\d{4}-\\d{2}-\\d{2}\\s[\\w\\s]+?");
 
             var hptSystemDirectories = di.GetDirectories()
                 .Where(diSystemDir => rexSystemDirectory.IsMatch(diSystemDir.Name))

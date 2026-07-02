@@ -12,7 +12,7 @@ namespace HPTClient
 
         internal void SaveHorseOwnInformationList()
         {
-            string fileName = HPTConfig.MyDocumentsPath + "HorseOwnInformationList.hptinfo";
+            var fileName = $"{HPTConfig.MyDocumentsPath}HorseOwnInformationList.hptinfo";
             HPTSerializer.SerializeHPTHorseOwnInformation(fileName, this);
         }
 
@@ -81,7 +81,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -105,7 +105,7 @@ namespace HPTClient
                     }
                     catch (Exception exc)
                     {
-                        string s = exc.Message;
+                        var s = exc.Message;
                     }
                     ownInformation = null;
                     return null;
@@ -158,46 +158,35 @@ namespace HPTClient
     [DataContract]
     public class HPTHorseOwnInformation : Notifier
     {
-        private int startNr;
         [DataMember]
         public int StartNr
         {
-            get
-            {
-                return startNr;
-            }
+            get;
             set
             {
-                startNr = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _ATGId;
         [DataMember]
         public string ATGId
         {
-            get
-            {
-                return _ATGId;
-            }
+            get;
             set
             {
-                _ATGId = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
-        private string name;
+
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public string Name
         {
-            get
-            {
-                return name;
-            }
+            get;
             set
             {
-                name = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -210,7 +199,7 @@ namespace HPTClient
                 {
                     return "ERROR";
                 }
-                string correctedHorseName = Name;
+                var correctedHorseName = Name;
                 System.IO.Path.GetInvalidFileNameChars()
                     .ToList()
                     .ForEach(ic => correctedHorseName = correctedHorseName.Replace(ic, '_'));
@@ -219,17 +208,13 @@ namespace HPTClient
             }
         }
 
-        private bool? nextTimer;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public bool? NextTimer
         {
-            get
-            {
-                return nextTimer;
-            }
+            get;
             set
             {
-                nextTimer = value;
+                field = value;
                 OnPropertyChanged();
                 if (HorseOwnInformationCommentList != null && HorseOwnInformationCommentList.Count > 0)
                 {
@@ -241,158 +226,118 @@ namespace HPTClient
             }
         }
 
-        private ObservableCollection<HPTHorseOwnInformationComment> horseOwnInformationCommentList;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public ObservableCollection<HPTHorseOwnInformationComment> HorseOwnInformationCommentList
         {
-            get
-            {
-                return horseOwnInformationCommentList;
-            }
+            get;
             set
             {
-                horseOwnInformationCommentList = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private string comment;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public string Comment
         {
-            get
-            {
-                return comment;
-            }
+            get;
             set
             {
-                comment = value;
+                field = value;
                 OnPropertyChanged();
-                if (!string.IsNullOrEmpty(comment))
+                if (!string.IsNullOrEmpty(field))
                 {
                     HasComment = true;
                 }
             }
         }
 
-        private bool hasComment;
         [DataMember]
         public bool HasComment
         {
-            get
-            {
-                return hasComment;
-            }
+            get;
             set
             {
-                hasComment = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private HPTHorseNextStart _NextStart;
         [DataMember]
         public HPTHorseNextStart NextStart
         {
-            get
-            {
-                return _NextStart;
-            }
+            get;
             set
             {
-                _NextStart = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
 
-        private int _Age;
         [DataMember]
         public int Age
         {
-            get
-            {
-                return _Age;
-            }
+            get;
             set
             {
-                _Age = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _Sex;
         [DataMember]
         public string Sex
         {
-            get
-            {
-                return _Sex;
-            }
+            get;
             set
             {
-                _Sex = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _Owner;
         [DataMember]
         public string Owner
         {
-            get
-            {
-                return _Owner;
-            }
+            get;
             set
             {
-                _Owner = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _Trainer;
         [DataMember]
         public string Trainer
         {
-            get
-            {
-                return _Trainer;
-            }
+            get;
             set
             {
-                _Trainer = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _HomeTrack;
         [DataMember]
         public string HomeTrack
         {
-            get
-            {
-                return _HomeTrack;
-            }
+            get;
             set
             {
-                _HomeTrack = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
 
-        private DateTime _CreationDate;
         [DataMember]
         public DateTime CreationDate
         {
-            get
-            {
-                return _CreationDate;
-            }
+            get;
             set
             {
-                _CreationDate = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -449,108 +394,80 @@ namespace HPTClient
     [DataContract]
     public class HPTHorseOwnInformationComment : Notifier
     {
-        private string distance;
         [DataMember]
         public string Distance
         {
-            get
-            {
-                return distance;
-            }
+            get;
             set
             {
-                distance = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private string comment;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public string Comment
         {
-            get
-            {
-                return comment;
-            }
+            get;
             set
             {
-                comment = value;
+                field = value;
                 OnPropertyChanged();
-                HasComment = !string.IsNullOrEmpty(comment);
+                HasComment = !string.IsNullOrEmpty(field);
             }
         }
 
-        private DateTime commentDate;
         [DataMember]
         public DateTime CommentDate
         {
-            get
-            {
-                return commentDate;
-            }
+            get;
             set
             {
-                commentDate = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private string commentUser;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public string CommentUser
         {
-            get
-            {
-                return commentUser;
-            }
+            get;
             set
             {
-                commentUser = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool hasComment;
         [DataMember]
         public bool HasComment
         {
-            get
-            {
-                return hasComment;
-            }
+            get;
             set
             {
-                hasComment = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool isOwnComment;
         [DataMember]
         public bool IsOwnComment
         {
-            get
-            {
-                return isOwnComment;
-            }
+            get;
             set
             {
-                isOwnComment = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool? nextTimer;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public bool? NextTimer
         {
-            get
-            {
-                return nextTimer;
-            }
+            get;
             set
             {
-                nextTimer = value;
+                field = value;
                 OnPropertyChanged();
             }
         }

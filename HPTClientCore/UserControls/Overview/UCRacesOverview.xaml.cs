@@ -52,8 +52,8 @@ namespace HPTClient
             {
                 return;
             }
-            ComboBoxItem cbi = (ComboBoxItem)cmbSort.SelectedItem;
-            string sortVariable = (string)cbi.Tag;
+            var cbi = (ComboBoxItem)cmbSort.SelectedItem;
+            var sortVariable = (string)cbi.Tag;
             RaceList.ForEach(r =>
                 {
                     r.Sort(sortVariable);
@@ -63,7 +63,7 @@ namespace HPTClient
 
         private void btnSetRankOwn_Click(object sender, RoutedEventArgs e)
         {
-            bool recalculationPaused = MarkBet.pauseRecalculation;
+            var recalculationPaused = MarkBet.pauseRecalculation;
             try
             {
                 MarkBet.pauseRecalculation = true;
@@ -71,8 +71,8 @@ namespace HPTClient
                 {
                     foreach (var race in MarkBet.RaceDayInfo.RaceList)
                     {
-                        int rankToSet = 1;
-                        int numberOfScratchedHorses = 0;
+                        var rankToSet = 1;
+                        var numberOfScratchedHorses = 0;
                         foreach (var horse in race.HorseList)
                         {
                             if (horse.Scratched == true)
@@ -102,7 +102,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
             MarkBet.pauseRecalculation = recalculationPaused;
             MarkBet.RecalculateReduction(RecalculateReason.All);
@@ -310,8 +310,8 @@ namespace HPTClient
         public bool FilterHorses(object obj)
         {
             var horse = obj as HPTHorse;
-            bool showScratched = chkHideScratched.IsChecked == false;
-            bool showOnlySelected = chkShowOnlySelected.IsChecked == true;
+            var showScratched = chkHideScratched.IsChecked == false;
+            var showOnlySelected = chkShowOnlySelected.IsChecked == true;
 
             return (showScratched == horse.Scratched || horse.Scratched == false) && (showOnlySelected == horse.Selected || !showOnlySelected);
         }
@@ -426,7 +426,7 @@ namespace HPTClient
                 }
                 catch (Exception exc)
                 {
-                    string s = exc.Message;
+                    var s = exc.Message;
                 }
                 MarkBet.pauseRecalculation = false;
                 MarkBet.RecalculateReduction(RecalculateReason.All);

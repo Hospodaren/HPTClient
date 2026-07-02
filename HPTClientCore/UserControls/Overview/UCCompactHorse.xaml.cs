@@ -27,24 +27,21 @@ namespace HPTClient
             DependencyProperty.Register("Horse", typeof(HPTHorse), typeof(UCCompactHorse), new PropertyMetadata(null));
 
 
-
-
-        private System.Windows.Controls.Primitives.Popup pu;
         public System.Windows.Controls.Primitives.Popup PU
         {
             get
             {
-                if (pu == null)
+                if (field == null)
                 {
-                    pu = new System.Windows.Controls.Primitives.Popup()
+                    field = new System.Windows.Controls.Primitives.Popup()
                     {
                         Placement = System.Windows.Controls.Primitives.PlacementMode.MousePoint,
                         HorizontalOffset = -10D,
                         VerticalOffset = -10D
                     };
-                    pu.MouseLeave += new MouseEventHandler(pu_MouseLeave);
+                    field.MouseLeave += new MouseEventHandler(pu_MouseLeave);
                 }
-                return pu;
+                return field;
             }
         }
 
@@ -54,7 +51,7 @@ namespace HPTClient
             {
                 return;
             }
-            TextBlock tb = (TextBlock)sender;
+            var tb = (TextBlock)sender;
             PU.DataContext = tb.DataContext;
             PU.Child = new UCResultView();
             PU.IsOpen = true;

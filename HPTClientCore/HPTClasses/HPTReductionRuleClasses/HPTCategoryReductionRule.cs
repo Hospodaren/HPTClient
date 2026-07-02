@@ -21,7 +21,7 @@ namespace HPTClient
         public HPTCategoryReductionRule Clone()
         {
             var rule = new HPTCategoryReductionRule(CategoryCode, NumberOfWinnersList.Count - 1, Use);
-            foreach (HPTNumberOfWinners now in NumberOfWinnersList)
+            foreach (var now in NumberOfWinnersList)
             {
                 var hptNow = rule.NumberOfWinnersList.FirstOrDefault(n => n.NumberOfWinners == now.NumberOfWinners);
                 if (hptNow != null)
@@ -41,12 +41,12 @@ namespace HPTClient
             }
             if (!OnlyInSpecifiedLegs)
             {
-                int numberOfX = singleRow.HorseList.Count(h => h.CategoryCode.HasFlag(CategoryCode));
+                var numberOfX = singleRow.HorseList.Count(h => h.CategoryCode.HasFlag(CategoryCode));
                 return NumberOfWinnersList[numberOfX].Selected;
             }
             else
             {
-                int numberOfX = 0;
+                var numberOfX = 0;
                 foreach (var legNumber in LegList)
                 {
                     numberOfX += singleRow.HorseList[legNumber - 1].CategoryCode.HasFlag(CategoryCode) ? 1 : 0;
@@ -64,7 +64,7 @@ namespace HPTClient
 
             if (!OnlyInSpecifiedLegs)
             {
-                int numberOfX = horseList.Take(numberOfRacesToTest).Count(h => h.CategoryCode.HasFlag(CategoryCode));
+                var numberOfX = horseList.Take(numberOfRacesToTest).Count(h => h.CategoryCode.HasFlag(CategoryCode));
                 if (numberOfX > MaxNumberOfX)  // Högsta antal har överskridits redan innan alla lopp kontrollerats
                 {
                     return false;
@@ -77,7 +77,7 @@ namespace HPTClient
             }
             else
             {
-                int numberOfX = 0;
+                var numberOfX = 0;
                 foreach (var legNumber in LegList.Where(ln => ln <= numberOfRacesToTest))
                 {
                     numberOfX += horseList[legNumber - 1].CategoryCode.HasFlag(CategoryCode) ? 1 : 0;
@@ -91,8 +91,8 @@ namespace HPTClient
             // Skapa dictionary för att kontrollera hur många vinstrader villkoret skulle gett
             if (markBet.RaceDayInfo.ResultComplete)
             {
-                int numberOfXHorses = markBet.CouponCorrector.HorseList.Count(h => h.CategoryCode == CategoryCode);
-                RuleResultForCorrectRow = numberOfXHorses.ToString() + " " + CategoryCode.GetString();
+                var numberOfXHorses = markBet.CouponCorrector.HorseList.Count(h => h.CategoryCode == CategoryCode);
+                RuleResultForCorrectRow = $"{numberOfXHorses} {CategoryCode.GetString()}";
             }
             return true;
         }
@@ -113,47 +113,35 @@ namespace HPTClient
             ReductionSpecificationString = sb.ToString();
         }
 
-        private StartCategoryCode _categoryCode;
         [DataMember]
         public StartCategoryCode CategoryCode
         {
-            get
-            {
-                return _categoryCode;
-            }
+            get;
             set
             {
-                _categoryCode = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int numberOfX;
         [DataMember]
         public int NumberOfX
         {
-            get
-            {
-                return numberOfX;
-            }
+            get;
             set
             {
-                numberOfX = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int numberOfRacesWithX;
         [DataMember]
         public int NumberOfRacesWithX
         {
-            get
-            {
-                return numberOfRacesWithX;
-            }
+            get;
             set
             {
-                numberOfRacesWithX = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -168,7 +156,7 @@ namespace HPTClient
         {
             get
             {
-                return CategoryCode.GetString() + "-villkor";
+                return $"{CategoryCode.GetString()}-villkor";
             }
         }
                 public override string ToString()
@@ -179,7 +167,7 @@ namespace HPTClient
         public override string ToString(HPTMarkBet markBet)
         {
             // Create String representation
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.Append(NumberOfWinnersString);
             //for (int i = this.MinNumberOfX; i <= this.MaxNumberOfX; i++)
             //{

@@ -27,24 +27,16 @@ namespace HPTClient
         // Resultat:   https://www.atg.se/spel/2015-09-24/vp/hagmyren/lopp1/resultat
         internal static string CreateRaceStartlistLink(HPTRace race)
         {
-            string result = ATGBaseUrl +
-                race.ParentRaceDayInfo.RaceDayDateString +
-                "/vp/" +
-                CreateTrackNameForUrl(race) +
-                "/lopp" +
-                race.RaceNr.ToString();
+            var result =
+                $"{ATGBaseUrl}{race.ParentRaceDayInfo.RaceDayDateString}/vp/{CreateTrackNameForUrl(race)}/lopp{race.RaceNr}";
 
             return result;
         }
 
         internal static string CreateRaceStartlistLink(int trackId, DateTime startDate, int raceNumber)
         {
-            string result = ATGBaseUrl +
-                startDate.ToString("yyyy-MM-dd") +
-                "/vp/" +
-                EnumHelper.GetTrackNameATGSEFromId(trackId) +
-                "/lopp" +
-                raceNumber.ToString();
+            var result =
+                $"{ATGBaseUrl}{startDate:yyyy-MM-dd}/vp/{EnumHelper.GetTrackNameATGSEFromId(trackId)}/lopp{raceNumber}";
 
             return result;
         }
@@ -66,15 +58,15 @@ namespace HPTClient
 
             var rexRaceParts = new Regex(@"(\d{4}-\d{2}-\d{2})_(\d{1,2})_(\d{1,2})", RegexOptions.IgnoreCase);
             var result = rexRaceParts.Match(horseResult.ATGId);
-            int trackId = int.Parse(result.Groups[2].Value);
-            string trackName = EnumHelper.GetTrackNameForResultLinkFromTrackId(trackId);
+            var trackId = int.Parse(result.Groups[2].Value);
+            var trackName = EnumHelper.GetTrackNameForResultLinkFromTrackId(trackId);
             
             return $"{ATGBaseUrl}{result.Groups[1].Value}/vinnare/{trackName}/lopp/{result.Groups[2].Value}/resultat" ;
         } 
 
         internal static string CreateTrackNameForUrl(HPTRace race)
         {
-            string trackName = race.ParentRaceDayInfo.Trackname.ToLower();
+            var trackName = race.ParentRaceDayInfo.Trackname.ToLower();
             if (race.TrackName != null)
             {
                 trackName = race.TrackName.ToLower();

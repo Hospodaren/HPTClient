@@ -26,12 +26,12 @@ namespace HPTClient
                 .Select(r => new HPTRaceLight()
                 {
                     LegNr = r.LegNr,
-                    LegNrString = MarkBet.BetType.Code + "-" + r.LegNr.ToString(),
+                    LegNrString = $"{MarkBet.BetType.Code}-{r.LegNr}",
                     HorseList = r.HorseList
                             .Select(h => new HPTHorseLightSelectable()
                             {
                                 LegNr = r.LegNr,
-                                LegNrString = MarkBet.BetType.Code + "-" + r.LegNr.ToString(),
+                                LegNrString = $"{MarkBet.BetType.Code}-{r.LegNr}",
                                 Name = h.HorseName,
                                 Selectable = h.Selected,
                                 StartNr = h.StartNr,
@@ -71,8 +71,8 @@ namespace HPTClient
         {
             if (e.PropertyName == "Selected")
             {
-                HPTHorseLightSelectable horseLightSelectable = (HPTHorseLightSelectable)sender;
-                HPTHorse horse = MarkBet.RaceDayInfo.HorseListSelected
+                var horseLightSelectable = (HPTHorseLightSelectable)sender;
+                var horse = MarkBet.RaceDayInfo.HorseListSelected
                     .FirstOrDefault(h => h.StartNr == horseLightSelectable.StartNr && h.ParentRace.LegNr == horseLightSelectable.LegNr);
 
                 if (horse != null)
@@ -101,92 +101,68 @@ namespace HPTClient
         [XmlIgnore]
         public ICollection<HPTHorse> HorseList { get; set; }
 
-        private bool use;
         [DataMember]
         public bool Use
         {
-            get
-            {
-                return use;
-            }
+            get;
             set
             {
-                use = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool v6;
         [DataMember]
         public bool V6
         {
-            get
-            {
-                return v6;
-            }
+            get;
             set
             {
-                v6 = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int betMultiplier;
         [DataMember]
         public int BetMultiplier
         {
-            get
-            {
-                return betMultiplier;
-            }
+            get;
             set
             {
-                betMultiplier = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int ruleNumber;
         [DataMember]
         public int RuleNumber
         {
-            get
-            {
-                return ruleNumber;
-            }
+            get;
             set
             {
-                ruleNumber = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int[] betMultiplierList;
         [XmlIgnore]
         public int[] BetMultiplierList
         {
-            get
-            {
-                return betMultiplierList;
-            }
+            get;
             set
             {
-                betMultiplierList = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int numberOfRowsAffected;
         [XmlIgnore]
         public int NumberOfRowsAffected
         {
-            get
-            {
-                return numberOfRowsAffected;
-            }
+            get;
             set
             {
-                numberOfRowsAffected = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -197,7 +173,7 @@ namespace HPTClient
         public string ToString(HPTMarkBet markBet)
         {
             // Create String representation
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             //sb.AppendLine("Regel för V6/V7/V8/Flerbong");
             sb.AppendLine("Regel för V6/Flerbong");
             if (Use)
@@ -219,7 +195,7 @@ namespace HPTClient
             }
             sb.AppendLine();
 
-            foreach (HPTHorse horse in HorseList)
+            foreach (var horse in HorseList)
             {
                 sb.AppendLine(horse.HorseName);
             }

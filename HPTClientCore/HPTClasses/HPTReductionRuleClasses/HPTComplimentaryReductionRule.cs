@@ -32,7 +32,7 @@ namespace HPTClient
                 return true;
             }
 
-            int numberOfHorses = horseList
+            var numberOfHorses = horseList
                 .Take(numberOfRacesToTest)
                 .Intersect(HorseList)
                 .Count();
@@ -67,16 +67,16 @@ namespace HPTClient
         public void UpdateSelectable()
         {
             NumberOfSelected = 0;
-            int[] raceNumbers = new int[HorseList.Count];
-            for (int i = 0; i < HorseList.Count; i++)
+            var raceNumbers = new int[HorseList.Count];
+            for (var i = 0; i < HorseList.Count; i++)
             {
                 //raceNumbers[i] = this.HorseList[i].ParentRace.LegNr;
                 raceNumbers[i] = HorseList.ElementAt(i).ParentRace.LegNr;
             }
-            int antal = raceNumbers.Distinct().Count();
-            for (int i = 0; i <= NumberOfRaces; i++)
+            var antal = raceNumbers.Distinct().Count();
+            for (var i = 0; i <= NumberOfRaces; i++)
             {
-                HPTNumberOfWinners hptNow = NumberOfWinnersList.First(now => now.NumberOfWinners == i);
+                var hptNow = NumberOfWinnersList.First(now => now.NumberOfWinners == i);
                 if (hptNow.NumberOfWinners > antal)
                 {
                     hptNow.Selectable = false;
@@ -92,7 +92,7 @@ namespace HPTClient
 
         public override bool IncludeRow(HPTMarkBet markBet, HPTMarkBetSingleRow singleRow)
         {
-            int numberOfHorses = HorseList.Intersect(singleRow.HorseList).Count();
+            var numberOfHorses = HorseList.Intersect(singleRow.HorseList).Count();
             return NumberOfWinnersList.First(now => now.NumberOfWinners == numberOfHorses).Selected;
         }
 
@@ -101,11 +101,11 @@ namespace HPTClient
             // Skapa dictionary för att kontrollera hur många vinstrader villkoret skulle gett
             if (markBet.RaceDayInfo.ResultComplete)
             {
-                int numberOfXHorses = markBet.CouponCorrector.HorseList
+                var numberOfXHorses = markBet.CouponCorrector.HorseList
                     .Intersect(HorseList)
                     .Count();
 
-                RuleResultForCorrectRow = numberOfXHorses.ToString() + " U-Häst(ar)";
+                RuleResultForCorrectRow = $"{numberOfXHorses} U-Häst(ar)";
             }
             return true;
         }
@@ -121,17 +121,13 @@ namespace HPTClient
         //    this.ShortDescription = sb.ToString();
         //}
 
-        private string shortDescription;
         [DataMember]
         public string ShortDescription
         {
-            get
-            {
-                return shortDescription;
-            }
+            get;
             set
             {
-                shortDescription = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -158,7 +154,7 @@ namespace HPTClient
         {
             get
             {
-                return "Utgång: " + NumberOfWinnersString + " vinnare";
+                return $"Utgång: {NumberOfWinnersString} vinnare";
             }
         }
 
@@ -167,7 +163,7 @@ namespace HPTClient
             // Create String representation
             var sb = new StringBuilder();
 
-            foreach (HPTHorse horse in HorseList.OrderBy(h => h.ParentRace.LegNr).ThenBy(h => h.StartNr))
+            foreach (var horse in HorseList.OrderBy(h => h.ParentRace.LegNr).ThenBy(h => h.StartNr))
             {
                 sb.Append(horse.ParentRace.LegNrString);
                 sb.Append(": ");
@@ -175,7 +171,7 @@ namespace HPTClient
                 sb.Append(" - ");
                 sb.AppendLine(horse.HorseName);
             }
-            ClipboardString = ReductionTypeString + "\r\n" + sb.ToString();
+            ClipboardString = $"{ReductionTypeString}\r\n{sb}";
             return sb.ToString();
         }
     }

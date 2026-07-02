@@ -4,58 +4,42 @@
     {
         public List<HPTHorseRankVariable> HorseRankVariableList { get; set; }
 
-        private int stake;
         public int Stake
         {
-            get
-            {
-                return stake;
-            }
+            get;
             set
             {
-                stake = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private int numberOfSpikes;
         public int NumberOfSpikes
         {
-            get
-            {
-                return numberOfSpikes;
-            }
+            get;
             set
             {
-                numberOfSpikes = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private HPTReductionRisk reductionRisk;
         public HPTReductionRisk ReductionRisk
         {
-            get
-            {
-                return reductionRisk;
-            }
+            get;
             set
             {
-                reductionRisk = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private HPTDesiredProfit desiredProfit;
         public HPTDesiredProfit DesiredProfit
         {
-            get
-            {
-                return desiredProfit;
-            }
+            get;
             set
             {
-                desiredProfit = value;
+                field = value;
                 OnPropertyChanged();
             }
         }

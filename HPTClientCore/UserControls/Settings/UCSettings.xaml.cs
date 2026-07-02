@@ -21,11 +21,11 @@ namespace HPTClient
         {
             try
             {
-                ATGCalendar ac = (ATGCalendar)DataContext;
+                var ac = (ATGCalendar)DataContext;
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
     }

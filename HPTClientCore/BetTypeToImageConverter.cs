@@ -10,8 +10,8 @@ namespace HPTClient
         {
             try
             {
-                string betType = (string)value;
-                return new BitmapImage(new Uri("/ATGImages/" + betType + "XSmall.png", UriKind.Relative));
+                var betType = (string)value;
+                return new BitmapImage(new Uri($"/ATGImages/{betType}XSmall.png", UriKind.Relative));
             }
             catch (Exception)
             {

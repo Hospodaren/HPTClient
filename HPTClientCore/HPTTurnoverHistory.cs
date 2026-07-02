@@ -14,17 +14,13 @@ namespace HPTClient
         [DataMember]
         public decimal Percentage { get; set; }
 
-        private bool _IsSelected;
         [DataMember]
         public bool IsSelected
         {
-            get
-            {
-                return _IsSelected;
-            }
+            get;
             set
             {
-                _IsSelected = value;
+                field = value;
                 OnPropertyChanged();
             }
         }

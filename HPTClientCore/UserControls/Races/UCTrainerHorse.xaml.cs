@@ -17,7 +17,7 @@ namespace HPTClient
         {
             if (lvwLopp.SelectedItem != null)
             {
-                HPTHorse horse = (HPTHorse)lvwLopp.SelectedItem;
+                var horse = (HPTHorse)lvwLopp.SelectedItem;
                 switch (e.Key)
                 {
                     //case Key.A:

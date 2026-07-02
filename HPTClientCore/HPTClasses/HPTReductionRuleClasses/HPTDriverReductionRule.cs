@@ -26,7 +26,7 @@ namespace HPTClient
         {
             get
             {
-                return "Kuskvillkor: " + NumberOfWinnersString + " vinnare";
+                return $"Kuskvillkor: {NumberOfWinnersString} vinnare";
             }
         }
 
@@ -34,12 +34,12 @@ namespace HPTClient
         {
             // Create String representation
             var sb = new StringBuilder();
-            foreach (string person in PersonNameList)
+            foreach (var person in PersonNameList)
             {
                 sb.AppendLine(person);
             }
 
-            ClipboardString = ReductionTypeString + "\r\n" + sb.ToString();
+            ClipboardString = $"{ReductionTypeString}\r\n{sb}";
             return sb.ToString();
         }
     }

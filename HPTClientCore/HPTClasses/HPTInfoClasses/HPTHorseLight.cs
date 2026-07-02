@@ -28,18 +28,14 @@ namespace HPTClient
         [XmlIgnore]
         public string GroupCode { get; set; }
 
-        private bool selectable;
         [DataMember]
         public bool Selectable
         {
-            get
-            {
-                return selectable;
-            }
+            get;
             set
             {
-                selectable = value;
-                if (!selectable && Selected)
+                field = value;
+                if (!field && Selected)
                 {
                     Selected = false;
                 }
@@ -47,17 +43,13 @@ namespace HPTClient
             }
         }
 
-        private bool selected;
         [DataMember]
         public bool Selected
         {
-            get
-            {
-                return selected;
-            }
+            get;
             set
             {
-                selected = value;
+                field = value;
                 OnPropertyChanged();
             }
         }

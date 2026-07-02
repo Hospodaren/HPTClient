@@ -6,195 +6,147 @@ namespace HPTClient
     {
         #region Combination settings
 
-        private bool showRowNumber;
         [HorseDataToShow("Radnummer", "ShowRowNumber", DataToShowUsage.Everywhere, 1)]
         [DataMember]
         public bool ShowRowNumber
         {
-            get
-            {
-                return showRowNumber;
-            }
+            get;
             set
             {
-                showRowNumber = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showRowValue;
         [HorseDataToShow("Radvärde", "ShowRowValue", DataToShowUsage.Everywhere, 2)]
         [DataMember]
         public bool ShowRowValue
         {
-            get
-            {
-                return showRowValue;
-            }
+            get;
             set
             {
-                showRowValue = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showV6;
         [HorseDataToShow("V6/V7/V8-val", "ShowV6", DataToShowUsage.Everywhere, 3)]
         [DataMember]
         public bool ShowV6
         {
-            get
-            {
-                return showV6;
-            }
+            get;
             set
             {
-                showV6 = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showRowValueV6;
         //[HorseDataToShow("Radvärde V6/V7/V8", "ShowRowValueV6", DataToShowUsage.Everywhere, 4)]
         [HorseDataToShow("Radvärde V6", "ShowRowValueV6", DataToShowUsage.Everywhere, 4)]
         [DataMember]
         public bool ShowRowValueV6
         {
-            get
-            {
-                return showRowValueV6;
-            }
+            get;
             set
             {
-                showRowValueV6 = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showBetMultiplier;
         [HorseDataToShow("Flerbongsval", "ShowBetMultiplier", DataToShowUsage.Everywhere, 5)]
         [DataMember]
         public bool ShowBetMultiplier
         {
-            get
-            {
-                return showBetMultiplier;
-            }
+            get;
             set
             {
-                showBetMultiplier = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showRowValueBetMultiplier;
         [HorseDataToShow("Radvärde flerbong", "ShowRowValueBetMultiplier", DataToShowUsage.Everywhere, 6)]
         [DataMember]
         public bool ShowRowValueBetMultiplier
         {
-            get
-            {
-                return showRowValueBetMultiplier;
-            }
+            get;
             set
             {
-                showRowValueBetMultiplier = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showRowValue1And2Errors;
         [HorseDataToShow("Radvärde 1/2 fel", "ShowRowValue1And2Errors", DataToShowUsage.Everywhere, 7)]
         [DataMember]
         public bool ShowRowValue1And2Errors
         {
-            get
-            {
-                return showRowValue1And2Errors;
-            }
+            get;
             set
             {
-                showRowValue1And2Errors = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showStakeShareSum;
         [HorseDataToShow("Insatsfördelningssumma", "ShowStakeShareSum", DataToShowUsage.Everywhere, 8)]
         [DataMember]
         public bool ShowStakeShareSum
         {
-            get
-            {
-                return showStakeShareSum;
-            }
+            get;
             set
             {
-                showStakeShareSum = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showStartNumberSum;
         [HorseDataToShow("Startnummersumma", "ShowStartNumberSum", DataToShowUsage.Everywhere, 9)]
         [DataMember]
         public bool ShowStartNumberSum
         {
-            get
-            {
-                return showStartNumberSum;
-            }
+            get;
             set
             {
-                showStartNumberSum = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showRankSum;
         [HorseDataToShow("Ranksumma", "ShowRankSum", DataToShowUsage.Everywhere, 10)]
         [DataMember]
         public bool ShowRankSum
         {
-            get
-            {
-                return showRankSum;
-            }
+            get;
             set
             {
-                showRankSum = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showHorses;
         [HorseDataToShow("Hästar", "ShowHorses", DataToShowUsage.None, 11)]
         [DataMember]
         public bool ShowHorses
         {
-            get
-            {
-                return showHorses;
-            }
+            get;
             set
             {
-                showHorses = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool showOwnProbability;
         [HorseDataToShow("Chansvärderingskvot", "ShowOwnProbability", DataToShowUsage.Everywhere, 12)]
         [DataMember]
         public bool ShowOwnProbability
         {
-            get
-            {
-                return showOwnProbability;
-            }
+            get;
             set
             {
-                showOwnProbability = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
