@@ -158,7 +158,7 @@ namespace HPTClient
                     return (TrackNameEnum)i;
                 }
             }
-            return TrackNameEnum.Ok�nd;
+            return TrackNameEnum.Okänd;
         }
 
         public static string GetTrackNameATGSEFromId(int trackId)
