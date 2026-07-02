@@ -1,69 +1,60 @@
-﻿namespace HPTClient
+﻿using System.Linq;
+
+namespace HPTClient;
+
+/// <summary>
+/// Extension methods for collections and enum formatting.
+/// </summary>
+public static class Extensions
 {
-    public static class Extensions
+    /// <summary>
+    /// Computes the population standard deviation of a decimal sequence in a single pass.
+    /// Uses Welford's online algorithm for numerical stability.
+    /// </summary>
+    public static decimal StdDev(this IEnumerable<decimal> values)
     {
-        public static decimal StdDev(this IEnumerable<decimal> values)
+        decimal count = 0;
+        decimal mean = 0m;
+        decimal m2 = 0m;
+
+        foreach (decimal value in values)
         {
-            double ret = 0;
-            int count = values.Count();
-            if (count > 1)
-            {
-                //Compute the Average
-                decimal avg = values.Average();
-
-                //Perform the Sum of (value-avg)^2
-                decimal sum = values.Sum(d => (d - avg) * (d - avg));
-
-                //Put it all together
-                ret = Math.Sqrt((double)sum / count);
-            }
-            return (decimal)ret;
+            count++;
+            decimal delta = value - mean;
+            mean += delta / count;
+            decimal delta2 = value - mean;
+            m2 += delta * delta2;
         }
 
-        public static string GetString(this StartCategoryCode categoryCode)
-        {
+        return count > 1 ? (decimal)Math.Sqrt((double)(m2 / count)) : 0m;
+    }
 
-            switch (categoryCode)
-            {
-                case StartCategoryCode.None:
-                    return "Ingen";
-                case StartCategoryCode.Favorit:
-                    return "Favoriter";
-                case StartCategoryCode.Storfavorit:
-                    return "Storfavoriter";
-                case StartCategoryCode.EjStorfavorit:
-                    return "Ej storfavoriter";
-                case StartCategoryCode.Megafavorit:
-                    return "Megafavoriter";
-                case StartCategoryCode.EjMegafavorit:
-                    return "Ej megafavoriter";
-                case StartCategoryCode.KnappFavorit:
-                    return "Knappa favoriter";
-                case StartCategoryCode.Overraskning:
-                    return "Överraskning";
-                case StartCategoryCode.Skrall:
-                    return "Skräll";
-                case StartCategoryCode.Storskrall:
-                    return "Storskräll";
-                case StartCategoryCode.Hemmahast:
-                    return "Hemmahästar";
-                case StartCategoryCode.Utlandshast:
-                    return "Utländska hästar";
-                case StartCategoryCode.TrendarUppATG:
-                    return "Trendar uppåt (ATG)";
-                case StartCategoryCode.TrendarNerATG:
-                    return "Trendar neråt (ATG)";
-                case StartCategoryCode.TrendarUppHPT:
-                    return "Trendar uppåt (HPT)";
-                case StartCategoryCode.TrendarNerHPT:
-                    return "Trendar neråt (HPT)";
-                case StartCategoryCode.AndraTredjeeHandare:
-                    return "2- och 3-handare";
-                case StartCategoryCode.Mellanspelade:
-                    return "Mellanspelade";
-                default:
-                    return string.Empty;
-            }
-        }
+    /// <summary>
+    /// Gets a human-readable Swedish string for the given StartCategoryCode.
+    /// </summary>
+    public static string GetString(this StartCategoryCode categoryCode)
+    {
+        return categoryCode switch
+        {
+            StartCategoryCode.None => "Ingen",
+            StartCategoryCode.Favorit => "Favoriter",
+            StartCategoryCode.Storfavorit => "Storfavoriter",
+            StartCategoryCode.EjStorfavorit => "Ej storfavoriter",
+            StartCategoryCode.Megafavorit => "Megafavoriter",
+            StartCategoryCode.EjMegafavorit => "Ej megafavoriter",
+            StartCategoryCode.KnappFavorit => "Knappa favoriter",
+            StartCategoryCode.Overraskning => "Överraskning",
+            StartCategoryCode.Skrall => "Skräll",
+            StartCategoryCode.Storskrall => "Storskräll",
+            StartCategoryCode.Hemmahast => "Hemmahästar",
+            StartCategoryCode.Utlandshast => "Utländska hästar",
+            StartCategoryCode.TrendarUppATG => "Trendar uppåt (ATG)",
+            StartCategoryCode.TrendarNerATG => "Trendar neråt (ATG)",
+            StartCategoryCode.TrendarUppHPT => "Trendar uppåt (HPT)",
+            StartCategoryCode.TrendarNerHPT => "Trendar neråt (HPT)",
+            StartCategoryCode.AndraTredjeeHandare => "2- och 3-handare",
+            StartCategoryCode.Mellanspelade => "Mellanspelade",
+            _ => string.Empty
+        };
     }
 }

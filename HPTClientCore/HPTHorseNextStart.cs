@@ -94,9 +94,13 @@ namespace HPTClient
         //     }
         // }
 
-        public int CompareTo(object obj)
+        public int CompareTo(object? obj)
         {
-            return StartDate.CompareTo(obj);
+            if (obj is null)
+                return 1;
+            if (obj is HPTHorseNextStart other)
+                return StartDate.CompareTo(other.StartDate);
+            throw new ArgumentException("Object must be a HPTHorseNextStart", nameof(obj));
         }
 
 

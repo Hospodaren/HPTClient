@@ -2,70 +2,22 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <AssemblyName>HPTrav7</AssemblyName>
-    <IsWebBootstrapper>true</IsWebBootstrapper>
-    <SccProjectName>
-    </SccProjectName>
-    <SccLocalPath>
-    </SccLocalPath>
-    <SccAuxPath>
-    </SccAuxPath>
-    <SccProvider>
-    </SccProvider>
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Web</InstallFrom>
-    <UpdateEnabled>true</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>http://download.hpt.nu/</InstallUrl>
-    <UpdateUrl>http://download.hpt.nu/</UpdateUrl>
-    <SupportUrl>https://www.hpt.nu</SupportUrl>
-    <ErrorReportUrl>https://www.hpt.nu</ErrorReportUrl>
     <ProductName>Hjälp på traven 7.0</ProductName>
     <PublisherName>HPT</PublisherName>
-    <SuiteName>Hjälp på...</SuiteName>
-    <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>103</ApplicationRevision>
-    <ApplicationVersion>5.0.0.%2a</ApplicationVersion>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <CreateDesktopShortcut>true</CreateDesktopShortcut>
-    <PublishWizardCompleted>true</PublishWizardCompleted>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <UseWPF>true</UseWPF>
-    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
-    <UseWinFormsOutOfProcDesigner>True</UseWinFormsOutOfProcDesigner>
     <ImplicitUsings>enable</ImplicitUsings>
-    <TargetFrameworks>net10.0</TargetFrameworks>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ManifestCertificateThumbprint>3355D5589AEBC7D67C91BC34AD3394093046DB16</ManifestCertificateThumbprint>
-  </PropertyGroup>
-  <!--<PropertyGroup>
-    <ManifestKeyFile>HPTClient_3_TemporaryKey.pfx</ManifestKeyFile>
-  </PropertyGroup>-->
-  <PropertyGroup>
-    <GenerateManifests>true</GenerateManifests>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignManifests>true</SignManifests>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>Icons\HPT.ico</ApplicationIcon>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>False</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <!--<AssemblyOriginatorKeyFile>HPTCert2025.pfx</AssemblyOriginatorKeyFile>-->
-    <StartupObject>HPTClient.App</StartupObject>
-    <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
+    <Nullable>enable</Nullable>
     <TargetFramework>net10.0-windows</TargetFramework>
+    <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
+    <ApplicationIcon>Icons\HPT.ico</ApplicationIcon>
+    <SplashScreen>HPTSplash.png</SplashScreen>
+    <StartupObject>HPTClient.App</StartupObject>
     <AssemblyTitle>HPTrav7</AssemblyTitle>
+    <SignAssembly>False</SignAssembly>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <PublishReadyToRun>true</PublishReadyToRun>
+    <PublishTrimmed>false</PublishTrimmed>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Service References\HPTService\**" />
@@ -86,20 +38,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Remove="UserControls\UserData\UCUserSystemUpload.xaml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Update="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Update="System.Runtime.Serialization">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Update="System.Xml.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Update="UIAutomationProvider">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Update="atg_filebetting_1_8_6.cs">
@@ -126,9 +64,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="ATGImages\V85XSmall.png" />
@@ -166,43 +101,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\rc_html.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 and x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client,KB2468871">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 and x64%29 and Update for .NET Framework 4 %28KB2468871%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.5.1">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.5.1 %28x86 and x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Windows.Installer.4.5">
-      <Visible>False</Visible>
-      <ProductName>Windows Installer 4.5</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="ATGImages\V85Small.png" />
@@ -258,7 +156,6 @@
     <Resource Include="ATGImagesBW\GS75Small.png" />
     <Content Include="HptLogo.ico" />
     <Resource Include="Icons\HPT.ico" />
-    <SplashScreen Include="HPTSplash.png" />
     <Resource Include="HptLogoSmall.png" />
     <Content Include="Icons\HPTPublish.ico" />
     <EmbeddedResource Include="Sounds\horse.wav" />
@@ -273,38 +170,14 @@
     </FileAssociation>
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Service References\HPTService\" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="ATGDownloader" Version="1.0.23" />
     <PackageReference Include="Extended.Wpf.Toolkit" Version="5.1.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Connections.Abstractions" Version="10.0.9" />
-    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel.Core" Version="2.3.11" />
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="10.0.9" />
-    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="10.0.9" />
-    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="10.0.9" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.9" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="10.0.9" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="10.0.9" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="10.0.9" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.9" />
-    <PackageReference Include="Microsoft.Extensions.Diagnostics.Abstractions" Version="10.0.9" />
-    <PackageReference Include="Microsoft.Extensions.FileSystemGlobbing" Version="10.0.9" />
-    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.9" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.9" />
+    <PackageReference Include="Microsoft.Extensions.FileProviders.Physical" Version="10.0.9" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="10.0.9" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.9" />
-    <PackageReference Include="Microsoft.Extensions.ObjectPool" Version="10.0.9" />
-    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="10.0.9" />
-    <PackageReference Include="Microsoft.Extensions.WebEncoders" Version="10.0.9" />
-    <PackageReference Include="Microsoft.IdentityModel.Protocols.WsFederation" Version="8.19.1" />
-    <PackageReference Include="Microsoft.IdentityModel.Tokens.Saml" Version="8.19.1" />
-    <PackageReference Include="Microsoft.NETCore.Platforms" Version="7.0.4" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
     <PackageReference Include="System.DirectoryServices.Protocols" Version="10.0.9" />
-    <PackageReference Include="System.Net.WebSockets.WebSocketProtocol" Version="5.1.3" />
-    <PackageReference Include="System.Web.Services.Description" Version="10.0.652802" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\DataSources\" />

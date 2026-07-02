@@ -734,12 +734,10 @@ namespace HPTClient
                 TabItem ti = (TabItem)mi.Tag;
                 ti.Content = null;
                 tcMain.Items.Remove(mi.Tag);
-                GC.Collect();
             }
             catch (Exception exc)
             {
                 string s = exc.Message;
-                GC.Collect();
             }
         }
 

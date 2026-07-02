@@ -1,53 +1,89 @@
-﻿namespace HPTClient
+﻿namespace HPTClient;
+
+/// <summary>
+/// Represents an HPT application version with support for beta releases.
+/// </summary>
+internal class HPTVersion : IEquatable<HPTVersion>
 {
-    internal class HPTVersion
+    private static HPTVersion? s_oldestAllowedVersion;
+
+    /// <summary>
+    /// Gets the oldest version of HPT data files still supported.
+    /// </summary>
+    static HPTVersion OldestAllowedVersion
     {
-        static HPTVersion oldestAllowedVersion;
-        static HPTVersion OldestAllowedVersion
+        get
         {
-            get
+            if (s_oldestAllowedVersion is null)
             {
-                if (oldestAllowedVersion == null)
+                s_oldestAllowedVersion = new HPTVersion
                 {
-                    oldestAllowedVersion = new HPTVersion();
-                    oldestAllowedVersion.Beta = false;
-                    oldestAllowedVersion.BetaVersion = 0;
-                    oldestAllowedVersion.Version = 3.63M;
-                }
-                return oldestAllowedVersion;
+                    Beta = false,
+                    BetaVersion = 0,
+                    Version = 3.63m
+                };
             }
+            return s_oldestAllowedVersion;
         }
-        public decimal Version { get; set; }
+    }
 
-        public bool Beta { get; set; }
+    /// <summary>
+    /// Gets or sets the main version number.
+    /// </summary>
+    public decimal Version { get; set; }
 
-        public int BetaVersion { get; set; }
+    /// <summary>
+    /// Gets or sets a value indicating whether this is a beta release.
+    /// </summary>
+    public bool Beta { get; set; }
 
-        public static bool operator ==(HPTVersion hv1, HPTVersion hv2)
-        {
-            return hv1.Version == hv2.Version && hv1.Beta == hv2.Beta && hv1.BetaVersion == hv2.BetaVersion;
-        }
+    /// <summary>
+    /// Gets or sets the beta version number (only meaningful when Beta is true).
+    /// </summary>
+    public int BetaVersion { get; set; }
 
-        public static bool operator !=(HPTVersion hv1, HPTVersion hv2)
-        {
-            return !(hv1 == hv2);
-        }
+    public static bool operator ==(HPTVersion? hv1, HPTVersion? hv2)
+    {
+        return hv1 is not null && hv2 is not null
+            && hv1.Version == hv2.Version
+            && hv1.Beta == hv2.Beta
+            && hv1.BetaVersion == hv2.BetaVersion;
+    }
 
-        public virtual int CompareTo(HPTVersion hv)
-        {
-            if (hv.Version != Version)
-            {
-                return Version - hv.Version > 0 ? 1 : -1;
-            }
-            if (Beta != hv.Beta)
-            {
-                return hv.Beta ? 1 : -1;
-            }
-            if (hv.BetaVersion != BetaVersion)
-            {
-                return BetaVersion - hv.BetaVersion;
-            }
-            return 0;
-        }
+    public static bool operator !=(HPTVersion? hv1, HPTVersion? hv2)
+    {
+        return !(hv1 == hv2);
+    }
+
+    public virtual int CompareTo(HPTVersion? hv)
+    {
+        if (hv is null)
+            return 1;
+
+        if (Version != hv.Version)
+            return Version > hv.Version ? 1 : -1;
+
+        if (Beta != hv.Beta)
+            return hv.Beta ? 1 : -1;
+
+        return BetaVersion.CompareTo(hv.BetaVersion);
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return Equals(obj as HPTVersion);
+    }
+
+    public bool Equals(HPTVersion? other)
+    {
+        return other is not null
+            && Version == other.Version
+            && Beta == other.Beta
+            && BetaVersion == other.BetaVersion;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Version, Beta, BetaVersion);
     }
 }

@@ -419,22 +419,30 @@ namespace HPTClient
 
         public bool Updated { get; set; }
 
-        public static bool operator ==(HPTHorseOwnInformation oi1, HPTHorseOwnInformation oi2)
+        public static bool operator ==(HPTHorseOwnInformation? oi1, HPTHorseOwnInformation? oi2)
         {
-            if ((object)oi1 == null && (object)oi2 == null)
-            {
-                return true;
-            }
-            if ((object)oi1 == null || (object)oi2 == null)
-            {
-                return false;
-            }
-            return oi1.Name == oi2.Name;
+            return oi1 is not null && oi2 is not null
+                && oi1.Name == oi2.Name;
         }
 
-        public static bool operator !=(HPTHorseOwnInformation oi1, HPTHorseOwnInformation oi2)
+        public static bool operator !=(HPTHorseOwnInformation? oi1, HPTHorseOwnInformation? oi2)
         {
             return !(oi1 == oi2);
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return Equals(obj as HPTHorseOwnInformation);
+        }
+
+        public bool Equals(HPTHorseOwnInformation? other)
+        {
+            return other is not null && Name == other.Name;
+        }
+
+        public override int GetHashCode()
+        {
+            return Name?.GetHashCode() ?? 0;
         }
     }
 
