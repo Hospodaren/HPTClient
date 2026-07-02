@@ -2079,7 +2079,7 @@ namespace HPTClient
         {
             get
             {
-                return $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\HPT Travsystem\\";
+                return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),"HPT Travsystem");
             }
         }
 
@@ -2087,62 +2087,14 @@ namespace HPTClient
         {
             get
             {
-                return $"{MyDocumentsPath}Temp\\";
+                return Path.Combine(MyDocumentsPath, "Temp");
             }
         }
-
-        internal static string PaysonURL = "https://www.payson.se/SendMoney/?De=Ett+%e5rs+%27Hj%e4lp+p%e5+traven+PRO%27&amp;Se=hjalp.pa.traven%40gmail.com&amp;Cost=299%2c00&amp;Currency=SEK&amp;Sp=1";
-        internal static string PaysonURLThreeMonths = "https://www.payson.se/SendMoney/?De=Tre+m%e5naders+%27Hj%e4lp+p%e5+traven+PRO%27&amp;Se=hjalp.pa.traven%40gmail.com&amp;Cost=99%2c00&amp;Currency=SEK&amp;Sp=1";
 
         #region Gratis/PRO
 
-        private bool isPayingCustomer;
-        [XmlIgnore]
-        internal bool IsPayingCustomer
-        {
-            get
-            {
-                //return this.isPayingCustomer;
-                return true;
-            }
-            set
-            {
-                if (!value)
-                {
-                    //// Flikar som bara finns i PRO-versionen
-                    //this.MarkBetTabsToShow.ShowAdvanced = false;
-                    //this.MarkBetTabsToShow.ShowComplimentaryRules = false;
-                    //this.MarkBetTabsToShow.ShowDriverReduction = false;
-                    //this.MarkBetTabsToShow.ShowSingleRows = false;
-                    //this.MarkBetTabsToShow.ShowRankOverview = false;
-                    //this.MarkBetTabsToShow.ShowTrainerReduction = false;
-                    //this.MarkBetTabsToShow.ShowGroupIntervalReduction = false;
-                    //this.MarkBetTabsToShow.ShowCompanyGambling = false;
-                    //this.MarkBetTabsToShow.ShowV6BetMultiplier = false;
-                    //this.MarkBetTabsToShow.ShowMultiABCD = false;
-
-                    //// DEF ska bara finnas i PRO-versionen
-                    //this.UseD = false;
-                    //this.UseE = false;
-                    //this.UseF = false;
-
-                    //this.AlwaysCreateSingleRows = false;
-                    //this.AlwaysLoadDD = false;
-                    //this.AlwaysLoadLD = false;
-                    //this.AlwaysLoadMainEvent = false;
-                    //this.AlwaysLoadV4 = false;
-                    //this.CopyCouponsToClipboard = false;
-                    //this.CopySingleRowsToClipboard = false;
-                    //this.DefaultUpdateInterval = 0;
-                    //this.ThreadedRecalculation = false;
-                    //this.UseDefaultRankTemplate = false;
-                    //this.WarnIfNoReserv = false;                    
-                }
-                isPayingCustomer = value;
-                OnPropertyChanged();
-            }
-        }
-
+        [XmlIgnore] internal bool IsPayingCustomer = true;
+        
         internal void SetColumnsForFreeloaders(HPTDataToShow dataToShow)
         {
             var hdtsAttributes = dataToShow.GetHorseDataToShowAttributes();

@@ -1569,9 +1569,9 @@ namespace HPTClient
             {
                 if (!Directory.Exists(SaveDirectory))  // Not saved locally
                 {
-                    SaveDirectory = $"{HPTConfig.MyDocumentsPath}{RaceDayInfo.ToDateAndTrackString()}\\";
+                    SaveDirectory = Path.Combine(HPTConfig.MyDocumentsPath,RaceDayInfo.ToDateAndTrackString());
                     Directory.CreateDirectory(SaveDirectory);
-                    HPTSerializer.SerializeHPTSystem($"{SaveDirectory}{ToFileNameString()}.hpt7", this);
+                    HPTSerializer.SerializeHPTSystem(Path.Combine(SaveDirectory, $"{ToFileNameString()}.hpt7"), this);
                 }
             }
             catch (Exception exc)

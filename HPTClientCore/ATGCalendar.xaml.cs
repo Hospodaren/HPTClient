@@ -308,7 +308,7 @@ namespace HPTClient
                     hptRdi.DataToShow = HPTConfig.Config.DataToShowVxx;
                     var hmb = new HPTMarkBet(hptRdi, hptRdi.BetType);
                     ATGDownloaderToHPTHelper.SetNonSerializedValues(hmb);
-                    hmb.SaveDirectory = $"{raceDayDirectory}\\";    // TODO: Fult, använd Path.Combine
+                    hmb.SaveDirectory = raceDayDirectory;
                     HPTSerializer.GetTrendsFromDisk(hmb);   // TODO: Använda skiten också
                     HPTSerializer.SerializeHPTRaceDayInfoHistory(hmb);
                     hmb.RecalculateCategoryCodes();
@@ -318,19 +318,19 @@ namespace HPTClient
                 case "LD":
                     hptRdi.DataToShow = HPTConfig.Config.DataToShowDD;
                     var hcb = new HPTCombBet(hptRdi, hptRdi.BetType);
-                    hcb.SaveDirectory = $"{raceDayDirectory}\\";
+                    hcb.SaveDirectory = raceDayDirectory;
                     Dispatcher.Invoke(new Action<HPTCombBet>(AddTabItem), hcb);
                     break;
                 case "TV":
                     hptRdi.DataToShow = HPTConfig.Config.DataToShowTvilling;
                     var hcb2 = new HPTCombBet(hptRdi, hptRdi.BetType);
-                    hcb2.SaveDirectory = $"{raceDayDirectory}\\";
+                    hcb2.SaveDirectory = raceDayDirectory;
                     Dispatcher.Invoke(new Action<HPTCombBet>(AddTabItem), hcb2);
                     break;
                 case "T":
                     hptRdi.DataToShow = HPTConfig.Config.DataToShowTrio;
                     var hcb3 = new HPTCombBet(hptRdi, hptRdi.BetType);
-                    hcb3.SaveDirectory = $"{raceDayDirectory}\\";
+                    hcb3.SaveDirectory = raceDayDirectory;
                     Dispatcher.Invoke(new Action<HPTCombBet>(AddTabItem), hcb3);
                     break;
                 default:
@@ -758,7 +758,7 @@ namespace HPTClient
                 try
                 {
                     var hmb = HPTSerializer.DeserializeHPTSystem(ofd.FileName);
-                    hmb.SaveDirectory = $"{HPTConfig.MyDocumentsPath}{hmb.RaceDayInfo.ToDateAndTrackString()}\\";
+                    hmb.SaveDirectory = Path.Combine(HPTConfig.MyDocumentsPath,hmb.RaceDayInfo.ToDateAndTrackString());
                     AddTabItem(hmb);
                 }
                 catch (Exception)
@@ -921,7 +921,7 @@ namespace HPTClient
                         || sysFile.FileNameShort.ToUpper().StartsWith("V86_"))
                     {
                         var hmb = HPTSerializer.DeserializeHPTSystem(sysFile.FileName);
-                        hmb.SaveDirectory = $"{HPTConfig.MyDocumentsPath}{hmb.RaceDayInfo.ToDateAndTrackString()}\\";
+                        hmb.SaveDirectory = Path.Combine(HPTConfig.MyDocumentsPath, hmb.RaceDayInfo.ToDateAndTrackString());
                         AddTabItem(hmb);
                     }
                     //else if (sysFile.FileNameShort.ToUpper().StartsWith("DD_")
@@ -954,7 +954,7 @@ namespace HPTClient
                 try
                 {
                     var hmb = HPTSerializer.DeserializeHPTSystem(sysFile.FileName);
-                    hmb.SaveDirectory = $"{HPTConfig.MyDocumentsPath}{hmb.RaceDayInfo.ToDateAndTrackString()}\\";
+                    hmb.SaveDirectory = Path.Combine(HPTConfig.MyDocumentsPath,hmb.RaceDayInfo.ToDateAndTrackString());
                     AddTabItem(hmb);
                 }
                 catch (InvalidOperationException)

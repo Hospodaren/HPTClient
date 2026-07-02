@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using System.IO;
+using Microsoft.Win32;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -29,7 +30,7 @@ namespace HPTClient
 
         private void btnCreateCoupons_Click(object sender, RoutedEventArgs e)
         {
-            var fileName = CombBet.SaveDirectory + CombBet.ToFileNameString();
+            var fileName = Path.Combine(CombBet.SaveDirectory,CombBet.ToFileNameString());
             CombBet.SystemFilename = $"{fileName}.xml";
             var couponHelper = new ATGCouponHelper(CombBet);
             couponHelper.CreateCoupons();
@@ -60,7 +61,7 @@ namespace HPTClient
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            HPTSerializer.SerializeHPTCombinationSystem($"{CombBet.SaveDirectory}{CombBet.ToFileNameString()}.hpt5", CombBet);
+            HPTSerializer.SerializeHPTCombinationSystem(Path.Combine(CombBet.SaveDirectory,$"{CombBet.ToFileNameString()}.hpt5"), CombBet);
         }
 
         private void btnSaveAs_Click(object sender, RoutedEventArgs e)

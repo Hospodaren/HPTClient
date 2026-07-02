@@ -1359,7 +1359,7 @@ namespace HPTClient
             {
                 if (!Directory.Exists(hcb.SaveDirectory))
                 {
-                    hcb.SaveDirectory = $"{HPTConfig.MyDocumentsPath}{hcb.RaceDayInfo.ToDateAndTrackString()}\\";
+                    hcb.SaveDirectory = Path.Combine(HPTConfig.MyDocumentsPath,hcb.RaceDayInfo.ToDateAndTrackString());
                 }
             }
             catch (Exception exc)
@@ -1657,7 +1657,7 @@ namespace HPTClient
             {
                 if (!Directory.Exists(hmb.SaveDirectory))
                 {
-                    hmb.SaveDirectory = $"{HPTConfig.MyDocumentsPath}{hmb.RaceDayInfo.ToDateAndTrackString()}\\";
+                    hmb.SaveDirectory = Path.Combine(HPTConfig.MyDocumentsPath,hmb.RaceDayInfo.ToDateAndTrackString());
                 }
             }
             catch (Exception exc)
