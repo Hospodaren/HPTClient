@@ -95,7 +95,7 @@ namespace HPTClient
             set
             {
                 calendarRacaDayInfoBrush = value;
-                OnPropertyChanged("CalendarRacaDayInfoBrush");
+                OnPropertyChanged();
             }
         }
 
@@ -118,7 +118,7 @@ namespace HPTClient
             set
             {
                 betTypeATGLogo = value;
-                OnPropertyChanged("BetTypeATGLogo");
+                OnPropertyChanged();
             }
         }
 

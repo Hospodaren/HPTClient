@@ -15,7 +15,7 @@ namespace HPTClient
             set
             {
                 name = value;
-                OnPropertyChanged("Name");
+                OnPropertyChanged();
             }
         }
 
@@ -47,7 +47,7 @@ namespace HPTClient
             set
             {
                 nameAndNumberOfHorses = value;
-                OnPropertyChanged("NameAndNumberOfHorses");
+                OnPropertyChanged();
             }
         }
 
@@ -67,7 +67,7 @@ namespace HPTClient
             set
             {
                 selected = value;
-                OnPropertyChanged("Selected");
+                OnPropertyChanged();
             }
         }
 

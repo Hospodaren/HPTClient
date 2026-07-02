@@ -55,7 +55,7 @@ namespace HPTClient
                     return;
                 }
                 show = value;
-                OnPropertyChanged("Show");
+                OnPropertyChanged();
             }
         }
 
@@ -117,7 +117,7 @@ namespace HPTClient
                 if (rank != value)
                 {
                     rank = value;
-                    OnPropertyChanged("Rank");
+                    OnPropertyChanged();
                 }
             }
         }
@@ -135,7 +135,7 @@ namespace HPTClient
                 if (rankWeighted != value)
                 {
                     rankWeighted = value;
-                    OnPropertyChanged("RankWeighted");
+                    OnPropertyChanged();
                 }
             }
         }
@@ -151,7 +151,7 @@ namespace HPTClient
             set
             {
                 name = value;
-                OnPropertyChanged("Name");
+                OnPropertyChanged();
             }
         }
 
@@ -166,7 +166,7 @@ namespace HPTClient
             set
             {
                 backColor = value;
-                OnPropertyChanged("BackColor");
+                OnPropertyChanged();
             }
         }
 
@@ -345,7 +345,7 @@ namespace HPTClient
                     return;
                 }
                 use = value;
-                OnPropertyChanged("Use");
+                OnPropertyChanged();
             }
         }
 
@@ -360,7 +360,7 @@ namespace HPTClient
             set
             {
                 weight = value;
-                OnPropertyChanged("Weight");
+                OnPropertyChanged();
             }
         }
 
@@ -539,7 +539,7 @@ namespace HPTClient
             set
             {
                 horseRankInfo = value;
-                OnPropertyChanged("HorseRankInfo");
+                OnPropertyChanged();
             }
         }
 
@@ -556,7 +556,7 @@ namespace HPTClient
             set
             {
                 raceHorseRankList = value;
-                OnPropertyChanged("RaceHorseRankList");
+                OnPropertyChanged();
             }
         }
 
@@ -583,7 +583,7 @@ namespace HPTClient
             set
             {
                 raceNumber = value;
-                OnPropertyChanged("RaceNumber");
+                OnPropertyChanged();
             }
         }
 
@@ -598,7 +598,7 @@ namespace HPTClient
             set
             {
                 horseRankList = value;
-                OnPropertyChanged("HorseRankList");
+                OnPropertyChanged();
             }
         }
     }

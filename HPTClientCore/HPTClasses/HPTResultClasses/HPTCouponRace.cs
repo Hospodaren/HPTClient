@@ -24,7 +24,7 @@ namespace HPTClient
             set
             {
                 reserv1 = value;
-                OnPropertyChanged("Reserv1");
+                OnPropertyChanged();
                 if (HorseList != null && HorseList.Count > 0)
                 {
                     try
@@ -50,7 +50,7 @@ namespace HPTClient
             set
             {
                 reserv2 = value;
-                OnPropertyChanged("Reserv2");
+                OnPropertyChanged();
                 if (HorseList != null && HorseList.Count > 0)
                 {
                     try

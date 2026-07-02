@@ -17,7 +17,7 @@ namespace HPTClient
             set
             {
                 _Place = value;
-                OnPropertyChanged("Place");
+                OnPropertyChanged();
             }
         }
 
@@ -32,7 +32,7 @@ namespace HPTClient
             set
             {
                 _FinishingPosition = value;
-                OnPropertyChanged("FinishingPosition");
+                OnPropertyChanged();
             }
         }
 
@@ -48,7 +48,7 @@ namespace HPTClient
             set
             {
                 _Earning = value;
-                OnPropertyChanged("Earning");
+                OnPropertyChanged();
             }
         }
 
@@ -63,7 +63,7 @@ namespace HPTClient
             set
             {
                 _KmTime = value;
-                OnPropertyChanged("KmTime");
+                OnPropertyChanged();
             }
         }
 
@@ -78,7 +78,7 @@ namespace HPTClient
             set
             {
                 _TotalTime = value;
-                OnPropertyChanged("TotalTime");
+                OnPropertyChanged();
             }
         }
         private bool _Disqualified;
@@ -92,7 +92,7 @@ namespace HPTClient
             set
             {
                 _Disqualified = value;
-                OnPropertyChanged("Disqualified");
+                OnPropertyChanged();
             }
         }
 
@@ -107,7 +107,7 @@ namespace HPTClient
             set
             {
                 _PlaceString = value;
-                OnPropertyChanged("PlaceString");
+                OnPropertyChanged();
             }
         }
 

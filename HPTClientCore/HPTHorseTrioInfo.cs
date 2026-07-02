@@ -16,7 +16,7 @@ namespace HPTClient
             set
             {
                 trioIndex = value;
-                OnPropertyChanged("TrioIndex");
+                OnPropertyChanged();
             }
         }
 
@@ -31,7 +31,7 @@ namespace HPTClient
             set
             {
                 placeInfo1 = value;
-                OnPropertyChanged("PlaceInfo1");
+                OnPropertyChanged();
             }
         }
 
@@ -46,7 +46,7 @@ namespace HPTClient
             set
             {
                 placeInfo2 = value;
-                OnPropertyChanged("PlaceInfo2");
+                OnPropertyChanged();
             }
         }
 
@@ -61,7 +61,7 @@ namespace HPTClient
             set
             {
                 placeInfo3 = value;
-                OnPropertyChanged("PlaceInfo3");
+                OnPropertyChanged();
             }
         }
 
@@ -100,7 +100,7 @@ namespace HPTClient
             set
             {
                 investment = value;
-                OnPropertyChanged("Investment");
+                OnPropertyChanged();
             }
         }
 
@@ -114,7 +114,7 @@ namespace HPTClient
             set
             {
                 investmentShare = value;
-                OnPropertyChanged("InvestmentShare");
+                OnPropertyChanged();
             }
         }
 
@@ -129,7 +129,7 @@ namespace HPTClient
             set
             {
                 percent = value;
-                OnPropertyChanged("Percent");
+                OnPropertyChanged();
             }
         }
 
@@ -144,7 +144,7 @@ namespace HPTClient
             set
             {
                 selected = value;
-                OnPropertyChanged("Selected");
+                OnPropertyChanged();
             }
         }
     }

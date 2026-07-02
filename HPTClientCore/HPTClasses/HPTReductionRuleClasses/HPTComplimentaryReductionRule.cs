@@ -132,7 +132,7 @@ namespace HPTClient
             set
             {
                 shortDescription = value;
-                OnPropertyChanged("ShortDescription");
+                OnPropertyChanged();
             }
         }
 
@@ -147,7 +147,7 @@ namespace HPTClient
             set
             {
                 horseList = value;
-                OnPropertyChanged("HorseList");
+                OnPropertyChanged();
             }
         }
 

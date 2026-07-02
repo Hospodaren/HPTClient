@@ -16,7 +16,7 @@ namespace HPTClient
             set
             {
                 name = value;
-                OnPropertyChanged("Name");
+                OnPropertyChanged();
             }
         }
 
@@ -31,7 +31,7 @@ namespace HPTClient
             set
             {
                 startMethodCode = value;
-                OnPropertyChanged("StartMethodCode");
+                OnPropertyChanged();
             }
         }
 
@@ -46,7 +46,7 @@ namespace HPTClient
             set
             {
                 distanceCode = value;
-                OnPropertyChanged("DistanceCode");
+                OnPropertyChanged();
             }
         }
 
@@ -61,7 +61,7 @@ namespace HPTClient
             set
             {
                 startNumberRankList = value;
-                OnPropertyChanged("StartNumberRankList");
+                OnPropertyChanged();
             }
         }
     }

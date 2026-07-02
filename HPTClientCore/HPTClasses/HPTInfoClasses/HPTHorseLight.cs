@@ -43,7 +43,7 @@ namespace HPTClient
                 {
                     Selected = false;
                 }
-                OnPropertyChanged("Selectable");
+                OnPropertyChanged();
             }
         }
 
@@ -58,7 +58,7 @@ namespace HPTClient
             set
             {
                 selected = value;
-                OnPropertyChanged("Selected");
+                OnPropertyChanged();
             }
         }
     }

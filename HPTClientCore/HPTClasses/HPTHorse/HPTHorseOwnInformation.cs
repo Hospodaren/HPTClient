@@ -169,7 +169,7 @@ namespace HPTClient
             set
             {
                 startNr = value;
-                OnPropertyChanged("StartNr");
+                OnPropertyChanged();
             }
         }
 
@@ -184,7 +184,7 @@ namespace HPTClient
             set
             {
                 _ATGId = value;
-                OnPropertyChanged("ATGId");
+                OnPropertyChanged();
             }
         }
         private string name;
@@ -198,7 +198,7 @@ namespace HPTClient
             set
             {
                 name = value;
-                OnPropertyChanged("Name");
+                OnPropertyChanged();
             }
         }
 
@@ -230,7 +230,7 @@ namespace HPTClient
             set
             {
                 nextTimer = value;
-                OnPropertyChanged("NextTimer");
+                OnPropertyChanged();
                 if (HorseOwnInformationCommentList != null && HorseOwnInformationCommentList.Count > 0)
                 {
                     foreach (var comment in HorseOwnInformationCommentList)
@@ -252,7 +252,7 @@ namespace HPTClient
             set
             {
                 horseOwnInformationCommentList = value;
-                OnPropertyChanged("HorseOwnInformationCommentList");
+                OnPropertyChanged();
             }
         }
 
@@ -267,7 +267,7 @@ namespace HPTClient
             set
             {
                 comment = value;
-                OnPropertyChanged("Comment");
+                OnPropertyChanged();
                 if (!string.IsNullOrEmpty(comment))
                 {
                     HasComment = true;
@@ -286,7 +286,7 @@ namespace HPTClient
             set
             {
                 hasComment = value;
-                OnPropertyChanged("HasComment");
+                OnPropertyChanged();
             }
         }
 
@@ -301,7 +301,7 @@ namespace HPTClient
             set
             {
                 _NextStart = value;
-                OnPropertyChanged("NextStart");
+                OnPropertyChanged();
             }
         }
 
@@ -317,7 +317,7 @@ namespace HPTClient
             set
             {
                 _Age = value;
-                OnPropertyChanged("Age");
+                OnPropertyChanged();
             }
         }
 
@@ -332,7 +332,7 @@ namespace HPTClient
             set
             {
                 _Sex = value;
-                OnPropertyChanged("Sex");
+                OnPropertyChanged();
             }
         }
 
@@ -347,7 +347,7 @@ namespace HPTClient
             set
             {
                 _Owner = value;
-                OnPropertyChanged("Owner");
+                OnPropertyChanged();
             }
         }
 
@@ -362,7 +362,7 @@ namespace HPTClient
             set
             {
                 _Trainer = value;
-                OnPropertyChanged("Trainer");
+                OnPropertyChanged();
             }
         }
 
@@ -377,7 +377,7 @@ namespace HPTClient
             set
             {
                 _HomeTrack = value;
-                OnPropertyChanged("HomeTrack");
+                OnPropertyChanged();
             }
         }
 
@@ -393,7 +393,7 @@ namespace HPTClient
             set
             {
                 _CreationDate = value;
-                OnPropertyChanged("CreationDate");
+                OnPropertyChanged();
             }
         }
 
@@ -460,7 +460,7 @@ namespace HPTClient
             set
             {
                 distance = value;
-                OnPropertyChanged("Distance");
+                OnPropertyChanged();
             }
         }
 
@@ -475,7 +475,7 @@ namespace HPTClient
             set
             {
                 comment = value;
-                OnPropertyChanged("Comment");
+                OnPropertyChanged();
                 HasComment = !string.IsNullOrEmpty(comment);
             }
         }
@@ -491,7 +491,7 @@ namespace HPTClient
             set
             {
                 commentDate = value;
-                OnPropertyChanged("CommentDate");
+                OnPropertyChanged();
             }
         }
 
@@ -506,7 +506,7 @@ namespace HPTClient
             set
             {
                 commentUser = value;
-                OnPropertyChanged("CommentUser");
+                OnPropertyChanged();
             }
         }
 
@@ -521,7 +521,7 @@ namespace HPTClient
             set
             {
                 hasComment = value;
-                OnPropertyChanged("HasComment");
+                OnPropertyChanged();
             }
         }
 
@@ -536,7 +536,7 @@ namespace HPTClient
             set
             {
                 isOwnComment = value;
-                OnPropertyChanged("IsOwnComment");
+                OnPropertyChanged();
             }
         }
 
@@ -551,7 +551,7 @@ namespace HPTClient
             set
             {
                 nextTimer = value;
-                OnPropertyChanged("NextTimer");
+                OnPropertyChanged();
             }
         }
 

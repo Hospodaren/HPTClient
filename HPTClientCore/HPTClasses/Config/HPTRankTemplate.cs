@@ -44,7 +44,7 @@ namespace HPTClient
             set
             {
                 name = value;
-                OnPropertyChanged("Name");
+                OnPropertyChanged();
             }
         }
 
@@ -89,7 +89,7 @@ namespace HPTClient
             set
             {
                 horseRankVariableList = value;
-                OnPropertyChanged("HorseRankVariableList");
+                OnPropertyChanged();
             }
         }
 
@@ -108,7 +108,7 @@ namespace HPTClient
             set
             {
                 horseRankVariableListMarksAndOdds = value;
-                OnPropertyChanged("HorseRankVariableListMarksAndOdds");
+                OnPropertyChanged();
             }
         }
 
@@ -127,7 +127,7 @@ namespace HPTClient
             set
             {
                 horseRankVariableListRecords = value;
-                OnPropertyChanged("HorseRankVariableListRecords");
+                OnPropertyChanged();
             }
         }
 
@@ -146,7 +146,7 @@ namespace HPTClient
             set
             {
                 horseRankVariableListWinning = value;
-                OnPropertyChanged("HorseRankVariableListWinning");
+                OnPropertyChanged();
             }
         }
 
@@ -165,7 +165,7 @@ namespace HPTClient
             set
             {
                 horseRankVariableListPlace = value;
-                OnPropertyChanged("HorseRankVariableListPlace");
+                OnPropertyChanged();
             }
         }
 
@@ -184,7 +184,7 @@ namespace HPTClient
             set
             {
                 horseRankVariableListRest = value;
-                OnPropertyChanged("HorseRankVariableListRest");
+                OnPropertyChanged();
             }
         }
 

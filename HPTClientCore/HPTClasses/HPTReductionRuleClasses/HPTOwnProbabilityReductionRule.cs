@@ -36,7 +36,7 @@ namespace HPTClient // KOMMANDE
                     return;
                 }
                 use = value;
-                OnPropertyChanged("Use");
+                OnPropertyChanged();
             }
         }
 
@@ -55,7 +55,7 @@ namespace HPTClient // KOMMANDE
                     return;
                 }
                 minProbability = value;
-                OnPropertyChanged("MinProbability");
+                OnPropertyChanged();
             }
         }
 

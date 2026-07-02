@@ -45,7 +45,7 @@ namespace HPTClient
             set
             {
                 multipliedOdds = value;
-                OnPropertyChanged("MultipliedOdds");
+                OnPropertyChanged();
             }
         }
 
@@ -60,7 +60,7 @@ namespace HPTClient
             set
             {
                 multipliedPlatsOdds = value;
-                OnPropertyChanged("MultipliedPlatsOdds");
+                OnPropertyChanged();
             }
         }
 
@@ -75,7 +75,7 @@ namespace HPTClient
             set
             {
                 combinationOdds = value;
-                OnPropertyChanged("CombinationOdds");
+                OnPropertyChanged();
                 //if (this.combinationOdds > 0 && this.ParentRaceDayInfo != null)
                 //{
                 //    //this.CombinationOddsShare = 10 * this.ParentRaceDayInfo.BetType.PoolShare / this.combinationOdds;
@@ -95,7 +95,7 @@ namespace HPTClient
             set
             {
                 _CombinationOddsExact = value;
-                OnPropertyChanged("CombinationOddsExact");
+                OnPropertyChanged();
                 if (CombinationOddsExact > 0M && ParentRaceDayInfo != null)
                 {
                     CombinationOddsShare = ParentRaceDayInfo.BetType.PoolShare / CombinationOddsExact;
@@ -114,7 +114,7 @@ namespace HPTClient
             set
             {
                 calculatedOdds = value;
-                OnPropertyChanged("CalculatedOdds");
+                OnPropertyChanged();
             }
         }
 
@@ -129,7 +129,7 @@ namespace HPTClient
             set
             {
                 calculatedOddsQuota = value;
-                OnPropertyChanged("CalculatedOddsQuota");
+                OnPropertyChanged();
             }
         }
 
@@ -146,7 +146,7 @@ namespace HPTClient
             set
             {
                 oddsQuota = value;
-                OnPropertyChanged("OddsQuota");
+                OnPropertyChanged();
             }
         }
 
@@ -161,7 +161,7 @@ namespace HPTClient
             set
             {
                 vOdds = value;
-                OnPropertyChanged("VOdds");
+                OnPropertyChanged();
             }
         }
 
@@ -176,7 +176,7 @@ namespace HPTClient
             set
             {
                 vQuota = value;
-                OnPropertyChanged("VQuota");
+                OnPropertyChanged();
             }
         }
 
@@ -191,7 +191,7 @@ namespace HPTClient
             set
             {
                 pOdds = value;
-                OnPropertyChanged("POdds");
+                OnPropertyChanged();
             }
         }
 
@@ -206,7 +206,7 @@ namespace HPTClient
             set
             {
                 pQuota = value;
-                OnPropertyChanged("PQuota");
+                OnPropertyChanged();
             }
         }
 
@@ -221,7 +221,7 @@ namespace HPTClient
             set
             {
                 vpOdds = value;
-                OnPropertyChanged("VPOdds");
+                OnPropertyChanged();
             }
         }
 
@@ -236,7 +236,7 @@ namespace HPTClient
             set
             {
                 vpQuota = value;
-                OnPropertyChanged("VPQuota");
+                OnPropertyChanged();
             }
         }
 
@@ -251,7 +251,7 @@ namespace HPTClient
             set
             {
                 opQuota = value;
-                OnPropertyChanged("OPQuota");
+                OnPropertyChanged();
             }
         }
 
@@ -266,7 +266,7 @@ namespace HPTClient
             set
             {
                 tvQuota = value;
-                OnPropertyChanged("TVQuota");
+                OnPropertyChanged();
             }
         }
 
@@ -281,7 +281,7 @@ namespace HPTClient
             set
             {
                 tQuota = value;
-                OnPropertyChanged("TQuota");
+                OnPropertyChanged();
             }
         }
 
@@ -296,7 +296,7 @@ namespace HPTClient
             set
             {
                 dQuota = value;
-                OnPropertyChanged("DQuota");
+                OnPropertyChanged();
             }
         }
 
@@ -311,7 +311,7 @@ namespace HPTClient
             set
             {
                 stakeQuota = value;
-                OnPropertyChanged("StakeQuota");
+                OnPropertyChanged();
             }
         }
 
@@ -326,7 +326,7 @@ namespace HPTClient
             set
             {
                 selected = value;
-                OnPropertyChanged("Selected");
+                OnPropertyChanged();
             }
         }
 
@@ -341,7 +341,7 @@ namespace HPTClient
             set
             {
                 stake = value;
-                OnPropertyChanged("Stake");
+                OnPropertyChanged();
                 if (value == null)
                 {
                     return;
@@ -378,7 +378,7 @@ namespace HPTClient
                         ProfitString = string.Format("{0:## ### ###}", profit); ;
                         break;
                 }
-                OnPropertyChanged("Profit");
+                OnPropertyChanged();
             }
         }
 
@@ -393,7 +393,7 @@ namespace HPTClient
             set
             {
                 profitString = value;
-                OnPropertyChanged("ProfitString");
+                OnPropertyChanged();
             }
         }
 
@@ -410,7 +410,7 @@ namespace HPTClient
             set
             {
                 multipliedOddsRank = value;
-                OnPropertyChanged("MultipliedOddsRank");
+                OnPropertyChanged();
             }
         }
 
@@ -425,7 +425,7 @@ namespace HPTClient
             set
             {
                 combinationOddsRank = value;
-                OnPropertyChanged("CombinationOddsRank");
+                OnPropertyChanged();
             }
         }
 
@@ -440,7 +440,7 @@ namespace HPTClient
             set
             {
                 playability = value;
-                OnPropertyChanged("Playability");
+                OnPropertyChanged();
             }
         }
 
@@ -773,7 +773,7 @@ namespace HPTClient
             set
             {
                 oddsQuotaColor = value;
-                OnPropertyChanged("OddsQuotaColor");
+                OnPropertyChanged();
             }
         }
 
@@ -806,7 +806,7 @@ namespace HPTClient
             set
             {
                 rankDiffColor = value;
-                OnPropertyChanged("RankDiffColor");
+                OnPropertyChanged();
             }
         }
 
@@ -839,7 +839,7 @@ namespace HPTClient
             set
             {
                 playabilityColor = value;
-                OnPropertyChanged("PlayabilityColor");
+                OnPropertyChanged();
             }
         }
     }

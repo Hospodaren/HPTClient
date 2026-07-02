@@ -1237,7 +1237,7 @@ namespace HPTClient
             set
             {
                 shortTrend = value;
-                OnPropertyChanged("ShortTrend");
+                OnPropertyChanged();
             }
         }
 
@@ -1252,7 +1252,7 @@ namespace HPTClient
             set
             {
                 longTrend = value;
-                OnPropertyChanged("LongTrend");
+                OnPropertyChanged();
             }
         }
 
@@ -1293,7 +1293,7 @@ namespace HPTClient
             set
             {
                 stLink = value;
-                OnPropertyChanged("STLink");
+                OnPropertyChanged();
             }
         }
 
@@ -1311,7 +1311,7 @@ namespace HPTClient
             set
             {
                 horseResultInfo = value;
-                OnPropertyChanged("HorseResultInfo");
+                OnPropertyChanged();
             }
         }
 
@@ -1356,7 +1356,7 @@ namespace HPTClient
             set
             {
                 horseHistoryInfoGroupedList = value;
-                OnPropertyChanged("HorseHistoryInfoGroupedList");
+                OnPropertyChanged();
             }
         }
 
@@ -1393,7 +1393,7 @@ namespace HPTClient
             set
             {
                 historyRelativeDifferenceUnadjusted = value;
-                OnPropertyChanged("HistoryRelativeDifferenceUnadjusted");
+                OnPropertyChanged();
             }
         }
 
@@ -1595,7 +1595,7 @@ namespace HPTClient
             set
             {
                 numberOfHeadToHeadWins = value;
-                OnPropertyChanged("NumberOfHeadToHeadWins");
+                OnPropertyChanged();
             }
         }
 
@@ -1610,7 +1610,7 @@ namespace HPTClient
             set
             {
                 numberOfHeadToHeadLosses = value;
-                OnPropertyChanged("NumberOfHeadToHeadLosses");
+                OnPropertyChanged();
             }
         }
 
@@ -1625,7 +1625,7 @@ namespace HPTClient
             set
             {
                 numberOfHeadToHeadEqual = value;
-                OnPropertyChanged("NumberOfHeadToHeadEqual");
+                OnPropertyChanged();
             }
         }
 
@@ -1640,7 +1640,7 @@ namespace HPTClient
             set
             {
                 numberOfHeadToHeadRaces = value;
-                OnPropertyChanged("NumberOfHeadToHeadRaces");
+                OnPropertyChanged();
             }
         }
 
@@ -1655,7 +1655,7 @@ namespace HPTClient
             set
             {
                 numberOfHeadToHeadResults = value;
-                OnPropertyChanged("NumberOfHeadToHeadResults");
+                OnPropertyChanged();
             }
         }
 
@@ -1670,7 +1670,7 @@ namespace HPTClient
             set
             {
                 hasHeadToHeadResults = value;
-                OnPropertyChanged("HasHeadToHeadResults");
+                OnPropertyChanged();
             }
         }
 
@@ -1685,7 +1685,7 @@ namespace HPTClient
             set
             {
                 shoeInfoCurrent = value;
-                OnPropertyChanged("ShoeInfoCurrent");
+                OnPropertyChanged();
             }
         }
 
@@ -1700,7 +1700,7 @@ namespace HPTClient
             set
             {
                 shoeInfoPrevious = value;
-                OnPropertyChanged("ShoeInfoPrevious");
+                OnPropertyChanged();
             }
         }
 
@@ -1715,7 +1715,7 @@ namespace HPTClient
             set
             {
                 sulkyInfoCurrent = value;
-                OnPropertyChanged("SulkyInfoCurrent");
+                OnPropertyChanged();
             }
         }
 
@@ -1730,7 +1730,7 @@ namespace HPTClient
             set
             {
                 sulkyInfoPrevious = value;
-                OnPropertyChanged("SulkyInfoPrevious");
+                OnPropertyChanged();
             }
         }
 
@@ -1747,7 +1747,7 @@ namespace HPTClient
             set
             {
                 trioInfo = value;
-                OnPropertyChanged("TrioInfo");
+                OnPropertyChanged();
             }
         }
 
@@ -2022,7 +2022,7 @@ namespace HPTClient
                 //    this.VinnarOddsString = this.vinnarOdds.ToString();
                 //    this.VinnarOddsShare = 0.8M / this.vinnarOdds * 10;
                 //}
-                OnPropertyChanged("VinnarOdds");
+                OnPropertyChanged();
             }
         }
 
@@ -2041,7 +2041,7 @@ namespace HPTClient
                     VinnarOddsString = vinnarOddsExact.ToString();
                     //this.VinnarOddsShare = 0.8M / this.vinnarOdds * 10;
                 }
-                OnPropertyChanged("VinnarOddsExact");
+                OnPropertyChanged();
             }
         }
 
@@ -2055,7 +2055,7 @@ namespace HPTClient
             set
             {
                 _VinnarDddsFinal = value;
-                OnPropertyChanged("VinnarDddsFinal");
+                OnPropertyChanged();
             }
         }
 
@@ -2071,7 +2071,7 @@ namespace HPTClient
             set
             {
                 stakeDistributionPercent = value;
-                OnPropertyChanged("StakeDistributionPercent");
+                OnPropertyChanged();
             }
         }
 
@@ -2086,7 +2086,7 @@ namespace HPTClient
             set
             {
                 stakeDistribution = value;
-                OnPropertyChanged("StakeDistribution");
+                OnPropertyChanged();
             }
         }
 
@@ -2101,7 +2101,7 @@ namespace HPTClient
             set
             {
                 stakeDistributionShare = value;
-                OnPropertyChanged("StakeDistributionShare");
+                OnPropertyChanged();
             }
         }
 
@@ -2115,7 +2115,7 @@ namespace HPTClient
             set
             {
                 _StakeDistributionShareFinal = value;
-                OnPropertyChanged("StakeDistributionShareFinal");
+                OnPropertyChanged();
             }
         }
 
@@ -2133,7 +2133,7 @@ namespace HPTClient
             set
             {
                 stakeDistributionShareAccumulated = value;
-                OnPropertyChanged("StakeDistributionShareAccumulated");
+                OnPropertyChanged();
             }
         }
 
@@ -2148,7 +2148,7 @@ namespace HPTClient
             set
             {
                 vinnarOddsString = value;
-                OnPropertyChanged("VinnarOddsString");
+                OnPropertyChanged();
             }
         }
 
@@ -2164,7 +2164,7 @@ namespace HPTClient
             set
             {
                 vinnarOddsShare = value;
-                OnPropertyChanged("VinnarOddsShare");
+                OnPropertyChanged();
                 if (value > 0M && VinnarOddsExact == 0M)
                 {
                     VinnarOddsExact = 0.8M / value;
@@ -2193,7 +2193,7 @@ namespace HPTClient
             set
             {
                 _MinPlatsOddsExact = value;
-                OnPropertyChanged("MinPlatsOddsExact");
+                OnPropertyChanged();
             }
         }
 
@@ -2208,7 +2208,7 @@ namespace HPTClient
             set
             {
                 _MaxPlatsOddsExact = value;
-                OnPropertyChanged("MaxPlatsOddsExact");
+                OnPropertyChanged();
             }
         }
 
@@ -2223,7 +2223,7 @@ namespace HPTClient
             set
             {
                 platsOddsString = value;
-                OnPropertyChanged("PlatsOddsString");
+                OnPropertyChanged();
             }
         }
 
@@ -2238,7 +2238,7 @@ namespace HPTClient
             set
             {
                 notScratched = value;
-                OnPropertyChanged("NotScratched");
+                OnPropertyChanged();
             }
         }
 
@@ -2272,7 +2272,7 @@ namespace HPTClient
                 }
                 NotScratched = value == null || value == false;
                 scratched = value;
-                OnPropertyChanged("Scratched");
+                OnPropertyChanged();
             }
         }
 
@@ -2287,7 +2287,7 @@ namespace HPTClient
             set
             {
                 investmentPlats = value;
-                OnPropertyChanged("InvestmentPlats");
+                OnPropertyChanged();
             }
         }
 
@@ -2302,7 +2302,7 @@ namespace HPTClient
             set
             {
                 investmentVinnare = value;
-                OnPropertyChanged("InvestmentVinnare");
+                OnPropertyChanged();
             }
         }
 
@@ -2389,7 +2389,7 @@ namespace HPTClient
             set
             {
                 rankTip = value;
-                OnPropertyChanged("RankTip");
+                OnPropertyChanged();
             }
         }
 
@@ -2404,7 +2404,7 @@ namespace HPTClient
             set
             {
                 selectedFromTip = value;
-                OnPropertyChanged("SelectedFromTip");
+                OnPropertyChanged();
             }
         }
 
@@ -2419,7 +2419,7 @@ namespace HPTClient
             set
             {
                 numberOfSelectionsFromTips = value;
-                OnPropertyChanged("NumberOfSelectionsFromTips");
+                OnPropertyChanged();
             }
         }
 
@@ -2450,7 +2450,7 @@ namespace HPTClient
             set
             {
                 prioStringFromTips = value;
-                OnPropertyChanged("PrioStringFromTips");
+                OnPropertyChanged();
             }
         }
 
@@ -2495,7 +2495,7 @@ namespace HPTClient
                 {
                     ParentRace.Reserv1Nr = 0;
                 }
-                OnPropertyChanged("Reserv1");
+                OnPropertyChanged();
                 if (Reserv2 == true && value == true)
                     Reserv2 = null;
             }
@@ -2520,7 +2520,7 @@ namespace HPTClient
                 {
                     ParentRace.Reserv2Nr = 0;
                 }
-                OnPropertyChanged("Reserv2");
+                OnPropertyChanged();
                 if (Reserv1 == true && value == true)
                     Reserv1 = null;
             }
@@ -2545,7 +2545,7 @@ namespace HPTClient
                 }
                 selected = value;
                 //this.RankABC = GetRankABC();
-                OnPropertyChanged("Selected");
+                OnPropertyChanged();
                 if (!selected && HorseXReductionList != null)
                 {
                     foreach (HPTHorseXReduction horseXReduction in HorseXReductionList.Where(xr => xr.Selected))
@@ -2581,7 +2581,7 @@ namespace HPTClient
             set
             {
                 locked = value;
-                OnPropertyChanged("Locked");
+                OnPropertyChanged();
                 if (locked == true && !Selected)
                 {
                     Selected = true;
@@ -2600,7 +2600,7 @@ namespace HPTClient
             set
             {
                 isHighlighted = value;
-                OnPropertyChanged("IsHighlighted");
+                OnPropertyChanged();
             }
         }
 
@@ -2615,7 +2615,7 @@ namespace HPTClient
             set
             {
                 isHomeTrack = value;
-                OnPropertyChanged("IsHomeTrack");
+                OnPropertyChanged();
             }
         }
 
@@ -2632,7 +2632,7 @@ namespace HPTClient
                 if (value != selectedForComplimentaryRule)
                 {
                     selectedForComplimentaryRule = value;
-                    OnPropertyChanged("SelectedForComplimentaryRule");
+                    OnPropertyChanged();
                     ComplimentaryText = value ? "U" : string.Empty;
                 }
             }
@@ -2649,7 +2649,7 @@ namespace HPTClient
             set
             {
                 complimentaryText = value;
-                OnPropertyChanged("ComplimentaryText");
+                OnPropertyChanged();
             }
         }
 
@@ -2664,7 +2664,7 @@ namespace HPTClient
             set
             {
                 selectedForRowValueCalculation = value;
-                OnPropertyChanged("SelectedForRowValueCalculation");
+                OnPropertyChanged();
             }
         }
 
@@ -2679,7 +2679,7 @@ namespace HPTClient
             set
             {
                 numberOfCoveredRows = value;
-                OnPropertyChanged("NumberOfCoveredRows");
+                OnPropertyChanged();
             }
         }
 
@@ -2694,7 +2694,7 @@ namespace HPTClient
             set
             {
                 systemCoverage = value;
-                OnPropertyChanged("SystemCoverage");
+                OnPropertyChanged();
             }
         }
 
@@ -2717,7 +2717,7 @@ namespace HPTClient
             set
             {
                 ownInformation = value;
-                OnPropertyChanged("OwnInformation");
+                OnPropertyChanged();
             }
         }
 
@@ -2740,7 +2740,7 @@ namespace HPTClient
             set
             {
                 prioString = value;
-                OnPropertyChanged("PrioString");
+                OnPropertyChanged();
             }
         }
 
@@ -2756,7 +2756,7 @@ namespace HPTClient
             {
                 prio = value;
                 RankABC = GetRankABC();
-                OnPropertyChanged("Prio");
+                OnPropertyChanged();
                 if (ParentRace != null)
                 {
                     ParentRace.RankABCSum = ParentRace.HorseList
@@ -2873,7 +2873,7 @@ namespace HPTClient
             {
                 rankABC = value;
                 RankList.First(r => r.Name == "RankABC").Rank = value;
-                OnPropertyChanged("RankABC");
+                OnPropertyChanged();
             }
         }
 
@@ -2908,7 +2908,7 @@ namespace HPTClient
             set
             {
                 horseXReductionList = value;
-                OnPropertyChanged("HorseXReductionList");
+                OnPropertyChanged();
             }
         }
 
@@ -2993,7 +2993,7 @@ namespace HPTClient
             set
             {
                 platsoddsColor = value;
-                OnPropertyChanged("PlatsoddsColor");
+                OnPropertyChanged();
             }
         }
 
@@ -3012,7 +3012,7 @@ namespace HPTClient
             set
             {
                 vinnaroddsColor = value;
-                OnPropertyChanged("VinnaroddsColor");
+                OnPropertyChanged();
             }
         }
 
@@ -3042,7 +3042,7 @@ namespace HPTClient
                         c = Colors.Gray;
                     }
                     markabilityColor = new SolidColorBrush(c);
-                    OnPropertyChanged("MarkabilityColor");
+                    OnPropertyChanged();
                 }
                 return markabilityColor;
             }
@@ -3094,7 +3094,7 @@ namespace HPTClient
             set
             {
                 driverChanged = value;
-                OnPropertyChanged("DriverChanged");
+                OnPropertyChanged();
             }
         }
 
@@ -3109,7 +3109,7 @@ namespace HPTClient
             set
             {
                 driverChangedSinceLastStart = value;
-                OnPropertyChanged("DriverChangedSinceLastStart");
+                OnPropertyChanged();
             }
         }
 
@@ -3139,7 +3139,7 @@ namespace HPTClient
             set
             {
                 rankList = value;
-                OnPropertyChanged("RankList");
+                OnPropertyChanged();
             }
         }
 
@@ -3156,7 +3156,7 @@ namespace HPTClient
             set
             {
                 rankATG = value;
-                OnPropertyChanged("RankATG");
+                OnPropertyChanged();
             }
         }
 
@@ -3182,7 +3182,7 @@ namespace HPTClient
             set
             {
                 rankOwn = value;
-                OnPropertyChanged("RankOwn");
+                OnPropertyChanged();
                 if (ParentRace != null)
                 {
                     ParentRace.RankOwnSum = ParentRace.HorseList.Sum(h => h.RankOwn);
@@ -3201,7 +3201,7 @@ namespace HPTClient
             set
             {
                 ownProbability = value;
-                OnPropertyChanged("OwnProbability");
+                OnPropertyChanged();
                 if (ParentRace != null)
                 {
                     ParentRace.OwnProbabilitySum = ParentRace.HorseList.Where(h => h.OwnProbability != null).Sum(h => h.OwnProbability);
@@ -3261,7 +3261,7 @@ namespace HPTClient
             set
             {
                 rankAlternate = value;
-                OnPropertyChanged("RankAlternate");
+                OnPropertyChanged();
                 if (ParentRace != null)
                 {
                     ParentRace.RankAlternateSum = ParentRace.HorseList.Sum(h => h.RankAlternate);
@@ -3281,7 +3281,7 @@ namespace HPTClient
             set
             {
                 rankStartNumber = value;
-                OnPropertyChanged("RankStartNumber");
+                OnPropertyChanged();
             }
         }
 
@@ -3297,7 +3297,7 @@ namespace HPTClient
             set
             {
                 rankMean = value;
-                OnPropertyChanged("RankMean");
+                OnPropertyChanged();
             }
         }
 
@@ -3313,7 +3313,7 @@ namespace HPTClient
             set
             {
                 rankWeighted = value;
-                OnPropertyChanged("RankWeighted");
+                OnPropertyChanged();
             }
         }
 
@@ -3407,7 +3407,7 @@ namespace HPTClient
             set
             {
                 platsQuotient = value;
-                OnPropertyChanged("PlatsQuotient");
+                OnPropertyChanged();
             }
         }
 
@@ -3421,7 +3421,7 @@ namespace HPTClient
             set
             {
                 vinnarQuotient = value;
-                OnPropertyChanged("VinnarQuotient");
+                OnPropertyChanged();
             }
         }
 
@@ -3468,7 +3468,7 @@ namespace HPTClient
             set
             {
                 markability = value;
-                OnPropertyChanged("Markability");
+                OnPropertyChanged();
             }
         }
 
@@ -3545,7 +3545,7 @@ namespace HPTClient
             set
             {
                 vinnarOddsRelative = value;
-                OnPropertyChanged("VinnarOddsRelative");
+                OnPropertyChanged();
             }
         }
 
@@ -3821,7 +3821,7 @@ namespace HPTClient
             set
             {
                 correct = value;
-                OnPropertyChanged("Correct");
+                OnPropertyChanged();
             }
         }
 
@@ -3835,7 +3835,7 @@ namespace HPTClient
             set
             {
                 numberOfRowsWithAllCorrect = value;
-                OnPropertyChanged("NumberOfRowsWithAllCorrect");
+                OnPropertyChanged();
             }
         }
 
@@ -3849,7 +3849,7 @@ namespace HPTClient
             set
             {
                 numberOfRowsWithOneError = value;
-                OnPropertyChanged("NumberOfRowsWithOneError");
+                OnPropertyChanged();
             }
         }
 
@@ -3863,7 +3863,7 @@ namespace HPTClient
             set
             {
                 numberOfRowsWithTwoErrors = value;
-                OnPropertyChanged("NumberOfRowsWithTwoErrors");
+                OnPropertyChanged();
             }
         }
 
@@ -3877,7 +3877,7 @@ namespace HPTClient
             set
             {
                 numberOfRowsWithPossibility = value;
-                OnPropertyChanged("NumberOfRowsWithPossibility");
+                OnPropertyChanged();
             }
         }
 
@@ -3896,7 +3896,7 @@ namespace HPTClient
             set
             {
                 platsOddsShare = value;
-                OnPropertyChanged("PlatsOddsShare");
+                OnPropertyChanged();
             }
         }
 
@@ -3912,7 +3912,7 @@ namespace HPTClient
             set
             {
                 tvillingShare = value;
-                OnPropertyChanged("TvillingShare");
+                OnPropertyChanged();
             }
         }
 
@@ -3927,7 +3927,7 @@ namespace HPTClient
             set
             {
                 doubleShare = value;
-                OnPropertyChanged("DoubleShare");
+                OnPropertyChanged();
             }
         }
 
@@ -3942,7 +3942,7 @@ namespace HPTClient
             set
             {
                 trioShare = value;
-                OnPropertyChanged("TrioShare");
+                OnPropertyChanged();
             }
         }
 
@@ -3957,7 +3957,7 @@ namespace HPTClient
             set
             {
                 stakeShareAlternate = value;
-                OnPropertyChanged("StakeShareAlternate");
+                OnPropertyChanged();
             }
         }
 
@@ -3972,7 +3972,7 @@ namespace HPTClient
             set
             {
                 stakeShareAlternate2 = value;
-                OnPropertyChanged("StakeShareAlternate2");
+                OnPropertyChanged();
             }
         }
 
@@ -4022,7 +4022,7 @@ namespace HPTClient
             set
             {
                 rankMeanTotal = value;
-                OnPropertyChanged("RankMeanTotal");
+                OnPropertyChanged();
             }
         }
 
@@ -4037,7 +4037,7 @@ namespace HPTClient
             set
             {
                 rankStDev = value;
-                OnPropertyChanged("RankStDev");
+                OnPropertyChanged();
             }
         }
 
@@ -4052,7 +4052,7 @@ namespace HPTClient
             set
             {
                 stakeShareRelativeToFavourite = value;
-                OnPropertyChanged("StakeShareRelativeToFavourite");
+                OnPropertyChanged();
             }
         }
 
@@ -4067,7 +4067,7 @@ namespace HPTClient
             set
             {
                 stakeShareRelativeToNext = value;
-                OnPropertyChanged("StakeShareRelativeToNext");
+                OnPropertyChanged();
             }
         }
 
@@ -4082,7 +4082,7 @@ namespace HPTClient
             set
             {
                 stakeShareRelativeToPrevious = value;
-                OnPropertyChanged("StakeShareRelativeToPrevious");
+                OnPropertyChanged();
             }
         }
 

@@ -889,7 +889,7 @@ namespace HPTClient
                 {
                     systemSizesToShowString = "50\r\n100\r\n250\r\n500\r\n1000r\n2500\r\n5000\r\n10000\r\n999999999";
                 }
-                OnPropertyChanged("SystemSizesToShowString");
+                OnPropertyChanged();
 
                 systemSizesToShow = new ObservableCollection<int>();
                 var sizeStringArray = systemSizesToShowString.Split(new String[] { "\r\n" }, StringSplitOptions.None);
@@ -922,7 +922,7 @@ namespace HPTClient
             set
             {
                 systemSizesToShow = value;
-                OnPropertyChanged("SystemSizesToShow");
+                OnPropertyChanged();
             }
         }
 
@@ -958,7 +958,7 @@ namespace HPTClient
                         beginnerSizesToShow.Add(number);
                     }
                 }
-                OnPropertyChanged("BeginnerSizesToShowString");
+                OnPropertyChanged();
             }
         }
 
@@ -978,7 +978,7 @@ namespace HPTClient
             set
             {
                 beginnerSizesToShow = value;
-                OnPropertyChanged("BeginnerSizesToShow");
+                OnPropertyChanged();
             }
         }
 
@@ -994,7 +994,7 @@ namespace HPTClient
             set
             {
                 hptSystemDirectories = value;
-                OnPropertyChanged("HPTSystemDirectories");
+                OnPropertyChanged();
 
                 // 10 senaste filerna
                 RecentFileList = new ObservableCollection<HPTSystemFile>(
@@ -1017,7 +1017,7 @@ namespace HPTClient
             set
             {
                 recentFileList = value;
-                OnPropertyChanged("RecentFileList");
+                OnPropertyChanged();
             }
         }
 
@@ -2153,7 +2153,7 @@ namespace HPTClient
                     //this.WarnIfNoReserv = false;                    
                 }
                 isPayingCustomer = value;
-                OnPropertyChanged("IsPayingCustomer");
+                OnPropertyChanged();
             }
         }
 
@@ -2231,7 +2231,7 @@ namespace HPTClient
             set
             {
                 isEligibleForPro = value;
-                OnPropertyChanged("IsEligibleForPro");
+                OnPropertyChanged();
             }
         }
 
@@ -2252,7 +2252,7 @@ namespace HPTClient
             set
             {
                 versionText = value;
-                OnPropertyChanged("VersionText");
+                OnPropertyChanged();
             }
         }
 
@@ -2310,7 +2310,7 @@ namespace HPTClient
             set
             {
                 zoom = value;
-                OnPropertyChanged("Zoom");
+                OnPropertyChanged();
             }
         }
 
@@ -2967,7 +2967,7 @@ namespace HPTClient
             set
             {
                 dataToShowVxx = value;
-                OnPropertyChanged("DataToShowVxx");
+                OnPropertyChanged();
 
                 // Uppdatera alla DataToShow när en ändras
                 DataToShowVxx.PropertyChanged += DataToShowVxx_PropertyChanged;
@@ -3749,7 +3749,7 @@ namespace HPTClient
             set
             {
                 copyStakeShare = value;
-                OnPropertyChanged("CopyStakeShare");
+                OnPropertyChanged();
             }
         }
 
@@ -3768,7 +3768,7 @@ namespace HPTClient
             set
             {
                 copyOwnRank = value;
-                OnPropertyChanged("CopyOwnRank");
+                OnPropertyChanged();
             }
         }
 
@@ -3787,7 +3787,7 @@ namespace HPTClient
             set
             {
                 copyRankMean = value;
-                OnPropertyChanged("CopyRankMean");
+                OnPropertyChanged();
             }
         }
 
@@ -3806,7 +3806,7 @@ namespace HPTClient
             set
             {
                 copyAlternateRank = value;
-                OnPropertyChanged("CopyAlternateRank");
+                OnPropertyChanged();
             }
         }
 
@@ -3921,7 +3921,7 @@ namespace HPTClient
             {
                 useA = value;
                 PrioList[HPTPrio.A] = value;
-                OnPropertyChanged("UseA");
+                OnPropertyChanged();
             }
         }
 
@@ -3937,7 +3937,7 @@ namespace HPTClient
             {
                 useB = value;
                 PrioList[HPTPrio.B] = value;
-                OnPropertyChanged("UseB");
+                OnPropertyChanged();
             }
         }
 
@@ -3953,7 +3953,7 @@ namespace HPTClient
             {
                 useC = value;
                 PrioList[HPTPrio.C] = value;
-                OnPropertyChanged("UseC");
+                OnPropertyChanged();
             }
         }
 
@@ -3969,7 +3969,7 @@ namespace HPTClient
             {
                 useD = value;
                 PrioList[HPTPrio.D] = value;
-                OnPropertyChanged("UseD");
+                OnPropertyChanged();
             }
         }
 
@@ -3985,7 +3985,7 @@ namespace HPTClient
             {
                 useE = value;
                 PrioList[HPTPrio.E] = value;
-                OnPropertyChanged("UseE");
+                OnPropertyChanged();
             }
         }
 
@@ -4001,7 +4001,7 @@ namespace HPTClient
             {
                 useF = value;
                 PrioList[HPTPrio.F] = value;
-                OnPropertyChanged("UseF");
+                OnPropertyChanged();
             }
         }
 
@@ -4122,7 +4122,7 @@ namespace HPTClient
             {
                 colorGood = value;
                 BrushGood = CreateBrush(value);
-                OnPropertyChanged("ColorGood");
+                OnPropertyChanged();
             }
         }
 
@@ -4138,7 +4138,7 @@ namespace HPTClient
             {
                 colorMedium = value;
                 BrushMedium = CreateBrush(value);
-                OnPropertyChanged("ColorMedium");
+                OnPropertyChanged();
             }
         }
 
@@ -4154,7 +4154,7 @@ namespace HPTClient
             {
                 colorBad = value;
                 BrushBad = CreateBrush(value);
-                OnPropertyChanged("ColorBad");
+                OnPropertyChanged();
             }
         }
 
@@ -4169,7 +4169,7 @@ namespace HPTClient
             set
             {
                 brushGood = value;
-                OnPropertyChanged("BrushGood");
+                OnPropertyChanged();
             }
         }
 
@@ -4184,7 +4184,7 @@ namespace HPTClient
             set
             {
                 brushMedium = value;
-                OnPropertyChanged("BrushMedium");
+                OnPropertyChanged();
             }
         }
 
@@ -4199,7 +4199,7 @@ namespace HPTClient
             set
             {
                 brushBad = value;
-                OnPropertyChanged("BrushBad");
+                OnPropertyChanged();
             }
         }
 
@@ -4220,7 +4220,7 @@ namespace HPTClient
                     SetColorFromStakePercent = false;
                 }
                 setColorFromVinnarOdds = value;
-                OnPropertyChanged("SetColorFromVinnarOdds");
+                OnPropertyChanged();
             }
         }
 
@@ -4241,7 +4241,7 @@ namespace HPTClient
                     SetColorFromStakePercent = false;
                 }
                 setColorFromMarksPercent = value;
-                OnPropertyChanged("SetColorFromMarksPercent");
+                OnPropertyChanged();
             }
         }
 
@@ -4262,7 +4262,7 @@ namespace HPTClient
                     SetColorFromStakePercent = false;
                 }
                 setColorFromMarkability = value;
-                OnPropertyChanged("SetColorFromMarkability");
+                OnPropertyChanged();
             }
         }
 
@@ -4283,7 +4283,7 @@ namespace HPTClient
                     SetColorFromMarkability = false;
                 }
                 setColorFromStakePercent = value;
-                OnPropertyChanged("SetColorFromStakePercent");
+                OnPropertyChanged();
             }
         }
 

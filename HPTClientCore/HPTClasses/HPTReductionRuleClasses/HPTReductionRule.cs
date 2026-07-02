@@ -89,7 +89,7 @@ namespace HPTClient
             set
             {
                 ruleResultForCorrectRow = value;
-                OnPropertyChanged("RuleResultForCorrectRow");
+                OnPropertyChanged();
             }
         }
 
@@ -107,7 +107,7 @@ namespace HPTClient
                     return;
                 }
                 probability = value;
-                OnPropertyChanged("Probability");
+                OnPropertyChanged();
             }
         }
 
@@ -125,7 +125,7 @@ namespace HPTClient
                     return;
                 }
                 probabilityRelative = value;
-                OnPropertyChanged("ProbabilityRelative");
+                OnPropertyChanged();
             }
         }
 
@@ -143,7 +143,7 @@ namespace HPTClient
                     return;
                 }
                 remainingRows = value;
-                OnPropertyChanged("RemainingRows");
+                OnPropertyChanged();
             }
         }
 
@@ -161,7 +161,7 @@ namespace HPTClient
                     return;
                 }
                 remainingRowsPercentage = value;
-                OnPropertyChanged("RemainingRowsPercentage");
+                OnPropertyChanged();
             }
         }
 
@@ -179,7 +179,7 @@ namespace HPTClient
                     return;
                 }
                 numberOfAllCorrect = value;
-                OnPropertyChanged("NumberOfAllCorrect");
+                OnPropertyChanged();
             }
         }
 
@@ -197,7 +197,7 @@ namespace HPTClient
                     return;
                 }
                 numberOfOneError = value;
-                OnPropertyChanged("NumberOfOneError");
+                OnPropertyChanged();
             }
         }
 
@@ -215,7 +215,7 @@ namespace HPTClient
                     return;
                 }
                 numberOfTwoErrors = value;
-                OnPropertyChanged("NumberOfTwoErrors");
+                OnPropertyChanged();
             }
         }
 
@@ -233,7 +233,7 @@ namespace HPTClient
                     return;
                 }
                 numberOfThreeErrors = value;
-                OnPropertyChanged("NumberOfThreeErrors");
+                OnPropertyChanged();
             }
         }
 
@@ -256,7 +256,7 @@ namespace HPTClient
                     return;
                 }
                 onlyInSpecifiedLegs = value;
-                OnPropertyChanged("OnlyInSpecifiedLegs");
+                OnPropertyChanged();
             }
         }
 
@@ -313,7 +313,7 @@ namespace HPTClient
             set
             {
                 selected = value;
-                OnPropertyChanged("Selected");
+                OnPropertyChanged();
             }
         }
 

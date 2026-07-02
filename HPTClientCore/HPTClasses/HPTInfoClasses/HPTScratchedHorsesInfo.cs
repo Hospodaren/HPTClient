@@ -39,7 +39,7 @@ namespace HPTClient
             set
             {
                 parentRaceDayInfo = value;
-                OnPropertyChanged("ParentRaceDayInfo");
+                OnPropertyChanged();
             }
         }
 
@@ -53,7 +53,7 @@ namespace HPTClient
             set
             {
                 haveSelectedScratchedHorse = value;
-                OnPropertyChanged("HaveSelectedScratchedHorse");
+                OnPropertyChanged();
             }
         }
     }

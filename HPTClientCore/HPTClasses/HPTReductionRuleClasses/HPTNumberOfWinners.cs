@@ -17,7 +17,7 @@ namespace HPTClient
             set
             {
                 numberOfWinners = value;
-                OnPropertyChanged("NumberOfWinners");
+                OnPropertyChanged();
             }
         }
 
@@ -36,7 +36,7 @@ namespace HPTClient
                     return;
                 }
                 selected = value;
-                OnPropertyChanged("Selected");
+                OnPropertyChanged();
             }
         }
 
@@ -59,7 +59,7 @@ namespace HPTClient
                     return;
                 }
                 selectable = value;
-                OnPropertyChanged("Selectable");
+                OnPropertyChanged();
             }
         }
 
@@ -73,7 +73,7 @@ namespace HPTClient
             set
             {
                 probability = value;
-                OnPropertyChanged("Probability");
+                OnPropertyChanged();
             }
         }
 
@@ -88,7 +88,7 @@ namespace HPTClient
             set
             {
                 isSuperfluous = value;
-                OnPropertyChanged("IsSuperfluous");
+                OnPropertyChanged();
             }
         }
     }

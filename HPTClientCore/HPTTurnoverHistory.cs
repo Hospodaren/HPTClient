@@ -25,7 +25,7 @@ namespace HPTClient
             set
             {
                 _IsSelected = value;
-                OnPropertyChanged("IsSelected");
+                OnPropertyChanged();
             }
         }
     }

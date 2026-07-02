@@ -18,7 +18,7 @@ namespace HPTClient
             set
             {
                 headlineString = value;
-                OnPropertyChanged("HeadlineString");
+                OnPropertyChanged();
             }
         }
 
@@ -33,7 +33,7 @@ namespace HPTClient
             set
             {
                 reductionTypeString = value;
-                OnPropertyChanged("ReductionTypeString");
+                OnPropertyChanged();
             }
         }
 
@@ -48,7 +48,7 @@ namespace HPTClient
             set
             {
                 reductionRuleString = value;
-                OnPropertyChanged("ReductionRuleString");
+                OnPropertyChanged();
             }
         }
 

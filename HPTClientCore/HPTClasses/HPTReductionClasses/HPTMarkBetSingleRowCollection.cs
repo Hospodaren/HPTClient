@@ -668,7 +668,7 @@ namespace HPTClient
             set
             {
                 currentCouponNumber = value;
-                OnPropertyChanged("CurrentCouponNumber");
+                OnPropertyChanged();
             }
         }
 
@@ -682,7 +682,7 @@ namespace HPTClient
             set
             {
                 numberOfCoveredRows = value;
-                OnPropertyChanged("NumberOfCoveredRows");
+                OnPropertyChanged();
             }
         }
 
@@ -696,7 +696,7 @@ namespace HPTClient
             set
             {
                 coveredRowsShare = value;
-                OnPropertyChanged("CoveredRowsShare");
+                OnPropertyChanged();
             }
         }
 
@@ -710,7 +710,7 @@ namespace HPTClient
             set
             {
                 numberOfAnalyzedRows = value;
-                OnPropertyChanged("NumberOfAnalyzedRows");
+                OnPropertyChanged();
             }
         }
 
@@ -724,7 +724,7 @@ namespace HPTClient
             set
             {
                 analyzedRowsShare = value;
-                OnPropertyChanged("AnalyzedRowsShare");
+                OnPropertyChanged();
             }
         }
 
@@ -1205,7 +1205,7 @@ namespace HPTClient
             set
             {
                 minRankSum = value;
-                OnPropertyChanged("MinRankSum");
+                OnPropertyChanged();
             }
         }
 
@@ -1219,7 +1219,7 @@ namespace HPTClient
             set
             {
                 maxRankSum = value;
-                OnPropertyChanged("MaxRankSum");
+                OnPropertyChanged();
             }
         }
 

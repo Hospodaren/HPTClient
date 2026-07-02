@@ -601,7 +601,7 @@ namespace HPTClient
             set
             {
                 updatedPostTime = value;
-                OnPropertyChanged("UpdatedPostTime");
+                OnPropertyChanged();
             }
         }
 
@@ -631,7 +631,7 @@ namespace HPTClient
             set
             {
                 turnoverPlats = value;
-                OnPropertyChanged("TurnoverPlats");
+                OnPropertyChanged();
             }
         }
 
@@ -646,7 +646,7 @@ namespace HPTClient
             set
             {
                 turnoverVinnare = value;
-                OnPropertyChanged("TurnoverVinnare");
+                OnPropertyChanged();
             }
         }
 
@@ -667,7 +667,7 @@ namespace HPTClient
             set
             {
                 turnoverTvilling = value;
-                OnPropertyChanged("TurnoverTvilling");
+                OnPropertyChanged();
                 if (value > 0M)
                 {
                     TurnoverCombination = (int)value;
@@ -686,7 +686,7 @@ namespace HPTClient
             set
             {
                 turnoverTrio = value;
-                OnPropertyChanged("TurnoverTrio");
+                OnPropertyChanged();
                 if (value > 0M)
                 {
                     TurnoverCombination = (int)value;
@@ -705,7 +705,7 @@ namespace HPTClient
             set
             {
                 turnoverCombination = value;
-                OnPropertyChanged("TurnoverCombination");
+                OnPropertyChanged();
             }
         }
 
@@ -725,7 +725,7 @@ namespace HPTClient
             set
             {
                 reserv1Nr = value;
-                OnPropertyChanged("Reserv1Nr");
+                OnPropertyChanged();
             }
         }
 
@@ -740,7 +740,7 @@ namespace HPTClient
             set
             {
                 reserv2Nr = value;
-                OnPropertyChanged("Reserv2Nr");
+                OnPropertyChanged();
             }
         }
 
@@ -819,7 +819,7 @@ namespace HPTClient
             set
             {
                 locked = value;
-                OnPropertyChanged("Locked");
+                OnPropertyChanged();
             }
         }
 
@@ -993,7 +993,7 @@ namespace HPTClient
             set
             {
                 noSelected = value;
-                OnPropertyChanged("NumberOfSelectedHorses");
+                OnPropertyChanged();
             }
         }
 
@@ -1026,7 +1026,7 @@ namespace HPTClient
             set
             {
                 ownProbabilitySum = value;
-                OnPropertyChanged("OwnProbabilitySum");
+                OnPropertyChanged();
             }
         }
 
@@ -1040,7 +1040,7 @@ namespace HPTClient
             set
             {
                 rankOwnSum = value;
-                OnPropertyChanged("RankOwnSum");
+                OnPropertyChanged();
             }
         }
 
@@ -1054,7 +1054,7 @@ namespace HPTClient
             set
             {
                 rankAlternateSum = value;
-                OnPropertyChanged("RankAlternateSum");
+                OnPropertyChanged();
             }
         }
 
@@ -1068,7 +1068,7 @@ namespace HPTClient
             set
             {
                 rankABCSum = value;
-                OnPropertyChanged("RankABCSum");
+                OnPropertyChanged();
             }
         }
 
@@ -1252,7 +1252,7 @@ namespace HPTClient
             set
             {
                 legResult = value;
-                OnPropertyChanged("LegResult");
+                OnPropertyChanged();
             }
         }
 
@@ -1267,7 +1267,7 @@ namespace HPTClient
             set
             {
                 hasResult = value;
-                OnPropertyChanged("HasResult");
+                OnPropertyChanged();
             }
         }
 
@@ -1282,7 +1282,7 @@ namespace HPTClient
             set
             {
                 splitVictory = value;
-                OnPropertyChanged("SplitVictory");
+                OnPropertyChanged();
             }
         }
 
@@ -1297,7 +1297,7 @@ namespace HPTClient
             set
             {
                 atgResultLink = value;
-                OnPropertyChanged("ATGResultLink");
+                OnPropertyChanged();
             }
         }
 

@@ -18,7 +18,7 @@ namespace HPTClient
             set
             {
                 showOverview = value;
-                OnPropertyChanged("ShowOverview");
+                OnPropertyChanged();
             }
         }
 
@@ -33,7 +33,7 @@ namespace HPTClient
             set
             {
                 showRaceLock = value;
-                OnPropertyChanged("ShowRaceLock");
+                OnPropertyChanged();
             }
         }
 
@@ -52,7 +52,7 @@ namespace HPTClient
             set
             {
                 showUpdateHandling = value;
-                OnPropertyChanged("ShowUpdateHandling");
+                OnPropertyChanged();
             }
         }
 
@@ -67,7 +67,7 @@ namespace HPTClient
             set
             {
                 showReservHandling = value;
-                OnPropertyChanged("ShowReservHandling");
+                OnPropertyChanged();
             }
         }
 
@@ -82,7 +82,7 @@ namespace HPTClient
             set
             {
                 showCouponCompression = value;
-                OnPropertyChanged("ShowCouponCompression");
+                OnPropertyChanged();
             }
         }
 
@@ -97,7 +97,7 @@ namespace HPTClient
             set
             {
                 showV6 = value;
-                OnPropertyChanged("ShowV6");
+                OnPropertyChanged();
             }
         }
 
@@ -112,7 +112,7 @@ namespace HPTClient
             set
             {
                 showBetMultiplier = value;
-                OnPropertyChanged("ShowBetMultiplier");
+                OnPropertyChanged();
             }
         }
 
@@ -127,7 +127,7 @@ namespace HPTClient
             set
             {
                 showAutomaticCalculation = value;
-                OnPropertyChanged("ShowAutomaticCalculation");
+                OnPropertyChanged();
             }
         }
 
@@ -144,7 +144,7 @@ namespace HPTClient
             set
             {
                 showTemplates = value;
-                OnPropertyChanged("ShowTemplates");
+                OnPropertyChanged();
             }
         }
 
@@ -161,7 +161,7 @@ namespace HPTClient
             set
             {
                 showSystemSize = value;
-                OnPropertyChanged("ShowSystemSize");
+                OnPropertyChanged();
             }
         }
 
@@ -176,7 +176,7 @@ namespace HPTClient
             set
             {
                 showReducedSize = value;
-                OnPropertyChanged("ShowReducedSize");
+                OnPropertyChanged();
             }
         }
 
@@ -191,7 +191,7 @@ namespace HPTClient
             set
             {
                 showReductionPercentage = value;
-                OnPropertyChanged("ShowReductionPercentage");
+                OnPropertyChanged();
             }
         }
 
@@ -206,7 +206,7 @@ namespace HPTClient
             set
             {
                 showCouponInfo = value;
-                OnPropertyChanged("ShowCouponInfo");
+                OnPropertyChanged();
             }
         }
 
@@ -221,7 +221,7 @@ namespace HPTClient
             set
             {
                 showNumberOfSystems = value;
-                OnPropertyChanged("ShowNumberOfSystems");
+                OnPropertyChanged();
             }
         }
 
@@ -236,7 +236,7 @@ namespace HPTClient
             set
             {
                 showSystemCost = value;
-                OnPropertyChanged("ShowSystemCost");
+                OnPropertyChanged();
             }
         }
 
@@ -251,7 +251,7 @@ namespace HPTClient
             set
             {
                 showSystemCostChange = value;
-                OnPropertyChanged("ShowSystemCostChange");
+                OnPropertyChanged();
             }
         }
 
@@ -266,7 +266,7 @@ namespace HPTClient
             set
             {
                 showNumberOfGambledRows = value;
-                OnPropertyChanged("ShowNumberOfGambledRows");
+                OnPropertyChanged();
             }
         }
 
@@ -281,7 +281,7 @@ namespace HPTClient
             set
             {
                 showRowValueInterval = value;
-                OnPropertyChanged("ShowRowValueInterval");
+                OnPropertyChanged();
             }
         }
 
@@ -296,7 +296,7 @@ namespace HPTClient
             set
             {
                 showLiveCalculation = value;
-                OnPropertyChanged("ShowLiveCalculation");
+                OnPropertyChanged();
             }
         }
 
@@ -313,7 +313,7 @@ namespace HPTClient
             set
             {
                 showReductionList = value;
-                OnPropertyChanged("ShowReductionList");
+                OnPropertyChanged();
             }
         }
 
@@ -330,7 +330,7 @@ namespace HPTClient
             set
             {
                 showBeginner = value;
-                OnPropertyChanged("ShowBeginner");
+                OnPropertyChanged();
             }
         }
 
@@ -345,7 +345,7 @@ namespace HPTClient
             set
             {
                 showSave = value;
-                OnPropertyChanged("ShowSave");
+                OnPropertyChanged();
             }
         }
 
@@ -360,7 +360,7 @@ namespace HPTClient
             set
             {
                 showSaveAs = value;
-                OnPropertyChanged("ShowSaveAs");
+                OnPropertyChanged();
             }
         }
 
@@ -375,7 +375,7 @@ namespace HPTClient
             set
             {
                 showCopy = value;
-                OnPropertyChanged("ShowCopy");
+                OnPropertyChanged();
             }
         }
 
@@ -390,7 +390,7 @@ namespace HPTClient
             set
             {
                 showPrint = value;
-                OnPropertyChanged("ShowPrint");
+                OnPropertyChanged();
             }
         }
 
@@ -405,7 +405,7 @@ namespace HPTClient
             set
             {
                 showClear = value;
-                OnPropertyChanged("ShowClear");
+                OnPropertyChanged();
             }
         }
 
@@ -420,7 +420,7 @@ namespace HPTClient
             set
             {
                 showUpload = value;
-                OnPropertyChanged("ShowUpload");
+                OnPropertyChanged();
             }
         }
 

@@ -16,7 +16,7 @@ namespace HPTClient
             set
             {
                 lowerLimit = value;
-                OnPropertyChanged("LowerLimit");
+                OnPropertyChanged();
             }
         }
 
@@ -31,7 +31,7 @@ namespace HPTClient
             set
             {
                 upperLimit = value;
-                OnPropertyChanged("UpperLimit");
+                OnPropertyChanged();
             }
         }
 
@@ -46,7 +46,7 @@ namespace HPTClient
             set
             {
                 numberOfRows = value;
-                OnPropertyChanged("NumberOfRows");
+                OnPropertyChanged();
             }
         }
 
@@ -61,7 +61,7 @@ namespace HPTClient
             set
             {
                 percentageOfRows = value;
-                OnPropertyChanged("PercentageOfRows");
+                OnPropertyChanged();
             }
         }
     }
@@ -80,7 +80,7 @@ namespace HPTClient
             set
             {
                 percentile = value;
-                OnPropertyChanged("Percentile");
+                OnPropertyChanged();
             }
         }
 
@@ -95,7 +95,7 @@ namespace HPTClient
             set
             {
                 description = value;
-                OnPropertyChanged("Description");
+                OnPropertyChanged();
             }
         }
 
@@ -110,7 +110,7 @@ namespace HPTClient
             set
             {
                 rowValue = value;
-                OnPropertyChanged("RowValue");
+                OnPropertyChanged();
             }
         }
     }

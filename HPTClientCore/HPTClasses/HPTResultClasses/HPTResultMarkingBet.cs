@@ -23,7 +23,7 @@ namespace HPTClient
             set
             {
                 winnerStrings = value;
-                OnPropertyChanged("WinnerStrings");
+                OnPropertyChanged();
             }
         }
 
@@ -38,7 +38,7 @@ namespace HPTClient
             set
             {
                 this.value = value;
-                OnPropertyChanged("Value");
+                OnPropertyChanged();
             }
         }
 
@@ -53,7 +53,7 @@ namespace HPTClient
             set
             {
                 systemsLeft = value;
-                OnPropertyChanged("SystemsLeft");
+                OnPropertyChanged();
             }
         }
 
@@ -68,7 +68,7 @@ namespace HPTClient
             set
             {
                 hasResult = value;
-                OnPropertyChanged("HasResult");
+                OnPropertyChanged();
             }
         }
 
@@ -83,7 +83,7 @@ namespace HPTClient
             set
             {
                 winnerList = value;
-                OnPropertyChanged("WinnerList");
+                OnPropertyChanged();
             }
         }
 
@@ -105,7 +105,7 @@ namespace HPTClient
             set
             {
                 numberOfCorrect = value;
-                OnPropertyChanged("NumberOfCorrect");
+                OnPropertyChanged();
             }
         }
 
@@ -120,7 +120,7 @@ namespace HPTClient
             set
             {
                 payOutAmount = value;
-                OnPropertyChanged("PayOutAmount");
+                OnPropertyChanged();
             }
         }
 
@@ -141,7 +141,7 @@ namespace HPTClient
             set
             {
                 totalAmount = value;
-                OnPropertyChanged("TotalAmount");
+                OnPropertyChanged();
             }
         }
 
@@ -156,7 +156,7 @@ namespace HPTClient
             set
             {
                 numberOfWinningRows = value;
-                OnPropertyChanged("NumberOfWinningRows");
+                OnPropertyChanged();
             }
         }
 
@@ -170,7 +170,7 @@ namespace HPTClient
             set
             {
                 minRowValue = value;
-                OnPropertyChanged("MinRowValue");
+                OnPropertyChanged();
             }
         }
 
@@ -184,7 +184,7 @@ namespace HPTClient
             set
             {
                 maxRowValue = value;
-                OnPropertyChanged("MaxRowValue");
+                OnPropertyChanged();
             }
         }
 

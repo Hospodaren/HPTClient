@@ -45,7 +45,7 @@ namespace HPTClient
             set
             {
                 abcdTemplateSettingsList = value;
-                OnPropertyChanged("ABCDTemplateSettingsList");
+                OnPropertyChanged();
             }
         }
 

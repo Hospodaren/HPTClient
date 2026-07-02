@@ -18,7 +18,7 @@ namespace HPTClient
             set
             {
                 showRowNumber = value;
-                OnPropertyChanged("ShowRowNumber");
+                OnPropertyChanged();
             }
         }
 
@@ -34,7 +34,7 @@ namespace HPTClient
             set
             {
                 showRowValue = value;
-                OnPropertyChanged("ShowRowValue");
+                OnPropertyChanged();
             }
         }
 
@@ -50,7 +50,7 @@ namespace HPTClient
             set
             {
                 showV6 = value;
-                OnPropertyChanged("ShowV6");
+                OnPropertyChanged();
             }
         }
 
@@ -67,7 +67,7 @@ namespace HPTClient
             set
             {
                 showRowValueV6 = value;
-                OnPropertyChanged("ShowRowValueV6");
+                OnPropertyChanged();
             }
         }
 
@@ -83,7 +83,7 @@ namespace HPTClient
             set
             {
                 showBetMultiplier = value;
-                OnPropertyChanged("ShowBetMultiplier");
+                OnPropertyChanged();
             }
         }
 
@@ -99,7 +99,7 @@ namespace HPTClient
             set
             {
                 showRowValueBetMultiplier = value;
-                OnPropertyChanged("ShowRowValueBetMultiplier");
+                OnPropertyChanged();
             }
         }
 
@@ -115,7 +115,7 @@ namespace HPTClient
             set
             {
                 showRowValue1And2Errors = value;
-                OnPropertyChanged("ShowRowValue1And2Errors");
+                OnPropertyChanged();
             }
         }
 
@@ -131,7 +131,7 @@ namespace HPTClient
             set
             {
                 showStakeShareSum = value;
-                OnPropertyChanged("ShowStakeShareSum");
+                OnPropertyChanged();
             }
         }
 
@@ -147,7 +147,7 @@ namespace HPTClient
             set
             {
                 showStartNumberSum = value;
-                OnPropertyChanged("ShowStartNumberSum");
+                OnPropertyChanged();
             }
         }
 
@@ -163,7 +163,7 @@ namespace HPTClient
             set
             {
                 showRankSum = value;
-                OnPropertyChanged("ShowRankSum");
+                OnPropertyChanged();
             }
         }
 
@@ -179,7 +179,7 @@ namespace HPTClient
             set
             {
                 showHorses = value;
-                OnPropertyChanged("ShowHorses");
+                OnPropertyChanged();
             }
         }
 
@@ -195,7 +195,7 @@ namespace HPTClient
             set
             {
                 showOwnProbability = value;
-                OnPropertyChanged("ShowOwnProbability");
+                OnPropertyChanged();
             }
         }
 

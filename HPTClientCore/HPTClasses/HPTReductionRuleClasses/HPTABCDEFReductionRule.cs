@@ -36,7 +36,7 @@ namespace HPTClient
             set
             {
                 xReductionRuleList = value;
-                OnPropertyChanged("XReductionRuleList");
+                OnPropertyChanged();
             }
         }
 
@@ -102,7 +102,7 @@ namespace HPTClient
             set
             {
                 lowestMax = value;
-                OnPropertyChanged("LowestMax");
+                OnPropertyChanged();
             }
         }
 
@@ -117,7 +117,7 @@ namespace HPTClient
             set
             {
                 use = value;
-                OnPropertyChanged("Use");
+                OnPropertyChanged();
             }
         }
 

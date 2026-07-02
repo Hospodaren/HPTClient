@@ -20,7 +20,7 @@ namespace HPTClient
                     return;
                 }
                 use = value;
-                OnPropertyChanged("Use");
+                OnPropertyChanged();
             }
         }
 
@@ -39,7 +39,7 @@ namespace HPTClient
                     return;
                 }
                 minSum = value;
-                OnPropertyChanged("MinSum");
+                OnPropertyChanged();
             }
         }
 
@@ -58,7 +58,7 @@ namespace HPTClient
                     return;
                 }
                 maxSum = value;
-                OnPropertyChanged("MaxSum");
+                OnPropertyChanged();
             }
         }
 
@@ -77,7 +77,7 @@ namespace HPTClient
                     return;
                 }
                 minPercentSum = value;
-                OnPropertyChanged("MinPercentSum");
+                OnPropertyChanged();
             }
         }
 
@@ -96,7 +96,7 @@ namespace HPTClient
                     return;
                 }
                 maxPercentSum = value;
-                OnPropertyChanged("MaxPercentSum");
+                OnPropertyChanged();
             }
         }
 
@@ -115,7 +115,7 @@ namespace HPTClient
                     return;
                 }
                 lowestSum = value;
-                OnPropertyChanged("LowestSum");
+                OnPropertyChanged();
             }
         }
 
@@ -134,7 +134,7 @@ namespace HPTClient
                     return;
                 }
                 highestSum = value;
-                OnPropertyChanged("HighestSum");
+                OnPropertyChanged();
             }
         }
 
@@ -153,7 +153,7 @@ namespace HPTClient
                     return;
                 }
                 lowestIncludedSum = value;
-                OnPropertyChanged("LowestIncludedSum");
+                OnPropertyChanged();
             }
         }
 
@@ -172,7 +172,7 @@ namespace HPTClient
                     return;
                 }
                 highestIncludedSum = value;
-                OnPropertyChanged("HighestIncludedSum");
+                OnPropertyChanged();
             }
         }
 
@@ -187,7 +187,7 @@ namespace HPTClient
             set
             {
                 incrementLower = value;
-                OnPropertyChanged("IncrementLower");
+                OnPropertyChanged();
             }
         }
 
@@ -202,7 +202,7 @@ namespace HPTClient
             set
             {
                 incrementUpper = value;
-                OnPropertyChanged("IncrementUpper");
+                OnPropertyChanged();
             }
         }
 

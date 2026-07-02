@@ -76,7 +76,7 @@ namespace HPTClient
             set
             {
                 use = value;
-                OnPropertyChanged("Use");
+                OnPropertyChanged();
             }
         }
 
@@ -91,7 +91,7 @@ namespace HPTClient
             set
             {
                 numberOfRulesList = value;
-                OnPropertyChanged("NumberOfRulesList");
+                OnPropertyChanged();
             }
         }
     }

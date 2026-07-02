@@ -267,7 +267,7 @@ namespace HPTClient
             set
             {
                 dataToShow = value;
-                OnPropertyChanged("DataToShow");
+                OnPropertyChanged();
             }
         }
 
@@ -303,7 +303,7 @@ namespace HPTClient
             set
             {
                 trackCondition = value;
-                OnPropertyChanged("TrackCondition");
+                OnPropertyChanged();
             }
         }
 
@@ -318,7 +318,7 @@ namespace HPTClient
             set
             {
                 raceDayDate = value;
-                OnPropertyChanged("RaceDayDate");
+                OnPropertyChanged();
                 if (value == DateTime.MinValue)
                 {
                     RaceDayDateString = string.Empty;
@@ -343,7 +343,7 @@ namespace HPTClient
             set
             {
                 showInUI = value;
-                OnPropertyChanged("ShowInUI");
+                OnPropertyChanged();
             }
         }
 
@@ -398,7 +398,7 @@ namespace HPTClient
             set
             {
                 marksQuantity = value;
-                OnPropertyChanged("MarksQuantity");
+                OnPropertyChanged();
             }
         }
 
@@ -413,7 +413,7 @@ namespace HPTClient
             set
             {
                 turnover = value;
-                OnPropertyChanged("Turnover");
+                OnPropertyChanged();
                 if (marksQuantity > 0)
                 {
                     MeanSystemCost = Convert.ToDecimal(turnover) / Convert.ToDecimal(marksQuantity);
@@ -451,7 +451,7 @@ namespace HPTClient
             set
             {
                 meanSystemCost = value;
-                OnPropertyChanged("MeanSystemCost");
+                OnPropertyChanged();
             }
         }
 
@@ -628,7 +628,7 @@ namespace HPTClient
             set
             {
                 hasResult = value;
-                OnPropertyChanged("HasResult");
+                OnPropertyChanged();
             }
         }
 
@@ -643,7 +643,7 @@ namespace HPTClient
             set
             {
                 resultComplete = value;
-                OnPropertyChanged("ResultComplete");
+                OnPropertyChanged();
             }
         }
 
@@ -694,7 +694,7 @@ namespace HPTClient
             set
             {
                 numberOfFinishedRaces = value;
-                OnPropertyChanged("NumberOfFinishedRaces");
+                OnPropertyChanged();
             }
         }
 
@@ -734,7 +734,7 @@ namespace HPTClient
             set
             {
                 horseListSelected = value;
-                OnPropertyChanged("HorseListSelected");
+                OnPropertyChanged();
             }
         }
 
@@ -773,7 +773,7 @@ namespace HPTClient
             set
             {
                 payOutListATG = value;
-                OnPropertyChanged("PayOutListATG");
+                OnPropertyChanged();
             }
         }
 
@@ -803,7 +803,7 @@ namespace HPTClient
             set
             {
                 payOutList = value;
-                OnPropertyChanged("PayOutList");
+                OnPropertyChanged();
             }
         }
 

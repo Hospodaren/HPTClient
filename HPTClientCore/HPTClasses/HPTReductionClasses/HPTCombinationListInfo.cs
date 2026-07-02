@@ -56,7 +56,7 @@ namespace HPTClient
             set
             {
                 numberOfSelectedCombinations = value;
-                OnPropertyChanged("NumberOfSelectedCombinations");
+                OnPropertyChanged();
             }
         }
 
@@ -70,7 +70,7 @@ namespace HPTClient
             set
             {
                 totalStake = value;
-                OnPropertyChanged("TotalStake");
+                OnPropertyChanged();
             }
         }
 

@@ -112,7 +112,7 @@ namespace HPTClient
             set
             {
                 use = value;
-                OnPropertyChanged("Use");
+                OnPropertyChanged();
             }
         }
 
@@ -127,7 +127,7 @@ namespace HPTClient
             set
             {
                 v6 = value;
-                OnPropertyChanged("V6");
+                OnPropertyChanged();
             }
         }
 
@@ -142,7 +142,7 @@ namespace HPTClient
             set
             {
                 betMultiplier = value;
-                OnPropertyChanged("BetMultiplier");
+                OnPropertyChanged();
             }
         }
 
@@ -157,7 +157,7 @@ namespace HPTClient
             set
             {
                 ruleNumber = value;
-                OnPropertyChanged("RuleNumber");
+                OnPropertyChanged();
             }
         }
 
@@ -172,7 +172,7 @@ namespace HPTClient
             set
             {
                 betMultiplierList = value;
-                OnPropertyChanged("BetMultiplierList");
+                OnPropertyChanged();
             }
         }
 
@@ -187,7 +187,7 @@ namespace HPTClient
             set
             {
                 numberOfRowsAffected = value;
-                OnPropertyChanged("NumberOfRowsAffected");
+                OnPropertyChanged();
             }
         }
 

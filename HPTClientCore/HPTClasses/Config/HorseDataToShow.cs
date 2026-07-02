@@ -16,7 +16,7 @@ namespace HPTClient
             set
             {
                 showHorsePopup = value;
-                OnPropertyChanged("ShowHorsePopup");
+                OnPropertyChanged();
             }
         }
 
@@ -31,7 +31,7 @@ namespace HPTClient
             set
             {
                 showDriverPopup = value;
-                OnPropertyChanged("ShowDriverPopup");
+                OnPropertyChanged();
             }
         }
 
@@ -46,7 +46,7 @@ namespace HPTClient
             set
             {
                 showTrainerPopup = value;
-                OnPropertyChanged("ShowTrainerPopup");
+                OnPropertyChanged();
             }
         }
 
@@ -62,7 +62,7 @@ namespace HPTClient
             set
             {
                 showStartNr = value;
-                OnPropertyChanged("ShowStartNr");
+                OnPropertyChanged();
             }
         }
 
@@ -78,7 +78,7 @@ namespace HPTClient
             set
             {
                 showPrio = value;
-                OnPropertyChanged("ShowPrio");
+                OnPropertyChanged();
             }
         }
 
@@ -94,7 +94,7 @@ namespace HPTClient
             set
             {
                 showName = value;
-                OnPropertyChanged("ShowName");
+                OnPropertyChanged();
             }
         }
 
@@ -110,7 +110,7 @@ namespace HPTClient
             set
             {
                 showSex = value;
-                OnPropertyChanged("ShowSex");
+                OnPropertyChanged();
             }
         }
 
@@ -126,7 +126,7 @@ namespace HPTClient
             set
             {
                 showAge = value;
-                OnPropertyChanged("ShowAge");
+                OnPropertyChanged();
             }
         }
 
@@ -142,7 +142,7 @@ namespace HPTClient
             set
             {
                 showTrack = value;
-                OnPropertyChanged("ShowTrack");
+                OnPropertyChanged();
             }
         }
 
@@ -158,7 +158,7 @@ namespace HPTClient
             set
             {
                 showATGTrend = value;
-                OnPropertyChanged("ShowATGTrend");
+                OnPropertyChanged();
             }
         }
 
@@ -174,7 +174,7 @@ namespace HPTClient
             set
             {
                 showTrends = value;
-                OnPropertyChanged("ShowTrends");
+                OnPropertyChanged();
             }
         }
 
@@ -190,7 +190,7 @@ namespace HPTClient
             set
             {
                 showDriver = value;
-                OnPropertyChanged("ShowDriver");
+                OnPropertyChanged();
             }
         }
 
@@ -206,7 +206,7 @@ namespace HPTClient
             set
             {
                 showTrainer = value;
-                OnPropertyChanged("ShowTrainer");
+                OnPropertyChanged();
             }
         }
 
@@ -222,7 +222,7 @@ namespace HPTClient
             set
             {
                 showOwner = value;
-                OnPropertyChanged("ShowOwner");
+                OnPropertyChanged();
             }
         }
 
@@ -238,7 +238,7 @@ namespace HPTClient
             set
             {
                 showOwnProbability = value;
-                OnPropertyChanged("ShowOwnProbability");
+                OnPropertyChanged();
             }
         }
 
@@ -254,7 +254,7 @@ namespace HPTClient
             set
             {
                 showBreeder = value;
-                OnPropertyChanged("ShowBreeder");
+                OnPropertyChanged();
             }
         }
 
@@ -270,7 +270,7 @@ namespace HPTClient
             set
             {
                 showVinnarOdds = value;
-                OnPropertyChanged("ShowVinnarOdds");
+                OnPropertyChanged();
             }
         }
 
@@ -286,7 +286,7 @@ namespace HPTClient
             set
             {
                 showVinnarOddsShare = value;
-                OnPropertyChanged("ShowVinnarOddsShare");
+                OnPropertyChanged();
             }
         }
 
@@ -302,7 +302,7 @@ namespace HPTClient
             set
             {
                 showVinnarOddsRelative = value;
-                OnPropertyChanged("ShowVinnarOddsRelative");
+                OnPropertyChanged();
             }
         }
 
@@ -318,7 +318,7 @@ namespace HPTClient
             set
             {
                 showPlatsOdds = value;
-                OnPropertyChanged("ShowPlatsOdds");
+                OnPropertyChanged();
             }
         }
 
@@ -334,7 +334,7 @@ namespace HPTClient
             set
             {
                 showStakeDistributionPercent = value;
-                OnPropertyChanged("ShowStakeDistributionPercent");
+                OnPropertyChanged();
             }
         }
 
@@ -350,7 +350,7 @@ namespace HPTClient
             set
             {
                 showStakeDistributionShareAccumulated = value;
-                OnPropertyChanged("ShowStakeDistributionShareAccumulated");
+                OnPropertyChanged();
             }
         }
 
@@ -366,7 +366,7 @@ namespace HPTClient
             set
             {
                 showMarkability = value;
-                OnPropertyChanged("ShowMarkability");
+                OnPropertyChanged();
             }
         }
 
@@ -382,7 +382,7 @@ namespace HPTClient
             set
             {
                 showReserv = value;
-                OnPropertyChanged("ShowReserv");
+                OnPropertyChanged();
             }
         }
 
@@ -398,7 +398,7 @@ namespace HPTClient
             set
             {
                 showRecord = value;
-                OnPropertyChanged("ShowRecord");
+                OnPropertyChanged();
             }
         }
 
@@ -414,7 +414,7 @@ namespace HPTClient
             set
             {
                 showShape = value;
-                OnPropertyChanged("ShowShape");
+                OnPropertyChanged();
             }
         }
 
@@ -430,7 +430,7 @@ namespace HPTClient
             set
             {
                 showEarnings = value;
-                OnPropertyChanged("ShowEarnings");
+                OnPropertyChanged();
             }
         }
 
@@ -446,7 +446,7 @@ namespace HPTClient
             set
             {
                 showEarningsMeanLast5 = value;
-                OnPropertyChanged("ShowEarningsMeanLast5");
+                OnPropertyChanged();
             }
         }
 
@@ -462,7 +462,7 @@ namespace HPTClient
             set
             {
                 showLocked = value;
-                OnPropertyChanged("ShowLocked");
+                OnPropertyChanged();
             }
         }
 
@@ -478,7 +478,7 @@ namespace HPTClient
             set
             {
                 showDaysSinceLastStart = value;
-                OnPropertyChanged("ShowDaysSinceLastStart");
+                OnPropertyChanged();
             }
         }
 
@@ -494,7 +494,7 @@ namespace HPTClient
             set
             {
                 showDistance = value;
-                OnPropertyChanged("ShowDistance");
+                OnPropertyChanged();
             }
         }
 
@@ -510,7 +510,7 @@ namespace HPTClient
             set
             {
                 showShoeInfo = value;
-                OnPropertyChanged("ShowShoeInfo");
+                OnPropertyChanged();
             }
         }
 
@@ -526,7 +526,7 @@ namespace HPTClient
             set
             {
                 showSulkyInfo = value;
-                OnPropertyChanged("ShowSulkyInfo");
+                OnPropertyChanged();
             }
         }
 
@@ -542,7 +542,7 @@ namespace HPTClient
             set
             {
                 showComments = value;
-                OnPropertyChanged("ShowComments");
+                OnPropertyChanged();
             }
         }
 
@@ -558,7 +558,7 @@ namespace HPTClient
             set
             {
                 showLastStartDate = value;
-                OnPropertyChanged("ShowLastStartDate");
+                OnPropertyChanged();
             }
         }
 
@@ -574,7 +574,7 @@ namespace HPTClient
             set
             {
                 showResultRow = value;
-                OnPropertyChanged("ShowResultRow");
+                OnPropertyChanged();
             }
         }
 
@@ -590,7 +590,7 @@ namespace HPTClient
             set
             {
                 showSystemCoverage = value;
-                OnPropertyChanged("ShowSystemCoverage");
+                OnPropertyChanged();
             }
         }
 
@@ -606,7 +606,7 @@ namespace HPTClient
             set
             {
                 showRankMean = value;
-                OnPropertyChanged("ShowRankMean");
+                OnPropertyChanged();
             }
         }
 
@@ -622,7 +622,7 @@ namespace HPTClient
             set
             {
                 showRankOwn = value;
-                OnPropertyChanged("ShowRankOwn");
+                OnPropertyChanged();
             }
         }
 
@@ -638,7 +638,7 @@ namespace HPTClient
             set
             {
                 showRankAlternate = value;
-                OnPropertyChanged("ShowRankAlternate");
+                OnPropertyChanged();
             }
         }
 
@@ -670,7 +670,7 @@ namespace HPTClient
             set
             {
                 showOwnInformation = value;
-                OnPropertyChanged("ShowOwnInformation");
+                OnPropertyChanged();
             }
         }
 
@@ -686,7 +686,7 @@ namespace HPTClient
             set
             {
                 showDoubleShare = value;
-                OnPropertyChanged("ShowDoubleShare");
+                OnPropertyChanged();
             }
         }
 
@@ -702,7 +702,7 @@ namespace HPTClient
             set
             {
                 showTvillingShare = value;
-                OnPropertyChanged("ShowTvillingShare");
+                OnPropertyChanged();
             }
         }
 
@@ -718,7 +718,7 @@ namespace HPTClient
             set
             {
                 showTrioShare = value;
-                OnPropertyChanged("ShowTrioShare");
+                OnPropertyChanged();
             }
         }
 
@@ -734,7 +734,7 @@ namespace HPTClient
             set
             {
                 showPlatsShare = value;
-                OnPropertyChanged("ShowPlatsShare");
+                OnPropertyChanged();
             }
         }
 
@@ -751,7 +751,7 @@ namespace HPTClient
             set
             {
                 showStakeShare = value;
-                OnPropertyChanged("ShowStakeShare");
+                OnPropertyChanged();
             }
         }
 
@@ -767,7 +767,7 @@ namespace HPTClient
             set
             {
                 showStakeShareRelativeToFavourite = value;
-                OnPropertyChanged("ShowStakeShareRelativeToFavourite");
+                OnPropertyChanged();
             }
         }
 
@@ -783,7 +783,7 @@ namespace HPTClient
             set
             {
                 showStakeShareRelativeToNext = value;
-                OnPropertyChanged("ShowStakeShareRelativeToNext");
+                OnPropertyChanged();
             }
         }
 
@@ -799,7 +799,7 @@ namespace HPTClient
             set
             {
                 showHeadToHead = value;
-                OnPropertyChanged("ShowHeadToHead");
+                OnPropertyChanged();
             }
         }
 
@@ -815,7 +815,7 @@ namespace HPTClient
             set
             {
                 showRelativeDifference = value;
-                OnPropertyChanged("ShowRelativeDifference");
+                OnPropertyChanged();
             }
         }
 
@@ -863,7 +863,7 @@ namespace HPTClient
             set
             {
                 showSTHorseLink = value;
-                OnPropertyChanged("ShowSTHorseLink");
+                OnPropertyChanged();
             }
         }
 
@@ -879,7 +879,7 @@ namespace HPTClient
             set
             {
                 showResultInfo = value;
-                OnPropertyChanged("ShowResultInfo");
+                OnPropertyChanged();
             }
         }
 
@@ -897,7 +897,7 @@ namespace HPTClient
             set
             {
                 showComplimentaryRuleSelect = value;
-                OnPropertyChanged("ShowComplimentaryRuleSelect");
+                OnPropertyChanged();
             }
         }
 
@@ -948,7 +948,7 @@ namespace HPTClient
             set
             {
                 showMarksShare = value;
-                OnPropertyChanged("ShowMarksShare");
+                OnPropertyChanged();
             }
         }
 
@@ -964,7 +964,7 @@ namespace HPTClient
             set
             {
                 showMarksQuantity = value;
-                OnPropertyChanged("ShowMarksQuantity");
+                OnPropertyChanged();
             }
         }
 
@@ -984,7 +984,7 @@ namespace HPTClient
             set
             {
                 showRankATG = value;
-                OnPropertyChanged("ShowRankATG");
+                OnPropertyChanged();
             }
         }
 
@@ -999,7 +999,7 @@ namespace HPTClient
             set
             {
                 showRankVinnarOdds = value;
-                OnPropertyChanged("ShowRankVinnarOdds");
+                OnPropertyChanged();
             }
         }
 
@@ -1014,7 +1014,7 @@ namespace HPTClient
             set
             {
                 showRankMarks = value;
-                OnPropertyChanged("ShowRankMarks");
+                OnPropertyChanged();
             }
         }
 
@@ -1029,7 +1029,7 @@ namespace HPTClient
             set
             {
                 showRankMarkability = value;
-                OnPropertyChanged("ShowRankMarkability");
+                OnPropertyChanged();
             }
         }
 
@@ -1044,7 +1044,7 @@ namespace HPTClient
             set
             {
                 showRankRecord = value;
-                OnPropertyChanged("ShowRankRecord");
+                OnPropertyChanged();
             }
         }
 
@@ -1059,7 +1059,7 @@ namespace HPTClient
             set
             {
                 showRankShape = value;
-                OnPropertyChanged("ShowRankShape");
+                OnPropertyChanged();
             }
         }
 
@@ -1074,7 +1074,7 @@ namespace HPTClient
             set
             {
                 showRankEarnings = value;
-                OnPropertyChanged("ShowRankEarnings");
+                OnPropertyChanged();
             }
         }
 
@@ -1089,7 +1089,7 @@ namespace HPTClient
             set
             {
                 showRankEarningsMeanLast5 = value;
-                OnPropertyChanged("ShowRankEarningsMeanLast5");
+                OnPropertyChanged();
             }
         }
 
@@ -1104,7 +1104,7 @@ namespace HPTClient
             set
             {
                 showRankRecordWeighedTotal = value;
-                OnPropertyChanged("ShowRankRecordWeighedTotal");
+                OnPropertyChanged();
             }
         }
 
@@ -1119,7 +1119,7 @@ namespace HPTClient
             set
             {
                 showRankRecordWeighedLast5 = value;
-                OnPropertyChanged("ShowRankRecordWeighedLast5");
+                OnPropertyChanged();
             }
         }
 
@@ -1134,7 +1134,7 @@ namespace HPTClient
             set
             {
                 showRankEarningsMeanThisYear = value;
-                OnPropertyChanged("ShowRankEarningsMeanThisYear");
+                OnPropertyChanged();
             }
         }
 
@@ -1149,7 +1149,7 @@ namespace HPTClient
             set
             {
                 showRankEarningsMeanLastYear = value;
-                OnPropertyChanged("ShowRankEarningsMeanLastYear");
+                OnPropertyChanged();
             }
         }
 
@@ -1164,7 +1164,7 @@ namespace HPTClient
             set
             {
                 showRankTotalEarningsMean = value;
-                OnPropertyChanged("ShowRankTotalEarningsMean");
+                OnPropertyChanged();
             }
         }
 
@@ -1179,7 +1179,7 @@ namespace HPTClient
             set
             {
                 showRankPlatsodds = value;
-                OnPropertyChanged("ShowRankPlatsodds");
+                OnPropertyChanged();
             }
         }
 

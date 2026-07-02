@@ -16,7 +16,7 @@ namespace HPTClient
             set
             {
                 _StartDate = value;
-                OnPropertyChanged("StartDate");
+                OnPropertyChanged();
             }
         }
 
@@ -31,7 +31,7 @@ namespace HPTClient
             set
             {
                 _RaceNumber = value;
-                OnPropertyChanged("RaceNumber");
+                OnPropertyChanged();
             }
         }
 
@@ -46,7 +46,7 @@ namespace HPTClient
             set
             {
                 _TrackId = value;
-                OnPropertyChanged("TrackId");
+                OnPropertyChanged();
             }
         }
 
@@ -61,7 +61,7 @@ namespace HPTClient
             set
             {
                 _BetTypes = value;
-                OnPropertyChanged("BetTypes");
+                OnPropertyChanged();
             }
         }
 

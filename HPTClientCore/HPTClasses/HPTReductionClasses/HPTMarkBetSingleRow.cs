@@ -31,7 +31,7 @@ namespace HPTClient
             set
             {
                 selectedForEditing = value;
-                OnPropertyChanged("SelectedForEditing");
+                OnPropertyChanged();
             }
         }
 
@@ -49,7 +49,7 @@ namespace HPTClient
             set
             {
                 v6 = value;
-                OnPropertyChanged("V6");
+                OnPropertyChanged();
             }
         }
 
@@ -179,7 +179,7 @@ namespace HPTClient
             set
             {
                 rowValue = value;
-                OnPropertyChanged("RowValue");
+                OnPropertyChanged();
             }
         }
 
@@ -193,7 +193,7 @@ namespace HPTClient
             set
             {
                 rowValueWithoutScratchings = value;
-                OnPropertyChanged("RowValueWithoutScratchings");
+                OnPropertyChanged();
             }
         }
 
@@ -207,7 +207,7 @@ namespace HPTClient
             set
             {
                 rowValueV6 = value;
-                OnPropertyChanged("RowValueV6");
+                OnPropertyChanged();
             }
         }
 
@@ -221,7 +221,7 @@ namespace HPTClient
             set
             {
                 rowValueBetMultiplier = value;
-                OnPropertyChanged("RowValueBetMultiplier");
+                OnPropertyChanged();
             }
         }
 
@@ -243,7 +243,7 @@ namespace HPTClient
             set
             {
                 betMultiplier = value;
-                OnPropertyChanged("BetMultiplier");
+                OnPropertyChanged();
                 RowValueBetMultiplier = RowValueV6 * value;
             }
         }
@@ -354,7 +354,7 @@ namespace HPTClient
             set
             {
                 rowValueOneError = value;
-                OnPropertyChanged("RowValueOneError");
+                OnPropertyChanged();
             }
         }
 
@@ -368,7 +368,7 @@ namespace HPTClient
             set
             {
                 rowValueTwoErrors = value;
-                OnPropertyChanged("RowValueTwoErrors");
+                OnPropertyChanged();
             }
         }
 
@@ -382,7 +382,7 @@ namespace HPTClient
             set
             {
                 rowValueThreeErrors = value;
-                OnPropertyChanged("RowValueThreeErrors");
+                OnPropertyChanged();
             }
         }
 
@@ -396,7 +396,7 @@ namespace HPTClient
             set
             {
                 rowValueOneErrorLower = value;
-                OnPropertyChanged("RowValueOneErrorLower");
+                OnPropertyChanged();
             }
         }
 
@@ -410,7 +410,7 @@ namespace HPTClient
             set
             {
                 rowValueOneErrorUpper = value;
-                OnPropertyChanged("RowValueOneErrorUpper");
+                OnPropertyChanged();
             }
         }
 
@@ -425,7 +425,7 @@ namespace HPTClient
 
             {
                 rowValueTwoErrorsLower = value;
-                OnPropertyChanged("RowValueTwoErrorsLower");
+                OnPropertyChanged();
             }
         }
 
@@ -439,7 +439,7 @@ namespace HPTClient
             set
             {
                 rowValueTwoErrorsUpper = value;
-                OnPropertyChanged("RowValueTwoErrorsUpper");
+                OnPropertyChanged();
             }
         }
 
@@ -454,7 +454,7 @@ namespace HPTClient
 
             {
                 rowValueThreeErrorsLower = value;
-                OnPropertyChanged("RowValueThreeErrorsLower");
+                OnPropertyChanged();
             }
         }
 
@@ -468,7 +468,7 @@ namespace HPTClient
             set
             {
                 rowValueThreeErrorsUpper = value;
-                OnPropertyChanged("RowValueThreeErrorsUpper");
+                OnPropertyChanged();
             }
         }
 

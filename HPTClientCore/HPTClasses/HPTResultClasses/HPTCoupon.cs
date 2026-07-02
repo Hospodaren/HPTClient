@@ -27,7 +27,7 @@ namespace HPTClient
             set
             {
                 betMultiplier = value;
-                OnPropertyChanged("BetMultiplier");
+                OnPropertyChanged();
             }
         }
 
@@ -42,7 +42,7 @@ namespace HPTClient
             set
             {
                 numberOfCorrect = value;
-                OnPropertyChanged("NumberOfCorrect");
+                OnPropertyChanged();
             }
         }
 
@@ -132,7 +132,7 @@ namespace HPTClient
             set
             {
                 numberOfAllCorrect = value;
-                OnPropertyChanged("NumberOfAllCorrect");
+                OnPropertyChanged();
             }
         }
 
@@ -147,7 +147,7 @@ namespace HPTClient
             set
             {
                 numberOfOneError = value;
-                OnPropertyChanged("NumberOfOneError");
+                OnPropertyChanged();
             }
         }
 
@@ -162,7 +162,7 @@ namespace HPTClient
             set
             {
                 numberOfTwoErrors = value;
-                OnPropertyChanged("NumberOfTwoErrors");
+                OnPropertyChanged();
             }
         }
 
@@ -177,7 +177,7 @@ namespace HPTClient
             set
             {
                 numberOfThreeErrors = value;
-                OnPropertyChanged("NumberOfThreeErrors");
+                OnPropertyChanged();
             }
         }
 
@@ -192,7 +192,7 @@ namespace HPTClient
             set
             {
                 couponId = value;
-                OnPropertyChanged("CouponId");
+                OnPropertyChanged();
             }
         }
 
@@ -211,7 +211,7 @@ namespace HPTClient
             set
             {
                 couponIdFile = value;
-                OnPropertyChanged("CouponIdFile");
+                OnPropertyChanged();
             }
         }
 
@@ -235,7 +235,7 @@ namespace HPTClient
             set
             {
                 date = value;
-                OnPropertyChanged("Date");
+                OnPropertyChanged();
             }
         }
 
@@ -250,7 +250,7 @@ namespace HPTClient
             set
             {
                 trackCode = value;
-                OnPropertyChanged("TrackCode");
+                OnPropertyChanged();
             }
         }
 
@@ -265,7 +265,7 @@ namespace HPTClient
             set
             {
                 v6 = value;
-                OnPropertyChanged("V6");
+                OnPropertyChanged();
             }
         }
 
@@ -279,7 +279,7 @@ namespace HPTClient
             set
             {
                 canWin = value;
-                OnPropertyChanged("CanWin");
+                OnPropertyChanged();
             }
         }
 
@@ -368,7 +368,7 @@ namespace HPTClient
             set
             {
                 numberOfCorrectsColor = value;
-                OnPropertyChanged("NumberOfCorrectsColor");
+                OnPropertyChanged();
             }
         }
 
@@ -383,7 +383,7 @@ namespace HPTClient
             set
             {
                 systemSize = value;
-                OnPropertyChanged("SystemSize");
+                OnPropertyChanged();
             }
         }
 
@@ -421,7 +421,7 @@ namespace HPTClient
             set
             {
                 payOutAmount = value;
-                OnPropertyChanged("PayOutAmount");
+                OnPropertyChanged();
             }
         }
 

@@ -17,7 +17,7 @@ namespace HPTClient
             set
             {
                 horse = value;
-                OnPropertyChanged("Horse");
+                OnPropertyChanged();
             }
         }
 
@@ -32,7 +32,7 @@ namespace HPTClient
             set
             {
                 prio = value;
-                OnPropertyChanged("Prio");
+                OnPropertyChanged();
             }
         }
 
@@ -65,7 +65,7 @@ namespace HPTClient
                     //    }
                     //}
                 }
-                OnPropertyChanged("Selected");
+                OnPropertyChanged();
             }
         }
 
@@ -84,7 +84,7 @@ namespace HPTClient
                 {
                     Selected = false;
                 }
-                OnPropertyChanged("Selectable");
+                OnPropertyChanged();
             }
         }
     }

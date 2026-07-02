@@ -18,7 +18,7 @@ namespace HPTClient
             set
             {
                 sulkyChanged = value;
-                OnPropertyChanged("SulkyChanged");
+                OnPropertyChanged();
             }
         }
 
@@ -38,7 +38,7 @@ namespace HPTClient
                 //    this.SulkyChanged = true;
                 //}
                 text = value;
-                OnPropertyChanged("Text");
+                OnPropertyChanged();
             }
         }
     }

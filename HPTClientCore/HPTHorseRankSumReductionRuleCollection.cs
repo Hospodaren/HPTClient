@@ -21,7 +21,7 @@ namespace HPTClient
             set
             {
                 typeCategory = value;
-                OnPropertyChanged("TypeCategory");
+                OnPropertyChanged();
             }
         }
 
@@ -36,7 +36,7 @@ namespace HPTClient
             set
             {
                 name = value;
-                OnPropertyChanged("Name");
+                OnPropertyChanged();
             }
         }
 

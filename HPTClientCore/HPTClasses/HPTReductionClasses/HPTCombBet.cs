@@ -128,7 +128,7 @@ namespace HPTClient
             set
             {
                 numberOfSelected = value;
-                OnPropertyChanged("NumberOfSelected");
+                OnPropertyChanged();
             }
         }
 
@@ -143,7 +143,7 @@ namespace HPTClient
             set
             {
                 totalStake = value;
-                OnPropertyChanged("TotalStake");
+                OnPropertyChanged();
             }
         }
 
@@ -158,7 +158,7 @@ namespace HPTClient
             set
             {
                 targetReturn = value;
-                OnPropertyChanged("TargetReturn");
+                OnPropertyChanged();
                 CalculateStake();
             }
         }

@@ -14,7 +14,7 @@
             set
             {
                 stake = value;
-                OnPropertyChanged("Stake");
+                OnPropertyChanged();
             }
         }
 
@@ -28,7 +28,7 @@
             set
             {
                 numberOfSpikes = value;
-                OnPropertyChanged("NumberOfSpikes");
+                OnPropertyChanged();
             }
         }
 
@@ -42,7 +42,7 @@
             set
             {
                 reductionRisk = value;
-                OnPropertyChanged("ReductionRisk");
+                OnPropertyChanged();
             }
         }
 
@@ -56,7 +56,7 @@
             set
             {
                 desiredProfit = value;
-                OnPropertyChanged("DesiredProfit");
+                OnPropertyChanged();
             }
         }
     }

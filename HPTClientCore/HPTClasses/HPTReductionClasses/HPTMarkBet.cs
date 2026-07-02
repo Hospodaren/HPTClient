@@ -803,7 +803,7 @@ namespace HPTClient
             set
             {
                 lockCoupons = value;
-                OnPropertyChanged("LockCoupons");
+                OnPropertyChanged();
             }
         }
 
@@ -818,7 +818,7 @@ namespace HPTClient
             set
             {
                 couponList = value;
-                OnPropertyChanged("CouponList");
+                OnPropertyChanged();
             }
         }
 
@@ -1649,7 +1649,7 @@ namespace HPTClient
             set
             {
                 reductionRuleInfoList = value;
-                OnPropertyChanged("ReductionRuleInfoList");
+                OnPropertyChanged();
             }
         }
 
@@ -1851,7 +1851,7 @@ namespace HPTClient
             set
             {
                 reductionRulesString = value;
-                OnPropertyChanged("ReductionRulesString");
+                OnPropertyChanged();
             }
         }
 
@@ -1989,7 +1989,7 @@ namespace HPTClient
             set
             {
                 minRankSum = value;
-                OnPropertyChanged("MinRankSum");
+                OnPropertyChanged();
             }
         }
 
@@ -2004,7 +2004,7 @@ namespace HPTClient
             set
             {
                 maxRankSum = value;
-                OnPropertyChanged("MaxRankSum");
+                OnPropertyChanged();
             }
         }
 
@@ -2019,7 +2019,7 @@ namespace HPTClient
             set
             {
                 minRankSumPercent = value;
-                OnPropertyChanged("MinRankSumPercent");
+                OnPropertyChanged();
             }
         }
 
@@ -2034,7 +2034,7 @@ namespace HPTClient
             set
             {
                 maxRankSumPercent = value;
-                OnPropertyChanged("MaxRankSumPercent");
+                OnPropertyChanged();
             }
         }
 
@@ -2070,7 +2070,7 @@ namespace HPTClient
                     return;
                 }
                 reductionV6BetMultiplierRule = value;
-                OnPropertyChanged("ReductionV6BetMultiplierRule");
+                OnPropertyChanged();
                 UpdateV6BetMultiplierSingleRows();
             }
         }
@@ -2091,7 +2091,7 @@ namespace HPTClient
                     return;
                 }
                 reductionRank = value;
-                OnPropertyChanged("ReductionRank");
+                OnPropertyChanged();
                 if (!IsDeserializing)
                 {
                     RecalculateRank();
@@ -2116,7 +2116,7 @@ namespace HPTClient
                     return;
                 }
                 reductionHorseRank = value;
-                OnPropertyChanged("ReductionHorseRank");
+                OnPropertyChanged();
                 if (!IsDeserializing)
                 {
                     RecalculateAllRanks();
@@ -2482,7 +2482,7 @@ namespace HPTClient
             set
             {
                 reductionRulesToApply = value;
-                OnPropertyChanged("ReductionRulesToApply");
+                OnPropertyChanged();
             }
         }
 
@@ -2606,7 +2606,7 @@ namespace HPTClient
             set
             {
                 systemURL = value;
-                OnPropertyChanged("SystemURL");
+                OnPropertyChanged();
             }
         }
 
@@ -2621,7 +2621,7 @@ namespace HPTClient
             set
             {
                 userCommentsDescription = value;
-                OnPropertyChanged("UserCommentsDescription");
+                OnPropertyChanged();
             }
         }
 
@@ -2636,7 +2636,7 @@ namespace HPTClient
             set
             {
                 systemComment = value;
-                OnPropertyChanged("SystemComment");
+                OnPropertyChanged();
             }
         }
 
@@ -2655,7 +2655,7 @@ namespace HPTClient
             set
             {
                 mailSender = value;
-                OnPropertyChanged("MailSender");
+                OnPropertyChanged();
             }
         }
 
@@ -2691,7 +2691,7 @@ namespace HPTClient
             set
             {
                 compressCoupons = value;
-                OnPropertyChanged("CompressCoupons");
+                OnPropertyChanged();
                 if (value && SingleRowCollection != null
                     && !IsDeserializing)
                 {
@@ -2726,7 +2726,7 @@ namespace HPTClient
             set
             {
                 useV6BetMultiplierRules = value;
-                OnPropertyChanged("UseV6BetMultiplierRules");
+                OnPropertyChanged();
                 //SetV6BetMultiplierSingleRows();
             }
         }
@@ -2742,7 +2742,7 @@ namespace HPTClient
             set
             {
                 v6 = value;
-                OnPropertyChanged("V6");
+                OnPropertyChanged();
                 UpdateV6BetMultiplierSingleRows();
             }
         }
@@ -2762,7 +2762,7 @@ namespace HPTClient
                     return;
                 }
                 v6SingleRows = value;
-                OnPropertyChanged("V6SingleRows");
+                OnPropertyChanged();
                 UpdateV6BetMultiplierSingleRows();
             }
         }
@@ -2778,7 +2778,7 @@ namespace HPTClient
             set
             {
                 v6UpperBoundary = value;
-                OnPropertyChanged("V6UpperBoundary");
+                OnPropertyChanged();
                 if (V6SingleRows)
                 {
                     UpdateV6BetMultiplierSingleRows();
@@ -2802,7 +2802,7 @@ namespace HPTClient
                     return;
                 }
                 v6OwnRank = value;
-                OnPropertyChanged("V6OwnRank");
+                OnPropertyChanged();
                 UpdateV6BetMultiplierSingleRows();
             }
         }
@@ -2818,7 +2818,7 @@ namespace HPTClient
             set
             {
                 v6OwnRankMax = value;
-                OnPropertyChanged("V6OwnRankMax");
+                OnPropertyChanged();
                 if (V6OwnRank)
                 {
                     UpdateV6BetMultiplierSingleRows();
@@ -2841,7 +2841,7 @@ namespace HPTClient
                     return;
                 }
                 singleRowBetMultiplier = value;
-                OnPropertyChanged("SingleRowBetMultiplier");
+                OnPropertyChanged();
                 UpdateV6BetMultiplierSingleRows();
                 //SetV6BetMultiplierSingleRows();
             }
@@ -2858,7 +2858,7 @@ namespace HPTClient
             set
             {
                 ownProbabilityCostTarget = value;
-                OnPropertyChanged("OwnProbabilityCostTarget");
+                OnPropertyChanged();
                 if (!IsDeserializing && !pauseRecalculation && OwnProbabilityCost)
                 {
                     RecalculateReduction(RecalculateReason.All);
@@ -2881,7 +2881,7 @@ namespace HPTClient
                     return;
                 }
                 ownProbabilityCost = value;
-                OnPropertyChanged("OwnProbabilityCost");
+                OnPropertyChanged();
                 if (!IsDeserializing && !pauseRecalculation)
                 {
                     RecalculateReduction(RecalculateReason.All);
@@ -2900,7 +2900,7 @@ namespace HPTClient
             set
             {
                 singleRowTargetProfit = value;
-                OnPropertyChanged("SingleRowTargetProfit");
+                OnPropertyChanged();
                 if (SingleRowBetMultiplier)
                 {
                     UpdateV6BetMultiplierSingleRows();
@@ -2924,7 +2924,7 @@ namespace HPTClient
                     return;
                 }
                 guaranteeReduction = value;
-                OnPropertyChanged("GuaranteeReduction");
+                OnPropertyChanged();
                 if (!IsDeserializing && !pauseRecalculation)
                 {
                     RecalculateReduction(RecalculateReason.All);
@@ -2944,7 +2944,7 @@ namespace HPTClient
             set
             {
                 _FastGuaranteeReduction = value;
-                OnPropertyChanged("FastGuaranteeReduction");
+                OnPropertyChanged();
                 if (guaranteeReduction && !IsDeserializing && !pauseRecalculation)
                 {
                     RecalculateReduction(RecalculateReason.All);
@@ -2963,7 +2963,7 @@ namespace HPTClient
             set
             {
                 numberOfToleratedErrors = value;
-                OnPropertyChanged("NumberOfToleratedErrors");
+                OnPropertyChanged();
                 if (GuaranteeReduction && !IsDeserializing && !pauseRecalculation)
                 {
                     RecalculateReduction(RecalculateReason.All);
@@ -2986,7 +2986,7 @@ namespace HPTClient
                     return;
                 }
                 randomRowReduction = value;
-                OnPropertyChanged("RandomRowReduction");
+                OnPropertyChanged();
                 if (!IsDeserializing && !pauseRecalculation)
                 {
                     RecalculateReduction(RecalculateReason.All);
@@ -3005,7 +3005,7 @@ namespace HPTClient
             set
             {
                 randomRowReductionTarget = value;
-                OnPropertyChanged("RandomRowReductionTarget");
+                OnPropertyChanged();
                 if (!IsDeserializing && !pauseRecalculation && RandomRowReduction)
                 {
                     RecalculateReduction(RecalculateReason.All);
@@ -3028,7 +3028,7 @@ namespace HPTClient
                     return;
                 }
                 betMultiplierRowAddition = value;
-                OnPropertyChanged("BetMultiplierRowAddition");
+                OnPropertyChanged();
                 if (!IsDeserializing && !pauseRecalculation)
                 {
                     RecalculateReduction(RecalculateReason.All);
@@ -3047,7 +3047,7 @@ namespace HPTClient
             set
             {
                 betMultiplierRowAdditionTarget = value;
-                OnPropertyChanged("BetMultiplierRowAdditionTarget");
+                OnPropertyChanged();
                 if (!IsDeserializing && !pauseRecalculation)
                 {
                     RecalculateReduction(RecalculateReason.All);
@@ -3066,7 +3066,7 @@ namespace HPTClient
             set
             {
                 v6Enabled = value;
-                OnPropertyChanged("V6Enabled");
+                OnPropertyChanged();
             }
         }
 
@@ -3081,7 +3081,7 @@ namespace HPTClient
             set
             {
                 compressionEnabled = value;
-                OnPropertyChanged("CompressionEnabled");
+                OnPropertyChanged();
             }
         }
 
@@ -3231,7 +3231,7 @@ namespace HPTClient
             set
             {
                 v6Visibility = value;
-                OnPropertyChanged("V6Visibility");
+                OnPropertyChanged();
             }
         }
 
@@ -3272,7 +3272,7 @@ namespace HPTClient
             set
             {
                 size = value;
-                OnPropertyChanged("SystemSize");
+                OnPropertyChanged();
             }
         }
 
@@ -3286,7 +3286,7 @@ namespace HPTClient
             set
             {
                 maxPotentialWinnings = value;
-                OnPropertyChanged("MaxPotentialWinnings");
+                OnPropertyChanged();
             }
         }
 
@@ -3300,7 +3300,7 @@ namespace HPTClient
             set
             {
                 systemProbability = value;
-                OnPropertyChanged("SystemProbability");
+                OnPropertyChanged();
             }
         }
 
@@ -3314,7 +3314,7 @@ namespace HPTClient
             set
             {
                 jackpotProbability = value;
-                OnPropertyChanged("JackpotProbability");
+                OnPropertyChanged();
             }
         }
 
@@ -3328,7 +3328,7 @@ namespace HPTClient
             set
             {
                 jackpotRowsOneError = value;
-                OnPropertyChanged("JackpotRowsOneError");
+                OnPropertyChanged();
             }
         }
 
@@ -3342,7 +3342,7 @@ namespace HPTClient
             set
             {
                 jackpotRowsTwoErrors = value;
-                OnPropertyChanged("JackpotRowsTwoErrors");
+                OnPropertyChanged();
             }
         }
 
@@ -3356,7 +3356,7 @@ namespace HPTClient
             set
             {
                 reducedSystemProbability = value;
-                OnPropertyChanged("ReducedSystemProbability");
+                OnPropertyChanged();
             }
         }
 
@@ -3370,7 +3370,7 @@ namespace HPTClient
             set
             {
                 systemProbabilityRatio = value;
-                OnPropertyChanged("SystemProbabilityRatio");
+                OnPropertyChanged();
             }
         }
 
@@ -3385,7 +3385,7 @@ namespace HPTClient
             set
             {
                 totalCouponSize = value;
-                OnPropertyChanged("TotalCouponSize");
+                OnPropertyChanged();
                 SystemCost = value * BetType.RowCost;
             }
         }
@@ -3401,7 +3401,7 @@ namespace HPTClient
             set
             {
                 reducedSize = value;
-                OnPropertyChanged("ReducedSize");
+                OnPropertyChanged();
                 if (SystemSize > 0)
                 {
                     ReductionQuota = Convert.ToDecimal(ReducedSize) / Convert.ToDecimal(SystemSize);
@@ -3429,7 +3429,7 @@ namespace HPTClient
 
                 // Sätt nytt värde
                 systemCost = value;
-                OnPropertyChanged("SystemCost");
+                OnPropertyChanged();
 
                 //// Specialhantering om gratisanvändare gör för stort system
                 //if (!HPTConfig.Config.IsPayingCustomer && value > this.BetType.MaxBetForNotPayingCustomer)
@@ -3454,7 +3454,7 @@ namespace HPTClient
             set
             {
                 numberOfSystems = value;
-                OnPropertyChanged("NumberOfSystems");
+                OnPropertyChanged();
             }
         }
 
@@ -3469,7 +3469,7 @@ namespace HPTClient
             set
             {
                 systemCostChange = value;
-                OnPropertyChanged("SystemCostChange");
+                OnPropertyChanged();
             }
         }
 
@@ -3484,7 +3484,7 @@ namespace HPTClient
             set
             {
                 systemCostChangeRelative = value;
-                OnPropertyChanged("SystemCostChangeRelative");
+                OnPropertyChanged();
             }
         }
 
@@ -3499,7 +3499,7 @@ namespace HPTClient
             set
             {
                 tooExpensive = value;
-                OnPropertyChanged("TooExpensive");
+                OnPropertyChanged();
             }
         }
 
@@ -3514,7 +3514,7 @@ namespace HPTClient
             set
             {
                 reductionQuota = value;
-                OnPropertyChanged("ReductionQuota");
+                OnPropertyChanged();
             }
         }
 
@@ -3529,7 +3529,7 @@ namespace HPTClient
             set
             {
                 numberOfRaces = value;
-                OnPropertyChanged("NumberOfRaces");
+                OnPropertyChanged();
             }
         }
 
@@ -3544,7 +3544,7 @@ namespace HPTClient
             set
             {
                 numberOfCoupons = value;
-                OnPropertyChanged("NumberOfCoupons");
+                OnPropertyChanged();
             }
         }
 
@@ -3562,7 +3562,7 @@ namespace HPTClient
             set
             {
                 singleRowCollection = value;
-                OnPropertyChanged("SingleRowCollection");
+                OnPropertyChanged();
             }
         }
 
@@ -3582,7 +3582,7 @@ namespace HPTClient
             set
             {
                 betMultiplier = value;
-                OnPropertyChanged("BetMultiplier");
+                OnPropertyChanged();
                 if (SystemSize > 0)
                 {
                     CreateBetMultiplierList();
@@ -3627,7 +3627,7 @@ namespace HPTClient
             set
             {
                 uploadedSystemGUID = value;
-                OnPropertyChanged("UploadedSystemGUID");
+                OnPropertyChanged();
             }
         }
 
@@ -3902,7 +3902,7 @@ namespace HPTClient
             set
             {
                 noReservChoiceMade = value;
-                OnPropertyChanged("NoReservChoiceMade");
+                OnPropertyChanged();
             }
         }
 
@@ -3917,7 +3917,7 @@ namespace HPTClient
             set
             {
                 hasOverlappingComplementaryRuleHorses = value;
-                OnPropertyChanged("HasOverlappingComplementaryRuleHorses");
+                OnPropertyChanged();
             }
         }
 
@@ -3932,7 +3932,7 @@ namespace HPTClient
             set
             {
                 hasUncoveredHorses = value;
-                OnPropertyChanged("HasUncoveredHorses");
+                OnPropertyChanged();
             }
         }
 
@@ -3947,7 +3947,7 @@ namespace HPTClient
             set
             {
                 hasTooManySystems = value;
-                OnPropertyChanged("HasTooManySystems");
+                OnPropertyChanged();
             }
         }
 
@@ -3962,7 +3962,7 @@ namespace HPTClient
             set
             {
                 hasSuperfluousXReduction = value;
-                OnPropertyChanged("HasSuperfluousXReduction");
+                OnPropertyChanged();
             }
         }
 
@@ -4050,7 +4050,7 @@ namespace HPTClient
             set
             {
                 reservHandling = value;
-                OnPropertyChanged("ReservHandling");
+                OnPropertyChanged();
             }
         }
 
@@ -4067,7 +4067,7 @@ namespace HPTClient
             set
             {
                 templateResultList = value;
-                OnPropertyChanged("TemplateResultList");
+                OnPropertyChanged();
             }
         }
 
@@ -4082,7 +4082,7 @@ namespace HPTClient
             set
             {
                 numberOfTestedTemplates = value;
-                OnPropertyChanged("NumberOfTestedTemplates");
+                OnPropertyChanged();
             }
         }
 
@@ -4097,7 +4097,7 @@ namespace HPTClient
             set
             {
                 numberOfAddedTemplates = value;
-                OnPropertyChanged("NumberOfAddedTemplates");
+                OnPropertyChanged();
             }
         }
 
@@ -4419,7 +4419,7 @@ namespace HPTClient
             set
             {
                 isCalculatingTemplates = value;
-                OnPropertyChanged("IsCalculatingTemplates");
+                OnPropertyChanged();
             }
         }
 
@@ -4883,7 +4883,7 @@ namespace HPTClient
             set
             {
                 lastSaveTime = value;
-                OnPropertyChanged("LastSaveTime");
+                OnPropertyChanged();
                 if (value == DateTime.MinValue)
                 {
                     LastSaveString = "Ej sparad";
@@ -4910,7 +4910,7 @@ namespace HPTClient
             set
             {
                 lastSaveString = value;
-                OnPropertyChanged("LastSaveString");
+                OnPropertyChanged();
             }
         }
 

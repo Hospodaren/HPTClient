@@ -134,7 +134,7 @@ namespace HPTClient
             set
             {
                 lowerBoundary = value;
-                OnPropertyChanged("LowerBoundary");
+                OnPropertyChanged();
             }
         }
 
@@ -149,7 +149,7 @@ namespace HPTClient
             set
             {
                 upperBoundary = value;
-                OnPropertyChanged("UpperBoundary");
+                OnPropertyChanged();
             }
         }
 
@@ -185,7 +185,7 @@ namespace HPTClient
                 {
                     PropertyName = horseVariable.PropertyName;
                 }
-                OnPropertyChanged("HorseVariable");
+                OnPropertyChanged();
             }
         }
 

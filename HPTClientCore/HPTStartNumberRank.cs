@@ -16,7 +16,7 @@ namespace HPTClient
             set
             {
                 select = value;
-                OnPropertyChanged("Select");
+                OnPropertyChanged();
             }
         }
 
@@ -31,7 +31,7 @@ namespace HPTClient
             set
             {
                 startNumber = value;
-                OnPropertyChanged("StartNumber");
+                OnPropertyChanged();
             }
         }
 
@@ -46,7 +46,7 @@ namespace HPTClient
             set
             {
                 rank = value;
-                OnPropertyChanged("Rank");
+                OnPropertyChanged();
             }
         }
     }

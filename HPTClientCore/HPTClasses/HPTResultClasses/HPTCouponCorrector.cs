@@ -521,7 +521,7 @@ namespace HPTClient
             set
             {
                 couponHelper = value;
-                OnPropertyChanged("CouponHelper");
+                OnPropertyChanged();
             }
         }
 
@@ -535,7 +535,7 @@ namespace HPTClient
             set
             {
                 raceDayInfo = value;
-                OnPropertyChanged("RaceDayInfo");
+                OnPropertyChanged();
             }
         }
 

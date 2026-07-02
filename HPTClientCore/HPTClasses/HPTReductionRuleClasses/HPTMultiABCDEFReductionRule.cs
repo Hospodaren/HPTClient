@@ -18,7 +18,7 @@ namespace HPTClient
             set
             {
                 abcdefReductionRuleList = value;
-                OnPropertyChanged("ABCDEFReductionRuleList");
+                OnPropertyChanged();
             }
         }
 
@@ -45,7 +45,7 @@ namespace HPTClient
             set
             {
                 use = value;
-                OnPropertyChanged("Use");
+                OnPropertyChanged();
             }
         }
 

@@ -65,7 +65,7 @@ namespace HPTClient
             set
             {
                 numberOfRaces = value;
-                OnPropertyChanged("NumberOfRaces");
+                OnPropertyChanged();
             }
         }
 
@@ -80,7 +80,7 @@ namespace HPTClient
             set
             {
                 use = value;
-                OnPropertyChanged("Use");
+                OnPropertyChanged();
             }
         }
 
@@ -95,7 +95,7 @@ namespace HPTClient
             set
             {
                 name = value;
-                OnPropertyChanged("Name");
+                OnPropertyChanged();
             }
         }
 
@@ -110,7 +110,7 @@ namespace HPTClient
             set
             {
                 numberOfSelected = value;
-                OnPropertyChanged("NumberOfSelected");
+                OnPropertyChanged();
             }
         }
 
@@ -146,7 +146,7 @@ namespace HPTClient
             set
             {
                 numberOfWinnersList = value;
-                OnPropertyChanged("NumberOfWinnersList");
+                OnPropertyChanged();
             }
         }
 

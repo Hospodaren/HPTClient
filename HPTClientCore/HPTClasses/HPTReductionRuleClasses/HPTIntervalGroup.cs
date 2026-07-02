@@ -29,7 +29,7 @@ namespace HPTClient
             set
             {
                 numberOfWinnersList = value;
-                OnPropertyChanged("NumberOfWinnersList");
+                OnPropertyChanged();
             }
         }
 
@@ -55,7 +55,7 @@ namespace HPTClient
             set
             {
                 use = value;
-                OnPropertyChanged("Use");
+                OnPropertyChanged();
             }
         }
 
@@ -70,7 +70,7 @@ namespace HPTClient
             set
             {
                 lowerBoundary = value;
-                OnPropertyChanged("LowerBoundary");
+                OnPropertyChanged();
             }
         }
 
@@ -85,7 +85,7 @@ namespace HPTClient
             set
             {
                 upperBoundary = value;
-                OnPropertyChanged("UpperBoundary");
+                OnPropertyChanged();
             }
         }
 

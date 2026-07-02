@@ -17,7 +17,7 @@ namespace HPTClient
             set
             {
                 lowerBoundary = value;
-                OnPropertyChanged("LowerBoundary");
+                OnPropertyChanged();
             }
         }
 
@@ -32,7 +32,7 @@ namespace HPTClient
             set
             {
                 upperBoundary = value;
-                OnPropertyChanged("UpperBoundary");
+                OnPropertyChanged();
             }
         }
 
@@ -47,7 +47,7 @@ namespace HPTClient
             set
             {
                 lowColor = value;
-                OnPropertyChanged("LowColor");
+                OnPropertyChanged();
             }
         }
 
@@ -62,7 +62,7 @@ namespace HPTClient
             set
             {
                 mediumColor = value;
-                OnPropertyChanged("MediumColor");
+                OnPropertyChanged();
             }
         }
 
@@ -77,7 +77,7 @@ namespace HPTClient
             set
             {
                 highColor = value;
-                OnPropertyChanged("HighColor");
+                OnPropertyChanged();
             }
         }
     }

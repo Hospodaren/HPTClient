@@ -18,7 +18,7 @@ namespace HPTClient
             set
             {
                 name = value;
-                OnPropertyChanged("Name");
+                OnPropertyChanged();
             }
         }
 
@@ -33,7 +33,7 @@ namespace HPTClient
             set
             {
                 recipientList = value;
-                OnPropertyChanged("RecipientList");
+                OnPropertyChanged();
             }
         }
 
@@ -48,7 +48,7 @@ namespace HPTClient
             set
             {
                 expanded = value;
-                OnPropertyChanged("Expanded");
+                OnPropertyChanged();
             }
         }
     }

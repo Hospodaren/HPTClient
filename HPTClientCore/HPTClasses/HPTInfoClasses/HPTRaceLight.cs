@@ -23,7 +23,7 @@ namespace HPTClient
             set
             {
                 selectedHorse = value;
-                OnPropertyChanged("SelectedHorse");
+                OnPropertyChanged();
             }
         }
 

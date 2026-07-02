@@ -17,7 +17,7 @@ namespace HPTClient
             set
             {
                 foreshoes = value;
-                OnPropertyChanged("Foreshoes");
+                OnPropertyChanged();
                 if (value == null)
                 {
                     ForeshoesString1 = string.Empty;
@@ -47,7 +47,7 @@ namespace HPTClient
             set
             {
                 foreshoesChanged = value;
-                OnPropertyChanged("ForeshoesChanged");
+                OnPropertyChanged();
             }
         }
 
@@ -62,7 +62,7 @@ namespace HPTClient
             set
             {
                 previousUsed = value;
-                OnPropertyChanged("PreviousUsed");
+                OnPropertyChanged();
             }
         }
 
@@ -77,7 +77,7 @@ namespace HPTClient
             set
             {
                 hindshoes = value;
-                OnPropertyChanged("Hindshoes");
+                OnPropertyChanged();
                 if (value == null)
                 {
                     HindshoesString1 = string.Empty;
@@ -107,7 +107,7 @@ namespace HPTClient
             set
             {
                 hindshoesChanged = value;
-                OnPropertyChanged("HindshoesChanged");
+                OnPropertyChanged();
             }
         }
 
@@ -122,7 +122,7 @@ namespace HPTClient
             set
             {
                 foreshoesString1 = value;
-                OnPropertyChanged("ForeshoesString1");
+                OnPropertyChanged();
             }
         }
 
@@ -137,7 +137,7 @@ namespace HPTClient
             set
             {
                 foreshoesString2 = value;
-                OnPropertyChanged("ForeshoesString2");
+                OnPropertyChanged();
             }
         }
 
@@ -152,7 +152,7 @@ namespace HPTClient
             set
             {
                 hindshoesString1 = value;
-                OnPropertyChanged("HindshoesString1");
+                OnPropertyChanged();
             }
         }
 
@@ -167,7 +167,7 @@ namespace HPTClient
             set
             {
                 hindshoesString2 = value;
-                OnPropertyChanged("HindshoesString2");
+                OnPropertyChanged();
             }
         }
 

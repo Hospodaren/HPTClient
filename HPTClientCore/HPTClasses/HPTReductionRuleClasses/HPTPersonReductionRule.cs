@@ -90,7 +90,7 @@ namespace HPTClient
             set
             {
                 shortDescription = value;
-                OnPropertyChanged("ShortDescription");
+                OnPropertyChanged();
             }
         }
 
@@ -167,7 +167,7 @@ namespace HPTClient
             set
             {
                 personList = value;
-                OnPropertyChanged("PersonList");
+                OnPropertyChanged();
             }
         }
 

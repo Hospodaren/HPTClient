@@ -75,7 +75,7 @@ namespace HPTClient
             set
             {
                 guiProfile = value;
-                OnPropertyChanged("GUIProfile");
+                OnPropertyChanged();
             }
         }
 

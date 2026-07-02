@@ -49,7 +49,7 @@ namespace HPTClient
             set
             {
                 couponList = value;
-                OnPropertyChanged("CouponList");
+                OnPropertyChanged();
             }
         }
 
@@ -948,7 +948,7 @@ namespace HPTClient
             set
             {
                 totalSystemSize = value;
-                OnPropertyChanged("TotalSystemSize");
+                OnPropertyChanged();
             }
         }
 
@@ -962,7 +962,7 @@ namespace HPTClient
             set
             {
                 totalNumberOfAllCorrect = value;
-                OnPropertyChanged("TotalNumberOfAllCorrect");
+                OnPropertyChanged();
             }
         }
 
@@ -978,7 +978,7 @@ namespace HPTClient
             set
             {
                 totalNumberOfOneError = value;
-                OnPropertyChanged("TotalNumberOfOneError");
+                OnPropertyChanged();
             }
         }
 
@@ -1024,7 +1024,7 @@ namespace HPTClient
             set
             {
                 totalWinnings = value;
-                OnPropertyChanged("TotalWinnings");
+                OnPropertyChanged();
             }
         }
 

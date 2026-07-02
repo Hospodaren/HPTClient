@@ -41,7 +41,7 @@ namespace HPTClient
             set
             {
                 groupReductionInfo = value;
-                OnPropertyChanged("GroupReductionInfo");
+                OnPropertyChanged();
             }
         }
 

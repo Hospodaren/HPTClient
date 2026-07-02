@@ -16,7 +16,7 @@ namespace HPTClient
             set
             {
                 numberOfRules = value;
-                OnPropertyChanged("NumberOfRules");
+                OnPropertyChanged();
             }
         }
 
@@ -35,7 +35,7 @@ namespace HPTClient
                     return;
                 }
                 selected = value;
-                OnPropertyChanged("Selected");
+                OnPropertyChanged();
             }
         }
 
@@ -58,7 +58,7 @@ namespace HPTClient
                     return;
                 }
                 selectable = value;
-                OnPropertyChanged("Selectable");
+                OnPropertyChanged();
             }
         }
     }

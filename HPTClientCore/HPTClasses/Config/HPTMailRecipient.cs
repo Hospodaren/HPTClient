@@ -17,7 +17,7 @@ namespace HPTClient
             set
             {
                 name = value;
-                OnPropertyChanged("Name");
+                OnPropertyChanged();
             }
         }
 
@@ -32,7 +32,7 @@ namespace HPTClient
             set
             {
                 eMailAddress = value;
-                OnPropertyChanged("EMailAddress");
+                OnPropertyChanged();
             }
         }
 
@@ -47,7 +47,7 @@ namespace HPTClient
             set
             {
                 selected = value;
-                OnPropertyChanged("Selected");
+                OnPropertyChanged();
             }
         }
 

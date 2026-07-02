@@ -16,7 +16,7 @@ namespace HPTClient
             set
             {
                 showV3 = value;
-                OnPropertyChanged("ShowV3");
+                OnPropertyChanged();
             }
         }
 
@@ -31,7 +31,7 @@ namespace HPTClient
             set
             {
                 showV4 = value;
-                OnPropertyChanged("ShowV4");
+                OnPropertyChanged();
             }
         }
 
@@ -46,7 +46,7 @@ namespace HPTClient
             set
             {
                 showV5 = value;
-                OnPropertyChanged("ShowV5");
+                OnPropertyChanged();
             }
         }
 
@@ -61,7 +61,7 @@ namespace HPTClient
             set
             {
                 showV65 = value;
-                OnPropertyChanged("ShowV65");
+                OnPropertyChanged();
             }
         }
 
@@ -76,7 +76,7 @@ namespace HPTClient
             set
             {
                 showV64 = value;
-                OnPropertyChanged("ShowV64");
+                OnPropertyChanged();
             }
         }
 
@@ -91,7 +91,7 @@ namespace HPTClient
             set
             {
                 showV75 = value;
-                OnPropertyChanged("ShowV75");
+                OnPropertyChanged();
             }
         }
 
@@ -106,7 +106,7 @@ namespace HPTClient
             set
             {
                 showV86 = value;
-                OnPropertyChanged("ShowV86");
+                OnPropertyChanged();
             }
         }
 
@@ -121,7 +121,7 @@ namespace HPTClient
             set
             {
                 showTvilling = value;
-                OnPropertyChanged("ShowTvilling");
+                OnPropertyChanged();
             }
         }
 
@@ -136,7 +136,7 @@ namespace HPTClient
             set
             {
                 showDD = value;
-                OnPropertyChanged("ShowDD");
+                OnPropertyChanged();
             }
         }
 
@@ -151,7 +151,7 @@ namespace HPTClient
             set
             {
                 showLD = value;
-                OnPropertyChanged("ShowLD");
+                OnPropertyChanged();
             }
         }
 
@@ -166,7 +166,7 @@ namespace HPTClient
             set
             {
                 showTrio = value;
-                OnPropertyChanged("ShowTrio");
+                OnPropertyChanged();
             }
         }
 
@@ -181,7 +181,7 @@ namespace HPTClient
             set
             {
                 showDouble = value;
-                OnPropertyChanged("ShowDouble");
+                OnPropertyChanged();
             }
         }
 
@@ -196,7 +196,7 @@ namespace HPTClient
             set
             {
                 showVx = value;
-                OnPropertyChanged("ShowVx");
+                OnPropertyChanged();
             }
         }
 
@@ -211,7 +211,7 @@ namespace HPTClient
             set
             {
                 showVxx = value;
-                OnPropertyChanged("ShowVxx");
+                OnPropertyChanged();
             }
         }
     }

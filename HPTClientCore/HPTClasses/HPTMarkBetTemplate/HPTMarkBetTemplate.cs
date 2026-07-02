@@ -27,7 +27,7 @@ namespace HPTClient
             set
             {
                 name = value;
-                OnPropertyChanged("Name");
+                OnPropertyChanged();
             }
         }
 
@@ -41,7 +41,7 @@ namespace HPTClient
             set
             {
                 rankTemplatename = value;
-                OnPropertyChanged("RankTemplateName");
+                OnPropertyChanged();
             }
         }
 
@@ -60,7 +60,7 @@ namespace HPTClient
                 {
                     RankTemplateName = rankTemplate.Name;
                 }
-                OnPropertyChanged("RankTemplate");
+                OnPropertyChanged();
             }
         }
 

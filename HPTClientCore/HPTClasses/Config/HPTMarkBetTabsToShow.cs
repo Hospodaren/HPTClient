@@ -45,7 +45,7 @@ namespace HPTClient
             set
             {
                 guiProfile = value;
-                OnPropertyChanged("GUIProfile");
+                OnPropertyChanged();
             }
         }
 
@@ -60,7 +60,7 @@ namespace HPTClient
             set
             {
                 isPayingCustomer = value;
-                OnPropertyChanged("IsPayingCustomer");
+                OnPropertyChanged();
             }
         }
 
@@ -76,7 +76,7 @@ namespace HPTClient
             set
             {
                 showRaces = value;
-                OnPropertyChanged("ShowRaces");
+                OnPropertyChanged();
             }
         }
 
@@ -92,7 +92,7 @@ namespace HPTClient
             set
             {
                 showRacesGrouped = value;
-                OnPropertyChanged("ShowRacesGrouped");
+                OnPropertyChanged();
             }
         }
 
@@ -108,7 +108,7 @@ namespace HPTClient
             set
             {
                 showOverview = value;
-                OnPropertyChanged("ShowOverview");
+                OnPropertyChanged();
             }
         }
 
@@ -140,7 +140,7 @@ namespace HPTClient
             set
             {
                 showComments = value;
-                OnPropertyChanged("ShowComments");
+                OnPropertyChanged();
             }
         }
 
@@ -156,7 +156,7 @@ namespace HPTClient
             set
             {
                 showRankReduction = value;
-                OnPropertyChanged("ShowRankReduction");
+                OnPropertyChanged();
             }
         }
 
@@ -172,7 +172,7 @@ namespace HPTClient
             set
             {
                 showRankOverview = value;
-                OnPropertyChanged("ShowRankOverview");
+                OnPropertyChanged();
             }
         }
 
@@ -188,7 +188,7 @@ namespace HPTClient
             set
             {
                 showSingleRows = value;
-                OnPropertyChanged("ShowSingleRows");
+                OnPropertyChanged();
             }
         }
 
@@ -204,7 +204,7 @@ namespace HPTClient
             set
             {
                 showComplimentaryRules = value;
-                OnPropertyChanged("ShowComplimentaryRules");
+                OnPropertyChanged();
             }
         }
 
@@ -221,7 +221,7 @@ namespace HPTClient
             set
             {
                 showIntervalReduction = value;
-                OnPropertyChanged("ShowIntervalReduction");
+                OnPropertyChanged();
             }
         }
 
@@ -237,7 +237,7 @@ namespace HPTClient
             set
             {
                 showDriverReduction = value;
-                OnPropertyChanged("ShowDriverReduction");
+                OnPropertyChanged();
             }
         }
 
@@ -253,7 +253,7 @@ namespace HPTClient
             set
             {
                 showTrainerReduction = value;
-                OnPropertyChanged("ShowTrainerReduction");
+                OnPropertyChanged();
             }
         }
 
@@ -269,7 +269,7 @@ namespace HPTClient
             set
             {
                 showCorrection = value;
-                OnPropertyChanged("ShowCorrection");
+                OnPropertyChanged();
             }
         }
 
@@ -285,7 +285,7 @@ namespace HPTClient
             set
             {
                 showReductionStatistics = value;
-                OnPropertyChanged("ShowReductionStatistics");
+                OnPropertyChanged();
             }
         }
 
@@ -301,7 +301,7 @@ namespace HPTClient
             set
             {
                 showGroupIntervalReduction = value;
-                OnPropertyChanged("ShowGroupIntervalReduction");
+                OnPropertyChanged();
             }
         }
 
@@ -317,7 +317,7 @@ namespace HPTClient
             set
             {
                 showMultiABCD = value;
-                OnPropertyChanged("ShowMultiABCD");
+                OnPropertyChanged();
             }
         }
 
@@ -333,7 +333,7 @@ namespace HPTClient
             set
             {
                 showV6BetMultiplier = value;
-                OnPropertyChanged("ShowV6BetMultiplier");
+                OnPropertyChanged();
             }
         }
 
@@ -349,7 +349,7 @@ namespace HPTClient
             set
             {
                 showCategoryCodeReduction = value;
-                OnPropertyChanged("ShowCategoryCodeReduction");
+                OnPropertyChanged();
             }
         }
     }

@@ -124,7 +124,7 @@ namespace HPTClient
             set
             {
                 _categoryCode = value;
-                OnPropertyChanged("CategoryCode");
+                OnPropertyChanged();
             }
         }
 
@@ -139,7 +139,7 @@ namespace HPTClient
             set
             {
                 numberOfX = value;
-                OnPropertyChanged("NumberOfX");
+                OnPropertyChanged();
             }
         }
 
@@ -154,7 +154,7 @@ namespace HPTClient
             set
             {
                 numberOfRacesWithX = value;
-                OnPropertyChanged("NumberOfRacesWithX");
+                OnPropertyChanged();
             }
         }
 

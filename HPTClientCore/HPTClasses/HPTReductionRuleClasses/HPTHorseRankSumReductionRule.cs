@@ -121,7 +121,7 @@ namespace HPTClient
             set
             {
                 propertyName = value;
-                OnPropertyChanged("PropertyName");
+                OnPropertyChanged();
             }
         }
 
@@ -136,7 +136,7 @@ namespace HPTClient
             set
             {
                 horseRankVariable = value;
-                OnPropertyChanged("HorseRankVariable");
+                OnPropertyChanged();
             }
         }
 
@@ -151,7 +151,7 @@ namespace HPTClient
             set
             {
                 reductionRuleList = value;
-                OnPropertyChanged("ReductionRuleList");
+                OnPropertyChanged();
             }
         }
 

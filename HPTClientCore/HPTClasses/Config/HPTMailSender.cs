@@ -19,7 +19,7 @@ namespace HPTClient
             set
             {
                 subject = value;
-                OnPropertyChanged("Subject");
+                OnPropertyChanged();
             }
         }
 
@@ -34,7 +34,7 @@ namespace HPTClient
             set
             {
                 body = value;
-                OnPropertyChanged("Body");
+                OnPropertyChanged();
             }
         }
 
@@ -64,7 +64,7 @@ namespace HPTClient
             set
             {
                 hpt3FileName = value;
-                OnPropertyChanged("HPT3FileName");
+                OnPropertyChanged();
             }
         }
 
@@ -79,7 +79,7 @@ namespace HPTClient
             set
             {
                 atgSystemFileName = value;
-                OnPropertyChanged("ATGSystemFileName");
+                OnPropertyChanged();
             }
         }
 
@@ -94,7 +94,7 @@ namespace HPTClient
             set
             {
                 attachATGSystemFile = value;
-                OnPropertyChanged("AttachATGSystemFile");
+                OnPropertyChanged();
             }
         }
 
@@ -109,7 +109,7 @@ namespace HPTClient
             set
             {
                 attachHPT3File = value;
-                OnPropertyChanged("AttachHPT3File");
+                OnPropertyChanged();
             }
         }
 

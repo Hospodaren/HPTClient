@@ -1710,7 +1710,7 @@ namespace HPTClient
             set
             {
                 errorString = value;
-                OnPropertyChanged("ErrorString");
+                OnPropertyChanged();
             }
         }
 
@@ -1724,7 +1724,7 @@ namespace HPTClient
             set
             {
                 buttonVisibility = value;
-                OnPropertyChanged("ButtonVisibility");
+                OnPropertyChanged();
             }
         }
 
@@ -1750,7 +1750,7 @@ namespace HPTClient
             set
             {
                 raceDayInfo = value;
-                OnPropertyChanged("RaceDayInfo");
+                OnPropertyChanged();
             }
         }
 
