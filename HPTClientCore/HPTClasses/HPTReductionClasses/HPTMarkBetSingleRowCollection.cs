@@ -862,7 +862,7 @@ namespace HPTClient
                     return;
                 }
                 // Skicka iväg komprimeringen i en ny tråd
-                ThreadPool.QueueUserWorkItem(CompressToCouponsDelegate);
+                _ = Task.Run(() => CompressToCouponsDelegate());
             }
             catch (Exception exc)
             {
@@ -870,7 +870,7 @@ namespace HPTClient
             }
         }
 
-        internal void CompressToCouponsDelegate(object stateInfo)
+        internal void CompressToCouponsDelegate()
         {
             try
             {

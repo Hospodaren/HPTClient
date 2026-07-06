@@ -107,7 +107,7 @@ namespace HPTClient
 
                 if (hptCalendar is null)
                 {
-                    var calendarFileName = $"{HPTConfig.MyDocumentsPath}HPT7Calendar.xml";
+                    var calendarFileName = Path.Combine(HPTConfig.MyDocumentsPath, "HPT7Calendar.xml");
                     hptCalendar = HPTSerializer.DeserializeHPTCalendar(calendarFileName);
                     ATGDownloaderToHPTHelper.UpdateCalendar(hptCalendar);
                     HPTSerializer.SerializeHPTCalendar(calendarFileName, hptCalendar);
@@ -130,7 +130,7 @@ namespace HPTClient
             {
                 ATGDownloaderToHPTHelper.UpdateCalendar(hptCalendar);
                 BindingOperations.GetBindingExpression(lvwCalenda, ListView.ItemsSourceProperty).UpdateTarget();
-                HPTSerializer.SerializeHPTCalendar($"{HPTConfig.MyDocumentsPath}HPT7Calendar.xml", hptCalendar);
+                HPTSerializer.SerializeHPTCalendar(Path.Combine(HPTConfig.MyDocumentsPath,"HPT7Calendar.xml"), hptCalendar);
             }
             catch (Exception exc)
             {
@@ -288,7 +288,7 @@ namespace HPTClient
             //    }
             //    return;
             //}
-            var raceDayDirectory = HPTConfig.MyDocumentsPath + hptRdi.ToDateAndTrackString();
+            var raceDayDirectory = Path.Combine(HPTConfig.MyDocumentsPath, hptRdi.ToDateAndTrackString());
             if (!Directory.Exists(raceDayDirectory))
             {
                 Directory.CreateDirectory(raceDayDirectory);
@@ -974,24 +974,36 @@ namespace HPTClient
             }
         }
 
-        private void miUpdateCalendar_Click(object sender, RoutedEventArgs e)
+        private CancellationTokenSource? calendarUpdateCts;
+
+        private async void miUpdateCalendar_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 Cursor = Cursors.Wait;
-                //var serviceConnector = new HPTServiceConnector(); // TODO?
+                // Cancel any previous in-progress update
+                calendarUpdateCts?.Cancel();
+                calendarUpdateCts = new CancellationTokenSource();
+
                 if (hptCalendar.RaceDayInfoList != null)
                 {
                     hptCalendar.RaceDayInfoList.Clear();
                 }
-                ThreadPool.QueueUserWorkItem(new WaitCallback(GetCalendar), ThreadPriority.Normal);
-                //serviceConnector.GetCalendar(this.hptCalendar);
+
+                await Task.Run(() => GetCalendar(), calendarUpdateCts.Token);
+            }
+            catch (OperationCanceledException)
+            {
+                // Update was cancelled, ignore
             }
             catch (Exception exc)
             {
                 Config.AddToErrorLog(exc);
             }
-            Cursor = Cursors.Arrow;
+            finally
+            {
+                Cursor = Cursors.Arrow;
+            }
         }
 
         private void miAbout_Click(object sender, RoutedEventArgs e)

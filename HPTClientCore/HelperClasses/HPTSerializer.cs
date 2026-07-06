@@ -102,7 +102,7 @@ namespace HPTClient
 
             try
             {
-                ThreadPool.QueueUserWorkItem(new WaitCallback(HPTConfig.Config.UpdateHPTSystemDirectories), ThreadPriority.Normal);
+                _ = Task.Run(() => HPTConfig.Config.UpdateHPTSystemDirectories());
             }
             catch (Exception exc)
             {

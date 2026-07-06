@@ -17,7 +17,7 @@ namespace HPTClient
 
         #endregion
 
-        internal static string ResultAnalyzerFileName = $"{HPTConfig.MyDocumentsPath}HPTResultAnalyzerList.hptral";
+        internal static string ResultAnalyzerFileName =Path.Combine(HPTConfig.MyDocumentsPath, "HPTResultAnalyzerList.hptral");
 
         public HPTResultAnalyzer()
         {

@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
 
@@ -12,7 +13,7 @@ namespace HPTClient
 
         internal void SaveHorseOwnInformationList()
         {
-            var fileName = $"{HPTConfig.MyDocumentsPath}HorseOwnInformationList.hptinfo";
+            var fileName = Path.Combine(HPTConfig.MyDocumentsPath, "HorseOwnInformationList.hptinfo");
             HPTSerializer.SerializeHPTHorseOwnInformation(fileName, this);
         }
 
@@ -62,26 +63,14 @@ namespace HPTClient
                     savedHorseInformation.HasComment = true;
                 }
 
-                // Spara filen efter varje ändring
-                ThreadPool.QueueUserWorkItem(new WaitCallback(SaveHorseOwnInformationList), ThreadPriority.Normal);
+                // Spara filen efter varje ändring (fire-and-forget med Task)
+                _ = Task.Run(() => SaveHorseOwnInformationList());
 
                 return savedHorseInformation;
             }
             catch (Exception)
             {
                 return horse.OwnInformation;
-            }
-        }
-
-        internal void SaveHorseOwnInformationList(object state)
-        {
-            try
-            {
-                SaveHorseOwnInformationList();
-            }
-            catch (Exception exc)
-            {
-                var s = exc.Message;
             }
         }
 

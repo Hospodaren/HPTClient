@@ -951,7 +951,7 @@ namespace HPTClient
 
             try
             {
-                ThreadPool.QueueUserWorkItem(new WaitCallback(RecalculateReductionThreaded), ThreadPriority.Lowest);
+                _ = Task.Run(() => RecalculateReductionThreaded());
             }
             catch (Exception exc)
             {
@@ -959,7 +959,7 @@ namespace HPTClient
             }
         }
 
-        public void RecalculateReductionThreaded(object stateInfo)
+        public void RecalculateReductionThreaded()
         {
             try
             {
@@ -972,19 +972,6 @@ namespace HPTClient
                 if (SystemSize == 0)
                 {
                     return;
-                }
-
-                if (stateInfo != null)
-                {
-                    try
-                    {
-                        var prio = (ThreadPriority)stateInfo;
-                        Thread.CurrentThread.Priority = prio;
-                    }
-                    catch (Exception exc)
-                    {
-                        var s = exc.Message;
-                    }
                 }
 
                 // Nollställ räknaren för hur många rader varje häst är med på
@@ -3971,7 +3958,7 @@ namespace HPTClient
 
             //var templateSettings = (VxxTemplateRankSettings)this.vts;
             IsCalculatingTemplates = true;
-            RecalculateReductionThreaded(this);
+            RecalculateReductionThreaded();
             templateResultList = new ObservableCollection<HPTMarkBetTemplateResult>();
 
             // Beräkna ranksummegränserna
@@ -4046,7 +4033,7 @@ namespace HPTClient
             CompressCoupons = false;
             try
             {
-                CreateSystemsFromTemplateABCD(new object());
+                CreateSystemsFromTemplateABCD();
 
                 // Välj förslag utifrån hur mycket man vill vinna
                 var lowerRowLimit = Convert.ToInt32(TemplateForBeginners.Stake / BetType.RowCost * 0.9M);
@@ -4181,10 +4168,10 @@ namespace HPTClient
 
         public void CreateSystemsFromTemplateABCD()
         {
-            ThreadPool.QueueUserWorkItem(new WaitCallback(CreateSystemsFromTemplateABCD));
+            _ = Task.Run(() => CreateSystemsFromTemplateABCDWorker());
         }
 
-        public void CreateSystemsFromTemplateABCD(object stateInfo)
+        private void CreateSystemsFromTemplateABCDWorker()
         {
             if (SystemSize == 0)
             {
@@ -4363,7 +4350,7 @@ namespace HPTClient
                     {
                         return;
                     }
-                    RecalculateReductionThreaded(this);
+            RecalculateReductionThreaded();
                     NumberOfTestedTemplates++;
 
                     var quota = Convert.ToDecimal(ReducedSize) / Convert.ToDecimal(desiredSystemSize);
@@ -4428,27 +4415,27 @@ namespace HPTClient
 
             MinRankSum = markBetTemplateRank.MinRankValue;
             MaxRankSum = markBetTemplateRank.MaxRankValue;
-            RecalculateReductionThreaded(this);
+            RecalculateReductionThreaded();
             TemplateResultList.Add(new HPTMarkBetTemplateResult(this));
 
             MinRankSum = markBetTemplateRank.MinRankValue + 0.1M;
             MaxRankSum = markBetTemplateRank.MaxRankValue + 0.1M;
-            RecalculateReductionThreaded(this);
+            RecalculateReductionThreaded();
             TemplateResultList.Add(new HPTMarkBetTemplateResult(this));
 
             MinRankSum = markBetTemplateRank.MinRankValue - 0.1M;
             MaxRankSum = markBetTemplateRank.MaxRankValue - 0.1M;
-            RecalculateReductionThreaded(this);
+            RecalculateReductionThreaded();
             TemplateResultList.Add(new HPTMarkBetTemplateResult(this));
 
             MinRankSum = markBetTemplateRank.MinRankValue - 0.1M;
             MaxRankSum = markBetTemplateRank.MaxRankValue;
-            RecalculateReductionThreaded(this);
+            RecalculateReductionThreaded();
             TemplateResultList.Add(new HPTMarkBetTemplateResult(this));
 
             MinRankSum = markBetTemplateRank.MinRankValue;
             MaxRankSum = markBetTemplateRank.MaxRankValue + 0.1M;
-            RecalculateReductionThreaded(this);
+            RecalculateReductionThreaded();
             TemplateResultList.Add(new HPTMarkBetTemplateResult(this));
 
             //this.MinRankSumPercent = markBetTemplateRank.LowerPercentageLimit;

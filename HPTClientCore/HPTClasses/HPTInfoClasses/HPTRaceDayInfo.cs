@@ -153,7 +153,12 @@ namespace HPTClient
 
                 // Ta hänsyn till V6/V7/V8
                 // TODO: V6/V7-beräkningen blir inte rätt
-                var payoutWithoutJackpot = this.MaxPayOut - (decimal)this.Jackpot;
+                var payoutWithoutJackpot = BetType.Code switch
+                {
+                    "GS75" => MaxPayOut - (decimal)this.Jackpot * 0.4M,
+                    _ => MaxPayOut - (decimal)this.Jackpot
+                };
+                // var payoutWithoutJackpot = this.MaxPayOut - (decimal)this.Jackpot;
                 var v6Turnover = payoutWithoutJackpot - minPayOut;
                 var amountToAdd = this.BetType.V6Factor * v6Turnover;
                 var totalAmount = minPayOut + amountToAdd;

@@ -62,7 +62,7 @@ namespace HPTClient
 
         public static HPTConfig ResetHPTConfig()
         {
-            var fileName = MyDocumentsPath + ConfigFileName;
+            var fileName = Path.Combine(MyDocumentsPath, ConfigFileName);
             if (File.Exists(fileName))
             {
                 File.Delete(fileName);
@@ -82,7 +82,7 @@ namespace HPTClient
                 }
 
                 // Konfigurationsfilen saknas av någon anledning
-                if (!File.Exists(MyDocumentsPath + ConfigFileName))
+                if (!File.Exists(Path.Combine(MyDocumentsPath, ConfigFileName)))
                 {
                     hptConfig = new HPTConfig();
                     hptConfig.InitializeConfig();
@@ -108,7 +108,7 @@ namespace HPTClient
                     hptConfig.InitializeConfig();
                     hptConfig.AddToErrorLog(exc);
                 }
-                HPTSerializer.SerializeHPTConfig(MyDocumentsPath + ConfigFileName, hptConfig);
+                HPTSerializer.SerializeHPTConfig( Path.Combine(MyDocumentsPath, ConfigFileName), hptConfig);
             }
 
             if (hptConfig.RankTemplateList == null)
@@ -142,9 +142,9 @@ namespace HPTClient
         internal void SetNonSerializedValues()
         {
             // Katalogen för mallar saknas
-            if (!Directory.Exists($"{MyDocumentsPath}Mallar"))
+            if (!Directory.Exists(Path.Combine(MyDocumentsPath, "Mallar")))
             {
-                Directory.CreateDirectory($"{MyDocumentsPath}Mallar");
+                Directory.CreateDirectory(Path.Combine(MyDocumentsPath, "Mallar"));
             }
 
             //CreateRankVariableLists();
@@ -161,7 +161,7 @@ namespace HPTClient
         internal static void ExportHPTConfig(string fileName)
         {
             Config.SaveConfig();
-            var hptConfig = HPTSerializer.DeserializeHPTConfig(MyDocumentsPath + ConfigFileName);
+            var hptConfig = HPTSerializer.DeserializeHPTConfig(Path.Combine(MyDocumentsPath, ConfigFileName));
             hptConfig.UserName = string.Empty;
             hptConfig.Password = string.Empty;
             try
@@ -194,13 +194,13 @@ namespace HPTClient
         {
             try
             {
-                var templateDirectory = $@"{MyDocumentsPath}Mallar\";
+                var templateDirectory = Path.Combine(MyDocumentsPath, "Mallar");
 
                 Config.RankTemplateList
                     .ToList()
                     .ForEach(r =>
                     {
-                        var fullPath = templateDirectory + CreateFilename(r.Name, "hptrvm");
+                        var fullPath = Path.Combine(templateDirectory, CreateFilename(r.Name, "hptrvm"));
                         HPTSerializer.SerializeHPTObject(typeof(HPTRankTemplate), fullPath, r);
                     });
 
@@ -846,8 +846,7 @@ namespace HPTClient
             {
                 if (field == null)
                 {
-                    field = HPTSerializer.DeserializeHPTHorseOwnInformation(
-                        $"{MyDocumentsPath}HorseOwnInformationList.hptinfo");
+                    field = HPTSerializer.DeserializeHPTHorseOwnInformation(Path.Combine(MyDocumentsPath, "HorseOwnInformationList.hptinfo"));
                     //string dir = HPTConfig.MyDocumentsPath + "OwnHorseInformation\\";
                     //if (!Directory.Exists(dir))
                     //{
@@ -1094,14 +1093,14 @@ namespace HPTClient
                 return;
             }
 
-            var directoryPath = $@"{MyDocumentsPath}Logg\";
+            var directoryPath = Path.Combine(MyDocumentsPath, "Logg");
             if (!Directory.Exists(directoryPath))
             {
                 Directory.CreateDirectory(directoryPath);
             }
             if (string.IsNullOrEmpty(logFilePath))
             {
-                logFilePath = $"{directoryPath}Logg {DateTime.Now:yyyy-MM-dd}.txt";
+                logFilePath = Path.Combine(directoryPath, $"Logg {DateTime.Now:yyyy-MM-dd}.txt");
             }
             var sw = new StreamWriter(logFilePath, true);
             var sb = new StringBuilder();
@@ -1125,14 +1124,14 @@ namespace HPTClient
                 return;
             }
 
-            var directoryPath = $@"{MyDocumentsPath}Logg\";
+            var directoryPath = Path.Combine(MyDocumentsPath,"Logg");
             if (!Directory.Exists(directoryPath))
             {
                 Directory.CreateDirectory(directoryPath);
             }
             if (string.IsNullOrEmpty(logFilePath))
             {
-                logFilePath = $"{directoryPath}Logg {DateTime.Now:yyyy-MM-dd}.txt";
+                logFilePath = Path.Combine(directoryPath, $"Logg {DateTime.Now:yyyy-MM-dd}.txt");
             }
             var sw = new StreamWriter(logFilePath, true);
             var sb = new StringBuilder();
