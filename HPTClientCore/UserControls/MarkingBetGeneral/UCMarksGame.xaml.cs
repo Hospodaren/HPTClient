@@ -246,8 +246,8 @@ namespace HPTClient
                     return;
                 }
 
-                // Deaktivera knappen
-                btnUpdate.IsEnabled = false;
+                // // Deaktivera knappen
+                // btnUpdate.IsEnabled = false;
 
                 // TODO: Använd ATGDownloader
                 var gameBase = ATGDownloader.ATGObjectGetter.UpdateGame(MarkBet.BetType.GameInfoBase);
@@ -261,9 +261,9 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                var s = exc.Message;
+                HPTConfig.AddToErrorLogStatic(exc);
             }
-            btnUpdate.IsEnabled = true;
+            // btnUpdate.IsEnabled = true;
             Cursor = Cursors.Arrow;
         }
 
@@ -527,21 +527,21 @@ namespace HPTClient
                             MarkBet.RecalculateReduction(RecalculateReason.All);
                         }
 
-                        // Begränsningar för gratisanvändarna
-                        if (!Config.IsPayingCustomer)
-                        {
-                            gbFile.IsEnabled = false;
-                            btnCreateCoupons.IsEnabled = false;
-                            btnCreateCouponsAs.IsEnabled = false;
-
-                            //IEnumerable<HPTXReductionRule> proXReductionRules = this.MarkBet.ABCDEFReductionRule.XReductionRuleList.Where(x => x.Use && (x.Prio == HPTPrio.D || x.Prio == HPTPrio.E || x.Prio == HPTPrio.F));
-                            //if ((this.MarkBet.ABCDEFReductionRule.Use && this.MarkBet.ReductionRulesToApply.Count > 1)
-                            //    || proXReductionRules.Count() > 0)
-                            //{
-                            //    this.btnCreateCoupons.IsEnabled = false;
-                            //    this.btnCreateCouponsAs.IsEnabled = false;
-                            //}
-                        }
+                        // // Begränsningar för gratisanvändarna
+                        // if (!Config.IsPayingCustomer)
+                        // {
+                        //     gbFile.IsEnabled = false;
+                        //     btnCreateCoupons.IsEnabled = false;
+                        //     btnCreateCouponsAs.IsEnabled = false;
+                        //
+                        //     //IEnumerable<HPTXReductionRule> proXReductionRules = this.MarkBet.ABCDEFReductionRule.XReductionRuleList.Where(x => x.Use && (x.Prio == HPTPrio.D || x.Prio == HPTPrio.E || x.Prio == HPTPrio.F));
+                        //     //if ((this.MarkBet.ABCDEFReductionRule.Use && this.MarkBet.ReductionRulesToApply.Count > 1)
+                        //     //    || proXReductionRules.Count() > 0)
+                        //     //{
+                        //     //    this.btnCreateCoupons.IsEnabled = false;
+                        //     //    this.btnCreateCouponsAs.IsEnabled = false;
+                        //     //}
+                        // }
 
                         if (MarkBet.LastSaveTime == DateTime.MinValue)
                         {

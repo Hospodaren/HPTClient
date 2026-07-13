@@ -306,9 +306,12 @@ namespace HPTClient
                     try
                     {
                         // Beräkna hur mycket du kan vinna som mest
-                        CalculateWorstCaseScenario();
-                        CalculateBestCaseScenario();
-                        CalculateRemainingRowsForHorses();
+                        if (!MarkBet.RaceDayInfo.ResultComplete)
+                        {
+                            CalculateWorstCaseScenario();
+                            CalculateBestCaseScenario();
+                            CalculateRemainingRowsForHorses();
+                        }
                     }
                     catch (Exception exc)
                     {
@@ -904,7 +907,11 @@ namespace HPTClient
                     MarkBet.BetType.PayOutDummyList[1].PayOutAmount = sr.RowValueOneErrorFinalStakeShare;
                     if (numberOfPools > 2)
                     {
-                        MarkBet.BetType.PayOutDummyList[2].PayOutAmount = sr.RowValueThreeErrorsFinalStakeShare;
+                        MarkBet.BetType.PayOutDummyList[2].PayOutAmount = sr.RowValueTwoErrorsFinalStakeShare;
+                        if (numberOfPools > 3)
+                        {
+                            MarkBet.BetType.PayOutDummyList[3].PayOutAmount = sr.RowValueThreeErrorsFinalStakeShare;
+                        }
                     }
                 }
                 icWorstCaseScenario.ItemsSource = MarkBet.BetType.PayOutDummyList;
@@ -1008,8 +1015,8 @@ namespace HPTClient
 
                                 if (numberOfPools > 3)
                                 {
-                                    // Utdelning på två fel i bästa fall
-                                    bestRow.RowValueThreeErrors = (int)MarkBet.CouponCorrector.CalculatePayOutTwoErrors(bestRow.HorseList, MarkBet.BetType.PoolShareTwoErrors * MarkBet.BetType.RowCost);
+                                    // Utdelning på tre fel i bästa fall
+                                    bestRow.RowValueThreeErrors = (int)MarkBet.CouponCorrector.CalculatePayOutThreeErrors(bestRow.HorseList, MarkBet.BetType.PoolShareTwoErrors * MarkBet.BetType.RowCost);
 
                                     if (bestRow.RowValueTwoErrorsFinalStakeShare >= MarkBet.BetType.JackpotLimit)
                                     {

@@ -22,7 +22,8 @@ namespace HPTClient
             HorseList.Clear();
             for (var raceNumber = 1; raceNumber <= racesToCorrect; raceNumber++)
             {
-                var hptRace = RaceDayInfo.RaceList.FirstOrDefault(hr => hr.LegNr == raceNumber);
+                // var hptRace = RaceDayInfo.RaceList.FirstOrDefault(hr => hr.LegNr == raceNumber);
+                var hptRace = RaceDayInfo.RaceDictionary[raceNumber];
 
                 var legResult = hptRace.LegResult;
                 if (legResult != null)
@@ -482,8 +483,6 @@ namespace HPTClient
 
         public void RetrieveResult(bool setValues)
         {
-            //var serviceConnector = new HPTServiceConnector();
-            //serviceConnector.GetResultMarkingBetByTrackAndDate(RaceDayInfo.BetType.Code, RaceDayInfo.TrackId, RaceDayInfo.RaceDayDate, RaceDayInfo, setValues);
             ReplaceScratchedHorses();
         }
 
@@ -494,13 +493,11 @@ namespace HPTClient
             {
                 foreach (var couponRace in coupon.CouponRaceList)
                 {
-                    var race = RaceDayInfo.RaceList.Where(hr => hr.LegNr == couponRace.LegNr).FirstOrDefault();
-                    if (race != null)
+                    // var race = RaceDayInfo.RaceList.Where(hr => hr.LegNr == couponRace.LegNr).FirstOrDefault();
+                    var race = RaceDayInfo.RaceDictionary[couponRace.LegNr];
+                    if (race != null && couponRace.ReplaceScratchedHorses(race))
                     {
-                        if (couponRace.ReplaceScratchedHorses(race))
-                        {
-                            replaced = true;
-                        }
+                        replaced = true;
                     }
                 }
             }

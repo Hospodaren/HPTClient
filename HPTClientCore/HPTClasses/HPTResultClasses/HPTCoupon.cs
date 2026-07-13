@@ -54,7 +54,9 @@ namespace HPTClient
             {
                 if (couponRace.StartNrList == null)
                 {
-                    couponRace.StartNrList = couponRace.HorseList.Select(h => h.StartNr).ToList();
+                    couponRace.StartNrList = couponRace.HorseList
+                        .Select(h => h.StartNr)
+                        .ToList();
                 }
             }
             this.raceDayInfo = raceDayInfo;
@@ -67,7 +69,8 @@ namespace HPTClient
             NumberOfCorrect = 0;
             for (var raceNumber = 1; raceNumber <= racesToCorrect; raceNumber++)
             {
-                var hptRace = raceDayInfo.RaceList.First(r => r.LegNr == raceNumber);
+                // var hptRace = raceDayInfo.RaceList.First(r => r.LegNr == raceNumber);
+                var hptRace = raceDayInfo.RaceDictionary[raceNumber];
                 if (hptRace.LegResult != null && hptRace.LegResult.WinnerList != null)
                 {
                     var hptLegResult = hptRace.LegResult;
@@ -89,7 +92,8 @@ namespace HPTClient
             NumberOfCorrect = 0;
             for (var raceNumber = 1; raceNumber <= raceDayInfo.RaceList.Count; raceNumber++)
             {
-                var hptRace = raceDayInfo.RaceList.First(r => r.LegNr == raceNumber);
+                // var hptRace = raceDayInfo.RaceList.First(r => r.LegNr == raceNumber);
+                var hptRace = raceDayInfo.RaceDictionary[raceNumber];
                 if (hptRace.LegResult != null && hptRace.LegResult.WinnerList != null)
                 {
                     var hptLegResult = hptRace.LegResult;
@@ -396,7 +400,8 @@ namespace HPTClient
                     var numberOfErrors = 0;
                     for (var i = 1; i <= NumberOfFinishedLegs; i++)
                     {
-                        var race = raceDayInfo.RaceList.First(r => r.LegNr == i);
+                        // var race = raceDayInfo.RaceList.First(r => r.LegNr == i);
+                        var race = raceDayInfo.RaceDictionary[i];
                         if (race.LegResult != null && race.LegResult.WinnerList != null && race.LegResult.WinnerList[0] != null)
                         {
                             //HPTLegResult legResult = race.LegResult;

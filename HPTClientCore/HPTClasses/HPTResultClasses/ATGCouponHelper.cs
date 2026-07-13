@@ -759,7 +759,8 @@ namespace HPTClient
                         .Select(i => new HPTCouponRace()
                         {
                             LegNr = i,
-                            HorseList = MarkBet.RaceDayInfo.RaceList.First(r => r.LegNr == i).HorseListSelected
+                            // HorseList = MarkBet.RaceDayInfo.RaceList.First(r => r.LegNr == i).HorseListSelected
+                            HorseList = MarkBet.RaceDayInfo.RaceDictionary[i].HorseListSelected
                         }))
                 };
                 couponList.Add(coupon);
@@ -1010,7 +1011,8 @@ namespace HPTClient
                 foreach (var couponRace in coupon.CouponRaceList)
                 {
                     couponRace.HorseList = new List<HPTHorse>();
-                    var race = MarkBet.RaceDayInfo.RaceList.FirstOrDefault(r => r.LegNr == couponRace.LegNr);
+                    // var race = MarkBet.RaceDayInfo.RaceList.FirstOrDefault(r => r.LegNr == couponRace.LegNr);
+                    var race = MarkBet.RaceDayInfo.RaceDictionary[couponRace.LegNr];
                     if (race != null)
                     {
                         foreach (var startNr in couponRace.StartNrList)
@@ -1032,7 +1034,8 @@ namespace HPTClient
             {
                 foreach (var couponRace in coupon.CouponRaceList)
                 {
-                    var race = MarkBet.RaceDayInfo.RaceList.FirstOrDefault(r => r.LegNr == couponRace.LegNr);
+                    // var race = MarkBet.RaceDayInfo.RaceList.FirstOrDefault(r => r.LegNr == couponRace.LegNr);
+                    var race = MarkBet.RaceDayInfo.RaceDictionary[couponRace.LegNr];
                     if (race != null)
                     {
                         couponRace.StartNrList = couponRace.HorseList.Select(h => h.StartNr).ToList();
