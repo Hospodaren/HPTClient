@@ -2107,5 +2107,10 @@ namespace HPTClient
         //}
 
         #endregion
+
+        private void HandleCalendarViewUpdate(object timerData)
+        {
+            // Dispatcher.Invoke(HandleCalendarViewUpdate); // Calls itself!
+        }
     }
 }

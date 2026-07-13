@@ -1316,11 +1316,11 @@ namespace HPTClient
             {
                 lock (RaceDayInfo.HorseListSelected)
                 {
-                    var race = RaceDayInfo.RaceList.FirstOrDefault(r => r.LegNr == legNr);
+                    // var race = RaceDayInfo.RaceList.FirstOrDefault(r => r.LegNr == legNr);
+                    var race = RaceDayInfo.RaceDictionary?[legNr];
                     var selectedHorses = race.HorseList.Where(h => h.Selected).ToList();
                     if (race.HorseListSelected == null)
                     {
-                        //race.HorseListSelected = new List<HPTHorse>(selectedHorses);
                         race.HorseListSelected = new List<HPTHorse>();
                     }
 

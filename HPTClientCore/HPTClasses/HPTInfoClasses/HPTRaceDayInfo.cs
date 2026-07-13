@@ -373,9 +373,20 @@ namespace HPTClient
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public List<HPTRace> RaceList { get; set; }
 
-        //[DataMember]
-        //public int MarksQuantity { get; set; }
-
+        [XmlIgnore]
+        public IDictionary<int, HPTRace>? RaceDictionary 
+        {
+            get
+            {
+                if (field is null)
+                {
+                    field = RaceList?.ToDictionary(r =>  r.LegNr);   
+                }
+                return field;
+            } 
+            set; 
+        }
+        
         private int marksQuantity;
         [DataMember]
         public int MarksQuantity

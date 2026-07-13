@@ -3,15 +3,15 @@
   "WorkspaceRootPath": "C:\\Users\\johan\\source\\repos\\HPTClient\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A694C247-97CF-3243-9EA1-098F13D9C818}|HPTClientCore\\HPTClientCore.csproj|c:\\users\\johan\\source\\repos\\hptclient\\hptclientcore\\hptclientcore.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
+      "RelativeMoniker": "D:0:0:{A694C247-97CF-3243-9EA1-098F13D9C818}|HPTClientCore\\HPTClientCore.csproj|solutionrelative:hptclientcore\\hptclientcore.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files\\dotnet\\sdk\\10.0.301\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.Sdk.DefaultItems.targets||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A694C247-97CF-3243-9EA1-098F13D9C818}|HPTClientCore\\HPTClientCore.csproj|c:\\users\\johan\\source\\repos\\hptclient\\hptclientcore\\atgcalendar.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A694C247-97CF-3243-9EA1-098F13D9C818}|HPTClientCore\\HPTClientCore.csproj|solutionrelative:hptclientcore\\atgcalendar.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A694C247-97CF-3243-9EA1-098F13D9C818}|HPTClientCore\\HPTClientCore.csproj|c:\\users\\johan\\source\\repos\\hptclient\\hptclientcore\\hptclientcore.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
-      "RelativeMoniker": "D:0:0:{A694C247-97CF-3243-9EA1-098F13D9C818}|HPTClientCore\\HPTClientCore.csproj|solutionrelative:hptclientcore\\hptclientcore.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A694C247-97CF-3243-9EA1-098F13D9C818}|HPTClientCore\\HPTClientCore.csproj|c:\\users\\johan\\source\\repos\\hptclient\\hptclientcore\\helperclasses\\hptserializer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -275,15 +275,14 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "HPTClientCore",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClientCore.csproj",
               "RelativeDocumentMoniker": "HPTClientCore\\HPTClientCore.csproj",
               "ToolTip": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\HPTClientCore.csproj",
               "RelativeToolTip": "HPTClientCore\\HPTClientCore.csproj",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2026-06-17T15:37:56.598Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-17T15:37:56.598Z"
             },
             {
               "$type": "Document",
@@ -390,7 +389,8 @@
               "ToolTip": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UserControls\\Correction\\UCCorrectionMarkingBet.xaml",
               "RelativeToolTip": "HPTClientCore\\UserControls\\Correction\\UCCorrectionMarkingBet.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-03-01T16:33:59.507Z"
+              "WhenOpened": "2026-03-01T16:33:59.507Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -449,7 +449,8 @@
               "ToolTip": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UserControls\\MarkingBetGeneral\\UCMarksGame.xaml",
               "RelativeToolTip": "HPTClientCore\\UserControls\\MarkingBetGeneral\\UCMarksGame.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-02-24T08:20:35.697Z"
+              "WhenOpened": "2026-02-24T08:20:35.697Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -496,7 +497,8 @@
               "ToolTip": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UserControls\\MarkingBetReductions\\UCABCDReductionSettings.xaml",
               "RelativeToolTip": "HPTClientCore\\UserControls\\MarkingBetReductions\\UCABCDReductionSettings.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-02-23T13:51:57.325Z"
+              "WhenOpened": "2026-02-23T13:51:57.325Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -521,6 +523,10 @@
               "ViewState": "AgIAABMAAAAAAAAAAAAowBMAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-16T16:47:29.454Z"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
             }
           ]
         },
@@ -538,16 +544,14 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Microsoft.NET.Sdk.DefaultItems.targets",
               "DocumentMoniker": "C:\\Program Files\\dotnet\\sdk\\10.0.301\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.Sdk.DefaultItems.targets",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Program Files\\dotnet\\sdk\\10.0.301\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.Sdk.DefaultItems.targets",
               "ToolTip": "C:\\Program Files\\dotnet\\sdk\\10.0.301\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.Sdk.DefaultItems.targets",
               "RelativeToolTip": "..\\..\\..\\..\\..\\Program Files\\dotnet\\sdk\\10.0.301\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.Sdk.DefaultItems.targets",
-              "ViewState": "AgIAAIAAAAAAAAAAAAAUwJwAAAALAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
-              "WhenOpened": "2026-06-17T15:41:00.531Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-17T15:41:00.531Z"
             },
             {
               "$type": "Document",
@@ -575,7 +579,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "ATGCalendar.xaml.cs",
               "DocumentMoniker": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\ATGCalendar.xaml.cs",
               "RelativeDocumentMoniker": "HPTClientCore\\ATGCalendar.xaml.cs",
@@ -583,8 +587,7 @@
               "RelativeToolTip": "HPTClientCore\\ATGCalendar.xaml.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-23T12:04:34.535Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-23T12:04:34.535Z"
             },
             {
               "$type": "Document",
@@ -832,7 +835,8 @@
               "ToolTip": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UserControls\\MarkingBetReductions\\UCCategoryReductionSettings.xaml",
               "RelativeToolTip": "HPTClientCore\\UserControls\\MarkingBetReductions\\UCCategoryReductionSettings.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-02-23T15:07:43.351Z"
+              "WhenOpened": "2026-02-23T15:07:43.351Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -924,7 +928,8 @@
               "ToolTip": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\ATGCalendar.xaml",
               "RelativeToolTip": "HPTClientCore\\ATGCalendar.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-02-25T12:11:29.228Z"
+              "WhenOpened": "2026-02-25T12:11:29.228Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -1053,7 +1058,8 @@
               "ToolTip": "C:\\Users\\johan\\source\\repos\\HPTClient\\HPTClientCore\\UCOwnInformationView.xaml",
               "RelativeToolTip": "HPTClientCore\\UCOwnInformationView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-02-23T12:46:53.645Z"
+              "WhenOpened": "2026-02-23T12:46:53.645Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",

@@ -142,8 +142,8 @@ namespace HPTClient
                     })
                 };
 
-                var dirName = Path.GetDirectoryName(hmb.SaveDirectory);
-                dirName = Path.Combine(dirName, "Historik");
+                // var dirName = Path.GetDirectoryName(hmb.SaveDirectory);
+                var dirName = Path.Combine(hmb.SaveDirectory, "Historik");
                 if (!Directory.Exists(dirName))
                 {
                     Directory.CreateDirectory(dirName);

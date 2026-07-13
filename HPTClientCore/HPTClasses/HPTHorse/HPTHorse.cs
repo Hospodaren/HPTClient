@@ -61,6 +61,7 @@ namespace HPTClient
 
             // Insatsfördelning
             this.StakeDistributionShare = start.BetDistributionShare > 0 ? start.BetDistributionShare : this.StakeDistributionShare;
+            StakeDistributionShareFinal = StakeDistributionShare;
             this.ATGTrend = start.Trend;
 
             // Sen strykning

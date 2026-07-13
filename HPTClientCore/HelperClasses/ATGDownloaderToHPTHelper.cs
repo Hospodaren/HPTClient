@@ -424,6 +424,7 @@ namespace HPTClient
                 //StakeDistribution = TODO: Summa per häst verkar inte finnas längre
                 //StakeDistributionPercent = TODO: Ta bort?
                 StakeDistributionShare = start.BetDistributionShare,
+                StakeDistributionShareFinal = start.BetDistributionShare,
                 //StakeShareAlternate = TODO: Fixa i ATGDownloader
                 //StakeShareAlternate2 = TODO: Fixa i ATGDownloader
                 //StakeShareRounded = TODO: Ta bort
