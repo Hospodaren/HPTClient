@@ -29,8 +29,8 @@ namespace HPTClient
         {
             if (cmbUpdateInterval.SelectedItem != null)
             {
-                ComboBoxItem cbi = (ComboBoxItem)cmbUpdateInterval.SelectedItem;
-                int updatePeriod = Convert.ToInt32(cbi.Tag);
+                var cbi = (ComboBoxItem)cmbUpdateInterval.SelectedItem;
+                var updatePeriod = Convert.ToInt32(cbi.Tag);
                 if (HPTConfig.Config.DefaultUpdateInterval != updatePeriod)
                 {
                     HPTConfig.Config.DefaultUpdateInterval = updatePeriod;
@@ -42,8 +42,8 @@ namespace HPTClient
         {
             if (cmbReservHandling.SelectedItem != null)
             {
-                ComboBoxItem cbi = (ComboBoxItem)cmbReservHandling.SelectedItem;
-                ReservHandling rh = (ReservHandling)Convert.ToInt32(cbi.Tag);
+                var cbi = (ComboBoxItem)cmbReservHandling.SelectedItem;
+                var rh = (ReservHandling)Convert.ToInt32(cbi.Tag);
                 if (HPTConfig.Config.DefaultReservHandling != rh)
                 {
                     HPTConfig.Config.DefaultReservHandling = rh;

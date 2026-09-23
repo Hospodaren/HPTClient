@@ -6,7 +6,7 @@ namespace HPTClient
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            int intValue = System.Convert.ToInt32(value);
+            var intValue = System.Convert.ToInt32(value);
             if (culture == null)
             {
                 culture = new System.Globalization.CultureInfo("sv-SE");
@@ -15,28 +15,28 @@ namespace HPTClient
 
             if (intValue < 10000)
             {
-                return intValue.ToString("N0", culture) + " kr";
+                return $"{intValue.ToString("N0", culture)} kr";
             }
 
             if (intValue < 100000)
             {
-                decimal dividedAndRounded = intValue / 1000M;
+                var dividedAndRounded = intValue / 1000M;
                 dividedAndRounded = Math.Round(dividedAndRounded, 1);
-                return dividedAndRounded.ToString(culture) + " K";
+                return $"{dividedAndRounded.ToString(culture)} K";
             }
 
             if (intValue < 1000000)
             {
-                decimal dividedAndRounded = intValue / 1000M;
+                var dividedAndRounded = intValue / 1000M;
                 dividedAndRounded = Math.Round(dividedAndRounded, 0);
-                return dividedAndRounded.ToString(culture) + " K";
+                return $"{dividedAndRounded.ToString(culture)} K";
             }
 
             if (intValue < 10000000)
             {
-                decimal dividedAndRounded = intValue / 1000000M;
+                var dividedAndRounded = intValue / 1000000M;
                 dividedAndRounded = Math.Round(dividedAndRounded, 1);
-                return dividedAndRounded.ToString(culture) + " M";
+                return $"{dividedAndRounded.ToString(culture)} M";
             }
 
             //if (intValue < 100000000)
@@ -48,9 +48,9 @@ namespace HPTClient
 
             if (intValue >= 10000000)
             {
-                decimal dividedAndRounded = intValue / 1000000M;
+                var dividedAndRounded = intValue / 1000000M;
                 dividedAndRounded = Math.Round(dividedAndRounded, 0);
-                return dividedAndRounded.ToString(culture) + " M";
+                return $"{dividedAndRounded.ToString(culture)} M";
             }
 
             return string.Empty;

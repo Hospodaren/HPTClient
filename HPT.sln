@@ -13,8 +13,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HPTClientCore", "HPTClientC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HPTHistoryDownloaderService", "HPTHistoryDownloaderService\HPTHistoryDownloaderService.csproj", "{4E12E6AD-942E-4744-8D03-87AA20213F12}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HPT.Data", "HPT.Data\HPT.Data.csproj", "{D49C2DC3-044D-4EDD-B8A8-7390EE772321}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{4E12E6AD-942E-4744-8D03-87AA20213F12}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E12E6AD-942E-4744-8D03-87AA20213F12}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E12E6AD-942E-4744-8D03-87AA20213F12}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D49C2DC3-044D-4EDD-B8A8-7390EE772321}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D49C2DC3-044D-4EDD-B8A8-7390EE772321}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D49C2DC3-044D-4EDD-B8A8-7390EE772321}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D49C2DC3-044D-4EDD-B8A8-7390EE772321}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -15,20 +15,19 @@ namespace HPTClient
             InitializeComponent();
         }
 
-        private HPTV6BetMultiplierRule v6BetMultiplierRule;
         internal HPTV6BetMultiplierRule V6BetMultiplierRule
         {
             get
             {
-                if (v6BetMultiplierRule == null && DataContext != null && DataContext.GetType() == typeof(HPTV6BetMultiplierRule))
+                if (field == null && DataContext != null && DataContext.GetType() == typeof(HPTV6BetMultiplierRule))
                 {
-                    v6BetMultiplierRule = (HPTV6BetMultiplierRule)DataContext;
+                    field = (HPTV6BetMultiplierRule)DataContext;
                     if (MarkBet == null)
                     {
-                        MarkBet = v6BetMultiplierRule.MarkBet;
+                        MarkBet = field.MarkBet;
                     }
                 }
-                return v6BetMultiplierRule;
+                return field;
             }
         }
 
@@ -158,7 +157,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
     }

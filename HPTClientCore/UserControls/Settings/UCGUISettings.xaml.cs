@@ -13,13 +13,12 @@ namespace HPTClient
             InitializeComponent();
         }
 
-        private HPTGUIElementsToShow guiElementsToShow;
         internal HPTGUIElementsToShow GUIElementsToShow
         {
             get
             {
-                guiElementsToShow = (HPTGUIElementsToShow)DataContext;
-                return guiElementsToShow;
+                field = (HPTGUIElementsToShow)DataContext;
+                return field;
             }
         }
 

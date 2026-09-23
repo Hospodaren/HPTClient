@@ -6,18 +6,14 @@ namespace HPTClient
     [DataContract]
     public class HPTHorseShoeInfo : Notifier
     {
-        private bool? foreshoes;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public bool? Foreshoes
         {
-            get
-            {
-                return foreshoes;
-            }
+            get;
             set
             {
-                foreshoes = value;
-                OnPropertyChanged("Foreshoes");
+                field = value;
+                OnPropertyChanged();
                 if (value == null)
                 {
                     ForeshoesString1 = string.Empty;
@@ -36,48 +32,36 @@ namespace HPTClient
             }
         }
 
-        private bool foreshoesChanged;
         [XmlIgnore]
         public bool ForeshoesChanged
         {
-            get
-            {
-                return foreshoesChanged;
-            }
+            get;
             set
             {
-                foreshoesChanged = value;
-                OnPropertyChanged("ForeshoesChanged");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool previousUsed;
         [DataMember]
         public bool PreviousUsed
         {
-            get
-            {
-                return previousUsed;
-            }
+            get;
             set
             {
-                previousUsed = value;
-                OnPropertyChanged("PreviousUsed");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool? hindshoes;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public bool? Hindshoes
         {
-            get
-            {
-                return hindshoes;
-            }
+            get;
             set
             {
-                hindshoes = value;
-                OnPropertyChanged("Hindshoes");
+                field = value;
+                OnPropertyChanged();
                 if (value == null)
                 {
                     HindshoesString1 = string.Empty;
@@ -96,78 +80,58 @@ namespace HPTClient
             }
         }
 
-        private bool hindshoesChanged;
         [XmlIgnore]
         public bool HindshoesChanged
         {
-            get
-            {
-                return hindshoesChanged;
-            }
+            get;
             set
             {
-                hindshoesChanged = value;
-                OnPropertyChanged("HindshoesChanged");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private string foreshoesString1;
         [XmlIgnore]
         public string ForeshoesString1
         {
-            get
-            {
-                return foreshoesString1;
-            }
+            get;
             set
             {
-                foreshoesString1 = value;
-                OnPropertyChanged("ForeshoesString1");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private string foreshoesString2;
         [XmlIgnore]
         public string ForeshoesString2
         {
-            get
-            {
-                return foreshoesString2;
-            }
+            get;
             set
             {
-                foreshoesString2 = value;
-                OnPropertyChanged("ForeshoesString2");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private string hindshoesString1;
         [XmlIgnore]
         public string HindshoesString1
         {
-            get
-            {
-                return hindshoesString1;
-            }
+            get;
             set
             {
-                hindshoesString1 = value;
-                OnPropertyChanged("HindshoesString1");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private string hindshoesString2;
         [XmlIgnore]
         public string HindshoesString2
         {
-            get
-            {
-                return hindshoesString2;
-            }
+            get;
             set
             {
-                hindshoesString2 = value;
-                OnPropertyChanged("HindshoesString2");
+                field = value;
+                OnPropertyChanged();
             }
         }
 

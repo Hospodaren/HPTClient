@@ -12,78 +12,58 @@ namespace HPTClient
         [DataMember]
         public int[] Winners { get; set; }
 
-        private string[] winnerStrings;
         [XmlIgnore]
         public string[] WinnerStrings
         {
-            get
-            {
-                return winnerStrings;
-            }
+            get;
             set
             {
-                winnerStrings = value;
-                OnPropertyChanged("WinnerStrings");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int? value;
         [DataMember]
         public int? Value
         {
-            get
-            {
-                return value;
-            }
+            get;
             set
             {
-                this.value = value;
-                OnPropertyChanged("Value");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal? systemsLeft;
         [DataMember]
         public decimal? SystemsLeft
         {
-            get
-            {
-                return systemsLeft;
-            }
+            get;
             set
             {
-                systemsLeft = value;
-                OnPropertyChanged("SystemsLeft");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool hasResult;
         [DataMember]
         public bool HasResult
         {
-            get
-            {
-                return hasResult;
-            }
+            get;
             set
             {
-                hasResult = value;
-                OnPropertyChanged("HasResult");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private HPTHorse[] winnerList;
         [XmlIgnore]
         public HPTHorse[] WinnerList
         {
-            get
-            {
-                return winnerList;
-            }
+            get;
             set
             {
-                winnerList = value;
-                OnPropertyChanged("WinnerList");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -94,33 +74,25 @@ namespace HPTClient
     [DataContract]
     public class HPTPayOut : Notifier
     {
-        private int numberOfCorrect;
         [DataMember]
         public int NumberOfCorrect
         {
-            get
-            {
-                return numberOfCorrect;
-            }
+            get;
             set
             {
-                numberOfCorrect = value;
-                OnPropertyChanged("NumberOfCorrect");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal payOutAmount;
         [DataMember]
         public decimal PayOutAmount
         {
-            get
-            {
-                return payOutAmount;
-            }
+            get;
             set
             {
-                payOutAmount = value;
-                OnPropertyChanged("PayOutAmount");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -130,61 +102,45 @@ namespace HPTClient
         //[DataMember]
         //public int TotalAmount { get; set; }
 
-        private int totalAmount;
         [DataMember]
         public int TotalAmount
         {
-            get
-            {
-                return totalAmount;
-            }
+            get;
             set
             {
-                totalAmount = value;
-                OnPropertyChanged("TotalAmount");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int numberOfWinningRows;
         [DataMember]
         public int NumberOfWinningRows
         {
-            get
-            {
-                return numberOfWinningRows;
-            }
+            get;
             set
             {
-                numberOfWinningRows = value;
-                OnPropertyChanged("NumberOfWinningRows");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int minRowValue;
         public int MinRowValue
         {
-            get
-            {
-                return minRowValue;
-            }
+            get;
             set
             {
-                minRowValue = value;
-                OnPropertyChanged("MinRowValue");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int maxRowValue;
         public int MaxRowValue
         {
-            get
-            {
-                return maxRowValue;
-            }
+            get;
             set
             {
-                maxRowValue = value;
-                OnPropertyChanged("MaxRowValue");
+                field = value;
+                OnPropertyChanged();
             }
         }
 

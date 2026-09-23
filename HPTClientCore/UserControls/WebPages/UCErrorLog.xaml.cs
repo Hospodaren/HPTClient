@@ -18,9 +18,9 @@ namespace HPTClient
         {
             try
             {
-                Button btn = (Button)e.OriginalSource;
-                Exception exc = (Exception)btn.DataContext;
-                StringBuilder sb = new StringBuilder();
+                var btn = (Button)e.OriginalSource;
+                var exc = (Exception)btn.DataContext;
+                var sb = new StringBuilder();
                 sb.AppendLine("Felmeddelande:");
                 sb.AppendLine(exc.Message);
                 sb.AppendLine("StackTrace:");
@@ -29,7 +29,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -37,9 +37,9 @@ namespace HPTClient
         {
             try
             {
-                HPTConfig config = (HPTConfig)DataContext;
-                StringBuilder sb = new StringBuilder();
-                foreach (Exception exc in config.ErrorLog)
+                var config = (HPTConfig)DataContext;
+                var sb = new StringBuilder();
+                foreach (var exc in config.ErrorLog)
                 {
                     sb.AppendLine("Felmeddelande:");
                     sb.AppendLine(exc.Message);
@@ -51,7 +51,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -63,7 +63,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
     }

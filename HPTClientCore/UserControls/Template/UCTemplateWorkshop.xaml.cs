@@ -78,7 +78,7 @@ namespace HPTClient
                 }
                 catch (Exception exc)
                 {
-                    string s = exc.Message;
+                    var s = exc.Message;
                 }
                 //RemoveEventHandlers();
                 AddEventHandlers();
@@ -111,7 +111,7 @@ namespace HPTClient
         private bool calculationInProgress;
         internal void UpdateSelectionFromTemplate()
         {
-            bool recalculationPaused = MarkBet.pauseRecalculation;
+            var recalculationPaused = MarkBet.pauseRecalculation;
             if (MarkBet == null || CurrentRankTemplate == null || CurrentMarkBetTemplateABCD == null || calculationInProgress)
             {
                 return;
@@ -174,7 +174,7 @@ namespace HPTClient
         {
             if (string.IsNullOrEmpty(CurrentMarkBetTemplateABCD.Name))
             {
-                CurrentMarkBetTemplateABCD.Name = "Ny mall " + DateTime.Now.ToLongDateString();
+                CurrentMarkBetTemplateABCD.Name = $"Ny mall {DateTime.Now.ToLongDateString()}";
             }
             if (CurrentRankTemplate != null)
             {
@@ -191,7 +191,7 @@ namespace HPTClient
         {
             if (string.IsNullOrEmpty(CurrentMarkBetTemplateRank.Name))
             {
-                CurrentMarkBetTemplateRank.Name = "Ny mall " + DateTime.Now.ToLongDateString();
+                CurrentMarkBetTemplateRank.Name = $"Ny mall {DateTime.Now.ToLongDateString()}";
             }
             CurrentMarkBetTemplateRank.DesiredSystemSize = CurrentMarkBetTemplateABCD.DesiredSystemSize;
             CurrentMarkBetTemplateRank.NumberOfSpikes = CurrentMarkBetTemplateABCD.NumberOfSpikes;

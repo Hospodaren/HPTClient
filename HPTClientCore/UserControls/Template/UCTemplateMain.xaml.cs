@@ -54,8 +54,8 @@ namespace HPTClient
         {
             try
             {
-                string result = HPTConfig.ExportTemplatesToDisk();
-                var dr = MessageBox.Show("Mallar exporterade till " + result + ". Vill du öppna katalog?", "Mallar exporterade", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                var result = HPTConfig.ExportTemplatesToDisk();
+                var dr = MessageBox.Show($"Mallar exporterade till {result}. Vill du öppna katalog?", "Mallar exporterade", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
                 if (dr == MessageBoxResult.Yes)
                 {
                     System.Diagnostics.Process.Start(result);
@@ -73,7 +73,7 @@ namespace HPTClient
             {
                 try
                 {
-                    OpenFileDialog ofd = (OpenFileDialog)sender;
+                    var ofd = (OpenFileDialog)sender;
                     var templateCollection = HPTSerializer.DeserializeHPTTemplateCollection(ofd.FileName);
                     CopyTemplatesToConfig(templateCollection);
                 }
@@ -147,12 +147,12 @@ namespace HPTClient
                 var existingRankTemplate = Config.RankTemplateList.FirstOrDefault(rt => rt.Name == rankTemplate.Name);
                 if (existingRankTemplate != null)
                 {
-                    int rankTemplateNumber = 1;
-                    string templateName = rankTemplate.Name;
+                    var rankTemplateNumber = 1;
+                    var templateName = rankTemplate.Name;
                     while (existingRankTemplate != null)
                     {
                         rankTemplateNumber++;
-                        templateName = rankTemplate.Name + " (" + rankTemplateNumber.ToString() + ")";
+                        templateName = $"{rankTemplate.Name} ({rankTemplateNumber})";
                         existingRankTemplate = Config.RankTemplateList.FirstOrDefault(rt => rt.Name == templateName);
                     }
                     ChangeRankTemplateReference(templateCollection.MarkBetTemplateABCDList, rankTemplate.Name, templateName);
@@ -170,12 +170,12 @@ namespace HPTClient
                 var existingTemplate = Config.MarkBetTemplateABCDList.FirstOrDefault(t => t.Name == markBetABCDTemplate.Name);
                 if (existingTemplate != null)
                 {
-                    int templateNumber = 1;
-                    string templateName = markBetABCDTemplate.Name;
+                    var templateNumber = 1;
+                    var templateName = markBetABCDTemplate.Name;
                     while (existingTemplate != null)
                     {
                         templateNumber++;
-                        templateName = markBetABCDTemplate.Name + " (" + templateNumber.ToString() + ")";
+                        templateName = $"{markBetABCDTemplate.Name} ({templateNumber})";
                         existingTemplate = Config.MarkBetTemplateABCDList.FirstOrDefault(t => t.Name == templateName);
                     }
                     markBetABCDTemplate.Name = templateName;   // Sätt namn med löpnummer efter
@@ -192,12 +192,12 @@ namespace HPTClient
                 var existingTemplate = Config.MarkBetTemplateRankList.FirstOrDefault(t => t.Name == markBetRankTemplate.Name);
                 if (existingTemplate != null)
                 {
-                    int templateNumber = 1;
-                    string templateName = markBetRankTemplate.Name;
+                    var templateNumber = 1;
+                    var templateName = markBetRankTemplate.Name;
                     while (existingTemplate != null)
                     {
                         templateNumber++;
-                        templateName = markBetRankTemplate.Name + " (" + templateNumber.ToString() + ")";
+                        templateName = $"{markBetRankTemplate.Name} ({templateNumber})";
                         existingTemplate = Config.MarkBetTemplateRankList.FirstOrDefault(t => t.Name == templateName);
                     }
                     markBetRankTemplate.Name = templateName;   // Sätt namn med löpnummer efter
@@ -214,12 +214,12 @@ namespace HPTClient
                 var existingTemplate = Config.GroupIntervalRulesCollectionList.FirstOrDefault(t => t.Name == groupIntervalRulesCollection.Name);
                 if (existingTemplate != null)
                 {
-                    int templateNumber = 1;
-                    string templateName = groupIntervalRulesCollection.Name;
+                    var templateNumber = 1;
+                    var templateName = groupIntervalRulesCollection.Name;
                     while (existingTemplate != null)
                     {
                         templateNumber++;
-                        templateName = groupIntervalRulesCollection.Name + " (" + templateNumber.ToString() + ")";
+                        templateName = $"{groupIntervalRulesCollection.Name} ({templateNumber})";
                         existingTemplate = Config.GroupIntervalRulesCollectionList.FirstOrDefault(t => t.Name == templateName);
                     }
                     groupIntervalRulesCollection.Name = templateName;   // Sätt namn med löpnummer efter
@@ -241,12 +241,12 @@ namespace HPTClient
                 var existingTemplate = Config.RankSumReductionRuleCollection.FirstOrDefault(t => t.Name == rankSumReductionCollection.Name);
                 if (existingTemplate != null)
                 {
-                    int templateNumber = 1;
-                    string templateName = rankSumReductionCollection.Name;
+                    var templateNumber = 1;
+                    var templateName = rankSumReductionCollection.Name;
                     while (existingTemplate != null)
                     {
                         templateNumber++;
-                        templateName = rankSumReductionCollection.Name + " (" + templateNumber.ToString() + ")";
+                        templateName = $"{rankSumReductionCollection.Name} ({templateNumber})";
                         existingTemplate = Config.RankSumReductionRuleCollection.FirstOrDefault(t => t.Name == templateName);
                     }
                     rankSumReductionCollection.Name = templateName;   // Sätt namn med löpnummer efter

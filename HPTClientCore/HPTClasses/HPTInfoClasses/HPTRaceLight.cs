@@ -12,18 +12,14 @@ namespace HPTClient
         [DataMember]
         public string LegNrString { get; set; }
 
-        private HPTHorseLightSelectable selectedHorse;
         [XmlIgnore]
         public HPTHorseLightSelectable SelectedHorse
         {
-            get
-            {
-                return selectedHorse;
-            }
+            get;
             set
             {
-                selectedHorse = value;
-                OnPropertyChanged("SelectedHorse");
+                field = value;
+                OnPropertyChanged();
             }
         }
 

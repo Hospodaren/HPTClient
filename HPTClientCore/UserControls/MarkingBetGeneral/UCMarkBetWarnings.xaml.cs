@@ -37,7 +37,7 @@ namespace HPTClient
             }
 
             // Skapa innehållet för popupen
-            Border b = new Border()
+            var b = new Border()
             {
                 BorderBrush = new SolidColorBrush(Colors.Black),
                 BorderThickness = new Thickness(1D),
@@ -51,13 +51,13 @@ namespace HPTClient
             };
 
             // Plocka ut hästarna med rätt Prio
-            IOrderedEnumerable<HPTHorse> orderedHorseList = MarkBet.RaceDayInfo.HorseListSelected
+            var orderedHorseList = MarkBet.RaceDayInfo.HorseListSelected
                 .Where(h => h.NumberOfCoveredRows == 0)
                 .OrderBy(h => h.ParentRace.LegNr)
                 .ThenBy(h => h.StartNr);
 
             // Skapa en IHorseListContainer med valda hästar
-            HPTHorseListContainer horseCollection = new HPTHorseListContainer()
+            var horseCollection = new HPTHorseListContainer()
             {
                 //HorseList = new System.Collections.ObjectModel.ObservableCollection<HPTHorse>(orderedHorseList),
                 HorseList = new List<HPTHorse>(orderedHorseList),
@@ -89,7 +89,7 @@ namespace HPTClient
 
         private void btnDeselectUncoveredHorses_Click(object sender, RoutedEventArgs e)
         {
-            bool pauseRecalculation = MarkBet.pauseRecalculation;
+            var pauseRecalculation = MarkBet.pauseRecalculation;
             MarkBet.pauseRecalculation = true;
             try
             {
@@ -127,7 +127,7 @@ namespace HPTClient
             }
 
             // Skapa innehållet för popupen
-            Border b = new Border()
+            var b = new Border()
             {
                 BorderBrush = new SolidColorBrush(Colors.Black),
                 BorderThickness = new Thickness(1D),
@@ -141,13 +141,13 @@ namespace HPTClient
             };
 
             // Plocka ut hästarna med rätt Prio
-            IOrderedEnumerable<HPTHorse> orderedHorseList = MarkBet.RaceDayInfo.HorseListSelected
+            var orderedHorseList = MarkBet.RaceDayInfo.HorseListSelected
                 .Where(h => h.NumberOfCoveredRows == 0)
                 .OrderBy(h => h.ParentRace.LegNr)
                 .ThenBy(h => h.StartNr);
 
             // Skapa en IHorseListContainer med valda hästar
-            HPTHorseListContainer horseCollection = new HPTHorseListContainer()
+            var horseCollection = new HPTHorseListContainer()
             {
                 //HorseList = new System.Collections.ObjectModel.ObservableCollection<HPTHorse>(orderedHorseList),
                 HorseList = new List<HPTHorse>(orderedHorseList),
@@ -175,7 +175,7 @@ namespace HPTClient
         private void btnDeSelectScratchedHorses_Click(object sender, RoutedEventArgs e)
         {
             MarkBet.RaceDayInfo.ScratchedHorseInfo.DeSelectAll();
-            foreach (HPTRace race in MarkBet.RaceDayInfo.RaceList)
+            foreach (var race in MarkBet.RaceDayInfo.RaceList)
             {
                 race.NumberOfSelectedHorses = race.HorseListSelected.Count;
             }
@@ -198,7 +198,7 @@ namespace HPTClient
 
         void pu_MouseLeave(object sender, MouseEventArgs e)
         {
-            System.Windows.Controls.Primitives.Popup pu = (System.Windows.Controls.Primitives.Popup)sender;
+            var pu = (System.Windows.Controls.Primitives.Popup)sender;
             pu.Child = null;
             pu.IsOpen = false;
         }

@@ -27,18 +27,14 @@ namespace HPTClient
 
         }
 
-        private ObservableCollection<HPTCategoryReductionRule> ccReductionRuleList;
         [DataMember]
         public ObservableCollection<HPTCategoryReductionRule> CCReductionRuleList
         {
-            get
-            {
-                return ccReductionRuleList;
-            }
+            get;
             set
             {
-                ccReductionRuleList = value;
-                OnPropertyChanged("CCReductionRuleList");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -93,35 +89,27 @@ namespace HPTClient
             }
         }
 
-        private int lowestMax;
         [DataMember]
         public int LowestMax
         {
-            get
-            {
-                return lowestMax;
-            }
+            get;
             set
             {
-                lowestMax = value;
-                OnPropertyChanged("LowestMax");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool use = true;
         [DataMember]
         public bool Use
         {
-            get
-            {
-                return use;
-            }
+            get;
             set
             {
-                use = value;
-                OnPropertyChanged("Use");
+                field = value;
+                OnPropertyChanged();
             }
-        }
+        } = true;
 
         public void Clear()
         {
@@ -146,7 +134,7 @@ namespace HPTClient
         public override string ToString(HPTMarkBet markBet)
         {
             // Create String representation
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             //sb.AppendLine("ABCD-Villkor");
 
             CCReductionRuleList

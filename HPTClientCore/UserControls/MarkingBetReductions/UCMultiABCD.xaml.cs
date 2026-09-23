@@ -16,7 +16,7 @@ namespace HPTClient
 
         private void btnNewRule_Click(object sender, RoutedEventArgs e)
         {
-            object o = icRules.DataContext;
+            var o = icRules.DataContext;
             MarkBet.MultiABCDEFReductionRule.ABCDEFReductionRuleList.Add(new HPTABCDEFReductionRule(MarkBet));
             MarkBet.RecalculateNumberOfX();
         }
@@ -51,16 +51,16 @@ namespace HPTClient
 
         private void btnRemove_Click(object sender, RoutedEventArgs e)
         {
-            Button btn = (Button)sender;
-            HPTABCDEFReductionRule rule = (HPTABCDEFReductionRule)btn.DataContext;
+            var btn = (Button)sender;
+            var rule = (HPTABCDEFReductionRule)btn.DataContext;
             MarkBet.MultiABCDEFReductionRule.ABCDEFReductionRuleList.Remove(rule);
             MarkBet.RecalculateReduction(RecalculateReason.XReduction);
         }
 
         private void btnClearABCD_Click(object sender, RoutedEventArgs e)
         {
-            Button btn = (Button)sender;
-            HPTABCDEFReductionRule rule = (HPTABCDEFReductionRule)btn.DataContext;
+            var btn = (Button)sender;
+            var rule = (HPTABCDEFReductionRule)btn.DataContext;
             rule.Clear();
         }
 

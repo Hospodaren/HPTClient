@@ -19,10 +19,10 @@ namespace HPTClient
 
         private void ItemsControl_Checked(object sender, RoutedEventArgs e)
         {
-            CheckBox chk = (CheckBox)e.OriginalSource;
-            ItemsControl ic = (ItemsControl)sender;
+            var chk = (CheckBox)e.OriginalSource;
+            var ic = (ItemsControl)sender;
 
-            HPTGroupIntervalReductionRule rule = (HPTGroupIntervalReductionRule)ic.DataContext;
+            var rule = (HPTGroupIntervalReductionRule)ic.DataContext;
             if (rule.Use)
             {
                 MarkBet.RecalculateReduction(RecalculateReason.Other);
@@ -31,8 +31,8 @@ namespace HPTClient
 
         private void btnRemove_Click(object sender, RoutedEventArgs e)
         {
-            Button btn = (Button)sender;
-            HPTGroupIntervalReductionRule rule = (HPTGroupIntervalReductionRule)btn.DataContext;
+            var btn = (Button)sender;
+            var rule = (HPTGroupIntervalReductionRule)btn.DataContext;
             MarkBet.GroupIntervalRulesCollection.ReductionRuleList.Remove(rule);
             if (rule.Use)
             {
@@ -42,9 +42,9 @@ namespace HPTClient
 
         private void cmbVariable_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ComboBox cmb = (ComboBox)sender;
-            HPTGroupIntervalReductionRule rule = (HPTGroupIntervalReductionRule)cmb.Tag;
-            HPTHorseVariable hv = (HPTHorseVariable)cmb.SelectedItem;
+            var cmb = (ComboBox)sender;
+            var rule = (HPTGroupIntervalReductionRule)cmb.Tag;
+            var hv = (HPTHorseVariable)cmb.SelectedItem;
             if (rule.HorseVariable == null || rule.HorseVariable.PropertyName != hv.PropertyName)
             {
                 rule.HorseVariable = hv;
@@ -57,7 +57,7 @@ namespace HPTClient
         {
             if (MarkBet != null)
             {
-                HPTGroupIntervalReductionRule rule = new HPTGroupIntervalReductionRule(MarkBet.RaceDayInfo.RaceList.Count, false);
+                var rule = new HPTGroupIntervalReductionRule(MarkBet.RaceDayInfo.RaceList.Count, false);
                 MarkBet.GroupIntervalRulesCollection.ReductionRuleList.Add(rule);
             }
         }
@@ -66,14 +66,14 @@ namespace HPTClient
         {
             if (MarkBet != null)
             {
-                HPTGroupIntervalReductionRule rule = new HPTGroupIntervalReductionRule(MarkBet.RaceDayInfo.RaceList.Count, false);
+                var rule = new HPTGroupIntervalReductionRule(MarkBet.RaceDayInfo.RaceList.Count, false);
                 MarkBet.GroupIntervalRulesCollection.ReductionRuleList.Add(rule);
             }
         }
 
         private void btnRemoveAll_Click(object sender, RoutedEventArgs e)
         {
-            bool recalculationPaused = MarkBet.pauseRecalculation;
+            var recalculationPaused = MarkBet.pauseRecalculation;
             MarkBet.pauseRecalculation = true;
             try
             {
@@ -125,7 +125,8 @@ namespace HPTClient
             }
             if (string.IsNullOrEmpty(txtNewTemplateName.Text))
             {
-                newGroupIntervalRulesCollection.Name = "Gruppintervall " + MarkBet.BetType.Code + " " + MarkBet.RaceDayInfo.RaceDayDate.ToString("yyyy-MM-dd"); ;
+                newGroupIntervalRulesCollection.Name =
+                    $"Gruppintervall {MarkBet.BetType.Code} {MarkBet.RaceDayInfo.RaceDayDate:yyyy-MM-dd}"; ;
             }
             else
             {
@@ -143,7 +144,7 @@ namespace HPTClient
             {
                 var groupIntervalRulesCollection = (HPTGroupIntervalRulesCollection)cmbGroupIntervalRulesCollection.SelectedItem;
 
-                bool recalculationPaused = MarkBet.pauseRecalculation;
+                var recalculationPaused = MarkBet.pauseRecalculation;
                 MarkBet.pauseRecalculation = true;
                 if (MarkBet.GroupIntervalRulesCollection.ReductionRuleList == null)
                 {
@@ -193,7 +194,7 @@ namespace HPTClient
             }
 
             // Skapa innehållet för popupen
-            Border b = new Border()
+            var b = new Border()
             {
                 BorderBrush = new SolidColorBrush(Colors.Black),
                 BorderThickness = new Thickness(1D),
@@ -209,7 +210,7 @@ namespace HPTClient
 
             // Plocka ut hästarna som ligger i intervallet
             var pi = rule.HorseVariable.HorseProperty;
-            IOrderedEnumerable<HPTHorse> orderedHorseList = MarkBet.RaceDayInfo.HorseListSelected
+            var orderedHorseList = MarkBet.RaceDayInfo.HorseListSelected
                 .Where(h => Convert.ToDecimal(pi.GetValue(h, null)) >= rule.LowerBoundary
                     && Convert.ToDecimal(pi.GetValue(h, null)) <= rule.UpperBoundary)
                 .OrderBy(h => h.ParentRace.LegNr)
@@ -224,7 +225,7 @@ namespace HPTClient
             }
 
             // Skapa en IHorseListContainer med valda hästar
-            HPTHorseListContainer horseCollection = new HPTHorseListContainer()
+            var horseCollection = new HPTHorseListContainer()
             {
                 //HorseList = new System.Collections.ObjectModel.ObservableCollection<HPTHorse>(orderedHorseList),
                 HorseList = new List<HPTHorse>(orderedHorseList),

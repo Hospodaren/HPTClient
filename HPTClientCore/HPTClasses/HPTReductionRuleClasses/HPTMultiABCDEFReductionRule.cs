@@ -7,18 +7,14 @@ namespace HPTClient
     [DataContract]
     public class HPTMultiABCDEFReductionRule : HPTReductionRule
     {
-        private ObservableCollection<HPTABCDEFReductionRule> abcdefReductionRuleList;
         [DataMember]
         public ObservableCollection<HPTABCDEFReductionRule> ABCDEFReductionRuleList
         {
-            get
-            {
-                return abcdefReductionRuleList;
-            }
+            get;
             set
             {
-                abcdefReductionRuleList = value;
-                OnPropertyChanged("ABCDEFReductionRuleList");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -34,18 +30,14 @@ namespace HPTClient
             return false;
         }
 
-        private bool use;
         [DataMember]
         public bool Use
         {
-            get
-            {
-                return use;
-            }
+            get;
             set
             {
-                use = value;
-                OnPropertyChanged("Use");
+                field = value;
+                OnPropertyChanged();
             }
         }
 

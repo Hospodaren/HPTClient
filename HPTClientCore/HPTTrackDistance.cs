@@ -41,16 +41,15 @@
             return 0;
         }
 
-        private static HPTTrackDistance[] trackDistanceArray;
         public static HPTTrackDistance[] TrackDistanceArray
         {
             get
             {
-                if (trackDistanceArray == null)
+                if (field == null)
                 {
-                    trackDistanceArray = CreateTrackDistanceArray();
+                    field = CreateTrackDistanceArray();
                 }
-                return trackDistanceArray;
+                return field;
             }
         }
 

@@ -27,17 +27,15 @@ namespace HPTClient
             DependencyProperty.Register("ShowLegList", typeof(Visibility), typeof(UCABCDReductionSettings), new PropertyMetadata(Visibility.Collapsed));
 
 
-
-        private HPTABCDEFReductionRule abcdefreductionRule;
         internal HPTABCDEFReductionRule ABCDEFreductionRule
         {
             get
             {
-                if (abcdefreductionRule == null)
+                if (field == null)
                 {
-                    abcdefreductionRule = (HPTABCDEFReductionRule)DataContext;
+                    field = (HPTABCDEFReductionRule)DataContext;
                 }
-                return abcdefreductionRule;
+                return field;
             }
         }
 
@@ -67,8 +65,8 @@ namespace HPTClient
                 return;
             }
 
-            TextBlock tb = (TextBlock)sender;
-            HPTXReductionRule rule = (HPTXReductionRule)tb.DataContext;
+            var tb = (TextBlock)sender;
+            var rule = (HPTXReductionRule)tb.DataContext;
             if (pu == null)
             {
                 pu = new System.Windows.Controls.Primitives.Popup()
@@ -82,7 +80,7 @@ namespace HPTClient
             }
 
             // Skapa innehållet för popupen
-            Border b = new Border()
+            var b = new Border()
             {
                 BorderBrush = new SolidColorBrush(Colors.Black),
                 BorderThickness = new Thickness(1D),
@@ -149,7 +147,7 @@ namespace HPTClient
 
         void pu_MouseLeave(object sender, MouseEventArgs e)
         {
-            System.Windows.Controls.Primitives.Popup pu = (System.Windows.Controls.Primitives.Popup)sender;
+            var pu = (System.Windows.Controls.Primitives.Popup)sender;
             pu.Child = null;
             pu.IsOpen = false;
         }

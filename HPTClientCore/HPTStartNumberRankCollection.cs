@@ -5,63 +5,47 @@ namespace HPTClient
     [DataContract]
     public class HPTStartNumberRankCollection : Notifier
     {
-        private string name;
         [DataMember]
         public string Name
         {
-            get
-            {
-                return name;
-            }
+            get;
             set
             {
-                name = value;
-                OnPropertyChanged("Name");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private string startMethodCode;
         [DataMember]
         public string StartMethodCode
         {
-            get
-            {
-                return startMethodCode;
-            }
+            get;
             set
             {
-                startMethodCode = value;
-                OnPropertyChanged("StartMethodCode");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private string distanceCode;
         [DataMember]
         public string DistanceCode
         {
-            get
-            {
-                return distanceCode;
-            }
+            get;
             set
             {
-                distanceCode = value;
-                OnPropertyChanged("DistanceCode");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private List<HPTStartNumberRank> startNumberRankList;
         [DataMember]
         public List<HPTStartNumberRank> StartNumberRankList
         {
-            get
-            {
-                return startNumberRankList;
-            }
+            get;
             set
             {
-                startNumberRankList = value;
-                OnPropertyChanged("StartNumberRankList");
+                field = value;
+                OnPropertyChanged();
             }
         }
     }

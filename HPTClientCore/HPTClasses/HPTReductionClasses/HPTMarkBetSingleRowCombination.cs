@@ -44,10 +44,10 @@ namespace HPTClient
         {
             addedHorse = horse;
             newRowsToFind.Clear();
-            int position = horse.ParentRace.LegNr - 1;
+            var position = horse.ParentRace.LegNr - 1;
             RowList.ForEach(r =>
                 {
-                    string newRow = r.Remove(position, 1).Insert(position, horse.HexCode);
+                    var newRow = r.Remove(position, 1).Insert(position, horse.HexCode);
                     if (!newRowsToFind.Contains(newRow))
                     {
                         newRowsToFind.Add(newRow);
@@ -149,7 +149,7 @@ namespace HPTClient
 
         public string ToCouponString()
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
 
             sb.Append("Kupong ");
             sb.Append(CouponNumber);
@@ -160,7 +160,7 @@ namespace HPTClient
                 sb.Append("Avd ");
                 sb.Append(leg.Key);
                 sb.Append(": ");
-                string horses = string.Join(" ,", leg.Value.OrderBy(h => h.StartNr));
+                var horses = string.Join(" ,", leg.Value.OrderBy(h => h.StartNr));
                 sb.Append(horses);
                 sb.AppendLine();
             }

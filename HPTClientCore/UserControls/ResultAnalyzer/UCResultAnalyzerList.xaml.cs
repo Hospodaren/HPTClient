@@ -38,7 +38,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -72,7 +72,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -103,33 +103,33 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
         private void GridViewColumnHeader_Click(object sender, RoutedEventArgs e)
         {
             //var gd = new PropertyGroupDescription("ParentRace.LegNrString");
-            GridViewColumnHeader column = e.OriginalSource as GridViewColumnHeader;
+            var column = e.OriginalSource as GridViewColumnHeader;
             if (column == null)
             {
                 return;
             }
 
-            String field = column.Tag as String;
+            var field = column.Tag as String;
             if (string.IsNullOrEmpty(field))
             {
                 return;
             }
 
-            ListSortDirection newDir = ListSortDirection.Ascending;
+            var newDir = ListSortDirection.Ascending;
 
             if (lvwResultAnalyzerList.Items.SortDescriptions.Count > 0)
             {
-                SortDescription sd = lvwResultAnalyzerList.Items.SortDescriptions[0];
+                var sd = lvwResultAnalyzerList.Items.SortDescriptions[0];
                 if (sd.PropertyName == field)
                 {
-                    SortDescription sdNew = new SortDescription();
+                    var sdNew = new SortDescription();
                     sdNew.PropertyName = sd.PropertyName;
                     sdNew.Direction = sd.Direction == ListSortDirection.Ascending
                                             ? ListSortDirection.Descending

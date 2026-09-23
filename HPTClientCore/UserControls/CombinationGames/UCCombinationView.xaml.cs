@@ -64,10 +64,10 @@ namespace HPTClient
 
         private void chkSelected_Checked(object sender, RoutedEventArgs e)
         {
-            CheckBox chk = (CheckBox)sender;
+            var chk = (CheckBox)sender;
             if ((bool)chk.IsChecked)
             {
-                HPTCombination comb = (HPTCombination)chk.DataContext;
+                var comb = (HPTCombination)chk.DataContext;
                 if (CombBet.TargetReturn > 0)
                 {
                     CombBet.CalculateStake(comb);
@@ -84,17 +84,17 @@ namespace HPTClient
 
         private void GridViewColumnHeader_Click(object sender, RoutedEventArgs e)
         {
-            GridViewColumnHeader column = sender as GridViewColumnHeader;
-            String field = column.Tag as String;
+            var column = sender as GridViewColumnHeader;
+            var field = column.Tag as String;
 
-            ListSortDirection newDir = ListSortDirection.Ascending;
+            var newDir = ListSortDirection.Ascending;
 
             if (lvwCombinations.Items.SortDescriptions.Count > 0)
             {
-                SortDescription sd = lvwCombinations.Items.SortDescriptions[0];
+                var sd = lvwCombinations.Items.SortDescriptions[0];
                 if (sd.PropertyName == field)
                 {
-                    SortDescription sdNew = new SortDescription();
+                    var sdNew = new SortDescription();
                     sdNew.PropertyName = sd.PropertyName;
                     sdNew.Direction = sd.Direction == ListSortDirection.Ascending ? ListSortDirection.Descending : ListSortDirection.Ascending;
                     lvwCombinations.Items.SortDescriptions.Clear();
@@ -131,7 +131,7 @@ namespace HPTClient
             {
                 if (e.RemovedItems.Count > 0)
                 {
-                    HPTCombination combOld = (HPTCombination)e.RemovedItems[0];
+                    var combOld = (HPTCombination)e.RemovedItems[0];
                     combOld.Horse1.IsHighlighted = false;
                     combOld.Horse2.IsHighlighted = false;
                     if (combOld.Horse3 != null)
@@ -139,7 +139,7 @@ namespace HPTClient
                         combOld.Horse3.IsHighlighted = false;
                     }
                 }
-                HPTCombination combNew = (HPTCombination)e.AddedItems[0];
+                var combNew = (HPTCombination)e.AddedItems[0];
                 combNew.Horse1.IsHighlighted = true;
                 combNew.Horse2.IsHighlighted = true;
                 if (combNew.Horse3 != null)
@@ -149,7 +149,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -184,16 +184,15 @@ namespace HPTClient
 
         #endregion
 
-        private HPTCombinationListInfo combinationListInfo;
         public HPTCombinationListInfo CombinationListInfo
         {
             get
             {
-                if (combinationListInfo == null)
+                if (field == null)
                 {
-                    combinationListInfo = (HPTCombinationListInfo)DataContext;
+                    field = (HPTCombinationListInfo)DataContext;
                 }
-                return combinationListInfo;
+                return field;
             }
         }
 
@@ -209,10 +208,10 @@ namespace HPTClient
             gvwCombinations.Columns.Clear();
             foreach (var columnName in CombBet.DataToShow.ColumnsInOrder)
             {
-                ColumnHandler columnHandler = ColumnHandlerList.FirstOrDefault(ch => columnName == ch.Name);
+                var columnHandler = ColumnHandlerList.FirstOrDefault(ch => columnName == ch.Name);
                 if (columnHandler != null)
                 {
-                    GridViewColumn gvc = columnHandler.Column;
+                    var gvc = columnHandler.Column;
                     gvwCombinations.Columns.Add(gvc);
                 }
             }
@@ -226,9 +225,9 @@ namespace HPTClient
         private void SaveColumnOrder()
         {
             CombBet.DataToShow.ColumnsInOrder = new List<string>();
-            for (int i = 0; i < gvwCombinations.Columns.Count; i++)
+            for (var i = 0; i < gvwCombinations.Columns.Count; i++)
             {
-                ColumnHandler columnHandler = ColumnHandlerList.First(ch => ch.Column == gvwCombinations.Columns[i]);
+                var columnHandler = ColumnHandlerList.First(ch => ch.Column == gvwCombinations.Columns[i]);
                 columnHandler.Position = i;
                 CombBet.DataToShow.ColumnsInOrder.Add(columnHandler.Name);
             }
@@ -242,12 +241,12 @@ namespace HPTClient
                 if (!CMColumnsToShow.HasItems)
                 {
                     CMColumnsToShow = new ContextMenu();
-                    List<HorseDataToShowAttribute> attributeList = CombBet.DataToShow.GetHorseDataToShowAttributes();
+                    var attributeList = CombBet.DataToShow.GetHorseDataToShowAttributes();
                     CMColumnsToShow.Items.Clear();
                     CMColumnsToShow.DataContext = CombBet.DataToShow;
-                    foreach (HorseDataToShowAttribute hda in attributeList)
+                    foreach (var hda in attributeList)
                     {
-                        MenuItem mi = new MenuItem()
+                        var mi = new MenuItem()
                         {
                             IsCheckable = true,
                             Header = hda.Name,
@@ -263,12 +262,12 @@ namespace HPTClient
                 {
                     CreateColumnHandlerList();
 
-                    List<string> propertyNamesList = ColumnHandlerList.Select(ch => ch.BindingField).ToList();
+                    var propertyNamesList = ColumnHandlerList.Select(ch => ch.BindingField).ToList();
 
-                    foreach (string propertyName in propertyNamesList)
+                    foreach (var propertyName in propertyNamesList)
                     {
                         // Ta bort de kolumner man inte vill visa
-                        bool show = (bool)CombBet
+                        var show = (bool)CombBet
                             .DataToShow.GetType().GetProperty(propertyName)
                             .GetValue(CombBet.DataToShow, null);
 
@@ -284,11 +283,11 @@ namespace HPTClient
 
         private void HandleColumn(string showText, bool show)
         {
-            List<ColumnHandler> columnsToHandle =
+            var columnsToHandle =
                 ColumnHandlerList.Where(ch => ch.BindingField == showText).ToList();
             foreach (var columnHandler in columnsToHandle)
             {
-                GridViewColumn gvc = columnHandler.Column;
+                var gvc = columnHandler.Column;
                 if (show && !gvwCombinations.Columns.Contains(gvc))
                 {
                     gvwCombinations.Columns.Add(gvc);
@@ -306,7 +305,7 @@ namespace HPTClient
 
             if (sender.GetType().BaseType == typeof(HPTDataToShow))
             {
-                bool show = (bool)sender.GetType().GetProperty(e.PropertyName).GetValue(sender, null);
+                var show = (bool)sender.GetType().GetProperty(e.PropertyName).GetValue(sender, null);
                 HandleColumn(e.PropertyName, show);
             }
         }
@@ -529,7 +528,7 @@ namespace HPTClient
                 default:
                     break;
             }
-            int totalStake = 0;
+            var totalStake = 0;
             foreach (var comb in combinationsToSelect)
             {
                 comb.Selected = true;

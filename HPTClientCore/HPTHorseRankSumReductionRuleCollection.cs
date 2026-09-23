@@ -10,33 +10,25 @@ namespace HPTClient
         //[DataMember]
         //public BetTypeCategory TypeCategory { get; set; }
 
-        private BetTypeCategory typeCategory;
         [DataMember]
         public BetTypeCategory TypeCategory
         {
-            get
-            {
-                return typeCategory;
-            }
+            get;
             set
             {
-                typeCategory = value;
-                OnPropertyChanged("TypeCategory");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private string name;
         [DataMember]
         public string Name
         {
-            get
-            {
-                return name;
-            }
+            get;
             set
             {
-                name = value;
-                OnPropertyChanged("Name");
+                field = value;
+                OnPropertyChanged();
             }
         }
 

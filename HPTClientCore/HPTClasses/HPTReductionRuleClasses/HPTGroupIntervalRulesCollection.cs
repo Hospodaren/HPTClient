@@ -20,8 +20,8 @@ namespace HPTClient
             {
                 return true;
             }
-            int numberOfRules = 0;
-            IEnumerable<HPTGroupIntervalReductionRule> ruleList = ReductionRuleList.Cast<HPTGroupIntervalReductionRule>();
+            var numberOfRules = 0;
+            var ruleList = ReductionRuleList.Cast<HPTGroupIntervalReductionRule>();
             foreach (var propertyInfo in DistinctProperties)
             {
                 singleRow.SetCurrentGroupIntervalValues(propertyInfo);

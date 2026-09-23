@@ -9,7 +9,7 @@ namespace HPTClient
         {
             try
             {
-                int trackId = (int)value;
+                var trackId = (int)value;
                 return EnumHelper.GetTrackNameFromTrackId(trackId);
 
             }

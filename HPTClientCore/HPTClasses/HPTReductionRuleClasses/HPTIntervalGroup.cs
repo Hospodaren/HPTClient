@@ -18,74 +18,58 @@ namespace HPTClient
             }
         }
 
-        private ObservableCollection<HPTNumberOfWinners> numberOfWinnersList;
         [DataMember]
         public ObservableCollection<HPTNumberOfWinners> NumberOfWinnersList
         {
-            get
-            {
-                return numberOfWinnersList;
-            }
+            get;
             set
             {
-                numberOfWinnersList = value;
-                OnPropertyChanged("NumberOfWinnersList");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
         public bool IncludeRow(HPTMarkBetSingleRow singleRow, string propertyName)
         {
-            int horsesInInterval = 0;
-            foreach (HPTHorse horse in singleRow.HorseList)
+            var horsesInInterval = 0;
+            foreach (var horse in singleRow.HorseList)
             {
-                decimal horseValue = Convert.ToDecimal(horse.GetType().GetProperty(propertyName).GetValue(horse, null));
+                var horseValue = Convert.ToDecimal(horse.GetType().GetProperty(propertyName).GetValue(horse, null));
                 horsesInInterval += IsInInterval(horseValue) ? 1 : 0;
             }
             return NumberOfWinnersList.First(now => now.NumberOfWinners == horsesInInterval).Selected;
         }
 
-        private bool use;
         [DataMember]
         public bool Use
         {
-            get
-            {
-                return use;
-            }
+            get;
             set
             {
-                use = value;
-                OnPropertyChanged("Use");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal lowerBoundary;
         [DataMember]
         public decimal LowerBoundary
         {
-            get
-            {
-                return lowerBoundary;
-            }
+            get;
             set
             {
-                lowerBoundary = value;
-                OnPropertyChanged("LowerBoundary");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal upperBoundary;
         [DataMember]
         public decimal UpperBoundary
         {
-            get
-            {
-                return upperBoundary;
-            }
+            get;
             set
             {
-                upperBoundary = value;
-                OnPropertyChanged("UpperBoundary");
+                field = value;
+                OnPropertyChanged();
             }
         }
 

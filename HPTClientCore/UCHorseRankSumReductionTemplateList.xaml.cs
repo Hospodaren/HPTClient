@@ -29,7 +29,7 @@ namespace HPTClient
             Config.RankSumReductionRuleCollection.Add(new HPTHorseRankSumReductionRuleCollection()
             {
                 TypeCategory = BetTypeCategory.V75,
-                Name = "Ny rankreduceringsmall " + DateTime.Now.ToString("yyyy-MM-dd") + " " + DateTime.Now.ToShortTimeString(),
+                Name = $"Ny rankreduceringsmall {DateTime.Now:yyyy-MM-dd} {DateTime.Now.ToShortTimeString()}",
                 RankSumReductionRuleList = new ObservableCollection<HPTHorseRankSumReductionRule>()
             });
         }

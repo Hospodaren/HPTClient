@@ -6,78 +6,58 @@ namespace HPTClient
     [DataContract]
     public class HPTColorInterval : Notifier
     {
-        private decimal lowerBoundary;
         [DataMember]
         public decimal LowerBoundary
         {
-            get
-            {
-                return lowerBoundary;
-            }
+            get;
             set
             {
-                lowerBoundary = value;
-                OnPropertyChanged("LowerBoundary");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal upperBoundary;
         [DataMember]
         public decimal UpperBoundary
         {
-            get
-            {
-                return upperBoundary;
-            }
+            get;
             set
             {
-                upperBoundary = value;
-                OnPropertyChanged("UpperBoundary");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private Color lowColor;
         [DataMember]
         public Color LowColor
         {
-            get
-            {
-                return lowColor;
-            }
+            get;
             set
             {
-                lowColor = value;
-                OnPropertyChanged("LowColor");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private Color mediumColor;
         [DataMember]
         public Color MediumColor
         {
-            get
-            {
-                return mediumColor;
-            }
+            get;
             set
             {
-                mediumColor = value;
-                OnPropertyChanged("MediumColor");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private Color highColor;
         [DataMember]
         public Color HighColor
         {
-            get
-            {
-                return highColor;
-            }
+            get;
             set
             {
-                highColor = value;
-                OnPropertyChanged("HighColor");
+                field = value;
+                OnPropertyChanged();
             }
         }
     }

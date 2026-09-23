@@ -41,7 +41,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -59,7 +59,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -76,7 +76,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -101,7 +101,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -125,7 +125,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -154,7 +154,7 @@ namespace HPTClient
                 }
 
                 // Skapa innehållet för popupen
-                Border b = new Border()
+                var b = new Border()
                 {
                     BorderBrush = new SolidColorBrush(Colors.Black),
                     BorderThickness = new Thickness(1D),
@@ -183,12 +183,12 @@ namespace HPTClient
                 }
 
 
-                IOrderedEnumerable<HPTHorse> orderedHorseList = horseList
+                var orderedHorseList = horseList
                     .OrderBy(h => h.ParentRace.LegNr)
                     .ThenBy(h => h.StartNr);
 
                 // Skapa en IHorseListContainer med valda hästar
-                HPTHorseListContainer horseCollection = new HPTHorseListContainer()
+                var horseCollection = new HPTHorseListContainer()
                 {
                     //HorseList = new System.Collections.ObjectModel.ObservableCollection<HPTHorse>(orderedHorseList),
                     HorseList = new List<HPTHorse>(orderedHorseList),
@@ -221,7 +221,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 

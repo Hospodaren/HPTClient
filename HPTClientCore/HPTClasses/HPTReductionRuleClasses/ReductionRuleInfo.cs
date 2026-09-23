@@ -7,33 +7,25 @@ namespace HPTClient
     [DataContract]
     public class ReductionRuleInfo : Notifier
     {
-        private string headlineString;
         [DataMember]
         public string HeadlineString
         {
-            get
-            {
-                return headlineString;
-            }
+            get;
             set
             {
-                headlineString = value;
-                OnPropertyChanged("HeadlineString");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private string reductionTypeString;
         [DataMember]
         public string ReductionTypeString
         {
-            get
-            {
-                return reductionTypeString;
-            }
+            get;
             set
             {
-                reductionTypeString = value;
-                OnPropertyChanged("ReductionTypeString");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -48,7 +40,7 @@ namespace HPTClient
             set
             {
                 reductionRuleString = value;
-                OnPropertyChanged("ReductionRuleString");
+                OnPropertyChanged();
             }
         }
 
@@ -78,7 +70,7 @@ namespace HPTClient
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             if (!string.IsNullOrEmpty(HeadlineString))
             {
                 sb.AppendLine(HeadlineString);

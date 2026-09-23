@@ -6,39 +6,31 @@ namespace HPTClient
     [DataContract]
     public class HPTHorseSulkyInfo : Notifier
     {
-        private bool sulkyChanged;
         [XmlIgnore]
         [DataMember]
         public bool SulkyChanged
         {
-            get
-            {
-                return sulkyChanged;
-            }
+            get;
             set
             {
-                sulkyChanged = value;
-                OnPropertyChanged("SulkyChanged");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private string text;
         [XmlIgnore]
         [DataMember]
         public string Text
         {
-            get
-            {
-                return text;
-            }
+            get;
             set
             {
                 //if (!string.IsNullOrEmpty(value) && !string.IsNullOrEmpty(this.text) && value != this.text)
                 //{
                 //    this.SulkyChanged = true;
                 //}
-                text = value;
-                OnPropertyChanged("Text");
+                field = value;
+                OnPropertyChanged();
             }
         }
     }

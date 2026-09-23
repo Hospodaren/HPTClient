@@ -35,7 +35,7 @@ namespace HPTClient
             }
             else
             {
-                ReductionSpecificationString = NumberOfWinnersString + " villkor";
+                ReductionSpecificationString = $"{NumberOfWinnersString} villkor";
             }
 
         }
@@ -47,7 +47,7 @@ namespace HPTClient
 
         void ReductionRuleList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            IEnumerable<HPTNumberOfWinners> nowList = Enumerable.Range(0, ReductionRuleList.Count + 1)
+            var nowList = Enumerable.Range(0, ReductionRuleList.Count + 1)
                 .Select(i => new HPTNumberOfWinners()
                 {
                     NumberOfWinners = i,
@@ -62,7 +62,7 @@ namespace HPTClient
         {
             if (NumberOfWinnersList == null || NumberOfWinnersList.Count < ReductionRuleList.Count)
             {
-                IEnumerable<HPTNumberOfWinners> nowList = Enumerable.Range(0, ReductionRuleList.Count + 1)
+                var nowList = Enumerable.Range(0, ReductionRuleList.Count + 1)
                 .Select(i => new HPTNumberOfWinners()
                 {
                     NumberOfWinners = i,
@@ -81,7 +81,7 @@ namespace HPTClient
 
         public void Clear()
         {
-            List<HPTNumberOfWinners> numberOfWinnersList =
+            var numberOfWinnersList =
                 NumberOfWinnersList.Where(now => now.NumberOfWinners > 0).ToList();
             foreach (var numberOfWinners in numberOfWinnersList)
             {
@@ -108,7 +108,7 @@ namespace HPTClient
             {
                 return true;
             }
-            int numberOfRules = 0;
+            var numberOfRules = 0;
             foreach (var rule in ReductionRuleList)
             {
                 if (!rule.Use || rule.IncludeRow(markBet, singleRow))
@@ -144,7 +144,7 @@ namespace HPTClient
 
         public override string ToString(HPTMarkBet markBet)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             foreach (var rule in ReductionRuleList.Where(r => r.Use))
             {
                 sb.AppendLine(rule.ToString(markBet));

@@ -27,7 +27,7 @@ namespace HPTClient
         {
             var rankVariableTemplate = new HPTRankTemplate()
             {
-                Name = "Ny mall (" + DateTime.Now.ToString("yyyy-MM-dd") + ", " + DateTime.Now.ToShortTimeString()
+                Name = $"Ny mall ({DateTime.Now:yyyy-MM-dd}, {DateTime.Now.ToShortTimeString()}"
             };
             rankVariableTemplate.InitializeTemplate();
 

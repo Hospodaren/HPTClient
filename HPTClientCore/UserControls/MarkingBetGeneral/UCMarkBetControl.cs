@@ -15,12 +15,12 @@ namespace HPTClient
         {
             get
             {
-                object o = GetValue(MarkBetProperty);
+                var o = GetValue(MarkBetProperty);
                 if (o == null || o.GetType() != typeof(HPTMarkBet))
                 {
                     try
                     {
-                        HPTMarkBet markBet = (HPTMarkBet)DataContext;
+                        var markBet = (HPTMarkBet)DataContext;
                         SetValue(MarkBetProperty, markBet);
                     }
                     catch (Exception)

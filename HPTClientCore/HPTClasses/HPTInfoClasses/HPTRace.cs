@@ -122,7 +122,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -178,7 +178,7 @@ namespace HPTClient
                 .ToList()
                 .ForEach(h =>
                 {
-                    StartCategoryCode categoryCode = h.StakeDistributionShare switch
+                    var categoryCode = h.StakeDistributionShare switch
                     {
                         < 0.015m => StartCategoryCode.Storskrall,
                         < 0.04m => StartCategoryCode.Skrall,
@@ -590,18 +590,14 @@ namespace HPTClient
         [DataMember]
         public DateTime PostTime { get; set; }
 
-        private DateTime updatedPostTime;
         [XmlIgnore]
         public DateTime UpdatedPostTime
         {
-            get
-            {
-                return updatedPostTime;
-            }
+            get;
             set
             {
-                updatedPostTime = value;
-                OnPropertyChanged("UpdatedPostTime");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -620,33 +616,25 @@ namespace HPTClient
         [DataMember]
         public string Distance { get; set; }
 
-        private decimal turnoverPlats;
         [DataMember]
         public decimal TurnoverPlats
         {
-            get
-            {
-                return turnoverPlats;
-            }
+            get;
             set
             {
-                turnoverPlats = value;
-                OnPropertyChanged("TurnoverPlats");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal turnoverVinnare;
         [DataMember]
         public decimal TurnoverVinnare
         {
-            get
-            {
-                return turnoverVinnare;
-            }
+            get;
             set
             {
-                turnoverVinnare = value;
-                OnPropertyChanged("TurnoverVinnare");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -656,18 +644,14 @@ namespace HPTClient
         //[DataMember]
         //public decimal TurnoverTvilling { get; set; }
 
-        private decimal turnoverTvilling;
         [DataMember]
         public decimal TurnoverTvilling
         {
-            get
-            {
-                return turnoverTvilling;
-            }
+            get;
             set
             {
-                turnoverTvilling = value;
-                OnPropertyChanged("TurnoverTvilling");
+                field = value;
+                OnPropertyChanged();
                 if (value > 0M)
                 {
                     TurnoverCombination = (int)value;
@@ -675,18 +659,14 @@ namespace HPTClient
             }
         }
 
-        private int turnoverTrio;
         [DataMember]
         public int TurnoverTrio
         {
-            get
-            {
-                return turnoverTrio;
-            }
+            get;
             set
             {
-                turnoverTrio = value;
-                OnPropertyChanged("TurnoverTrio");
+                field = value;
+                OnPropertyChanged();
                 if (value > 0M)
                 {
                     TurnoverCombination = (int)value;
@@ -694,18 +674,14 @@ namespace HPTClient
             }
         }
 
-        private int turnoverCombination;
         [DataMember]
         public int TurnoverCombination
         {
-            get
-            {
-                return turnoverCombination;
-            }
+            get;
             set
             {
-                turnoverCombination = value;
-                OnPropertyChanged("TurnoverCombination");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -714,33 +690,25 @@ namespace HPTClient
 
         public string[] BetTypes { get; set; }
 
-        private int reserv1Nr;
         [DataMember]
         public int Reserv1Nr
         {
-            get
-            {
-                return reserv1Nr;
-            }
+            get;
             set
             {
-                reserv1Nr = value;
-                OnPropertyChanged("Reserv1Nr");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int reserv2Nr;
         [DataMember]
         public int Reserv2Nr
         {
-            get
-            {
-                return reserv2Nr;
-            }
+            get;
             set
             {
-                reserv2Nr = value;
-                OnPropertyChanged("Reserv2Nr");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -751,7 +719,6 @@ namespace HPTClient
         //[DataMember(IsRequired = false, EmitDefaultValue = false)]
         //public string ReservOrder { get; set; }
 
-        private int[] reservOrderList;
         public int[] ReservOrderList
         {
             get
@@ -763,19 +730,17 @@ namespace HPTClient
                 //        .Select(h => h.StartNr)
                 //        .ToArray();
                 //}
-                if (reservOrderList == null)
+                if (field == null)
                 {
-                    reservOrderList = HorseList
+                    field = HorseList
                         .OrderByDescending(h => h.StakeDistribution)
                         .Select(h => h.StartNr)
                         .ToArray();
                 }
-                return reservOrderList;
+
+                return field;
             }
-            set
-            {
-                reservOrderList = value;
-            }
+            set;
         }
 
         //[DataMember(IsRequired = false, EmitDefaultValue = false)]
@@ -808,18 +773,14 @@ namespace HPTClient
         [XmlIgnore]
         public HPTRaceDayInfo ParentRaceDayInfo { get; set; }
 
-        private bool locked;
         [DataMember]
         public bool Locked
         {
-            get
-            {
-                return locked;
-            }
+            get;
             set
             {
-                locked = value;
-                OnPropertyChanged("Locked");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -832,7 +793,7 @@ namespace HPTClient
         {
             get
             {
-                StringBuilder sb = new StringBuilder();
+                var sb = new StringBuilder();
                 sb.Append(LegNrString);
                 sb.Append(" (");
                 sb.Append(PostTime.ToString("HH:mm"));
@@ -857,9 +818,9 @@ namespace HPTClient
 
         public string ToClipboardString()
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.AppendLine(ClipboardString);
-            foreach (HPTHorse horse in HorseListSelected)
+            foreach (var horse in HorseListSelected)
             {
                 sb.AppendLine(horse.ClipboardString);
             }
@@ -868,11 +829,11 @@ namespace HPTClient
 
         public string ToCompactClipboardString()
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.Append(LegNrString);
             //sb.AppendLine(this.ClipboardString);
 
-            for (int i = 0; i < 6; i++)
+            for (var i = 0; i < 6; i++)
             {
                 sb.Append(GetHorsesWithPrio(i));
             }
@@ -895,7 +856,7 @@ namespace HPTClient
                     sb.Append(prio.ToString());
                     sb.Append(":");
                 }
-                string startNumbersString = startNumberListWithPrio.Aggregate((startnr, next) => startnr + ", " + next);
+                var startNumbersString = startNumberListWithPrio.Aggregate((startnr, next) => $"{startnr}, {next}");
                 sb.Append(startNumbersString);
             }
             return sb.ToString();
@@ -907,7 +868,7 @@ namespace HPTClient
 
         public int GetNumberOfX(HPTPrio prio)
         {
-            int numberOfX = HorseListSelected.Count(h => h.Prio == prio);
+            var numberOfX = HorseListSelected.Count(h => h.Prio == prio);
             return numberOfX;
         }
 
@@ -977,98 +938,78 @@ namespace HPTClient
             }
         }
 
-        private int noSelected;
         [XmlIgnore]
         public int NumberOfSelectedHorses
         {
             get
             {
-                if (noSelected == 0)
+                if (field == 0)
                 {
                     horseListSelected = HorseList.Where(h => h.Selected == true).ToList();
-                    noSelected = horseListSelected.Count;
+                    field = horseListSelected.Count;
                 }
-                return noSelected;
+                return field;
             }
             set
             {
-                noSelected = value;
-                OnPropertyChanged("NumberOfSelectedHorses");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int numberOfStartingHorses;
         [XmlIgnore]
         public int NumberOfStartingHorses
         {
             get
             {
-                if (numberOfStartingHorses == 0)
+                if (field == 0)
                 {
-                    numberOfStartingHorses = HorseList.Count(h => h.Scratched == false || h.Scratched == null);
+                    field = HorseList.Count(h => h.Scratched == false || h.Scratched == null);
                 }
-                return numberOfStartingHorses;
+
+                return field;
             }
-            set
-            {
-                numberOfStartingHorses = value;
-            }
+            set;
         }
 
-        private decimal? ownProbabilitySum;
         //[DataMember(IsRequired = false, EmitDefaultValue = false)]
         public decimal? OwnProbabilitySum
         {
-            get
-            {
-                return ownProbabilitySum;
-            }
+            get;
             set
             {
-                ownProbabilitySum = value;
-                OnPropertyChanged("OwnProbabilitySum");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int rankOwnSum;
         public int RankOwnSum
         {
-            get
-            {
-                return rankOwnSum;
-            }
+            get;
             set
             {
-                rankOwnSum = value;
-                OnPropertyChanged("RankOwnSum");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int rankAlternateSum;
         public int RankAlternateSum
         {
-            get
-            {
-                return rankAlternateSum;
-            }
+            get;
             set
             {
-                rankAlternateSum = value;
-                OnPropertyChanged("RankAlternateSum");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int rankABCSum;
         public int RankABCSum
         {
-            get
-            {
-                return rankABCSum;
-            }
+            get;
             set
             {
-                rankABCSum = value;
-                OnPropertyChanged("RankABCSum");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -1083,9 +1024,9 @@ namespace HPTClient
                 case "GS75":
                 case "V85":
                 case "V86":
-                    decimal shareSum = HorseList.Sum(h => h.StakeDistributionShare);
-                    decimal shareSumWithoutScratchings = HorseList.Where(h => h.Scratched != true).Sum(h => h.StakeDistributionShare);
-                    decimal shareSumWithoutScratchingsQuota = 1M;
+                    var shareSum = HorseList.Sum(h => h.StakeDistributionShare);
+                    var shareSumWithoutScratchings = HorseList.Where(h => h.Scratched != true).Sum(h => h.StakeDistributionShare);
+                    var shareSumWithoutScratchingsQuota = 1M;
                     if (shareSum > 0)
                     {
                         shareSumWithoutScratchingsQuota = shareSumWithoutScratchings / shareSum;
@@ -1106,7 +1047,7 @@ namespace HPTClient
                     break;
                 case "V4":
                 case "V5":
-                    decimal shareSumWithoutScratchingsVx = HorseList.Where(h => h.Scratched != true).Sum(h => h.StakeDistributionShare);
+                    var shareSumWithoutScratchingsVx = HorseList.Where(h => h.Scratched != true).Sum(h => h.StakeDistributionShare);
                     foreach (var horse in HorseList)
                     {
                         if (horse.OwnProbability == null || horse.OwnProbability == 0M)
@@ -1133,7 +1074,7 @@ namespace HPTClient
         internal void SetCorrectStakeDistributionShareAlt1()
         {
             // Rätta till alternativ insatsfördelning 1
-            decimal shareSum = HorseList.Sum(h => Convert.ToDecimal(h.StakeShareAlternate));
+            var shareSum = HorseList.Sum(h => Convert.ToDecimal(h.StakeShareAlternate));
             foreach (var horse in HorseList)
             {
                 if (shareSum > 0)
@@ -1146,7 +1087,7 @@ namespace HPTClient
         internal void SetCorrectStakeDistributionShareAlt2()
         {
             // Rätta till alternativ insatsfördelning 2
-            decimal shareSum = HorseList.Sum(h => Convert.ToDecimal(h.StakeShareAlternate2));
+            var shareSum = HorseList.Sum(h => Convert.ToDecimal(h.StakeShareAlternate2));
             foreach (var horse in HorseList)
             {
                 if (shareSum > 0)
@@ -1172,7 +1113,7 @@ namespace HPTClient
         {
             return;
             // TODO: Så småningom kan det här vara bra att ha...
-            IEnumerable<List<HPTHorseResult>> horseResultList = HorseList
+            var horseResultList = HorseList
                 .SelectMany(h => h.ResultList)
                 .GroupBy(hr => new { hr.Date, hr.RaceNr, hr.TrackCode })
                 .Where(g => g.Count() > 1)
@@ -1241,63 +1182,47 @@ namespace HPTClient
 
         //#region Result properties
 
-        private HPTLegResult legResult;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public HPTLegResult LegResult
         {
-            get
-            {
-                return legResult;
-            }
+            get;
             set
             {
-                legResult = value;
-                OnPropertyChanged("LegResult");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool hasResult;
         [XmlIgnore]
         public bool HasResult
         {
-            get
-            {
-                return hasResult;
-            }
+            get;
             set
             {
-                hasResult = value;
-                OnPropertyChanged("HasResult");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool splitVictory;
         [DataMember]
         public bool SplitVictory
         {
-            get
-            {
-                return splitVictory;
-            }
+            get;
             set
             {
-                splitVictory = value;
-                OnPropertyChanged("SplitVictory");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private string atgResultLink;
         [DataMember]
         public string ATGResultLink
         {
-            get
-            {
-                return atgResultLink;
-            }
+            get;
             set
             {
-                atgResultLink = value;
-                OnPropertyChanged("ATGResultLink");
+                field = value;
+                OnPropertyChanged();
             }
         }
 

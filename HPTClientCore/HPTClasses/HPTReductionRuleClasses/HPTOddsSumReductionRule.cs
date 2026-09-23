@@ -18,13 +18,13 @@ namespace HPTClient
 
         public override bool IncludeRow(HPTMarkBet markBet, HPTHorse[] horseList, int numberOfRacesToTest)
         {
-            int partialSum = horseList.Take(numberOfRacesToTest).Sum(h => h.VinnarOdds);
+            var partialSum = horseList.Take(numberOfRacesToTest).Sum(h => h.VinnarOdds);
             return MaxSum > partialSum;
         }
 
         public override bool GetRuleResultForCorrectRow(HPTMarkBet markBet)
         {
-            RuleResultForCorrectRow = "Summa " + markBet.CouponCorrector.HorseList.Sum(h => h.VinnarOdds).ToString();
+            RuleResultForCorrectRow = $"Summa {markBet.CouponCorrector.HorseList.Sum(h => h.VinnarOdds)}";
             return true;
         }
 
@@ -55,7 +55,7 @@ namespace HPTClient
                 sb.AppendLine("%");
             }
 
-            ClipboardString = ReductionTypeString + "\r\n" + sb.ToString();
+            ClipboardString = $"{ReductionTypeString}\r\n{sb}";
             return sb.ToString();
         }
     }

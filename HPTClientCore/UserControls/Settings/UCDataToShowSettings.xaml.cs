@@ -28,14 +28,13 @@ namespace HPTClient
             }
         }
 
-        private HPTDataToShow dataToShow;
         internal HPTDataToShow DataToShow
         {
             get
             {
                 //this.dataToShow = (HPTHorseDataToShow)this.DataContext;
-                dataToShow = (HPTDataToShow)DataContext;
-                return dataToShow;
+                field = (HPTDataToShow)DataContext;
+                return field;
             }
         }
 
@@ -111,16 +110,16 @@ namespace HPTClient
             }
             ColumnsToShowList.Clear();
             BindingOperations.GetBindingExpression(icColumnsToShow, ListBox.ItemsSourceProperty).UpdateTarget();
-            List<HorseDataToShowAttribute> attributeList = DataToShow.GetHorseDataToShowAttributes();
-            foreach (HorseDataToShowAttribute hda in attributeList)
+            var attributeList = DataToShow.GetHorseDataToShowAttributes();
+            foreach (var hda in attributeList)
             {
-                CheckBox chk = new CheckBox()
+                var chk = new CheckBox()
                 {
                     IsChecked = (bool)DataToShow.GetType().GetProperty(hda.PropertyName).GetValue(DataToShow, null),
                     Content = hda.Name,
                     IsEnabled = hda.RequiresPro ? HPTConfig.Config.IsPayingCustomer : true
                 };
-                ListBoxItem lbi = new ListBoxItem()
+                var lbi = new ListBoxItem()
                 {
                     Content = chk
                 };

@@ -37,7 +37,7 @@ namespace HPTClient
         {
             get
             {
-                return Text + ": " + NumberOfWinnersString + " av " + ReductionRuleList.Count(r => r.Use).ToString();
+                return $"{Text}: {NumberOfWinnersString} av {ReductionRuleList.Count(r => r.Use)}";
             }
         }
 

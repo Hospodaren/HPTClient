@@ -22,9 +22,9 @@ namespace HPTClient
 
         public void CreateXReductionRuleList()
         {
-            foreach (HPTPrio prio in HPTConfig.Config.PrioList.Keys)
+            foreach (var prio in HPTConfig.Config.PrioList.Keys)
             {
-                HPTHorseXReduction horseXReduction = new HPTHorseXReduction();
+                var horseXReduction = new HPTHorseXReduction();
                 horseXReduction.Prio = prio;
                 horseXReduction.Selectable = HPTConfig.Config.PrioList[prio];
                 horseXReduction.Horse = this;
@@ -61,6 +61,7 @@ namespace HPTClient
 
             // Insatsfördelning
             this.StakeDistributionShare = start.BetDistributionShare > 0 ? start.BetDistributionShare : this.StakeDistributionShare;
+            StakeDistributionShareFinal = StakeDistributionShare;
             this.ATGTrend = start.Trend;
 
             // Sen strykning
@@ -710,7 +711,7 @@ namespace HPTClient
             {
                 return timeToFormat;
             }
-            string formattedTime = timeToFormat;
+            var formattedTime = timeToFormat;
             var rexTime = new Regex(@"\d\.\d\.\d");
             if (rexTime.IsMatch(formattedTime))
             {
@@ -744,10 +745,10 @@ namespace HPTClient
             }
             else
             {
-                Regex rexKmTime = new Regex(@"\d\.(\d{1,2}\.\d)");
+                var rexKmTime = new Regex(@"\d\.(\d{1,2}\.\d)");
                 if (rexKmTime.IsMatch(Record.Time))
                 {
-                    string kmTimeString = rexKmTime.Match(Record.Time).Groups[1].Value;
+                    var kmTimeString = rexKmTime.Match(Record.Time).Groups[1].Value;
                     var ci = new CultureInfo("en-US");
                     RecordTime = Convert.ToDecimal(kmTimeString, ci.NumberFormat);
                 }
@@ -892,7 +893,7 @@ namespace HPTClient
         {
             try
             {
-                string startMethodAndDistanceCode = hptHorseResult.Time.EndsWith("a") ? "A" : string.Empty;
+                var startMethodAndDistanceCode = hptHorseResult.Time.EndsWith("a") ? "A" : string.Empty;
                 if (hptHorseResult.Distance < 1800)
                 {
                     startMethodAndDistanceCode += "K";
@@ -906,7 +907,7 @@ namespace HPTClient
                     startMethodAndDistanceCode += "M";
                 }
 
-                decimal secondsToAdd = 0M;
+                var secondsToAdd = 0M;
                 switch (startMethodAndDistanceCode)
                 {
                     case "K":
@@ -932,7 +933,7 @@ namespace HPTClient
                 }
                 if (rexTime.IsMatch(hptHorseResult.Time))
                 {
-                    decimal time = decimal.Parse(rexTime.Match(hptHorseResult.Time).Value, swedishCulture);
+                    var time = decimal.Parse(rexTime.Match(hptHorseResult.Time).Value, swedishCulture);
                     hptHorseResult.TimeWeighed = time + secondsToAdd;
                 }
                 else
@@ -942,7 +943,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
                 hptHorseResult.TimeWeighed = 30M;
             }
         }
@@ -990,7 +991,7 @@ namespace HPTClient
 
                 // Plats
                 PlatsOddsShare = ParentRace.TurnoverPlats > 0 ? InvestmentPlats / ParentRace.TurnoverPlats : 0M;
-                PlatsOddsString = MinPlatsOddsExact.ToString() + "-" + MaxPlatsOddsExact.ToString();
+                PlatsOddsString = $"{MinPlatsOddsExact}-{MaxPlatsOddsExact}";
                 //this.PlatsOddsString = this.MinPlatsOdds.ToString() + "-" + this.MaxPlatsOdds.ToString();
 
                 // Vinnare
@@ -1109,7 +1110,7 @@ namespace HPTClient
             {
                 try
                 {
-                    decimal secondsToAdd = 0M;
+                    var secondsToAdd = 0M;
                     switch (record.RecordType)
                     {
                         case "K":
@@ -1133,11 +1134,11 @@ namespace HPTClient
                         default:
                             break;
                     }
-                    decimal extractedTime = 30M;
-                    Regex rexExtractTime = new Regex("\\d\\.(\\d\\d\\.\\d)");
+                    var extractedTime = 30M;
+                    var rexExtractTime = new Regex("\\d\\.(\\d\\d\\.\\d)");
                     if (rexExtractTime.IsMatch(record.Time))
                     {
-                        string extractedTimeString = rexExtractTime.Match(record.Time).Groups[1].Value;
+                        var extractedTimeString = rexExtractTime.Match(record.Time).Groups[1].Value;
                         extractedTimeString = extractedTimeString.Replace('.', ',');
                         extractedTime = Convert.ToDecimal(extractedTimeString);
                     }
@@ -1145,7 +1146,7 @@ namespace HPTClient
                 }
                 catch (Exception exc)
                 {
-                    string s = exc.Message;
+                    var s = exc.Message;
                     record.TimeWeighed = 30M;
                 }
             }
@@ -1184,7 +1185,7 @@ namespace HPTClient
                 {
                     return HorseName;
                 }
-                return StartNr.ToString() + " - " + HorseName;
+                return $"{StartNr} - {HorseName}";
             }
         }
 
@@ -1192,7 +1193,7 @@ namespace HPTClient
         {
             get
             {
-                return ParentRace.LegNr + "-" + StartNr.ToString() + " - " + HorseName;
+                return $"{ParentRace.LegNr}-{StartNr} - {HorseName}";
             }
         }
 
@@ -1204,7 +1205,7 @@ namespace HPTClient
                 {
                     return "ERROR";
                 }
-                string correctedHorseName = HorseName;
+                var correctedHorseName = HorseName;
                 System.IO.Path.GetInvalidFileNameChars()
                     .ToList()
                     .ForEach(ic => correctedHorseName = correctedHorseName.Replace(ic, '_'));
@@ -1226,33 +1227,25 @@ namespace HPTClient
         [DataMember]
         public decimal ATGTrend { get; set; }
 
-        [DataMember]
-        private decimal shortTrend;
+        [field: DataMember]
         public decimal ShortTrend
         {
-            get
-            {
-                return shortTrend;
-            }
+            get;
             set
             {
-                shortTrend = value;
-                OnPropertyChanged("ShortTrend");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        [DataMember]
-        private decimal longTrend;
+        [field: DataMember]
         public decimal LongTrend
         {
-            get
-            {
-                return longTrend;
-            }
+            get;
             set
             {
-                longTrend = value;
-                OnPropertyChanged("LongTrend");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -1279,39 +1272,34 @@ namespace HPTClient
 
         public string HomeTrackInfo { get; set; }
 
-        private string stLink;
         public string STLink
         {
             get
             {
-                if (string.IsNullOrEmpty(stLink))
+                if (string.IsNullOrEmpty(field))
                 {
                     STLink = ATGLinkCreator.CreateSTHorseLink(this);
                 }
-                return stLink;
+                return field;
             }
             set
             {
-                stLink = value;
-                OnPropertyChanged("STLink");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public ObservableCollection<HPTHorseResult> ResultList { get; set; }
 
-        private HPTHorseResultInfo horseResultInfo;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public HPTHorseResultInfo HorseResultInfo
         {
-            get
-            {
-                return horseResultInfo;
-            }
+            get;
             set
             {
-                horseResultInfo = value;
-                OnPropertyChanged("HorseResultInfo");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -1345,18 +1333,14 @@ namespace HPTClient
         //    }
         //}
 
-        private HPTHorseHistoryInfoGrouped[] horseHistoryInfoGroupedList;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public HPTHorseHistoryInfoGrouped[] HorseHistoryInfoGroupedList
         {
-            get
-            {
-                return horseHistoryInfoGroupedList;
-            }
+            get;
             set
             {
-                horseHistoryInfoGroupedList = value;
-                OnPropertyChanged("HorseHistoryInfoGroupedList");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -1369,31 +1353,27 @@ namespace HPTClient
                 {
                     return 0M;
                 }
-                decimal newestStakeShare = HorseHistoryInfoGroupedList.First().StakeHistoryMain.StakeShare;
-                decimal oldestStakeShare = HorseHistoryInfoGroupedList.Last().StakeHistoryMain.StakeShare;
+                var newestStakeShare = HorseHistoryInfoGroupedList.First().StakeHistoryMain.StakeShare;
+                var oldestStakeShare = HorseHistoryInfoGroupedList.Last().StakeHistoryMain.StakeShare;
                 if (newestStakeShare > 0M && oldestStakeShare > 0M)
                 {
-                    decimal relativeDifference = (newestStakeShare / oldestStakeShare) - 1M;
-                    decimal relativeDifferenceAdjusted = relativeDifference < 0M ? 0M : relativeDifference + StakeDistributionShare;
+                    var relativeDifference = (newestStakeShare / oldestStakeShare) - 1M;
+                    var relativeDifferenceAdjusted = relativeDifference < 0M ? 0M : relativeDifference + StakeDistributionShare;
                     return relativeDifferenceAdjusted;
                 }
                 return 0M;
             }
         }
 
-        private decimal historyRelativeDifferenceUnadjusted;
         [HorseRank("Trend", 3, true, false, HPTRankCategory.MarksAndOdds, true)]
         [DataMember]
         public decimal HistoryRelativeDifferenceUnadjusted
         {
-            get
-            {
-                return historyRelativeDifferenceUnadjusted;
-            }
+            get;
             set
             {
-                historyRelativeDifferenceUnadjusted = value;
-                OnPropertyChanged("HistoryRelativeDifferenceUnadjusted");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -1438,10 +1418,10 @@ namespace HPTClient
                 return;
             }
 
-            decimal newestStakeShare = HorseHistoryInfoGroupedList.First().StakeHistoryMain.StakeShare;
+            var newestStakeShare = HorseHistoryInfoGroupedList.First().StakeHistoryMain.StakeShare;
             if (newestStakeShare > 0M)
             {
-                decimal oldestStakeShare = HorseHistoryInfoGroupedList.Last(hh => hh.StakeHistoryMain.StakeShare > 0M).StakeHistoryMain.StakeShare;
+                var oldestStakeShare = HorseHistoryInfoGroupedList.Last(hh => hh.StakeHistoryMain.StakeShare > 0M).StakeHistoryMain.StakeShare;
                 HistoryRelativeDifferenceUnadjusted = (newestStakeShare / oldestStakeShare) - 1M;
             }
             //decimal newestVinnarShare = this.HorseHistoryInfoGroupedList.First().VinnarOddsShare;
@@ -1475,8 +1455,8 @@ namespace HPTClient
                 return;
             }
 
-            decimal newestStakeShare = HorseHistoryInfoGroupedList.First().StakeHistoryMain.StakeShare;
-            decimal oldestStakeShare = HorseHistoryInfoGroupedList[positionForOldestStakeShare].StakeHistoryMain.StakeShare;
+            var newestStakeShare = HorseHistoryInfoGroupedList.First().StakeHistoryMain.StakeShare;
+            var oldestStakeShare = HorseHistoryInfoGroupedList[positionForOldestStakeShare].StakeHistoryMain.StakeShare;
             if (newestStakeShare > 0M && oldestStakeShare > 0M)
             {
                 HistoryRelativeDifferenceUnadjusted = (newestStakeShare / oldestStakeShare) - 1M;
@@ -1569,7 +1549,7 @@ namespace HPTClient
         {
             get
             {
-                List<HPTHeadToHeadCollection> headToHeadResultCollectionList = new List<HPTHeadToHeadCollection>();
+                var headToHeadResultCollectionList = new List<HPTHeadToHeadCollection>();
                 foreach (var horseResult in ResultList)
                 {
                     if (horseResult.HeadToHeadResultList != null && horseResult.HeadToHeadResultList.Count > 0)
@@ -1584,170 +1564,126 @@ namespace HPTClient
             }
         }
 
-        private int numberOfHeadToHeadWins;
         [XmlIgnore]
         public int NumberOfHeadToHeadWins
         {
-            get
-            {
-                return numberOfHeadToHeadWins;
-            }
+            get;
             set
             {
-                numberOfHeadToHeadWins = value;
-                OnPropertyChanged("NumberOfHeadToHeadWins");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int numberOfHeadToHeadLosses;
         [XmlIgnore]
         public int NumberOfHeadToHeadLosses
         {
-            get
-            {
-                return numberOfHeadToHeadLosses;
-            }
+            get;
             set
             {
-                numberOfHeadToHeadLosses = value;
-                OnPropertyChanged("NumberOfHeadToHeadLosses");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int numberOfHeadToHeadEqual;
         [XmlIgnore]
         public int NumberOfHeadToHeadEqual
         {
-            get
-            {
-                return numberOfHeadToHeadEqual;
-            }
+            get;
             set
             {
-                numberOfHeadToHeadEqual = value;
-                OnPropertyChanged("NumberOfHeadToHeadEqual");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int numberOfHeadToHeadRaces;
         [XmlIgnore]
         public int NumberOfHeadToHeadRaces
         {
-            get
-            {
-                return numberOfHeadToHeadRaces;
-            }
+            get;
             set
             {
-                numberOfHeadToHeadRaces = value;
-                OnPropertyChanged("NumberOfHeadToHeadRaces");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int numberOfHeadToHeadResults;
         [XmlIgnore]
         public int NumberOfHeadToHeadResults
         {
-            get
-            {
-                return numberOfHeadToHeadResults;
-            }
+            get;
             set
             {
-                numberOfHeadToHeadResults = value;
-                OnPropertyChanged("NumberOfHeadToHeadResults");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool hasHeadToHeadResults;
         [XmlIgnore]
         public bool HasHeadToHeadResults
         {
-            get
-            {
-                return hasHeadToHeadResults;
-            }
+            get;
             set
             {
-                hasHeadToHeadResults = value;
-                OnPropertyChanged("HasHeadToHeadResults");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private HPTHorseShoeInfo shoeInfoCurrent;
         [DataMember]
         public HPTHorseShoeInfo ShoeInfoCurrent
         {
-            get
-            {
-                return shoeInfoCurrent;
-            }
+            get;
             set
             {
-                shoeInfoCurrent = value;
-                OnPropertyChanged("ShoeInfoCurrent");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private HPTHorseShoeInfo shoeInfoPrevious;
         [DataMember]
         public HPTHorseShoeInfo ShoeInfoPrevious
         {
-            get
-            {
-                return shoeInfoPrevious;
-            }
+            get;
             set
             {
-                shoeInfoPrevious = value;
-                OnPropertyChanged("ShoeInfoPrevious");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private HPTHorseSulkyInfo sulkyInfoCurrent;
         [DataMember]
         public HPTHorseSulkyInfo SulkyInfoCurrent
         {
-            get
-            {
-                return sulkyInfoCurrent;
-            }
+            get;
             set
             {
-                sulkyInfoCurrent = value;
-                OnPropertyChanged("SulkyInfoCurrent");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private HPTHorseSulkyInfo sulkyInfoPrevious;
         [DataMember]
         public HPTHorseSulkyInfo SulkyInfoPrevious
         {
-            get
-            {
-                return sulkyInfoPrevious;
-            }
+            get;
             set
             {
-                sulkyInfoPrevious = value;
-                OnPropertyChanged("SulkyInfoPrevious");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
         #endregion
 
-        private HPTHorseTrioInfo trioInfo;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public HPTHorseTrioInfo TrioInfo
         {
-            get
-            {
-                return trioInfo;
-            }
+            get;
             set
             {
-                trioInfo = value;
-                OnPropertyChanged("TrioInfo");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -2003,119 +1939,92 @@ namespace HPTClient
 
         #region Properties from VPOdds
 
-        private int vinnarOdds;
         [RandomInterval("VinnarOdds", 10, 300, 1D)]
         [HorseRank("Vinnarodds", 3, false, false, HPTRankCategory.MarksAndOdds, true, true, "Vinnarodds")]
         [GroupReduction("Vinnarodds", 1, 10D, 999D, 1D, 30D, 100D)]
         [DataMember]
         public int VinnarOdds
         {
-            get
-            {
-                return vinnarOdds;
-            }
+            get;
             set
             {
-                vinnarOdds = value;
+                field = value;
                 //if (value != 0 && value != 9999)
                 //{
                 //    this.VinnarOddsString = this.vinnarOdds.ToString();
                 //    this.VinnarOddsShare = 0.8M / this.vinnarOdds * 10;
                 //}
-                OnPropertyChanged("VinnarOdds");
+                OnPropertyChanged();
             }
         }
 
-        private decimal vinnarOddsExact;
         public decimal VinnarOddsExact
         {
-            get
-            {
-                return vinnarOddsExact;
-            }
+            get;
             set
             {
-                vinnarOddsExact = value;
+                field = value;
                 if (value != 0 && value != 9999)
                 {
-                    VinnarOddsString = vinnarOddsExact.ToString();
+                    VinnarOddsString = field.ToString();
                     //this.VinnarOddsShare = 0.8M / this.vinnarOdds * 10;
                 }
-                OnPropertyChanged("VinnarOddsExact");
+                OnPropertyChanged();
             }
         }
 
-        private decimal? _VinnarDddsFinal;
         public decimal? VinnarDddsFinal
         {
-            get
-            {
-                return _VinnarDddsFinal;
-            }
+            get;
             set
             {
-                _VinnarDddsFinal = value;
-                OnPropertyChanged("VinnarDddsFinal");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int stakeDistributionPercent;
         [GroupReduction("Insatsfördelning", 2, 0D, 100D, 1D, 10D, 70D)]
         [DataMember]
         public int StakeDistributionPercent
         {
-            get
-            {
-                return stakeDistributionPercent;
-            }
+            get;
             set
             {
-                stakeDistributionPercent = value;
-                OnPropertyChanged("StakeDistributionPercent");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int stakeDistribution;
         [DataMember]
         public int StakeDistribution
         {
-            get
-            {
-                return stakeDistribution;
-            }
+            get;
             set
             {
-                stakeDistribution = value;
-                OnPropertyChanged("StakeDistribution");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal stakeDistributionShare;
-        [HorseRank("Insatsfördelning", 1, true, false, HPTRankCategory.MarksAndOdds, true, true, "Insatsfördelning", "", "P1", 0D)]
+        [HorseRank("Insatsfördelning", 1, true, false, HPTRankCategory.MarksAndOdds, true, true, "Insatsfördelning", "",
+            "P1", 0D)]
         public decimal StakeDistributionShare
         {
-            get
-            {
-                return stakeDistributionShare;
-            }
+            get;
             set
             {
-                stakeDistributionShare = value;
-                OnPropertyChanged("StakeDistributionShare");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal? _StakeDistributionShareFinal;
         public decimal? StakeDistributionShareFinal
         {
-            get
-            {
-                return _StakeDistributionShareFinal;
-            }
+            get;
             set
             {
-                _StakeDistributionShareFinal = value;
-                OnPropertyChanged("StakeDistributionShareFinal");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -2123,48 +2032,36 @@ namespace HPTClient
 
         public decimal StakeShareWithoutScratchings { get; set; }
 
-        private decimal stakeDistributionShareAccumulated;
         public decimal StakeDistributionShareAccumulated
         {
-            get
-            {
-                return stakeDistributionShareAccumulated;
-            }
+            get;
             set
             {
-                stakeDistributionShareAccumulated = value;
-                OnPropertyChanged("StakeDistributionShareAccumulated");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private string vinnarOddsString;
         [XmlIgnore]
         public string VinnarOddsString
         {
-            get
-            {
-                return vinnarOddsString;
-            }
+            get;
             set
             {
-                vinnarOddsString = value;
-                OnPropertyChanged("VinnarOddsString");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal vinnarOddsShare;
         [GroupReduction("Vinnaroddsandel", 5, 0D, 1D, 0.01D, 0.1D, 0.5D)]
         [XmlIgnore]
         public decimal VinnarOddsShare
         {
-            get
-            {
-                return vinnarOddsShare;
-            }
+            get;
             set
             {
-                vinnarOddsShare = value;
-                OnPropertyChanged("VinnarOddsShare");
+                field = value;
+                OnPropertyChanged();
                 if (value > 0M && VinnarOddsExact == 0M)
                 {
                     VinnarOddsExact = 0.8M / value;
@@ -2182,63 +2079,47 @@ namespace HPTClient
         public int MaxPlatsOdds { get; set; }
 
 
-        private decimal _MinPlatsOddsExact;
         [DataMember]
         public decimal MinPlatsOddsExact
         {
-            get
-            {
-                return _MinPlatsOddsExact;
-            }
+            get;
             set
             {
-                _MinPlatsOddsExact = value;
-                OnPropertyChanged("MinPlatsOddsExact");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal _MaxPlatsOddsExact;
         [DataMember]
         public decimal MaxPlatsOddsExact
         {
-            get
-            {
-                return _MaxPlatsOddsExact;
-            }
+            get;
             set
             {
-                _MaxPlatsOddsExact = value;
-                OnPropertyChanged("MaxPlatsOddsExact");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private string platsOddsString;
         [XmlIgnore]
         public string PlatsOddsString
         {
-            get
-            {
-                return platsOddsString;
-            }
+            get;
             set
             {
-                platsOddsString = value;
-                OnPropertyChanged("PlatsOddsString");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool notScratched;
         [XmlIgnore]
         public bool NotScratched
         {
-            get
-            {
-                return notScratched;
-            }
+            get;
             set
             {
-                notScratched = value;
-                OnPropertyChanged("NotScratched");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -2272,37 +2153,29 @@ namespace HPTClient
                 }
                 NotScratched = value == null || value == false;
                 scratched = value;
-                OnPropertyChanged("Scratched");
+                OnPropertyChanged();
             }
         }
 
-        private int investmentPlats;
         [DataMember]
         public int InvestmentPlats
         {
-            get
-            {
-                return investmentPlats;
-            }
+            get;
             set
             {
-                investmentPlats = value;
-                OnPropertyChanged("InvestmentPlats");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int investmentVinnare;
         [DataMember]
         public int InvestmentVinnare
         {
-            get
-            {
-                return investmentVinnare;
-            }
+            get;
             set
             {
-                investmentVinnare = value;
-                OnPropertyChanged("InvestmentVinnare");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -2376,81 +2249,61 @@ namespace HPTClient
         //    }
         //}
 
-        private int? rankTip;
         [HorseRank("Tipsrank", 53, false, false, HPTRankCategory.Rest, false, false, "", "", "", 0D)]
         [GroupReduction("Tipsrank", 8, 1D, 16D, 1D, 1D, 16D)]
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public int? RankTip
         {
-            get
-            {
-                return rankTip;
-            }
+            get;
             set
             {
-                rankTip = value;
-                OnPropertyChanged("RankTip");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool selectedFromTip;
         [XmlIgnore]
         public bool SelectedFromTip
         {
-            get
-            {
-                return selectedFromTip;
-            }
+            get;
             set
             {
-                selectedFromTip = value;
-                OnPropertyChanged("SelectedFromTip");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int numberOfSelectionsFromTips;
         [XmlIgnore]
         public int NumberOfSelectionsFromTips
         {
-            get
-            {
-                return numberOfSelectionsFromTips;
-            }
+            get;
             set
             {
-                numberOfSelectionsFromTips = value;
-                OnPropertyChanged("NumberOfSelectionsFromTips");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private HPTPrio prioFromTips;
         [XmlIgnore]
         public HPTPrio PrioFromTips
         {
-            get
-            {
-                return prioFromTips;
-            }
+            get;
             set
             {
-                prioFromTips = value;
+                field = value;
                 PrioStringFromTips = value == HPTPrio.M ? string.Empty : value.ToString();
                 //OnPropertyChanged("PrioFromTips");
             }
         }
 
-        private string prioStringFromTips;
         [XmlIgnore]
         public string PrioStringFromTips
         {
-            get
-            {
-                return prioStringFromTips;
-            }
+            get;
             set
             {
-                prioStringFromTips = value;
-                OnPropertyChanged("PrioStringFromTips");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -2476,51 +2329,43 @@ namespace HPTClient
 
         #region HPT properties
 
-        private bool? reserv1;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public bool? Reserv1
         {
-            get
-            {
-                return reserv1;
-            }
+            get;
             set
             {
-                reserv1 = value;
-                if (reserv1 == true && ParentRace != null)
+                field = value;
+                if (field == true && ParentRace != null)
                 {
                     ParentRace.Reserv1Nr = StartNr;
                 }
-                else if (reserv1 == null && ParentRace != null)
+                else if (field == null && ParentRace != null)
                 {
                     ParentRace.Reserv1Nr = 0;
                 }
-                OnPropertyChanged("Reserv1");
+                OnPropertyChanged();
                 if (Reserv2 == true && value == true)
                     Reserv2 = null;
             }
         }
 
-        private bool? reserv2;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public bool? Reserv2
         {
-            get
-            {
-                return reserv2;
-            }
+            get;
             set
             {
-                reserv2 = value;
-                if (reserv2 == true && ParentRace != null)
+                field = value;
+                if (field == true && ParentRace != null)
                 {
                     ParentRace.Reserv2Nr = StartNr;
                 }
-                else if (reserv2 == null && ParentRace != null)
+                else if (field == null && ParentRace != null)
                 {
                     ParentRace.Reserv2Nr = 0;
                 }
-                OnPropertyChanged("Reserv2");
+                OnPropertyChanged();
                 if (Reserv1 == true && value == true)
                     Reserv1 = null;
             }
@@ -2545,10 +2390,10 @@ namespace HPTClient
                 }
                 selected = value;
                 //this.RankABC = GetRankABC();
-                OnPropertyChanged("Selected");
+                OnPropertyChanged();
                 if (!selected && HorseXReductionList != null)
                 {
-                    foreach (HPTHorseXReduction horseXReduction in HorseXReductionList.Where(xr => xr.Selected))
+                    foreach (var horseXReduction in HorseXReductionList.Where(xr => xr.Selected))
                     {
                         horseXReduction.Selected = false;
                     }
@@ -2570,154 +2415,121 @@ namespace HPTClient
             }
         }
 
-        private bool? locked;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public bool? Locked
         {
-            get
-            {
-                return locked;
-            }
+            get;
             set
             {
-                locked = value;
-                OnPropertyChanged("Locked");
-                if (locked == true && !Selected)
+                field = value;
+                OnPropertyChanged();
+                if (field == true && !Selected)
                 {
                     Selected = true;
                 }
             }
         }
 
-        private bool isHighlighted;
         [XmlIgnore]
         public bool IsHighlighted
         {
-            get
-            {
-                return isHighlighted;
-            }
+            get;
             set
             {
-                isHighlighted = value;
-                OnPropertyChanged("IsHighlighted");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool isHomeTrack;
         [XmlIgnore]
         public bool IsHomeTrack
         {
-            get
-            {
-                return isHomeTrack;
-            }
+            get;
             set
             {
-                isHomeTrack = value;
-                OnPropertyChanged("IsHomeTrack");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool selectedForComplimentaryRule;
         [XmlIgnore]
         public bool SelectedForComplimentaryRule
         {
-            get
-            {
-                return selectedForComplimentaryRule;
-            }
+            get;
             set
             {
-                if (value != selectedForComplimentaryRule)
+                if (value != field)
                 {
-                    selectedForComplimentaryRule = value;
-                    OnPropertyChanged("SelectedForComplimentaryRule");
+                    field = value;
+                    OnPropertyChanged();
                     ComplimentaryText = value ? "U" : string.Empty;
                 }
             }
         }
 
-        private string complimentaryText;
         [XmlIgnore]
         public string ComplimentaryText
         {
-            get
-            {
-                return complimentaryText;
-            }
+            get;
             set
             {
-                complimentaryText = value;
-                OnPropertyChanged("ComplimentaryText");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool selectedForRowValueCalculation;
         [XmlIgnore]
         public bool SelectedForRowValueCalculation
         {
-            get
-            {
-                return selectedForRowValueCalculation;
-            }
+            get;
             set
             {
-                selectedForRowValueCalculation = value;
-                OnPropertyChanged("SelectedForRowValueCalculation");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int numberOfCoveredRows;
         [XmlIgnore]
         public int NumberOfCoveredRows
         {
-            get
-            {
-                return numberOfCoveredRows;
-            }
+            get;
             set
             {
-                numberOfCoveredRows = value;
-                OnPropertyChanged("NumberOfCoveredRows");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal systemCoverage;
         [XmlIgnore]
         public decimal SystemCoverage
         {
-            get
-            {
-                return systemCoverage;
-            }
+            get;
             set
             {
-                systemCoverage = value;
-                OnPropertyChanged("SystemCoverage");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private HPTHorseOwnInformation ownInformation;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public HPTHorseOwnInformation OwnInformation
         {
             get
             {
-                if (ownInformation == null)
+                if (field == null)
                 {
-                    ownInformation = HPTConfig.Config.HorseOwnInformationCollection.GetOwnInformationByName(HorseName);
-                    if (ownInformation != null && ownInformation.ATGId == "0")
+                    field = HPTConfig.Config.HorseOwnInformationCollection.GetOwnInformationByName(HorseName);
+                    if (field != null && field.ATGId == "0")
                     {
-                        ownInformation.ATGId = ATGId;
+                        field.ATGId = ATGId;
                     }
                 }
-                return ownInformation;
+                return field;
             }
             set
             {
-                ownInformation = value;
-                OnPropertyChanged("OwnInformation");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -2729,34 +2541,26 @@ namespace HPTClient
             }
         }
 
-        private string prioString;
         [XmlIgnore]
         public string PrioString
         {
-            get
-            {
-                return prioString;
-            }
+            get;
             set
             {
-                prioString = value;
-                OnPropertyChanged("PrioString");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private HPTPrio prio;
         [DataMember]
         public HPTPrio Prio
         {
-            get
-            {
-                return prio;
-            }
+            get;
             set
             {
-                prio = value;
+                field = value;
                 RankABC = GetRankABC();
-                OnPropertyChanged("Prio");
+                OnPropertyChanged();
                 if (ParentRace != null)
                 {
                     ParentRace.RankABCSum = ParentRace.HorseList
@@ -2816,7 +2620,7 @@ namespace HPTClient
 
         internal int GetRankABC()
         {
-            int result = 0;
+            var result = 0;
             try
             {
                 switch (Prio)
@@ -2851,29 +2655,28 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
             return result;
         }
 
-        private int rankABC;
         [HorseRank("ABC-Rank", 54, true, false, HPTRankCategory.Rest, false, false, "", "Prio", "", -1D)]
         public int RankABC
         {
             get
             {
-                if (Prio == HPTPrio.M && Selected && rankABC > 0)
+                if (Prio == HPTPrio.M && Selected && field > 0)
                 {
-                    rankABC = 0;
+                    field = 0;
                     RankList.First(r => r.Name == "RankABC").Rank = 0;
                 }
-                return rankABC;
+                return field;
             }
             set
             {
-                rankABC = value;
+                field = value;
                 RankList.First(r => r.Name == "RankABC").Rank = value;
-                OnPropertyChanged("RankABC");
+                OnPropertyChanged();
             }
         }
 
@@ -2897,24 +2700,20 @@ namespace HPTClient
             }
         }
 
-        private ObservableCollection<HPTHorseXReduction> horseXReductionList;
         [XmlIgnore]
         public ObservableCollection<HPTHorseXReduction> HorseXReductionList
         {
-            get
-            {
-                return horseXReductionList;
-            }
+            get;
             set
             {
-                horseXReductionList = value;
-                OnPropertyChanged("HorseXReductionList");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
         internal void SetColors()
         {
-            Color c = Colors.White;
+            var c = Colors.White;
             if (HPTConfig.Config.SetColorFromVinnarOdds)
             {
                 if (VinnarOdds < HPTConfig.Config.ColorIntervalVinnarOdds.LowerBoundary)
@@ -2974,7 +2773,7 @@ namespace HPTClient
         {
             get
             {
-                Color c = Colors.White;
+                var c = Colors.White;
                 if (VinnarOdds < 50)
                 {
                     c = Colors.Green;
@@ -2987,44 +2786,42 @@ namespace HPTClient
                 {
                     c = Colors.Red;
                 }
-                LinearGradientBrush lgb = new LinearGradientBrush(c, Colors.White, 90.0);
+                var lgb = new LinearGradientBrush(c, Colors.White, 90.0);
                 return lgb;
             }
             set
             {
                 platsoddsColor = value;
-                OnPropertyChanged("PlatsoddsColor");
+                OnPropertyChanged();
             }
         }
 
-        private Brush vinnaroddsColor;
         [XmlIgnore]
         public Brush VinnaroddsColor
         {
             get
             {
-                if (vinnaroddsColor == null)
+                if (field == null)
                 {
                     SetColors();
                 }
-                return vinnaroddsColor;
+                return field;
             }
             set
             {
-                vinnaroddsColor = value;
-                OnPropertyChanged("VinnaroddsColor");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private Brush markabilityColor;
         [XmlIgnore]
         public Brush MarkabilityColor
         {
             get
             {
-                if (markabilityColor == null)
+                if (field == null)
                 {
-                    Color c = Colors.White;
+                    var c = Colors.White;
                     if (VinnarOdds < 50)
                     {
                         c = HPTConfig.Config.ColorGood;
@@ -3041,10 +2838,10 @@ namespace HPTClient
                     {
                         c = Colors.Gray;
                     }
-                    markabilityColor = new SolidColorBrush(c);
-                    OnPropertyChanged("MarkabilityColor");
+                    field = new SolidColorBrush(c);
+                    OnPropertyChanged();
                 }
-                return markabilityColor;
+                return field;
             }
         }
 
@@ -3083,33 +2880,25 @@ namespace HPTClient
         //    }
         //}
 
-        private bool? driverChanged;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public bool? DriverChanged
         {
-            get
-            {
-                return driverChanged;
-            }
+            get;
             set
             {
-                driverChanged = value;
-                OnPropertyChanged("DriverChanged");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool? driverChangedSinceLastStart;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public bool? DriverChangedSinceLastStart
         {
-            get
-            {
-                return driverChangedSinceLastStart;
-            }
+            get;
             set
             {
-                driverChangedSinceLastStart = value;
-                OnPropertyChanged("DriverChangedSinceLastStart");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -3117,50 +2906,45 @@ namespace HPTClient
 
         #region Rank properties
 
-        private ObservableCollection<HPTHorseRank> rankList;
         [XmlIgnore]
         public ObservableCollection<HPTHorseRank> RankList
         {
             get
             {
-                if (rankList == null || rankList.Count == 0)
+                if (field == null || field.Count == 0)
                 {
                     if (HPTConfig.Config.DefaultRankTemplate.HorseRankVariableList == null || HPTConfig.Config.DefaultRankTemplate.HorseRankVariableList.Count == 0)
                     {
                         HPTConfig.Config.DefaultRankTemplate.HorseRankVariableList = HPTHorseRankVariable.CreateVariableList();
                     }
-                    rankList = new ObservableCollection<HPTHorseRank>(HPTConfig.Config.DefaultRankTemplate.HorseRankVariableList.Select(rv => new HPTHorseRank()
+                    field = new ObservableCollection<HPTHorseRank>(HPTConfig.Config.DefaultRankTemplate.HorseRankVariableList.Select(rv => new HPTHorseRank()
                     {
                         Name = rv.PropertyName
                     }));
                 }
-                return rankList;
+                return field;
             }
             set
             {
-                rankList = value;
-                OnPropertyChanged("RankList");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int rankATG;
-        [HorseRank("ATG-rank", 51, false, false, HPTRankCategory.Rest, false, false, "", "StartPoint", "## ### ##0", 0D)]
+        [HorseRank("ATG-rank", 51, false, false, HPTRankCategory.Rest, false, false, "", "StartPoint", "## ### ##0",
+            0D)]
         [GroupReduction("ATG-rank", 6, 1D, 15D, 1D, 1D, 16D)]
         [DataMember]
         public int RankATG
         {
-            get
-            {
-                return rankATG;
-            }
+            get;
             set
             {
-                rankATG = value;
-                OnPropertyChanged("RankATG");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int rankOwn;
         //[HorseRank("Egen rank", 52, false, false, HPTRankCategory.Rest, false, false, "", "", "", 0D)]
         [HorseRank("Egen rank", 52, false, false, HPTRankCategory.Rest, false, false, "", "", "", 0D)]
         [GroupReduction("Egen rank", 7, 1D, 100D, 1D, 1D, 16D)]
@@ -3169,20 +2953,20 @@ namespace HPTClient
         {
             get
             {
-                if (rankOwn == 0 && RankList != null)
+                if (field == 0 && RankList != null)
                 {
                     var rank = RankList.FirstOrDefault(hr => hr.Name == "StakeDistributionShare");
                     if (rank != null)
                     {
-                        rankOwn = rank.Rank;
+                        field = rank.Rank;
                     }
                 }
-                return rankOwn;
+                return field;
             }
             set
             {
-                rankOwn = value;
-                OnPropertyChanged("RankOwn");
+                field = value;
+                OnPropertyChanged();
                 if (ParentRace != null)
                 {
                     ParentRace.RankOwnSum = ParentRace.HorseList.Sum(h => h.RankOwn);
@@ -3190,18 +2974,14 @@ namespace HPTClient
             }
         }
 
-        private decimal? ownProbability;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public decimal? OwnProbability
         {
-            get
-            {
-                return ownProbability;
-            }
+            get;
             set
             {
-                ownProbability = value;
-                OnPropertyChanged("OwnProbability");
+                field = value;
+                OnPropertyChanged();
                 if (ParentRace != null)
                 {
                     ParentRace.OwnProbabilitySum = ParentRace.HorseList.Where(h => h.OwnProbability != null).Sum(h => h.OwnProbability);
@@ -3240,7 +3020,6 @@ namespace HPTClient
             }
         }
 
-        private int rankAlternate;
         [HorseRank("Poäng", 53, false, false, HPTRankCategory.Rest, false, false, "", "", "", 0D)]
         [GroupReduction("Poäng", 7, 1D, 100D, 1D, 1D, 16D)]
         [DataMember]
@@ -3248,20 +3027,20 @@ namespace HPTClient
         {
             get
             {
-                if (rankAlternate == 0 && RankList != null)
+                if (field == 0 && RankList != null)
                 {
                     var rank = RankList.FirstOrDefault(hr => hr.Name == "StakeDistributionShare");
                     if (rank != null)
                     {
-                        rankAlternate = rank.Rank;
+                        field = rank.Rank;
                     }
                 }
-                return rankAlternate;
+                return field;
             }
             set
             {
-                rankAlternate = value;
-                OnPropertyChanged("RankAlternate");
+                field = value;
+                OnPropertyChanged();
                 if (ParentRace != null)
                 {
                     ParentRace.RankAlternateSum = ParentRace.HorseList.Sum(h => h.RankAlternate);
@@ -3269,51 +3048,39 @@ namespace HPTClient
             }
         }
 
-        private int rankStartNumber;
         [HorseRank("Spårrank", 55, false, false, HPTRankCategory.Rest, false, true, "Spårrank", "", "", 0D)]
         [DataMember]
         public int RankStartNumber
         {
-            get
-            {
-                return rankStartNumber;
-            }
+            get;
             set
             {
-                rankStartNumber = value;
-                OnPropertyChanged("RankStartNumber");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal rankMean;
         [GroupReduction("Snittrank", 7, 1D, 15D, 0.1D, 1D, 16D)]
         [XmlIgnore]
         public decimal RankMean
         {
-            get
-            {
-                return rankMean;
-            }
+            get;
             set
             {
-                rankMean = value;
-                OnPropertyChanged("RankMean");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal rankWeighted;
         [GroupReduction("Viktad snittrank", 8, 1D, 15D, 0.1D, 1D, 16D)]
         [XmlIgnore]
         public decimal RankWeighted
         {
-            get
-            {
-                return rankWeighted;
-            }
+            get;
             set
             {
-                rankWeighted = value;
-                OnPropertyChanged("RankWeighted");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -3383,7 +3150,7 @@ namespace HPTClient
                 shareList.Add(Convert.ToDecimal(StakeShareAlternate2));
             }
 
-            decimal avg = shareList.Average(s => s / StakeDistributionShare);
+            var avg = shareList.Average(s => s / StakeDistributionShare);
             if (avg == 0M)
             {
                 return;
@@ -3397,31 +3164,23 @@ namespace HPTClient
             //this.Markability = -1M * (diff / stdDev) * (decimal)Math.Sqrt(shareList.Count);
         }
 
-        private decimal platsQuotient;
         public decimal PlatsQuotient
         {
-            get
-            {
-                return platsQuotient;
-            }
+            get;
             set
             {
-                platsQuotient = value;
-                OnPropertyChanged("PlatsQuotient");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal vinnarQuotient;
         public decimal VinnarQuotient
         {
-            get
-            {
-                return vinnarQuotient;
-            }
+            get;
             set
             {
-                vinnarQuotient = value;
-                OnPropertyChanged("VinnarQuotient");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -3441,7 +3200,7 @@ namespace HPTClient
                 shareList.Add(Convert.ToDecimal(StakeShareAlternate2));
             }
 
-            decimal avg = shareList.Average();
+            var avg = shareList.Average();
             if (avg == 0M || shareList.Count < 3)
             {
                 return;
@@ -3451,7 +3210,6 @@ namespace HPTClient
             VinnarQuotient = avg / VinnarOddsShare;
         }
 
-        private decimal markability;
         [HorseRank("Streckbarhet", 6, true, false, HPTRankCategory.MarksAndOdds, true, false, "", "", "F2", 0D)]
         [GroupReduction("Streckbarhet", 8, 0D, 4D, 0.01D, 0D, 4D)]
         [XmlIgnore]
@@ -3459,16 +3217,16 @@ namespace HPTClient
         {
             get
             {
-                if (markability == 0M)
+                if (field == 0M)
                 {
                     SetMarkability();
                 }
-                return markability;
+                return field;
             }
             set
             {
-                markability = value;
-                OnPropertyChanged("Markability");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -3476,7 +3234,7 @@ namespace HPTClient
         {
             get
             {
-                StringBuilder sb = new StringBuilder();
+                var sb = new StringBuilder();
                 sb.Append(StartNr);
                 if (PrioString != string.Empty && PrioString != null)
                 {
@@ -3521,7 +3279,7 @@ namespace HPTClient
 
         public string ToClipboardString()
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.Append(StartNr);
             if (PrioString != string.Empty && PrioString != null)
             {
@@ -3534,18 +3292,14 @@ namespace HPTClient
             return sb.ToString();
         }
 
-        private decimal vinnarOddsRelative;
         [XmlIgnore]
         public decimal VinnarOddsRelative
         {
-            get
-            {
-                return vinnarOddsRelative;
-            }
+            get;
             set
             {
-                vinnarOddsRelative = value;
-                OnPropertyChanged("VinnarOddsRelative");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -3683,45 +3437,40 @@ namespace HPTClient
             }
         }
 
-        private decimal meanPlaceLast5;
-        [HorseRank("Snitt senaste 5", 22, false, true, HPTRankCategory.Place, true, true, "Placering senaste 5", "", "F1", -1D)]
+        [HorseRank("Snitt senaste 5", 22, false, true, HPTRankCategory.Place, true, true, "Placering senaste 5", "",
+            "F1", -1D)]
         [XmlIgnore]
         public decimal MeanPlaceLast5
         {
             get
             {
-                if (meanPlaceLast5 == 0M && ResultList != null && ResultList.Count > 0)
+                if (field == 0M && ResultList != null && ResultList.Count > 0)
                 {
-                    meanPlaceLast5 = Convert.ToDecimal(ResultList.Average(hr => hr.Place));
+                    field = Convert.ToDecimal(ResultList.Average(hr => hr.Place));
                 }
-                return meanPlaceLast5;
+
+                return field;
             }
-            set
-            {
-                meanPlaceLast5 = value;
-            }
+            set;
         }
 
-        private decimal meanPlaceLast3;
         [HorseRank("Snitt senaste 3", 21, false, true, HPTRankCategory.Place, true, false, "", "", "F1", -1D)]
         [XmlIgnore]
         public decimal MeanPlaceLast3
         {
             get
             {
-                if (meanPlaceLast3 == 0M && ResultList != null && ResultList.Count > 0)
+                if (field == 0M && ResultList != null && ResultList.Count > 0)
                 {
-                    meanPlaceLast3 = Convert.ToDecimal(ResultList
+                    field = Convert.ToDecimal(ResultList
                         .OrderByDescending(r => r.Date)
                         .Take(3)
                         .Average(hr => hr.Place));
                 }
-                return meanPlaceLast3;
+
+                return field;
             }
-            set
-            {
-                meanPlaceLast3 = value;
-            }
+            set;
         }
 
         [HorseRank("Andel totalt", 33, true, true, HPTRankCategory.Top3, true, false, "", "", "P0", -1D)]
@@ -3754,7 +3503,6 @@ namespace HPTClient
             }
         }
 
-        private int daysSinceLastStart = 0;
         [GroupReduction("Dagar sen senaste start", 11, 1D, 365D, 1D, 1D, 365D)]
         public int DaysSinceLastStart
         {
@@ -3769,11 +3517,10 @@ namespace HPTClient
                 //        daysSinceLastStart = Convert.ToInt32(Math.Floor(ts.TotalDays));
                 //    }
                 //}
-                return daysSinceLastStart;
+                return field;
             }
-        }
+        } = 0;
 
-        private string daysBetweenStarts = "0";
         public string DaysBetweenStarts
         {
             get
@@ -3797,9 +3544,9 @@ namespace HPTClient
                 //    sb.Append(")");
                 //    daysBetweenStarts = sb.ToString();
                 //}
-                return daysBetweenStarts;
+                return field;
             }
-        }
+        } = "0";
 
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public decimal? Shape { get; set; }
@@ -3811,73 +3558,53 @@ namespace HPTClient
 
         #region Result properties
 
-        private bool correct;
         public bool Correct
         {
-            get
-            {
-                return correct;
-            }
+            get;
             set
             {
-                correct = value;
-                OnPropertyChanged("Correct");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int numberOfRowsWithAllCorrect;
         public int NumberOfRowsWithAllCorrect
         {
-            get
-            {
-                return numberOfRowsWithAllCorrect;
-            }
+            get;
             set
             {
-                numberOfRowsWithAllCorrect = value;
-                OnPropertyChanged("NumberOfRowsWithAllCorrect");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int? numberOfRowsWithOneError;
         public int? NumberOfRowsWithOneError
         {
-            get
-            {
-                return numberOfRowsWithOneError;
-            }
+            get;
             set
             {
-                numberOfRowsWithOneError = value;
-                OnPropertyChanged("NumberOfRowsWithOneError");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int? numberOfRowsWithTwoErrors;
         public int? NumberOfRowsWithTwoErrors
         {
-            get
-            {
-                return numberOfRowsWithTwoErrors;
-            }
+            get;
             set
             {
-                numberOfRowsWithTwoErrors = value;
-                OnPropertyChanged("NumberOfRowsWithTwoErrors");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private string numberOfRowsWithPossibility;
         public string NumberOfRowsWithPossibility
         {
-            get
-            {
-                return numberOfRowsWithPossibility;
-            }
+            get;
             set
             {
-                numberOfRowsWithPossibility = value;
-                OnPropertyChanged("NumberOfRowsWithPossibility");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -3885,94 +3612,70 @@ namespace HPTClient
 
         #region Shareinfo
 
-        private decimal platsOddsShare;
         [XmlIgnore]
         public decimal PlatsOddsShare
         {
-            get
-            {
-                return platsOddsShare;
-            }
+            get;
             set
             {
-                platsOddsShare = value;
-                OnPropertyChanged("PlatsOddsShare");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal tvillingShare;
         [DataMember]
         [HorseRank("Tvillingandel", 5, true, false, HPTRankCategory.MarksAndOdds, true, false, "", "", "P1", -1D)]
         public decimal TvillingShare
         {
-            get
-            {
-                return tvillingShare;
-            }
+            get;
             set
             {
-                tvillingShare = value;
-                OnPropertyChanged("TvillingShare");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal? doubleShare;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public decimal? DoubleShare
         {
-            get
-            {
-                return doubleShare;
-            }
+            get;
             set
             {
-                doubleShare = value;
-                OnPropertyChanged("DoubleShare");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal? trioShare;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public decimal? TrioShare
         {
-            get
-            {
-                return trioShare;
-            }
+            get;
             set
             {
-                trioShare = value;
-                OnPropertyChanged("TrioShare");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal? stakeShareAlternate;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public decimal? StakeShareAlternate
         {
-            get
-            {
-                return stakeShareAlternate;
-            }
+            get;
             set
             {
-                stakeShareAlternate = value;
-                OnPropertyChanged("StakeShareAlternate");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal? stakeShareAlternate2;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public decimal? StakeShareAlternate2
         {
-            get
-            {
-                return stakeShareAlternate2;
-            }
+            get;
             set
             {
-                stakeShareAlternate2 = value;
-                OnPropertyChanged("StakeShareAlternate2");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -3980,8 +3683,8 @@ namespace HPTClient
         {
             get
             {
-                decimal stakeShareAlternate = Convert.ToDecimal(StakeShareAlternate);
-                decimal stakeShareAlternate2 = Convert.ToDecimal(StakeShareAlternate2);
+                var stakeShareAlternate = Convert.ToDecimal(StakeShareAlternate);
+                var stakeShareAlternate2 = Convert.ToDecimal(StakeShareAlternate2);
 
                 if (stakeShareAlternate > 0M && stakeShareAlternate2 > 0M)
                 {
@@ -4006,83 +3709,63 @@ namespace HPTClient
         internal void CalculateTotalMeanAndStDev()
         {
             RankMeanTotal = Convert.ToDecimal(RankList.Select(hr => hr.Rank).Average());
-            decimal variance =
+            var variance =
                 RankList.Select(hr => hr.Rank).Average(r => (r - RankMeanTotal) * (r - RankMeanTotal));
             RankStDev = Convert.ToDecimal(Math.Sqrt(Convert.ToDouble(variance)));
         }
 
-        private decimal rankMeanTotal;
         [XmlIgnore]
         public decimal RankMeanTotal
         {
-            get
-            {
-                return rankMeanTotal;
-            }
+            get;
             set
             {
-                rankMeanTotal = value;
-                OnPropertyChanged("RankMeanTotal");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal rankStDev;
         [XmlIgnore]
         public decimal RankStDev
         {
-            get
-            {
-                return rankStDev;
-            }
+            get;
             set
             {
-                rankStDev = value;
-                OnPropertyChanged("RankStDev");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal stakeShareRelativeToFavourite;
         [XmlIgnore]
         public decimal StakeShareRelativeToFavourite
         {
-            get
-            {
-                return stakeShareRelativeToFavourite;
-            }
+            get;
             set
             {
-                stakeShareRelativeToFavourite = value;
-                OnPropertyChanged("StakeShareRelativeToFavourite");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal stakeShareRelativeToNext;
         [XmlIgnore]
         public decimal StakeShareRelativeToNext
         {
-            get
-            {
-                return stakeShareRelativeToNext;
-            }
+            get;
             set
             {
-                stakeShareRelativeToNext = value;
-                OnPropertyChanged("StakeShareRelativeToNext");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal stakeShareRelativeToPrevious;
         [XmlIgnore]
         public decimal StakeShareRelativeToPrevious
         {
-            get
-            {
-                return stakeShareRelativeToPrevious;
-            }
+            get;
             set
             {
-                stakeShareRelativeToPrevious = value;
-                OnPropertyChanged("StakeShareRelativeToPrevious");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -4110,7 +3793,7 @@ namespace HPTClient
                 //ResultList = start.StartInfo.ResultList.ToList(),
                 //RecordList = start.StartInfo.RecordList.ToList()
             };
-            string jsonString = HPTSerializer.CreateJson(horseStaticInformation);
+            var jsonString = HPTSerializer.CreateJson(horseStaticInformation);
             return jsonString;
         }
 

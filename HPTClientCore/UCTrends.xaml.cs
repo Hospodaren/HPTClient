@@ -46,17 +46,10 @@ namespace HPTClient
             GetRaceDayInfoHistory();
         }
 
-        private int selectedIndex;
         public int SelectedIndex
         {
-            get
-            {
-                return selectedIndex;
-            }
-            set
-            {
-                selectedIndex = value;
-            }
+            get { return field; }
+            set;
         }
 
         private void GetRaceDayInfoHistory()
@@ -134,26 +127,26 @@ namespace HPTClient
         private string GroupDescriptionName = "ParentRace.LegNrString";
         private void GridViewColumnHeader_Click(object sender, RoutedEventArgs e)
         {
-            GridViewColumnHeader column = e.OriginalSource as GridViewColumnHeader;
+            var column = e.OriginalSource as GridViewColumnHeader;
             if (column == null)
             {
                 return;
             }
 
-            String field = column.Tag as String;
+            var field = column.Tag as String;
             if (string.IsNullOrEmpty(field))
             {
                 field = "StakeDistributionShare";
             }
 
-            ListSortDirection newDir = ListSortDirection.Ascending;
+            var newDir = ListSortDirection.Ascending;
 
             if (lvwLopp.Items.SortDescriptions.Count > 1)
             {
-                SortDescription sd = lvwLopp.Items.SortDescriptions[1];
+                var sd = lvwLopp.Items.SortDescriptions[1];
                 if (sd.PropertyName == field)
                 {
-                    SortDescription sdNew = new SortDescription();
+                    var sdNew = new SortDescription();
                     sdNew.PropertyName = sd.PropertyName;
                     sdNew.Direction = sd.Direction == ListSortDirection.Ascending
                                           ? ListSortDirection.Descending
@@ -325,8 +318,8 @@ namespace HPTClient
         {
             if (cmbUpdateInterval.SelectedItem != null)
             {
-                ComboBoxItem cbi = (ComboBoxItem)cmbUpdateInterval.SelectedItem;
-                int updatePeriod = Convert.ToInt32(cbi.Tag) * 60 * 1000;
+                var cbi = (ComboBoxItem)cmbUpdateInterval.SelectedItem;
+                var updatePeriod = Convert.ToInt32(cbi.Tag) * 60 * 1000;
                 if (updatePeriod == 0)
                 {
                     atgUpdateTimer.Change(Timeout.Infinite, Timeout.Infinite);

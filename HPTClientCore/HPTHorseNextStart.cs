@@ -5,63 +5,47 @@ namespace HPTClient
     [DataContract]
     public class HPTHorseNextStart : Notifier, IComparable
     {
-        private DateTime _StartDate;
         [DataMember]
         public DateTime StartDate
         {
-            get
-            {
-                return _StartDate;
-            }
+            get;
             set
             {
-                _StartDate = value;
-                OnPropertyChanged("StartDate");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int _RaceNumber;
         [DataMember]
         public int RaceNumber
         {
-            get
-            {
-                return _RaceNumber;
-            }
+            get;
             set
             {
-                _RaceNumber = value;
-                OnPropertyChanged("RaceNumber");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int _TrackId;
         [DataMember]
         public int TrackId
         {
-            get
-            {
-                return _TrackId;
-            }
+            get;
             set
             {
-                _TrackId = value;
-                OnPropertyChanged("TrackId");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private List<string> _BetTypes;
         [DataMember]
         public List<string> BetTypes
         {
-            get
-            {
-                return _BetTypes;
-            }
+            get;
             set
             {
-                _BetTypes = value;
-                OnPropertyChanged("BetTypes");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -94,9 +78,13 @@ namespace HPTClient
         //     }
         // }
 
-        public int CompareTo(object obj)
+        public int CompareTo(object? obj)
         {
-            return StartDate.CompareTo(obj);
+            if (obj is null)
+                return 1;
+            if (obj is HPTHorseNextStart other)
+                return StartDate.CompareTo(other.StartDate);
+            throw new ArgumentException("Object must be a HPTHorseNextStart", nameof(obj));
         }
 
 

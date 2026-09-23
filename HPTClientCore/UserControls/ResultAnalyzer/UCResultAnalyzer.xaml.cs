@@ -21,13 +21,13 @@ namespace HPTClient
                 var resultAnalyzer = (HPTResultAnalyzer)DataContext;
                 if (resultAnalyzer != null)
                 {
-                    string analysisData = resultAnalyzer.ExportToExcel();
+                    var analysisData = resultAnalyzer.ExportToExcel();
                     Clipboard.SetDataObject(analysisData);
                 }
             }
             catch (Exception exc)
             {
-                string fel = exc.Message;
+                var fel = exc.Message;
             }
         }
 
@@ -37,7 +37,7 @@ namespace HPTClient
             var resultAnalyzer = (HPTResultAnalyzer)DataContext;
             if (resultAnalyzer != null)
             {
-                string analysisData = resultAnalyzer.ExportToExcel(true);
+                var analysisData = resultAnalyzer.ExportToExcel(true);
                 Clipboard.SetDataObject(analysisData);
             }
         }
@@ -48,7 +48,7 @@ namespace HPTClient
             var resultAnalyzer = (HPTResultAnalyzer)DataContext;
             if (resultAnalyzer != null)
             {
-                string analysisData = resultAnalyzer.ExportToExcel(false);
+                var analysisData = resultAnalyzer.ExportToExcel(false);
                 Clipboard.SetDataObject(analysisData);
             }
         }
