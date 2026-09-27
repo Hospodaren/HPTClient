@@ -108,7 +108,14 @@ namespace HPTClient
                 if (hptCalendar is null)
                 {
                     var calendarFileName = Path.Combine(HPTConfig.MyDocumentsPath, "HPT7Calendar.xml");
-                    hptCalendar = HPTSerializer.DeserializeHPTCalendar(calendarFileName);
+                    if (File.Exists(calendarFileName))
+                    {
+                        hptCalendar = HPTSerializer.DeserializeHPTCalendar(calendarFileName);    
+                    }
+                    else
+                    {
+                        hptCalendar = new HPTCalendar();
+                    }
                     ATGDownloaderToHPTHelper.UpdateCalendar(hptCalendar);
                     HPTSerializer.SerializeHPTCalendar(calendarFileName, hptCalendar);
                 }
@@ -118,8 +125,8 @@ namespace HPTClient
                 MessageBox.Show(exc.ToString());
             }
 
-            // Sätt versionstext som ska synas i föstret
-            Config.VersionText = $"Hjälp på Traven Open Source Stand Alone-Preview 2. Inga garantier, ingen support, ingen kostnad.";
+            // Sätt versionstext som ska synas i fönstret
+            Config.VersionText = $"Hjälp på Traven Open Source Stand Alone-rc2. Inga garantier, ingen support, ingen kostnad.";
             VersionText = Config.VersionText;
         }
 
@@ -215,7 +222,7 @@ namespace HPTClient
 
                 var gameBase = ATGDownloader.ATGObjectGetter.GetGame(bt.GameInfoBase);
                 var hptRdi = ATGDownloaderToHPTHelper.CreateRaceDayInfo(gameBase);
-                hptRdi.GameBase = gameBase;
+                hptRdi.GameInfoBase = gameBase.GameInfo;
                 hptRdi.BetType = bt;
 
                 switch (bt.Code)
@@ -489,27 +496,6 @@ namespace HPTClient
                 cm.Items.Add(miClone);
                 miClone.Click += new RoutedEventHandler(miClone_Click);
 
-
-                //// Lägg till val för uppladdning av system
-                //MenuItem miUploadCompleteSystem = new MenuItem()
-                //{
-                //    Header = "Ladda upp system",
-                //    Tag = hmb
-                //};
-                //cm.Items.Add(miUploadCompleteSystem);
-                //miUploadCompleteSystem.Click += miUploadCompleteSystem_Click;
-
-                //// Lägg till val för uppladdning av system
-                //MenuItem miPasteTips = new MenuItem()
-                //{
-                //    Header = "Klistra in tips",
-                //    Tag = ucMarksGame,
-                //    DataContext = hmb
-                //};
-                //cm.Items.Add(miPasteTips);
-                //miPasteTips.Click += new RoutedEventHandler(miPasteTips_Click);
-
-
                 // Lägg till val för borttag av rader från fil
                 var miRemoveRowsFromFile = new MenuItem()
                 {
@@ -759,6 +745,7 @@ namespace HPTClient
                 {
                     var hmb = HPTSerializer.DeserializeHPTSystem(ofd.FileName);
                     hmb.SaveDirectory = Path.Combine(HPTConfig.MyDocumentsPath,hmb.RaceDayInfo.ToDateAndTrackString());
+                    ATGDownloaderToHPTHelper.SetNonSerializedValues(hmb);
                     AddTabItem(hmb);
                 }
                 catch (Exception)
@@ -922,6 +909,7 @@ namespace HPTClient
                     {
                         var hmb = HPTSerializer.DeserializeHPTSystem(sysFile.FileName);
                         hmb.SaveDirectory = Path.Combine(HPTConfig.MyDocumentsPath, hmb.RaceDayInfo.ToDateAndTrackString());
+                        ATGDownloaderToHPTHelper.SetNonSerializedValues(hmb);
                         AddTabItem(hmb);
                     }
                     //else if (sysFile.FileNameShort.ToUpper().StartsWith("DD_")
@@ -1323,7 +1311,7 @@ namespace HPTClient
             sb.Append("\t");
             sb.Append(horse.VinnarOddsShare);
             sb.Append("\t");
-            sb.Append(horse.RankList.First(r => r.Name == "VinnarOdds").Rank);
+            sb.Append(horse.RankList.First(r => r.Name == "VinnarOddsExact").Rank);
             sb.Append("\t");
             sb.Append(horse.PlatsOddsShare);
             sb.Append("\t");
@@ -1705,6 +1693,26 @@ namespace HPTClient
                 UseShellExecute = true
             };
             Process.Start(psi);
+        }
+
+        private void UIElement_OnKeyUp(object sender, KeyEventArgs e)
+        {
+            switch (Keyboard.Modifiers)
+            {
+                case ModifierKeys.Control:
+                    switch (e.Key)
+                    {
+                        case Key.OemPlus:
+                        case Key.Add:
+                            HPTConfig.Config.Zoom += 0.1M;
+                            break;
+                        case Key.OemMinus:
+                        case Key.Subtract:
+                            HPTConfig.Config.Zoom -= 0.1M;
+                            break;
+                    }
+                    break;
+            }
         }
     }
 

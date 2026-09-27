@@ -22,9 +22,6 @@ namespace HPTClient
             // Lista med resultat av mallberäkning
             TemplateResultList = new ObservableCollection<HPTMarkBetTemplateResult>();
 
-            // Klass för mailskickning
-            MailSender = new HPTMailSender();
-
             ReductionRuleInfoList = new ObservableCollection<ReductionRuleInfo>();
             ReductionRuleStatisticsList = new ObservableCollection<HPTReductionRule>();
             SingleRowsObservable = new ObservableCollection<HPTMarkBetSingleRow>();
@@ -955,12 +952,16 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                var s = exc.Message;
+                HPTConfig.AddToErrorLogStatic(exc);
             }
         }
 
         public void RecalculateReductionThreaded()
         {
+            if (SingleRowCollection is null)
+            {
+                return;
+            }
             try
             {
                 if (IsDeserializing)
@@ -989,7 +990,7 @@ namespace HPTClient
             {
                 SingleRowCollection.StopCalculation = false;
                 SingleRowCollection.CalculationInProgress = false;
-                var s = exc.Message;
+                HPTConfig.AddToErrorLogStatic(exc);
             }
         }
 
@@ -1476,6 +1477,7 @@ namespace HPTClient
             // Beräkna samm för kategorireduceringarna
             var allHorses = RaceDayInfo.RaceList
                 .SelectMany(r => r.HorseList)
+                .Where(h => h.Scratched != true)
                 .ToList();
 
             foreach (var rule in CategoryCodeReductionRuleCollection.CCReductionRuleList)

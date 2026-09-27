@@ -71,8 +71,8 @@
                     <TextBlock Grid.Column="2" Text="Övre gräns"/>
                     
                     <CheckBox x:Name="chkUseVinnarOdds" IsChecked="{Binding SetColorFromVinnarOdds}" Content="Vinnarodds" Grid.Row="1"/>
-                    <EXT:IntegerUpDown x:Name="iudVinnarOddsLower" Padding="2" Minimum="10" Maximum="1000" Increment="2" Grid.Row="1" Grid.Column="1" Margin="1"
-                                     Value="{Binding Path=ColorIntervalVinnarOdds.LowerBoundary,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" DefaultValue="10" />
+                    <EXT:IntegerUpDown x:Name="iudVinnarOddsLower" Padding="2" Minimum="1" Maximum="100" Increment="2" Grid.Row="1" Grid.Column="1" Margin="1"
+                                     Value="{Binding Path=ColorIntervalVinnarOdds.LowerBoundary,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" DefaultValue="5" />
                     <EXT:IntegerUpDown x:Name="iudVinnarOddsUpper" Padding="2" Minimum="10" Maximum="1000" Increment="2" Grid.Row="1" Grid.Column="2" Margin="1"
                                      Value="{Binding Path=ColorIntervalVinnarOdds.UpperBoundary,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" DefaultValue="10" />
 

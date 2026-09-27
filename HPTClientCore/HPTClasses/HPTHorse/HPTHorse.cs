@@ -62,7 +62,7 @@ namespace HPTClient
             // Insatsfördelning
             this.StakeDistributionShare = start.BetDistributionShare > 0 ? start.BetDistributionShare : this.StakeDistributionShare;
             StakeDistributionShareFinal = StakeDistributionShare;
-            this.ATGTrend = start.Trend;
+            this.ATGTrend = (decimal)start.Trend;
 
             // Sen strykning
             if (start.Scratched == true)
@@ -1938,11 +1938,11 @@ namespace HPTClient
         //#endregion
 
         #region Properties from VPOdds
-
-        [RandomInterval("VinnarOdds", 10, 300, 1D)]
-        [HorseRank("Vinnarodds", 3, false, false, HPTRankCategory.MarksAndOdds, true, true, "Vinnarodds")]
-        [GroupReduction("Vinnarodds", 1, 10D, 999D, 1D, 30D, 100D)]
-        [DataMember]
+        //
+        // [RandomInterval("VinnarOdds", 10, 300, 1D)]
+        // [HorseRank("Vinnarodds", 3, false, false, HPTRankCategory.MarksAndOdds, true, true, "Vinnarodds")]
+        // [GroupReduction("Vinnarodds", 1, 10D, 999D, 1D, 30D, 100D)]
+        // [DataMember]
         public int VinnarOdds
         {
             get;
@@ -1958,6 +1958,10 @@ namespace HPTClient
             }
         }
 
+        [RandomInterval("VinnarOdds", 10, 300, 1D)]
+        [HorseRank("Vinnarodds", 3, false, false, HPTRankCategory.MarksAndOdds, true, true, "Vinnarodds")]
+        [GroupReduction("Vinnarodds", 1, 10D, 999D, 1D, 30D, 100D)]
+        [DataMember]
         public decimal VinnarOddsExact
         {
             get;
@@ -1995,7 +1999,6 @@ namespace HPTClient
             }
         }
 
-        [DataMember]
         public int StakeDistribution
         {
             get;
@@ -2008,6 +2011,7 @@ namespace HPTClient
 
         [HorseRank("Insatsfördelning", 1, true, false, HPTRankCategory.MarksAndOdds, true, true, "Insatsfördelning", "",
             "P1", 0D)]
+        [DataMember]
         public decimal StakeDistributionShare
         {
             get;
@@ -2716,11 +2720,11 @@ namespace HPTClient
             var c = Colors.White;
             if (HPTConfig.Config.SetColorFromVinnarOdds)
             {
-                if (VinnarOdds < HPTConfig.Config.ColorIntervalVinnarOdds.LowerBoundary)
+                if (VinnarOddsExact < HPTConfig.Config.ColorIntervalVinnarOdds.LowerBoundary)
                 {
                     c = HPTConfig.Config.ColorGood;
                 }
-                else if (VinnarOdds < HPTConfig.Config.ColorIntervalVinnarOdds.UpperBoundary)
+                else if (VinnarOddsExact < HPTConfig.Config.ColorIntervalVinnarOdds.UpperBoundary)
                 {
                     c = HPTConfig.Config.ColorMedium;
                 }
@@ -2729,21 +2733,21 @@ namespace HPTClient
                     c = HPTConfig.Config.ColorBad;
                 }
             }
-            else if (HPTConfig.Config.SetColorFromMarkability)
-            {
-                if (Markability < HPTConfig.Config.ColorIntervalMarkability.LowerBoundary)
-                {
-                    c = HPTConfig.Config.ColorBad;
-                }
-                else if (Markability < HPTConfig.Config.ColorIntervalMarkability.UpperBoundary)
-                {
-                    c = HPTConfig.Config.ColorMedium;
-                }
-                else
-                {
-                    c = HPTConfig.Config.ColorGood;
-                }
-            }
+            // else if (HPTConfig.Config.SetColorFromMarkability)
+            // {
+            //     if (Markability < HPTConfig.Config.ColorIntervalMarkability.LowerBoundary)
+            //     {
+            //         c = HPTConfig.Config.ColorBad;
+            //     }
+            //     else if (Markability < HPTConfig.Config.ColorIntervalMarkability.UpperBoundary)
+            //     {
+            //         c = HPTConfig.Config.ColorMedium;
+            //     }
+            //     else
+            //     {
+            //         c = HPTConfig.Config.ColorGood;
+            //     }
+            // }
             else if (HPTConfig.Config.SetColorFromStakePercent)
             {
                 if (StakeDistributionPercent < HPTConfig.Config.ColorIntervalStakePercent.LowerBoundary)
@@ -2774,11 +2778,11 @@ namespace HPTClient
             get
             {
                 var c = Colors.White;
-                if (VinnarOdds < 50)
+                if (VinnarOddsExact < 5.0M)
                 {
                     c = Colors.Green;
                 }
-                else if (VinnarOdds < 100)
+                else if (VinnarOddsExact < 10.0M)
                 {
                     c = Colors.Yellow;
                 }

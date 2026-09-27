@@ -1,10 +1,12 @@
 ﻿//using ICSharpCode.SharpZipLib.Zip;
+
 using ATGDownloader;
 using System.Collections.ObjectModel;
 using System.IO;
 //using System.IO.Compression;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Serialization;
@@ -27,6 +29,26 @@ namespace HPTClient
             {
                 var s = exc.Message;
             }
+
+            return false;
+        }
+
+        internal static bool SerializeHPTObjectJson(string fileName, object hptObject)
+        {
+            try
+            {
+                using var fileStream = File.OpenWrite(fileName);
+                JsonSerializer.Serialize(fileStream);
+                // var serializer = new DataContractSerializer(typeOfObject);
+                // serializer.WriteObject(fileStream, hptObject);
+
+                return true;
+            }
+            catch (Exception exc)
+            {
+                var s = exc.Message;
+            }
+
             return false;
         }
 
@@ -43,6 +65,7 @@ namespace HPTClient
             {
                 HPTConfig.AddToErrorLogStatic(exc);
             }
+
             return null;
         }
 
@@ -81,15 +104,15 @@ namespace HPTClient
 
         internal static HPTMarkBet DeserializeHPTSystem(string fileName)
         {
-            var stream = File.OpenRead(fileName);
-            HPTMarkBet hmb = null;
-
-            var fileExtension = Path.GetExtension(fileName).Replace(".", string.Empty);
-            if (fileExtension == "hpt7")
-            {
-                var serializer = new DataContractSerializer(typeof(HPTMarkBet));
-                hmb = (HPTMarkBet)serializer.ReadObject(stream);
-            }
+            var hmb = (HPTMarkBet)DeserializeHPTObject(typeof(HPTMarkBet), fileName);
+            // var stream = File.OpenRead(fileName);
+            //
+            // var fileExtension = Path.GetExtension(fileName).Replace(".", string.Empty);
+            // if (fileExtension == "hpt7")
+            // {
+            //     var serializer = new DataContractSerializer(typeof(HPTMarkBet));
+            //     hmb = (HPTMarkBet)serializer.ReadObject(stream);
+            // }
             hmb.Config = HPTConfig.Config;
 
             return hmb;
@@ -116,6 +139,7 @@ namespace HPTClient
             {
                 return;
             }
+
             try
             {
                 var raceDayInfoHistory = new HPTRaceDayInfoHistory()
@@ -130,6 +154,7 @@ namespace HPTClient
                     {
                         LegNumber = r.LegNr,
                         RaceNumber = r.RaceNr,
+                        AtgRaceId = r.AtgRaceId,
                         HorseList = r.HorseList.Select(h => new HPTHorseHistory()
                         {
                             Name = h.HorseName,
@@ -148,6 +173,7 @@ namespace HPTClient
                 {
                     Directory.CreateDirectory(dirName);
                 }
+
                 var fileName = Path.Combine(dirName, $"{hmb.BetType.Code}_{DateTime.Now:yyyyMMddHHmmss}.xml");
 
                 SerializeHPTObject(typeof(HPTRaceDayInfoHistory), fileName, raceDayInfoHistory);
@@ -174,11 +200,12 @@ namespace HPTClient
                     {
                         LegNumber = (int)r.LegNumber,
                         RaceNumber = r.Number,
+                        AtgRaceId = r.Id,
                         HorseList = r.StartList.Select(s => new HPTHorseHistory()
                         {
                             Name = s.Horse.Name,
                             StartNumber = s.Number,
-                            ATGTrend = s.Trend,
+                            ATGTrend = (decimal)s.Trend,
                             StakeShare = s.BetDistributionShare,
                             VinnarOdds = s.VinnarOdds,
                             PlatsOdds = s.PlatsOdds,
@@ -191,6 +218,7 @@ namespace HPTClient
                 {
                     Directory.CreateDirectory(dirName);
                 }
+
                 var fileName = Path.Combine(dirName, $"{game.GameInfo.Code}_{DateTime.Now:yyyyMMddHHmmss}.xml");
 
                 SerializeHPTObject(typeof(HPTRaceDayInfoHistory), fileName, raceDayInfoHistory);
@@ -248,6 +276,7 @@ namespace HPTClient
             catch (Exception)
             {
             }
+
             return new HPTCalendar();
         }
 
@@ -289,9 +318,9 @@ namespace HPTClient
                     }
                     catch (Exception)
                     {
-
                     }
                 }
+
                 return new HPTHorseOwnInformationCollection()
                 {
                     HorseOwnInformationList = new ObservableCollection<HPTHorseOwnInformation>()
@@ -299,7 +328,8 @@ namespace HPTClient
             }
         }
 
-        internal static void SerializeHPTHorseOwnInformation(string fileName, HPTHorseOwnInformationCollection hptHorseOwnInformation)
+        internal static void SerializeHPTHorseOwnInformation(string fileName,
+            HPTHorseOwnInformationCollection hptHorseOwnInformation)
         {
             SerializeHPTObject(typeof(HPTHorseOwnInformationCollection), fileName, hptHorseOwnInformation);
         }
@@ -322,17 +352,6 @@ namespace HPTClient
                             .Where(rdi => rdi.RaceDayDate > DateTime.Now.AddHours(-14))
                             .OrderBy(rdi => rdi.RaceDayDate);
 
-                        //// Ta bort de spelformer som inte ingår i gratisversionen
-                        //if (!HPTConfig.Config.IsPayingCustomer)
-                        //{
-                        //    foreach (var raceDayInfo in orderedRaceDayInfoList)
-                        //    {
-                        //        raceDayInfo.BetTypeList = raceDayInfo.BetTypeList
-                        //                .Where(bt => bt.Code == "V65" || bt.Code == "V75" || bt.Code == "V86" || bt.Code == "V64")
-                        //                .ToList();
-                        //    }
-                        //}
-
                         // Ta bara med de tävlingar där det finns spelbara spelformer
                         var finalRaceDayInfoList = orderedRaceDayInfoList
                             .Where(rdi => rdi.BetTypeList.Count > 0);
@@ -346,6 +365,7 @@ namespace HPTClient
                             return null;
                         }
                     }
+
                     return hptCalendar;
                 }
             }
@@ -353,6 +373,7 @@ namespace HPTClient
             {
                 HPTConfig.AddToErrorLogStatic(exc);
             }
+
             return null;
         }
 
@@ -367,6 +388,7 @@ namespace HPTClient
                 Directory.CreateDirectory(historyDir);
                 return trendFiles;
             }
+
             if (markBet.RaceDayInfo.Turnover == 0)
             {
                 return trendFiles;
@@ -380,7 +402,8 @@ namespace HPTClient
                 {
                     if (rexTimestampFromFileName.IsMatch(f))
                     {
-                        var fileTimeStamp = DateTime.ParseExact(rexTimestampFromFileName.Match(f).Groups[1].Value, "yyyyMMddHHmmss", null);
+                        var fileTimeStamp = DateTime.ParseExact(rexTimestampFromFileName.Match(f).Groups[1].Value,
+                            "yyyyMMddHHmmss", null);
                         // TODO: ShortTrend ska åtminstone vara en stund (30 minuter?) gammal
                         if (fileTimeStamp.Date == markBet.RaceDayInfo.RaceDayDate.Date)
                         {
@@ -395,7 +418,8 @@ namespace HPTClient
                 var longDiff = 0.333M;
 
                 var allRaceDayInfoHistory = trendFiles
-                    .Select(tf => (HPTRaceDayInfoHistory)DeserializeHPTObject(typeof(HPTRaceDayInfoHistory), tf.FileName))
+                    .Select(tf =>
+                        (HPTRaceDayInfoHistory)DeserializeHPTObject(typeof(HPTRaceDayInfoHistory), tf.FileName))
                     .Where(h => h != null);
                 var raceDayInfoHistoryLongTrend = allRaceDayInfoHistory
                     .OrderBy(rdi => Math.Abs(rdi.Turnover / markBet.RaceDayInfo.Turnover - longDiff))
@@ -407,8 +431,8 @@ namespace HPTClient
 
                 markBet.RaceDayInfo.RaceList.ToList().ForEach(r =>
                 {
-                    var raceLong = raceDayInfoHistoryLongTrend.RaceList.First(rl => rl.RaceNumber == r.RaceNr);
-                    var raceShort = raceDayInfoHistoryShortTrend.RaceList.First(rs => rs.RaceNumber == r.RaceNr);
+                    var raceLong = raceDayInfoHistoryLongTrend.RaceList.First(rl => rl.AtgRaceId == r.AtgRaceId);
+                    var raceShort = raceDayInfoHistoryShortTrend.RaceList.First(rs => rs.AtgRaceId == r.AtgRaceId);
                     r.HorseList.ToList().ForEach(h =>
                     {
                         var horseLong = raceLong.HorseList.First(hl => hl.StartNumber == h.StartNr);
@@ -416,10 +440,24 @@ namespace HPTClient
 
                         h.LongTrend = h.StakeDistributionShare / horseLong.StakeShare - 1M;
                         h.ShortTrend = h.StakeDistributionShare / horseShort.StakeShare - 1M;
-
                     });
                     r.CalculateDynamicGameValues();
                 });
+                
+                // markBet.RaceDayInfo.RaceList.ToList().ForEach(r =>
+                // {
+                //     var raceLong = raceDayInfoHistoryLongTrend.RaceList.First(rl => rl.RaceNumber == r.RaceNr);
+                //     var raceShort = raceDayInfoHistoryShortTrend.RaceList.First(rs => rs.RaceNumber == r.RaceNr);
+                //     r.HorseList.ToList().ForEach(h =>
+                //     {
+                //         var horseLong = raceLong.HorseList.First(hl => hl.StartNumber == h.StartNr);
+                //         var horseShort = raceShort.HorseList.First(hl => hl.StartNumber == h.StartNr);
+                //
+                //         h.LongTrend = h.StakeDistributionShare / horseLong.StakeShare - 1M;
+                //         h.ShortTrend = h.StakeDistributionShare / horseShort.StakeShare - 1M;
+                //     });
+                //     r.CalculateDynamicGameValues();
+                // });
             }
 
             return trendFiles;
@@ -448,6 +486,7 @@ namespace HPTClient
                 xtr.Close();
                 xtr = null;
             }
+
             return templateCollection;
         }
 
@@ -462,7 +501,8 @@ namespace HPTClient
         //    return hptTemplateCollection;
         //}
 
-        internal static void SerializeHPTTemplateCollection(string fileName, HPTTemplateCollection hptTemplateCollection)
+        internal static void SerializeHPTTemplateCollection(string fileName,
+            HPTTemplateCollection hptTemplateCollection)
         {
             SerializeHPTObject(typeof(HPTTemplateCollection), fileName, hptTemplateCollection);
         }
@@ -498,10 +538,12 @@ namespace HPTClient
             {
                 var s = exc.Message;
             }
+
             return null;
         }
 
-        internal static void SerializeHPTResultAnalyzerList(string fileName, ObservableCollection<HPTResultAnalyzer> resultAnalyzerList)
+        internal static void SerializeHPTResultAnalyzerList(string fileName,
+            ObservableCollection<HPTResultAnalyzer> resultAnalyzerList)
         {
             SerializeHPTObject(typeof(ObservableCollection<HPTResultAnalyzer>), fileName, resultAnalyzerList);
         }
@@ -539,5 +581,37 @@ namespace HPTClient
         }
 
         #endregion
+    }
+
+    /// <summary>
+    /// Extension methods for HPT serialization.
+    /// </summary>
+    public static class HPTSerializerExtensions
+    {
+        /// <summary>
+        /// Deserializes the JSON file at <paramref name="fileName"/> into an object of type <typeparamref name="T"/>.
+        /// </summary>
+        /// <typeparam name="T">The type of object to deserialize into.</typeparam>
+        /// <param name="_">Unused receiver. Pass <c>default(T)</c>, e.g. <c>default(HPTConfig)</c>.</param>
+        /// <param name="fileName">Path to the JSON file to deserialize.</param>
+        /// <returns>The deserialized object, or <c>null</c> if deserialization failed.</returns>
+        /// <example>
+        /// <code>
+        /// var hptConfig = default(HPTConfig).DeserializeHPTObjectJson("config.json");
+        /// var hptMarkBet = default(HPTMarkBet).DeserializeHPTObjectJson("system.json");
+        /// </code>
+        /// </example>
+        public static T? DeserializeHPTObjectJson<T>(this T _, string fileName)
+        {
+            try
+            {
+                return JsonSerializer.Deserialize<T>(File.ReadAllText(fileName));
+            }
+            catch (Exception exc)
+            {
+                HPTConfig.AddToErrorLogStatic(exc);
+                return default;
+            }
+        }
     }
 }

@@ -129,25 +129,6 @@ namespace HPTClient
                 }
             }
 
-            // TODO: Skita i smygen?
-            //// Smygen, utdelningen har inte visats upp
-            //if (RaceDayInfo.PayOutList.Count == 0 && RaceDayInfo.ResultMarkingBet != null && racesToCorrect == RaceDayInfo.RaceList.Count)
-            //{
-            //    foreach (var servicePayOut in RaceDayInfo.ResultMarkingBet.PayOutList)
-            //    {
-            //        var payOut = new HPTPayOut()
-            //        {
-            //            NumberOfCorrect = servicePayOut.NumberOfCorrect,
-            //            NumberOfSystems = servicePayOut.NumberOfSystems,
-            //            NumberOfWinningRows = 0,
-            //            OwnWinnings = 0,
-            //            PayOutAmount = servicePayOut.PayOutAmount,
-            //            TotalAmount = servicePayOut.TotalAmount
-            //        };
-            //        RaceDayInfo.PayOutList.Add(payOut);
-            //    }
-            //}
-
             if (RaceDayInfo.ResultComplete && racesToCorrect == RaceDayInfo.RaceList.Count && RaceDayInfo.PayOutList.Count > 0)
             {
                 RaceDayInfo.PayOutList[0].NumberOfWinningRows = CouponHelper.TotalNumberOfAllCorrect;

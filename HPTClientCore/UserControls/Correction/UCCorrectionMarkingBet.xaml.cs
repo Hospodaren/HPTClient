@@ -82,7 +82,7 @@ namespace HPTClient
                 Cursor = Cursors.Wait;
                 numberOfFinishedRaces = 0;
                 AutoCorrectOptimized();
-                //UpdateResult();
+                // UpdateResult();
             }
             catch (Exception exc)
             {
@@ -186,11 +186,10 @@ namespace HPTClient
                 chkSimulate.IsChecked = false;
                 Thread.Sleep(200);
             }
-            //isSneakCorrection = false;
+            
             numberOfFinishedRaces = MarkBet.RaceDayInfo.NumberOfFinishedRaces;
             if (MarkBet.RaceDayInfo.ResultComplete && MarkBet.RaceDayInfo.PayOutList.Count > 0)// && winnerList == null)    // Vafan gör jag här...?
             {
-                //this.chkAutomaticCorrection.IsChecked = false;
                 Correct();
             }
             else
@@ -198,9 +197,9 @@ namespace HPTClient
                 //HPTServiceConnector connector = new HPTServiceConnector();
                 // TODO: Ny lösning
                 //connector.GetResultMarkingBetByTrackAndDate(CouponCorrector.RaceDayInfo.BetType.Code, CouponCorrector.RaceDayInfo.TrackId, CouponCorrector.RaceDayInfo.RaceDayDate, ReceiveResult);
-                if (!MarkBet.RaceDayInfo.ResultComplete)
+                if (!MarkBet.RaceDayInfo.ResultComplete || MarkBet.RaceDayInfo.GameBase is null)
                 {
-                    MarkBet.RaceDayInfo.GameBase = ATGDownloader.ATGObjectGetter.GetGame(MarkBet.RaceDayInfo.GameBase.GameInfo);
+                    MarkBet.RaceDayInfo.GameBase = ATGDownloader.ATGObjectGetter.UpdateGame(MarkBet.RaceDayInfo.GameInfoBase);
                 }
                 ATGDownloaderToHPTHelper.CreateResultMarkingBet(MarkBet.RaceDayInfo.GameBase, MarkBet.RaceDayInfo);
                 Correct();
@@ -941,7 +940,7 @@ namespace HPTClient
                 });
 
                 // Raden med högst potential
-                var bestRow = singleRowsAfterReservHandling
+                var bestRow = SingleRowsAfterReservHandling
                     .OrderByDescending(sr => sr.HorseList.Intersect(correctHorses).Count())
                     .ThenByDescending(sr => sr.RowValueFinalStakeShare * sr.BetMultiplier)
                     .First();

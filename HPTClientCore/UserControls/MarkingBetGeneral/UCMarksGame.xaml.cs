@@ -257,6 +257,7 @@ namespace HPTClient
                 HPTSerializer.SerializeHPTRaceDayInfoHistory(MarkBet);
                 MarkBet.TimeStamp = DateTime.Now;
                 MarkBet.RecalculateCategoryCodes();
+                MarkBet.RecalculateReductionThreaded();
                 btnUpdate.Content = $" Uppdatera ({MarkBet.TimeStamp:HH:mm:ss})";
                 ChangeUpdateTimer();
             }
@@ -792,6 +793,36 @@ namespace HPTClient
         {
             switch (Keyboard.Modifiers)
             {
+                case ModifierKeys.Control:
+                    switch (e.Key)
+                    {
+                        case Key.S:
+                            btnCreateCoupons_Click(sender, new RoutedEventArgs());
+                            break;
+                        case Key.P:
+                            btnPrint_Click(sender, new RoutedEventArgs());
+                            break;
+                        case Key.C:
+                            btnCopy_Click(sender, new RoutedEventArgs());
+                            break;
+                        case Key.R:
+                            btnClearAll_Click(sender, new RoutedEventArgs());
+                            break;
+                        case Key.V:
+                            HandlePastedText();
+                            break;
+                    }
+                    break;
+                case ModifierKeys.None:
+                    if (e.Key == Key.F5)
+                    {
+                        UpdateFromATG();
+                    }
+                    break;
+                case ModifierKeys.Shift:
+                    break;
+                case ModifierKeys.Windows:
+                    break;
                 case ModifierKeys.Alt:
                     if (e.SystemKey == Key.D1)
                     {
@@ -846,39 +877,6 @@ namespace HPTClient
                         var result = MarkBet.CalculateJackpotRows();
                         Clipboard.SetDataObject(result);
                     }
-                    break;
-                case ModifierKeys.Control:
-                    if (Config.IsPayingCustomer)
-                    {
-                        switch (e.Key)
-                        {
-                            case Key.S:
-                                btnCreateCoupons_Click(sender, new RoutedEventArgs());
-                                break;
-                            case Key.P:
-                                btnPrint_Click(sender, new RoutedEventArgs());
-                                break;
-                            case Key.C:
-                                btnCopy_Click(sender, new RoutedEventArgs());
-                                break;
-                            case Key.R:
-                                btnClearAll_Click(sender, new RoutedEventArgs());
-                                break;
-                            case Key.V:
-                                HandlePastedText();
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                    break;
-                case ModifierKeys.None:
-                    break;
-                case ModifierKeys.Shift:
-                    break;
-                case ModifierKeys.Windows:
-                    break;
-                default:
                     break;
             }
         }

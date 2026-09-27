@@ -43,6 +43,9 @@ namespace HPTClient
         public int LegNumber { get; set; }
 
         [DataMember]
+        public string AtgRaceId { get; set; }
+
+        [DataMember]
         public IEnumerable<HPTHorseHistory> HorseList { get; set; }
     }
 

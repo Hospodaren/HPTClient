@@ -347,6 +347,10 @@ namespace HPTClient
 
         public void SortHorseList(List<HPTHorse> horseList)
         {
+            if (horseList?[0].ParentRace is null)
+            {
+                return;
+            }
             lock (this)
             {
                 if (HorseProperty == null)

@@ -270,7 +270,7 @@ namespace HPTClient
         {
             CreateNewRule();
             MarkBet.RecalculateAllRanks();
-            var oddsNumberOneHorseList = MarkBet.RaceDayInfo.HorseListSelected.Where(h => h.RankList.FirstOrDefault(hr => hr.Name == "VinnarOdds" && hr.Rank == 1) != null);
+            var oddsNumberOneHorseList = MarkBet.RaceDayInfo.HorseListSelected.Where(h => h.RankList.FirstOrDefault(hr => hr.Name == "VinnarOddsExact" && hr.Rank == 1) != null);
 
             var recalculationPaused = MarkBet.pauseRecalculation;
             MarkBet.pauseRecalculation = true;

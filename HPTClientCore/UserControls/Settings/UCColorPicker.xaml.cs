@@ -108,8 +108,8 @@ namespace HPTClient
         {
             try
             {
-                HPTConfig.Config.ColorIntervalVinnarOdds.LowerBoundary = 50M;
-                HPTConfig.Config.ColorIntervalVinnarOdds.UpperBoundary = 100M;
+                HPTConfig.Config.ColorIntervalVinnarOdds.LowerBoundary = 5.0M;
+                HPTConfig.Config.ColorIntervalVinnarOdds.UpperBoundary = 10.0M;
 
                 //HPTConfig.Config.ColorIntervalMarksPercent.LowerBoundary = 10M;
                 //HPTConfig.Config.ColorIntervalMarksPercent.UpperBoundary = 50M;

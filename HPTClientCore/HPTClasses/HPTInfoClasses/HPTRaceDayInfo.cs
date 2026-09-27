@@ -28,8 +28,8 @@ namespace HPTClient
         [XmlIgnore]
         public ATGGameBase GameBase { get; set; }
 
-        //[XmlIgnore]
-        //public ATGGameInfoBase GameInfoBase { get; set; }
+        [DataMember]
+        public ATGGameInfoBase GameInfoBase { get; set; }
 
         public void Merge(ATGGameBase gameBase)
         {
@@ -98,11 +98,13 @@ namespace HPTClient
                     SetV6Factor();
                 }
 
-                //MarksQuantity = gameBase.SystemCount;// TODO?
 
-
+                // var pairedRaces = RaceList
+                //     .Join(gameBase.Races, ri => ri.RaceNr, ro => ro.Number, (ri, ro) => new { LocalRace = ri, RetrievedRace = ro });
+                
                 var pairedRaces = RaceList
-                    .Join(gameBase.Races, ri => ri.RaceNr, ro => ro.Number, (ri, ro) => new { LocalRace = ri, RetrievedRace = ro });
+                    .Join(gameBase.Races, ri => ri.AtgRaceId, ro => ro.Id, (ri, ro) => new { LocalRace = ri, RetrievedRace = ro });
+
 
                 foreach (var racePair in pairedRaces)
                 {

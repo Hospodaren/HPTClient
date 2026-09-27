@@ -170,14 +170,14 @@
     </FileAssociation>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="ATGDownloader" Version="1.0.23" />
+    <PackageReference Include="ATGDownloader" Version="1.0.35" />
     <PackageReference Include="Extended.Wpf.Toolkit" Version="5.1.2" />
-    <PackageReference Include="Microsoft.Extensions.FileProviders.Physical" Version="10.0.10" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="10.0.10" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.10" />
+    <PackageReference Include="Microsoft.Extensions.FileProviders.Physical" Version="10.0.12" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="10.0.12" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.12" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
-    <PackageReference Include="System.DirectoryServices.Protocols" Version="10.0.10" />
+    <PackageReference Include="System.DirectoryServices.Protocols" Version="10.0.12" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\DataSources\" />
