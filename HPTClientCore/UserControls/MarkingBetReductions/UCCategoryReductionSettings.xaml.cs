@@ -100,6 +100,7 @@ namespace HPTClient
             // Plocka ut hästarna med rätt Prio
             var orderedHorseList = MarkBet.RaceDayInfo.RaceList
                 .SelectMany(r => r.HorseList)
+                .Where(h => h.Scratched != true)
                 .Where(h => h.CategoryCode.HasFlag(rule.CategoryCode))
                 .OrderBy(h => h.ParentRace.LegNr)
                 .ThenBy(h => h.StartNr);

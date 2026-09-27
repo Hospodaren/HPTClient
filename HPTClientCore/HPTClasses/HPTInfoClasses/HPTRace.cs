@@ -10,7 +10,7 @@ namespace HPTClient
     public class HPTRace : Notifier, IHorseListContainer
     {
         // TEST
-        internal ATGRaceBase race;
+        internal ATGRaceAllInfo race;
 
         #region egna events
 
@@ -29,14 +29,14 @@ namespace HPTClient
             HorseList = new List<HPTHorse>();
         }
 
-        public HPTRace(ATGRaceBase race, HPTRaceDayInfo raceDayInfo)
+        public HPTRace(ATGRaceAllInfo race, HPTRaceDayInfo raceDayInfo)
         {
             //this.HorseList = new ObservableCollection<HPTHorse>();
             ParentRaceDayInfo = raceDayInfo;
             this.race = race;
         }
 
-        public void Merge(ATGRaceBase race)
+        public void Merge(ATGRaceAllInfo race)
         {
             try
             {
@@ -156,8 +156,14 @@ namespace HPTClient
                     if (i < orderedArray.Length - 1)
                     {
                         var secondHorse = orderedArray[i + 1];
-                        horse.StakeShareRelativeToNext = horse.StakeDistributionShare / secondHorse.StakeDistributionShare;
-                        secondHorse.StakeShareRelativeToPrevious = secondHorse.StakeDistributionShare / horse.StakeDistributionShare;
+                        if (secondHorse.StakeDistributionShare > 0M)
+                        {
+                            horse.StakeShareRelativeToNext = horse.StakeDistributionShare / secondHorse.StakeDistributionShare;
+                        }
+                        if (horse.StakeDistributionShare > 0M)
+                        {
+                            secondHorse.StakeShareRelativeToPrevious = secondHorse.StakeDistributionShare / horse.StakeDistributionShare;
+                        }
                     }
                     else
                     {
@@ -216,7 +222,7 @@ namespace HPTClient
 
         }
 
-        public void ConvertRace(ATGRaceBase race)
+        public void ConvertRace(ATGRaceAllInfo race)
         {
             // TODO: Använd ATGRaceBase istället
             //Distance = race.SharedInfo.Distance;
@@ -520,6 +526,9 @@ namespace HPTClient
         //}
 
         #region Properties
+
+        [DataMember]
+        public string AtgRaceId { get; set; }
 
         [DataMember]
         public int RaceNr { get; set; }

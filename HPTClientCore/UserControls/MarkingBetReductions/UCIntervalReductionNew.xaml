@@ -4,12 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-                      Loaded="UCMarkBetControl_Loaded"
             xmlns:HPT="clr-namespace:HPTClient"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="600">
     
     <UserControl.Resources>
+        <!-- Loaded="UCMarkBetControl_Loaded" -->
 
         <Style TargetType="{x:Type xctk:IntegerUpDown}">
             <Setter Property="Width" Value="100"/>

@@ -7,7 +7,7 @@
             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
              x:Name="ucRacesTabControl">
-    <Grid>
+    <Grid KeyUp="UIElement_OnKeyUp">
 
         <TabControl x:Name="tcRaces" TabStripPlacement="Left" ItemsSource="{Binding RaceList}" SelectedIndex="0" Grid.Row="0">
 
@@ -37,7 +37,7 @@
                             <WrapPanel Orientation="Horizontal" Background="Orange">
 
                                 <Label Margin="1,1,10,0" Padding="1,0">
-                                    <Hyperlink x:Name="hlVPOnAtgSe" NavigateUri="{Binding Path=ATGLink}" RequestNavigate="hlVPOnAtgSe_RequestNavigate">
+                                    <Hyperlink x:Name="hlVPOnAtgSe" NavigateUri="https://atg.se" RequestNavigate="hlVPOnAtgSe_RequestNavigate">
                                         <TextBlock>
                                             <TextBlock.Text>
                                                 <MultiBinding StringFormat="{}{0} lopp {1}">

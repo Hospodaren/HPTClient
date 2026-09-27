@@ -53,6 +53,10 @@ namespace HPTClient
 
         internal static string CreateRaceResultLink(HPTHorseResult horseResult)
         {
+            if (horseResult.ATGId is null)
+            {
+                return string.Empty;
+            }
             // TODO: https://www.atg.se/spel/2026-01-03/vinnare/jagersro/lopp/8/resultat
             // 2025-08-30_18_2
 

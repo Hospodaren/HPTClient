@@ -1556,8 +1556,8 @@ namespace HPTClient
 
             ColorIntervalVinnarOdds = new HPTColorInterval()
             {
-                LowerBoundary = 600M,
-                UpperBoundary = 1500M
+                LowerBoundary = 6.00M,
+                UpperBoundary = 15.00M
             };
 
             ColorIntervalStakePercent = new HPTColorInterval()
@@ -1722,7 +1722,7 @@ namespace HPTClient
                 IsDefault = true
             };
 
-            rankTemplate.HorseRankVariableList.First(hrv => hrv.PropertyName == "VinnarOdds").Use = true;
+            rankTemplate.HorseRankVariableList.First(hrv => hrv.PropertyName == "VinnarOddsExact").Use = true;
             rankTemplate.HorseRankVariableList.First(hrv => hrv.PropertyName == "StakeDistributionShare").Use = true;
             rankTemplate.HorseRankVariableList.First(hrv => hrv.PropertyName == "EarningsMeanLast5").Use = true;
 
@@ -1738,7 +1738,7 @@ namespace HPTClient
                 IsDefaultDouble = true
             };
 
-            rankTemplate.HorseRankVariableList.First(hrv => hrv.PropertyName == "VinnarOdds").Use = true;
+            rankTemplate.HorseRankVariableList.First(hrv => hrv.PropertyName == "VinnarOddsExact").Use = true;
             rankTemplate.HorseRankVariableList.First(hrv => hrv.PropertyName == "MaxPlatsOdds").Use = true;
             rankTemplate.HorseRankVariableList.First(hrv => hrv.PropertyName == "EarningsMeanLast5").Use = true;
 
@@ -1754,7 +1754,7 @@ namespace HPTClient
                 IsDefaultTvilling = true
             };
 
-            rankTemplate.HorseRankVariableList.First(hrv => hrv.PropertyName == "VinnarOdds").Use = true;
+            rankTemplate.HorseRankVariableList.First(hrv => hrv.PropertyName == "VinnarOddsExact").Use = true;
             rankTemplate.HorseRankVariableList.First(hrv => hrv.PropertyName == "MaxPlatsOdds").Use = true;
             rankTemplate.HorseRankVariableList.First(hrv => hrv.PropertyName == "EarningsMeanLast5").Use = true;
 
@@ -1770,7 +1770,7 @@ namespace HPTClient
                 IsDefaultTrio = true
             };
 
-            rankTemplate.HorseRankVariableList.First(hrv => hrv.PropertyName == "VinnarOdds").Use = true;
+            rankTemplate.HorseRankVariableList.First(hrv => hrv.PropertyName == "VinnarOddsExact").Use = true;
             rankTemplate.HorseRankVariableList.First(hrv => hrv.PropertyName == "MaxPlatsOdds").Use = true;
             rankTemplate.HorseRankVariableList.First(hrv => hrv.PropertyName == "EarningsMeanLast5").Use = true;
 
@@ -3378,24 +3378,21 @@ namespace HPTClient
                 ShowOverview = true,
                 ShowRaces = true,
                 ShowCategoryCodeReduction = true,
+                ShowComplimentaryRules = true,
+                ShowSingleRows = true
             };
             if (profile == GUIProfile.Normal || profile == GUIProfile.Advanced)
             {
-                markBetTabsToShow.ShowComplimentaryRules = true;
                 markBetTabsToShow.ShowDriverReduction = true;
                 markBetTabsToShow.ShowGroupIntervalReduction = true;
                 markBetTabsToShow.ShowIntervalReduction = true;
                 markBetTabsToShow.ShowMultiABCD = true;
                 markBetTabsToShow.ShowRankReduction = true;
-                markBetTabsToShow.ShowSingleRows = true;
                 if (profile == GUIProfile.Advanced)
                 {
                     markBetTabsToShow.ShowComments = false;
-                    //markBetTabsToShow.ShowCompanyGambling = false;
                     markBetTabsToShow.ShowRankOverview = true;
-                    //markBetTabsToShow.ShowTemplateWorkshop = true;
                     markBetTabsToShow.ShowTrainerReduction = true;
-                    //markBetTabsToShow.ShowTrends = true;
                     markBetTabsToShow.ShowV6BetMultiplier = true;
                 }
             }

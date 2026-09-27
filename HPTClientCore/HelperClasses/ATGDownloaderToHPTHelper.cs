@@ -105,7 +105,7 @@ namespace HPTClient
                 RaceNumberList = gameBase.Races.Select(r => r.Number).ToList(),
                 RaceList = gameBase.Races.Select(r => CreateRace(r)).ToList(),
                 Turnover = Convert.ToInt32(gameBase.Turnover / 100M),
-                GameBase = gameBase,
+                GameInfoBase = gameBase.GameInfo,
             };
 
             hptRdi.RaceList.ToList().ForEach(r =>
@@ -275,7 +275,7 @@ namespace HPTClient
             }
         }
 
-        public static HPTRace CreateRace(ATGRaceBase race)
+        public static HPTRace CreateRace(ATGRaceAllInfo race)
         {
             HPTRace hptRace = new()
             {
@@ -295,6 +295,7 @@ namespace HPTClient
                     _ => "M"
                 },
                 RaceNr = race.Number,
+                AtgRaceId = race.Id,
                 LegNr = race.LegNumber ?? race.Number,    // TODO: Måste räknas fram senare
                 RaceName = race.Name,
                 //MarksQuantity = Convert.ToInt32(race.MarksQuantity);  // TODO: Skita i det här?            
@@ -387,7 +388,7 @@ namespace HPTClient
             {
                 Age = start.Horse.Age,
                 ATGId = start.Horse.Id.ToString(),  // TODO: Byta datatyp?
-                ATGTrend = start.Trend,
+                ATGTrend = Convert.ToDecimal(start.Trend),
                 //Breeder = TODO:,
                 //BreederName = TODO:,
                 //CurrentYearStatistics = TODO:,
@@ -907,8 +908,12 @@ namespace HPTClient
             }
         }
 
-        public static HPTHorseYearStatistics ConvertHorseYearStatistics(ATGHorseStatistics yearStatistics)
+        public static HPTHorseYearStatistics ConvertHorseYearStatistics(ATGHorseStatistics? yearStatistics)
         {
+            if (yearStatistics is null)
+            {
+                return new  HPTHorseYearStatistics();
+            }
             HPTHorseYearStatistics hptYearStatistics = new()
             {
                 Earning = yearStatistics.Earnings,
@@ -1383,7 +1388,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                var s = exc.Message;
+                HPTConfig.Config.AddToErrorLog(exc);
             }
         }
 

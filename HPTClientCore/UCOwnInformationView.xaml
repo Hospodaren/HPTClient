@@ -92,7 +92,7 @@
 
                                 <Label Margin="1,1,10,0" Padding="1,0"  ButtonBase.Click="Label_Click">
                                     <!--<Hyperlink x:Name="hlVPOnAtgSe" NavigateUri="{Binding Path=ATGLink}" RequestNavigate="hlVPOnAtgSe_RequestNavigate">-->
-                                    <Hyperlink x:Name="hlVPOnAtgSe" NavigateUri="{Binding Path=NextStart.ATGLink}">
+                                    <Hyperlink x:Name="hlVPOnAtgSe" NavigateUri="https://atg.se">
                                         <TextBlock>
                                             <TextBlock.Text>
                                                 <MultiBinding StringFormat="{}{0} lopp {1}">

@@ -1090,10 +1090,10 @@ namespace HPTClient
                     HandleReservNotSelectedRankMean();
                     break;
                 case ReservHandling.OddsSelected:
-                    HandleReservSelectedRank("VinnarOdds");
+                    HandleReservSelectedRank("VinnarOddsExact");
                     break;
                 case ReservHandling.OddsNotSelected:
-                    HandleReservNotSelectedRank("VinnarOdds");
+                    HandleReservNotSelectedRank("VinnarOddsExact");
                     break;
                 case ReservHandling.NextRankSelected:
                     HandleReservSelectedNextRank();

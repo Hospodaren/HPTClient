@@ -9,7 +9,8 @@
     Icon="Icons/HPT.ico" Initialized="atgCalendar_Initialized"
     Closing="Window_Closing"
     Loaded="Window_Loaded"
-    x:Name="atgCalendar">
+    x:Name="atgCalendar"
+    KeyUp="UIElement_OnKeyUp">
     
     <Window.Resources>
 
