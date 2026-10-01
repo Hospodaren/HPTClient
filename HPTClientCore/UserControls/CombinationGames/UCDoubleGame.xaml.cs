@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Media;
 
@@ -21,19 +19,19 @@ namespace HPTClient
 
         public UCDoubleGame(HPTCombBet combBet)
         {
-            this.CombBet = combBet;
-            this.RaceList = new ObservableCollection<HPTRace>(combBet.RaceDayInfo.RaceList);
-            this.Race1 = combBet.RaceDayInfo.RaceList[0];
-            this.Race2 = combBet.RaceDayInfo.RaceList[1];
+            CombBet = combBet;
+            RaceList = new ObservableCollection<HPTRace>(combBet.RaceDayInfo.RaceList);
+            Race1 = combBet.RaceDayInfo.RaceList[0];
+            Race2 = combBet.RaceDayInfo.RaceList[1];
 
-            var selectedHorses = this.RaceList
+            var selectedHorses = RaceList
                 .SelectMany(r => r.HorseList)
                 .Where(h => h.Selected)
                 .ToList();
 
             if (selectedHorses.Count == 0)
             {
-                this.RaceList.ToList().ForEach(r =>
+                RaceList.ToList().ForEach(r =>
                 {
                     r.HorseList
                         .Where(h => h.Scratched == null || h.Scratched == false)
@@ -52,7 +50,7 @@ namespace HPTClient
                 //    race.NumberOfSelectedChanged += new HPTRace.NumberOfSelectedChangedEventDelegate(race_NumberOfSelectedChanged);
                 //}
             }
-            this.CombBet.RaceDayInfo.CombinationListInfoDouble.UpdateCombinationsToShow();
+            CombBet.RaceDayInfo.CombinationListInfoDouble.UpdateCombinationsToShow();
             InitializeComponent();
 
             //// Hantering av gratisanvändare som öppnar fil med icke stödda spelformer
@@ -96,7 +94,7 @@ namespace HPTClient
             //    return;
             //}
             //horse.ParentRace.ParentRaceDayInfo.CombinationListInfoDouble.UpdateCombinationsToShow();
-            this.CombBet.RaceDayInfo.CombinationListInfoDouble.UpdateCombinationsToShow();
+            CombBet.RaceDayInfo.CombinationListInfoDouble.UpdateCombinationsToShow();
         }
 
         private bool firstLoad = true;
@@ -109,44 +107,44 @@ namespace HPTClient
         internal void SetCountDown()
         {
             // Återställ textinställningar
-            this.txtCountdownTimer.FontWeight = FontWeights.Normal;
-            this.txtCountdownTimer.Foreground = new SolidColorBrush(Colors.Black);
+            txtCountdownTimer.FontWeight = FontWeights.Normal;
+            txtCountdownTimer.Foreground = new SolidColorBrush(Colors.Black);
 
             // Hämta nästa lopp
-            this.upcomingRace = this.CombBet.RaceDayInfo.RaceList
+            upcomingRace = CombBet.RaceDayInfo.RaceList
                 .OrderBy(r => r.PostTime)
                 .FirstOrDefault(r => r.PostTime > DateTime.Now);
 
             // Dra igång nedräknare om tävlingen är idag
-            if (this.upcomingRace != null && this.upcomingRace.PostTime.Date == DateTime.Today)
+            if (upcomingRace != null && upcomingRace.PostTime.Date == DateTime.Today)
             {
-                TimeSpan ts = this.upcomingRace.PostTime - DateTime.Now;
+                var ts = upcomingRace.PostTime - DateTime.Now;
                 Countdown(ts, cur =>
                 {
                     if ((int)cur.TotalSeconds == 600)
                     {
-                        this.txtCountdownTimer.FontWeight = FontWeights.Bold;
-                        this.txtCountdownTimer.Foreground = new SolidColorBrush(Colors.Red);
+                        txtCountdownTimer.FontWeight = FontWeights.Bold;
+                        txtCountdownTimer.Foreground = new SolidColorBrush(Colors.Red);
                     }
-                    this.txtCountdownTimer.Text = cur.ToString(@"hh\:mm\:ss");
+                    txtCountdownTimer.Text = cur.ToString(@"hh\:mm\:ss");
                 });
-                this.txtCountdownInfo.Text = this.upcomingRace.LegNrString + ":";
+                txtCountdownInfo.Text = $"{upcomingRace.LegNrString}:";
             }
             else
             {
-                this.txtCountdownTimer.Text = string.Empty;
-                this.txtCountdownInfo.Text = string.Empty;
+                txtCountdownTimer.Text = string.Empty;
+                txtCountdownInfo.Text = string.Empty;
             }
         }
 
         void Countdown(TimeSpan timeLeft, Action<TimeSpan> ts)
         {
-            int count = (int)timeLeft.TotalSeconds;
+            var count = (int)timeLeft.TotalSeconds;
             var dt = new System.Windows.Threading.DispatcherTimer();
             dt.Interval = TimeSpan.FromSeconds(1D);
             dt.Tick += (_, a) =>
             {
-                if (this.upcomingRace == null)
+                if (upcomingRace == null)
                 {
                     dt.Stop();
                     dt = null;
@@ -154,7 +152,7 @@ namespace HPTClient
                 }
                 else
                 {
-                    TimeSpan tsTemp = this.upcomingRace.PostTime - DateTime.Now;
+                    var tsTemp = upcomingRace.PostTime - DateTime.Now;
                     ts(tsTemp);
                 }
             };

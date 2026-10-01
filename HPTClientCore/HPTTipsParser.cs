@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace HPTClient
 {
@@ -24,11 +22,11 @@ namespace HPTClient
         {
             try
             {
-                var rexParseTips = new Regex(this.ParseTipsRegExString, RegexOptions.IgnoreCase);
+                var rexParseTips = new Regex(ParseTipsRegExString, RegexOptions.IgnoreCase);
                 var matches = rexParseTips.Matches(tips);
                 foreach (Match m in matches)
                 {
-                    int legNr = Convert.ToInt32(m.Groups[1].Value);
+                    var legNr = Convert.ToInt32(m.Groups[1].Value);
                     var race = markBet.RaceDayInfo.RaceList.FirstOrDefault(r => r.LegNr == legNr);
                     if (race != null)
                     {
@@ -37,14 +35,14 @@ namespace HPTClient
                             horse.SelectedFromTip = false;
                             horse.RankTip = 15;
                         }
-                        int rank = 1;
-                        string horseNumbersString = m.Groups[2].Value;
-                        var horseNumberStrings = horseNumbersString.Split(this.HorseSeparatorString, StringSplitOptions.RemoveEmptyEntries);
+                        var rank = 1;
+                        var horseNumbersString = m.Groups[2].Value;
+                        var horseNumberStrings = horseNumbersString.Split(HorseSeparatorString, StringSplitOptions.RemoveEmptyEntries);
                         if (horseNumberStrings.Length > 0)
                         {
                             foreach (var horseNumberString in horseNumberStrings)
                             {
-                                int horseNumber = 0;
+                                var horseNumber = 0;
                                 if (!int.TryParse(horseNumberString, out horseNumber))  // Spik med text eller "ALLA"
                                 {
                                     var rexSpike = new Regex(@"\d{1,2}");
@@ -95,10 +93,10 @@ namespace HPTClient
         //Avd 8: 2-11-10 (6-1)
         internal HPTTipsParserAftonbladet()
         {
-            this.IsTipsRegExString = @"Avd\s(\d):";
-            this.ParseTipsRegExString = @"Avd\s(\d):\s([\d\w\s\.\–-]+?)\((\d{1,2})[\–-](\d{1,2})\)";
-            this.HorseSeparatorString = new string[] { "-", "–" };
-            this.RaceSeparatorString = "\r\n";
+            IsTipsRegExString = @"Avd\s(\d):";
+            ParseTipsRegExString = @"Avd\s(\d):\s([\d\w\s\.\–-]+?)\((\d{1,2})[\–-](\d{1,2})\)";
+            HorseSeparatorString = new string[] { "-", "–" };
+            RaceSeparatorString = "\r\n";
         }
     }
 
@@ -112,11 +110,11 @@ namespace HPTClient
         //V64-6: 1 Pampa Cato
         internal HPTTipsParserStandard1()
         {
-            this.IsTipsRegExString = @"V\d{1,2}[\–-](\d):*\s([\d\w\s\.\–-]+)";
-            this.ParseTipsRegExString = @"V\d{1,2}[\–-](\d):*\s([^\n]+)";
+            IsTipsRegExString = @"V\d{1,2}[\–-](\d):*\s([\d\w\s\.\–-]+)";
+            ParseTipsRegExString = @"V\d{1,2}[\–-](\d):*\s([^\n]+)";
             //this.ParseTipsRegExString = @"V\d{1,2}-(\d):*\s([\d\w\s\.\–-]+)";
-            this.HorseSeparatorString = new string[] { "-", "–", "," };
-            this.RaceSeparatorString = "\r\n";
+            HorseSeparatorString = new string[] { "-", "–", "," };
+            RaceSeparatorString = "\r\n";
         }
     }
 
@@ -131,9 +129,9 @@ namespace HPTClient
         //V75-7: 1, 2, 5, 10
         internal HPTTipsParserStandard2()
         {
-            this.IsTipsRegExString = @"V\d{1,2}-(\d):*\s([\d\s,]+)";
-            this.HorseSeparatorString = new string[] { "-", "–", "," };
-            this.RaceSeparatorString = "\r\n";
+            IsTipsRegExString = @"V\d{1,2}-(\d):*\s([\d\s,]+)";
+            HorseSeparatorString = new string[] { "-", "–", "," };
+            RaceSeparatorString = "\r\n";
         }
     }
 
@@ -147,30 +145,30 @@ namespace HPTClient
         //V64-6 A:8 B:7 C:2, 9, 12
         internal HPTTipsParserHptABC()
         {
-            this.IsTipsRegExString = @"V\d{1,2}-(\d)\s(((([A-F]):)*(\d{1,2},*\s*)*)*)";
-            this.ParseTipsRegExString = @"V\d{1,2}-(\d)\s(((([A-F]):)*(\d{1,2},*\s*)*)*)";
-            this.HorseSeparatorString = new string[] { "-", "–", "," };
-            this.RaceSeparatorString = "\r\n";
+            IsTipsRegExString = @"V\d{1,2}-(\d)\s(((([A-F]):)*(\d{1,2},*\s*)*)*)";
+            ParseTipsRegExString = @"V\d{1,2}-(\d)\s(((([A-F]):)*(\d{1,2},*\s*)*)*)";
+            HorseSeparatorString = new string[] { "-", "–", "," };
+            RaceSeparatorString = "\r\n";
         }
 
         internal override bool ParseTips(string tips, HPTMarkBet markBet)
         {
             try
             {
-                var rexParseTips = new Regex(this.ParseTipsRegExString, RegexOptions.IgnoreCase);
+                var rexParseTips = new Regex(ParseTipsRegExString, RegexOptions.IgnoreCase);
                 var matches = rexParseTips.Matches(tips);
                 foreach (Match m in matches)
                 {
-                    int legNr = Convert.ToInt32(m.Groups[1].Value);
+                    var legNr = Convert.ToInt32(m.Groups[1].Value);
                     var race = markBet.RaceDayInfo.RaceList.FirstOrDefault(r => r.LegNr == legNr);
                     if (race != null)
                     {
-                        string raceSelectedHorsesString = m.Groups[2].Value;
+                        var raceSelectedHorsesString = m.Groups[2].Value;
                         var rexMPrioHorses = new Regex(@"V\d{1,2}-(\d)\s([\d,\s]+)");
                         if (rexMPrioHorses.IsMatch(raceSelectedHorsesString))
                         {
-                            Match mPrioHorses = rexMPrioHorses.Match(raceSelectedHorsesString);
-                            string horseNumbersString = mPrioHorses.Groups[2].Value;
+                            var mPrioHorses = rexMPrioHorses.Match(raceSelectedHorsesString);
+                            var horseNumbersString = mPrioHorses.Groups[2].Value;
                             SelectFromString(race, HPTPrio.M, horseNumbersString);
                         }
 
@@ -178,7 +176,7 @@ namespace HPTClient
                         foreach (Match mXPrioHorses in rexXPrioHorses.Matches(raceSelectedHorsesString))
                         {
                             var prio = EnumHelper.GetHPTPrioFromShortString(mXPrioHorses.Groups[1].Value);
-                            string horseNumbersString = mXPrioHorses.Groups[2].Value;
+                            var horseNumbersString = mXPrioHorses.Groups[2].Value;
                             SelectFromString(race, prio, horseNumbersString);
                         }
                     }
@@ -193,12 +191,12 @@ namespace HPTClient
 
         internal void SelectFromString(HPTRace race, HPTPrio prio, string horseNumbersString)
         {
-            var horseNumberStrings = horseNumbersString.Split(this.HorseSeparatorString, StringSplitOptions.RemoveEmptyEntries);
+            var horseNumberStrings = horseNumbersString.Split(HorseSeparatorString, StringSplitOptions.RemoveEmptyEntries);
             if (horseNumberStrings.Length > 0)
             {
                 foreach (var horseNumberString in horseNumberStrings)
                 {
-                    int horseNumber = 0;
+                    var horseNumber = 0;
                     if (!int.TryParse(horseNumberString, out horseNumber))  // Spik med text eller "ALLA"
                     {
                         var rexSpike = new Regex(@"\d{1,2}");

@@ -6,89 +6,69 @@ namespace HPTClient
     [DataContract]
     public class HPTNumberOfWinners : Notifier
     {
-        private int numberOfWinners;
         [DataMember]
         public int NumberOfWinners
         {
-            get
-            {
-                return this.numberOfWinners;
-            }
+            get;
             set
             {
-                this.numberOfWinners = value;
-                OnPropertyChanged("NumberOfWinners");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool selected;
         [DataMember]
         public bool Selected
         {
-            get
-            {
-                return this.selected;
-            }
+            get;
             set
             {
-                if (this.selected == value)
+                if (field == value)
                 {
                     return;
                 }
-                this.selected = value;
-                OnPropertyChanged("Selected");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool selectable;
         [DataMember]
         public bool Selectable
         {
-            get
-            {
-                return this.selectable;
-            }
+            get;
             set
             {
-                if (!value && this.Selected)
+                if (!value && Selected)
                 {
-                    this.Selected = false;
+                    Selected = false;
                 }
-                if (this.selectable == value)
+                if (field == value)
                 {
                     return;
                 }
-                this.selectable = value;
-                OnPropertyChanged("Selectable");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal probability;
         public decimal Probability
         {
-            get
-            {
-                return this.probability;
-            }
+            get;
             set
             {
-                this.probability = value;
-                OnPropertyChanged("Probability");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool isSuperfluous;
         [XmlIgnore]
         public bool IsSuperfluous
         {
-            get
-            {
-                return this.isSuperfluous;
-            }
+            get;
             set
             {
-                this.isSuperfluous = value;
-                OnPropertyChanged("IsSuperfluous");
+                field = value;
+                OnPropertyChanged();
             }
         }
     }

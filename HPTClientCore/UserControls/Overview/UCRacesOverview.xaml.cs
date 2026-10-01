@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -51,13 +48,13 @@ namespace HPTClient
 
         private void cmbSort_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (this.RaceList == null && !CreateRaceList())
+            if (RaceList == null && !CreateRaceList())
             {
                 return;
             }
-            ComboBoxItem cbi = (ComboBoxItem)this.cmbSort.SelectedItem;
-            string sortVariable = (string)cbi.Tag;
-            this.RaceList.ForEach(r =>
+            var cbi = (ComboBoxItem)cmbSort.SelectedItem;
+            var sortVariable = (string)cbi.Tag;
+            RaceList.ForEach(r =>
                 {
                     r.Sort(sortVariable);
                     r.DragDropEnabled = sortVariable == "RankOwn";
@@ -66,16 +63,16 @@ namespace HPTClient
 
         private void btnSetRankOwn_Click(object sender, RoutedEventArgs e)
         {
-            bool recalculationPaused = this.MarkBet.pauseRecalculation;
+            var recalculationPaused = MarkBet.pauseRecalculation;
             try
             {
-                this.MarkBet.pauseRecalculation = true;
-                if (this.cmbSort.SelectedIndex == -1)
+                MarkBet.pauseRecalculation = true;
+                if (cmbSort.SelectedIndex == -1)
                 {
-                    foreach (var race in this.MarkBet.RaceDayInfo.RaceList)
+                    foreach (var race in MarkBet.RaceDayInfo.RaceList)
                     {
-                        int rankToSet = 1;
-                        int numberOfScratchedHorses = 0;
+                        var rankToSet = 1;
+                        var numberOfScratchedHorses = 0;
                         foreach (var horse in race.HorseList)
                         {
                             if (horse.Scratched == true)
@@ -94,21 +91,21 @@ namespace HPTClient
                 }
                 else
                 {
-                    this.RaceList.ForEach(r =>
+                    RaceList.ForEach(r =>
                         {
                             r.SetRank();
                         });
 
                 }
 
-                this.cmbSort.SelectedIndex = 0;
+                cmbSort.SelectedIndex = 0;
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
-            this.MarkBet.pauseRecalculation = recalculationPaused;
-            this.MarkBet.RecalculateReduction(RecalculateReason.All);
+            MarkBet.pauseRecalculation = recalculationPaused;
+            MarkBet.RecalculateReduction(RecalculateReason.All);
 
             //bool recalculationPaused = this.MarkBet.pauseRecalculation;
             //try
@@ -294,18 +291,18 @@ namespace HPTClient
 
         private void chkHideScratched_Checked(object sender, RoutedEventArgs e)
         {
-            this.RaceList.ForEach(r =>
+            RaceList.ForEach(r =>
             {
-                r.HideScratched = (bool)this.chkHideScratched.IsChecked;
+                r.HideScratched = (bool)chkHideScratched.IsChecked;
                 r.SetFilter();
             });
         }
 
         private void chkShowOnlySelected_Checked(object sender, RoutedEventArgs e)
         {
-            this.RaceList.ForEach(r =>
+            RaceList.ForEach(r =>
             {
-                r.ShowOnlySelected = (bool)this.chkShowOnlySelected.IsChecked;
+                r.ShowOnlySelected = (bool)chkShowOnlySelected.IsChecked;
                 r.SetFilter();
             });
         }
@@ -313,8 +310,8 @@ namespace HPTClient
         public bool FilterHorses(object obj)
         {
             var horse = obj as HPTHorse;
-            bool showScratched = this.chkHideScratched.IsChecked == false;
-            bool showOnlySelected = this.chkShowOnlySelected.IsChecked == true;
+            var showScratched = chkHideScratched.IsChecked == false;
+            var showOnlySelected = chkShowOnlySelected.IsChecked == true;
 
             return (showScratched == horse.Scratched || horse.Scratched == false) && (showOnlySelected == horse.Selected || !showOnlySelected);
         }
@@ -414,12 +411,12 @@ namespace HPTClient
 
         private void btnSelectAll_Click(object sender, RoutedEventArgs e)
         {
-            if (this.MarkBet != null)
+            if (MarkBet != null)
             {
                 try
                 {
-                    this.MarkBet.pauseRecalculation = true;
-                    foreach (var race in this.MarkBet.RaceDayInfo.RaceList)
+                    MarkBet.pauseRecalculation = true;
+                    foreach (var race in MarkBet.RaceDayInfo.RaceList)
                     {
                         foreach (var horse in race.HorseList.Where(h => h.Scratched != true))
                         {
@@ -429,10 +426,10 @@ namespace HPTClient
                 }
                 catch (Exception exc)
                 {
-                    string s = exc.Message;
+                    var s = exc.Message;
                 }
-                this.MarkBet.pauseRecalculation = false;
-                this.MarkBet.RecalculateReduction(RecalculateReason.All);
+                MarkBet.pauseRecalculation = false;
+                MarkBet.RecalculateReduction(RecalculateReason.All);
             }
         }
 
@@ -443,13 +440,13 @@ namespace HPTClient
         // Egen rank ändrad på någon av hästarna
         private void IntegerUpDown_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            if (this.IsLoaded && this.MarkBet != null && !this.MarkBet.pauseRecalculation)
+            if (IsLoaded && MarkBet != null && !MarkBet.pauseRecalculation)
             {
-                this.MarkBet.RecalculateAllRanks();
-                this.MarkBet.RecalculateRank();
-                if (this.MarkBet.HasOwnRankReduction())
+                MarkBet.RecalculateAllRanks();
+                MarkBet.RecalculateRank();
+                if (MarkBet.HasOwnRankReduction())
                 {
-                    this.MarkBet.RecalculateReduction(RecalculateReason.Rank);
+                    MarkBet.RecalculateReduction(RecalculateReason.Rank);
                 }
             }
         }
@@ -457,22 +454,22 @@ namespace HPTClient
         // Poäng ändrad på någon av hästarna
         private void iudRankAlternate_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            if (this.IsLoaded && this.MarkBet != null && !this.MarkBet.pauseRecalculation)
+            if (IsLoaded && MarkBet != null && !MarkBet.pauseRecalculation)
             {
-                this.MarkBet.RecalculateAllRanks();
-                this.MarkBet.RecalculateRank();
-                if (this.MarkBet.HasAlternateRankReduction())
+                MarkBet.RecalculateAllRanks();
+                MarkBet.RecalculateRank();
+                if (MarkBet.HasAlternateRankReduction())
                 {
-                    this.MarkBet.RecalculateReduction(RecalculateReason.Rank);
+                    MarkBet.RecalculateReduction(RecalculateReason.Rank);
                 }
             }
         }
 
         private void IntegerUpDown_ValueChanged_1(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            if (this.MarkBet != null)
+            if (MarkBet != null)
             {
-                this.MarkBet.RecalculateReduction(RecalculateReason.All);
+                MarkBet.RecalculateReduction(RecalculateReason.All);
             }
         }
 
@@ -483,16 +480,16 @@ namespace HPTClient
 
         private bool CreateRaceList()
         {
-            if (this.MarkBet != null && this.RaceList == null)
+            if (MarkBet != null && RaceList == null)
             {
-                this.RaceList = this.MarkBet.RaceDayInfo.RaceList.Select(r => new UCRaceForOverview()
+                RaceList = MarkBet.RaceDayInfo.RaceList.Select(r => new UCRaceForOverview()
                 {
                     DataContext = r,
                     Race = r,
-                    MarkBet = this.MarkBet
+                    MarkBet = MarkBet
                 }).ToList();
 
-                this.RaceList.ForEach(r =>
+                RaceList.ForEach(r =>
                     {
                         r.Sort("RankOwn");
                         r.UpdateHorseOrder();

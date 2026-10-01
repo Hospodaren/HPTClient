@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 namespace HPTClient
@@ -16,7 +15,7 @@ namespace HPTClient
 
         private void btnAddComment_Click(object sender, RoutedEventArgs e)
         {
-            if (this.DataContext == null || this.DataContext.GetType() != typeof(HPTHorse))
+            if (DataContext == null || DataContext.GetType() != typeof(HPTHorse))
             {
                 return;
             }
@@ -25,7 +24,7 @@ namespace HPTClient
 
         public void AddComment()
         {
-            var horse = (HPTHorse)this.DataContext;
+            var horse = (HPTHorse)DataContext;
             var horseComment = new HPTHorseOwnInformationComment()
             {
                 CommentDate = DateTime.Now,
@@ -72,14 +71,14 @@ namespace HPTClient
         {
             try
             {
-                var horse = (HPTHorse)this.DataContext;
+                var horse = (HPTHorse)DataContext;
                 var fe = (FrameworkElement)e.OriginalSource;
                 var commentToRemove = (HPTHorseOwnInformationComment)fe.DataContext;
                 horse.OwnInformation.HorseOwnInformationCommentList.Remove(commentToRemove);
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
 
         }

@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace HPTClient
+﻿namespace HPTClient
 {
     public class HPTTrackDistance
     {
@@ -27,7 +25,7 @@ namespace HPTClient
         public int GetDistance(TrackNameEnum horseTrack)
         {
             // Hemmabana
-            if (horseTrack == this.TrackName)
+            if (horseTrack == TrackName)
             {
                 return 0;
             }
@@ -36,23 +34,22 @@ namespace HPTClient
             var horseTrackDistance = TrackDistanceArray.FirstOrDefault(td => td.TrackName == horseTrack);
             if (horseTrackDistance != null)
             {
-                return this.DistanceArray[horseTrackDistance.PositionInArray];
+                return DistanceArray[horseTrackDistance.PositionInArray];
             }
 
             // Ingen träff på bana
             return 0;
         }
 
-        private static HPTTrackDistance[] trackDistanceArray;
         public static HPTTrackDistance[] TrackDistanceArray
         {
             get
             {
-                if (trackDistanceArray == null)
+                if (field == null)
                 {
-                    trackDistanceArray = CreateTrackDistanceArray();
+                    field = CreateTrackDistanceArray();
                 }
-                return trackDistanceArray;
+                return field;
             }
         }
 

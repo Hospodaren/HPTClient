@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System.Collections.ObjectModel;
 
 namespace HPTClient
 {
@@ -8,15 +6,15 @@ namespace HPTClient
     {
         public void InitializeTemplate(IEnumerable<HPTPrio> priosToUse)
         {
-            this.ABCDTemplateSettingsList = new ObservableCollection<ABCDTemplateSettings>();
-            foreach (HPTPrio prio in HPTConfig.Config.PrioList.Keys)
+            ABCDTemplateSettingsList = new ObservableCollection<ABCDTemplateSettings>();
+            foreach (var prio in HPTConfig.Config.PrioList.Keys)
             {
-                ABCDTemplateSettings settings = new ABCDTemplateSettings()
+                var settings = new ABCDTemplateSettings()
                 {
                     Prio = prio,
                     Selected = priosToUse.Contains(prio)
                 };
-                this.ABCDTemplateSettingsList.Add(settings);
+                ABCDTemplateSettingsList.Add(settings);
             }
         }
 
@@ -24,30 +22,26 @@ namespace HPTClient
         {
             var template = new HPTMarkBetTemplateABCD()
             {
-                DesiredSystemSize = this.DesiredSystemSize,
-                Name = this.Name,
-                NumberOfSpikes = this.NumberOfSpikes,
-                RankTemplate = this.RankTemplate,
-                RankTemplateName = this.RankTemplateName,
-                TypeCategory = this.TypeCategory,
-                ReductionPercentage = this.ReductionPercentage
+                DesiredSystemSize = DesiredSystemSize,
+                Name = Name,
+                NumberOfSpikes = NumberOfSpikes,
+                RankTemplate = RankTemplate,
+                RankTemplateName = RankTemplateName,
+                TypeCategory = TypeCategory,
+                ReductionPercentage = ReductionPercentage
             };
-            template.InitializeTemplate(this.ABCDTemplateSettingsList.Where(abcd => abcd.Selected).Select(abcd => abcd.Prio));
+            template.InitializeTemplate(ABCDTemplateSettingsList.Where(abcd => abcd.Selected).Select(abcd => abcd.Prio));
 
             return template;
         }
 
-        private ObservableCollection<ABCDTemplateSettings> abcdTemplateSettingsList;
         public ObservableCollection<ABCDTemplateSettings> ABCDTemplateSettingsList
         {
-            get
-            {
-                return this.abcdTemplateSettingsList;
-            }
+            get;
             set
             {
-                this.abcdTemplateSettingsList = value;
-                OnPropertyChanged("ABCDTemplateSettingsList");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -55,7 +49,7 @@ namespace HPTClient
         {
             get
             {
-                return this.ABCDTemplateSettingsList
+                return ABCDTemplateSettingsList
                     .Where(ts => ts.Selected)
                     .Select(ts => ts.Prio);
             }

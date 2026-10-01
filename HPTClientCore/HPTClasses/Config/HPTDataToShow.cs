@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.Serialization;
 
 namespace HPTClient
@@ -9,7 +8,7 @@ namespace HPTClient
     {
         public void Clone(HPTDataToShow dataToShow)
         {
-            foreach (PropertyInfo pi in (dataToShow.GetType()).GetProperties())
+            foreach (var pi in (dataToShow.GetType()).GetProperties())
             {
                 if (pi.PropertyType == typeof(bool))
                 {
@@ -18,18 +17,11 @@ namespace HPTClient
             }
         }
 
-        [DataMember]
-        private DataToShowUsage usage;
+        [field: DataMember]
         public DataToShowUsage Usage
         {
-            get
-            {
-                return this.usage;
-            }
-            set
-            {
-                this.usage = value;
-            }
+            get { return field; }
+            set;
         }
 
         [DataMember]
@@ -40,19 +32,19 @@ namespace HPTClient
 
         public List<HorseDataToShowAttribute> GetHorseDataToShowAttributes()
         {
-            List<HorseDataToShowAttribute> attributeList = new List<HorseDataToShowAttribute>();
-            foreach (PropertyInfo pi in (this.GetType()).GetProperties())
+            var attributeList = new List<HorseDataToShowAttribute>();
+            foreach (var pi in (GetType()).GetProperties())
             {
-                foreach (object o in pi.GetCustomAttributes(true))
+                foreach (var o in pi.GetCustomAttributes(true))
                 {
                     if (o.GetType() == typeof(HorseDataToShowAttribute))
                     {
-                        HorseDataToShowAttribute hda = (HorseDataToShowAttribute)o;
+                        var hda = (HorseDataToShowAttribute)o;
                         //if (hda.PropertyName == "ShowReserv")
                         //{
                         //    string s = string.Empty;
                         //}
-                        if (hda.Usage.HasFlag(this.Usage) || hda.Usage == DataToShowUsage.Everywhere)
+                        if (hda.Usage.HasFlag(Usage) || hda.Usage == DataToShowUsage.Everywhere)
                         {
                             attributeList.Add(hda);
                         }
@@ -65,20 +57,15 @@ namespace HPTClient
         [DataMember]
         public List<string> ColumnsInOrder { get; set; }
 
-        private GUIProfile guiProfile = GUIProfile.Normal;
         [DataMember]
         public GUIProfile GUIProfile
         {
-            get
-            {
-                return guiProfile;
-            }
+            get;
             set
             {
-                guiProfile = value;
-                OnPropertyChanged("GUIProfile");
+                field = value;
+                OnPropertyChanged();
             }
-        }
-
+        } = GUIProfile.Normal;
     }
 }

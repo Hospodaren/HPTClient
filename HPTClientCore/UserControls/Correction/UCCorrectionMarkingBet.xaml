@@ -364,10 +364,10 @@
 
                         <TextBlock Style="{StaticResource tbBigStyle}" FontSize="14" Text="{Binding Path=CouponHelper.TotalWinnings,StringFormat='Total Vinst: {0:N0} kr',ConverterCulture=sv-SE}" Padding="2,6,2,2"/>
 
-                        <Button x:Name="btnAnalyzeResult" Content="Analys" Padding="2,1" Margin="2" Click="btnAnalyzeResult_Click"
+                        <!--<Button x:Name="btnAnalyzeResult" Content="Analys" Padding="2,1" Margin="2" Click="btnAnalyzeResult_Click"
                                 ToolTip="Analyserar vinnande hästar utifrån rank" IsEnabled="{Binding Path=MarkBet.RaceDayInfo.HasResult,ElementName=ucCorrectionMarkingBet}"/>
 
-                        <Button x:Name="btnWinnerList" Content="Visa vinstlista" IsEnabled="False" Click="btnWinnerList_Click" Padding="2,1" Margin="2"/>
+                        <Button x:Name="btnWinnerList" Content="Visa vinstlista" IsEnabled="False" Click="btnWinnerList_Click" Padding="2,1" Margin="2"/>-->
 
                         <Button x:Name="btnSuggestNextTimers" Content="Föreslå nästagångare" IsEnabled="False" Click="btnSuggestNextTimers_Click" Padding="2,1" Margin="2"/>
 
@@ -461,7 +461,7 @@
 
                 <TextBlock x:Name="txtError" VerticalAlignment="Center" Foreground="Red" FontSize="14" FontWeight="DemiBold" HorizontalAlignment="Left"/>
 
-                <StackPanel Orientation="Horizontal" Grid.Column="1">
+                <!--<StackPanel Orientation="Horizontal" Grid.Column="1">
 
                     <Button x:Name="btnRetrieveResult" Content="Smygen" Click="btnRetrieveResult_Click" Padding="1" Margin="2"
                             ToolTip="Hämtar resultat för färdiga lopp utan att visa det i gränssnittet"/>
@@ -479,16 +479,16 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
 
-                </StackPanel>
+                </StackPanel>-->
 
             <CheckBox x:Name="chkShowOnlyCouponsWithPotential" Checked="chkShowOnlyCouponsWithPotential_Checked" Unchecked="chkShowOnlyCouponsWithPotential_Unchecked"
                       Padding="2,6,2,2" Margin="2,6,2,2" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center">
                 <TextBlock Text="Bara kuponger med vinstchans" Style="{StaticResource tbMediumStyle}" Margin="2,-8,20,2"/>
             </CheckBox>
 
-            <CheckBox x:Name="chkPlaySound" Padding="2,6,2,2" Margin="2,6,2,2" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Center">
+            <!--<CheckBox x:Name="chkPlaySound" Padding="2,6,2,2" Margin="2,6,2,2" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Center">
                 <TextBlock Text="Spela ljud" Style="{StaticResource tbMediumStyle}" Margin="2,-8,20,2"/>
-            </CheckBox>
+            </CheckBox>-->
 
             <CheckBox x:Name="chkAutomaticCorrection" Padding="2,6,2,2" Margin="2,6,2,2" Grid.Column="4" HorizontalAlignment="Right" VerticalAlignment="Center" Checked="chkAutomaticCorrection_Checked" Unchecked="chkAutomaticCorrection_Checked">
                 <TextBlock Text="Automatiskt rättning" VerticalAlignment="Center" Style="{StaticResource tbMediumStyle}" Grid.Column="4" HorizontalAlignment="Right" Margin="2,-8,20,2"/>

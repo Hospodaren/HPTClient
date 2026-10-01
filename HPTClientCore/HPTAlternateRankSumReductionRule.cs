@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 using System.Text;
 
 namespace HPTClient
@@ -14,18 +13,18 @@ namespace HPTClient
             {
                 singleRow.CalculateValues();
             }
-            return (this.MinSum <= singleRow.AlternateRankSum && this.MaxSum >= singleRow.AlternateRankSum);
+            return (MinSum <= singleRow.AlternateRankSum && MaxSum >= singleRow.AlternateRankSum);
         }
 
         public override bool IncludeRow(HPTMarkBet markBet, HPTHorse[] horseList, int numberOfRacesToTest)
         {
-            int partialSum = horseList.Take(numberOfRacesToTest).Sum(h => h.RankAlternate);
-            return this.MaxSum > partialSum;
+            var partialSum = horseList.Take(numberOfRacesToTest).Sum(h => h.RankAlternate);
+            return MaxSum > partialSum;
         }
 
         public override bool GetRuleResultForCorrectRow(HPTMarkBet markBet)
         {
-            this.RuleResultForCorrectRow = "Summa " + markBet.CouponCorrector.HorseList.Sum(h => h.RankAlternate).ToString();
+            RuleResultForCorrectRow = $"Summa {markBet.CouponCorrector.HorseList.Sum(h => h.RankAlternate)}";
             return true;
         }
 
@@ -40,23 +39,23 @@ namespace HPTClient
         public override string ToString(HPTMarkBet markBet)
         {
             // Create String representation
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.Append("Summa egen poäng: ");
-            sb.Append(this.MinSum);
+            sb.Append(MinSum);
             sb.Append(" - ");
-            sb.Append(this.MaxSum);
+            sb.Append(MaxSum);
             sb.AppendLine();
 
-            if (this.MinPercentSum > 0 || this.MaxPercentSum < 100)
+            if (MinPercentSum > 0 || MaxPercentSum < 100)
             {
                 sb.Append("Procentintervall: ");
-                sb.Append(this.MinPercentSum);
+                sb.Append(MinPercentSum);
                 sb.Append(" - ");
-                sb.Append(this.MaxPercentSum);
+                sb.Append(MaxPercentSum);
                 sb.AppendLine();
             }
 
-            this.ClipboardString = this.ReductionTypeString + "\r\n" + sb.ToString();
+            ClipboardString = $"{ReductionTypeString}\r\n{sb}";
             return sb.ToString();
         }
     }

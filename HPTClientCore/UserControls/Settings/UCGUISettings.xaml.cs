@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 namespace HPTClient
@@ -14,38 +13,37 @@ namespace HPTClient
             InitializeComponent();
         }
 
-        private HPTGUIElementsToShow guiElementsToShow;
         internal HPTGUIElementsToShow GUIElementsToShow
         {
             get
             {
-                this.guiElementsToShow = (HPTGUIElementsToShow)this.DataContext;
-                return this.guiElementsToShow;
+                field = (HPTGUIElementsToShow)DataContext;
+                return field;
             }
         }
 
         private void cmbGUIProfile_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (this.cmbGUIProfile.SelectedIndex == (int)this.GUIElementsToShow.GUIProfile)
+            if (cmbGUIProfile.SelectedIndex == (int)GUIElementsToShow.GUIProfile)
             {
                 return;
             }
 
-            var guiProfile = (GUIProfile)this.cmbGUIProfile.SelectedIndex;
-            this.GUIElementsToShow.IsDefault = false;
+            var guiProfile = (GUIProfile)cmbGUIProfile.SelectedIndex;
+            GUIElementsToShow.IsDefault = false;
             var guiElementsToShow = HPTConfig.Config.GUIElementsToShowList.First(ets => ets.GUIProfile == guiProfile);
             guiElementsToShow.IsDefault = true;
-            this.DataContext = guiElementsToShow;
-            HPTConfig.Config.GUIElementsToShow = this.GUIElementsToShow;
+            DataContext = guiElementsToShow;
+            HPTConfig.Config.GUIElementsToShow = GUIElementsToShow;
         }
 
         private void btnResetProfile_Click(object sender, RoutedEventArgs e)
         {
-            HPTConfig.Config.GUIElementsToShowList.Remove(this.GUIElementsToShow);
-            var guiElementsToShow = HPTConfig.Config.GetElementsToShow(this.GUIElementsToShow.GUIProfile);
+            HPTConfig.Config.GUIElementsToShowList.Remove(GUIElementsToShow);
+            var guiElementsToShow = HPTConfig.Config.GetElementsToShow(GUIElementsToShow.GUIProfile);
             guiElementsToShow.IsDefault = true;
-            this.DataContext = guiElementsToShow;
-            HPTConfig.Config.GUIElementsToShow = this.GUIElementsToShow;
+            DataContext = guiElementsToShow;
+            HPTConfig.Config.GUIElementsToShow = GUIElementsToShow;
             HPTConfig.Config.GUIElementsToShowList.Add(guiElementsToShow);
 
         }
@@ -54,16 +52,16 @@ namespace HPTClient
         {
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
-                switch (this.GUIElementsToShow.GUIProfile)
+                switch (GUIElementsToShow.GUIProfile)
                 {
                     case GUIProfile.Simple:
-                        this.cmbGUIProfile.SelectedIndex = 0;
+                        cmbGUIProfile.SelectedIndex = 0;
                         break;
                     case GUIProfile.Normal:
-                        this.cmbGUIProfile.SelectedIndex = 1;
+                        cmbGUIProfile.SelectedIndex = 1;
                         break;
                     case GUIProfile.Advanced:
-                        this.cmbGUIProfile.SelectedIndex = 2;
+                        cmbGUIProfile.SelectedIndex = 2;
                         break;
                     case GUIProfile.Custom:
                         break;

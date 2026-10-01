@@ -1,68 +1,51 @@
-﻿using System.Collections.Generic;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
 namespace HPTClient
 {
     [DataContract]
     public class HPTStartNumberRankCollection : Notifier
     {
-        private string name;
         [DataMember]
         public string Name
         {
-            get
-            {
-                return this.name;
-            }
+            get;
             set
             {
-                this.name = value;
-                OnPropertyChanged("Name");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private string startMethodCode;
         [DataMember]
         public string StartMethodCode
         {
-            get
-            {
-                return this.startMethodCode;
-            }
+            get;
             set
             {
-                this.startMethodCode = value;
-                OnPropertyChanged("StartMethodCode");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private string distanceCode;
         [DataMember]
         public string DistanceCode
         {
-            get
-            {
-                return this.distanceCode;
-            }
+            get;
             set
             {
-                this.distanceCode = value;
-                OnPropertyChanged("DistanceCode");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private List<HPTStartNumberRank> startNumberRankList;
         [DataMember]
         public List<HPTStartNumberRank> StartNumberRankList
         {
-            get
-            {
-                return this.startNumberRankList;
-            }
+            get;
             set
             {
-                this.startNumberRankList = value;
-                OnPropertyChanged("StartNumberRankList");
+                field = value;
+                OnPropertyChanged();
             }
         }
     }

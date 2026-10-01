@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 namespace HPTClient
@@ -23,10 +21,10 @@ namespace HPTClient
 
         public virtual ReductionRuleInfo GetReductionRuleInfo(HPTMarkBet markBet)
         {
-            string ruleString = this.ToString(markBet);
-            ReductionRuleInfo rri = new ReductionRuleInfo()
+            var ruleString = ToString(markBet);
+            var rri = new ReductionRuleInfo()
             {
-                ReductionTypeString = this.ReductionTypeString,
+                ReductionTypeString = ReductionTypeString,
                 ReductionRuleString = ruleString
             };
             return rri;
@@ -46,7 +44,7 @@ namespace HPTClient
 
         public virtual void SetReductionSpecificationString()
         {
-            this.ReductionSpecificationString = string.Empty;
+            ReductionSpecificationString = string.Empty;
         }
 
         public string ReductionSpecificationString { get; set; }
@@ -73,7 +71,7 @@ namespace HPTClient
 
         public virtual bool GetRuleResultForCorrectRow(HPTMarkBet markBet)
         {
-            this.RuleResultForCorrectRow = string.Empty;
+            RuleResultForCorrectRow = string.Empty;
             return true;
         }
 
@@ -81,161 +79,125 @@ namespace HPTClient
 
         #region Statistisk information om villkoret
 
-        private string ruleResultForCorrectRow;
         public string RuleResultForCorrectRow
         {
-            get
-            {
-                return ruleResultForCorrectRow;
-            }
+            get;
             set
             {
-                ruleResultForCorrectRow = value;
-                OnPropertyChanged("RuleResultForCorrectRow");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal probability;
         public decimal Probability
         {
-            get
-            {
-                return probability;
-            }
+            get;
             set
             {
-                if (probability == value)
+                if (field == value)
                 {
                     return;
                 }
-                probability = value;
-                OnPropertyChanged("Probability");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal probabilityRelative;
         public decimal ProbabilityRelative
         {
-            get
-            {
-                return probabilityRelative;
-            }
+            get;
             set
             {
-                if (probabilityRelative == value)
+                if (field == value)
                 {
                     return;
                 }
-                probabilityRelative = value;
-                OnPropertyChanged("ProbabilityRelative");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int remainingRows;
         public int RemainingRows
         {
-            get
-            {
-                return remainingRows;
-            }
+            get;
             set
             {
-                if (remainingRows == value)
+                if (field == value)
                 {
                     return;
                 }
-                remainingRows = value;
-                OnPropertyChanged("RemainingRows");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal remainingRowsPercentage;
         public decimal RemainingRowsPercentage
         {
-            get
-            {
-                return remainingRowsPercentage;
-            }
+            get;
             set
             {
-                if (remainingRowsPercentage == value)
+                if (field == value)
                 {
                     return;
                 }
-                remainingRowsPercentage = value;
-                OnPropertyChanged("RemainingRowsPercentage");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int numberOfAllCorrect;
         public int NumberOfAllCorrect
         {
-            get
-            {
-                return numberOfAllCorrect;
-            }
+            get;
             set
             {
-                if (numberOfAllCorrect == value)
+                if (field == value)
                 {
                     return;
                 }
-                numberOfAllCorrect = value;
-                OnPropertyChanged("NumberOfAllCorrect");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int numberOfOneError;
         public int NumberOfOneError
         {
-            get
-            {
-                return numberOfOneError;
-            }
+            get;
             set
             {
-                if (numberOfOneError == value)
+                if (field == value)
                 {
                     return;
                 }
-                numberOfOneError = value;
-                OnPropertyChanged("NumberOfOneError");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int numberOfTwoErrors;
         public int NumberOfTwoErrors
         {
-            get
-            {
-                return numberOfTwoErrors;
-            }
+            get;
             set
             {
-                if (numberOfTwoErrors == value)
+                if (field == value)
                 {
                     return;
                 }
-                numberOfTwoErrors = value;
-                OnPropertyChanged("NumberOfTwoErrors");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int numberOfThreeErrors;
         public int NumberOfThreeErrors
         {
-            get
-            {
-                return numberOfThreeErrors;
-            }
+            get;
             set
             {
-                if (numberOfThreeErrors == value)
+                if (field == value)
                 {
                     return;
                 }
-                numberOfThreeErrors = value;
-                OnPropertyChanged("NumberOfThreeErrors");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -243,22 +205,18 @@ namespace HPTClient
 
         #region Förberett för villkor endast på valda lopp
 
-        private bool onlyInSpecifiedLegs;
         [DataMember]
         public bool OnlyInSpecifiedLegs
         {
-            get
-            {
-                return onlyInSpecifiedLegs;
-            }
+            get;
             set
             {
-                if (onlyInSpecifiedLegs == value)
+                if (field == value)
                 {
                     return;
                 }
-                onlyInSpecifiedLegs = value;
-                OnPropertyChanged("OnlyInSpecifiedLegs");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -269,29 +227,29 @@ namespace HPTClient
 
         internal void InitializeLegSelectionList(int numberOfRaces)
         {
-            this.LegSelectionList = Enumerable
+            LegSelectionList = Enumerable
                 .Range(1, numberOfRaces)
                 .Select(legNumber => new HPTLegSelection() { LegNumber = legNumber, Selected = false })
                 .ToList();
 
-            this.LegSelectionList.ForEach(l => l.PropertyChanged += legSelection_PropertyChanged);
+            LegSelectionList.ForEach(l => l.PropertyChanged += legSelection_PropertyChanged);
         }
 
         void legSelection_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            this.LegList = this.LegSelectionList
+            LegList = LegSelectionList
                 .Where(ls => ls.Selected)
                 .Select(ls => ls.LegNumber)
                 .ToList();
 
             // Skapa lista med de lopp som ingår i regeln
-            if (this.LegList.Count > 0)
+            if (LegList.Count > 0)
             {
-                this.OnlyInSpecifiedLegs = true;
+                OnlyInSpecifiedLegs = true;
             }
             else
             {
-                this.OnlyInSpecifiedLegs = false;
+                OnlyInSpecifiedLegs = false;
             }
 
             //// Fullösning för att dra igång beräkningen...
@@ -305,19 +263,14 @@ namespace HPTClient
     {
         public int LegNumber { get; set; }
 
-        private bool selected;
         public bool Selected
         {
-            get
-            {
-                return selected;
-            }
+            get;
             set
             {
-                selected = value;
-                OnPropertyChanged("Selected");
+                field = value;
+                OnPropertyChanged();
             }
         }
-
     }
 }

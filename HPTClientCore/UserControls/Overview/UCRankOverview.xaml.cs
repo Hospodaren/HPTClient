@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 
 namespace HPTClient
 {
@@ -15,12 +14,12 @@ namespace HPTClient
 
         private void ListBox_Checked(object sender, RoutedEventArgs e)
         {
-            if (!this.MarkBet.IsDeserializing)
+            if (!MarkBet.IsDeserializing)
             {
-                this.MarkBet.RecalculateRank();
-                if (this.MarkBet.ReductionRank)
+                MarkBet.RecalculateRank();
+                if (MarkBet.ReductionRank)
                 {
-                    this.MarkBet.RecalculateReduction(RecalculateReason.Rank);
+                    MarkBet.RecalculateReduction(RecalculateReason.Rank);
                 }
             }
         }
@@ -29,18 +28,18 @@ namespace HPTClient
         {
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))// && this.IsVisible)
             {
-                if (this.MarkBet != null && !this.MarkBet.IsDeserializing)
+                if (MarkBet != null && !MarkBet.IsDeserializing)
                 {
-                    this.MarkBet.RecalculateAllRanks();
+                    MarkBet.RecalculateAllRanks();
                 }
             }
         }
 
         private void dudMinValue_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            if (this.MarkBet.ReductionRank)
+            if (MarkBet.ReductionRank)
             {
-                this.MarkBet.RecalculateReduction(RecalculateReason.Rank);
+                MarkBet.RecalculateReduction(RecalculateReason.Rank);
             }
         }
 
@@ -48,12 +47,12 @@ namespace HPTClient
         {
             try
             {
-                string rankExport = this.MarkBet.ExportHorseRanksToExcelFormat();
+                var rankExport = MarkBet.ExportHorseRanksToExcelFormat();
                 Clipboard.SetDataObject(rankExport);
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
     }

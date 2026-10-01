@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -16,14 +14,14 @@ namespace HPTClient
     {
         public UCTrends()
         {
-            if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
+            if (!DesignerProperties.GetIsInDesignMode(this))
             {
-                this.atgUpdateTimer = new System.Threading.Timer(new System.Threading.TimerCallback(GetRaceDayInfoHistory));
+                atgUpdateTimer = new Timer(new TimerCallback(GetRaceDayInfoHistory));
 
                 InitializeComponent();
-                this.lvwLopp.Items.GroupDescriptions.Add(new PropertyGroupDescription("ParentRace.LegNrString"));
+                lvwLopp.Items.GroupDescriptions.Add(new PropertyGroupDescription("ParentRace.LegNrString"));
                 //this.staticColumns = new GridViewColumn[] { this.gvcStartNr, this.gvcABCD, this.gvcNamn, this.gvcRelativeDifference, this.gvcRelativeDifferenceVinnare, this.gvcRelativeDifferencePlats, this.gvcHistory };
-                this.staticColumns = new GridViewColumn[] { this.gvcStartNr, this.gvcABCD, this.gvcNamn, this.gvcRelativeDifference, this.gvcHistory };
+                staticColumns = new GridViewColumn[] { gvcStartNr, gvcABCD, gvcNamn, gvcRelativeDifference, gvcHistory };
                 //this.TimeList = new ObservableCollection<DateTime>();
             }
         }
@@ -48,17 +46,10 @@ namespace HPTClient
             GetRaceDayInfoHistory();
         }
 
-        private int selectedIndex;
         public int SelectedIndex
         {
-            get
-            {
-                return this.selectedIndex;
-            }
-            set
-            {
-                this.selectedIndex = value;
-            }
+            get { return field; }
+            set;
         }
 
         private void GetRaceDayInfoHistory()
@@ -66,101 +57,102 @@ namespace HPTClient
             try
             {
                 // Deaktivera knappen så man inte ska kunna göra parallella anrop
-                this.btnGetRaceDayInfoHistory.IsEnabled = false;
+                btnGetRaceDayInfoHistory.IsEnabled = false;
 
-                var connector = new HPTServiceConnector();
-                connector.GetRaceDayInfoHistoryGrouped(this.MarkBet.RaceDayInfo.BetType.Code, this.MarkBet.RaceDayInfo.TrackId, this.MarkBet.RaceDayInfo.RaceDayDate, GetRaceDayInfoHistory);
+                //var connector = new HPTServiceConnector();
+                // TODO: Ny lösning
+                //connector.GetRaceDayInfoHistoryGrouped(MarkBet.RaceDayInfo.BetType.Code, MarkBet.RaceDayInfo.TrackId, MarkBet.RaceDayInfo.RaceDayDate, GetRaceDayInfoHistory);
             }
             catch (Exception)
             {
-                this.btnGetRaceDayInfoHistory.IsEnabled = true;
+                btnGetRaceDayInfoHistory.IsEnabled = true;
             }
             Cursor = Cursors.Arrow;
         }
 
-        private void GetRaceDayInfoHistory(HPTService.HPTRaceDayInfoHistoryInfoGrouped raceDayInfoHistory)
-        {
-            try
-            {
-                Dispatcher.Invoke(new Action<HPTService.HPTRaceDayInfoHistoryInfoGrouped>(GetRaceDayInfoHistoryInvoke), raceDayInfoHistory);
-            }
-            catch (Exception)
-            {
-                this.btnGetRaceDayInfoHistory.IsEnabled = true;
-            }
-        }
+        // TODO: Helt ny lösning behövs
+        //private void GetRaceDayInfoHistory(HPTService.HPTRaceDayInfoHistoryInfoGrouped raceDayInfoHistory)
+        //{
+        //    try
+        //    {
+        //        Dispatcher.Invoke(new Action<HPTService.HPTRaceDayInfoHistoryInfoGrouped>(GetRaceDayInfoHistoryInvoke), raceDayInfoHistory);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        btnGetRaceDayInfoHistory.IsEnabled = true;
+        //    }
+        //}
 
-        private void GetRaceDayInfoHistoryInvoke(HPTService.HPTRaceDayInfoHistoryInfoGrouped raceDayInfoHistory)
-        {
-            try
-            {
-                // Konvertera datat
-                HPTServiceToHPTHelper.ConvertRaceDayInfoHistory(raceDayInfoHistory, this.MarkBet.RaceDayInfo);
+        //private void GetRaceDayInfoHistoryInvoke(HPTService.HPTRaceDayInfoHistoryInfoGrouped raceDayInfoHistory)
+        //{
+        //    try
+        //    {
+        //        // Konvertera datat
+        //        HPTServiceToHPTHelper.ConvertRaceDayInfoHistory(raceDayInfoHistory, MarkBet.RaceDayInfo);
 
-                // Se till att en av de hämtade blir vald
-                if (this.SelectedIndex == 0)
-                {
-                    this.SelectedTurnoverHistory = this.MarkBet.RaceDayInfo.TurnoverHistoryList.Last();
-                    this.SelectedIndex = this.MarkBet.RaceDayInfo.TurnoverHistoryList.Length - 1;
-                }
-                else
-                {
-                    this.SelectedTurnoverHistory = this.MarkBet.RaceDayInfo.TurnoverHistoryList[this.SelectedIndex];
-                }
-                this.SelectedTurnoverHistory.IsSelected = true;
+        //        // Se till att en av de hämtade blir vald
+        //        if (SelectedIndex == 0)
+        //        {
+        //            SelectedTurnoverHistory = MarkBet.RaceDayInfo.TurnoverHistoryList.Last();
+        //            SelectedIndex = MarkBet.RaceDayInfo.TurnoverHistoryList.Length - 1;
+        //        }
+        //        else
+        //        {
+        //            SelectedTurnoverHistory = MarkBet.RaceDayInfo.TurnoverHistoryList[SelectedIndex];
+        //        }
+        //        SelectedTurnoverHistory.IsSelected = true;
 
-                // Uppdatera vilka tidpunkter som är tillgängliga
-                this.TimeList.Clear();
-                this.MarkBet.RaceDayInfo.TimestampListMarkBetHistory
-                    .ToList()
-                    .ForEach(ts => this.TimeList.Add(ts));
+        //        // Uppdatera vilka tidpunkter som är tillgängliga
+        //        TimeList.Clear();
+        //        MarkBet.RaceDayInfo.TimestampListMarkBetHistory
+        //            .ToList()
+        //            .ForEach(ts => TimeList.Add(ts));
 
-                // Uppdatera gränssnittet med ny data
-                UpdateHistoryData();
+        //        // Uppdatera gränssnittet med ny data
+        //        UpdateHistoryData();
 
-                // Stäng av timern om den är igång
-                if (this.TimeList.Max() > this.MarkBet.RaceDayInfo.BetType.StartTime)
-                {
-                    this.cmbUpdateInterval.SelectedIndex = 0;
-                }
-            }
-            catch (Exception exc)
-            {
-                string s = exc.Message;
-            }
-            this.btnGetRaceDayInfoHistory.IsEnabled = true;
-            Cursor = Cursors.Arrow;
-        }
+        //        // Stäng av timern om den är igång
+        //        if (TimeList.Max() > MarkBet.RaceDayInfo.BetType.StartTime)
+        //        {
+        //            cmbUpdateInterval.SelectedIndex = 0;
+        //        }
+        //    }
+        //    catch
+        //    {
+        //    }
+        //    btnGetRaceDayInfoHistory.IsEnabled = true;
+        //    Cursor = Cursors.Arrow;
+        //}
 
         private string GroupDescriptionName = "ParentRace.LegNrString";
         private void GridViewColumnHeader_Click(object sender, RoutedEventArgs e)
         {
-            GridViewColumnHeader column = e.OriginalSource as GridViewColumnHeader;
+            var column = e.OriginalSource as GridViewColumnHeader;
             if (column == null)
             {
                 return;
             }
 
-            String field = column.Tag as String;
+            var field = column.Tag as String;
             if (string.IsNullOrEmpty(field))
             {
                 field = "StakeDistributionShare";
             }
 
-            ListSortDirection newDir = ListSortDirection.Ascending;
+            var newDir = ListSortDirection.Ascending;
 
-            if (this.lvwLopp.Items.SortDescriptions.Count > 1)
+            if (lvwLopp.Items.SortDescriptions.Count > 1)
             {
-                SortDescription sd = this.lvwLopp.Items.SortDescriptions[1];
+                var sd = lvwLopp.Items.SortDescriptions[1];
                 if (sd.PropertyName == field)
                 {
-                    SortDescription sdNew = new SortDescription();
+                    var sdNew = new SortDescription();
                     sdNew.PropertyName = sd.PropertyName;
                     sdNew.Direction = sd.Direction == ListSortDirection.Ascending
                                           ? ListSortDirection.Descending
                                           : ListSortDirection.Ascending;
-                    this.lvwLopp.Items.SortDescriptions.RemoveAt(1);
-                    this.lvwLopp.Items.SortDescriptions.Insert(1, sdNew);
+                    lvwLopp.Items.SortDescriptions.RemoveAt(1);
+                    lvwLopp.Items.SortDescriptions.Insert(1, sdNew);
                     return;
                 }
             }
@@ -186,20 +178,20 @@ namespace HPTClient
                     break;
             }
 
-            if (string.IsNullOrEmpty(this.GroupDescriptionName))
+            if (string.IsNullOrEmpty(GroupDescriptionName))
             {
                 // Aldrig sortering på mer än två variabler
-                if (this.lvwLopp.Items.SortDescriptions.Count > 1)
+                if (lvwLopp.Items.SortDescriptions.Count > 1)
                 {
-                    this.lvwLopp.Items.SortDescriptions.RemoveAt(1); ;
+                    lvwLopp.Items.SortDescriptions.RemoveAt(1); ;
                 }
-                this.lvwLopp.Items.SortDescriptions.Insert(0, new SortDescription(field, newDir));
+                lvwLopp.Items.SortDescriptions.Insert(0, new SortDescription(field, newDir));
             }
             else
             {
-                this.lvwLopp.Items.SortDescriptions.Clear();
-                this.lvwLopp.Items.SortDescriptions.Add(new SortDescription(this.GroupDescriptionName, ListSortDirection.Ascending));
-                this.lvwLopp.Items.SortDescriptions.Add(new SortDescription(field, newDir));
+                lvwLopp.Items.SortDescriptions.Clear();
+                lvwLopp.Items.SortDescriptions.Add(new SortDescription(GroupDescriptionName, ListSortDirection.Ascending));
+                lvwLopp.Items.SortDescriptions.Add(new SortDescription(field, newDir));
             }
         }
 
@@ -272,69 +264,69 @@ namespace HPTClient
 
         private void UpdateHistoryData()
         {
-            if (this.MarkBet != null && !this.MarkBet.IsDeserializing)
+            if (MarkBet != null && !MarkBet.IsDeserializing)
             {
-                this.MarkBet.RaceDayInfo.RaceList
+                MarkBet.RaceDayInfo.RaceList
                     .ForEach(r =>
                         r.HorseList
                             .ToList()
-                            .ForEach(h => h.SetHistoryRelativeDifferenceUnadjusted(this.SelectedIndex))  // Valt index på ComboBox med tider...
+                            .ForEach(h => h.SetHistoryRelativeDifferenceUnadjusted(SelectedIndex))  // Valt index på ComboBox med tider...
                             );
 
-                this.gvwVxxSpel.Columns.Clear();
+                gvwVxxSpel.Columns.Clear();
 
-                this.staticColumns
+                staticColumns
                     .ToList()
-                    .ForEach(sc => this.gvwVxxSpel.Columns.Add(sc));
+                    .ForEach(sc => gvwVxxSpel.Columns.Add(sc));
 
-                if (string.IsNullOrEmpty(this.GroupDescriptionName))
+                if (string.IsNullOrEmpty(GroupDescriptionName))
                 {
                     // Aldrig sortering på mer än två variabler
-                    if (this.lvwLopp.Items.SortDescriptions.Count > 1)
+                    if (lvwLopp.Items.SortDescriptions.Count > 1)
                     {
-                        this.lvwLopp.Items.SortDescriptions.RemoveAt(1); ;
+                        lvwLopp.Items.SortDescriptions.RemoveAt(1); ;
                     }
-                    this.lvwLopp.Items.SortDescriptions.Insert(0, new SortDescription("HistoryRelativeDifferenceUnadjusted", ListSortDirection.Descending));
+                    lvwLopp.Items.SortDescriptions.Insert(0, new SortDescription("HistoryRelativeDifferenceUnadjusted", ListSortDirection.Descending));
                 }
                 else
                 {
-                    this.lvwLopp.Items.SortDescriptions.Clear();
-                    this.lvwLopp.Items.SortDescriptions.Add(new SortDescription(this.GroupDescriptionName, ListSortDirection.Ascending));
-                    this.lvwLopp.Items.SortDescriptions.Add(new SortDescription("HistoryRelativeDifferenceUnadjusted", ListSortDirection.Descending));
+                    lvwLopp.Items.SortDescriptions.Clear();
+                    lvwLopp.Items.SortDescriptions.Add(new SortDescription(GroupDescriptionName, ListSortDirection.Ascending));
+                    lvwLopp.Items.SortDescriptions.Add(new SortDescription("HistoryRelativeDifferenceUnadjusted", ListSortDirection.Descending));
                 }
 
-                if (this.MarkBet.HasRankReduction())
+                if (MarkBet.HasRankReduction())
                 {
-                    this.MarkBet.RecalculateReduction(RecalculateReason.Rank);
+                    MarkBet.RecalculateReduction(RecalculateReason.Rank);
                 }
                 else
                 {
-                    this.MarkBet.RecalculateRank();
+                    MarkBet.RecalculateRank();
                 }
                 //this.MarkBet.HorseList.Clear();
-                this.lvwLopp.Items.Refresh();
+                lvwLopp.Items.Refresh();
             }
         }
 
-        System.Threading.Timer atgUpdateTimer;
+        Timer atgUpdateTimer;
         private void GetRaceDayInfoHistory(object timerData)
         {
-            this.Dispatcher.Invoke(GetRaceDayInfoHistory);
+            Dispatcher.Invoke(GetRaceDayInfoHistory);
         }
 
         private void cmbUpdateInterval_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (this.cmbUpdateInterval.SelectedItem != null)
+            if (cmbUpdateInterval.SelectedItem != null)
             {
-                ComboBoxItem cbi = (ComboBoxItem)this.cmbUpdateInterval.SelectedItem;
-                int updatePeriod = Convert.ToInt32(cbi.Tag) * 60 * 1000;
+                var cbi = (ComboBoxItem)cmbUpdateInterval.SelectedItem;
+                var updatePeriod = Convert.ToInt32(cbi.Tag) * 60 * 1000;
                 if (updatePeriod == 0)
                 {
-                    this.atgUpdateTimer.Change(System.Threading.Timeout.Infinite, System.Threading.Timeout.Infinite);
+                    atgUpdateTimer.Change(Timeout.Infinite, Timeout.Infinite);
                 }
                 else
                 {
-                    this.atgUpdateTimer.Change(updatePeriod, updatePeriod);
+                    atgUpdateTimer.Change(updatePeriod, updatePeriod);
                 }
             }
         }
@@ -444,15 +436,15 @@ namespace HPTClient
 
         private void btnSelectStartPoint_Click(object sender, RoutedEventArgs e)
         {
-            if (this.SelectedTurnoverHistory != null)
+            if (SelectedTurnoverHistory != null)
             {
-                this.SelectedTurnoverHistory.IsSelected = false;
+                SelectedTurnoverHistory.IsSelected = false;
             }
 
             var fe = (FrameworkElement)sender;
-            this.SelectedTurnoverHistory = (HPTTurnoverHistory)fe.DataContext;
-            this.SelectedIndex = Array.FindIndex<HPTTurnoverHistory>(this.MarkBet.RaceDayInfo.TurnoverHistoryList, toh => toh.Turnover == this.SelectedTurnoverHistory.Turnover);
-            this.SelectedTurnoverHistory.IsSelected = true;
+            SelectedTurnoverHistory = (HPTTurnoverHistory)fe.DataContext;
+            SelectedIndex = Array.FindIndex<HPTTurnoverHistory>(MarkBet.RaceDayInfo.TurnoverHistoryList, toh => toh.Turnover == SelectedTurnoverHistory.Turnover);
+            SelectedTurnoverHistory.IsSelected = true;
             UpdateHistoryData();
             //cmbChooseTrendData_SelectionChanged(new object(), null);
         }

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 
 namespace HPTClient
@@ -10,14 +9,14 @@ namespace HPTClient
         public HPTScratchedHorsesInfo(HPTRaceDayInfo raceDayInfo)
         {
             //this.HorseList = new ObservableCollection<HPTHorse>();
-            this.HorseList = new List<HPTHorse>();
-            this.HorseListAllScratched = new ObservableCollection<HPTHorse>();
-            this.ParentRaceDayInfo = raceDayInfo;
+            HorseList = new List<HPTHorse>();
+            HorseListAllScratched = new ObservableCollection<HPTHorse>();
+            ParentRaceDayInfo = raceDayInfo;
         }
 
         public void DeSelectAll()
         {
-            foreach (HPTHorse horse in this.HorseList)
+            foreach (var horse in HorseList)
             {
                 horse.Selected = false;
             }
@@ -30,31 +29,23 @@ namespace HPTClient
         [DataMember]
         public ObservableCollection<HPTHorse> HorseListAllScratched { get; set; }
 
-        private HPTRaceDayInfo parentRaceDayInfo;
         public HPTRaceDayInfo ParentRaceDayInfo
         {
-            get
-            {
-                return parentRaceDayInfo;
-            }
+            get;
             set
             {
-                parentRaceDayInfo = value;
-                OnPropertyChanged("ParentRaceDayInfo");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool haveSelectedScratchedHorse;
         public bool HaveSelectedScratchedHorse
         {
-            get
-            {
-                return haveSelectedScratchedHorse;
-            }
+            get;
             set
             {
-                haveSelectedScratchedHorse = value;
-                OnPropertyChanged("HaveSelectedScratchedHorse");
+                field = value;
+                OnPropertyChanged();
             }
         }
     }

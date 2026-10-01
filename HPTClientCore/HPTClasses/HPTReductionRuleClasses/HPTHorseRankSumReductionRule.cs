@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Xml.Serialization;
@@ -15,35 +14,35 @@ namespace HPTClient
 
         public HPTHorseRankSumReductionRule(HPTHorseRankVariable horseRankVariable, int numberOfRaces)
         {
-            this.NumberOfRaces = numberOfRaces;
-            this.HorseRankVariable = horseRankVariable;
-            this.PropertyName = horseRankVariable.PropertyName;
-            this.IncrementLower = 1;
-            this.IncrementUpper = 1;
+            NumberOfRaces = numberOfRaces;
+            HorseRankVariable = horseRankVariable;
+            PropertyName = horseRankVariable.PropertyName;
+            IncrementLower = 1;
+            IncrementUpper = 1;
             //this.MinSum = numberOfRaces;
-            this.MinSum = 0;
-            this.MaxSum = numberOfRaces * 15;
-            this.ReductionRuleList = new ObservableCollection<HPTHorseRankReductionRule>();
+            MinSum = 0;
+            MaxSum = numberOfRaces * 15;
+            ReductionRuleList = new ObservableCollection<HPTHorseRankReductionRule>();
         }
 
         // KOMMANDE
         public HPTHorseRankSumReductionRule Clone()
         {
             var clonedHorseRankSumReductionRule = (HPTHorseRankSumReductionRule)HPTSerializer.CreateDeepCopy(this);
-            clonedHorseRankSumReductionRule.HorseRankVariable = this.HorseRankVariable;
+            clonedHorseRankSumReductionRule.HorseRankVariable = HorseRankVariable;
             return clonedHorseRankSumReductionRule;
         }
 
         // KOMMANDE
         public void ApplyRule(HPTHorseRankSumReductionRule horseRankSumReductionRule)
         {
-            this.MinSum = horseRankSumReductionRule.MinSum;
-            this.MaxSum = horseRankSumReductionRule.MaxSum;
-            this.ReductionRuleList.Clear();
+            MinSum = horseRankSumReductionRule.MinSum;
+            MaxSum = horseRankSumReductionRule.MaxSum;
+            ReductionRuleList.Clear();
             foreach (var templateReductionRule in horseRankSumReductionRule.ReductionRuleList)
             {
                 var rankReductionRule = (HPTHorseRankReductionRule)HPTSerializer.CreateDeepCopy(templateReductionRule);
-                this.ReductionRuleList.Add(rankReductionRule);
+                ReductionRuleList.Add(rankReductionRule);
             }
         }
 
@@ -52,26 +51,26 @@ namespace HPTClient
 
         public override bool IncludeRow(HPTMarkBet markBet, HPTMarkBetSingleRow singleRow)
         {
-            if (!this.Use)
+            if (!Use)
             {
                 return true;
             }
 
             // Skapa lista med alla rankpoäng
             var rankList = singleRow.HorseList
-                .Select(h => h.RankList.First(r => r.Name == this.PropertyName))
+                .Select(h => h.RankList.First(r => r.Name == PropertyName))
                 .Select(r => r.Rank)
                 .ToList();
 
             // Beräkna summan
-            int rankSum = rankList.Sum();
-            if (rankSum >= this.MinSum && rankSum <= this.MaxSum)
+            var rankSum = rankList.Sum();
+            if (rankSum >= MinSum && rankSum <= MaxSum)
             {
-                foreach (var rule in this.ReductionRuleList)
+                foreach (var rule in ReductionRuleList)
                 {
                     if (!rule.OnlyInSpecifiedLegs)
                     {
-                        int numberInInterval = rankList.Count(r => r >= rule.LowerBoundary && r <= rule.UpperBoundary);
+                        var numberInInterval = rankList.Count(r => r >= rule.LowerBoundary && r <= rule.UpperBoundary);
                         if (!rule.NumberOfWinnersList.First(now => now.NumberOfWinners == numberInInterval).Selected)
                         {
                             return false;
@@ -79,10 +78,10 @@ namespace HPTClient
                     }
                     else
                     {
-                        int numberOfX = 0;
+                        var numberOfX = 0;
                         foreach (var legNumber in rule.LegList)
                         {
-                            int rankValue = rankList[legNumber - 1];
+                            var rankValue = rankList[legNumber - 1];
                             numberOfX += rankValue >= rule.LowerBoundary && rankValue <= rule.UpperBoundary ? 1 : 0;
                         }
                         if (!rule.NumberOfWinnersList[numberOfX].Selected)
@@ -111,48 +110,36 @@ namespace HPTClient
         //    this.Use = false;
         //}
 
-        private string propertyName;
         [DataMember]
         public string PropertyName
         {
-            get
-            {
-                return this.propertyName;
-            }
+            get;
             set
             {
-                this.propertyName = value;
-                OnPropertyChanged("PropertyName");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private HPTHorseRankVariable horseRankVariable;
         [XmlIgnore]
         public HPTHorseRankVariable HorseRankVariable
         {
-            get
-            {
-                return this.horseRankVariable;
-            }
+            get;
             set
             {
-                this.horseRankVariable = value;
-                OnPropertyChanged("HorseRankVariable");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private ObservableCollection<HPTHorseRankReductionRule> reductionRuleList;
         [DataMember]
         public ObservableCollection<HPTHorseRankReductionRule> ReductionRuleList
         {
-            get
-            {
-                return this.reductionRuleList;
-            }
+            get;
             set
             {
-                this.reductionRuleList = value;
-                OnPropertyChanged("ReductionRuleList");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -160,7 +147,7 @@ namespace HPTClient
         {
             get
             {
-                return "RANKPOÄNGSVILLKOR: " + this.HorseRankVariable.CategoryText + " - " + this.HorseRankVariable.Text;
+                return $"RANKPOÄNGSVILLKOR: {HorseRankVariable.CategoryText} - {HorseRankVariable.Text}";
             }
         }
 
@@ -170,17 +157,17 @@ namespace HPTClient
             var sb = new StringBuilder();
 
             sb.Append("Ranksumma ");
-            sb.Append(this.MinSum);
+            sb.Append(MinSum);
             sb.Append(" - ");
-            sb.Append(this.MaxSum);
-            foreach (var rule in this.ReductionRuleList)
+            sb.Append(MaxSum);
+            foreach (var rule in ReductionRuleList)
             {
                 sb.AppendLine();
                 sb.Append(rule.ToString(markBet));
             }
             sb.AppendLine();
 
-            this.ClipboardString = this.ReductionTypeString + "\r\n" + sb.ToString();
+            ClipboardString = $"{ReductionTypeString}\r\n{sb}";
             return sb.ToString();
         }
     }

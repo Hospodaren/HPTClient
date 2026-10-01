@@ -28,37 +28,29 @@ namespace HPTClient
         [XmlIgnore]
         public string GroupCode { get; set; }
 
-        private bool selectable;
         [DataMember]
         public bool Selectable
         {
-            get
-            {
-                return this.selectable;
-            }
+            get;
             set
             {
-                this.selectable = value;
-                if (!this.selectable && this.Selected)
+                field = value;
+                if (!field && Selected)
                 {
-                    this.Selected = false;
+                    Selected = false;
                 }
-                OnPropertyChanged("Selectable");
+                OnPropertyChanged();
             }
         }
 
-        private bool selected;
         [DataMember]
         public bool Selected
         {
-            get
-            {
-                return this.selected;
-            }
+            get;
             set
             {
-                this.selected = value;
-                OnPropertyChanged("Selected");
+                field = value;
+                OnPropertyChanged();
             }
         }
     }

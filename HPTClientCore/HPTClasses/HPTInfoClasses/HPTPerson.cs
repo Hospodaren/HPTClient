@@ -1,23 +1,17 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
 namespace HPTClient
 {
     [DataContract]
     public class HPTPerson : Notifier, IHorseListContainer
     {
-        private string name;
         public string Name
         {
-            get
-            {
-                return this.name;
-            }
+            get;
             set
             {
-                this.name = value;
-                OnPropertyChanged("Name");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -25,31 +19,30 @@ namespace HPTClient
         {
             get
             {
-                int numberOfSelected = this.HorseList.Count(h => h.Selected);
+                var numberOfSelected = HorseList.Count(h => h.Selected);
                 return numberOfSelected;
             }
         }
 
         public void SetNameAndNumberOfHorse()
         {
-            this.NameAndNumberOfHorses = this.Name + " (" + this.NumberOfSelectedHorse.ToString() + "/" + this.HorseList.Count.ToString() + ")";
+            NameAndNumberOfHorses = $"{Name} ({NumberOfSelectedHorse}/{HorseList.Count})";
         }
 
-        private string nameAndNumberOfHorses;
         public string NameAndNumberOfHorses
         {
             get
             {
-                if (this.nameAndNumberOfHorses == null || this.nameAndNumberOfHorses == string.Empty)
+                if (field == null || field == string.Empty)
                 {
                     SetNameAndNumberOfHorse();
                 }
-                return this.nameAndNumberOfHorses;
+                return field;
             }
             set
             {
-                this.nameAndNumberOfHorses = value;
-                OnPropertyChanged("NameAndNumberOfHorses");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -59,17 +52,13 @@ namespace HPTClient
 
         public ICollection<HPTHorse> HorseList { get; set; }
 
-        private bool selected;
         public bool Selected
         {
-            get
-            {
-                return this.selected;
-            }
+            get;
             set
             {
-                this.selected = value;
-                OnPropertyChanged("Selected");
+                field = value;
+                OnPropertyChanged();
             }
         }
 

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System.Collections.ObjectModel;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Windows.Media;
@@ -16,13 +13,13 @@ namespace HPTClient
         {
             var variableList = new List<HPTHorseRankVariableBase>();
 
-            foreach (PropertyInfo pi in (typeof(HPTHorse)).GetProperties())
+            foreach (var pi in (typeof(HPTHorse)).GetProperties())
             {
-                foreach (object o in pi.GetCustomAttributes(true))
+                foreach (var o in pi.GetCustomAttributes(true))
                 {
                     if (o.GetType() == typeof(HorseRankAttribute))
                     {
-                        HorseRankAttribute hra = (HorseRankAttribute)o;
+                        var hra = (HorseRankAttribute)o;
                         var variable = new HPTHorseRankVariableBase();
                         try
                         {
@@ -34,7 +31,7 @@ namespace HPTClient
                         }
                         catch (Exception exc)
                         {
-                            string s = exc.Message;
+                            var s = exc.Message;
                         }
                     }
                 }
@@ -43,51 +40,43 @@ namespace HPTClient
             //return variableList.OrderBy(rv => rv.Order).ToList();
         }
 
-        private bool show;
         [DataMember]
         public bool Show
         {
-            get
-            {
-                return this.show;
-            }
+            get;
             set
             {
-                if (this.show == value)
+                if (field == value)
                 {
                     return;
                 }
-                this.show = value;
-                OnPropertyChanged("Show");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private string propertyName;
         [DataMember]
         public virtual string PropertyName
         {
-            get
-            {
-                return this.propertyName;
-            }
+            get;
             set
             {
                 if (value == "MarksPercent" || value == "MarksQuantity" || string.IsNullOrEmpty(value))
                 {
                     return;
                 }
-                this.propertyName = value;
+                field = value;
 
                 try
                 {
-                    var pi = (typeof(HPTHorse)).GetProperty(this.propertyName);
+                    var pi = (typeof(HPTHorse)).GetProperty(field);
                     var hra = (HorseRankAttribute)pi.GetCustomAttribute(typeof(HorseRankAttribute));
-                    this.Text = hra.Name;
-                    this.CategoryText = EnumHelper.GetTextFromRankCategory(hra.Category);
+                    Text = hra.Name;
+                    CategoryText = EnumHelper.GetTextFromRankCategory(hra.Category);
                 }
                 catch (Exception exc)
                 {
-                    string s = exc.Message;
+                    var s = exc.Message;
                 }
             }
         }
@@ -100,76 +89,60 @@ namespace HPTClient
 
         public override string ToString()
         {
-            return this.Text + " (" + this.CategoryText + ")";
+            return $"{Text} ({CategoryText})";
         }
     }
 
     [DataContract]
     public class HPTHorseRank : Notifier
     {
-        private int rank;
         [DataMember]
         public int Rank
         {
-            get
-            {
-                return this.rank;
-            }
+            get;
             set
             {
-                if (this.rank != value)
+                if (field != value)
                 {
-                    this.rank = value;
-                    OnPropertyChanged("Rank");
+                    field = value;
+                    OnPropertyChanged();
                 }
             }
         }
 
-        private decimal rankWeighted;
         [DataMember]
         public decimal RankWeighted
         {
-            get
-            {
-                return this.rankWeighted;
-            }
+            get;
             set
             {
-                if (this.rankWeighted != value)
+                if (field != value)
                 {
-                    this.rankWeighted = value;
-                    OnPropertyChanged("RankWeighted");
+                    field = value;
+                    OnPropertyChanged();
                 }
             }
         }
 
-        private string name;
         [DataMember]
         public string Name
         {
-            get
-            {
-                return this.name;
-            }
+            get;
             set
             {
-                this.name = value;
-                OnPropertyChanged("Name");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private SolidColorBrush backColor;
         [XmlIgnore]
         public SolidColorBrush BackColor
         {
-            get
-            {
-                return this.backColor;
-            }
+            get;
             set
             {
-                this.backColor = value;
-                OnPropertyChanged("BackColor");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -180,7 +153,7 @@ namespace HPTClient
 
         public override string ToString()
         {
-            return this.Name;
+            return Name;
         }
     }
 
@@ -189,32 +162,32 @@ namespace HPTClient
     {
         public HPTHorseRankVariable()
         {
-            this.RaceHorseRankList = new ObservableCollection<RaceHorseRank>();
+            RaceHorseRankList = new ObservableCollection<RaceHorseRank>();
         }
 
         [OnDeserialized]
         public void InitializeOnDeserialized(StreamingContext sc)
         {
-            this.RaceHorseRankList = new ObservableCollection<RaceHorseRank>();
+            RaceHorseRankList = new ObservableCollection<RaceHorseRank>();
         }
 
         public HPTHorseRankVariable Clone()
         {
-            HPTHorseRankVariable rankVariable = new HPTHorseRankVariable();
+            var rankVariable = new HPTHorseRankVariable();
 
-            rankVariable.Calculated = this.Calculated;
-            rankVariable.Category = this.Category;
-            rankVariable.CategoryText = this.CategoryText;
-            rankVariable.Descending = this.Descending;
-            rankVariable.HorseProperty = this.HorseProperty;
-            rankVariable.HorseRankInfo = this.HorseRankInfo;
-            rankVariable.IsStatic = this.IsStatic;
-            rankVariable.RaceHorseRankList = this.RaceHorseRankList;
-            rankVariable.Sort = this.Sort;
-            rankVariable.PropertyName = this.PropertyName;
-            rankVariable.Text = this.Text;
-            rankVariable.Use = this.Use;
-            rankVariable.Weight = this.Weight;
+            rankVariable.Calculated = Calculated;
+            rankVariable.Category = Category;
+            rankVariable.CategoryText = CategoryText;
+            rankVariable.Descending = Descending;
+            rankVariable.HorseProperty = HorseProperty;
+            rankVariable.HorseRankInfo = HorseRankInfo;
+            rankVariable.IsStatic = IsStatic;
+            rankVariable.RaceHorseRankList = RaceHorseRankList;
+            rankVariable.Sort = Sort;
+            rankVariable.PropertyName = PropertyName;
+            rankVariable.Text = Text;
+            rankVariable.Use = Use;
+            rankVariable.Weight = Weight;
 
             return rankVariable;
         }
@@ -223,16 +196,16 @@ namespace HPTClient
 
         public static List<HPTHorseRankVariable> CreateVariableList()
         {
-            List<HPTHorseRankVariable> variableList = new List<HPTHorseRankVariable>();
+            var variableList = new List<HPTHorseRankVariable>();
 
-            foreach (PropertyInfo pi in (typeof(HPTHorse)).GetProperties())
+            foreach (var pi in (typeof(HPTHorse)).GetProperties())
             {
-                foreach (object o in pi.GetCustomAttributes(true))
+                foreach (var o in pi.GetCustomAttributes(true))
                 {
                     if (o.GetType() == typeof(HorseRankAttribute))
                     {
-                        HorseRankAttribute hra = (HorseRankAttribute)o;
-                        HPTHorseRankVariable variable = new HPTHorseRankVariable();
+                        var hra = (HorseRankAttribute)o;
+                        var variable = new HPTHorseRankVariable();
                         try
                         {
                             variable.PropertyName = pi.Name;
@@ -251,7 +224,7 @@ namespace HPTClient
                         }
                         catch (Exception exc)
                         {
-                            string s = exc.Message;
+                            var s = exc.Message;
                         }
                     }
                 }
@@ -263,14 +236,10 @@ namespace HPTClient
 
         #region Properties
 
-        private string propertyName;
         [DataMember]
         public override string PropertyName
         {
-            get
-            {
-                return this.propertyName;
-            }
+            get;
             set
             {
                 if (value == "MarksPercent" || value == "MarksQuantity" || string.IsNullOrEmpty(value))
@@ -278,45 +247,45 @@ namespace HPTClient
                     return;
                 }
 
-                this.propertyName = value;
-                if (this.propertyName == "HistoryRelativeDifference")
+                field = value;
+                if (field == "HistoryRelativeDifference")
                 {
-                    this.propertyName = "HistoryRelativeDifferenceUnadjusted";
+                    field = "HistoryRelativeDifferenceUnadjusted";
                 }
 
                 try
                 {
-                    if (this.horseRankInfo == null || this.HorseProperty == null)
+                    if (horseRankInfo == null || HorseProperty == null)
                     {
-                        this.HorseProperty = typeof(HPTHorse).GetProperty(this.propertyName);
-                        if (this.HorseProperty == null)
+                        HorseProperty = typeof(HPTHorse).GetProperty(field);
+                        if (HorseProperty == null)
                         {
                             return;
                         }
 
-                        object[] attributeArray = this.HorseProperty.GetCustomAttributes(typeof(HorseRankAttribute), true);
+                        var attributeArray = HorseProperty.GetCustomAttributes(typeof(HorseRankAttribute), true);
                         if (attributeArray == null || attributeArray.Length == 0)
                         {
-                            this.propertyName = null;
+                            field = null;
                             return;
                         }
-                        this.HorseRankInfo = (HorseRankAttribute)attributeArray[0];
+                        HorseRankInfo = (HorseRankAttribute)attributeArray[0];
 
-                        this.IsStatic = this.HorseRankInfo.IsStatic;
-                        this.Descending = this.HorseRankInfo.Descending;
-                        this.Category = this.HorseRankInfo.Category;
-                        this.CategoryText = EnumHelper.GetTextFromRankCategory(this.Category);
-                        this.Text = this.HorseRankInfo.Name;
-                        this.Sort = this.HorseRankInfo.Sort;
-                        this.DisplayPropertyName = this.HorseRankInfo.DisplayPropertyName;
-                        this.ValueForMissing = this.HorseRankInfo.ValueForMissing;
-                        this.StringFormat = this.HorseRankInfo.StringFormat;
-                        this.Order = this.HorseRankInfo.Order;
+                        IsStatic = HorseRankInfo.IsStatic;
+                        Descending = HorseRankInfo.Descending;
+                        Category = HorseRankInfo.Category;
+                        CategoryText = EnumHelper.GetTextFromRankCategory(Category);
+                        Text = HorseRankInfo.Name;
+                        Sort = HorseRankInfo.Sort;
+                        DisplayPropertyName = HorseRankInfo.DisplayPropertyName;
+                        ValueForMissing = HorseRankInfo.ValueForMissing;
+                        StringFormat = HorseRankInfo.StringFormat;
+                        Order = HorseRankInfo.Order;
                     }
                 }
                 catch (Exception exc)
                 {
-                    string s = exc.Message;
+                    var s = exc.Message;
                 }
             }
         }
@@ -333,37 +302,29 @@ namespace HPTClient
         [XmlIgnore]
         public bool IsStatic { get; set; }
 
-        private bool use;
         [DataMember]
         public bool Use
         {
-            get
-            {
-                return this.use;
-            }
+            get;
             set
             {
-                if (this.use == value)
+                if (field == value)
                 {
                     return;
                 }
-                this.use = value;
-                OnPropertyChanged("Use");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal weight;
         [DataMember]
         public decimal Weight
         {
-            get
-            {
-                return this.weight;
-            }
+            get;
             set
             {
-                this.weight = value;
-                OnPropertyChanged("Weight");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -386,16 +347,20 @@ namespace HPTClient
 
         public void SortHorseList(List<HPTHorse> horseList)
         {
+            if (horseList?[0].ParentRace is null)
+            {
+                return;
+            }
             lock (this)
             {
-                if (this.HorseProperty == null)
+                if (HorseProperty == null)
                 {
-                    this.HorseProperty = (typeof(HPTHorse)).GetProperty(this.PropertyName);
+                    HorseProperty = (typeof(HPTHorse)).GetProperty(PropertyName);
                 }
 
-                int legNr = horseList[0].ParentRace.LegNr;
+                var legNr = horseList[0].ParentRace.LegNr;
 
-                var raceHorseRank = this.RaceHorseRankList.FirstOrDefault(hr => hr.RaceNumber == legNr);
+                var raceHorseRank = RaceHorseRankList.FirstOrDefault(hr => hr.RaceNumber == legNr);
                 if (raceHorseRank == null)
                 {
                     raceHorseRank = new RaceHorseRank()
@@ -403,32 +368,32 @@ namespace HPTClient
                         RaceNumber = legNr,
                         HorseRankList = new ObservableCollection<HPTHorseRank>()
                     };
-                    this.RaceHorseRankList.Add(raceHorseRank);
+                    RaceHorseRankList.Add(raceHorseRank);
                 }
 
                 // Sortera på vald variabel
-                if (this.Sort)
+                if (Sort)
                 {
                     horseList.Sort(CompareHorses);
                 }
 
                 HPTHorse previousHorse = null;
-                int sortRank = 0;
-                for (int i = 0; i < horseList.Count; i++)
+                var sortRank = 0;
+                for (var i = 0; i < horseList.Count; i++)
                 {
-                    int tempRank = i;
+                    var tempRank = i;
                     var horse = horseList[i];
-                    var horseRank = horse.RankList.FirstOrDefault(r => r.Name == this.PropertyName);
+                    var horseRank = horse.RankList.FirstOrDefault(r => r.Name == PropertyName);
                     if (horseRank == null)
                     {
                         return;
                     }
-                    if (this.Sort)
+                    if (Sort)
                     {
                         if (previousHorse != null)
                         {
-                            decimal previousRankValue = Convert.ToDecimal(this.HorseProperty.GetValue(previousHorse, null));
-                            decimal rankValue = Convert.ToDecimal(this.HorseProperty.GetValue(horse, null));
+                            var previousRankValue = Convert.ToDecimal(HorseProperty.GetValue(previousHorse, null));
+                            var rankValue = Convert.ToDecimal(HorseProperty.GetValue(horse, null));
                             if (previousRankValue != rankValue)
                             {
                                 sortRank = i + 1;
@@ -442,8 +407,8 @@ namespace HPTClient
                     }
                     else
                     {
-                        sortRank = Convert.ToInt32(this.HorseProperty.GetValue(horse, null));
-                        if (this.PropertyName == "RankABC")
+                        sortRank = Convert.ToInt32(HorseProperty.GetValue(horse, null));
+                        if (PropertyName == "RankABC")
                         {
                             horseRank.Rank = horse.GetRankABC();
                         }
@@ -453,10 +418,10 @@ namespace HPTClient
                         }
                     }
                     horseRank.Use = false;
-                    horseRank.RankWeighted = horseRank.Rank * this.Weight;
+                    horseRank.RankWeighted = horseRank.Rank * Weight;
 
                     // Bakgrundsfärg för översiktsvyn
-                    Color c = Colors.LightGray;
+                    var c = Colors.LightGray;
                     //switch (tempRank + 1)
                     switch (sortRank)
                     {
@@ -484,15 +449,15 @@ namespace HPTClient
                 {
                     if (raceHorseRank.HorseRankList.Count == 0)
                     {
-                        List<HPTHorseRank> raceHorseRankList = horseList.OrderBy(h => h.StartNr).SelectMany(h => h.RankList.Where(hrv => hrv.Name == this.PropertyName)).ToList();
+                        var raceHorseRankList = horseList.OrderBy(h => h.StartNr).SelectMany(h => h.RankList.Where(hrv => hrv.Name == PropertyName)).ToList();
                         raceHorseRank.HorseRankList = new ObservableCollection<HPTHorseRank>(raceHorseRankList);
                     }
                 }
                 catch (Exception exc)
                 {
-                    string s = exc.Message;
+                    var s = exc.Message;
                 }
-                this.Calculated = true;
+                Calculated = true;
             }
         }
 
@@ -513,18 +478,18 @@ namespace HPTClient
                     return -1;
                 }
 
-                decimal exactDiff = Convert.ToDecimal(this.HorseProperty.GetValue(h1, null)) - Convert.ToDecimal(this.HorseProperty.GetValue(h2, null));
+                var exactDiff = Convert.ToDecimal(HorseProperty.GetValue(h1, null)) - Convert.ToDecimal(HorseProperty.GetValue(h2, null));
                 if (exactDiff == 0M)
                 {
                     return 0;
                 }
 
-                int diff = exactDiff > 0M ? 1 : -1;
-                return this.Descending ? diff * -1 : diff;
+                var diff = exactDiff > 0M ? 1 : -1;
+                return Descending ? diff * -1 : diff;
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
                 return 0;
             }
         }
@@ -537,29 +502,25 @@ namespace HPTClient
         {
             get
             {
-                return this.horseRankInfo;
+                return horseRankInfo;
             }
             set
             {
-                this.horseRankInfo = value;
-                OnPropertyChanged("HorseRankInfo");
+                horseRankInfo = value;
+                OnPropertyChanged();
             }
         }
 
         #region Hanteringen av översiktsvy för Rankvariabler
 
-        private ObservableCollection<RaceHorseRank> raceHorseRankList;
         [XmlIgnore]
         public ObservableCollection<RaceHorseRank> RaceHorseRankList
         {
-            get
-            {
-                return this.raceHorseRankList;
-            }
+            get;
             set
             {
-                this.raceHorseRankList = value;
-                OnPropertyChanged("RaceHorseRankList");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -572,36 +533,28 @@ namespace HPTClient
         public RaceHorseRank()
         {
             //this.HorseRankListSorted = new SortedList<int, HPTHorseRank>();
-            this.HorseRankList = new ObservableCollection<HPTHorseRank>();
+            HorseRankList = new ObservableCollection<HPTHorseRank>();
         }
 
-        private int raceNumber;
         [DataMember]
         public int RaceNumber
         {
-            get
-            {
-                return this.raceNumber;
-            }
+            get;
             set
             {
-                this.raceNumber = value;
-                OnPropertyChanged("RaceNumber");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private ObservableCollection<HPTHorseRank> horseRankList;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public ObservableCollection<HPTHorseRank> HorseRankList
         {
-            get
-            {
-                return this.horseRankList;
-            }
+            get;
             set
             {
-                this.horseRankList = value;
-                OnPropertyChanged("HorseRankList");
+                field = value;
+                OnPropertyChanged();
             }
         }
     }

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 namespace HPTClient
@@ -13,18 +12,14 @@ namespace HPTClient
         [DataMember]
         public string LegNrString { get; set; }
 
-        private HPTHorseLightSelectable selectedHorse;
         [XmlIgnore]
         public HPTHorseLightSelectable SelectedHorse
         {
-            get
-            {
-                return this.selectedHorse;
-            }
+            get;
             set
             {
-                this.selectedHorse = value;
-                OnPropertyChanged("SelectedHorse");
+                field = value;
+                OnPropertyChanged();
             }
         }
 

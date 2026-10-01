@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -23,7 +20,7 @@ namespace HPTClient
 
         private void icGroupRule_Checked(object sender, RoutedEventArgs e)
         {
-            this.MarkBet.RecalculateReduction(RecalculateReason.Rank);
+            MarkBet.RecalculateReduction(RecalculateReason.Rank);
         }
 
         private void btnNewGroupRule_Click(object sender, RoutedEventArgs e)
@@ -44,7 +41,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -57,12 +54,12 @@ namespace HPTClient
                 if (rule.ReductionRuleList != null && rule.ReductionRuleList.Count > 0)
                 {
                     rule.ReductionRuleList.Clear();
-                    this.MarkBet.RecalculateReduction(RecalculateReason.Rank);
+                    MarkBet.RecalculateReduction(RecalculateReason.Rank);
                 }
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -74,12 +71,12 @@ namespace HPTClient
                 var rule = (HPTHorseRankSumReductionRule)iud.DataContext;
                 if (rule.Use)
                 {
-                    this.MarkBet.RecalculateReduction(RecalculateReason.Rank);
+                    MarkBet.RecalculateReduction(RecalculateReason.Rank);
                 }
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -91,7 +88,7 @@ namespace HPTClient
             //    this.MarkBet.ReductionHorseRank = false;
             //}
             //this.MarkBet.ReductionHorseRank = 
-            this.MarkBet.RecalculateReduction(RecalculateReason.Rank);
+            MarkBet.RecalculateReduction(RecalculateReason.Rank);
         }
 
         private void iudMinNumberOfWinners_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -100,19 +97,19 @@ namespace HPTClient
             {
                 var iud = (IntegerUpDown)sender;
                 var rule = (HPTHorseRankReductionRule)iud.DataContext;
-                this.MarkBet.RecalculateReduction(RecalculateReason.Rank);
+                MarkBet.RecalculateReduction(RecalculateReason.Rank);
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
         private void dudMinValue_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            if (this.MarkBet.ReductionRank)
+            if (MarkBet.ReductionRank)
             {
-                this.MarkBet.RecalculateReduction(RecalculateReason.Rank);
+                MarkBet.RecalculateReduction(RecalculateReason.Rank);
             }
         }
 
@@ -124,11 +121,11 @@ namespace HPTClient
                 var rule = (HPTHorseRankReductionRule)btn.DataContext;
                 rule.ParentHorseRankSumReductionRule.ReductionRuleList.Remove(rule);
                 rule.ParentHorseRankSumReductionRule = null;
-                this.MarkBet.RecalculateReduction(RecalculateReason.Rank);
+                MarkBet.RecalculateReduction(RecalculateReason.Rank);
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -144,20 +141,20 @@ namespace HPTClient
             {
                 var btn = (Button)sender;
                 var rule = (HPTHorseRankReductionRule)btn.DataContext;
-                if (this.pu == null)
+                if (pu == null)
                 {
-                    this.pu = new System.Windows.Controls.Primitives.Popup()
+                    pu = new System.Windows.Controls.Primitives.Popup()
                     {
                         Placement = System.Windows.Controls.Primitives.PlacementMode.Top,
                         PlacementTarget = btn//,
                         //HorizontalOffset = -10D,
                         //VerticalOffset = -10D
                     };
-                    this.pu.MouseLeave += new MouseEventHandler(pu_MouseLeave);
+                    pu.MouseLeave += new MouseEventHandler(pu_MouseLeave);
                 }
 
                 // Skapa innehållet för popupen
-                Border b = new Border()
+                var b = new Border()
                 {
                     BorderBrush = new SolidColorBrush(Colors.Black),
                     BorderThickness = new Thickness(1D),
@@ -174,7 +171,7 @@ namespace HPTClient
                 var pi = rule.ParentHorseRankSumReductionRule.HorseRankVariable.HorseProperty;
 
                 var horseList = new List<HPTHorse>();
-                foreach (var horse in this.MarkBet.RaceDayInfo.HorseListSelected)
+                foreach (var horse in MarkBet.RaceDayInfo.HorseListSelected)
                 {
                     if (rule.OnlyInSpecifiedLegs && rule.LegSelectionList.First(l => l.LegNumber == horse.ParentRace.LegNr).Selected == false)
                     {
@@ -191,12 +188,12 @@ namespace HPTClient
                 }
 
 
-                IOrderedEnumerable<HPTHorse> orderedHorseList = horseList
+                var orderedHorseList = horseList
                     .OrderBy(h => h.ParentRace.LegNr)
                     .ThenBy(h => h.StartNr);
 
                 // Skapa en IHorseListContainer med valda hästar
-                HPTHorseListContainer horseCollection = new HPTHorseListContainer()
+                var horseCollection = new HPTHorseListContainer()
                 {
                     //HorseList = new System.Collections.ObjectModel.ObservableCollection<HPTHorse>(orderedHorseList),
                     HorseList = new List<HPTHorse>(orderedHorseList),
@@ -210,7 +207,7 @@ namespace HPTClient
                             ShowPrio = true,
                             ShowVinnarOdds = true,
                             ShowStakeDistributionPercent = true,
-                            ShowMarksPercent = true,
+                            //ShowMarksPercent = true,
                             ShowVinnarOddsShare = true,
                             ShowPlatsOdds = true,
                             ShowRankATG = true,
@@ -223,13 +220,13 @@ namespace HPTClient
                 };
 
                 // Visa popupen
-                this.pu.DataContext = horseCollection;
-                this.pu.Child = b;
-                this.pu.IsOpen = true;
+                pu.DataContext = horseCollection;
+                pu.Child = b;
+                pu.IsOpen = true;
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 

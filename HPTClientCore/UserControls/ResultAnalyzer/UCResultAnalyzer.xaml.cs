@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 namespace HPTClient
@@ -18,38 +17,38 @@ namespace HPTClient
         {
             try
             {
-                this.btnExportToClipboard.IsOpen = false;
-                var resultAnalyzer = (HPTResultAnalyzer)this.DataContext;
+                btnExportToClipboard.IsOpen = false;
+                var resultAnalyzer = (HPTResultAnalyzer)DataContext;
                 if (resultAnalyzer != null)
                 {
-                    string analysisData = resultAnalyzer.ExportToExcel();
+                    var analysisData = resultAnalyzer.ExportToExcel();
                     Clipboard.SetDataObject(analysisData);
                 }
             }
             catch (Exception exc)
             {
-                string fel = exc.Message;
+                var fel = exc.Message;
             }
         }
 
         private void miOverviewWithHeaders_Click(object sender, RoutedEventArgs e)
         {
-            this.btnExportToClipboard.IsOpen = false;
-            var resultAnalyzer = (HPTResultAnalyzer)this.DataContext;
+            btnExportToClipboard.IsOpen = false;
+            var resultAnalyzer = (HPTResultAnalyzer)DataContext;
             if (resultAnalyzer != null)
             {
-                string analysisData = resultAnalyzer.ExportToExcel(true);
+                var analysisData = resultAnalyzer.ExportToExcel(true);
                 Clipboard.SetDataObject(analysisData);
             }
         }
 
         private void miOverviewWithoutHeaders_Click(object sender, RoutedEventArgs e)
         {
-            this.btnExportToClipboard.IsOpen = false;
-            var resultAnalyzer = (HPTResultAnalyzer)this.DataContext;
+            btnExportToClipboard.IsOpen = false;
+            var resultAnalyzer = (HPTResultAnalyzer)DataContext;
             if (resultAnalyzer != null)
             {
-                string analysisData = resultAnalyzer.ExportToExcel(false);
+                var analysisData = resultAnalyzer.ExportToExcel(false);
                 Clipboard.SetDataObject(analysisData);
             }
         }

@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 using System.Text;
 using System.Xml.Serialization;
 
@@ -16,7 +15,7 @@ namespace HPTClient
         public HPTHorseRankReductionRule(int numberOfRaces, bool use)
             : base(numberOfRaces, use)
         {
-            foreach (HPTNumberOfWinners now in this.NumberOfWinnersList)
+            foreach (var now in NumberOfWinnersList)
             {
                 now.Selectable = true;
             }
@@ -54,27 +53,27 @@ namespace HPTClient
         {
             // Skapa lista med alla rankpoäng
             var rankList = singleRow.HorseList
-                .Select(h => h.RankList.First(r => r.Name == this.ParentHorseRankSumReductionRule.PropertyName))
+                .Select(h => h.RankList.First(r => r.Name == ParentHorseRankSumReductionRule.PropertyName))
                 .Select(r => r.Rank)
                 .ToList();
 
-            if (!this.OnlyInSpecifiedLegs)
+            if (!OnlyInSpecifiedLegs)
             {
-                int numberInInterval = rankList.Count(r => r >= this.LowerBoundary && r <= this.UpperBoundary);
-                if (!this.NumberOfWinnersList.First(now => now.NumberOfWinners == numberInInterval).Selected)
+                var numberInInterval = rankList.Count(r => r >= LowerBoundary && r <= UpperBoundary);
+                if (!NumberOfWinnersList.First(now => now.NumberOfWinners == numberInInterval).Selected)
                 {
                     return false;
                 }
             }
             else
             {
-                int numberOfX = 0;
-                foreach (var legNumber in this.LegList)
+                var numberOfX = 0;
+                foreach (var legNumber in LegList)
                 {
-                    int rankValue = rankList[legNumber - 1];
-                    numberOfX += rankValue >= this.LowerBoundary && rankValue <= this.UpperBoundary ? 1 : 0;
+                    var rankValue = rankList[legNumber - 1];
+                    numberOfX += rankValue >= LowerBoundary && rankValue <= UpperBoundary ? 1 : 0;
                 }
-                if (!this.NumberOfWinnersList[numberOfX].Selected)
+                if (!NumberOfWinnersList[numberOfX].Selected)
                 {
                     return false;
                 }
@@ -82,33 +81,25 @@ namespace HPTClient
             return true;
         }
 
-        private int lowerBoundary;
         [DataMember]
         public int LowerBoundary
         {
-            get
-            {
-                return lowerBoundary;
-            }
+            get;
             set
             {
-                this.lowerBoundary = value;
-                OnPropertyChanged("LowerBoundary");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int upperBoundary;
         [DataMember]
         public int UpperBoundary
         {
-            get
-            {
-                return upperBoundary;
-            }
+            get;
             set
             {
-                this.upperBoundary = value;
-                OnPropertyChanged("UpperBoundary");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -128,12 +119,12 @@ namespace HPTClient
             // Create String representation
             var sb = new StringBuilder();
             sb.Append("Rank ");
-            sb.Append(this.LowerBoundary);
+            sb.Append(LowerBoundary);
             sb.Append(" - ");
-            sb.Append(this.UpperBoundary);
+            sb.Append(UpperBoundary);
             sb.Append(": ");
-            sb.Append(this.NumberOfWinnersString);
-            this.ClipboardString = sb.ToString();
+            sb.Append(NumberOfWinnersString);
+            ClipboardString = sb.ToString();
             return sb.ToString();
         }
     }

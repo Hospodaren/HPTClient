@@ -21,15 +21,8 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" Visibility="{Binding Path=Use,Converter={StaticResource hptValueConverter}}">
-                            <!--<TextBlock Style="{StaticResource tbMediumStyle}" Padding="1,0,1,2" Width="110" MouseUp="TextBlock_MouseUp">-->
                         <TextBlock Style="{StaticResource tbMediumStyle}" Padding="1,0,1,2" Width="150" MouseUp="TextBlock_MouseUp">
                             <TextBlock.Text>
-                                    <!--<MultiBinding StringFormat="{}{2}-Hästar ({0}/{1}/{3:P1})">
-                                        <Binding Path="NumberOfRacesWithX"/>
-                                        <Binding Path="NumberOfX"/>
-                                    <Binding Path="Prio"/>  
-                                    <Binding Path="Probability"/>
-                                </MultiBinding>-->
                                 <MultiBinding StringFormat="{}{2}-Hästar ({0}/{1})">
                                         <Binding Path="NumberOfRacesWithX"/>
                                         <Binding Path="NumberOfX"/>
@@ -80,8 +73,6 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-            
-        <!--</GroupBox>-->
 
     </Grid>
 </HPT:UCMarkBetControl>

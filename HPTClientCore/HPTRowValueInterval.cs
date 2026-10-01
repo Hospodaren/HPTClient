@@ -5,63 +5,47 @@ namespace HPTClient
     [DataContract]
     public class HPTRowValueInterval : Notifier
     {
-        private int? lowerLimit;
         [DataMember]
         public int? LowerLimit
         {
-            get
-            {
-                return this.lowerLimit;
-            }
+            get;
             set
             {
-                this.lowerLimit = value;
-                OnPropertyChanged("LowerLimit");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int? upperLimit;
         [DataMember]
         public int? UpperLimit
         {
-            get
-            {
-                return this.upperLimit;
-            }
+            get;
             set
             {
-                this.upperLimit = value;
-                OnPropertyChanged("UpperLimit");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int numberOfRows;
         [DataMember]
         public int NumberOfRows
         {
-            get
-            {
-                return this.numberOfRows;
-            }
+            get;
             set
             {
-                this.numberOfRows = value;
-                OnPropertyChanged("NumberOfRows");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal percentageOfRows;
         [DataMember]
         public decimal PercentageOfRows
         {
-            get
-            {
-                return this.percentageOfRows;
-            }
+            get;
             set
             {
-                this.percentageOfRows = value;
-                OnPropertyChanged("PercentageOfRows");
+                field = value;
+                OnPropertyChanged();
             }
         }
     }
@@ -69,48 +53,36 @@ namespace HPTClient
     [DataContract]
     public class HPTRowValuePercentile : Notifier
     {
-        private decimal percentile;
         [DataMember]
         public decimal Percentile
         {
-            get
-            {
-                return this.percentile;
-            }
+            get;
             set
             {
-                this.percentile = value;
-                OnPropertyChanged("Percentile");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private string description;
         [DataMember]
         public string Description
         {
-            get
-            {
-                return this.description;
-            }
+            get;
             set
             {
-                this.description = value;
-                OnPropertyChanged("Description");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int rowValue;
         [DataMember]
         public int RowValue
         {
-            get
-            {
-                return this.rowValue;
-            }
+            get;
             set
             {
-                this.rowValue = value;
-                OnPropertyChanged("RowValue");
+                field = value;
+                OnPropertyChanged();
             }
         }
     }

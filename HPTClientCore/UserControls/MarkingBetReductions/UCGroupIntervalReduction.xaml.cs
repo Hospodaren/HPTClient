@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -22,32 +19,32 @@ namespace HPTClient
 
         private void ItemsControl_Checked(object sender, RoutedEventArgs e)
         {
-            CheckBox chk = (CheckBox)e.OriginalSource;
-            ItemsControl ic = (ItemsControl)sender;
+            var chk = (CheckBox)e.OriginalSource;
+            var ic = (ItemsControl)sender;
 
-            HPTGroupIntervalReductionRule rule = (HPTGroupIntervalReductionRule)ic.DataContext;
+            var rule = (HPTGroupIntervalReductionRule)ic.DataContext;
             if (rule.Use)
             {
-                this.MarkBet.RecalculateReduction(RecalculateReason.Other);
+                MarkBet.RecalculateReduction(RecalculateReason.Other);
             }
         }
 
         private void btnRemove_Click(object sender, RoutedEventArgs e)
         {
-            Button btn = (Button)sender;
-            HPTGroupIntervalReductionRule rule = (HPTGroupIntervalReductionRule)btn.DataContext;
-            this.MarkBet.GroupIntervalRulesCollection.ReductionRuleList.Remove(rule);
+            var btn = (Button)sender;
+            var rule = (HPTGroupIntervalReductionRule)btn.DataContext;
+            MarkBet.GroupIntervalRulesCollection.ReductionRuleList.Remove(rule);
             if (rule.Use)
             {
-                this.MarkBet.RecalculateReduction(RecalculateReason.Other);
+                MarkBet.RecalculateReduction(RecalculateReason.Other);
             }
         }
 
         private void cmbVariable_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ComboBox cmb = (ComboBox)sender;
-            HPTGroupIntervalReductionRule rule = (HPTGroupIntervalReductionRule)cmb.Tag;
-            HPTHorseVariable hv = (HPTHorseVariable)cmb.SelectedItem;
+            var cmb = (ComboBox)sender;
+            var rule = (HPTGroupIntervalReductionRule)cmb.Tag;
+            var hv = (HPTHorseVariable)cmb.SelectedItem;
             if (rule.HorseVariable == null || rule.HorseVariable.PropertyName != hv.PropertyName)
             {
                 rule.HorseVariable = hv;
@@ -58,45 +55,45 @@ namespace HPTClient
 
         private void btnNewRule_Click(object sender, RoutedEventArgs e)
         {
-            if (this.MarkBet != null)
+            if (MarkBet != null)
             {
-                HPTGroupIntervalReductionRule rule = new HPTGroupIntervalReductionRule(this.MarkBet.RaceDayInfo.RaceList.Count, false);
-                this.MarkBet.GroupIntervalRulesCollection.ReductionRuleList.Add(rule);
+                var rule = new HPTGroupIntervalReductionRule(MarkBet.RaceDayInfo.RaceList.Count, false);
+                MarkBet.GroupIntervalRulesCollection.ReductionRuleList.Add(rule);
             }
         }
 
         private void btnAddNewRule_Click(object sender, RoutedEventArgs e)
         {
-            if (this.MarkBet != null)
+            if (MarkBet != null)
             {
-                HPTGroupIntervalReductionRule rule = new HPTGroupIntervalReductionRule(this.MarkBet.RaceDayInfo.RaceList.Count, false);
-                this.MarkBet.GroupIntervalRulesCollection.ReductionRuleList.Add(rule);
+                var rule = new HPTGroupIntervalReductionRule(MarkBet.RaceDayInfo.RaceList.Count, false);
+                MarkBet.GroupIntervalRulesCollection.ReductionRuleList.Add(rule);
             }
         }
 
         private void btnRemoveAll_Click(object sender, RoutedEventArgs e)
         {
-            bool recalculationPaused = this.MarkBet.pauseRecalculation;
-            this.MarkBet.pauseRecalculation = true;
+            var recalculationPaused = MarkBet.pauseRecalculation;
+            MarkBet.pauseRecalculation = true;
             try
             {
-                foreach (HPTGroupIntervalReductionRule rule in this.MarkBet.GroupIntervalRulesCollection.ReductionRuleList)
+                foreach (HPTGroupIntervalReductionRule rule in MarkBet.GroupIntervalRulesCollection.ReductionRuleList)
                 {
                     rule.Use = false;
                 }
-                this.MarkBet.GroupIntervalRulesCollection.ReductionRuleList.Clear();
+                MarkBet.GroupIntervalRulesCollection.ReductionRuleList.Clear();
             }
             catch (Exception exc)
             {
                 Config.AddToErrorLog(exc);
             }
-            this.MarkBet.pauseRecalculation = recalculationPaused;
-            this.MarkBet.RecalculateReduction(RecalculateReason.All);
+            MarkBet.pauseRecalculation = recalculationPaused;
+            MarkBet.RecalculateReduction(RecalculateReason.All);
         }
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            this.MarkBet.RecalculateReduction(RecalculateReason.Other);
+            MarkBet.RecalculateReduction(RecalculateReason.Other);
             //if (this.MarkBet.GroupIntervalRulesCollection.Use)
             //{
             //    this.MarkBet.RecalculateReduction(RecalculateReason.Other);
@@ -107,74 +104,75 @@ namespace HPTClient
         {
             var dud = (DecimalUpDown)sender;
             var groupIntervalReductionRule = (HPTGroupIntervalReductionRule)dud.DataContext;
-            if (groupIntervalReductionRule.Use && this.MarkBet.GroupIntervalRulesCollection.Use)
+            if (groupIntervalReductionRule.Use && MarkBet.GroupIntervalRulesCollection.Use)
             {
-                this.MarkBet.RecalculateReduction(RecalculateReason.Other);
+                MarkBet.RecalculateReduction(RecalculateReason.Other);
             }
         }
 
         private HPTGroupIntervalRulesCollection newGroupIntervalRulesCollection;
         private void btnSaveAsTemplate_Click(object sender, RoutedEventArgs e)
         {
-            if (this.newGroupIntervalRulesCollection == null)
+            if (newGroupIntervalRulesCollection == null)
             {
-                this.newGroupIntervalRulesCollection = new HPTGroupIntervalRulesCollection(this.MarkBet.GroupIntervalRulesCollection.NumberOfRaces, this.MarkBet.GroupIntervalRulesCollection.Use);
+                newGroupIntervalRulesCollection = new HPTGroupIntervalRulesCollection(MarkBet.GroupIntervalRulesCollection.NumberOfRaces, MarkBet.GroupIntervalRulesCollection.Use);
             }
-            this.newGroupIntervalRulesCollection.TypeCategory = this.MarkBet.BetType.TypeCategory;
-            this.newGroupIntervalRulesCollection.ReductionRuleList.Clear();
-            foreach (HPTGroupIntervalReductionRule rule in this.MarkBet.GroupIntervalRulesCollection.ReductionRuleList)
+            newGroupIntervalRulesCollection.TypeCategory = MarkBet.BetType.TypeCategory;
+            newGroupIntervalRulesCollection.ReductionRuleList.Clear();
+            foreach (HPTGroupIntervalReductionRule rule in MarkBet.GroupIntervalRulesCollection.ReductionRuleList)
             {
-                this.newGroupIntervalRulesCollection.ReductionRuleList.Add(rule.Clone());
+                newGroupIntervalRulesCollection.ReductionRuleList.Add(rule.Clone());
             }
-            if (string.IsNullOrEmpty(this.txtNewTemplateName.Text))
+            if (string.IsNullOrEmpty(txtNewTemplateName.Text))
             {
-                this.newGroupIntervalRulesCollection.Name = "Gruppintervall " + this.MarkBet.BetType.Code + " " + this.MarkBet.RaceDayInfo.RaceDayDate.ToString("yyyy-MM-dd"); ;
+                newGroupIntervalRulesCollection.Name =
+                    $"Gruppintervall {MarkBet.BetType.Code} {MarkBet.RaceDayInfo.RaceDayDate:yyyy-MM-dd}"; ;
             }
             else
             {
-                this.newGroupIntervalRulesCollection.Name = this.txtNewTemplateName.Text;
+                newGroupIntervalRulesCollection.Name = txtNewTemplateName.Text;
             }
-            if (!HPTConfig.Config.GroupIntervalRulesCollectionList.Contains(this.newGroupIntervalRulesCollection))
+            if (!HPTConfig.Config.GroupIntervalRulesCollectionList.Contains(newGroupIntervalRulesCollection))
             {
-                HPTConfig.Config.GroupIntervalRulesCollectionList.Add(this.newGroupIntervalRulesCollection);
+                HPTConfig.Config.GroupIntervalRulesCollectionList.Add(newGroupIntervalRulesCollection);
             }
         }
 
         private void btnSelectTemplate_Click(object sender, RoutedEventArgs e)
         {
-            if (this.cmbGroupIntervalRulesCollection.SelectedItem != null)
+            if (cmbGroupIntervalRulesCollection.SelectedItem != null)
             {
-                var groupIntervalRulesCollection = (HPTGroupIntervalRulesCollection)this.cmbGroupIntervalRulesCollection.SelectedItem;
+                var groupIntervalRulesCollection = (HPTGroupIntervalRulesCollection)cmbGroupIntervalRulesCollection.SelectedItem;
 
-                bool recalculationPaused = this.MarkBet.pauseRecalculation;
-                this.MarkBet.pauseRecalculation = true;
-                if (this.MarkBet.GroupIntervalRulesCollection.ReductionRuleList == null)
+                var recalculationPaused = MarkBet.pauseRecalculation;
+                MarkBet.pauseRecalculation = true;
+                if (MarkBet.GroupIntervalRulesCollection.ReductionRuleList == null)
                 {
-                    this.MarkBet.GroupIntervalRulesCollection.ReductionRuleList = new ObservableCollection<HPTNumberOfWinnersReductionRule>();
+                    MarkBet.GroupIntervalRulesCollection.ReductionRuleList = new ObservableCollection<HPTNumberOfWinnersReductionRule>();
                 }
                 else
                 {
-                    this.MarkBet.GroupIntervalRulesCollection.ReductionRuleList.Clear();
+                    MarkBet.GroupIntervalRulesCollection.ReductionRuleList.Clear();
                 }
                 foreach (HPTGroupIntervalReductionRule groupIntervalReductionRule in groupIntervalRulesCollection.ReductionRuleList)
                 {
                     groupIntervalReductionRule.NumberOfRaces = groupIntervalReductionRule.NumberOfWinnersList.Max(now => now.NumberOfWinners);
                     var clonedRule = groupIntervalReductionRule.Clone();
-                    this.MarkBet.GroupIntervalRulesCollection.ReductionRuleList.Add(clonedRule);
+                    MarkBet.GroupIntervalRulesCollection.ReductionRuleList.Add(clonedRule);
                 }
-                this.MarkBet.pauseRecalculation = recalculationPaused;
-                if (this.MarkBet.GroupIntervalRulesCollection.Use)
+                MarkBet.pauseRecalculation = recalculationPaused;
+                if (MarkBet.GroupIntervalRulesCollection.Use)
                 {
-                    this.MarkBet.RecalculateReduction(RecalculateReason.Other);
+                    MarkBet.RecalculateReduction(RecalculateReason.Other);
                 }
             }
         }
 
         private void itNumberOfGroupIntervalRules_Checked(object sender, RoutedEventArgs e)
         {
-            if (this.MarkBet.GroupIntervalRulesCollection.Use)
+            if (MarkBet.GroupIntervalRulesCollection.Use)
             {
-                this.MarkBet.RecalculateReduction(RecalculateReason.Other);
+                MarkBet.RecalculateReduction(RecalculateReason.Other);
             }
         }
 
@@ -183,20 +181,20 @@ namespace HPTClient
         {
             var btn = (Button)sender;
             var rule = (HPTGroupIntervalReductionRule)btn.DataContext;
-            if (this.pu == null)
+            if (pu == null)
             {
-                this.pu = new System.Windows.Controls.Primitives.Popup()
+                pu = new System.Windows.Controls.Primitives.Popup()
                 {
                     Placement = System.Windows.Controls.Primitives.PlacementMode.Top,
                     PlacementTarget = btn//,
                     //HorizontalOffset = -10D,
                     //VerticalOffset = -10D
                 };
-                this.pu.MouseLeave += new MouseEventHandler(pu_MouseLeave);
+                pu.MouseLeave += new MouseEventHandler(pu_MouseLeave);
             }
 
             // Skapa innehållet för popupen
-            Border b = new Border()
+            var b = new Border()
             {
                 BorderBrush = new SolidColorBrush(Colors.Black),
                 BorderThickness = new Thickness(1D),
@@ -212,7 +210,7 @@ namespace HPTClient
 
             // Plocka ut hästarna som ligger i intervallet
             var pi = rule.HorseVariable.HorseProperty;
-            IOrderedEnumerable<HPTHorse> orderedHorseList = this.MarkBet.RaceDayInfo.HorseListSelected
+            var orderedHorseList = MarkBet.RaceDayInfo.HorseListSelected
                 .Where(h => Convert.ToDecimal(pi.GetValue(h, null)) >= rule.LowerBoundary
                     && Convert.ToDecimal(pi.GetValue(h, null)) <= rule.UpperBoundary)
                 .OrderBy(h => h.ParentRace.LegNr)
@@ -227,7 +225,7 @@ namespace HPTClient
             }
 
             // Skapa en IHorseListContainer med valda hästar
-            HPTHorseListContainer horseCollection = new HPTHorseListContainer()
+            var horseCollection = new HPTHorseListContainer()
             {
                 //HorseList = new System.Collections.ObjectModel.ObservableCollection<HPTHorse>(orderedHorseList),
                 HorseList = new List<HPTHorse>(orderedHorseList),
@@ -241,7 +239,7 @@ namespace HPTClient
                         ShowPrio = true,
                         ShowVinnarOdds = true,
                         ShowStakeDistributionPercent = true,
-                        ShowMarksPercent = true,
+                        //ShowMarksPercent = true,
                         ShowVinnarOddsShare = true,
                         ShowPlatsOdds = true,
                         ShowRankATG = true,
@@ -254,9 +252,9 @@ namespace HPTClient
             };
 
             // Visa popupen
-            this.pu.DataContext = horseCollection;
-            this.pu.Child = b;
-            this.pu.IsOpen = true;
+            pu.DataContext = horseCollection;
+            pu.Child = b;
+            pu.IsOpen = true;
         }
 
         void pu_MouseLeave(object sender, MouseEventArgs e)

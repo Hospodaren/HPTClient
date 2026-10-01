@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -27,10 +26,10 @@ namespace HPTClient
 
         private void btnNewGroupIntervalTemplate_Click(object sender, RoutedEventArgs e)
         {
-            this.Config.GroupIntervalRulesCollectionList.Add(new HPTGroupIntervalRulesCollection()
+            Config.GroupIntervalRulesCollectionList.Add(new HPTGroupIntervalRulesCollection()
             {
                 TypeCategory = BetTypeCategory.V75,
-                Name = "Ny gruppintervallmall " + DateTime.Now.ToString("yyyy-MM-dd") + " " + DateTime.Now.ToShortTimeString(),
+                Name = $"Ny gruppintervallmall {DateTime.Now:yyyy-MM-dd} {DateTime.Now.ToShortTimeString()}",
                 ReductionRuleList = new ObservableCollection<HPTNumberOfWinnersReductionRule>()
             });
         }

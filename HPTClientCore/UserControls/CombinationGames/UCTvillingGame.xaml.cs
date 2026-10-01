@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -22,16 +20,16 @@ namespace HPTClient
 
         public UCTvillingGame(HPTCombBet combBet)
         {
-            this.CombBet = combBet;
-            this.RaceList = new ObservableCollection<HPTRace>(combBet.RaceDayInfo.RaceList);
+            CombBet = combBet;
+            RaceList = new ObservableCollection<HPTRace>(combBet.RaceDayInfo.RaceList);
 
-            foreach (HPTRace hptRace in this.RaceList)
+            foreach (var hptRace in RaceList)
             {
-                int numberOfSelectedHorses = hptRace.HorseList.Count(h => h.Selected);
+                var numberOfSelectedHorses = hptRace.HorseList.Count(h => h.Selected);
 
                 if (numberOfSelectedHorses == 0)
                 {
-                    foreach (HPTHorse horse in hptRace.HorseList.Where(h => h.Scratched == null || h.Scratched == false))
+                    foreach (var horse in hptRace.HorseList.Where(h => h.Scratched == null || h.Scratched == false))
                     {
                         horse.Selected = true;
                     }
@@ -45,7 +43,7 @@ namespace HPTClient
 
         void race_NumberOfSelectedChanged(int raceNr, int startNr, bool selected)
         {
-            var race = this.RaceList.FirstOrDefault(r => r.RaceNr == raceNr);
+            var race = RaceList.FirstOrDefault(r => r.RaceNr == raceNr);
             if (race != null)
             {
                 race.CombinationListInfoTvilling.UpdateCombinationsToShow();
@@ -99,44 +97,44 @@ namespace HPTClient
         internal void SetCountDown()
         {
             // Återställ textinställningar
-            this.txtCountdownTimer.FontWeight = FontWeights.Normal;
-            this.txtCountdownTimer.Foreground = new SolidColorBrush(Colors.Black);
+            txtCountdownTimer.FontWeight = FontWeights.Normal;
+            txtCountdownTimer.Foreground = new SolidColorBrush(Colors.Black);
 
             // Hämta nästa lopp
-            this.upcomingRace = this.CombBet.RaceDayInfo.RaceList
+            upcomingRace = CombBet.RaceDayInfo.RaceList
                 .OrderBy(r => r.PostTime)
                 .FirstOrDefault(r => r.PostTime > DateTime.Now);
 
             // Dra igång nedräknare om tävlingen är idag
-            if (this.upcomingRace != null && this.upcomingRace.PostTime.Date == DateTime.Today)
+            if (upcomingRace != null && upcomingRace.PostTime.Date == DateTime.Today)
             {
-                TimeSpan ts = this.upcomingRace.PostTime - DateTime.Now;
+                var ts = upcomingRace.PostTime - DateTime.Now;
                 Countdown(ts, cur =>
                 {
                     if ((int)cur.TotalSeconds == 600)
                     {
-                        this.txtCountdownTimer.FontWeight = FontWeights.Bold;
-                        this.txtCountdownTimer.Foreground = new SolidColorBrush(Colors.Red);
+                        txtCountdownTimer.FontWeight = FontWeights.Bold;
+                        txtCountdownTimer.Foreground = new SolidColorBrush(Colors.Red);
                     }
-                    this.txtCountdownTimer.Text = cur.ToString(@"hh\:mm\:ss");
+                    txtCountdownTimer.Text = cur.ToString(@"hh\:mm\:ss");
                 });
-                this.txtCountdownInfo.Text = this.upcomingRace.LegNrString + ":";
+                txtCountdownInfo.Text = $"{upcomingRace.LegNrString}:";
             }
             else
             {
-                this.txtCountdownTimer.Text = string.Empty;
-                this.txtCountdownInfo.Text = string.Empty;
+                txtCountdownTimer.Text = string.Empty;
+                txtCountdownInfo.Text = string.Empty;
             }
         }
 
         void Countdown(TimeSpan timeLeft, Action<TimeSpan> ts)
         {
-            int count = (int)timeLeft.TotalSeconds;
+            var count = (int)timeLeft.TotalSeconds;
             var dt = new System.Windows.Threading.DispatcherTimer();
             dt.Interval = TimeSpan.FromSeconds(1D);
             dt.Tick += (_, a) =>
             {
-                TimeSpan tsTemp = this.upcomingRace.PostTime - DateTime.Now;
+                var tsTemp = upcomingRace.PostTime - DateTime.Now;
 
                 if (tsTemp.TotalSeconds < 1D)
                 {
@@ -157,9 +155,9 @@ namespace HPTClient
 
         private void ucTvillingGame_Loaded(object sender, RoutedEventArgs e)
         {
-            if (this.CombBet != null && this.CombBet.RaceDayInfo != null && this.CombBet.RaceNumberToLoad > 0)
+            if (CombBet != null && CombBet.RaceDayInfo != null && CombBet.RaceNumberToLoad > 0)
             {
-                SelectTabItemFRomRaceNumber(this.CombBet.RaceNumberToLoad);
+                SelectTabItemFRomRaceNumber(CombBet.RaceNumberToLoad);
             }
         }
 
@@ -167,15 +165,15 @@ namespace HPTClient
         {
             try
             {
-                var race = this.CombBet.RaceDayInfo.RaceList.FirstOrDefault(r => r.RaceNr == raceNumber);
+                var race = CombBet.RaceDayInfo.RaceList.FirstOrDefault(r => r.RaceNr == raceNumber);
                 if (race != null)
                 {
-                    this.tcTvillingGame.SelectedItem = race;
+                    tcTvillingGame.SelectedItem = race;
                 }
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
     }

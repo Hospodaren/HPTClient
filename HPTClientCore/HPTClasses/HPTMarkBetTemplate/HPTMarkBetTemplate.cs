@@ -8,59 +8,47 @@ namespace HPTClient
         {
             return new HPTMarkBetTemplate()
             {
-                DesiredSystemSize = this.DesiredSystemSize,
-                Name = this.Name,
-                NumberOfSpikes = this.NumberOfSpikes,
-                RankTemplate = this.RankTemplate,
-                RankTemplateName = this.RankTemplateName,
-                TypeCategory = this.TypeCategory
+                DesiredSystemSize = DesiredSystemSize,
+                Name = Name,
+                NumberOfSpikes = NumberOfSpikes,
+                RankTemplate = RankTemplate,
+                RankTemplateName = RankTemplateName,
+                TypeCategory = TypeCategory
             };
         }
 
-        private string name;
         public string Name
         {
-            get
-            {
-                return this.name;
-            }
+            get;
             set
             {
-                this.name = value;
-                OnPropertyChanged("Name");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private string rankTemplatename;
         public string RankTemplateName
         {
-            get
-            {
-                return this.rankTemplatename;
-            }
+            get;
             set
             {
-                this.rankTemplatename = value;
-                OnPropertyChanged("RankTemplateName");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private HPTRankTemplate rankTemplate;
         [XmlIgnore]
         public HPTRankTemplate RankTemplate
         {
-            get
-            {
-                return this.rankTemplate;
-            }
+            get;
             set
             {
-                this.rankTemplate = value;
+                field = value;
                 if (value != null)
                 {
-                    this.RankTemplateName = this.rankTemplate.Name;
+                    RankTemplateName = field.Name;
                 }
-                OnPropertyChanged("RankTemplate");
+                OnPropertyChanged();
             }
         }
 
@@ -78,7 +66,7 @@ namespace HPTClient
 
         public override string ToString()
         {
-            return this.Name;
+            return Name;
         }
     }
 }

@@ -5,835 +5,698 @@ namespace HPTClient
     [DataContract]
     public class HPTHorseDataToShow : HPTDataToShow
     {
-        private bool showHorsePopup;
         [DataMember]
         public bool ShowHorsePopup
         {
-            get
-            {
-                return showHorsePopup;
-            }
+            get;
             set
             {
-                showHorsePopup = value;
-                OnPropertyChanged("ShowHorsePopup");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showDriverPopup;
         [DataMember]
         public bool ShowDriverPopup
         {
-            get
-            {
-                return showDriverPopup;
-            }
+            get;
             set
             {
-                showDriverPopup = value;
-                OnPropertyChanged("ShowDriverPopup");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showTrainerPopup;
         [DataMember]
         public bool ShowTrainerPopup
         {
-            get
-            {
-                return showTrainerPopup;
-            }
+            get;
             set
             {
-                showTrainerPopup = value;
-                OnPropertyChanged("ShowTrainerPopup");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showStartNr;
         //[HorseDataToShow("Avdelningsnummer", "ShowLegNr", DataToShowUsage.All, 1)]
         [DataMember]
         public bool ShowStartNr
         {
-            get
-            {
-                return showStartNr;
-            }
+            get;
             set
             {
-                showStartNr = value;
-                OnPropertyChanged("ShowStartNr");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showPrio;
-        [HorseDataToShow("ABCD-rank", "ShowPrio", DataToShowUsage.Vxx | DataToShowUsage.ComplementaryRule | DataToShowUsage.Correction | DataToShowUsage.Trio, 2)]
+        [HorseDataToShow("ABCD-rank", "ShowPrio",
+            DataToShowUsage.Vxx | DataToShowUsage.ComplementaryRule | DataToShowUsage.Correction | DataToShowUsage.Trio,
+            2)]
         [DataMember]
         public bool ShowPrio
         {
-            get
-            {
-                return showPrio;
-            }
+            get;
             set
             {
-                showPrio = value;
-                OnPropertyChanged("ShowPrio");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showName;
         [HorseDataToShow("Namn", "ShowName", DataToShowUsage.Everywhere, 3)]
         [DataMember]
         public bool ShowName
         {
-            get
-            {
-                return showName;
-            }
+            get;
             set
             {
-                showName = value;
-                OnPropertyChanged("ShowName");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showSex;
         [HorseDataToShow("Kön", "ShowSex", DataToShowUsage.Everywhere, 4)]
         [DataMember]
         public bool ShowSex
         {
-            get
-            {
-                return this.showSex;
-            }
+            get;
             set
             {
-                this.showSex = value;
-                OnPropertyChanged("ShowSex");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showAge;
         [HorseDataToShow("Ålder", "ShowAge", DataToShowUsage.Everywhere, 5)]
         [DataMember]
         public bool ShowAge
         {
-            get
-            {
-                return this.showAge;
-            }
+            get;
             set
             {
-                this.showAge = value;
-                OnPropertyChanged("ShowAge");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showTrack;
         [HorseDataToShow("Bana", "ShowTrack", DataToShowUsage.Everywhere, 6)]
         [DataMember]
         public bool ShowTrack
         {
-            get
-            {
-                return showTrack;
-            }
+            get;
             set
             {
-                showTrack = value;
-                OnPropertyChanged("ShowTrack");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showDriver;
+        [HorseDataToShow("ATG-Trend", "ShowATGTrend", DataToShowUsage.Vxx, 3)]
+        [DataMember]
+        public bool ShowATGTrend
+        {
+            get;
+            set
+            {
+                field = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [HorseDataToShow("Trender", "ShowTrends", DataToShowUsage.Vxx, 3)]
+        [DataMember]
+        public bool ShowTrends
+        {
+            get;
+            set
+            {
+                field = value;
+                OnPropertyChanged();
+            }
+        }
+
         [HorseDataToShow("Kusk", "ShowDriver", DataToShowUsage.Everywhere, 3)]
         [DataMember]
         public bool ShowDriver
         {
-            get
-            {
-                return showDriver;
-            }
+            get;
             set
             {
-                showDriver = value;
-                OnPropertyChanged("ShowDriver");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showTrainer;
         [HorseDataToShow("Tränare", "ShowTrainer", DataToShowUsage.Everywhere, 3)]
         [DataMember]
         public bool ShowTrainer
         {
-            get
-            {
-                return showTrainer;
-            }
+            get;
             set
             {
-                showTrainer = value;
-                OnPropertyChanged("ShowTrainer");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showOwner;
         [HorseDataToShow("Ägare", "ShowOwner", DataToShowUsage.Everywhere, 3, true)]
         [DataMember]
         public bool ShowOwner
         {
-            get
-            {
-                return this.showOwner;
-            }
+            get;
             set
             {
-                this.showOwner = value;
-                OnPropertyChanged("ShowOwner");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showOwnProbability;
         [HorseDataToShow("Egen chansvärdering", "ShowOwnProbability", DataToShowUsage.Everywhere, 3, true)]
         [DataMember]
         public bool ShowOwnProbability
         {
-            get
-            {
-                return this.showOwnProbability;
-            }
+            get;
             set
             {
-                this.showOwnProbability = value;
-                OnPropertyChanged("ShowOwnProbability");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showBreeder;
         [HorseDataToShow("Uppfödare", "ShowBreeder", DataToShowUsage.Everywhere, 3, true)]
         [DataMember]
         public bool ShowBreeder
         {
-            get
-            {
-                return this.showBreeder;
-            }
+            get;
             set
             {
-                this.showBreeder = value;
-                OnPropertyChanged("ShowBreeder");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showVinnarOdds;
         [HorseDataToShow("Vinnarodds", "ShowVinnarOdds", DataToShowUsage.Everywhere, 3)]
         [DataMember]
         public bool ShowVinnarOdds
         {
-            get
-            {
-                return showVinnarOdds;
-            }
+            get;
             set
             {
-                showVinnarOdds = value;
-                OnPropertyChanged("ShowVinnarOdds");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showVinnarOddsShare;
         [HorseDataToShow("Vinnaroddsandel", "ShowVinnarOddsShare", DataToShowUsage.Everywhere, 3)]
         [DataMember]
         public bool ShowVinnarOddsShare
         {
-            get
-            {
-                return showVinnarOddsShare;
-            }
+            get;
             set
             {
-                showVinnarOddsShare = value;
-                OnPropertyChanged("ShowVinnarOddsShare");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showVinnarOddsRelative;
         [HorseDataToShow("Relativt vinnarodds", "ShowVinnarOddsRelative", DataToShowUsage.Everywhere, 3, true)]
         [DataMember]
         public bool ShowVinnarOddsRelative
         {
-            get
-            {
-                return showVinnarOddsRelative;
-            }
+            get;
             set
             {
-                showVinnarOddsRelative = value;
-                OnPropertyChanged("ShowVinnarOddsRelative");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showPlatsOdds;
         [HorseDataToShow("Platsodds", "ShowPlatsOdds", DataToShowUsage.Everywhere, 3)]
         [DataMember]
         public bool ShowPlatsOdds
         {
-            get
-            {
-                return showPlatsOdds;
-            }
+            get;
             set
             {
-                showPlatsOdds = value;
-                OnPropertyChanged("ShowPlatsOdds");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showStakeDistributionPercent;
-        [HorseDataToShow("Insatsfördelning", "ShowStakeDistributionPercent", DataToShowUsage.Vxx | DataToShowUsage.ComplementaryRule | DataToShowUsage.Correction, 3)]
+        [HorseDataToShow("Insatsfördelning", "ShowStakeDistributionPercent",
+            DataToShowUsage.Vxx | DataToShowUsage.ComplementaryRule | DataToShowUsage.Correction, 3)]
         [DataMember]
         public bool ShowStakeDistributionPercent
         {
-            get
-            {
-                return showStakeDistributionPercent;
-            }
+            get;
             set
             {
-                showStakeDistributionPercent = value;
-                OnPropertyChanged("ShowStakeDistributionPercent");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showStakeDistributionShareAccumulated;
-        [HorseDataToShow("Insatsförd. (ack)", "ShowStakeDistributionShareAccumulated", DataToShowUsage.Vxx | DataToShowUsage.ComplementaryRule | DataToShowUsage.Correction, 3)]
+        [HorseDataToShow("Insatsförd. (ack)", "ShowStakeDistributionShareAccumulated",
+            DataToShowUsage.Vxx | DataToShowUsage.ComplementaryRule | DataToShowUsage.Correction, 3)]
         [DataMember]
         public bool ShowStakeDistributionShareAccumulated
         {
-            get
-            {
-                return showStakeDistributionShareAccumulated;
-            }
+            get;
             set
             {
-                showStakeDistributionShareAccumulated = value;
-                OnPropertyChanged("ShowStakeDistributionShareAccumulated");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showMarkability;
-        [HorseDataToShow("Streckbarhet", "ShowMarkability", DataToShowUsage.Vxx | DataToShowUsage.ComplementaryRule | DataToShowUsage.Correction, 3, true)]
+        [HorseDataToShow("Streckbarhet", "ShowMarkability",
+            DataToShowUsage.Vxx | DataToShowUsage.ComplementaryRule | DataToShowUsage.Correction, 3, true)]
         [DataMember]
         public bool ShowMarkability
         {
-            get
-            {
-                return showMarkability;
-            }
+            get;
             set
             {
-                showMarkability = value;
-                OnPropertyChanged("ShowMarkability");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showReserv;
-        [HorseDataToShow("Reserv", "ShowReserv", DataToShowUsage.Vxx | DataToShowUsage.ComplementaryRule | DataToShowUsage.Correction, 3, true)]
+        [HorseDataToShow("Reserv", "ShowReserv",
+            DataToShowUsage.Vxx | DataToShowUsage.ComplementaryRule | DataToShowUsage.Correction, 3, true)]
         [DataMember]
         public bool ShowReserv
         {
-            get
-            {
-                return showReserv;
-            }
+            get;
             set
             {
-                showReserv = value;
-                OnPropertyChanged("ShowReserv");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showRecord;
         [HorseDataToShow("Rekord", "ShowRecord", DataToShowUsage.Everywhere, 3)]
         [DataMember]
         public bool ShowRecord
         {
-            get
-            {
-                return showRecord;
-            }
+            get;
             set
             {
-                showRecord = value;
-                OnPropertyChanged("ShowRecord");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showShape;
         //[HorseDataToShow("Namn", "ShowName", DataToShowUsage.All, 3)]
         [DataMember]
         public bool ShowShape
         {
-            get
-            {
-                return showShape;
-            }
+            get;
             set
             {
-                showShape = value;
-                OnPropertyChanged("ShowShape");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showEarnings;
         [HorseDataToShow("Intjänat", "ShowEarnings", DataToShowUsage.Everywhere, 3)]
         [DataMember]
         public bool ShowEarnings
         {
-            get
-            {
-                return showEarnings;
-            }
+            get;
             set
             {
-                showEarnings = value;
-                OnPropertyChanged("ShowEarnings");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showEarningsMeanLast5;
         [HorseDataToShow("Intjänat senaste 5", "ShowEarningsMeanLast5", DataToShowUsage.Everywhere, 3)]
         [DataMember]
         public bool ShowEarningsMeanLast5
         {
-            get
-            {
-                return showEarningsMeanLast5;
-            }
+            get;
             set
             {
-                showEarningsMeanLast5 = value;
-                OnPropertyChanged("ShowEarningsMeanLast5");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showLocked;
-        [HorseDataToShow("Lås", "ShowLocked", DataToShowUsage.Vxx | DataToShowUsage.ComplementaryRule | DataToShowUsage.Correction, 3)]
+        [HorseDataToShow("Lås", "ShowLocked",
+            DataToShowUsage.Vxx | DataToShowUsage.ComplementaryRule | DataToShowUsage.Correction, 3)]
         [DataMember]
         public bool ShowLocked
         {
-            get
-            {
-                return showLocked;
-            }
+            get;
             set
             {
-                showLocked = value;
-                OnPropertyChanged("ShowLocked");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showDaysSinceLastStart;
         //[HorseDataToShow("Senaste start", "ShowDaysSinceLastStart", DataToShowUsage.All, 3)]
         [DataMember]
         public bool ShowDaysSinceLastStart
         {
-            get
-            {
-                return showDaysSinceLastStart;
-            }
+            get;
             set
             {
-                showDaysSinceLastStart = value;
-                OnPropertyChanged("ShowDaysSinceLastStart");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showDistance;
         [HorseDataToShow("Distans inklusive tillägg", "ShowDistance", DataToShowUsage.Everywhere, 3)]
         [DataMember]
         public bool ShowDistance
         {
-            get
-            {
-                return showDistance;
-            }
+            get;
             set
             {
-                showDistance = value;
-                OnPropertyChanged("ShowDistance");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showShoeInfo;
         [HorseDataToShow("Skoinformation", "ShowShoeInfo", DataToShowUsage.Everywhere, 3)]
         [DataMember]
         public bool ShowShoeInfo
         {
-            get
-            {
-                return showShoeInfo;
-            }
+            get;
             set
             {
-                showShoeInfo = value;
-                OnPropertyChanged("ShowShoeInfo");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showSulkyInfo;
         [HorseDataToShow("Vagninformation", "ShowSulkyInfo", DataToShowUsage.Everywhere, 3)]
         [DataMember]
         public bool ShowSulkyInfo
         {
-            get
-            {
-                return showSulkyInfo;
-            }
+            get;
             set
             {
-                showSulkyInfo = value;
-                OnPropertyChanged("ShowSulkyInfo");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showComments;
         [HorseDataToShow("Kommentarer", "ShowComments", DataToShowUsage.None, 3, true)]
         [DataMember]
         public bool ShowComments
         {
-            get
-            {
-                return showComments;
-            }
+            get;
             set
             {
-                showComments = value;
-                OnPropertyChanged("ShowComments");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showLastStartDate;
         [HorseDataToShow("Senaste start", "ShowLastStartDate", DataToShowUsage.Everywhere, 3)]
         [DataMember]
         public bool ShowLastStartDate
         {
-            get
-            {
-                return showLastStartDate;
-            }
+            get;
             set
             {
-                showLastStartDate = value;
-                OnPropertyChanged("ShowLastStartDate");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showResultRow;
         [HorseDataToShow("Resultatrad", "ShowResultRow", DataToShowUsage.Everywhere, 8)]
         [DataMember]
         public bool ShowResultRow
         {
-            get
-            {
-                return showResultRow;
-            }
+            get;
             set
             {
-                showResultRow = value;
-                OnPropertyChanged("ShowResultRow");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showSystemCoverage;
-        [HorseDataToShow("Täckning", "ShowSystemCoverage", DataToShowUsage.Vxx | DataToShowUsage.ComplementaryRule | DataToShowUsage.Correction, 9)]
+        [HorseDataToShow("Täckning", "ShowSystemCoverage",
+            DataToShowUsage.Vxx | DataToShowUsage.ComplementaryRule | DataToShowUsage.Correction, 9)]
         [DataMember]
         public bool ShowSystemCoverage
         {
-            get
-            {
-                return showSystemCoverage;
-            }
+            get;
             set
             {
-                showSystemCoverage = value;
-                OnPropertyChanged("ShowSystemCoverage");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showRankMean;
         [HorseDataToShow("Snittrank", "ShowRankMean", DataToShowUsage.Everywhere, 10)]
         [DataMember]
         public bool ShowRankMean
         {
-            get
-            {
-                return showRankMean;
-            }
+            get;
             set
             {
-                showRankMean = value;
-                OnPropertyChanged("ShowRankMean");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showRankOwn;
         [HorseDataToShow("Egen rank", "ShowRankOwn", DataToShowUsage.Everywhere, 11, true)]
         [DataMember]
         public bool ShowRankOwn
         {
-            get
-            {
-                return showRankOwn;
-            }
+            get;
             set
             {
-                showRankOwn = value;
-                OnPropertyChanged("ShowRankOwn");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showRankAlternate;
         [HorseDataToShow("Poäng", "ShowRankAlternate", DataToShowUsage.Everywhere, 11, true)]
         [DataMember]
         public bool ShowRankAlternate
         {
-            get
-            {
-                return showRankAlternate;
-            }
+            get;
             set
             {
-                showRankAlternate = value;
-                OnPropertyChanged("ShowRankAlternate");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showRankTip;
-        [HorseDataToShow("Tipsrank", "ShowRankTip", DataToShowUsage.Vxx | DataToShowUsage.ComplementaryRule | DataToShowUsage.Correction, 12, true)]
-        [DataMember]
-        public bool ShowRankTip
-        {
-            get
-            {
-                return showRankTip;
-            }
-            set
-            {
-                showRankTip = value;
-                OnPropertyChanged("ShowRankTip");
-            }
-        }
+        //private bool showRankTip;
+        //[HorseDataToShow("Tipsrank", "ShowRankTip", DataToShowUsage.Vxx | DataToShowUsage.ComplementaryRule | DataToShowUsage.Correction, 12, true)]
+        //[DataMember]
+        //public bool ShowRankTip
+        //{
+        //    get
+        //    {
+        //        return showRankTip;
+        //    }
+        //    set
+        //    {
+        //        showRankTip = value;
+        //        OnPropertyChanged("ShowRankTip");
+        //    }
+        //}
 
-        private bool showOwnInformation;
         [HorseDataToShow("Egen info", "ShowOwnInformation", DataToShowUsage.Everywhere, 11, true)]
         [DataMember]
         public bool ShowOwnInformation
         {
-            get
-            {
-                return showOwnInformation;
-            }
+            get;
             set
             {
-                showOwnInformation = value;
-                OnPropertyChanged("ShowOwnInformation");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showDoubleShare;
         [HorseDataToShow("DD/LD-andel", "ShowDoubleShare", DataToShowUsage.Everywhere, 11, true)]
         [DataMember]
         public bool ShowDoubleShare
         {
-            get
-            {
-                return showDoubleShare;
-            }
+            get;
             set
             {
-                showDoubleShare = value;
-                OnPropertyChanged("ShowDoubleShare");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showTvillingShare;
         [HorseDataToShow("Tvillingandel", "ShowTvillingShare", DataToShowUsage.Everywhere, 11, true)]
         [DataMember]
         public bool ShowTvillingShare
         {
-            get
-            {
-                return showTvillingShare;
-            }
+            get;
             set
             {
-                showTvillingShare = value;
-                OnPropertyChanged("ShowTvillingShare");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showTrioShare;
         [HorseDataToShow("Trio-andel", "ShowTrioShare", DataToShowUsage.Everywhere, 11, true)]
         [DataMember]
         public bool ShowTrioShare
         {
-            get
-            {
-                return showTrioShare;
-            }
+            get;
             set
             {
-                showTrioShare = value;
-                OnPropertyChanged("ShowTrioShare");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showPlatsShare;
         [HorseDataToShow("Platsandel", "ShowPlatsShare", DataToShowUsage.Everywhere, 11, true)]
         [DataMember]
         public bool ShowPlatsShare
         {
-            get
-            {
-                return showPlatsShare;
-            }
+            get;
             set
             {
-                showPlatsShare = value;
-                OnPropertyChanged("ShowPlatsShare");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showStakeShare;
         //[HorseDataToShow("Alt. insatsfördelning", "ShowStakeShare", DataToShowUsage.Vxx | DataToShowUsage.ComplementaryRule | DataToShowUsage.Correction, 11, true)]
         [HorseDataToShow("Alt. insatsfördelning", "ShowStakeShare", DataToShowUsage.Everywhere, 11, true)]
         [DataMember]
         public bool ShowStakeShare
         {
-            get
-            {
-                return showStakeShare;
-            }
+            get;
             set
             {
-                showStakeShare = value;
-                OnPropertyChanged("ShowStakeShare");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showHeadToHead;
+        [HorseDataToShow("Insatsfördelning relativt favoriten", "ShowStakeShareRelativeToFavourite",
+            DataToShowUsage.Vxx, 11, true)]
+        [DataMember]
+        public bool ShowStakeShareRelativeToFavourite
+        {
+            get;
+            set
+            {
+                field = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [HorseDataToShow("Insatsfördelning relativt föregående- och nästrankad", "ShowStakeShareRelativeToNext",
+            DataToShowUsage.Vxx, 12, true)]
+        [DataMember]
+        public bool ShowStakeShareRelativeToNext
+        {
+            get;
+            set
+            {
+                field = value;
+                OnPropertyChanged();
+            }
+        }
+
         [HorseDataToShow("Inbördes möten", "ShowHeadToHead", DataToShowUsage.Everywhere, 12, true)]
         [DataMember]
         public bool ShowHeadToHead
         {
-            get
-            {
-                return showHeadToHead;
-            }
+            get;
             set
             {
-                showHeadToHead = value;
-                OnPropertyChanged("ShowHeadToHead");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showRelativeDifference;
-        [HorseDataToShow("Insatsutveckling", "ShowRelativeDifference", DataToShowUsage.Vxx | DataToShowUsage.ComplementaryRule | DataToShowUsage.Correction, 12, true)]
+        [HorseDataToShow("Insatsutveckling", "ShowRelativeDifference",
+            DataToShowUsage.Vxx | DataToShowUsage.ComplementaryRule | DataToShowUsage.Correction, 12, true)]
         [DataMember]
         public bool ShowRelativeDifference
         {
-            get
-            {
-                return showRelativeDifference;
-            }
+            get;
             set
             {
-                showRelativeDifference = value;
-                OnPropertyChanged("ShowRelativeDifference");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showRelativeDifferenceVinnare;
-        [HorseDataToShow("Insatsutveckling (V)", "ShowRelativeDifferenceVinnare", DataToShowUsage.Vxx | DataToShowUsage.ComplementaryRule | DataToShowUsage.Correction, 12, true)]
-        [DataMember]
-        public bool ShowRelativeDifferenceVinnare
-        {
-            get
-            {
-                return showRelativeDifferenceVinnare;
-            }
-            set
-            {
-                showRelativeDifferenceVinnare = value;
-                OnPropertyChanged("ShowRelativeDifferenceVinnare");
-            }
-        }
+        //private bool showRelativeDifferenceVinnare;
+        //[HorseDataToShow("Insatsutveckling (V)", "ShowRelativeDifferenceVinnare", DataToShowUsage.Vxx | DataToShowUsage.ComplementaryRule | DataToShowUsage.Correction, 12, true)]
+        //[DataMember]
+        //public bool ShowRelativeDifferenceVinnare
+        //{
+        //    get
+        //    {
+        //        return showRelativeDifferenceVinnare;
+        //    }
+        //    set
+        //    {
+        //        showRelativeDifferenceVinnare = value;
+        //        OnPropertyChanged("ShowRelativeDifferenceVinnare");
+        //    }
+        //}
 
-        private bool showRelativeDifferencePlats;
-        [HorseDataToShow("Insatsutveckling (P)", "ShowRelativeDifferencePlats", DataToShowUsage.Vxx | DataToShowUsage.ComplementaryRule | DataToShowUsage.Correction, 12, true)]
-        [DataMember]
-        public bool ShowRelativeDifferencePlats
-        {
-            get
-            {
-                return showRelativeDifferencePlats;
-            }
-            set
-            {
-                showRelativeDifferencePlats = value;
-                OnPropertyChanged("ShowRelativeDifferencePlats");
-            }
-        }
+        //private bool showRelativeDifferencePlats;
+        //[HorseDataToShow("Insatsutveckling (P)", "ShowRelativeDifferencePlats", DataToShowUsage.Vxx | DataToShowUsage.ComplementaryRule | DataToShowUsage.Correction, 12, true)]
+        //[DataMember]
+        //public bool ShowRelativeDifferencePlats
+        //{
+        //    get
+        //    {
+        //        return showRelativeDifferencePlats;
+        //    }
+        //    set
+        //    {
+        //        showRelativeDifferencePlats = value;
+        //        OnPropertyChanged("ShowRelativeDifferencePlats");
+        //    }
+        //}
 
-        private bool showSTHorseLink;
         [HorseDataToShow("Hästinfo på ST", "ShowSTHorseLink", DataToShowUsage.Everywhere, 12, true)]
         [DataMember]
         public bool ShowSTHorseLink
         {
-            get
-            {
-                return showSTHorseLink;
-            }
+            get;
             set
             {
-                showSTHorseLink = value;
-                OnPropertyChanged("ShowSTHorseLink");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showResultInfo;
         [HorseDataToShow("Dagens resultat", "ShowResultInfo", DataToShowUsage.Everywhere, 12, true)]
         [DataMember]
         public bool ShowResultInfo
         {
-            get
-            {
-                return showResultInfo;
-            }
+            get;
             set
             {
-                showResultInfo = value;
-                OnPropertyChanged("ShowResultInfo");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
         #region Specialfält som inte är konfigurerbara
 
-        private bool showComplimentaryRuleSelect;
         [HorseDataToShow("Utgång", "ShowComplimentaryRuleSelect", DataToShowUsage.None, 2)]
         [DataMember]
         public bool ShowComplimentaryRuleSelect
         {
-            get
-            {
-                return showComplimentaryRuleSelect;
-            }
+            get;
             set
             {
-                showComplimentaryRuleSelect = value;
-                OnPropertyChanged("ShowComplimentaryRuleSelect");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -856,51 +719,43 @@ namespace HPTClient
 
         #region Obsolete
 
-        private bool showMarksPercent;
-        //[HorseDataToShow("Streckprocent", "ShowMarksPercent", DataToShowUsage.Vxx | DataToShowUsage.ComplementaryRule | DataToShowUsage.Correction, 3)]
-        //[DataMember]
-        public bool ShowMarksPercent
-        {
-            get
-            {
-                return showMarksPercent;
-            }
-            set
-            {
-                showMarksPercent = value;
-                OnPropertyChanged("ShowMarksPercent");
-            }
-        }
+        //private bool showMarksPercent;
+        ////[HorseDataToShow("Streckprocent", "ShowMarksPercent", DataToShowUsage.Vxx | DataToShowUsage.ComplementaryRule | DataToShowUsage.Correction, 3)]
+        ////[DataMember]
+        //public bool ShowMarksPercent
+        //{
+        //    get
+        //    {
+        //        return showMarksPercent;
+        //    }
+        //    set
+        //    {
+        //        showMarksPercent = value;
+        //        OnPropertyChanged("ShowMarksPercent");
+        //    }
+        //}
 
-        private bool showMarksShare;
         //[HorseDataToShow("Streckandel", "ShowMarksShare", DataToShowUsage.Vxx | DataToShowUsage.ComplementaryRule | DataToShowUsage.Correction, 3)]
         //[DataMember]
         public bool ShowMarksShare
         {
-            get
-            {
-                return showMarksShare;
-            }
+            get;
             set
             {
-                showMarksShare = value;
-                OnPropertyChanged("ShowMarksShare");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showMarksQuantity;
         //[HorseDataToShow("Streckantal", "ShowMarksQuantity", DataToShowUsage.Vxx | DataToShowUsage.ComplementaryRule | DataToShowUsage.Correction, 3)]
         //[DataMember]
         public bool ShowMarksQuantity
         {
-            get
-            {
-                return showMarksQuantity;
-            }
+            get;
             set
             {
-                showMarksQuantity = value;
-                OnPropertyChanged("ShowMarksQuantity");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -908,214 +763,159 @@ namespace HPTClient
 
         #region Obsolete ranks
 
-        private bool showRankATG;
-        [HorseDataToShow("ATG-Rank", "ShowRankATG", DataToShowUsage.Vxx | DataToShowUsage.ComplementaryRule | DataToShowUsage.Correction, 20)]
+        [HorseDataToShow("ATG-Rank", "ShowRankATG",
+            DataToShowUsage.Vxx | DataToShowUsage.ComplementaryRule | DataToShowUsage.Correction, 20)]
         [DataMember]
         public bool ShowRankATG
         {
-            get
-            {
-                return showRankATG;
-            }
+            get;
             set
             {
-                showRankATG = value;
-                OnPropertyChanged("ShowRankATG");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showRankVinnarOdds;
         [DataMember]
         public bool ShowRankVinnarOdds
         {
-            get
-            {
-                return showRankVinnarOdds;
-            }
+            get;
             set
             {
-                showRankVinnarOdds = value;
-                OnPropertyChanged("ShowRankVinnarOdds");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showRankMarks;
         [DataMember]
         public bool ShowRankMarks
         {
-            get
-            {
-                return showRankMarks;
-            }
+            get;
             set
             {
-                showRankMarks = value;
-                OnPropertyChanged("ShowRankMarks");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showRankMarkability;
         [DataMember]
         public bool ShowRankMarkability
         {
-            get
-            {
-                return showRankMarkability;
-            }
+            get;
             set
             {
-                showRankMarkability = value;
-                OnPropertyChanged("ShowRankMarkability");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showRankRecord;
         [DataMember]
         public bool ShowRankRecord
         {
-            get
-            {
-                return showRankRecord;
-            }
+            get;
             set
             {
-                showRankRecord = value;
-                OnPropertyChanged("ShowRankRecord");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showRankShape;
         [DataMember]
         public bool ShowRankShape
         {
-            get
-            {
-                return showRankShape;
-            }
+            get;
             set
             {
-                showRankShape = value;
-                OnPropertyChanged("ShowRankShape");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showRankEarnings;
         [DataMember]
         public bool ShowRankEarnings
         {
-            get
-            {
-                return showRankEarnings;
-            }
+            get;
             set
             {
-                showRankEarnings = value;
-                OnPropertyChanged("ShowRankEarnings");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showRankEarningsMeanLast5;
         [DataMember]
         public bool ShowRankEarningsMeanLast5
         {
-            get
-            {
-                return showRankEarningsMeanLast5;
-            }
+            get;
             set
             {
-                showRankEarningsMeanLast5 = value;
-                OnPropertyChanged("ShowRankEarningsMeanLast5");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showRankRecordWeighedTotal;
         [DataMember]
         public bool ShowRankRecordWeighedTotal
         {
-            get
-            {
-                return this.showRankRecordWeighedTotal;
-            }
+            get;
             set
             {
-                this.showRankRecordWeighedTotal = value;
-                OnPropertyChanged("ShowRankRecordWeighedTotal");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showRankRecordWeighedLast5;
         [DataMember]
         public bool ShowRankRecordWeighedLast5
         {
-            get
-            {
-                return this.showRankRecordWeighedLast5;
-            }
+            get;
             set
             {
-                this.showRankRecordWeighedLast5 = value;
-                OnPropertyChanged("ShowRankRecordWeighedLast5");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showRankEarningsMeanThisYear;
         [DataMember]
         public bool ShowRankEarningsMeanThisYear
         {
-            get
-            {
-                return this.showRankEarningsMeanThisYear;
-            }
+            get;
             set
             {
-                this.showRankEarningsMeanThisYear = value;
-                OnPropertyChanged("ShowRankEarningsMeanThisYear");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showRankEarningsMeanLastYear;
         [DataMember]
         public bool ShowRankEarningsMeanLastYear
         {
-            get
-            {
-                return this.showRankEarningsMeanLastYear;
-            }
+            get;
             set
             {
-                this.showRankEarningsMeanLastYear = value;
-                OnPropertyChanged("ShowRankEarningsMeanLastYear");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showRankTotalEarningsMean;
         [DataMember]
         public bool ShowRankTotalEarningsMean
         {
-            get
-            {
-                return this.showRankTotalEarningsMean;
-            }
+            get;
             set
             {
-                this.showRankTotalEarningsMean = value;
-                OnPropertyChanged("ShowRankTotalEarningsMean");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool showRankPlatsodds;
         [DataMember]
         public bool ShowRankPlatsodds
         {
-            get
-            {
-                return this.showRankPlatsodds;
-            }
+            get;
             set
             {
-                this.showRankPlatsodds = value;
-                OnPropertyChanged("ShowRankPlatsodds");
+                field = value;
+                OnPropertyChanged();
             }
         }
 

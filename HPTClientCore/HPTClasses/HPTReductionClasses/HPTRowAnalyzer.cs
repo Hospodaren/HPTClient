@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace HPTClient
+﻿namespace HPTClient
 {
     public class HPTRowAnalyzer
     {
@@ -23,11 +19,11 @@ namespace HPTClient
 
         public HPTRowAnalyzer(IEnumerable<HPTHorse> horseListToAnalyze, int numberOfRaces, Action<HPTMarkBetSingleRow> analyzeRow, Func<int, HPTRowAnalyzer, bool> analyzeRowInAdvance)
         {
-            this.HorseListToAnalyze = horseListToAnalyze;
-            this.NumberOfRaces = numberOfRaces;
-            this.HorseList = new HPTHorse[numberOfRaces];
-            this.AnalyzeRow = analyzeRow;
-            this.AnalyzeRowInAdvance = analyzeRowInAdvance;
+            HorseListToAnalyze = horseListToAnalyze;
+            NumberOfRaces = numberOfRaces;
+            HorseList = new HPTHorse[numberOfRaces];
+            AnalyzeRow = analyzeRow;
+            AnalyzeRowInAdvance = analyzeRowInAdvance;
         }
 
         public void MakeSingleRowCollection(object stateInfo)
@@ -35,35 +31,35 @@ namespace HPTClient
             try
             {
                 MakeSingleRowCollection(0);
-                this.IsFinished = true;
-                if (this.AnalyzingFinished != null)
+                IsFinished = true;
+                if (AnalyzingFinished != null)
                 {
-                    this.AnalyzingFinished();
+                    AnalyzingFinished();
                 }
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
         internal int numberOfAnalyzedRows = 0;
         private void MakeSingleRowCollection(int raceNumber)
         {
-            if (raceNumber == this.NumberOfRaces)
+            if (raceNumber == NumberOfRaces)
             {
-                if (this.StopCalculation)
+                if (StopCalculation)
                 {
-                    if (this.InterruptionSuceeded != null)
+                    if (InterruptionSuceeded != null)
                     {
-                        this.IsFinished = true;
-                        this.InterruptionSuceeded();
+                        IsFinished = true;
+                        InterruptionSuceeded();
                     }
                     return;
                 }
-                HPTMarkBetSingleRow singleRow = new HPTMarkBetSingleRow(this.HorseList);
+                var singleRow = new HPTMarkBetSingleRow(HorseList);
                 AnalyzeRow(singleRow);
-                this.numberOfAnalyzedRows++;
+                numberOfAnalyzedRows++;
                 return;
             }
             else if (raceNumber > 1)    // Andra loppet eller senare
@@ -73,9 +69,9 @@ namespace HPTClient
                     return;
                 }
             }
-            foreach (HPTHorse horse in this.HorseListToAnalyze.Where(h => h.ParentRace.LegNr == raceNumber + 1))
+            foreach (var horse in HorseListToAnalyze.Where(h => h.ParentRace.LegNr == raceNumber + 1))
             {
-                this.HorseList[raceNumber] = horse;
+                HorseList[raceNumber] = horse;
                 MakeSingleRowCollection(raceNumber + 1);
             }
         }

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 
 namespace HPTClient
@@ -20,80 +18,64 @@ namespace HPTClient
             }
         }
 
-        private ObservableCollection<HPTNumberOfWinners> numberOfWinnersList;
         [DataMember]
         public ObservableCollection<HPTNumberOfWinners> NumberOfWinnersList
         {
-            get
-            {
-                return this.numberOfWinnersList;
-            }
+            get;
             set
             {
-                this.numberOfWinnersList = value;
-                OnPropertyChanged("NumberOfWinnersList");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
         public bool IncludeRow(HPTMarkBetSingleRow singleRow, string propertyName)
         {
-            int horsesInInterval = 0;
-            foreach (HPTHorse horse in singleRow.HorseList)
+            var horsesInInterval = 0;
+            foreach (var horse in singleRow.HorseList)
             {
-                decimal horseValue = Convert.ToDecimal(horse.GetType().GetProperty(propertyName).GetValue(horse, null));
+                var horseValue = Convert.ToDecimal(horse.GetType().GetProperty(propertyName).GetValue(horse, null));
                 horsesInInterval += IsInInterval(horseValue) ? 1 : 0;
             }
-            return this.NumberOfWinnersList.First(now => now.NumberOfWinners == horsesInInterval).Selected;
+            return NumberOfWinnersList.First(now => now.NumberOfWinners == horsesInInterval).Selected;
         }
 
-        private bool use;
         [DataMember]
         public bool Use
         {
-            get
-            {
-                return use;
-            }
+            get;
             set
             {
-                this.use = value;
-                OnPropertyChanged("Use");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal lowerBoundary;
         [DataMember]
         public decimal LowerBoundary
         {
-            get
-            {
-                return lowerBoundary;
-            }
+            get;
             set
             {
-                this.lowerBoundary = value;
-                OnPropertyChanged("LowerBoundary");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal upperBoundary;
         [DataMember]
         public decimal UpperBoundary
         {
-            get
-            {
-                return upperBoundary;
-            }
+            get;
             set
             {
-                this.upperBoundary = value;
-                OnPropertyChanged("UpperBoundary");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
         public bool IsInInterval(decimal Value)
         {
-            return (Value >= this.LowerBoundary && Value <= this.UpperBoundary);
+            return (Value >= LowerBoundary && Value <= UpperBoundary);
         }
     }
 }

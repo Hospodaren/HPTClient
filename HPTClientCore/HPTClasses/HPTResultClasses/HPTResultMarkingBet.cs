@@ -12,78 +12,58 @@ namespace HPTClient
         [DataMember]
         public int[] Winners { get; set; }
 
-        private string[] winnerStrings;
         [XmlIgnore]
         public string[] WinnerStrings
         {
-            get
-            {
-                return this.winnerStrings;
-            }
+            get;
             set
             {
-                this.winnerStrings = value;
-                OnPropertyChanged("WinnerStrings");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int? value;
         [DataMember]
         public int? Value
         {
-            get
-            {
-                return value;
-            }
+            get;
             set
             {
-                this.value = value;
-                OnPropertyChanged("Value");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int systemsLeft;
         [DataMember]
-        public int SystemsLeft
+        public decimal? SystemsLeft
         {
-            get
-            {
-                return this.systemsLeft;
-            }
+            get;
             set
             {
-                this.systemsLeft = value;
-                OnPropertyChanged("SystemsLeft");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool hasResult;
         [DataMember]
         public bool HasResult
         {
-            get
-            {
-                return this.hasResult;
-            }
+            get;
             set
             {
-                this.hasResult = value;
-                OnPropertyChanged("HasResult");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private HPTHorse[] winnerList;
         [XmlIgnore]
         public HPTHorse[] WinnerList
         {
-            get
-            {
-                return this.winnerList;
-            }
+            get;
             set
             {
-                this.winnerList = value;
-                OnPropertyChanged("WinnerList");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -94,33 +74,25 @@ namespace HPTClient
     [DataContract]
     public class HPTPayOut : Notifier
     {
-        private int numberOfCorrect;
         [DataMember]
         public int NumberOfCorrect
         {
-            get
-            {
-                return this.numberOfCorrect;
-            }
+            get;
             set
             {
-                this.numberOfCorrect = value;
-                OnPropertyChanged("NumberOfCorrect");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int payOutAmount;
         [DataMember]
-        public int PayOutAmount
+        public decimal PayOutAmount
         {
-            get
-            {
-                return this.payOutAmount;
-            }
+            get;
             set
             {
-                this.payOutAmount = value;
-                OnPropertyChanged("PayOutAmount");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -130,61 +102,45 @@ namespace HPTClient
         //[DataMember]
         //public int TotalAmount { get; set; }
 
-        private int totalAmount;
         [DataMember]
         public int TotalAmount
         {
-            get
-            {
-                return this.totalAmount;
-            }
+            get;
             set
             {
-                this.totalAmount = value;
-                OnPropertyChanged("TotalAmount");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int numberOfWinningRows;
         [DataMember]
         public int NumberOfWinningRows
         {
-            get
-            {
-                return this.numberOfWinningRows;
-            }
+            get;
             set
             {
-                this.numberOfWinningRows = value;
-                OnPropertyChanged("NumberOfWinningRows");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int minRowValue;
         public int MinRowValue
         {
-            get
-            {
-                return this.minRowValue;
-            }
+            get;
             set
             {
-                this.minRowValue = value;
-                OnPropertyChanged("MinRowValue");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int maxRowValue;
         public int MaxRowValue
         {
-            get
-            {
-                return this.maxRowValue;
-            }
+            get;
             set
             {
-                this.maxRowValue = value;
-                OnPropertyChanged("MaxRowValue");
+                field = value;
+                OnPropertyChanged();
             }
         }
 

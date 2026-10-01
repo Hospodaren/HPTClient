@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 
 namespace HPTClient
@@ -10,12 +8,12 @@ namespace HPTClient
     {
         public override bool IncludeRow(HPTMarkBet markBet, HPTMarkBetSingleRow singleRow)
         {
-            if (!this.Use)
+            if (!Use)
             {
                 return false;
             }
 
-            int numberOfRulesFulfilled = 0;
+            var numberOfRulesFulfilled = 0;
             foreach (var reductionRule in markBet.ReductionRulesToApply)
             {
                 if (reductionRule.IncludeRow(markBet, singleRow))
@@ -23,62 +21,58 @@ namespace HPTClient
                     numberOfRulesFulfilled++;
                 }
             }
-            return this.NumberOfRulesList.First(nor => nor.NumberOfRules == numberOfRulesFulfilled).Selected;
+            return NumberOfRulesList.First(nor => nor.NumberOfRules == numberOfRulesFulfilled).Selected;
         }
 
         internal void UpdateNumberOfRules(int numberOfRules)
         {
-            if (this.NumberOfRulesList == null)
+            if (NumberOfRulesList == null)
             {
-                IEnumerable<HPTNumberOfRules> norList = Enumerable.Range(1, numberOfRules)
+                var norList = Enumerable.Range(1, numberOfRules)
                     .Select(nor => new HPTNumberOfRules()
                     {
                         NumberOfRules = nor
                     });
-                this.NumberOfRulesList = new ObservableCollection<HPTNumberOfRules>(norList);
+                NumberOfRulesList = new ObservableCollection<HPTNumberOfRules>(norList);
             }
-            else if (this.numberOfRulesList.Count == numberOfRules)
+            else if (numberOfRulesList.Count == numberOfRules)
             {
                 return;
             }
-            else if (this.numberOfRulesList.Count < numberOfRules)
+            else if (numberOfRulesList.Count < numberOfRules)
             {
-                int position = this.NumberOfRulesList.Count;
+                var position = NumberOfRulesList.Count;
                 while (position > numberOfRules)
                 {
-                    HPTNumberOfRules nor = this.NumberOfRulesList[position - 1];
+                    var nor = NumberOfRulesList[position - 1];
                     nor.Selected = false;
-                    this.NumberOfRulesList.Remove(nor);
+                    NumberOfRulesList.Remove(nor);
                     position--;
                 }
             }
-            else if (this.numberOfRulesList.Count > numberOfRules)
+            else if (numberOfRulesList.Count > numberOfRules)
             {
-                int position = this.NumberOfRulesList.Count;
+                var position = NumberOfRulesList.Count;
                 while (position < numberOfRules)
                 {
-                    HPTNumberOfRules nor = new HPTNumberOfRules()
+                    var nor = new HPTNumberOfRules()
                     {
                         NumberOfRules = position
                     };
-                    this.NumberOfRulesList.Add(nor);
+                    NumberOfRulesList.Add(nor);
                     position++;
                 }
             }
         }
 
-        private bool use;
         [DataMember]
         public bool Use
         {
-            get
-            {
-                return this.use;
-            }
+            get;
             set
             {
-                this.use = value;
-                OnPropertyChanged("Use");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -88,12 +82,12 @@ namespace HPTClient
         {
             get
             {
-                return this.numberOfRulesList;
+                return numberOfRulesList;
             }
             set
             {
-                this.numberOfRulesList = value;
-                OnPropertyChanged("NumberOfRulesList");
+                numberOfRulesList = value;
+                OnPropertyChanged();
             }
         }
     }

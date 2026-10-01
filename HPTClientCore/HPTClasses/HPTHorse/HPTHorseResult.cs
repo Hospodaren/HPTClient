@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 using System.Windows.Media;
 using System.Xml.Serialization;
 
@@ -51,22 +49,19 @@ namespace HPTClient
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public string Time { get; set; }
 
-        private decimal timeWeighed;
         [XmlIgnore]
         public decimal TimeWeighed
         {
             get
             {
-                if (this.timeWeighed == 0M)
-                {
-                    HPTServiceToHPTHelper.SetWeighedTime(this);
-                }
-                return this.timeWeighed;
+                // TODO: Anropa ATGToHPTHelper istället
+                //if (timeWeighed == 0M)
+                //{
+                //    HPTServiceToHPTHelper.SetWeighedTime(this);
+                //}
+                return field;
             }
-            set
-            {
-                this.timeWeighed = value;
-            }
+            set;
         }
 
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
@@ -85,21 +80,22 @@ namespace HPTClient
             }
         }
 
-        private Brush backColor;
+        public string ATGId { get; set; }
+
         [XmlIgnore]
         public Brush BackColor
         {
             get
             {
-                if (backColor == null)
+                if (field == null)
                 {
-                    Color c = Colors.White;
-                    if (this.Place == 1)
+                    var c = Colors.White;
+                    if (Place == 1)
                     {
                         //c = Colors.LightGreen;
                         c = HPTConfig.Config.ColorGood;
                     }
-                    else if (this.Place == 2 || this.Place == 3)
+                    else if (Place == 2 || Place == 3)
                     {
                         //c = Colors.LightYellow;
                         c = HPTConfig.Config.ColorMedium;
@@ -110,9 +106,9 @@ namespace HPTClient
                         c = HPTConfig.Config.ColorBad;
                     }
                     //backColor = new LinearGradientBrush(c, Colors.White, 90.0);
-                    backColor = new SolidColorBrush(c);
+                    field = new SolidColorBrush(c);
                 }
-                return backColor;
+                return field;
             }
         }
     }

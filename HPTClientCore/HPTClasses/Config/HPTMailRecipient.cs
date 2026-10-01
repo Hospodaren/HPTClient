@@ -6,54 +6,42 @@ namespace HPTClient
     [DataContract]
     public class HPTMailRecipient : Notifier
     {
-        private string name;
         [DataMember]
         public string Name
         {
-            get
-            {
-                return this.name;
-            }
+            get;
             set
             {
-                this.name = value;
-                OnPropertyChanged("Name");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private string eMailAddress;
         [DataMember]
         public string EMailAddress
         {
-            get
-            {
-                return this.eMailAddress;
-            }
+            get;
             set
             {
-                this.eMailAddress = value;
-                OnPropertyChanged("EMailAddress");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool selected;
         [XmlIgnore]
         public bool Selected
         {
-            get
-            {
-                return this.selected;
-            }
+            get;
             set
             {
-                this.selected = value;
-                OnPropertyChanged("Selected");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
         public override string ToString()
         {
-            return this.Name + " (" + this.EMailAddress + ")";
+            return $"{Name} ({EMailAddress})";
         }
     }
 }

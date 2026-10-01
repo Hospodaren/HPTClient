@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using ATGDownloader;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace HPTClient
@@ -13,7 +10,7 @@ namespace HPTClient
     public class HPTRace : Notifier, IHorseListContainer
     {
         // TEST
-        internal HPTService.HPTRace race;
+        internal ATGRaceAllInfo race;
 
         #region egna events
 
@@ -29,411 +26,509 @@ namespace HPTClient
 
         public HPTRace()
         {
-            this.HorseList = new List<HPTHorse>();
+            HorseList = new List<HPTHorse>();
         }
 
-        public HPTRace(HPTService.HPTRace race, HPTRaceDayInfo raceDayInfo)
+        public HPTRace(ATGRaceAllInfo race, HPTRaceDayInfo raceDayInfo)
         {
             //this.HorseList = new ObservableCollection<HPTHorse>();
-            this.ParentRaceDayInfo = raceDayInfo;
+            ParentRaceDayInfo = raceDayInfo;
             this.race = race;
         }
 
-        public void Merge(HPTService.HPTRace race)
+        public void Merge(ATGRaceAllInfo race)
         {
             try
             {
-                if (race.SharedInfo.RaceNr == this.RaceNr)
+                var pairedHorses = HorseList
+                    .Join(race.StartList, h => h.StartNr, s => s.Number, (h, s) => new { LocalHorse = h, RetrievedStart = s });
+
+                foreach (var horsePair in pairedHorses)
                 {
-                    this.TurnoverPlats = race.SharedInfo.TurnoverPlats > 0 ? race.SharedInfo.TurnoverPlats : this.TurnoverPlats;
-                    this.TurnoverTvilling = race.SharedInfo.TurnoverTvilling > 0 ? race.SharedInfo.TurnoverTvilling : this.TurnoverTvilling;
-                    this.TurnoverVinnare = race.SharedInfo.TurnoverVinnare > 0 ? race.SharedInfo.TurnoverVinnare : this.TurnoverVinnare;
+                    horsePair.LocalHorse.Merge(horsePair.RetrievedStart);
+                    horsePair.LocalHorse.SetColors();
+                }
 
-                    this.NumberOfStartingHorses = 0;
-                    foreach (HPTService.HPTHorse horse in race.HorseList)
-                    {
-                        var hptHorse = GetHorseByNumber((int)horse.StartNr);
-                        hptHorse.Merge(horse);
-                        hptHorse.SetColors();
-                    }
-                    switch (this.ParentRaceDayInfo.BetType.Code)
-                    {
-                        case "V4":
-                        case "V5":
-                        case "V64":
-                        case "V65":
-                        case "V75":
-                        case "V85":
-                        case "GS75":
-                        case "V86":
-                            break;
-                        case "T":
-                            this.CombinationListInfoTrio.CalculatePercentages(this.HorseList);
-                            break;
-                        //case "TV":
-                        //    this.CombinationListInfoTvilling.CalculatePercentages(this.HorseList);
-                        //    break;
-                        case "DD":
-                        case "LD":
-                            // Hantera eventuellt strukna hästar
-                            this.HorseList
-                                .Where(h => h.Selected && h.Scratched == true)
-                                .ToList()
-                                .ForEach(h => h.Selected = false);
-                            break;
-                        default:
-                            break;
-                    }
+                // TODO: Fixa i ATGHelper
+                //TurnoverPlats = race.TurnoverPlats > 0 ? race.SharedInfo.TurnoverPlats : TurnoverPlats;
+                //TurnoverTvilling = race.SharedInfo.TurnoverTvilling > 0 ? race.SharedInfo.TurnoverTvilling : TurnoverTvilling;
+                //TurnoverVinnare = race.SharedInfo.TurnoverVinnare > 0 ? race.SharedInfo.TurnoverVinnare : TurnoverVinnare;
 
-                    //PerformCalculations();
-                    SetCorrectStakeDistributionShare();
-                    SetCorrectStakeDistributionShareAlt1();
-                    SetCorrectStakeDistributionShareAlt2();
-
-                    if (race.SharedInfo.TvillingCombinationList != null && this.CombinationListInfoTvilling.CombinationList != null)
-                    {
+                switch (ParentRaceDayInfo.BetType.Code)
+                {
+                    case "T":
+                        CombinationListInfoTrio.CalculatePercentages(HorseList);
+                        break;
+                    //case "TV":
+                    //    this.CombinationListInfoTvilling.CalculatePercentages(this.HorseList);
+                    //    break;
+                    case "DD":
+                    case "LD":
                         // Hantera eventuellt strukna hästar
-                        var selectedScratchedHorses = this.HorseList.Where(h => h.Selected && h.Scratched == true).ToList();
-                        selectedScratchedHorses.ForEach(h =>
-                            {
-                                h.Selected = false;
-                                this.CombinationListInfoTvilling.CombinationList
-                                    .Where(c => c.Horse1 == h || c.Horse2 == h)
-                                    .ToList()
-                                    .ForEach(c =>
-                                    {
-                                        c.Selected = false;
-                                        c.Stake = null;
-                                    });
-                            });
-
-                        // Uppdatera alla kombinationer
-                        foreach (HPTService.HPTCombination comb in race.SharedInfo.TvillingCombinationList)
-                        {
-                            var hptComb = this.CombinationListInfoTvilling.CombinationList.First(c => c.UniqueCode == this.CombinationListInfoTvilling.GetUniqueCodeFromCombination(comb));
-                            hptComb.CombinationOdds = comb.CombinationOdds;
-                            hptComb.CombinationOddsExact = comb.CombinationOddsExact;
-                            hptComb.CalculateQuotas("TV");
-                        }
-                        this.CombinationListInfoTvilling.SortCombinationValues();
-                    }
-
-                    if (race.SharedInfo.TrioCombinationList != null && this.CombinationListInfoTrio.CombinationList != null)
-                    {
-                        CreateAllTrioCombinations(race.SharedInfo.TrioCombinationList);
-                        CombinationListInfoTrio.SortCombinationValues();
-                    }
-                }
-            }
-            catch (Exception exc)
-            {
-                string s = exc.Message;
-            }
-        }
-
-        public void ConvertRace(HPTService.HPTRace race)
-        {
-            this.Distance = race.SharedInfo.Distance;
-            this.StartMethodCode = race.SharedInfo.StartMethodCode;
-            this.PostTime = race.SharedInfo.PostTime;
-
-            Regex rexExtractNumber = new Regex("\\d+");
-            if (!string.IsNullOrEmpty(this.Distance) && rexExtractNumber.IsMatch(this.Distance))
-            {
-                Match m = rexExtractNumber.Match(this.Distance);
-                int iDistance = int.Parse(m.Value);
-                if (iDistance < 1800)
-                {
-                    this.DistanceCode = "K";
-                }
-                else if (iDistance > 2500)
-                {
-                    this.DistanceCode = "L";
-                }
-                else
-                {
-                    this.DistanceCode = "M";
+                        HorseList
+                            .Where(h => h.Selected && h.Scratched == true)
+                            .ToList()
+                            .ForEach(h => h.Selected = false);
+                        break;
+                    default:
+                        break;
                 }
 
-                if (this.StartMethodCode == "A")
-                {
-                    this.StartMethodAndDistanceCode = this.StartMethodCode + this.DistanceCode;
-                }
-                else
-                {
-                    this.StartMethodAndDistanceCode = this.DistanceCode;
-                }
-            }
-            else
-            {
-                this.DistanceCode = string.Empty;
-            }
+                // Gör beräkningar och klassificeringar
+                SetCorrectStakeDistributionShare();
+                CalculateDynamicGameValues();
 
-            this.RaceNr = race.SharedInfo.RaceNr;
-            this.LegNr = race.LegNr;
-            this.RaceName = race.SharedInfo.RaceName;
-            this.RaceInfoShort = race.SharedInfo.RaceInfoShort.Replace("\n", string.Empty);
-            this.RaceInfoLong = race.SharedInfo.RaceInfoLong;
-            this.RaceShortText = "Lopp " + this.RaceNr.ToString();
-            this.ReservOrder = race.ReservOrder;
+                //PerformCalculations();
+                // TODO: Fixa i ATGHelper
+                //SetCorrectStakeDistributionShareAlt1();
+                //SetCorrectStakeDistributionShareAlt2();
 
-            this.ReservOrderList = new int[0];
-            if (this.ReservOrder != string.Empty)
-            {
-                string[] reservStringArray = this.ReservOrder.Split('-');
-                this.ReservOrderList = new int[reservStringArray.Length];
-                for (int i = 0; i < reservStringArray.Length; i++)
-                {
-                    this.ReservOrderList[i] = int.Parse(reservStringArray[i]);
-                }
-            }
-
-            this.StartMethod = race.SharedInfo.StartMethod;
-            this.StartMethodCode = race.SharedInfo.StartMethodCode;
-            this.TurnoverPlats = race.SharedInfo.TurnoverPlats;
-            this.TurnoverTvilling = race.SharedInfo.TurnoverTvilling;
-            this.TurnoverVinnare = race.SharedInfo.TurnoverVinnare;
-            this.TrackId = race.TrackId;
-
-            if (race.HorseList != null)
-            {
-                //this.HorseList = new ObservableCollection<HPTHorse>();
-                this.HorseList = new List<HPTHorse>();
-
-                Parallel.ForEach(race.HorseList, horse =>
-                {
-                    var startNumberRankCollection = HPTConfig.Config.StartNumberRankCollectionList.FirstOrDefault(snr => snr.StartMethodCode == this.StartMethodCode);
-                    var hptHorse = new HPTHorse()
-                    {
-                        ParentRace = this
-                    };
-                    hptHorse.ConvertHorse(horse);
-                    this.HorseList.Add(hptHorse);
-                    hptHorse.CreateXReductionRuleList();
-
-                    // Sätt Spårrank utifrån Config
-                    if (startNumberRankCollection != null)
-                    {
-                        var startNumberRank = startNumberRankCollection.StartNumberRankList.FirstOrDefault(sr => sr.StartNumber == hptHorse.StartNr);
-                        if (startNumberRank != null && hptHorse.Scratched != true)
-                        {
-                            hptHorse.Selected = startNumberRank.Select;
-                            hptHorse.RankStartNumber = startNumberRank.Rank;
-                        }
-                    }
-                });
-
-                //foreach (HPTService.HPTHorse horse in race.HorseList)
-                //{
-                //    var startNumberRankCollection = HPTConfig.Config.StartNumberRankCollectionList.FirstOrDefault(snr => snr.StartMethodCode == this.StartMethodCode);
-                //    var hptHorse = this.HorseList.FirstOrDefault(h => h.StartNr == horse.StartInfo.StartNr);
-                //    if (hptHorse == null)
+                // TODO: Fixa i ATGHelper
+                //    if (race.SharedInfo.TvillingCombinationList != null && CombinationListInfoTvilling.CombinationList != null)
                 //    {
-                //        hptHorse = new HPTHorse();
-                //        hptHorse.ParentRace = this;
-                //        hptHorse.ConvertHorse(horse);
-                //        this.HorseList.Add(hptHorse);
-                //        hptHorse.CreateXReductionRuleList();
+                //        // Hantera eventuellt strukna hästar
+                //        var selectedScratchedHorses = HorseList.Where(h => h.Selected && h.Scratched == true).ToList();
+                //        selectedScratchedHorses.ForEach(h =>
+                //            {
+                //                h.Selected = false;
+                //                CombinationListInfoTvilling.CombinationList
+                //                    .Where(c => c.Horse1 == h || c.Horse2 == h)
+                //                    .ToList()
+                //                    .ForEach(c =>
+                //                    {
+                //                        c.Selected = false;
+                //                        c.Stake = null;
+                //                    });
+                //            });
+
+                //        // Uppdatera alla kombinationer
+                //        foreach (HPTService.HPTCombination comb in race.SharedInfo.TvillingCombinationList)
+                //        {
+                //            var hptComb = CombinationListInfoTvilling.CombinationList.First(c => c.UniqueCode == CombinationListInfoTvilling.GetUniqueCodeFromCombination(comb));
+                //            hptComb.CombinationOdds = comb.CombinationOdds;
+                //            hptComb.CombinationOddsExact = comb.CombinationOddsExact;
+                //            hptComb.CalculateQuotas("TV");
+                //        }
+                //        CombinationListInfoTvilling.SortCombinationValues();
                 //    }
 
-                //    // Sätt Spårrank utifrån Config
-                //    if (startNumberRankCollection != null)
+                //    if (race.SharedInfo.TrioCombinationList != null && CombinationListInfoTrio.CombinationList != null)
                 //    {
-                //        var startNumberRank = startNumberRankCollection.StartNumberRankList.FirstOrDefault(sr => sr.StartNumber == hptHorse.StartNr);
-                //        if (startNumberRank != null && hptHorse.Scratched != true)
-                //        {
-                //            hptHorse.Selected = startNumberRank.Select;
-                //            hptHorse.RankStartNumber = startNumberRank.Rank;
-                //        }
+                //        CreateAllTrioCombinations(race.SharedInfo.TrioCombinationList);
+                //        CombinationListInfoTrio.SortCombinationValues();
                 //    }
                 //}
 
-                // Sätt ATG-rank utifrån reservordning
-                for (int i = 0; i < this.ReservOrderList.Length; i++)
-                {
-                    HPTHorse hptHorse = this.GetHorseByNumber(this.ReservOrderList[i]);
-                    hptHorse.RankATG = i + 1;
-                }
-
-                this.SetCorrectStakeDistributionShare();
-                this.SetCorrectStakeDistributionShareAlt1();
-                this.SetCorrectStakeDistributionShareAlt2();
             }
-
-            if (this.ParentRaceDayInfo == null)
+            catch (Exception exc)
             {
-                return;
-            }
-
-            // Tvilling
-            if (this.ParentRaceDayInfo.BetType.Code == "TV")
-            {
-                this.CombinationListInfoTvilling = new HPTCombinationListInfo()
-                {
-                    CombinationList = new List<HPTCombination>(),
-                    BetType = this.ParentRaceDayInfo.BetType.Code
-                };
-
-                if (race.SharedInfo.TvillingCombinationList != null && race.SharedInfo.TvillingCombinationList.Length > 0)
-                {
-                    foreach (HPTService.HPTCombination comb in race.SharedInfo.TvillingCombinationList)
-                    {
-                        HPTCombination hptComb = new HPTCombination();
-                        hptComb.ParentRace = this;
-                        hptComb.ParentRaceDayInfo = this.ParentRaceDayInfo;
-                        hptComb.CombinationOdds = comb.CombinationOdds;
-                        hptComb.Horse1Nr = comb.Horse1Nr;
-                        hptComb.Horse2Nr = comb.Horse2Nr;
-                        hptComb.Horse3Nr = comb.Horse3Nr;
-
-                        hptComb.Horse1 = this.GetHorseByNumber(comb.Horse1Nr);
-                        hptComb.Horse2 = this.GetHorseByNumber(comb.Horse2Nr);
-
-                        hptComb.CalculateQuotas("TV");
-                        this.CombinationListInfoTvilling.CombinationList.Add(hptComb);
-                    }
-                    this.CombinationListInfoTvilling.SortCombinationValues();
-                }
-                else
-                {
-                    for (int horse1 = 0; horse1 < this.HorseList.Count - 1; horse1++)
-                    {
-                        //HPTHorse hptHorse1 = this.HorseList[horse1];
-                        HPTHorse hptHorse1 = this.HorseList.ElementAt(horse1);
-                        for (int horse2 = horse1 + 1; horse2 < this.HorseList.Count; horse2++)
-                        {
-                            //HPTHorse hptHorse2 = this.HorseList[horse2];
-                            HPTHorse hptHorse2 = this.HorseList.ElementAt(horse2);
-                            HPTCombination hptComb = new HPTCombination();
-                            hptComb.ParentRace = this;
-                            hptComb.ParentRaceDayInfo = this.ParentRaceDayInfo;
-                            hptComb.CombinationOdds = 0M;
-                            hptComb.Horse1Nr = hptHorse1.StartNr;
-                            hptComb.Horse2Nr = hptHorse2.StartNr;
-
-                            hptComb.Horse1 = hptHorse1;
-                            hptComb.Horse2 = hptHorse2;
-
-                            hptComb.CalculateQuotas("TV");
-                            this.CombinationListInfoTvilling.CombinationList.Add(hptComb);
-                        }
-                    }
-                }
-                foreach (var horse in this.HorseList)
-                {
-                    horse.OwnProbability = horse.StakeShareRounded;
-                }
-            }
-
-            // Trio
-            if (this.ParentRaceDayInfo.BetType.Code == "T")
-            {
-                this.CombinationListInfoTrio = new HPTCombinationListInfo()
-                {
-                    CombinationList = new List<HPTCombination>(),
-                    BetType = this.ParentRaceDayInfo.BetType.Code
-                };
-                this.CombinationListInfoTrio.CalculatePercentages(this.HorseList);
-                this.CreateAllTrioCombinations(race.SharedInfo.TrioCombinationList);
-                this.CombinationListInfoTrio.SortCombinationValues();
-            }
-
-            // Inbördes möte hästar emellan
-            this.FindHeadToHead();
-        }
-
-
-        internal void CreateAllTrioCombinations(HPTService.HPTCombination[] combArray)
-        {
-            // Beräkna äkta insatsfördelning per häst
-            decimal turnoverTrio1 = this.HorseList.Sum(h => h.TrioInfo.PlaceInfo1.Investment);
-            decimal turnoverTrio2 = this.HorseList.Sum(h => h.TrioInfo.PlaceInfo2.Investment);
-            decimal turnoverTrio3 = this.HorseList.Sum(h => h.TrioInfo.PlaceInfo3.Investment);
-            if (turnoverTrio1 > 0M && turnoverTrio2 > 0M && turnoverTrio3 > 0M)
-            {
-                this.HorseList.ToList().ForEach(h =>
-                    {
-                        h.TrioInfo.PlaceInfo1.InvestmentShare = h.TrioInfo.PlaceInfo1.Investment / turnoverTrio1;
-                        h.TrioInfo.PlaceInfo2.InvestmentShare = h.TrioInfo.PlaceInfo2.Investment / turnoverTrio2;
-                        h.TrioInfo.PlaceInfo3.InvestmentShare = h.TrioInfo.PlaceInfo3.Investment / turnoverTrio3;
-                    });
-            }
-
-            // Hantera eventuellt strukna hästar
-            var selectedScratchedHorses = this.HorseList.Where(h => h.Selected && h.Scratched == true).ToList();
-            selectedScratchedHorses.ForEach(h =>
-            {
-                h.Selected = false;
-                this.CombinationListInfoTrio.CombinationList
-                    .Where(c => c.Horse1 == h || c.Horse2 == h || c.Horse3 == h)
-                    .ToList()
-                    .ForEach(c =>
-                    {
-                        c.Stake = null;
-                    });
-            });
-
-            int maxOdds = combArray.Max(c => c.CombinationOdds) + 1;
-            foreach (var horse1 in this.HorseList.Where(h => h.Scratched == false || h.Scratched == null))
-            {
-                foreach (var horse2 in this.HorseList.Where(h => (h.Scratched == false || h.Scratched == null) && h.StartNr != horse1.StartNr))
-                {
-                    foreach (var horse3 in this.HorseList.Where(h => (h.Scratched == false || h.Scratched == null) && h.StartNr != horse1.StartNr && h.StartNr != horse2.StartNr))
-                    {
-                        var serviceComb = combArray.FirstOrDefault(c => c.Horse1Nr == horse1.StartNr && c.Horse2Nr == horse2.StartNr && c.Horse3Nr == horse3.StartNr);
-                        var hptComb = this.CombinationListInfoTrio.CombinationList.FirstOrDefault(c => c.Horse1Nr == horse1.StartNr && c.Horse2Nr == horse2.StartNr && c.Horse3Nr == horse3.StartNr);
-
-                        if (hptComb == null)
-                        {
-                            hptComb = new HPTCombination()
-                            {
-                                ParentRace = this,
-                                ParentRaceDayInfo = this.ParentRaceDayInfo,
-                                Horse1Nr = horse1.StartNr,
-                                Horse2Nr = horse2.StartNr,
-                                Horse3Nr = horse3.StartNr,
-                                Horse1 = horse1,
-                                Horse2 = horse2,
-                                Horse3 = horse3,
-                                CombinationOdds = serviceComb.CombinationOdds,
-                                CombinationOddsExact = serviceComb.CombinationOddsExact
-                            };
-                            hptComb.CalculateQuotas("T");
-                            this.CombinationListInfoTrio.CombinationList.Add(hptComb);
-                        }
-                        if (serviceComb != null)
-                        {
-                            hptComb.CombinationOdds = serviceComb.CombinationOdds;
-                            hptComb.CombinationOddsExact = serviceComb.CombinationOddsExact;
-                        }
-                        else
-                        {
-                            hptComb.CombinationOdds = maxOdds;
-                            hptComb.CombinationOddsExact = maxOdds;
-                        }
-                    }
-                }
+                var s = exc.Message;
             }
         }
 
-        internal void SetHorseTrioInfoValues()
+        internal void CalculateDynamicGameValues()
         {
-            this.HorseList
-                .Where(h => h.Scratched == false || h.Scratched == null)
+            // Nollställ alla hästar
+            HorseList.ToList()
+                .ForEach(h => 
+                {
+                    h.CategoryCode = StartCategoryCode.None; 
+                });
+
+            // Nya experimentella fält
+            var orderedArray = HorseList
+                .Where(h => h.Scratched != true)
+                .OrderByDescending(h => h.StakeDistributionShare)
+                .ToArray();
+
+            var favourite = orderedArray[0];
+            var runnerUp = orderedArray[1];
+            runnerUp.CategoryCode = StartCategoryCode.AndraTredjeeHandare;
+            orderedArray[2].CategoryCode = StartCategoryCode.AndraTredjeeHandare;
+            favourite.CategoryCode |= StartCategoryCode.Favorit;
+
+            Enumerable.Range(0, orderedArray.Length)
+                .ToList()
+                .ForEach(i =>
+                {
+                    var horse = orderedArray[i];
+                    horse.StakeShareRelativeToFavourite = horse.StakeDistributionShare / favourite.StakeDistributionShare;
+                    if (i < orderedArray.Length - 1)
+                    {
+                        var secondHorse = orderedArray[i + 1];
+                        if (secondHorse.StakeDistributionShare > 0M)
+                        {
+                            horse.StakeShareRelativeToNext = horse.StakeDistributionShare / secondHorse.StakeDistributionShare;
+                        }
+                        if (horse.StakeDistributionShare > 0M)
+                        {
+                            secondHorse.StakeShareRelativeToPrevious = secondHorse.StakeDistributionShare / horse.StakeDistributionShare;
+                        }
+                    }
+                    else
+                    {
+                        horse.StakeShareRelativeToNext = 0M;
+                    }
+                });
+
+            favourite.CategoryCode |= favourite.StakeShareRelativeToNext > 2M ? StartCategoryCode.Storfavorit : StartCategoryCode.EjStorfavorit;
+            favourite.CategoryCode |= favourite.StakeShareRelativeToNext > 3M ? StartCategoryCode.Megafavorit : StartCategoryCode.EjMegafavorit;
+            if (favourite.StakeShareRelativeToNext < 1.2M)
+            {
+                favourite.CategoryCode |= StartCategoryCode.KnappFavorit;
+            }
+
+
+            // Sätt övriga kategorier
+            HorseList
                 .ToList()
                 .ForEach(h =>
                 {
-                    h.TrioInfo = new HPTHorseTrioInfo()
+                    var categoryCode = h.StakeDistributionShare switch
                     {
-                        PlaceInfo1 = new HPTHorseTrioPlaceInfo()
-                        {
-                            //Investment = this.tu
-                        }
+                        < 0.015m => StartCategoryCode.Storskrall,
+                        < 0.04m => StartCategoryCode.Skrall,
+                        < 0.1m => StartCategoryCode.Overraskning,
+                        < 0.2m => StartCategoryCode.Mellanspelade,
+                        _ => StartCategoryCode.None
                     };
+                    h.CategoryCode |= categoryCode;
+
+                    if (h.ParentRace.TrackName == h.HomeTrack)
+                    {
+                        h.CategoryCode |= StartCategoryCode.Hemmahast;
+                    }
+                    if (!string.IsNullOrWhiteSpace(h.Nationality))
+                    {
+                        h.CategoryCode |= StartCategoryCode.Utlandshast;
+                    }
+                    if (h.ATGTrend > 0.01M)
+                    {
+                        h.CategoryCode |= StartCategoryCode.TrendarUppATG;
+                    }
+                    if (h.ATGTrend < -0.01M)
+                    {
+                        h.CategoryCode |= StartCategoryCode.TrendarNerATG;
+                    }
+                    if (h.LongTrend > 0.1M && h.ShortTrend > 0.05M)
+                    {
+                        h.CategoryCode |= StartCategoryCode.TrendarUppHPT;
+                    }
+                    if (h.LongTrend < -0.1M && h.ShortTrend < -0.05M)
+                    {
+                        h.CategoryCode |= StartCategoryCode.TrendarNerHPT;
+                    }
                 });
+
         }
 
+        public void ConvertRace(ATGRaceAllInfo race)
+        {
+            // TODO: Använd ATGRaceBase istället
+            //Distance = race.SharedInfo.Distance;
+            //StartMethodCode = race.SharedInfo.StartMethodCode;
+            //PostTime = race.SharedInfo.PostTime;
+
+            //Regex rexExtractNumber = new Regex("\\d+");
+            //if (!string.IsNullOrEmpty(Distance) && rexExtractNumber.IsMatch(Distance))
+            //{
+            //    Match m = rexExtractNumber.Match(Distance);
+            //    int iDistance = int.Parse(m.Value);
+            //    if (iDistance < 1800)
+            //    {
+            //        DistanceCode = "K";
+            //    }
+            //    else if (iDistance > 2500)
+            //    {
+            //        DistanceCode = "L";
+            //    }
+            //    else
+            //    {
+            //        DistanceCode = "M";
+            //    }
+
+            //    if (StartMethodCode == "A")
+            //    {
+            //        StartMethodAndDistanceCode = StartMethodCode + DistanceCode;
+            //    }
+            //    else
+            //    {
+            //        StartMethodAndDistanceCode = DistanceCode;
+            //    }
+            //}
+            //else
+            //{
+            //    DistanceCode = string.Empty;
+            //}
+
+            //RaceNr = race.SharedInfo.RaceNr;
+            //LegNr = race.LegNr;
+            //RaceName = race.SharedInfo.RaceName;
+            //RaceInfoShort = race.SharedInfo.RaceInfoShort.Replace("\n", string.Empty);
+            //RaceInfoLong = race.SharedInfo.RaceInfoLong;
+            //RaceShortText = "Lopp " + RaceNr.ToString();
+            ////this.ReservOrder = race.ReservOrder;
+
+            //ReservOrderList = new int[0];
+            ////if (this.ReservOrder != string.Empty)
+            ////{
+            ////    string[] reservStringArray = this.ReservOrder.Split('-');
+            ////    this.ReservOrderList = new int[reservStringArray.Length];
+            ////    for (int i = 0; i < reservStringArray.Length; i++)
+            ////    {
+            ////        this.ReservOrderList[i] = int.Parse(reservStringArray[i]);
+            ////    }
+            ////}
+
+            //StartMethod = race.SharedInfo.StartMethod;
+            //StartMethodCode = race.SharedInfo.StartMethodCode;
+            //TurnoverPlats = race.SharedInfo.TurnoverPlats;
+            //TurnoverTvilling = race.SharedInfo.TurnoverTvilling;
+            //TurnoverVinnare = race.SharedInfo.TurnoverVinnare;
+            //TrackId = race.TrackId;
+
+            //if (race.HorseList != null)
+            //{
+            //    //this.HorseList = new ObservableCollection<HPTHorse>();
+            //    HorseList = new List<HPTHorse>();
+
+            //    Parallel.ForEach(race.HorseList, horse =>
+            //    {
+            //        var startNumberRankCollection = HPTConfig.Config.StartNumberRankCollectionList.FirstOrDefault(snr => snr.StartMethodCode == StartMethodCode);
+            //        var hptHorse = new HPTHorse()
+            //        {
+            //            ParentRace = this
+            //        };
+            //        hptHorse.ConvertHorse(horse);
+            //        HorseList.Add(hptHorse);
+            //        hptHorse.CreateXReductionRuleList();
+
+            //        // Sätt Spårrank utifrån Config
+            //        if (startNumberRankCollection != null)
+            //        {
+            //            var startNumberRank = startNumberRankCollection.StartNumberRankList.FirstOrDefault(sr => sr.StartNumber == hptHorse.StartNr);
+            //            if (startNumberRank != null && hptHorse.Scratched != true)
+            //            {
+            //                hptHorse.Selected = startNumberRank.Select;
+            //                hptHorse.RankStartNumber = startNumberRank.Rank;
+            //            }
+            //        }
+            //    });
+
+            //    //foreach (HPTService.HPTHorse horse in race.HorseList)
+            //    //{
+            //    //    var startNumberRankCollection = HPTConfig.Config.StartNumberRankCollectionList.FirstOrDefault(snr => snr.StartMethodCode == this.StartMethodCode);
+            //    //    var hptHorse = this.HorseList.FirstOrDefault(h => h.StartNr == horse.StartInfo.StartNr);
+            //    //    if (hptHorse == null)
+            //    //    {
+            //    //        hptHorse = new HPTHorse();
+            //    //        hptHorse.ParentRace = this;
+            //    //        hptHorse.ConvertHorse(horse);
+            //    //        this.HorseList.Add(hptHorse);
+            //    //        hptHorse.CreateXReductionRuleList();
+            //    //    }
+
+            //    //    // Sätt Spårrank utifrån Config
+            //    //    if (startNumberRankCollection != null)
+            //    //    {
+            //    //        var startNumberRank = startNumberRankCollection.StartNumberRankList.FirstOrDefault(sr => sr.StartNumber == hptHorse.StartNr);
+            //    //        if (startNumberRank != null && hptHorse.Scratched != true)
+            //    //        {
+            //    //            hptHorse.Selected = startNumberRank.Select;
+            //    //            hptHorse.RankStartNumber = startNumberRank.Rank;
+            //    //        }
+            //    //    }
+            //    //}
+
+            //    // Sätt ATG-rank utifrån reservordning
+            //    for (int i = 0; i < ReservOrderList.Length; i++)
+            //    {
+            //        HPTHorse hptHorse = GetHorseByNumber(ReservOrderList[i]);
+            //        hptHorse.RankATG = i + 1;
+            //    }
+
+            //    SetCorrectStakeDistributionShare();
+            //    SetCorrectStakeDistributionShareAlt1();
+            //    SetCorrectStakeDistributionShareAlt2();
+            //}
+
+            //if (ParentRaceDayInfo == null)
+            //{
+            //    return;
+            //}
+
+            //// Tvilling
+            //if (ParentRaceDayInfo.BetType.Code == "TV")
+            //{
+            //    CombinationListInfoTvilling = new HPTCombinationListInfo()
+            //    {
+            //        CombinationList = new List<HPTCombination>(),
+            //        BetType = ParentRaceDayInfo.BetType.Code
+            //    };
+
+            //    if (race.SharedInfo.TvillingCombinationList != null && race.SharedInfo.TvillingCombinationList.Length > 0)
+            //    {
+            //        foreach (HPTService.HPTCombination comb in race.SharedInfo.TvillingCombinationList)
+            //        {
+            //            HPTCombination hptComb = new HPTCombination();
+            //            hptComb.ParentRace = this;
+            //            hptComb.ParentRaceDayInfo = ParentRaceDayInfo;
+            //            hptComb.CombinationOdds = comb.CombinationOdds;
+            //            hptComb.Horse1Nr = comb.Horse1Nr;
+            //            hptComb.Horse2Nr = comb.Horse2Nr;
+            //            hptComb.Horse3Nr = comb.Horse3Nr;
+
+            //            hptComb.Horse1 = GetHorseByNumber(comb.Horse1Nr);
+            //            hptComb.Horse2 = GetHorseByNumber(comb.Horse2Nr);
+
+            //            hptComb.CalculateQuotas("TV");
+            //            CombinationListInfoTvilling.CombinationList.Add(hptComb);
+            //        }
+            //        CombinationListInfoTvilling.SortCombinationValues();
+            //    }
+            //    else
+            //    {
+            //        for (int horse1 = 0; horse1 < HorseList.Count - 1; horse1++)
+            //        {
+            //            //HPTHorse hptHorse1 = this.HorseList[horse1];
+            //            HPTHorse hptHorse1 = HorseList.ElementAt(horse1);
+            //            for (int horse2 = horse1 + 1; horse2 < HorseList.Count; horse2++)
+            //            {
+            //                //HPTHorse hptHorse2 = this.HorseList[horse2];
+            //                HPTHorse hptHorse2 = HorseList.ElementAt(horse2);
+            //                HPTCombination hptComb = new HPTCombination();
+            //                hptComb.ParentRace = this;
+            //                hptComb.ParentRaceDayInfo = ParentRaceDayInfo;
+            //                hptComb.CombinationOdds = 0M;
+            //                hptComb.Horse1Nr = hptHorse1.StartNr;
+            //                hptComb.Horse2Nr = hptHorse2.StartNr;
+
+            //                hptComb.Horse1 = hptHorse1;
+            //                hptComb.Horse2 = hptHorse2;
+
+            //                hptComb.CalculateQuotas("TV");
+            //                CombinationListInfoTvilling.CombinationList.Add(hptComb);
+            //            }
+            //        }
+            //    }
+            //    foreach (var horse in HorseList)
+            //    {
+            //        horse.OwnProbability = horse.StakeShareRounded;
+            //    }
+            //}
+
+            //// Trio
+            //if (ParentRaceDayInfo.BetType.Code == "T")
+            //{
+            //    CombinationListInfoTrio = new HPTCombinationListInfo()
+            //    {
+            //        CombinationList = new List<HPTCombination>(),
+            //        BetType = ParentRaceDayInfo.BetType.Code
+            //    };
+            //    CombinationListInfoTrio.CalculatePercentages(HorseList);
+            //    CreateAllTrioCombinations(race.SharedInfo.TrioCombinationList);
+            //    CombinationListInfoTrio.SortCombinationValues();
+            //}
+
+            // Inbördes möte hästar emellan
+            FindHeadToHead();
+        }
+
+
+        //internal void CreateAllTrioCombinations(HPTService.HPTCombination[] combArray)
+        //{
+        //    // Beräkna äkta insatsfördelning per häst
+        //    decimal turnoverTrio1 = HorseList.Sum(h => h.TrioInfo.PlaceInfo1.Investment);
+        //    decimal turnoverTrio2 = HorseList.Sum(h => h.TrioInfo.PlaceInfo2.Investment);
+        //    decimal turnoverTrio3 = HorseList.Sum(h => h.TrioInfo.PlaceInfo3.Investment);
+        //    if (turnoverTrio1 > 0M && turnoverTrio2 > 0M && turnoverTrio3 > 0M)
+        //    {
+        //        HorseList.ToList().ForEach(h =>
+        //            {
+        //                h.TrioInfo.PlaceInfo1.InvestmentShare = h.TrioInfo.PlaceInfo1.Investment / turnoverTrio1;
+        //                h.TrioInfo.PlaceInfo2.InvestmentShare = h.TrioInfo.PlaceInfo2.Investment / turnoverTrio2;
+        //                h.TrioInfo.PlaceInfo3.InvestmentShare = h.TrioInfo.PlaceInfo3.Investment / turnoverTrio3;
+        //            });
+        //    }
+
+        //    // Hantera eventuellt strukna hästar
+        //    var selectedScratchedHorses = HorseList.Where(h => h.Selected && h.Scratched == true).ToList();
+        //    selectedScratchedHorses.ForEach(h =>
+        //    {
+        //        h.Selected = false;
+        //        CombinationListInfoTrio.CombinationList
+        //            .Where(c => c.Horse1 == h || c.Horse2 == h || c.Horse3 == h)
+        //            .ToList()
+        //            .ForEach(c =>
+        //            {
+        //                c.Stake = null;
+        //            });
+        //    });
+
+        //    int maxOdds = combArray.Max(c => c.CombinationOdds) + 1;
+        //    foreach (var horse1 in HorseList.Where(h => h.Scratched == false || h.Scratched == null))
+        //    {
+        //        foreach (var horse2 in HorseList.Where(h => (h.Scratched == false || h.Scratched == null) && h.StartNr != horse1.StartNr))
+        //        {
+        //            foreach (var horse3 in HorseList.Where(h => (h.Scratched == false || h.Scratched == null) && h.StartNr != horse1.StartNr && h.StartNr != horse2.StartNr))
+        //            {
+        //                var serviceComb = combArray.FirstOrDefault(c => c.Horse1Nr == horse1.StartNr && c.Horse2Nr == horse2.StartNr && c.Horse3Nr == horse3.StartNr);
+        //                var hptComb = CombinationListInfoTrio.CombinationList.FirstOrDefault(c => c.Horse1Nr == horse1.StartNr && c.Horse2Nr == horse2.StartNr && c.Horse3Nr == horse3.StartNr);
+
+        //                if (hptComb == null)
+        //                {
+        //                    hptComb = new HPTCombination()
+        //                    {
+        //                        ParentRace = this,
+        //                        ParentRaceDayInfo = ParentRaceDayInfo,
+        //                        Horse1Nr = horse1.StartNr,
+        //                        Horse2Nr = horse2.StartNr,
+        //                        Horse3Nr = horse3.StartNr,
+        //                        Horse1 = horse1,
+        //                        Horse2 = horse2,
+        //                        Horse3 = horse3,
+        //                        CombinationOdds = serviceComb.CombinationOdds,
+        //                        CombinationOddsExact = serviceComb.CombinationOddsExact
+        //                    };
+        //                    hptComb.CalculateQuotas("T");
+        //                    CombinationListInfoTrio.CombinationList.Add(hptComb);
+        //                }
+        //                if (serviceComb != null)
+        //                {
+        //                    hptComb.CombinationOdds = serviceComb.CombinationOdds;
+        //                    hptComb.CombinationOddsExact = serviceComb.CombinationOddsExact;
+        //                }
+        //                else
+        //                {
+        //                    hptComb.CombinationOdds = maxOdds;
+        //                    hptComb.CombinationOddsExact = maxOdds;
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
+
+        //internal void SetHorseTrioInfoValues()
+        //{
+        //    HorseList
+        //        .Where(h => h.Scratched == false || h.Scratched == null)
+        //        .ToList()
+        //        .ForEach(h =>
+        //        {
+        //            h.TrioInfo = new HPTHorseTrioInfo()
+        //            {
+        //                PlaceInfo1 = new HPTHorseTrioPlaceInfo()
+        //                {
+        //                    //Investment = this.tu
+        //                }
+        //            };
+        //        });
+        //}
+
         #region Properties
+
+        [DataMember]
+        public string AtgRaceId { get; set; }
 
         [DataMember]
         public int RaceNr { get; set; }
@@ -448,15 +543,15 @@ namespace HPTClient
         {
             get
             {
-                if (this.TrackId == null || this.TrackId == 0)
+                if (TrackId == null || TrackId == 0)
                 {
-                    if (this.ParentRaceDayInfo != null)
+                    if (ParentRaceDayInfo != null)
                     {
-                        return this.ParentRaceDayInfo.Trackname;
+                        return ParentRaceDayInfo.Trackname;
                     }
                     return null;
                 }
-                return EnumHelper.GetTrackNameFromTrackId(Convert.ToInt32(this.TrackId));
+                return EnumHelper.GetTrackNameFromTrackId(Convert.ToInt32(TrackId));
             }
         }
 
@@ -472,11 +567,11 @@ namespace HPTClient
         {
             get
             {
-                if (this.TrackId == null || this.TrackId == 0)
+                if (TrackId == null || TrackId == 0)
                 {
                     return null;
                 }
-                return EnumHelper.GetTrackCodeFromTrackId(Convert.ToInt32(this.TrackId));
+                return EnumHelper.GetTrackCodeFromTrackId(Convert.ToInt32(TrackId));
             }
         }
 
@@ -504,18 +599,14 @@ namespace HPTClient
         [DataMember]
         public DateTime PostTime { get; set; }
 
-        private DateTime updatedPostTime;
         [XmlIgnore]
         public DateTime UpdatedPostTime
         {
-            get
-            {
-                return this.updatedPostTime;
-            }
+            get;
             set
             {
-                this.updatedPostTime = value;
-                OnPropertyChanged("UpdatedPostTime");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -534,33 +625,25 @@ namespace HPTClient
         [DataMember]
         public string Distance { get; set; }
 
-        private decimal turnoverPlats;
         [DataMember]
         public decimal TurnoverPlats
         {
-            get
-            {
-                return turnoverPlats;
-            }
+            get;
             set
             {
-                this.turnoverPlats = value;
-                OnPropertyChanged("TurnoverPlats");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal turnoverVinnare;
         [DataMember]
         public decimal TurnoverVinnare
         {
-            get
-            {
-                return turnoverVinnare;
-            }
+            get;
             set
             {
-                this.turnoverVinnare = value;
-                OnPropertyChanged("TurnoverVinnare");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -570,56 +653,44 @@ namespace HPTClient
         //[DataMember]
         //public decimal TurnoverTvilling { get; set; }
 
-        private decimal turnoverTvilling;
         [DataMember]
         public decimal TurnoverTvilling
         {
-            get
-            {
-                return turnoverTvilling;
-            }
+            get;
             set
             {
-                this.turnoverTvilling = value;
-                OnPropertyChanged("TurnoverTvilling");
+                field = value;
+                OnPropertyChanged();
                 if (value > 0M)
                 {
-                    this.TurnoverCombination = (int)value;
+                    TurnoverCombination = (int)value;
                 }
             }
         }
 
-        private int turnoverTrio;
         [DataMember]
         public int TurnoverTrio
         {
-            get
-            {
-                return turnoverTrio;
-            }
+            get;
             set
             {
-                this.turnoverTrio = value;
-                OnPropertyChanged("TurnoverTrio");
+                field = value;
+                OnPropertyChanged();
                 if (value > 0M)
                 {
-                    this.TurnoverCombination = (int)value;
+                    TurnoverCombination = (int)value;
                 }
             }
         }
 
-        private int turnoverCombination;
         [DataMember]
         public int TurnoverCombination
         {
-            get
-            {
-                return turnoverCombination;
-            }
+            get;
             set
             {
-                this.turnoverCombination = value;
-                OnPropertyChanged("TurnoverCombination");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -628,33 +699,25 @@ namespace HPTClient
 
         public string[] BetTypes { get; set; }
 
-        private int reserv1Nr;
         [DataMember]
         public int Reserv1Nr
         {
-            get
-            {
-                return reserv1Nr;
-            }
+            get;
             set
             {
-                this.reserv1Nr = value;
-                OnPropertyChanged("Reserv1Nr");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int reserv2Nr;
         [DataMember]
         public int Reserv2Nr
         {
-            get
-            {
-                return reserv2Nr;
-            }
+            get;
             set
             {
-                this.reserv2Nr = value;
-                OnPropertyChanged("Reserv2Nr");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -662,10 +725,9 @@ namespace HPTClient
         //[DataMember(IsRequired = false, EmitDefaultValue = false)]
         //public int Reserv2Nr { get; set; }
 
-        [DataMember(IsRequired = false, EmitDefaultValue = false)]
-        public string ReservOrder { get; set; }
+        //[DataMember(IsRequired = false, EmitDefaultValue = false)]
+        //public string ReservOrder { get; set; }
 
-        private int[] reservOrderList;
         public int[] ReservOrderList
         {
             get
@@ -677,19 +739,17 @@ namespace HPTClient
                 //        .Select(h => h.StartNr)
                 //        .ToArray();
                 //}
-                if (this.reservOrderList == null)
+                if (field == null)
                 {
-                    this.reservOrderList = this.HorseList
+                    field = HorseList
                         .OrderByDescending(h => h.StakeDistribution)
                         .Select(h => h.StartNr)
                         .ToArray();
                 }
-                return this.reservOrderList;
+
+                return field;
             }
-            set
-            {
-                this.reservOrderList = value;
-            }
+            set;
         }
 
         //[DataMember(IsRequired = false, EmitDefaultValue = false)]
@@ -705,35 +765,31 @@ namespace HPTClient
             get
             {
                 //if (this.horseListSelected == null || this.horseListSelected.Count == 0)
-                if (this.horseListSelected == null)
+                if (horseListSelected == null)
                 {
-                    this.horseListSelected = this.HorseList.Where(h => h.Selected == true).ToList();
+                    horseListSelected = HorseList.Where(h => h.Selected == true).ToList();
                     //this.horseListSelected = this.HorseList.Where(h => h.Selected == true).ToList();
                     //this.NumberOfSelectedHorses = this.horseListSelected.Count;
                 }
-                return this.horseListSelected;
+                return horseListSelected;
             }
             set
             {
-                this.horseListSelected = value;
+                horseListSelected = value;
             }
         }
 
         [XmlIgnore]
         public HPTRaceDayInfo ParentRaceDayInfo { get; set; }
 
-        private bool locked;
         [DataMember]
         public bool Locked
         {
-            get
-            {
-                return this.locked;
-            }
+            get;
             set
             {
-                this.locked = value;
-                OnPropertyChanged("Locked");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -746,22 +802,22 @@ namespace HPTClient
         {
             get
             {
-                StringBuilder sb = new StringBuilder();
-                sb.Append(this.LegNrString);
+                var sb = new StringBuilder();
+                sb.Append(LegNrString);
                 sb.Append(" (");
-                sb.Append(this.PostTime.ToString("HH:mm"));
+                sb.Append(PostTime.ToString("HH:mm"));
                 sb.Append(") :");
                 //sb.Append(this.RaceName);
                 //sb.Append(" - ");
-                sb.Append(this.RaceInfoShort);
-                if (this.Reserv1Nr != 0)
+                sb.Append(RaceInfoShort);
+                if (Reserv1Nr != 0)
                 {
                     sb.Append(" (R1:");
-                    sb.Append(this.Reserv1Nr);
-                    if (this.Reserv2Nr != 0)
+                    sb.Append(Reserv1Nr);
+                    if (Reserv2Nr != 0)
                     {
                         sb.Append(", R2:");
-                        sb.Append(this.Reserv2Nr);
+                        sb.Append(Reserv2Nr);
                     }
                     sb.Append(")");
                 }
@@ -771,9 +827,9 @@ namespace HPTClient
 
         public string ToClipboardString()
         {
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine(this.ClipboardString);
-            foreach (HPTHorse horse in this.HorseListSelected)
+            var sb = new StringBuilder();
+            sb.AppendLine(ClipboardString);
+            foreach (var horse in HorseListSelected)
             {
                 sb.AppendLine(horse.ClipboardString);
             }
@@ -782,11 +838,11 @@ namespace HPTClient
 
         public string ToCompactClipboardString()
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.Append(LegNrString);
             //sb.AppendLine(this.ClipboardString);
 
-            for (int i = 0; i < 6; i++)
+            for (var i = 0; i < 6; i++)
             {
                 sb.Append(GetHorsesWithPrio(i));
             }
@@ -797,7 +853,7 @@ namespace HPTClient
         {
             var prio = (HPTPrio)prioValue;
             var sb = new StringBuilder();
-            var startNumberListWithPrio = this.HorseListSelected
+            var startNumberListWithPrio = HorseListSelected
                 .Where(h => h.Prio == prio)
                 .Select(h => h.StartNr.ToString());
 
@@ -809,7 +865,7 @@ namespace HPTClient
                     sb.Append(prio.ToString());
                     sb.Append(":");
                 }
-                string startNumbersString = startNumberListWithPrio.Aggregate((startnr, next) => startnr + ", " + next);
+                var startNumbersString = startNumberListWithPrio.Aggregate((startnr, next) => $"{startnr}, {next}");
                 sb.Append(startNumbersString);
             }
             return sb.ToString();
@@ -821,15 +877,15 @@ namespace HPTClient
 
         public int GetNumberOfX(HPTPrio prio)
         {
-            int numberOfX = this.HorseListSelected.Count(h => h.Prio == prio);
+            var numberOfX = HorseListSelected.Count(h => h.Prio == prio);
             return numberOfX;
         }
 
         public void SetTrioSelectionChanged(HPTHorse horse)
         {
-            if (this.TrioSelectionChanged != null)
+            if (TrioSelectionChanged != null)
             {
-                this.TrioSelectionChanged(horse, new EventArgs());
+                TrioSelectionChanged(horse, new EventArgs());
             }
         }
 
@@ -853,10 +909,10 @@ namespace HPTClient
             //{
             //    this.Locked = false;
             //}
-            if (this.NumberOfSelectedChanged != null)
+            if (NumberOfSelectedChanged != null)
             {
                 //this.NumberOfSelectedChanged(horse, new EventArgs());
-                this.NumberOfSelectedChanged(legNr, startNr, selected);
+                NumberOfSelectedChanged(legNr, startNr, selected);
             }
         }
 
@@ -877,119 +933,99 @@ namespace HPTClient
 
         public void SelectAll(bool selected)
         {
-            if (this.SetAllSelected != null)
+            if (SetAllSelected != null)
             {
-                this.SetAllSelected(this, selected);
+                SetAllSelected(this, selected);
             }
         }
 
         public void ClearABCDRace()
         {
-            if (this.ClearABCD != null)
+            if (ClearABCD != null)
             {
-                this.ClearABCD(this);
+                ClearABCD(this);
             }
         }
 
-        private int noSelected;
         [XmlIgnore]
         public int NumberOfSelectedHorses
         {
             get
             {
-                if (this.noSelected == 0)
+                if (field == 0)
                 {
-                    this.horseListSelected = this.HorseList.Where(h => h.Selected == true).ToList();
-                    this.noSelected = this.horseListSelected.Count;
+                    horseListSelected = HorseList.Where(h => h.Selected == true).ToList();
+                    field = horseListSelected.Count;
                 }
-                return this.noSelected;
+                return field;
             }
             set
             {
-                this.noSelected = value;
-                OnPropertyChanged("NumberOfSelectedHorses");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int numberOfStartingHorses;
         [XmlIgnore]
         public int NumberOfStartingHorses
         {
             get
             {
-                if (this.numberOfStartingHorses == 0)
+                if (field == 0)
                 {
-                    this.numberOfStartingHorses = this.HorseList.Count(h => h.Scratched == false || h.Scratched == null);
+                    field = HorseList.Count(h => h.Scratched == false || h.Scratched == null);
                 }
-                return this.numberOfStartingHorses;
+
+                return field;
             }
-            set
-            {
-                this.numberOfStartingHorses = value;
-            }
+            set;
         }
 
-        private decimal? ownProbabilitySum;
         //[DataMember(IsRequired = false, EmitDefaultValue = false)]
         public decimal? OwnProbabilitySum
         {
-            get
-            {
-                return ownProbabilitySum;
-            }
+            get;
             set
             {
-                ownProbabilitySum = value;
-                OnPropertyChanged("OwnProbabilitySum");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int rankOwnSum;
         public int RankOwnSum
         {
-            get
-            {
-                return rankOwnSum;
-            }
+            get;
             set
             {
-                rankOwnSum = value;
-                OnPropertyChanged("RankOwnSum");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int rankAlternateSum;
         public int RankAlternateSum
         {
-            get
-            {
-                return rankAlternateSum;
-            }
+            get;
             set
             {
-                rankAlternateSum = value;
-                OnPropertyChanged("RankAlternateSum");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int rankABCSum;
         public int RankABCSum
         {
-            get
-            {
-                return rankABCSum;
-            }
+            get;
             set
             {
-                rankABCSum = value;
-                OnPropertyChanged("RankABCSum");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
         internal void SetCorrectStakeDistributionShare()
         {
             // Rätta till exakt insatsfördelning
-            switch (this.ParentRaceDayInfo.BetType.Code)
+            switch (ParentRaceDayInfo.BetType.Code)
             {
                 case "V64":
                 case "V65":
@@ -997,22 +1033,22 @@ namespace HPTClient
                 case "GS75":
                 case "V85":
                 case "V86":
-                    decimal shareSum = this.HorseList.Sum(h => h.StakeDistributionShare);
-                    decimal shareSumWithoutScratchings = this.HorseList.Where(h => h.Scratched != true).Sum(h => h.StakeDistributionShare);
-                    decimal shareSumWithoutScratchingsQuota = 1M;
+                    var shareSum = HorseList.Sum(h => h.StakeDistributionShare);
+                    var shareSumWithoutScratchings = HorseList.Where(h => h.Scratched != true).Sum(h => h.StakeDistributionShare);
+                    var shareSumWithoutScratchingsQuota = 1M;
                     if (shareSum > 0)
                     {
                         shareSumWithoutScratchingsQuota = shareSumWithoutScratchings / shareSum;
                     }
-                    foreach (var horse in this.HorseList)
+                    foreach (var horse in HorseList)
                     {
                         if (shareSum > 0)
                         {
                             horse.StakeDistributionShare /= shareSum;
-                            horse.StakeShareRounded = Math.Round(horse.StakeDistributionShare, 3);
+                            //horse.StakeShareRounded = Math.Round(horse.StakeDistributionShare, 3);
                             if (horse.OwnProbability == null || horse.OwnProbability == 0M)
                             {
-                                horse.OwnProbability = horse.StakeShareRounded;
+                                horse.OwnProbability = Math.Round(horse.StakeDistributionShare, 3);
                             }
                             horse.StakeShareWithoutScratchings = horse.StakeDistributionShare / shareSumWithoutScratchingsQuota;
                         }
@@ -1020,13 +1056,12 @@ namespace HPTClient
                     break;
                 case "V4":
                 case "V5":
-                    decimal shareSumWithoutScratchingsVx = this.HorseList.Where(h => h.Scratched != true).Sum(h => h.StakeDistributionShare);
-                    foreach (var horse in this.HorseList)
+                    var shareSumWithoutScratchingsVx = HorseList.Where(h => h.Scratched != true).Sum(h => h.StakeDistributionShare);
+                    foreach (var horse in HorseList)
                     {
-                        horse.StakeShareRounded = Math.Round(horse.StakeDistributionShare, 3);
                         if (horse.OwnProbability == null || horse.OwnProbability == 0M)
                         {
-                            horse.OwnProbability = horse.StakeShareRounded;
+                            horse.OwnProbability = Math.Round(horse.StakeDistributionShare, 3);
                         }
                         if (shareSumWithoutScratchingsVx > 0)
                         {
@@ -1039,17 +1074,17 @@ namespace HPTClient
             }
 
             // Sätt ackumulerad insatsfördelning
-            foreach (var horse in this.HorseList)
+            foreach (var horse in HorseList)
             {
-                horse.StakeDistributionShareAccumulated = this.HorseList.Where(h => h.StakeDistributionShare >= horse.StakeDistributionShare).Sum(h => h.StakeDistributionShare);
+                horse.StakeDistributionShareAccumulated = HorseList.Where(h => h.StakeDistributionShare >= horse.StakeDistributionShare).Sum(h => h.StakeDistributionShare);
             }
         }
 
         internal void SetCorrectStakeDistributionShareAlt1()
         {
             // Rätta till alternativ insatsfördelning 1
-            decimal shareSum = this.HorseList.Sum(h => Convert.ToDecimal(h.StakeShareAlternate));
-            foreach (var horse in this.HorseList)
+            var shareSum = HorseList.Sum(h => Convert.ToDecimal(h.StakeShareAlternate));
+            foreach (var horse in HorseList)
             {
                 if (shareSum > 0)
                 {
@@ -1061,8 +1096,8 @@ namespace HPTClient
         internal void SetCorrectStakeDistributionShareAlt2()
         {
             // Rätta till alternativ insatsfördelning 2
-            decimal shareSum = this.HorseList.Sum(h => Convert.ToDecimal(h.StakeShareAlternate2));
-            foreach (var horse in this.HorseList)
+            var shareSum = HorseList.Sum(h => Convert.ToDecimal(h.StakeShareAlternate2));
+            foreach (var horse in HorseList)
             {
                 if (shareSum > 0)
                 {
@@ -1085,7 +1120,9 @@ namespace HPTClient
 
         public void FindHeadToHead()
         {
-            IEnumerable<List<HPTHorseResult>> horseResultList = this.HorseList
+            return;
+            // TODO: Så småningom kan det här vara bra att ha...
+            var horseResultList = HorseList
                 .SelectMany(h => h.ResultList)
                 .GroupBy(hr => new { hr.Date, hr.RaceNr, hr.TrackCode })
                 .Where(g => g.Count() > 1)
@@ -1099,7 +1136,7 @@ namespace HPTClient
                 }
             }
 
-            foreach (var horse in this.HorseList)
+            foreach (var horse in HorseList)
             {
                 horse.NumberOfHeadToHeadRaces = horse.ResultList.Count(r => r.HeadToHeadResultList != null);    // Antal lopp där det finns jämförelser
 
@@ -1142,75 +1179,59 @@ namespace HPTClient
             //}
         }
 
-        internal HPTHorse GetHorseByNumber(int startNr)
-        {
-            return this.HorseList.Where(h => h.StartNr == startNr).FirstOrDefault();
-        }
+        //internal HPTHorse GetHorseByNumber(int startNr)
+        //{
+        //    return HorseList.Where(h => h.StartNr == startNr).FirstOrDefault();
+        //}
 
         internal HPTHorse GetHorseByName(string name)
         {
-            return this.HorseList.Where(h => h.HorseName == name).FirstOrDefault();
+            return HorseList.Where(h => h.HorseName == name).FirstOrDefault();
         }
 
         //#region Result properties
 
-        private HPTLegResult legResult;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public HPTLegResult LegResult
         {
-            get
-            {
-                return this.legResult;
-            }
+            get;
             set
             {
-                this.legResult = value;
-                OnPropertyChanged("LegResult");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool hasResult;
         [XmlIgnore]
         public bool HasResult
         {
-            get
-            {
-                return this.hasResult;
-            }
+            get;
             set
             {
-                this.hasResult = value;
-                OnPropertyChanged("HasResult");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool splitVictory;
         [DataMember]
         public bool SplitVictory
         {
-            get
-            {
-                return this.splitVictory;
-            }
+            get;
             set
             {
-                this.splitVictory = value;
-                OnPropertyChanged("SplitVictory");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private string atgResultLink;
         [DataMember]
         public string ATGResultLink
         {
-            get
-            {
-                return this.atgResultLink;
-            }
+            get;
             set
             {
-                this.atgResultLink = value;
-                OnPropertyChanged("ATGResultLink");
+                field = value;
+                OnPropertyChanged();
             }
         }
 

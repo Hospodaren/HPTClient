@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 using System.Text;
 
 namespace HPTClient
@@ -23,7 +22,7 @@ namespace HPTClient
 
         public override bool IncludeRow(HPTMarkBet markBet, HPTHorse[] horseList, int numberOfRacesToTest)
         {
-            decimal partialSum = horseList.Take(numberOfRacesToTest).Sum(h => h.RankWeighted);
+            var partialSum = horseList.Take(numberOfRacesToTest).Sum(h => h.RankWeighted);
             return markBet.MaxRankSum > partialSum;
         }
 
@@ -38,12 +37,12 @@ namespace HPTClient
         public override string ToString(HPTMarkBet markBet)
         {
             // Create String representation
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.Append("Ranksumma ");
             sb.Append(markBet.MinRankSum);
             sb.Append(" - ");
             sb.Append(markBet.MaxRankSum);
-            this.ClipboardString = this.ReductionTypeString + "\r\n" + sb.ToString();
+            ClipboardString = $"{ReductionTypeString}\r\n{sb}";
             return sb.ToString();
         }
     }

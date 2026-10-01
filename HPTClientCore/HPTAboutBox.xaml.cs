@@ -16,19 +16,19 @@ namespace HPTClient
 
         private void hlHomePage_Click(object sender, RoutedEventArgs e)
         {
-            Hyperlink hl = (Hyperlink)sender;
+            var hl = (Hyperlink)sender;
             GoToUrl(hl.NavigateUri.OriginalString);
             //System.Diagnostics.Process.Start(hl.NavigateUri.OriginalString);
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void hlATGSpelAnsvar_Click(object sender, RoutedEventArgs e)
         {
-            Hyperlink hl = (Hyperlink)sender;
+            var hl = (Hyperlink)sender;
             GoToUrl(hl.NavigateUri.OriginalString);
             //System.Diagnostics.Process.Start(hl.NavigateUri.OriginalString);
         }

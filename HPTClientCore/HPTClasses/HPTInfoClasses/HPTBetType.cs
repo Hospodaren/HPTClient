@@ -1,6 +1,5 @@
-﻿using System;
+﻿using ATGDownloader;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Runtime.Serialization;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -11,6 +10,9 @@ namespace HPTClient
     [DataContract]
     public class HPTBetType : Notifier
     {
+        [DataMember(IsRequired = false, EmitDefaultValue = false)]
+        public string AtgId { get; set; }
+
         [DataMember]
         public string Name { get; set; }
 
@@ -26,11 +28,15 @@ namespace HPTClient
         [DataMember]
         public int TrackId { get; set; }
 
+        //[XmlIgnore]
+        [DataMember]
+        public ATGGameInfoBase GameInfoBase { get; set; }
+
         public DateTime NextTime
         {
             get
             {
-                return this.StartTime > DateTime.Now ? this.StartTime : this.EndTime;
+                return StartTime > DateTime.Now ? StartTime : EndTime;
             }
         }
 
@@ -41,7 +47,7 @@ namespace HPTClient
         {
             get
             {
-                if (this.Jackpot)
+                if (Jackpot)
                 {
                     return "JACKPOTT";
                 }
@@ -52,13 +58,13 @@ namespace HPTClient
         internal void SetCalendarRacaDayInfoBrush()
         {
             var c = Colors.Transparent;
-            if (this.StartTime.Date == DateTime.Now.Date)
+            if (StartTime.Date == DateTime.Now.Date)
             {
-                if (this.StartTime > DateTime.Now)
+                if (StartTime > DateTime.Now)
                 {
                     c = Colors.LightGreen;
                 }
-                else if (this.EndTime < DateTime.Now)
+                else if (EndTime < DateTime.Now)
                 {
                     c = Colors.IndianRed;
                 }
@@ -67,59 +73,57 @@ namespace HPTClient
                     c = Colors.LightYellow;
                 }
             }
-            else if (this.EndTime < DateTime.Now)
+            else if (EndTime < DateTime.Now)
             {
                 c = Colors.IndianRed;
             }
 
-            this.CalendarRacaDayInfoBrush = new SolidColorBrush(c);
+            CalendarRacaDayInfoBrush = new SolidColorBrush(c);
         }
 
-        private Brush calendarRacaDayInfoBrush;
         public Brush CalendarRacaDayInfoBrush
         {
             get
             {
-                if (this.calendarRacaDayInfoBrush == null)
+                if (field == null)
                 {
                     SetCalendarRacaDayInfoBrush();
                 }
-                return this.calendarRacaDayInfoBrush;
+                return field;
             }
             set
             {
-                this.calendarRacaDayInfoBrush = value;
-                OnPropertyChanged("CalendarRacaDayInfoBrush");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
         //[DataMember]
         public HPTRaceDayInfo CalendarRaceDayInfo { get; set; }
 
-        private ImageSource betTypeATGLogo;
         [XmlIgnore]
         public ImageSource BetTypeATGLogo
         {
             get
             {
-                if (this.betTypeATGLogo == null)
+                if (field == null)
                 {
-                    string folder = this.IsEnabled ? "/ATGImages/" : "/ATGImagesBW/";
-                    this.betTypeATGLogo = GetBetTypeATGLogo();  // new BitmapImage(new Uri(folder + this.Code + "Small.png", UriKind.Relative));
+                    var folder = IsEnabled ? "/ATGImages/" : "/ATGImagesBW/";
+                    field = GetBetTypeATGLogo();  // new BitmapImage(new Uri(folder + this.Code + "Small.png", UriKind.Relative));
                 }
-                return this.betTypeATGLogo;
+                return field;
             }
             set
             {
-                this.betTypeATGLogo = value;
-                OnPropertyChanged("BetTypeATGLogo");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
         public ImageSource GetBetTypeATGLogo()
         {
-            string folder = this.IsEnabled ? "/ATGImages/" : "/ATGImagesBW/";
-            return new BitmapImage(new Uri(folder + this.Code + "Small.png", UriKind.Relative));
+            var folder = IsEnabled ? "/ATGImages/" : "/ATGImagesBW/";
+            return new BitmapImage(new Uri($"{folder}{Code}Small.png", UriKind.Relative));
         }
 
         [DataMember]
@@ -132,7 +136,7 @@ namespace HPTClient
         {
             get
             {
-                return this.Code == "V4" || this.Code == "V5" || this.Code == "V64" || this.Code == "V65" || this.Code == "V75" || this.Code == "V86" || this.Code == "GS75" || this.Code == "V85";
+                return Code == "V4" || Code == "V5" || Code == "V64" || Code == "V65" || Code == "V75" || Code == "V86" || Code == "GS75" || Code == "V85";
             }
         }
 
@@ -140,73 +144,71 @@ namespace HPTClient
         {
             get
             {
-                return this.Code == "GS75" || this.Code == "V64" || this.Code == "V65" || this.Code == "V75" || this.Code == "V86" || this.Code == "V85";
+                return Code == "GS75" || Code == "V64" || Code == "V65" || Code == "V75" || Code == "V86" || Code == "V85";
             }
         }
 
-        private decimal poolShare;
         [XmlIgnore]
         public decimal PoolShare
         {
             get
             {
-                if (this.poolShare == 0m)
+                if (field == 0m)
                 {
-                    switch (this.Code)
+                    switch (Code)
                     {
                         case "V3":
                         case "V4":
                         case "DD":
                         case "LD":
-                            this.poolShare = 0.75m;
+                            field = 0.75m;
                             break;
                         case "V5":
-                            this.poolShare = 0.65m;
+                            field = 0.65m;
                             break;
                         case "V64":
                         case "V75":
                         case "GS75":
                         case "V86":
-                            this.poolShare = 0.26m;
+                            field = 0.26m;
                             break;
                         case "V85":
-                            this.poolShare = 0.2275m;
+                            field = 0.195m;    // TODO: Ändra till 0.195 när ATG ändrar
                             break;
                         case "V65":
-                            this.poolShare = 0.325m;
+                            field = 0.325m;
                             break;
                         case "T":
-                            this.poolShare = 0.7m;
+                            field = 0.7m;
                             break;
                         case "V":
                         case "P":
                         case "TV":
-                            this.poolShare = 0.8m;
+                            field = 0.8m;
                             break;
                         default:
-                            this.poolShare = 1m;
+                            field = 1m;
                             break;
                     }
                 }
-                return this.poolShare;
+                return field;
             }
         }
 
-        private decimal gamblerReturnPercentage;
         [XmlIgnore]
         public decimal GamblerReturnPercentage
         {
             get
             {
-                if (this.gamblerReturnPercentage == 0m)
+                if (field == 0m)
                 {
-                    switch (this.Code)
+                    switch (Code)
                     {
                         case "V3":
                         case "V4":
                         case "DD":
                         case "LD":
-                            this.gamblerReturnPercentage = 0.75m;
+                            field = 0.75m;
                             break;
                         case "V5":
                         case "V64":
@@ -215,181 +217,175 @@ namespace HPTClient
                         case "GS75":
                         case "V86":
                         case "V65":
-                            this.gamblerReturnPercentage = 0.65m;
+                            field = 0.65m;
                             break;
                         case "T":
-                            this.gamblerReturnPercentage = 0.7m;
+                            field = 0.7m;
                             break;
                         case "V":
                         case "P":
                         case "TV":
-                            this.gamblerReturnPercentage = 0.8m;
+                            field = 0.8m;
                             break;
                         default:
-                            this.gamblerReturnPercentage = 1m;
+                            field = 1m;
                             break;
                     }
                 }
-                return this.gamblerReturnPercentage;
+                return field;
             }
         }
 
-        private decimal poolShareOneError;
         [XmlIgnore]
         public decimal PoolShareOneError
         {
             get
             {
-                if (this.poolShareOneError == 0m)
+                if (field == 0m)
                 {
-                    switch (this.Code)
+                    switch (Code)
                     {
                         case "V64":
                         case "V75":
                         case "GS75":
                         case "V86":
-                            this.poolShareOneError = 0.13m;
+                            field = 0.13m;
                             break;
                         case "V85":
-                            this.poolShareOneError = 0.0975m;
+                            field = 0.13m;    //TODO: Ändra till 0.13 när ATG ändrar
                             break;
                         case "V65":
-                            this.poolShareOneError = 0.325m;
+                            field = 0.325m;
                             break;
                         default:
-                            this.poolShareOneError = 0m;
+                            field = 0m;
                             break;
                     }
                 }
-                return this.poolShareOneError;
+                return field;
             }
         }
 
-        private decimal poolShareTwoErrors;
         [XmlIgnore]
         public decimal PoolShareTwoErrors
         {
             get
             {
-                if (this.poolShareTwoErrors == 0m)
+                if (field == 0m)
                 {
-                    switch (this.Code)
+                    switch (Code)
                     {
                         case "V64":
                         case "V75":
                         case "GS75":
                         case "V86":
-                            this.poolShareTwoErrors = 0.26m;
+                            field = 0.26m;
                             break;
                         case "V85":
-                            this.poolShareTwoErrors = 0.0975m;
+                            field = 0.0975m;
                             break;
                         default:
-                            this.poolShareTwoErrors = 0m;
+                            field = 0m;
                             break;
                     }
                 }
-                return this.poolShareTwoErrors;
+                return field;
             }
         }
 
-        private decimal poolShareThreeErrors;
         [XmlIgnore]
         public decimal PoolShareThreeErrors
         {
             get
             {
-                if (this.poolShareTwoErrors == 0m)
+                if (field == 0m)
                 {
-                    switch (this.Code)
+                    switch (Code)
                     {
                         case "V85":
-                            this.poolShareThreeErrors = 0.2275m;
+                            field = 0.2275m;
                             break;
                         default:
-                            this.poolShareThreeErrors = 0m;
+                            field = 0m;
                             break;
                     }
                 }
-                return this.poolShareThreeErrors;
+                return field;
             }
         }
 
-        private decimal v6Factor;
         [XmlIgnore]
         public decimal V6Factor
         {
             get
             {
-                if (this.v6Factor == 0m)
+                if (field == 0m)
                 {
-                    switch (this.Code)
+                    switch (Code)
                     {
                         case "V64":
                         case "V75":
                         case "GS75":
                         case "V86":
-                            this.v6Factor = 2.5m;
+                            field = 2.5m;
                             break;
                         case "V65":
-                            this.v6Factor = 2.0m;
+                            field = 2.0m;
                             break;
                         default:
-                            this.v6Factor = 1m;
+                            field = 1m;
                             break;
                     }
                 }
-                return this.v6Factor;
+                return field;
             }
         }
 
-        private string v6String;
         [XmlIgnore]
         public string V6String
         {
             get
             {
-                if (string.IsNullOrEmpty(this.v6String))
+                if (string.IsNullOrEmpty(field))
                 {
-                    switch (this.Code)
+                    switch (Code)
                     {
                         case "V64":
                         case "V65":
-                            this.v6String = "V6";
+                            field = "V6";
                             break;
                         case "V75":
                         case "GS75":
-                            this.v6String = "V7";
+                            field = "V7";
                             break;
                         case "V86":
-                            this.v6String = "V8";
+                            field = "V8";
                             break;
                         default:
-                            this.v6String = string.Empty;
+                            field = string.Empty;
                             break;
                     }
                 }
-                return this.v6String;
+                return field;
             }
         }
 
         public HPTRowValueInterval RowValueIntervalSingleWinner { get; set; }
 
-        private ObservableCollection<HPTRowValueInterval> rowValueIntervalList;
         [XmlIgnore]
         public ObservableCollection<HPTRowValueInterval> RowValueIntervalList
         {
             get
             {
-                if (this.rowValueIntervalList == null)
+                if (field == null)
                 {
-                    switch (this.Code)
+                    switch (Code)
                     {
                         case "V75":
                         case "GS75":
                         case "V86":
                         case "V85":
-                            this.rowValueIntervalList = new ObservableCollection<HPTRowValueInterval>
+                            field = new ObservableCollection<HPTRowValueInterval>
                             {
                                 new HPTRowValueInterval()
                                 {
@@ -435,7 +431,7 @@ namespace HPTClient
                             break;
                         case "V4":
                         case "V5":
-                            this.rowValueIntervalList = new ObservableCollection<HPTRowValueInterval>
+                            field = new ObservableCollection<HPTRowValueInterval>
                             {
                                 new HPTRowValueInterval()
                                 {
@@ -481,7 +477,7 @@ namespace HPTClient
                             break;
                         case "V64":
                         case "V65":
-                            this.rowValueIntervalList = new ObservableCollection<HPTRowValueInterval>
+                            field = new ObservableCollection<HPTRowValueInterval>
                             {
                                 new HPTRowValueInterval()
                                 {
@@ -529,20 +525,19 @@ namespace HPTClient
                             break;
                     }
                 }
-                return this.rowValueIntervalList;
+                return field;
             }
         }
 
 
-        private HPTRowValuePercentile[] rowValuePercentileList;
         [XmlIgnore]
         public HPTRowValuePercentile[] RowValuePercentileList
         {
             get
             {
-                if (this.rowValuePercentileList == null)
+                if (field == null)
                 {
-                    this.rowValuePercentileList = new HPTRowValuePercentile[]
+                    field = new HPTRowValuePercentile[]
                             {
                                 new HPTRowValuePercentile()
                                 {
@@ -571,23 +566,22 @@ namespace HPTClient
                                 }
                             };
                 }
-                return this.rowValuePercentileList;
+                return field;
             }
         }
 
-        private HPTPayOut[] payOutDummyList;
         [XmlIgnore]
         public HPTPayOut[] PayOutDummyList
         {
             get
             {
-                if (this.payOutDummyList == null)
+                if (field == null)
                 {
-                    switch (this.Code)
+                    switch (Code)
                     {
                         case "V75":
                         case "GS75":
-                            this.payOutDummyList = new HPTPayOut[]
+                            field = new HPTPayOut[]
                             {
                                 new HPTPayOut()
                                 {
@@ -604,7 +598,7 @@ namespace HPTClient
                             };
                             break;
                         case "V86":
-                            this.payOutDummyList = new HPTPayOut[]
+                            field = new HPTPayOut[]
                             {
                                 new HPTPayOut()
                                 {
@@ -621,7 +615,7 @@ namespace HPTClient
                             };
                             break;
                         case "V85":
-                            this.payOutDummyList = new HPTPayOut[]
+                            field = new HPTPayOut[]
                             {
                                 new HPTPayOut()
                                 {
@@ -642,7 +636,7 @@ namespace HPTClient
                             };
                             break;
                         case "V5":
-                            this.payOutDummyList = new HPTPayOut[]
+                            field = new HPTPayOut[]
                             {
                                 new HPTPayOut()
                                 {
@@ -651,7 +645,7 @@ namespace HPTClient
                             };
                             break;
                         case "V4":
-                            this.payOutDummyList = new HPTPayOut[]
+                            field = new HPTPayOut[]
                             {
                                 new HPTPayOut()
                                 {
@@ -660,7 +654,7 @@ namespace HPTClient
                             };
                             break;
                         case "V64":
-                            this.payOutDummyList = new HPTPayOut[]
+                            field = new HPTPayOut[]
                             {
                                 new HPTPayOut()
                                 {
@@ -677,7 +671,7 @@ namespace HPTClient
                             };
                             break;
                         case "V65":
-                            this.payOutDummyList = new HPTPayOut[]
+                            field = new HPTPayOut[]
                             {
                                 new HPTPayOut()
                                 {
@@ -693,159 +687,154 @@ namespace HPTClient
                             break;
                     }
                 }
-                return this.payOutDummyList;
+                return field;
             }
         }
 
-        private int[] betMultiplierList;
         [XmlIgnore]
         public int[] BetMultiplierList
         {
             get
             {
-                if (this.betMultiplierList == null || this.betMultiplierList.Count() == 0)
+                if (field == null || field.Count() == 0)
                 {
-                    switch (this.Code)
+                    switch (Code)
                     {
                         case "V75":
                         case "GS75":
                         case "V86":
                         case "V85":
                         case "V5":
-                            this.betMultiplierList = new int[] { 1, 2, 5, 10, 20, 50, 100 };
+                            field = new int[] { 1, 2, 5, 10, 20, 50, 100 };
                             break;
                         case "V4":
                         case "V64":
                         case "V65":
-                            this.betMultiplierList = new int[] { 1, 2, 3, 4, 5, 10, 50, 100 };
+                            field = new int[] { 1, 2, 3, 4, 5, 10, 50, 100 };
                             break;
                         default:
-                            this.betMultiplierList = new int[] { 1 };
+                            field = new int[] { 1 };
                             break;
                     }
                 }
-                return this.betMultiplierList;
+                return field;
             }
         }
 
-        private int lowestStake;
         [XmlIgnore]
         public int LowestStake
         {
             get
             {
-                if (this.lowestStake == 0)
+                if (field == 0)
                 {
-                    switch (this.Code)
+                    switch (Code)
                     {
                         case "DD":
                         case "LD":
                         case "TV":
-                            this.lowestStake = 5;
+                            field = 5;
                             break;
                         case "T":
-                            this.lowestStake = 2;
+                            field = 2;
                             break;
                         default:
-                            this.lowestStake = 1;
+                            field = 1;
                             break;
                     }
                 }
-                return this.lowestStake;
+                return field;
             }
         }
 
-        private int highestStake;
         [XmlIgnore]
         public int HighestStake
         {
             get
             {
-                if (this.highestStake == 0)
+                if (field == 0)
                 {
-                    switch (this.Code)
+                    switch (Code)
                     {
                         case "DD":
                         case "LD":
                         case "TV":
-                            this.highestStake = 1000;
+                            field = 1000;
                             break;
                         case "T":
-                            this.highestStake = 500;
+                            field = 500;
                             break;
                         default:
-                            this.highestStake = 1;
+                            field = 1;
                             break;
                     }
                 }
-                return this.highestStake;
+                return field;
             }
         }
 
-        private decimal rowCost;
         [XmlIgnore]
         public decimal RowCost
         {
             get
             {
-                if (this.rowCost == 0M)
+                if (field == 0M)
                 {
-                    switch (this.Code)
+                    switch (Code)
                     {
                         case "V3":
-                            this.rowCost = 10m;
+                            field = 10m;
                             break;
                         case "V4":
-                            this.rowCost = 2m;
+                            field = 2m;
                             break;
                         case "V5":
                         case "V64":
                         case "V65":
                         case "GS75":
-                            this.rowCost = 1m;
+                            field = 1m;
                             break;
                         case "V75":
                         case "V85":
-                            this.rowCost = 0.5m;
+                            field = 0.5m;
                             break;
                         case "V86":
-                            this.rowCost = 0.25m;
+                            field = 0.25m;
                             break;
                         default:
-                            this.rowCost = 0m;
+                            field = 0m;
                             break;
                     }
                 }
-                return this.rowCost;
+                return field;
             }
         }
 
         [XmlIgnore]
         public int NumberOfUploadedSystems { get; set; }
 
-        private int jackpotLimit;
         [XmlIgnore]
         public int JackpotLimit
         {
             get
             {
-                if (this.jackpotLimit == 0)
+                if (field == 0)
                 {
-                    switch (this.Code)
+                    switch (Code)
                     {
                         case "V65":
-                            this.jackpotLimit = 20;
+                            field = 20;
                             break;
                         case "V64":
-                            this.jackpotLimit = 7;
+                            field = 7;
                             break;
                         case "V75":
                         case "GS75":
                         case "V86":
-                            this.jackpotLimit = 15;
+                            field = 15;
                             break;
                         case "V85":
-                            this.jackpotLimit = 5;
+                            field = 5;
                             break;
                         case "DD":
                         case "LD":
@@ -854,171 +843,167 @@ namespace HPTClient
                         case "V5":
                         case "TV":
                         case "T":
-                            this.jackpotLimit = 0;
+                            field = 0;
                             break;
                         default:
                             return 0;
                     }
                 }
-                return this.jackpotLimit;
+                return field;
             }
         }
 
-        private int numberOfRaces;
         [XmlIgnore]
         public int NumberOfRaces
         {
             get
             {
-                if (this.numberOfRaces == 0m)
+                if (field == 0m)
                 {
-                    switch (this.Code)
+                    switch (Code)
                     {
                         case "V3":
-                            this.numberOfRaces = 3;
+                            field = 3;
                             break;
                         case "V4":
-                            this.numberOfRaces = 4;
+                            field = 4;
                             break;
                         case "V5":
-                            this.numberOfRaces = 5;
+                            field = 5;
                             break;
                         case "V65":
                         case "V64":
-                            this.numberOfRaces = 6;
+                            field = 6;
                             break;
                         case "V75":
                         case "GS75":
-                            this.numberOfRaces = 7;
+                            field = 7;
                             break;
                         case "V86":
                         case "V85":
-                            this.numberOfRaces = 8;
+                            field = 8;
                             break;
                         case "DD":
                         case "LD":
-                            this.numberOfRaces = 2;
+                            field = 2;
                             break;
                         case "TV":
                         case "T":
-                            this.numberOfRaces = 1;
+                            field = 1;
                             break;
                         default:
                             return 0;
                     }
                 }
-                return this.numberOfRaces;
+                return field;
             }
         }
 
-        private int maxNumberOfSystemsInFile;
         [XmlIgnore]
         public int MaxNumberOfSystemsInFile
         {
             get
             {
-                if (this.maxNumberOfSystemsInFile == 0m)
+                if (field == 0m)
                 {
-                    switch (this.Code)
+                    switch (Code)
                     {
                         case "V4":
                         case "V5":
-                            this.maxNumberOfSystemsInFile = 500;
+                            field = 500;
                             break;
                         case "V65":
                         case "V64":
-                            this.maxNumberOfSystemsInFile = 2000;
+                            field = 2000;
                             break;
                         case "V75":
                         case "V85":
                         case "GS75":
                         case "V86":
-                            this.maxNumberOfSystemsInFile = 5000;
+                            field = 5000;
                             break;
                         default:
-                            this.maxNumberOfSystemsInFile = 9999;
+                            field = 9999;
                             break;
                     }
                 }
-                return this.maxNumberOfSystemsInFile;
+                return field;
             }
         }
 
-        private BetTypeCategory typeCategory;
         [XmlIgnore]
         public BetTypeCategory TypeCategory
         {
             get
             {
-                if (this.typeCategory == BetTypeCategory.None)
+                if (field == BetTypeCategory.None)
                 {
-                    switch (this.Code)
+                    switch (Code)
                     {
                         //case "V3":
                         //    this.typeCategory = BetTypeCategory.None;
                         //    break;
                         case "V4":
-                            this.typeCategory = BetTypeCategory.V4;
+                            field = BetTypeCategory.V4;
                             break;
                         case "V5":
-                            this.typeCategory = BetTypeCategory.V5;
+                            field = BetTypeCategory.V5;
                             break;
                         case "V65":
                         case "V64":
-                            this.typeCategory = BetTypeCategory.V6X;
+                            field = BetTypeCategory.V6X;
                             break;
                         case "V75":
                         case "GS75":
-                            this.typeCategory = BetTypeCategory.V75;
+                            field = BetTypeCategory.V75;
                             break;
                         case "V86":
-                            this.typeCategory = BetTypeCategory.V86;
+                            field = BetTypeCategory.V86;
                             break;
                         case "V85":
-                            this.typeCategory = BetTypeCategory.V85;
+                            field = BetTypeCategory.V85;
                             break;
                         case "DD":
                         case "LD":
-                            this.typeCategory = BetTypeCategory.Double;
+                            field = BetTypeCategory.Double;
                             break;
                         case "TV":
                         case "T":
-                            this.typeCategory = BetTypeCategory.Twin;
+                            field = BetTypeCategory.Twin;
                             break;
                         default:
                             return BetTypeCategory.None;
                     }
                 }
-                return this.typeCategory;
+                return field;
             }
         }
 
-        private int maxBetForNotPayingCustomer;
         [XmlIgnore]
         public int MaxBetForNotPayingCustomer
         {
             get
             {
-                switch (this.Code)
+                switch (Code)
                 {
                     case "V4":
-                        this.maxBetForNotPayingCustomer = 50;
+                        field = 50;
                         break;
                     case "V65":
                     case "V64":
-                        this.maxBetForNotPayingCustomer = 150;
+                        field = 150;
                         break;
                     //case "V75":
                     //    this.maxBetForNotPayingCustomer = 7;
                     //    break;
                     case "V86":
-                        this.maxBetForNotPayingCustomer = 300;
+                        field = 300;
                         break;
                     default:
-                        this.maxBetForNotPayingCustomer = 0;
+                        field = 0;
                         return 0;
                 }
-                return this.maxBetForNotPayingCustomer;
+                return field;
             }
         }
 

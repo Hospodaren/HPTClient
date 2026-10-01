@@ -5,210 +5,166 @@ namespace HPTClient
     [DataContract]
     public class HPTIntervalReductionRule : HPTReductionRule
     {
-        private bool use;
         [DataMember]
         public bool Use
         {
-            get
-            {
-                return use;
-            }
+            get;
             set
             {
-                if (use == value)
+                if (field == value)
                 {
                     return;
                 }
-                use = value;
-                OnPropertyChanged("Use");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int minSum;
         [DataMember]
         public int MinSum
         {
-            get
-            {
-                return minSum;
-            }
+            get;
             set
             {
-                if (minSum == value)
+                if (field == value)
                 {
                     return;
                 }
-                minSum = value;
-                OnPropertyChanged("MinSum");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int maxSum;
         [DataMember]
         public int MaxSum
         {
-            get
-            {
-                return maxSum;
-            }
+            get;
             set
             {
-                if (maxSum == value)
+                if (field == value)
                 {
                     return;
                 }
-                maxSum = value;
-                OnPropertyChanged("MaxSum");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int minPercentSum;
         [DataMember]
         public int MinPercentSum
         {
-            get
-            {
-                return this.minPercentSum;
-            }
+            get;
             set
             {
-                if (minPercentSum == value)
+                if (field == value)
                 {
                     return;
                 }
-                this.minPercentSum = value;
-                OnPropertyChanged("MinPercentSum");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int maxPercentSum;
         [DataMember]
         public int MaxPercentSum
         {
-            get
-            {
-                return this.maxPercentSum;
-            }
+            get;
             set
             {
-                if (maxPercentSum == value)
+                if (field == value)
                 {
                     return;
                 }
-                this.maxPercentSum = value;
-                OnPropertyChanged("MaxPercentSum");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int lowestSum;
         [DataMember]
         public int LowestSum
         {
-            get
-            {
-                return this.lowestSum;
-            }
+            get;
             set
             {
-                if (value == this.lowestSum)
+                if (value == field)
                 {
                     return;
                 }
-                this.lowestSum = value;
-                OnPropertyChanged("LowestSum");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int highestSum;
         [DataMember]
         public int HighestSum
         {
-            get
-            {
-                return this.highestSum;
-            }
+            get;
             set
             {
-                if (value == this.highestSum)
+                if (value == field)
                 {
                     return;
                 }
-                this.highestSum = value;
-                OnPropertyChanged("HighestSum");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int lowestIncludedSum;
         [DataMember]
         public int LowestIncludedSum
         {
-            get
-            {
-                return this.lowestIncludedSum;
-            }
+            get;
             set
             {
-                if (value == this.lowestIncludedSum)
+                if (value == field)
                 {
                     return;
                 }
-                this.lowestIncludedSum = value;
-                OnPropertyChanged("LowestIncludedSum");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int highestIncludedSum;
         [DataMember]
         public int HighestIncludedSum
         {
-            get
-            {
-                return this.highestIncludedSum;
-            }
+            get;
             set
             {
-                if (value == this.highestIncludedSum)
+                if (value == field)
                 {
                     return;
                 }
-                this.highestIncludedSum = value;
-                OnPropertyChanged("HighestIncludedSum");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int incrementLower;
         [DataMember]
         public int IncrementLower
         {
-            get
-            {
-                return incrementLower;
-            }
+            get;
             set
             {
-                incrementLower = value;
-                OnPropertyChanged("IncrementLower");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int incrementUpper;
         [DataMember]
         public int IncrementUpper
         {
-            get
-            {
-                return incrementUpper;
-            }
+            get;
             set
             {
-                incrementUpper = value;
-                OnPropertyChanged("IncrementUpper");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
         public override void SetReductionSpecificationString()
         {
-            this.ReductionSpecificationString = "Summa " + this.MinSum.ToString() + " - " + this.MaxSum.ToString();
+            ReductionSpecificationString = $"Summa {MinSum} - {MaxSum}";
         }
 
     }

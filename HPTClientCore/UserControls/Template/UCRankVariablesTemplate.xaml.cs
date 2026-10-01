@@ -18,9 +18,9 @@ namespace HPTClient
         {
             get
             {
-                if (this.DataContext.GetType() == typeof(HPTRankTemplate))
+                if (DataContext.GetType() == typeof(HPTRankTemplate))
                 {
-                    return (HPTRankTemplate)this.DataContext;
+                    return (HPTRankTemplate)DataContext;
                 }
                 return null;
             }
@@ -28,13 +28,13 @@ namespace HPTClient
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            this.RankTemplate.Name = this.txtTemplateName.Text;
+            RankTemplate.Name = txtTemplateName.Text;
 
         }
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var hptHorseRankVariable in this.RankTemplate.HorseRankVariableList)
+            foreach (var hptHorseRankVariable in RankTemplate.HorseRankVariableList)
             {
                 hptHorseRankVariable.Use = false;
                 hptHorseRankVariable.Weight = 1M;
@@ -43,7 +43,7 @@ namespace HPTClient
 
         private void btnRemove_Click(object sender, RoutedEventArgs e)
         {
-            HPTConfig.Config.RankTemplateList.Remove(this.RankTemplate);
+            HPTConfig.Config.RankTemplateList.Remove(RankTemplate);
         }
     }
 }

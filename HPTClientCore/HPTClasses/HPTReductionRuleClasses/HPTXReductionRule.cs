@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 using System.Text;
 using System.Xml.Serialization;
 
@@ -16,16 +14,16 @@ namespace HPTClient
         public HPTXReductionRule(HPTPrio prio, int numberOfRaces, bool use)
             : base(numberOfRaces, use)
         {
-            this.Prio = prio;
+            Prio = prio;
             InitializeLegSelectionList(numberOfRaces);
         }
 
         public HPTXReductionRule Clone()
         {
-            HPTXReductionRule rule = new HPTXReductionRule(this.Prio, this.NumberOfWinnersList.Count - 1, this.Use);
-            foreach (HPTNumberOfWinners now in this.NumberOfWinnersList)
+            var rule = new HPTXReductionRule(Prio, NumberOfWinnersList.Count - 1, Use);
+            foreach (var now in NumberOfWinnersList)
             {
-                HPTNumberOfWinners hptNow = rule.NumberOfWinnersList.FirstOrDefault(n => n.NumberOfWinners == now.NumberOfWinners);
+                var hptNow = rule.NumberOfWinnersList.FirstOrDefault(n => n.NumberOfWinners == now.NumberOfWinners);
                 if (hptNow != null)
                 {
                     hptNow.Selected = now.Selected;
@@ -37,41 +35,41 @@ namespace HPTClient
 
         public override bool IncludeRow(HPTMarkBet markBet, HPTMarkBetSingleRow singleRow)
         {
-            if (this.NumberOfRacesWithX == 0 || this.SkipRule)
+            if (NumberOfRacesWithX == 0 || SkipRule)
             {
                 return true;
             }
-            if (!this.OnlyInSpecifiedLegs)
+            if (!OnlyInSpecifiedLegs)
             {
-                int numberOfX = singleRow.HorseList.Count(h => h.Prio == this.Prio);
-                return this.NumberOfWinnersList[numberOfX].Selected;
+                var numberOfX = singleRow.HorseList.Count(h => h.Prio == Prio);
+                return NumberOfWinnersList[numberOfX].Selected;
             }
             else
             {
-                int numberOfX = 0;
-                foreach (var legNumber in this.LegList)
+                var numberOfX = 0;
+                foreach (var legNumber in LegList)
                 {
-                    numberOfX += singleRow.HorseList[legNumber - 1].Prio == this.Prio ? 1 : 0;
+                    numberOfX += singleRow.HorseList[legNumber - 1].Prio == Prio ? 1 : 0;
                 }
-                return this.NumberOfWinnersList[numberOfX].Selected;
+                return NumberOfWinnersList[numberOfX].Selected;
             }
         }
 
         public override bool IncludeRow(HPTMarkBet markBet, HPTHorse[] horseList, int numberOfRacesToTest)
         {
-            if (this.NumberOfRacesWithX == 0 || numberOfRacesToTest <= this.MaxNumberOfX || this.SkipRule)
+            if (NumberOfRacesWithX == 0 || numberOfRacesToTest <= MaxNumberOfX || SkipRule)
             {
                 return true;
             }
 
-            if (!this.OnlyInSpecifiedLegs)
+            if (!OnlyInSpecifiedLegs)
             {
-                int numberOfX = horseList.Take(numberOfRacesToTest).Count(h => h.Prio == this.Prio);
-                if (numberOfX > this.MaxNumberOfX)  // Högsta antal har överskridits redan innan alla lopp kontrollerats
+                var numberOfX = horseList.Take(numberOfRacesToTest).Count(h => h.Prio == Prio);
+                if (numberOfX > MaxNumberOfX)  // Högsta antal har överskridits redan innan alla lopp kontrollerats
                 {
                     return false;
                 }
-                if (numberOfX + markBet.BetType.NumberOfRaces - numberOfRacesToTest < this.MinNumberOfX)    // Det går inte att komma upp i minimiantal på resterande lopp
+                if (numberOfX + markBet.BetType.NumberOfRaces - numberOfRacesToTest < MinNumberOfX)    // Det går inte att komma upp i minimiantal på resterande lopp
                 {
                     return false;
                 }
@@ -79,12 +77,12 @@ namespace HPTClient
             }
             else
             {
-                int numberOfX = 0;
-                foreach (var legNumber in this.LegList.Where(ln => ln <= numberOfRacesToTest))
+                var numberOfX = 0;
+                foreach (var legNumber in LegList.Where(ln => ln <= numberOfRacesToTest))
                 {
-                    numberOfX += horseList[legNumber - 1].Prio == this.Prio ? 1 : 0;
+                    numberOfX += horseList[legNumber - 1].Prio == Prio ? 1 : 0;
                 }
-                return numberOfX <= this.MaxNumberOfX;
+                return numberOfX <= MaxNumberOfX;
             }
         }
 
@@ -93,8 +91,8 @@ namespace HPTClient
             // Skapa dictionary för att kontrollera hur många vinstrader villkoret skulle gett
             if (markBet.RaceDayInfo.ResultComplete)
             {
-                int numberOfXHorses = markBet.CouponCorrector.HorseList.Count(h => h.Prio == this.Prio);
-                this.RuleResultForCorrectRow = numberOfXHorses.ToString() + " " + this.Prio.ToString() + "-Häst(ar)";
+                var numberOfXHorses = markBet.CouponCorrector.HorseList.Count(h => h.Prio == Prio);
+                RuleResultForCorrectRow = $"{numberOfXHorses} {Prio}-Häst(ar)";
             }
             return true;
         }
@@ -102,61 +100,49 @@ namespace HPTClient
         public override void SetReductionSpecificationString()
         {
             var sb = new StringBuilder();
-            sb.Append(this.NumberOfWinnersString);
+            sb.Append(NumberOfWinnersString);
             sb.Append(" ");
-            sb.Append(this.Prio);
+            sb.Append(Prio);
             sb.Append("-Hästar");
-            if (this.OnlyInSpecifiedLegs)
+            if (OnlyInSpecifiedLegs)
             {
                 sb.Append(" (");
-                sb.Append(this.SelectedRacesString);
+                sb.Append(SelectedRacesString);
                 sb.Append(")");
             }
-            this.ReductionSpecificationString = sb.ToString();
+            ReductionSpecificationString = sb.ToString();
         }
 
-        private HPTPrio prio;
         [DataMember]
         public HPTPrio Prio
         {
-            get
-            {
-                return this.prio;
-            }
+            get;
             set
             {
-                this.prio = value;
-                OnPropertyChanged("Prio");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int numberOfX;
         [DataMember]
         public int NumberOfX
         {
-            get
-            {
-                return this.numberOfX;
-            }
+            get;
             set
             {
-                this.numberOfX = value;
-                OnPropertyChanged("NumberOfX");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int numberOfRacesWithX;
         [DataMember]
         public int NumberOfRacesWithX
         {
-            get
-            {
-                return this.numberOfRacesWithX;
-            }
+            get;
             set
             {
-                this.numberOfRacesWithX = value;
-                OnPropertyChanged("NumberOfRacesWithX");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -170,15 +156,15 @@ namespace HPTClient
         {
             get
             {
-                return this.Prio.ToString() + "-villkor";
+                return $"{Prio}-villkor";
             }
         }
 
         public override string ToString(HPTMarkBet markBet)
         {
             // Create String representation
-            StringBuilder sb = new StringBuilder();
-            sb.Append(this.NumberOfWinnersString);
+            var sb = new StringBuilder();
+            sb.Append(NumberOfWinnersString);
             //for (int i = this.MinNumberOfX; i <= this.MaxNumberOfX; i++)
             //{
             //    var hptNow = this.NumberOfWinnersList.FirstOrDefault(now => now.NumberOfWinners == i);
@@ -192,11 +178,11 @@ namespace HPTClient
             {
                 //sb.Remove(sb.Length - 1, 1);
                 sb.Append(" ");
-                sb.Append(this.Prio);
+                sb.Append(Prio);
                 sb.Append("-Hästar");
             }
 
-            this.ClipboardString = sb.ToString();
+            ClipboardString = sb.ToString();
             return sb.ToString();
         }
     }

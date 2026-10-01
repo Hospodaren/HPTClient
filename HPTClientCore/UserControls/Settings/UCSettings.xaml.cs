@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 namespace HPTClient
@@ -22,11 +21,11 @@ namespace HPTClient
         {
             try
             {
-                ATGCalendar ac = (ATGCalendar)this.DataContext;
+                var ac = (ATGCalendar)DataContext;
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
     }

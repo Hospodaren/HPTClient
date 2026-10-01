@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -34,45 +33,45 @@ namespace HPTClient
             Process.Start(psi);
         }
 
-        private void btnGetMoreResults_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                var horse = this.DataContext as HPTHorse;
-                if (horse.ResultList.Count < 5)
-                {
-                    this.btnGetMoreResults.Visibility = Visibility.Collapsed;
-                    return;
-                }
+        //private void btnGetMoreResults_Click(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        var horse = DataContext as HPTHorse;
+        //        if (horse.ResultList.Count < 5)
+        //        {
+        //            btnGetMoreResults.Visibility = Visibility.Collapsed;
+        //            return;
+        //        }
 
-                var serviceConnector = new HPTServiceConnector();
-                //serviceConnector.GetHorseResultListFromATG(this.DataContext as HPTHorse);
-                serviceConnector.GetHorseStartInformationFromATG(horse);
-                this.btnGetMoreResults.Visibility = Visibility.Collapsed;
-            }
-            catch (Exception exc)
-            {
-                string s = exc.Message;
-            }
-        }
+        //        var serviceConnector = new HPTServiceConnector();
+        //        //serviceConnector.GetHorseResultListFromATG(this.DataContext as HPTHorse);
+        //        serviceConnector.GetHorseStartInformationFromATG(horse);
+        //        btnGetMoreResults.Visibility = Visibility.Collapsed;
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        string s = exc.Message;
+        //    }
+        //}
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (this.DataContext.GetType() == typeof(HPTHorse))
-                {
-                    var horse = this.DataContext as HPTHorse;
-                    if (horse.ResultList.Count != 5)
-                    {
-                        this.btnGetMoreResults.Visibility = Visibility.Collapsed;
-                    }
-                }
-            }
-            catch (Exception)
-            {
+        //private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        if (DataContext.GetType() == typeof(HPTHorse))
+        //        {
+        //            var horse = DataContext as HPTHorse;
+        //            if (horse.ResultList.Count != 5)
+        //            {
+        //                btnGetMoreResults.Visibility = Visibility.Collapsed;
+        //            }
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
 
-            }
-        }
+        //    }
+        //}
     }
 }

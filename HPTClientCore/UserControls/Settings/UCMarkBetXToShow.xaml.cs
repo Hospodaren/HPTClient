@@ -15,7 +15,7 @@ namespace HPTClient
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this) && this.IsVisible)
+            if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this) && IsVisible)
             {
                 //if (!HPTConfig.Config.IsPayingCustomer)
                 //{

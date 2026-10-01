@@ -16,29 +16,29 @@ namespace HPTClient
 
         private void btnNewRule_Click(object sender, RoutedEventArgs e)
         {
-            object o = this.icRules.DataContext;
-            this.MarkBet.MultiABCDEFReductionRule.ABCDEFReductionRuleList.Add(new HPTABCDEFReductionRule(this.MarkBet));
-            this.MarkBet.RecalculateNumberOfX();
+            var o = icRules.DataContext;
+            MarkBet.MultiABCDEFReductionRule.ABCDEFReductionRuleList.Add(new HPTABCDEFReductionRule(MarkBet));
+            MarkBet.RecalculateNumberOfX();
         }
 
         private void btnRemoveAll_Click(object sender, RoutedEventArgs e)
         {
-            this.MarkBet.MultiABCDEFReductionRule.ABCDEFReductionRuleList.Clear();
+            MarkBet.MultiABCDEFReductionRule.ABCDEFReductionRuleList.Clear();
         }
 
         private void ItemsControl_Checked(object sender, RoutedEventArgs e)
         {
-            if (this.MarkBet != null)
+            if (MarkBet != null)
             {
-                if (!this.MarkBet.IsDeserializing)
+                if (!MarkBet.IsDeserializing)
                 {
-                    if (this.MarkBet.ABCDEFReductionRule.Use)
+                    if (MarkBet.ABCDEFReductionRule.Use)
                     {
-                        this.MarkBet.RecalculateReduction(RecalculateReason.XReduction);
+                        MarkBet.RecalculateReduction(RecalculateReason.XReduction);
                     }
                     else
                     {
-                        this.MarkBet.RecalculateNumberOfX();
+                        MarkBet.RecalculateNumberOfX();
                     }
                 }
             }
@@ -51,22 +51,22 @@ namespace HPTClient
 
         private void btnRemove_Click(object sender, RoutedEventArgs e)
         {
-            Button btn = (Button)sender;
-            HPTABCDEFReductionRule rule = (HPTABCDEFReductionRule)btn.DataContext;
-            this.MarkBet.MultiABCDEFReductionRule.ABCDEFReductionRuleList.Remove(rule);
-            this.MarkBet.RecalculateReduction(RecalculateReason.XReduction);
+            var btn = (Button)sender;
+            var rule = (HPTABCDEFReductionRule)btn.DataContext;
+            MarkBet.MultiABCDEFReductionRule.ABCDEFReductionRuleList.Remove(rule);
+            MarkBet.RecalculateReduction(RecalculateReason.XReduction);
         }
 
         private void btnClearABCD_Click(object sender, RoutedEventArgs e)
         {
-            Button btn = (Button)sender;
-            HPTABCDEFReductionRule rule = (HPTABCDEFReductionRule)btn.DataContext;
+            var btn = (Button)sender;
+            var rule = (HPTABCDEFReductionRule)btn.DataContext;
             rule.Clear();
         }
 
         private void chkUseMultiABCDReduction_Checked(object sender, RoutedEventArgs e)
         {
-            this.MarkBet.RecalculateReduction(RecalculateReason.All);
+            MarkBet.RecalculateReduction(RecalculateReason.All);
         }
 
     }

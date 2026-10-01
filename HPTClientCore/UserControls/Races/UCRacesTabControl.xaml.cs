@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
-using System.Linq;
 using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Navigation;
 
 namespace HPTClient
@@ -17,7 +17,7 @@ namespace HPTClient
 
         internal void UpdateSortOrder()
         {
-            var raceViewList = this.tcRaces.Items.Cast<UCRaceView>();
+            var raceViewList = tcRaces.Items.Cast<UCRaceView>();
         }
 
         private void hlVPOnAtgSe_RequestNavigate(object sender, RequestNavigateEventArgs e)
@@ -36,6 +36,51 @@ namespace HPTClient
                 UseShellExecute = true
             };
             Process.Start(psi);
+        }
+
+        private void UIElement_OnKeyUp(object sender, KeyEventArgs e)
+        {
+            int selectedIndex = 0;
+            switch (e.Key)
+            {
+                case Key.D1:
+                case Key.NumPad1:
+                    selectedIndex = 0;
+                    break;
+                case Key.D2:
+                case Key.NumPad2:
+                    selectedIndex = 1;
+                    break;
+                case Key.D3:
+                case Key.NumPad3:
+                    selectedIndex = 2;
+                    break;
+                case Key.D4:
+                case Key.NumPad4:
+                    selectedIndex = 3;
+                    break;
+                case Key.D5:
+                case Key.NumPad5:
+                    selectedIndex = 4;
+                    break;
+                case Key.D6:
+                case Key.NumPad6:
+                    selectedIndex = 5;
+                    break;
+                case Key.D7:
+                case Key.NumPad7:
+                    selectedIndex = 6;
+                    break;
+                case Key.D8:
+                case Key.NumPad8:
+                    selectedIndex = 7;
+                    break;
+            }
+
+            if (tcRaces.Items.Count > selectedIndex)
+            {
+                tcRaces.SelectedIndex = selectedIndex;
+            }
         }
     }
 }

@@ -1,6 +1,4 @@
 ﻿using Microsoft.Win32;
-using System;
-using System.Linq;
 using System.Windows;
 
 namespace HPTClient
@@ -17,25 +15,24 @@ namespace HPTClient
             // Hantering av gratisanvändare som öppnar fil med icke stödda spelformer
             if (!HPTConfig.Config.IsPayingCustomer)
             {
-                this.btnCreateCoupons.IsEnabled = false;
-                this.btnCreateCouponsAs.IsEnabled = false;
-                this.btnCopy.IsEnabled = false;
-                this.btnPrint.IsEnabled = false;
+                btnCreateCoupons.IsEnabled = false;
+                btnCreateCouponsAs.IsEnabled = false;
+                btnCopy.IsEnabled = false;
+                btnPrint.IsEnabled = false;
             }
         }
 
         #region Dependency properties
 
-        private HPTCombinationListInfo combinationListInfo;
         public HPTCombinationListInfo CombinationListInfo
         {
             get
             {
-                if (this.DataContext != null && this.DataContext.GetType() == typeof(HPTCombinationListInfo))
+                if (DataContext != null && DataContext.GetType() == typeof(HPTCombinationListInfo))
                 {
-                    this.combinationListInfo = (HPTCombinationListInfo)this.DataContext;
+                    field = (HPTCombinationListInfo)DataContext;
                 }
-                return this.combinationListInfo;
+                return field;
             }
         }
 
@@ -47,25 +44,26 @@ namespace HPTClient
         {
             var race = CombinationListInfo.CombinationList.First().Horse1.ParentRace;
 
-            string fileName = this.CombBet.SaveDirectory + this.CombBet.ToFileNameString();
-            this.CombBet.SystemFilename = fileName + ".xml";
+            var fileName = CombBet.SaveDirectory + CombBet.ToFileNameString();
+            CombBet.SystemFilename = $"{fileName}.xml";
 
-            HPTSerializer.SerializeHPTCombinationSystem(this.CombBet.SaveDirectory + this.CombBet.ToFileNameString(race, this.CombinationListInfo) + ".hpt5", this.CombBet);
-            ATGCouponHelper couponHelper = new ATGCouponHelper(this.CombBet);
-            couponHelper.CreateCombinationCoupons(this.CombinationListInfo);
+            HPTSerializer.SerializeHPTCombinationSystem(
+                $"{CombBet.SaveDirectory}{CombBet.ToFileNameString(race, CombinationListInfo)}.hpt7", CombBet);
+            var couponHelper = new ATGCouponHelper(CombBet);
+            couponHelper.CreateCombinationCoupons(CombinationListInfo);
         }
 
         private void btnCopy_Click(object sender, RoutedEventArgs e)
         {
-            string systemInfo = this.CombBet.ToClipboardString();
+            var systemInfo = CombBet.ToClipboardString();
             Clipboard.SetDataObject(systemInfo);
         }
 
         private void btnCreateCouponsAs_Click(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog sfd = new SaveFileDialog();
-            sfd.InitialDirectory = this.CombBet.SaveDirectory;
-            sfd.FileName = this.CombBet.ToFileNameString() + ".xml";
+            var sfd = new SaveFileDialog();
+            sfd.InitialDirectory = CombBet.SaveDirectory;
+            sfd.FileName = $"{CombBet.ToFileNameString()}.xml";
             sfd.Filter = "ATG-kupongfiler (*.xml)|*.xml|Alla filer (*.*)|*.*";
             sfd.FileOk += new System.ComponentModel.CancelEventHandler(sfd_FileOk);
             sfd.ShowDialog();
@@ -91,16 +89,16 @@ namespace HPTClient
             {
                 try
                 {
-                    SaveFileDialog sfd = (SaveFileDialog)sender;
-                    string fileName = sfd.FileName;
-                    this.CombBet.SystemFilename = fileName;
-                    ATGCouponHelper couponHelper = new ATGCouponHelper(this.CombBet);
-                    couponHelper.CreateCombinationCoupons(this.CombinationListInfo);
-                    HPTSerializer.SerializeHPTCombinationSystem(fileName.Replace(".xml", ".hpt5"), this.CombBet);
+                    var sfd = (SaveFileDialog)sender;
+                    var fileName = sfd.FileName;
+                    CombBet.SystemFilename = fileName;
+                    var couponHelper = new ATGCouponHelper(CombBet);
+                    couponHelper.CreateCombinationCoupons(CombinationListInfo);
+                    HPTSerializer.SerializeHPTCombinationSystem(fileName.Replace(".xml", ".hpt7"), CombBet);
                 }
                 catch (Exception exc)
                 {
-                    string error = exc.Message;
+                    var error = exc.Message;
                 }
             }
         }

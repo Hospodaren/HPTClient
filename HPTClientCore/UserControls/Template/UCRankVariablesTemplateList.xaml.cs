@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 namespace HPTClient
@@ -28,15 +27,15 @@ namespace HPTClient
         {
             var rankVariableTemplate = new HPTRankTemplate()
             {
-                Name = "Ny mall (" + DateTime.Now.ToString("yyyy-MM-dd") + ", " + DateTime.Now.ToShortTimeString()
+                Name = $"Ny mall ({DateTime.Now:yyyy-MM-dd}, {DateTime.Now.ToShortTimeString()}"
             };
             rankVariableTemplate.InitializeTemplate();
 
-            if (this.Config.RankTemplateList == null)
+            if (Config.RankTemplateList == null)
             {
-                this.Config.RankTemplateList = new System.Collections.ObjectModel.ObservableCollection<HPTRankTemplate>();
+                Config.RankTemplateList = new System.Collections.ObjectModel.ObservableCollection<HPTRankTemplate>();
             }
-            this.Config.RankTemplateList.Add(rankVariableTemplate);
+            Config.RankTemplateList.Add(rankVariableTemplate);
         }
 
     }

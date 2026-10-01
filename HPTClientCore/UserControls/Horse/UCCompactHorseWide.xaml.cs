@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -22,25 +21,25 @@ namespace HPTClient
             {
                 return;
             }
-            TextBlock tb = (TextBlock)sender;
-            if (this.pu == null)
+            var tb = (TextBlock)sender;
+            if (pu == null)
             {
-                this.pu = new System.Windows.Controls.Primitives.Popup()
+                pu = new System.Windows.Controls.Primitives.Popup()
                 {
                     Placement = System.Windows.Controls.Primitives.PlacementMode.MousePoint,
                     HorizontalOffset = -10D,
                     VerticalOffset = -10D
                 };
-                this.pu.MouseLeave += new MouseEventHandler(pu_MouseLeave);
+                pu.MouseLeave += new MouseEventHandler(pu_MouseLeave);
             }
-            this.pu.DataContext = tb.DataContext;
-            this.pu.Child = new UCResultView();
-            this.pu.IsOpen = true;
+            pu.DataContext = tb.DataContext;
+            pu.Child = new UCResultView();
+            pu.IsOpen = true;
         }
 
         void pu_MouseLeave(object sender, MouseEventArgs e)
         {
-            System.Windows.Controls.Primitives.Popup pu = (System.Windows.Controls.Primitives.Popup)sender;
+            var pu = (System.Windows.Controls.Primitives.Popup)sender;
             pu.Child = null;
             pu.IsOpen = false;
         }
@@ -48,7 +47,7 @@ namespace HPTClient
         private void chkNextTimer_Checked(object sender, RoutedEventArgs e)
         {
             var chk = (CheckBox)sender;
-            var horse = (HPTHorse)this.DataContext;
+            var horse = (HPTHorse)DataContext;
             if (horse.OwnInformation == null)
             {
                 horse.OwnInformation = new HPTHorseOwnInformation()

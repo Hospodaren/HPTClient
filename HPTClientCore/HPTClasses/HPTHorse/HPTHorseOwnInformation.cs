@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System.Collections.ObjectModel;
+using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Threading;
 
 namespace HPTClient
 {
@@ -15,7 +13,7 @@ namespace HPTClient
 
         internal void SaveHorseOwnInformationList()
         {
-            string fileName = HPTConfig.MyDocumentsPath + "HorseOwnInformationList.hptinfo";
+            var fileName = Path.Combine(HPTConfig.MyDocumentsPath, "HorseOwnInformationList.hptinfo");
             HPTSerializer.SerializeHPTHorseOwnInformation(fileName, this);
         }
 
@@ -23,18 +21,18 @@ namespace HPTClient
         {
             try
             {
-                if (this.HorseOwnInformationList == null)
+                if (HorseOwnInformationList == null)
                 {
-                    this.HorseOwnInformationList = new ObservableCollection<HPTHorseOwnInformation>();
+                    HorseOwnInformationList = new ObservableCollection<HPTHorseOwnInformation>();
                 }
-                var savedHorseInformation = this.HorseOwnInformationList.FirstOrDefault(oi => oi.Name == horse.HorseName);
+                var savedHorseInformation = HorseOwnInformationList.FirstOrDefault(oi => oi.Name == horse.HorseName);
                 if (horse.OwnInformation == savedHorseInformation)
                 {
                     return horse.OwnInformation;
                 }
                 if (savedHorseInformation == null && horse.OwnInformation != null)
                 {
-                    this.HorseOwnInformationList.Add(horse.OwnInformation);
+                    HorseOwnInformationList.Add(horse.OwnInformation);
                     savedHorseInformation = horse.OwnInformation;
                     if (horse.OwnInformation.HorseOwnInformationCommentList.Count > 0)
                     {
@@ -65,8 +63,8 @@ namespace HPTClient
                     savedHorseInformation.HasComment = true;
                 }
 
-                // Spara filen efter varje ändring
-                ThreadPool.QueueUserWorkItem(new WaitCallback(SaveHorseOwnInformationList), ThreadPriority.Normal);
+                // Spara filen efter varje ändring (fire-and-forget med Task)
+                _ = Task.Run(() => SaveHorseOwnInformationList());
 
                 return savedHorseInformation;
             }
@@ -76,26 +74,14 @@ namespace HPTClient
             }
         }
 
-        internal void SaveHorseOwnInformationList(object state)
-        {
-            try
-            {
-                SaveHorseOwnInformationList();
-            }
-            catch (Exception exc)
-            {
-                string s = exc.Message;
-            }
-        }
-
         internal HPTHorseOwnInformation GetOwnInformationByName(string name)
         {
-            if (this.HorseOwnInformationList == null)
+            if (HorseOwnInformationList == null)
             {
-                this.HorseOwnInformationList = new ObservableCollection<HPTHorseOwnInformation>();
+                HorseOwnInformationList = new ObservableCollection<HPTHorseOwnInformation>();
             }
 
-            var ownInformation = this.HorseOwnInformationList.FirstOrDefault(oi => oi != null && oi.Name != null && oi.Name == name);
+            var ownInformation = HorseOwnInformationList.FirstOrDefault(oi => oi != null && oi.Name != null && oi.Name == name);
             if (ownInformation != null)
             {
                 if (string.IsNullOrEmpty(ownInformation.Comment)
@@ -104,11 +90,11 @@ namespace HPTClient
                 {
                     try
                     {
-                        this.HorseOwnInformationList.Remove(ownInformation);
+                        HorseOwnInformationList.Remove(ownInformation);
                     }
                     catch (Exception exc)
                     {
-                        string s = exc.Message;
+                        var s = exc.Message;
                     }
                     ownInformation = null;
                     return null;
@@ -141,11 +127,11 @@ namespace HPTClient
 
         internal void CleanUpOldNextStarts()
         {
-            this.HorseOwnInformationList
+            HorseOwnInformationList
                 .Where(oi => oi.NextStart != null)
                 .Where(oi => oi.NextStart.StartDate < DateTime.Now.AddDays(-7D))
                 .ToList()
-                .ForEach(oi => this.HorseOwnInformationList.Remove(oi));
+                .ForEach(oi => HorseOwnInformationList.Remove(oi));
         }
 
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
@@ -161,47 +147,36 @@ namespace HPTClient
     [DataContract]
     public class HPTHorseOwnInformation : Notifier
     {
-        private int startNr;
         [DataMember]
         public int StartNr
         {
-            get
-            {
-                return startNr;
-            }
+            get;
             set
             {
-                startNr = value;
-                OnPropertyChanged("StartNr");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private string _ATGId;
         [DataMember]
         public string ATGId
         {
-            get
-            {
-                return _ATGId;
-            }
+            get;
             set
             {
-                this._ATGId = value;
-                OnPropertyChanged("ATGId");
+                field = value;
+                OnPropertyChanged();
             }
         }
-        private string name;
+
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public string Name
         {
-            get
-            {
-                return name;
-            }
+            get;
             set
             {
-                name = value;
-                OnPropertyChanged("Name");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -209,11 +184,11 @@ namespace HPTClient
         {
             get
             {
-                if (string.IsNullOrEmpty(this.Name))
+                if (string.IsNullOrEmpty(Name))
                 {
                     return "ERROR";
                 }
-                string correctedHorseName = this.Name;
+                var correctedHorseName = Name;
                 System.IO.Path.GetInvalidFileNameChars()
                     .ToList()
                     .ForEach(ic => correctedHorseName = correctedHorseName.Replace(ic, '_'));
@@ -222,18 +197,14 @@ namespace HPTClient
             }
         }
 
-        private bool? nextTimer;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public bool? NextTimer
         {
-            get
-            {
-                return nextTimer;
-            }
+            get;
             set
             {
-                nextTimer = value;
-                OnPropertyChanged("NextTimer");
+                field = value;
+                OnPropertyChanged();
                 if (HorseOwnInformationCommentList != null && HorseOwnInformationCommentList.Count > 0)
                 {
                     foreach (var comment in HorseOwnInformationCommentList)
@@ -244,159 +215,119 @@ namespace HPTClient
             }
         }
 
-        private ObservableCollection<HPTHorseOwnInformationComment> horseOwnInformationCommentList;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public ObservableCollection<HPTHorseOwnInformationComment> HorseOwnInformationCommentList
         {
-            get
-            {
-                return horseOwnInformationCommentList;
-            }
+            get;
             set
             {
-                horseOwnInformationCommentList = value;
-                OnPropertyChanged("HorseOwnInformationCommentList");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private string comment;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public string Comment
         {
-            get
-            {
-                return comment;
-            }
+            get;
             set
             {
-                comment = value;
-                OnPropertyChanged("Comment");
-                if (!string.IsNullOrEmpty(this.comment))
+                field = value;
+                OnPropertyChanged();
+                if (!string.IsNullOrEmpty(field))
                 {
-                    this.HasComment = true;
+                    HasComment = true;
                 }
             }
         }
 
-        private bool hasComment;
         [DataMember]
         public bool HasComment
         {
-            get
-            {
-                return hasComment;
-            }
+            get;
             set
             {
-                hasComment = value;
-                OnPropertyChanged("HasComment");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private HPTHorseNextStart _NextStart;
         [DataMember]
         public HPTHorseNextStart NextStart
         {
-            get
-            {
-                return _NextStart;
-            }
+            get;
             set
             {
-                this._NextStart = value;
-                OnPropertyChanged("NextStart");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
 
-        private int _Age;
         [DataMember]
         public int Age
         {
-            get
-            {
-                return _Age;
-            }
+            get;
             set
             {
-                this._Age = value;
-                OnPropertyChanged("Age");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private string _Sex;
         [DataMember]
         public string Sex
         {
-            get
-            {
-                return _Sex;
-            }
+            get;
             set
             {
-                this._Sex = value;
-                OnPropertyChanged("Sex");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private string _Owner;
         [DataMember]
         public string Owner
         {
-            get
-            {
-                return _Owner;
-            }
+            get;
             set
             {
-                this._Owner = value;
-                OnPropertyChanged("Owner");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private string _Trainer;
         [DataMember]
         public string Trainer
         {
-            get
-            {
-                return _Trainer;
-            }
+            get;
             set
             {
-                this._Trainer = value;
-                OnPropertyChanged("Trainer");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private string _HomeTrack;
         [DataMember]
         public string HomeTrack
         {
-            get
-            {
-                return _HomeTrack;
-            }
+            get;
             set
             {
-                this._HomeTrack = value;
-                OnPropertyChanged("HomeTrack");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
 
-        private DateTime _CreationDate;
         [DataMember]
         public DateTime CreationDate
         {
-            get
-            {
-                return _CreationDate;
-            }
+            get;
             set
             {
-                this._CreationDate = value;
-                OnPropertyChanged("CreationDate");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -404,7 +335,7 @@ namespace HPTClient
         {
             get
             {
-                return ATGLinkCreator.CreateSTHorseLink(this.ATGId);
+                return ATGLinkCreator.CreateSTHorseLink(ATGId);
             }
         }
 
@@ -412,141 +343,121 @@ namespace HPTClient
         {
             get
             {
-                if (this.HorseOwnInformationCommentList == null || this.HorseOwnInformationCommentList.Count == 0)
+                if (HorseOwnInformationCommentList == null || HorseOwnInformationCommentList.Count == 0)
                 {
-                    return this.CreationDate;
+                    return CreationDate;
                 }
-                return this.HorseOwnInformationCommentList.Max(c => c.CommentDate);
+                return HorseOwnInformationCommentList.Max(c => c.CommentDate);
             }
         }
 
         public bool Updated { get; set; }
 
-        public static bool operator ==(HPTHorseOwnInformation oi1, HPTHorseOwnInformation oi2)
+        public static bool operator ==(HPTHorseOwnInformation? oi1, HPTHorseOwnInformation? oi2)
         {
-            if ((object)oi1 == null && (object)oi2 == null)
-            {
-                return true;
-            }
-            if ((object)oi1 == null || (object)oi2 == null)
-            {
-                return false;
-            }
-            return oi1.Name == oi2.Name;
+            return oi1 is not null && oi2 is not null
+                && oi1.Name == oi2.Name;
         }
 
-        public static bool operator !=(HPTHorseOwnInformation oi1, HPTHorseOwnInformation oi2)
+        public static bool operator !=(HPTHorseOwnInformation? oi1, HPTHorseOwnInformation? oi2)
         {
             return !(oi1 == oi2);
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return Equals(obj as HPTHorseOwnInformation);
+        }
+
+        public bool Equals(HPTHorseOwnInformation? other)
+        {
+            return other is not null && Name == other.Name;
+        }
+
+        public override int GetHashCode()
+        {
+            return Name?.GetHashCode() ?? 0;
         }
     }
 
     [DataContract]
     public class HPTHorseOwnInformationComment : Notifier
     {
-        private string distance;
         [DataMember]
         public string Distance
         {
-            get
-            {
-                return distance;
-            }
+            get;
             set
             {
-                distance = value;
-                OnPropertyChanged("Distance");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private string comment;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public string Comment
         {
-            get
-            {
-                return comment;
-            }
+            get;
             set
             {
-                comment = value;
-                OnPropertyChanged("Comment");
-                this.HasComment = !string.IsNullOrEmpty(this.comment);
+                field = value;
+                OnPropertyChanged();
+                HasComment = !string.IsNullOrEmpty(field);
             }
         }
 
-        private DateTime commentDate;
         [DataMember]
         public DateTime CommentDate
         {
-            get
-            {
-                return commentDate;
-            }
+            get;
             set
             {
-                commentDate = value;
-                OnPropertyChanged("CommentDate");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private string commentUser;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public string CommentUser
         {
-            get
-            {
-                return commentUser;
-            }
+            get;
             set
             {
-                commentUser = value;
-                OnPropertyChanged("CommentUser");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool hasComment;
         [DataMember]
         public bool HasComment
         {
-            get
-            {
-                return hasComment;
-            }
+            get;
             set
             {
-                hasComment = value;
-                OnPropertyChanged("HasComment");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool isOwnComment;
         [DataMember]
         public bool IsOwnComment
         {
-            get
-            {
-                return isOwnComment;
-            }
+            get;
             set
             {
-                isOwnComment = value;
-                OnPropertyChanged("IsOwnComment");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool? nextTimer;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public bool? NextTimer
         {
-            get
-            {
-                return nextTimer;
-            }
+            get;
             set
             {
-                nextTimer = value;
-                OnPropertyChanged("NextTimer");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -554,8 +465,8 @@ namespace HPTClient
         {
             var sb = new StringBuilder();
 
-            sb.AppendLine(this.CommentDate.ToString("yyyy-MM-dd"));
-            sb.AppendLine(this.Comment);
+            sb.AppendLine(CommentDate.ToString("yyyy-MM-dd"));
+            sb.AppendLine(Comment);
             sb.AppendLine();
 
             return sb.ToString();

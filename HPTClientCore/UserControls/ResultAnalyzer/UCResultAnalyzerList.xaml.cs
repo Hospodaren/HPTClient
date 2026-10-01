@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -42,7 +38,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -76,7 +72,7 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -103,58 +99,58 @@ namespace HPTClient
         {
             try
             {
-                BindingOperations.GetBindingExpression(this.lvwResultAnalyzerList, ListView.ItemsSourceProperty).UpdateTarget();
+                BindingOperations.GetBindingExpression(lvwResultAnalyzerList, ListView.ItemsSourceProperty).UpdateTarget();
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
         private void GridViewColumnHeader_Click(object sender, RoutedEventArgs e)
         {
             //var gd = new PropertyGroupDescription("ParentRace.LegNrString");
-            GridViewColumnHeader column = e.OriginalSource as GridViewColumnHeader;
+            var column = e.OriginalSource as GridViewColumnHeader;
             if (column == null)
             {
                 return;
             }
 
-            String field = column.Tag as String;
+            var field = column.Tag as String;
             if (string.IsNullOrEmpty(field))
             {
                 return;
             }
 
-            ListSortDirection newDir = ListSortDirection.Ascending;
+            var newDir = ListSortDirection.Ascending;
 
-            if (this.lvwResultAnalyzerList.Items.SortDescriptions.Count > 0)
+            if (lvwResultAnalyzerList.Items.SortDescriptions.Count > 0)
             {
-                SortDescription sd = this.lvwResultAnalyzerList.Items.SortDescriptions[0];
+                var sd = lvwResultAnalyzerList.Items.SortDescriptions[0];
                 if (sd.PropertyName == field)
                 {
-                    SortDescription sdNew = new SortDescription();
+                    var sdNew = new SortDescription();
                     sdNew.PropertyName = sd.PropertyName;
                     sdNew.Direction = sd.Direction == ListSortDirection.Ascending
                                             ? ListSortDirection.Descending
                                             : ListSortDirection.Ascending;
-                    this.lvwResultAnalyzerList.Items.SortDescriptions.Clear();
-                    this.lvwResultAnalyzerList.Items.SortDescriptions.Add(sdNew);
+                    lvwResultAnalyzerList.Items.SortDescriptions.Clear();
+                    lvwResultAnalyzerList.Items.SortDescriptions.Add(sdNew);
                     return;
                 }
             }
 
             // Aldrig sortering på mer än två variabler
-            if (this.lvwResultAnalyzerList.Items.SortDescriptions.Count > 1)
+            if (lvwResultAnalyzerList.Items.SortDescriptions.Count > 1)
             {
-                this.lvwResultAnalyzerList.Items.SortDescriptions.RemoveAt(1); ;
+                lvwResultAnalyzerList.Items.SortDescriptions.RemoveAt(1); ;
             }
-            this.lvwResultAnalyzerList.Items.SortDescriptions.Insert(0, new SortDescription(field, newDir));
+            lvwResultAnalyzerList.Items.SortDescriptions.Insert(0, new SortDescription(field, newDir));
         }
 
         private void btnExportToClipboard_Click(object sender, RoutedEventArgs e)
         {
-            this.btnExportToClipboard.IsOpen = false;
+            btnExportToClipboard.IsOpen = false;
 
             var sb = new StringBuilder();
 
@@ -179,7 +175,7 @@ namespace HPTClient
 
         private void miCompleteResults_Click(object sender, RoutedEventArgs e)
         {
-            this.btnExportToClipboard.IsOpen = false;
+            btnExportToClipboard.IsOpen = false;
 
             var sb = new StringBuilder();
 

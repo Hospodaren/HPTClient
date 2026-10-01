@@ -113,10 +113,11 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition />
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="164.873"/>
+                <ColumnDefinition Width="250.021"/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="0,94,0,0">
 
                 <TextBlock x:Name="txtCountdownInfo" Margin="2" FontWeight="Bold"/>
                 <TextBlock x:Name="txtCountdownTimer" Margin="2"/>
@@ -125,8 +126,8 @@
 
             <HPT:UCCombinationsGameHandling CombBet="{Binding CombBet,ElementName=ucTvillingGame}" 
                                         DataContext="{Binding Path=CombBet,ElementName=ucTvillingGame}" 
-                                        Grid.Column="2" HorizontalAlignment="Right"/>
+                                        Grid.Column="2" HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
         </Grid>
-        
+
     </Grid>
 </HPT:UCCombBetControl>

@@ -1,105 +1,90 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
 namespace HPTClient
 {
     [DataContract]
     public class HPTHorseNextStart : Notifier, IComparable
     {
-        private DateTime _StartDate;
         [DataMember]
         public DateTime StartDate
         {
-            get
-            {
-                return _StartDate;
-            }
+            get;
             set
             {
-                this._StartDate = value;
-                OnPropertyChanged("StartDate");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int _RaceNumber;
         [DataMember]
         public int RaceNumber
         {
-            get
-            {
-                return _RaceNumber;
-            }
+            get;
             set
             {
-                this._RaceNumber = value;
-                OnPropertyChanged("RaceNumber");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int _TrackId;
         [DataMember]
         public int TrackId
         {
-            get
-            {
-                return _TrackId;
-            }
+            get;
             set
             {
-                this._TrackId = value;
-                OnPropertyChanged("TrackId");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private List<string> _BetTypes;
         [DataMember]
         public List<string> BetTypes
         {
-            get
-            {
-                return _BetTypes;
-            }
+            get;
             set
             {
-                this._BetTypes = value;
-                OnPropertyChanged("BetTypes");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private List<HPTBetType> betTypeList;
-        public List<HPTBetType> BetTypeList
-        {
-            get
-            {
-                if (this.betTypeList == null)
-                {
-                    this.betTypeList = this.BetTypes
-                        .Select(bt => new HPTBetType()
-                        {
-                            Code = bt,
-                            Name = bt,
-                            IsEnabled = true
-                        })
-                        //.Select(bt => new HPTBetType(new Uri("/ATGImages/" + bt + "XSmall.png", UriKind.Relative)))
-                        .ToList();
-                }
-                return this.betTypeList;
-            }
-        }
+        // private List<HPTBetType> betTypeList;
+        // public List<HPTBetType> BetTypeList
+        // {
+        //     get
+        //     {
+        //         if (this.betTypeList == null)
+        //         {
+        //             this.betTypeList = this.BetTypes
+        //                 .Select(bt => new HPTBetType()
+        //                 {
+        //                     Code = bt,
+        //                     Name = bt,
+        //                     IsEnabled = true
+        //                 })
+        //                 //.Select(bt => new HPTBetType(new Uri("/ATGImages/" + bt + "XSmall.png", UriKind.Relative)))
+        //                 .ToList();
+        //         }
+        //         return this.betTypeList;
+        //     }
+        // }
 
-        public string ATGLink   // För Saxade banor
-        {
-            get
-            {
-                return ATGLinkCreator.CreateRaceStartlistLink(this.TrackId, this.StartDate, this.RaceNumber);
-            }
-        }
+        // public string ATGLink   // För Saxade banor
+        // {
+        //     get
+        //     {
+        //         return ATGLinkCreator.CreateRaceStartlistLink(this.TrackId, this.StartDate, this.RaceNumber);
+        //     }
+        // }
 
-        public int CompareTo(object obj)
+        public int CompareTo(object? obj)
         {
-            return StartDate.CompareTo(obj);
+            if (obj is null)
+                return 1;
+            if (obj is HPTHorseNextStart other)
+                return StartDate.CompareTo(other.StartDate);
+            throw new ArgumentException("Object must be a HPTHorseNextStart", nameof(obj));
         }
 
 

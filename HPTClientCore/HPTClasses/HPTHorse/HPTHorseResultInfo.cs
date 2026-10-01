@@ -1,153 +1,133 @@
-﻿using System;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
 namespace HPTClient
 {
     [DataContract]
     public class HPTHorseResultInfo : Notifier
     {
-
-        private int _Place;
         [DataMember]
         public int Place
         {
-            get
-            {
-                return _Place;
-            }
+            get;
             set
             {
-                this._Place = value;
-                OnPropertyChanged("Place");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int _FinishingPosition;
         [DataMember]
         public int FinishingPosition
         {
-            get
-            {
-                return _FinishingPosition;
-            }
+            get;
             set
             {
-                this._FinishingPosition = value;
-                OnPropertyChanged("FinishingPosition");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
 
-        private int _Earning;
         [DataMember]
         public int Earning
         {
-            get
-            {
-                return _Earning;
-            }
+            get;
             set
             {
-                this._Earning = value;
-                OnPropertyChanged("Earning");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private TimeSpan _KmTime;
         [DataMember]
         public TimeSpan KmTime
         {
-            get
-            {
-                return _KmTime;
-            }
+            get;
             set
             {
-                this._KmTime = value;
-                OnPropertyChanged("KmTime");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private TimeSpan _TotalTime;
         [DataMember]
         public TimeSpan TotalTime
         {
-            get
-            {
-                return _TotalTime;
-            }
+            get;
             set
             {
-                this._TotalTime = value;
-                OnPropertyChanged("TotalTime");
-            }
-        }
-        private bool _Disqualified;
-        [DataMember]
-        public bool Disqualified
-        {
-            get
-            {
-                return _Disqualified;
-            }
-            set
-            {
-                this._Disqualified = value;
-                OnPropertyChanged("Disqualified");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private string _PlaceString;
+        [DataMember]
+        public bool Disqualified
+        {
+            get;
+            set
+            {
+                field = value;
+                OnPropertyChanged();
+            }
+        }
+
         [DataMember]
         public string PlaceString
         {
-            get
-            {
-                return _PlaceString;
-            }
+            get;
             set
             {
-                this._PlaceString = value;
-                OnPropertyChanged("PlaceString");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
         public void SetPlaceString(HPTHorse hptHorse)
         {
+            //PlaceString = FinishingPosition switch
+            //{
+
+            //};
+
             if (hptHorse.Scratched == true)
             {
-                this.PlaceString = "-";
-                this.FinishingPosition = 50 + hptHorse.StartNr;
-            }
-            else if (this.Place > 0 && this.Place < 4)
-            {
-                this.PlaceString = this.Place.ToString();
-                if (this.FinishingPosition == 0 || this.FinishingPosition == 999)
-                {
-                    this.FinishingPosition = this.Place;
-                }
-            }
-            else if (this.FinishingPosition > 0 && this.FinishingPosition < 21) // Diskvalificerad är 41-49 av någon anledning...
-            {
-                this.PlaceString = this.FinishingPosition.ToString();
-            }
-            else if (this.FinishingPosition > 20 && this.FinishingPosition < 51) // Diskvalificerad är 41-49 av någon anledning...
-            {
-                this.PlaceString = "D";
-            }
-            else if (this.FinishingPosition > 50 && this.FinishingPosition < 70) // Diskvalificerad är 41-49 av någon anledning...
-            {
-                this.PlaceString = "-";
-            }
-            else if (this.FinishingPosition == 0 || this.FinishingPosition == 999) // Utländskt lopp som saknar finishingPosition...
-            {
-                this.PlaceString = "-";
-                this.FinishingPosition = 21;
+                PlaceString = "-";
+                //FinishingPosition = 50 + hptHorse.StartNr;
             }
             else
             {
-                this.PlaceString = string.Empty;
+                PlaceString = FinishingPosition.ToString();
             }
+            //else if (Place > 0 && Place < 4)
+            //{
+            //    PlaceString = Place.ToString();
+            //    if (FinishingPosition == 0 || FinishingPosition == 999)
+            //    {
+            //        FinishingPosition = Place;
+            //    }
+            //}
+            //else if (FinishingPosition > 0 && FinishingPosition < 21) // Diskvalificerad är 41-49 av någon anledning...
+            //{
+            //    PlaceString = FinishingPosition.ToString();
+            //}
+            //else if (FinishingPosition > 20 && FinishingPosition < 51) // Diskvalificerad är 41-49 av någon anledning...
+            //{
+            //    PlaceString = "D";
+            //}
+            //else if (FinishingPosition > 50 && FinishingPosition < 70) // Diskvalificerad är 41-49 av någon anledning...
+            //{
+            //    PlaceString = "-";
+            //}
+            //else if (FinishingPosition == 0 || FinishingPosition == 999) // Utländskt lopp som saknar finishingPosition...
+            //{
+            //    PlaceString = "-";
+            //    FinishingPosition = 21;
+            //}
+            //else
+            //{
+            //    PlaceString = string.Empty;
+            //}
         }
     }
 }

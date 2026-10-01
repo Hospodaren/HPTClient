@@ -1,5 +1,4 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Windows.Data;
 
 namespace HPTClient
@@ -10,7 +9,7 @@ namespace HPTClient
         {
             try
             {
-                int trackId = (int)value;
+                var trackId = (int)value;
                 return EnumHelper.GetTrackNameFromTrackId(trackId);
 
             }

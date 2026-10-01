@@ -27,24 +27,21 @@ namespace HPTClient
             DependencyProperty.Register("Horse", typeof(HPTHorse), typeof(UCCompactHorse), new PropertyMetadata(null));
 
 
-
-
-        private System.Windows.Controls.Primitives.Popup pu;
         public System.Windows.Controls.Primitives.Popup PU
         {
             get
             {
-                if (this.pu == null)
+                if (field == null)
                 {
-                    this.pu = new System.Windows.Controls.Primitives.Popup()
+                    field = new System.Windows.Controls.Primitives.Popup()
                     {
                         Placement = System.Windows.Controls.Primitives.PlacementMode.MousePoint,
                         HorizontalOffset = -10D,
                         VerticalOffset = -10D
                     };
-                    this.pu.MouseLeave += new MouseEventHandler(pu_MouseLeave);
+                    field.MouseLeave += new MouseEventHandler(pu_MouseLeave);
                 }
-                return this.pu;
+                return field;
             }
         }
 
@@ -54,10 +51,10 @@ namespace HPTClient
             {
                 return;
             }
-            TextBlock tb = (TextBlock)sender;
-            this.PU.DataContext = tb.DataContext;
-            this.PU.Child = new UCResultView();
-            this.PU.IsOpen = true;
+            var tb = (TextBlock)sender;
+            PU.DataContext = tb.DataContext;
+            PU.Child = new UCResultView();
+            PU.IsOpen = true;
         }
 
         private void txtDriverName_MouseUp(object sender, MouseButtonEventArgs e)
@@ -66,9 +63,9 @@ namespace HPTClient
             if (fe.DataContext.GetType() == typeof(HPTHorse))
             {
                 var horse = fe.DataContext as HPTHorse;
-                var serviceConnector = new HPTServiceConnector();
+                //var serviceConnector = new HPTServiceConnector(); // TODO?
                 //serviceConnector.GetDriverInfoFromATG(horse);
-                serviceConnector.GetHorseStartInformationFromATG(horse);
+                //serviceConnector.GetHorseStartInformationFromATG(horse);
 
                 if (horse.DriverInfo != null)
                 {
@@ -84,8 +81,8 @@ namespace HPTClient
                         }
                     };
 
-                    this.PU.Child = b;
-                    this.PU.IsOpen = true;
+                    PU.Child = b;
+                    PU.IsOpen = true;
                 }
             }
         }
@@ -93,19 +90,19 @@ namespace HPTClient
         void pu_MouseLeave(object sender, MouseEventArgs e)
         {
             //System.Windows.Controls.Primitives.Popup pu = (System.Windows.Controls.Primitives.Popup)sender;
-            this.PU.Child = null;
-            this.PU.IsOpen = false;
+            PU.Child = null;
+            PU.IsOpen = false;
         }
 
         private void ucCompactHorse_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if (this.DataContext == null)
+            if (DataContext == null)
             {
                 return;
             }
-            if (this.DataContext.GetType() == typeof(HPTHorse))
+            if (DataContext.GetType() == typeof(HPTHorse))
             {
-                this.Horse = (HPTHorse)this.DataContext;
+                Horse = (HPTHorse)DataContext;
             }
         }
 

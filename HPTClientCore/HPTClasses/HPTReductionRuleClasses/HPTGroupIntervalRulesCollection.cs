@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 namespace HPTClient
@@ -18,13 +16,13 @@ namespace HPTClient
 
         public override bool IncludeRow(HPTMarkBet markBet, HPTMarkBetSingleRow singleRow)
         {
-            if (ReductionRuleList.Count == 0 || !this.Use)
+            if (ReductionRuleList.Count == 0 || !Use)
             {
                 return true;
             }
-            int numberOfRules = 0;
-            IEnumerable<HPTGroupIntervalReductionRule> ruleList = this.ReductionRuleList.Cast<HPTGroupIntervalReductionRule>();
-            foreach (var propertyInfo in this.DistinctProperties)
+            var numberOfRules = 0;
+            var ruleList = ReductionRuleList.Cast<HPTGroupIntervalReductionRule>();
+            foreach (var propertyInfo in DistinctProperties)
             {
                 singleRow.SetCurrentGroupIntervalValues(propertyInfo);
                 foreach (var rule in ruleList.Where(r => r.PropertyName == propertyInfo.Name))
@@ -33,13 +31,13 @@ namespace HPTClient
                     {
                         numberOfRules++;
                     }
-                    else if (this.AllRulesMustApply)
+                    else if (AllRulesMustApply)
                     {
                         return false;
                     }
                 }
             }
-            return this.NumberOfWinnersList.First(now => now.NumberOfWinners == numberOfRules).Selected;
+            return NumberOfWinnersList.First(now => now.NumberOfWinners == numberOfRules).Selected;
         }
 
         [DataMember]
@@ -52,7 +50,7 @@ namespace HPTClient
         {
             base.Reset();
 
-            this.DistinctProperties = this.ReductionRuleList
+            DistinctProperties = ReductionRuleList
                 .Cast<HPTGroupIntervalReductionRule>()
                 .Where(r => r.HorseVariable != null)
                 .Select(r => r.HorseVariable.HorseProperty)
@@ -65,7 +63,7 @@ namespace HPTClient
             get
             {
                 //return "Gruppintervallregler: " + this.NumberOfWinnersString + " av " + this.ReductionRuleList.Count(r => r.Use).ToString();
-                if (this.ReductionRuleList.Count(r => r.Use) > 1)
+                if (ReductionRuleList.Count(r => r.Use) > 1)
                 {
                     return "GRUPPINTERVALLREGLER ";
                 }

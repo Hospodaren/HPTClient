@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -19,22 +16,21 @@ namespace HPTClient
         public UCPersonReduction()
         {
             //this.HorseList = new ObservableCollection<HPTHorse>();
-            this.HorseList = new ObservableCollection<HPTHorse>();
-            this.PersonList = new ObservableCollection<HPTPerson>();
+            HorseList = new ObservableCollection<HPTHorse>();
+            PersonList = new ObservableCollection<HPTPerson>();
             InitializeComponent();
             SetRaceDayInfo();
         }
 
-        private HPTPersonRulesCollection personRulesCollection;
         public HPTPersonRulesCollection PersonRulesCollection
         {
             get
             {
-                if (this.personRulesCollection == null)
+                if (field == null)
                 {
-                    this.personRulesCollection = (HPTPersonRulesCollection)this.DataContext;
+                    field = (HPTPersonRulesCollection)DataContext;
                 }
-                return this.personRulesCollection;
+                return field;
             }
         }
 
@@ -63,15 +59,15 @@ namespace HPTClient
 
         private void SetRaceDayInfo()
         {
-            this.ParentRaceDayInfo = new HPTRaceDayInfo();
-            this.ParentRaceDayInfo.DataToShow = new HPTHorseDataToShow()
+            ParentRaceDayInfo = new HPTRaceDayInfo();
+            ParentRaceDayInfo.DataToShow = new HPTHorseDataToShow()
             {
                 ShowDriver = true,
                 ShowDriverPopup = true,
                 ShowHorsePopup = true,
                 ShowLegNrText = true,
                 ShowMarkability = true,
-                ShowMarksPercent = true,
+                //ShowMarksPercent = true,
                 ShowMarksQuantity = true,
                 ShowMarksShare = true,
                 ShowName = true,
@@ -88,63 +84,63 @@ namespace HPTClient
 
         private void chkPerson_Checked(object sender, RoutedEventArgs e)
         {
-            if (this.isSelecting)
+            if (isSelecting)
             {
                 return;
             }
-            bool recalculationPaused = this.MarkBet.pauseRecalculation;
-            this.MarkBet.pauseRecalculation = true;
-            CheckBox chk = (CheckBox)sender;
-            HPTPerson person = (HPTPerson)chk.DataContext;
+            var recalculationPaused = MarkBet.pauseRecalculation;
+            MarkBet.pauseRecalculation = true;
+            var chk = (CheckBox)sender;
+            var person = (HPTPerson)chk.DataContext;
             if ((bool)chk.IsChecked)
             {
-                if (this.CurrentReductionRule == null)
+                if (CurrentReductionRule == null)
                 {
-                    this.CurrentReductionRule = this.PersonRulesCollection.ReductionRuleFactory();
+                    CurrentReductionRule = PersonRulesCollection.ReductionRuleFactory();
                 }
-                foreach (HPTHorse horse in person.HorseList)
+                foreach (var horse in person.HorseList)
                 {
-                    if (!this.HorseList.Contains(horse))
+                    if (!HorseList.Contains(horse))
                     {
-                        this.HorseList.Add(horse);
+                        HorseList.Add(horse);
                     }
                 }
-                if (!this.CurrentReductionRule.PersonList.Contains(person))
+                if (!CurrentReductionRule.PersonList.Contains(person))
                 {
-                    this.CurrentReductionRule.PersonList.Add(person);
+                    CurrentReductionRule.PersonList.Add(person);
                 }
-                if (!this.PersonRulesCollection.ReductionRuleList.Contains(this.CurrentReductionRule))
+                if (!PersonRulesCollection.ReductionRuleList.Contains(CurrentReductionRule))
                 {
-                    this.PersonRulesCollection.ReductionRuleList.Add(this.CurrentReductionRule);
+                    PersonRulesCollection.ReductionRuleList.Add(CurrentReductionRule);
                 }
             }
             else
             {
-                foreach (HPTHorse horse in person.HorseList)
+                foreach (var horse in person.HorseList)
                 {
-                    this.HorseList.Remove(horse);
+                    HorseList.Remove(horse);
                 }
-                this.CurrentReductionRule.PersonList.Remove(person);
+                CurrentReductionRule.PersonList.Remove(person);
             }
-            if (this.CurrentReductionRule.NumberOfWinnersList != null)
+            if (CurrentReductionRule.NumberOfWinnersList != null)
             {
-                this.CurrentReductionRule.UpdateSelectable(this.HorseList);
+                CurrentReductionRule.UpdateSelectable(HorseList);
             }
-            this.MarkBet.pauseRecalculation = recalculationPaused;
-            this.MarkBet.RecalculateReduction(RecalculateReason.Other);
+            MarkBet.pauseRecalculation = recalculationPaused;
+            MarkBet.RecalculateReduction(RecalculateReason.Other);
         }
 
         private void btnAddRule_Click(object sender, RoutedEventArgs e)
         {
-            if (this.PersonRulesCollection.ReductionRuleList.Contains(this.CurrentReductionRule))
+            if (PersonRulesCollection.ReductionRuleList.Contains(CurrentReductionRule))
             {
                 return;
             }
-            this.CurrentReductionRule.SetShortDescriptionString();
-            this.PersonRulesCollection.ReductionRuleList.Add(this.CurrentReductionRule);
+            CurrentReductionRule.SetShortDescriptionString();
+            PersonRulesCollection.ReductionRuleList.Add(CurrentReductionRule);
             //this.CurrentReductionRule = new HPTPersonReductionRule();
-            this.CurrentReductionRule = this.PersonRulesCollection.ReductionRuleFactory();
-            ResetPersonList(this.PersonList);
+            CurrentReductionRule = PersonRulesCollection.ReductionRuleFactory();
+            ResetPersonList(PersonList);
         }
 
         private bool isSelecting = false;
@@ -153,15 +149,15 @@ namespace HPTClient
         {
             try
             {
-                if (this.CurrentReductionRule != null && (this.CurrentReductionRule.PersonList == null || this.CurrentReductionRule.PersonList.Count == 0))
+                if (CurrentReductionRule != null && (CurrentReductionRule.PersonList == null || CurrentReductionRule.PersonList.Count == 0))
                 {
-                    this.PersonRulesCollection.ReductionRuleList.Remove(this.CurrentReductionRule);
+                    PersonRulesCollection.ReductionRuleList.Remove(CurrentReductionRule);
                 }
-                HPTPersonReductionRule rule = this.PersonRulesCollection.ReductionRuleFactory();
-                this.CurrentReductionRule = rule;
-                this.PersonRulesCollection.ReductionRuleList.Add(rule);
+                var rule = PersonRulesCollection.ReductionRuleFactory();
+                CurrentReductionRule = rule;
+                PersonRulesCollection.ReductionRuleList.Add(rule);
 
-                foreach (HPTPerson person in this.PersonList.Where(p => p.Selected))
+                foreach (var person in PersonList.Where(p => p.Selected))
                 {
                     person.Selected = false;
                 }
@@ -178,24 +174,24 @@ namespace HPTClient
             {
                 if (e.PropertyName == "NumberOfWinnersSelected")
                 {
-                    if (this.PersonRulesCollection.Use)
+                    if (PersonRulesCollection.Use)
                     {
-                        this.MarkBet.RecalculateReduction(RecalculateReason.Other);
+                        MarkBet.RecalculateReduction(RecalculateReason.Other);
                     }
                 }
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
         private void btnClearRule_Click(object sender, RoutedEventArgs e)
         {
-            bool recalculationPaused = this.MarkBet.pauseRecalculation;
-            this.MarkBet.pauseRecalculation = true;
-            ResetPersonList(this.CurrentReductionRule.PersonList);
-            foreach (HPTPerson person in this.PersonList)
+            var recalculationPaused = MarkBet.pauseRecalculation;
+            MarkBet.pauseRecalculation = true;
+            ResetPersonList(CurrentReductionRule.PersonList);
+            foreach (var person in PersonList)
             {
                 if (person.Selected)
                 {
@@ -203,47 +199,47 @@ namespace HPTClient
                 }
             }
 
-            this.PersonRulesCollection.ReductionRuleList.Remove(this.CurrentReductionRule);
-            this.CurrentReductionRule = this.PersonRulesCollection.ReductionRuleFactory();
+            PersonRulesCollection.ReductionRuleList.Remove(CurrentReductionRule);
+            CurrentReductionRule = PersonRulesCollection.ReductionRuleFactory();
 
-            this.PersonRulesCollection.ReductionRuleList.Add(this.CurrentReductionRule);
+            PersonRulesCollection.ReductionRuleList.Add(CurrentReductionRule);
 
-            this.MarkBet.pauseRecalculation = recalculationPaused;
-            if (this.PersonRulesCollection.Use)
+            MarkBet.pauseRecalculation = recalculationPaused;
+            if (PersonRulesCollection.Use)
             {
-                this.MarkBet.RecalculateReduction(RecalculateReason.Other);
+                MarkBet.RecalculateReduction(RecalculateReason.Other);
             }
         }
 
         private void btnRemoveRule_Click(object sender, RoutedEventArgs e)
         {
-            this.PersonRulesCollection.ReductionRuleList.Remove(this.CurrentReductionRule);
+            PersonRulesCollection.ReductionRuleList.Remove(CurrentReductionRule);
 
-            if (this.PersonRulesCollection.Use && this.CurrentReductionRule.Use)
+            if (PersonRulesCollection.Use && CurrentReductionRule.Use)
             {
-                this.MarkBet.RecalculateReduction(RecalculateReason.Other);
+                MarkBet.RecalculateReduction(RecalculateReason.Other);
             }
         }
 
         private void btnCalculate_Click(object sender, RoutedEventArgs e)
         {
-            this.MarkBet.RecalculateReduction(RecalculateReason.Other);
+            MarkBet.RecalculateReduction(RecalculateReason.Other);
         }
 
         private void SelectPersons(IEnumerable<HPTPerson> personList)
         {
-            this.MarkBet.pauseRecalculation = true;
+            MarkBet.pauseRecalculation = true;
             ResetPersonList(personList);
-            foreach (HPTPerson person in personList)
+            foreach (var person in personList)
             {
-                this.PersonRulesCollection.PersonList.First(p => p.ShortName == person.ShortName).Selected = true;
+                PersonRulesCollection.PersonList.First(p => p.ShortName == person.ShortName).Selected = true;
             }
-            this.MarkBet.pauseRecalculation = false;
+            MarkBet.pauseRecalculation = false;
         }
 
         private void ResetPersonList(IEnumerable<HPTPerson> personList)
         {
-            foreach (HPTPerson person in this.PersonList
+            foreach (var person in PersonList
                 .Where(p => p.Selected && !personList.Contains(p)))
             {
                 person.Selected = false;
@@ -252,26 +248,26 @@ namespace HPTClient
 
         private void btnRemove_Click(object sender, RoutedEventArgs e)
         {
-            Button btn = (Button)sender;
-            HPTPersonReductionRule rule = (HPTPersonReductionRule)btn.DataContext;
-            this.PersonRulesCollection.ReductionRuleList.Remove(rule);
-            if (rule == this.CurrentReductionRule)
+            var btn = (Button)sender;
+            var rule = (HPTPersonReductionRule)btn.DataContext;
+            PersonRulesCollection.ReductionRuleList.Remove(rule);
+            if (rule == CurrentReductionRule)
             {
                 //this.CurrentReductionRule = new HPTPersonReductionRule();
-                this.CurrentReductionRule = this.PersonRulesCollection.ReductionRuleFactory();
+                CurrentReductionRule = PersonRulesCollection.ReductionRuleFactory();
             }
 
-            if (this.PersonRulesCollection.Use)
+            if (PersonRulesCollection.Use)
             {
-                this.MarkBet.RecalculateReduction(RecalculateReason.Other);
+                MarkBet.RecalculateReduction(RecalculateReason.Other);
             }
         }
 
         private void btnRemoveAll_Click(object sender, RoutedEventArgs e)
         {
-            this.PersonRulesCollection.ReductionRuleList.Clear();
+            PersonRulesCollection.ReductionRuleList.Clear();
 
-            this.MarkBet.RecalculateReduction(RecalculateReason.Other);
+            MarkBet.RecalculateReduction(RecalculateReason.Other);
         }
 
         private void chkOnlyWithSelected_Checked(object sender, RoutedEventArgs e)
@@ -286,24 +282,24 @@ namespace HPTClient
 
         private void UpdatePersonList()
         {
-            bool onlyWithSelected = (bool)this.chkOnlyWithSelected.IsChecked;
-            bool onlyTwoOrMore = (bool)this.chkOnlyTwoOrMore.IsChecked;
-            this.PersonList.Clear();
+            var onlyWithSelected = (bool)chkOnlyWithSelected.IsChecked;
+            var onlyTwoOrMore = (bool)chkOnlyTwoOrMore.IsChecked;
+            PersonList.Clear();
 
-            IOrderedEnumerable<HPTPerson> orderedPersonList = this.PersonRulesCollection.PersonList
+            var orderedPersonList = PersonRulesCollection.PersonList
                 .Where(p => ((onlyWithSelected && p.NumberOfSelectedHorse > 0) || !onlyWithSelected)
                     && ((onlyTwoOrMore && p.HorseList.Count > 1) || !onlyTwoOrMore))
                     .OrderBy(p => p.ShortName);
 
-            foreach (HPTPerson person in orderedPersonList)
+            foreach (var person in orderedPersonList)
             {
-                this.PersonList.Add(person);
+                PersonList.Add(person);
             }
         }
 
         private void ucPersonReduction_Loaded(object sender, RoutedEventArgs e)
         {
-            if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this) && this.IsVisible)
+            if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this) && IsVisible)
             {
                 UpdatePersonList();
             }
@@ -311,46 +307,46 @@ namespace HPTClient
 
         private void ItemsControl_Checked(object sender, RoutedEventArgs e)
         {
-            if (this.PersonRulesCollection.Use)
+            if (PersonRulesCollection.Use)
             {
-                this.MarkBet.RecalculateReduction(RecalculateReason.Other);
+                MarkBet.RecalculateReduction(RecalculateReason.Other);
             }
         }
 
         private void chkUseReduction_Checked(object sender, RoutedEventArgs e)
         {
-            this.MarkBet.RecalculateReduction(RecalculateReason.Other);
+            MarkBet.RecalculateReduction(RecalculateReason.Other);
         }
 
         private void itNumberOfPersonRules_Checked(object sender, RoutedEventArgs e)
         {
-            if (this.PersonRulesCollection.Use)
+            if (PersonRulesCollection.Use)
             {
-                this.MarkBet.RecalculateReduction(RecalculateReason.Other);
+                MarkBet.RecalculateReduction(RecalculateReason.Other);
             }
         }
 
         private void btnSelect_Click(object sender, RoutedEventArgs e)
         {
-            this.isSelecting = true;
+            isSelecting = true;
             try
             {
                 var btn = (Button)sender;
-                HPTPersonReductionRule rule = (HPTPersonReductionRule)btn.DataContext;
-                this.CurrentReductionRule = rule;
+                var rule = (HPTPersonReductionRule)btn.DataContext;
+                CurrentReductionRule = rule;
                 ResetPersonList(rule.PersonList);
                 SelectPersons(rule.PersonList);
-                this.HorseList.Clear();
-                foreach (HPTHorse horse in this.CurrentReductionRule.PersonList.SelectMany(p => p.HorseList))
+                HorseList.Clear();
+                foreach (var horse in CurrentReductionRule.PersonList.SelectMany(p => p.HorseList))
                 {
-                    this.HorseList.Add(horse);
+                    HorseList.Add(horse);
                 }
             }
             catch (Exception exc)
             {
                 HPTConfig.AddToErrorLogStatic(exc);
             }
-            this.isSelecting = false;
+            isSelecting = false;
         }
     }
 }

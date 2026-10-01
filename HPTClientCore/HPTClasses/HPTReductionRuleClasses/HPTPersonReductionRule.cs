@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Xml.Serialization;
@@ -16,13 +14,13 @@ namespace HPTClient
     {
         public HPTPersonReductionRule()
         {
-            this.PersonList = new ObservableCollection<HPTPerson>();
+            PersonList = new ObservableCollection<HPTPerson>();
         }
 
         public HPTPersonReductionRule(int numberOfRaces, bool use)
             : base(numberOfRaces, use)
         {
-            this.PersonList = new ObservableCollection<HPTPerson>();
+            PersonList = new ObservableCollection<HPTPerson>();
         }
 
         private IEnumerable<HPTHorse> horseList;
@@ -30,11 +28,11 @@ namespace HPTClient
         {
             get
             {
-                if (this.horseList == null)
+                if (horseList == null)
                 {
-                    this.horseList = this.PersonList.SelectMany(p => p.HorseList);
+                    horseList = PersonList.SelectMany(p => p.HorseList);
                 }
-                return this.horseList;
+                return horseList;
             }
         }
 
@@ -44,17 +42,17 @@ namespace HPTClient
         //public void UpdateSelectable(IList<HPTHorse> horseList)
         public void UpdateSelectable(ICollection<HPTHorse> horseList)
         {
-            this.NumberOfSelected = 0;
-            int[] raceNumbers = new int[horseList.Count];
-            for (int i = 0; i < horseList.Count; i++)
+            NumberOfSelected = 0;
+            var raceNumbers = new int[horseList.Count];
+            for (var i = 0; i < horseList.Count; i++)
             {
                 //raceNumbers[i] = horseList[i].ParentRace.LegNr;
                 raceNumbers[i] = horseList.ElementAt(i).ParentRace.LegNr;
             }
-            int antal = raceNumbers.Distinct().Count();
-            for (int i = 0; i <= this.NumberOfRaces; i++)
+            var antal = raceNumbers.Distinct().Count();
+            for (var i = 0; i <= NumberOfRaces; i++)
             {
-                HPTNumberOfWinners hptNow = this.NumberOfWinnersList.First(now => now.NumberOfWinners == i);
+                var hptNow = NumberOfWinnersList.First(now => now.NumberOfWinners == i);
                 if (hptNow.NumberOfWinners > antal)
                 {
                     hptNow.Selectable = false;
@@ -63,125 +61,113 @@ namespace HPTClient
                 else
                 {
                     hptNow.Selectable = true;
-                    this.NumberOfSelected += hptNow.Selected ? 1 : 0;
+                    NumberOfSelected += hptNow.Selected ? 1 : 0;
                 }
             }
         }
 
         public void SetShortDescriptionString()
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.Append("-");
             sb.Append(": ");
-            foreach (HPTPerson person in this.PersonList)
+            foreach (var person in PersonList)
             {
                 sb.Append(person.ShortName);
                 sb.Append(", ");
             }
-            this.ShortDescription = sb.ToString();
+            ShortDescription = sb.ToString();
         }
 
-        private string shortDescription;
         [DataMember]
         public string ShortDescription
         {
-            get
-            {
-                return shortDescription;
-            }
+            get;
             set
             {
-                shortDescription = value;
-                OnPropertyChanged("ShortDescription");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private List<string> personShortNameList;
         [DataMember]
         public List<string> PersonShortNameList
         {
             get
             {
-                if (this.personShortNameList == null)
+                if (field == null)
                 {
-                    this.personShortNameList = new List<string>();
+                    field = new List<string>();
                 }
-                foreach (HPTPerson person in this.PersonList)
+
+                foreach (var person in PersonList)
                 {
-                    for (int i = 0; i < this.personShortNameList.Count; i++)
+                    for (var i = 0; i < field.Count; i++)
                     {
-                        if (this.personShortNameList[i] == person.ShortName)
+                        if (field[i] == person.ShortName)
                         {
-                            this.personShortNameList.RemoveAt(i);
+                            field.RemoveAt(i);
                             i--;
                         }
                     }
-                    this.personShortNameList.Add(person.ShortName);
+
+                    field.Add(person.ShortName);
                 }
 
-                return this.personShortNameList;
+                return field;
             }
-            set
-            {
-                this.personShortNameList = value;
-            }
+            set;
         }
 
-        private List<string> personNameList;
         [DataMember]
         public List<string> PersonNameList
         {
             get
             {
-                if (this.personNameList == null)
+                if (field == null)
                 {
-                    this.personNameList = new List<string>();
+                    field = new List<string>();
                 }
-                foreach (HPTPerson person in this.PersonList)
+
+                foreach (var person in PersonList)
                 {
-                    for (int i = 0; i < this.personNameList.Count; i++)
+                    for (var i = 0; i < field.Count; i++)
                     {
-                        if (this.personNameList[i] == person.Name)
+                        if (field[i] == person.Name)
                         {
-                            this.personNameList.RemoveAt(i);
+                            field.RemoveAt(i);
                             i--;
                         }
                     }
-                    this.personNameList.Add(person.Name);
+
+                    field.Add(person.Name);
                 }
 
-                return this.personNameList;
+                return field;
             }
-            set
-            {
-                this.personNameList = value;
-            }
+            set;
         }
 
-        private ObservableCollection<HPTPerson> personList;
         [XmlIgnore]
         public ObservableCollection<HPTPerson> PersonList
         {
-            get
-            {
-                return personList;
-            }
+            get;
             set
             {
-                personList = value;
-                OnPropertyChanged("PersonList");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
         public override void Reset()
         {
             base.Reset();
-            if (this.HorseList.Any())
+            if (HorseList.Any())
             {
-                this.LowestLegNumber = this.HorseList.Min(h => h.ParentRace.LegNr);
-                this.HighestLegNumber = this.HorseList.Max(h => h.ParentRace.LegNr);
+                LowestLegNumber = HorseList.Min(h => h.ParentRace.LegNr);
+                HighestLegNumber = HorseList.Max(h => h.ParentRace.LegNr);
             }
-            this.horseList = null;
+            horseList = null;
         }
 
         [XmlIgnore]
@@ -192,27 +178,27 @@ namespace HPTClient
 
         public override bool IncludeRow(HPTMarkBet markBet, HPTMarkBetSingleRow singleRow)
         {
-            if (!this.Use)
+            if (!Use)
             {
                 return true;
             }
-            int numberOfHorses = this.HorseList.Intersect(singleRow.HorseList).Count();
-            return this.NumberOfWinnersList.First(now => now.NumberOfWinners == numberOfHorses).Selected;
+            var numberOfHorses = HorseList.Intersect(singleRow.HorseList).Count();
+            return NumberOfWinnersList.First(now => now.NumberOfWinners == numberOfHorses).Selected;
         }
 
         public override bool IncludeRow(HPTMarkBet markBet, HPTHorse[] horseList, int numberOfRacesToTest)
         {
-            if (this.HighestLegNumber > numberOfRacesToTest || this.LowestLegNumber > numberOfRacesToTest || !this.Use)
+            if (HighestLegNumber > numberOfRacesToTest || LowestLegNumber > numberOfRacesToTest || !Use)
             {
                 return true;
             }
 
-            int numberOfHorses = horseList.Take(numberOfRacesToTest).Intersect(horseList).Count();
-            if (numberOfHorses > this.MaxNumberOfX) // Maxantalet har redan överskridits innan alla lopp kontrollerats
+            var numberOfHorses = horseList.Take(numberOfRacesToTest).Intersect(horseList).Count();
+            if (numberOfHorses > MaxNumberOfX) // Maxantalet har redan överskridits innan alla lopp kontrollerats
             {
                 return false;
             }
-            if (numberOfHorses + markBet.BetType.NumberOfRaces - numberOfRacesToTest < this.MinNumberOfX)   // Det går inte att komma upp i minimiantalet med kvarvarande lopp
+            if (numberOfHorses + markBet.BetType.NumberOfRaces - numberOfRacesToTest < MinNumberOfX)   // Det går inte att komma upp i minimiantalet med kvarvarande lopp
             {
                 return false;
             }
@@ -224,11 +210,11 @@ namespace HPTClient
             // Skapa dictionary för att kontrollera hur många vinstrader villkoret skulle gett
             if (markBet.RaceDayInfo.ResultComplete)
             {
-                int numberOfCorrectHorses = markBet.CouponCorrector.HorseList
-                    .Intersect(this.HorseList)
+                var numberOfCorrectHorses = markBet.CouponCorrector.HorseList
+                    .Intersect(HorseList)
                     .Count();
 
-                this.RuleResultForCorrectRow = numberOfCorrectHorses.ToString() + " Häst(ar)";
+                RuleResultForCorrectRow = $"{numberOfCorrectHorses} Häst(ar)";
             }
             return true;
         }

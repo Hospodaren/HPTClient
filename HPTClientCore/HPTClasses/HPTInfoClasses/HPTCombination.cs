@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 using System.Text;
 using System.Windows.Media;
 using System.Xml.Serialization;
@@ -36,33 +34,25 @@ namespace HPTClient
         [DataMember]
         public int Horse3Nr { get; set; }
 
-        private decimal multipliedOdds;
         [DataMember]
         public decimal MultipliedOdds
         {
-            get
-            {
-                return this.multipliedOdds;
-            }
+            get;
             set
             {
-                this.multipliedOdds = value;
-                OnPropertyChanged("MultipliedOdds");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal multipliedPlatsOdds;
         [DataMember]
         public decimal MultipliedPlatsOdds
         {
-            get
-            {
-                return this.multipliedPlatsOdds;
-            }
+            get;
             set
             {
-                this.multipliedPlatsOdds = value;
-                OnPropertyChanged("MultipliedPlatsOdds");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -72,12 +62,12 @@ namespace HPTClient
         {
             get
             {
-                return this.combinationOdds;
+                return combinationOdds;
             }
             set
             {
-                this.combinationOdds = value;
-                OnPropertyChanged("CombinationOdds");
+                combinationOdds = value;
+                OnPropertyChanged();
                 //if (this.combinationOdds > 0 && this.ParentRaceDayInfo != null)
                 //{
                 //    //this.CombinationOddsShare = 10 * this.ParentRaceDayInfo.BetType.PoolShare / this.combinationOdds;
@@ -86,363 +76,275 @@ namespace HPTClient
             }
         }
 
-        private decimal _CombinationOddsExact;
         [DataMember]
         public decimal CombinationOddsExact
         {
-            get
-            {
-                return _CombinationOddsExact;
-            }
+            get;
             set
             {
-                this._CombinationOddsExact = value;
-                OnPropertyChanged("CombinationOddsExact");
-                if (this.CombinationOddsExact > 0M && this.ParentRaceDayInfo != null)
+                field = value;
+                OnPropertyChanged();
+                if (CombinationOddsExact > 0M && ParentRaceDayInfo != null)
                 {
-                    this.CombinationOddsShare = this.ParentRaceDayInfo.BetType.PoolShare / this.CombinationOddsExact;
+                    CombinationOddsShare = ParentRaceDayInfo.BetType.PoolShare / CombinationOddsExact;
                 }
             }
         }
 
-        private decimal calculatedOdds;
         [DataMember]
         public decimal CalculatedOdds
         {
-            get
-            {
-                return this.calculatedOdds;
-            }
+            get;
             set
             {
-                this.calculatedOdds = value;
-                OnPropertyChanged("CalculatedOdds");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal calculatedOddsQuota;
         [DataMember]
         public decimal CalculatedOddsQuota
         {
-            get
-            {
-                return this.calculatedOddsQuota;
-            }
+            get;
             set
             {
-                this.calculatedOddsQuota = value;
-                OnPropertyChanged("CalculatedOddsQuota");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
         //public string MultipliedOddsString { get; set; }
 
-        private decimal oddsQuota;
         [DataMember]
         public decimal OddsQuota
         {
-            get
-            {
-                return this.oddsQuota;
-            }
+            get;
             set
             {
-                this.oddsQuota = value;
-                OnPropertyChanged("OddsQuota");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal vOdds;
         [DataMember]
         public decimal VOdds
         {
-            get
-            {
-                return this.vOdds;
-            }
+            get;
             set
             {
-                this.vOdds = value;
-                OnPropertyChanged("VOdds");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal vQuota;
         [DataMember]
         public decimal VQuota
         {
-            get
-            {
-                return this.vQuota;
-            }
+            get;
             set
             {
-                this.vQuota = value;
-                OnPropertyChanged("VQuota");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal pOdds;
         [DataMember]
         public decimal POdds
         {
-            get
-            {
-                return this.pOdds;
-            }
+            get;
             set
             {
-                this.pOdds = value;
-                OnPropertyChanged("POdds");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal pQuota;
         [DataMember]
         public decimal PQuota
         {
-            get
-            {
-                return this.pQuota;
-            }
+            get;
             set
             {
-                this.pQuota = value;
-                OnPropertyChanged("PQuota");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal vpOdds;
         [DataMember]
         public decimal VPOdds
         {
-            get
-            {
-                return this.vpOdds;
-            }
+            get;
             set
             {
-                this.vpOdds = value;
-                OnPropertyChanged("VPOdds");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal vpQuota;
         [DataMember]
         public decimal VPQuota
         {
-            get
-            {
-                return this.vpQuota;
-            }
+            get;
             set
             {
-                this.vpQuota = value;
-                OnPropertyChanged("VPQuota");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal opQuota;
         [DataMember]
         public decimal OPQuota
         {
-            get
-            {
-                return this.opQuota;
-            }
+            get;
             set
             {
-                this.opQuota = value;
-                OnPropertyChanged("OPQuota");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal tvQuota;
         [DataMember]
         public decimal TVQuota
         {
-            get
-            {
-                return this.tvQuota;
-            }
+            get;
             set
             {
-                this.tvQuota = value;
-                OnPropertyChanged("TVQuota");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal? tQuota;
         [DataMember]
         public decimal? TQuota
         {
-            get
-            {
-                return this.tQuota;
-            }
+            get;
             set
             {
-                this.tQuota = value;
-                OnPropertyChanged("TQuota");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal? dQuota;
         [DataMember]
         public decimal? DQuota
         {
-            get
-            {
-                return this.dQuota;
-            }
+            get;
             set
             {
-                this.dQuota = value;
-                OnPropertyChanged("DQuota");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal? stakeQuota;
         [DataMember]
         public decimal? StakeQuota
         {
-            get
-            {
-                return this.stakeQuota;
-            }
+            get;
             set
             {
-                this.stakeQuota = value;
-                OnPropertyChanged("StakeQuota");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool selected;
         [DataMember]
         public bool Selected
         {
-            get
-            {
-                return this.selected;
-            }
+            get;
             set
             {
-                this.selected = value;
-                OnPropertyChanged("Selected");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int? stake;
         [DataMember]
         public int? Stake
         {
-            get
-            {
-                return this.stake;
-            }
+            get;
             set
             {
-                this.stake = value;
-                OnPropertyChanged("Stake");
+                field = value;
+                OnPropertyChanged();
                 if (value == null)
                 {
                     return;
                 }
-                if (this.CombinationOdds == 9999 && this.CalculatedOdds != 0M)
+                if (CombinationOdds == 9999 && CalculatedOdds != 0M)
                 {
-                    this.Profit = Convert.ToInt32(this.stake * this.CalculatedOdds);
+                    Profit = Convert.ToInt32(field * CalculatedOdds);
                 }
                 else
                 {
                     //this.Profit = Convert.ToInt32(this.stake * this.CombinationOdds / 10);
-                    this.Profit = Convert.ToInt32(this.stake * this.CombinationOddsExact);
+                    Profit = Convert.ToInt32(field * CombinationOddsExact);
                 }
             }
         }
 
-        private int profit;
         [DataMember]
         public int Profit
         {
-            get
-            {
-                return this.profit;
-            }
+            get;
             set
             {
-                this.profit = value;
-                switch (this.profit)
+                field = value;
+                switch (field)
                 {
                     case 0:
-                        this.ProfitString = string.Empty;
+                        ProfitString = string.Empty;
                         break;
                     default:
-                        this.ProfitString = string.Format("{0:## ### ###}", this.profit); ;
+                        ProfitString = string.Format("{0:## ### ###}", field); ;
                         break;
                 }
-                OnPropertyChanged("Profit");
+                OnPropertyChanged();
             }
         }
 
-        private string profitString;
         [DataMember]
         public string ProfitString
         {
-            get
-            {
-                return this.profitString;
-            }
+            get;
             set
             {
-                this.profitString = value;
-                OnPropertyChanged("ProfitString");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
         public decimal CombinationOddsShare { get; set; }
 
-        private int multipliedOddsRank;
         [DataMember]
         public int MultipliedOddsRank
         {
-            get
-            {
-                return this.multipliedOddsRank;
-            }
+            get;
             set
             {
-                this.multipliedOddsRank = value;
-                OnPropertyChanged("MultipliedOddsRank");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int combinationOddsRank;
         [DataMember]
         public int CombinationOddsRank
         {
-            get
-            {
-                return this.combinationOddsRank;
-            }
+            get;
             set
             {
-                this.combinationOddsRank = value;
-                OnPropertyChanged("CombinationOddsRank");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal playability;
         [DataMember]
         public decimal Playability
         {
-            get
-            {
-                return this.playability;
-            }
+            get;
             set
             {
-                this.playability = value;
-                OnPropertyChanged("Playability");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -450,14 +352,14 @@ namespace HPTClient
         {
             get
             {
-                if (this.Horse3 == null)
+                if (Horse3 == null)
                 {
-                    return this.Horse1.HexCode + this.Horse2.HexCode;
+                    return Horse1.HexCode + Horse2.HexCode;
                 }
 
                 else
                 {
-                    return this.Horse1.HexCode + this.Horse2.HexCode + this.Horse3.HexCode;
+                    return Horse1.HexCode + Horse2.HexCode + Horse3.HexCode;
                 }
             }
         }
@@ -468,21 +370,21 @@ namespace HPTClient
             {
                 case "DD":
                 case "LD":
-                    if (this.ParentRaceDayInfo == null)
+                    if (ParentRaceDayInfo == null)
                     {
                         return;
                     }
                     CalculateQuotasDD();
                     break;
                 case "TV":
-                    if (this.ParentRace == null || this.ParentRace.HorseList == null || this.ParentRace.HorseList.Count == 0)
+                    if (ParentRace == null || ParentRace.HorseList == null || ParentRace.HorseList.Count == 0)
                     {
                         return;
                     }
                     CalculateQuotasTvilling();
                     break;
                 case "T":
-                    if (this.ParentRace == null || this.ParentRace.HorseList == null || this.ParentRace.HorseList.Count == 0)
+                    if (ParentRace == null || ParentRace.HorseList == null || ParentRace.HorseList.Count == 0)
                     {
                         return;
                     }
@@ -497,86 +399,86 @@ namespace HPTClient
         {
             try
             {
-                this.MultipliedOdds = this.Horse1.VinnarOddsExact * this.Horse2.VinnarOddsExact;
+                MultipliedOdds = Horse1.VinnarOddsExact * Horse2.VinnarOddsExact;
                 //this.OddsQuota = this.CombinationOdds / this.MultipliedOdds / 10;
-                this.OddsQuota = this.CombinationOddsExact / this.MultipliedOdds;
-                this.Playability = Convert.ToDecimal(Math.Sqrt(decimal.ToDouble(this.MultipliedOdds))) / (this.OddsQuota * this.OddsQuota);
+                OddsQuota = CombinationOddsExact / MultipliedOdds;
+                Playability = Convert.ToDecimal(Math.Sqrt(decimal.ToDouble(MultipliedOdds))) / (OddsQuota * OddsQuota);
 
                 // NYA MÅTT
-                if (this.CombinationOddsShare > 0M)
+                if (CombinationOddsShare > 0M)
                 {
-                    this.VQuota = (this.Horse1.VinnarOddsShare * this.Horse2.VinnarOddsShare) / this.CombinationOddsShare;
-                    this.PQuota = (this.Horse1.PlatsOddsShare * this.Horse2.PlatsOddsShare) / this.CombinationOddsShare;
-                    this.TVQuota = (this.Horse1.TvillingShare * this.Horse2.TvillingShare) / this.CombinationOddsShare;
-                    this.OPQuota = (Convert.ToDecimal(this.Horse1.OwnProbability) * Convert.ToDecimal(this.Horse2.OwnProbability)) / this.CombinationOddsShare;
+                    VQuota = (Horse1.VinnarOddsShare * Horse2.VinnarOddsShare) / CombinationOddsShare;
+                    PQuota = (Horse1.PlatsOddsShare * Horse2.PlatsOddsShare) / CombinationOddsShare;
+                    TVQuota = (Horse1.TvillingShare * Horse2.TvillingShare) / CombinationOddsShare;
+                    OPQuota = (Convert.ToDecimal(Horse1.OwnProbability) * Convert.ToDecimal(Horse2.OwnProbability)) / CombinationOddsShare;
 
-                    if (this.Horse1.StakeShareAlternate > 0M && this.Horse2.StakeShareAlternate > 0M)
+                    if (Horse1.StakeShareAlternate > 0M && Horse2.StakeShareAlternate > 0M)
                     {
-                        this.StakeQuota = (Convert.ToDecimal(this.Horse1.StakeShareAlternate) * Convert.ToDecimal(this.Horse2.StakeShareAlternate)) / this.CombinationOddsShare;
+                        StakeQuota = (Convert.ToDecimal(Horse1.StakeShareAlternate) * Convert.ToDecimal(Horse2.StakeShareAlternate)) / CombinationOddsShare;
                     }
                 }
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
         public void CalculateQuotasTvilling()
         {
             // Andel kombinationer i förhållande till totalantal om det varit DD/LD istället
-            int numberOfStartingHorse = this.ParentRace.HorseList.Count(h => h.Scratched == null || h.Scratched == false);
-            decimal numberOfCombinationsQuota =
+            var numberOfStartingHorse = ParentRace.HorseList.Count(h => h.Scratched == null || h.Scratched == false);
+            var numberOfCombinationsQuota =
                 Convert.ToDecimal(numberOfStartingHorse * (numberOfStartingHorse - 1) * 0.5M) /
                 Convert.ToDecimal(numberOfStartingHorse * numberOfStartingHorse);
 
-            this.MultipliedOdds = this.Horse1.VinnarOddsExact * this.Horse2.VinnarOddsExact;
-            this.MultipliedPlatsOdds = Convert.ToDecimal(this.Horse1.MaxPlatsOdds * this.Horse2.MaxPlatsOdds) / 100;
+            MultipliedOdds = Horse1.VinnarOddsExact * Horse2.VinnarOddsExact;
+            MultipliedPlatsOdds = Convert.ToDecimal(Horse1.MaxPlatsOdds * Horse2.MaxPlatsOdds) / 100;
 
-            if (this.MultipliedOdds != 0M && this.MultipliedPlatsOdds != 0M && this.combinationOdds != 0M)
+            if (MultipliedOdds != 0M && MultipliedPlatsOdds != 0M && combinationOdds != 0M)
             {
                 //decimal vinnarOddsQuota = this.CombinationOdds / 10 / numberOfCombinationsQuota / this.MultipliedOdds;
                 //decimal platsOddsQuota = this.CombinationOdds / 10 / this.MultipliedPlatsOdds;
-                decimal vinnarOddsQuota = this.CombinationOddsExact / numberOfCombinationsQuota / this.MultipliedOdds;
-                decimal platsOddsQuota = this.CombinationOddsExact / this.MultipliedPlatsOdds;
-                this.OddsQuota = vinnarOddsQuota;
-                this.Playability = Convert.ToDecimal(Math.Sqrt(decimal.ToDouble(this.MultipliedOdds + this.MultipliedPlatsOdds))) / (this.OddsQuota * this.OddsQuota * platsOddsQuota * platsOddsQuota);
+                var vinnarOddsQuota = CombinationOddsExact / numberOfCombinationsQuota / MultipliedOdds;
+                var platsOddsQuota = CombinationOddsExact / MultipliedPlatsOdds;
+                OddsQuota = vinnarOddsQuota;
+                Playability = Convert.ToDecimal(Math.Sqrt(decimal.ToDouble(MultipliedOdds + MultipliedPlatsOdds))) / (OddsQuota * OddsQuota * platsOddsQuota * platsOddsQuota);
             }
 
             // NYA MÅTT
-            decimal adjustedCombinationShare = this.CombinationOddsShare * numberOfCombinationsQuota;
-            if (this.CombinationOddsShare > 0M && adjustedCombinationShare > 0M)
+            var adjustedCombinationShare = CombinationOddsShare * numberOfCombinationsQuota;
+            if (CombinationOddsShare > 0M && adjustedCombinationShare > 0M)
             {
-                decimal vpShare = (this.Horse1.VinnarOddsShare * this.Horse2.PlatsOddsShare) + (this.Horse1.PlatsOddsShare * this.Horse2.VinnarOddsShare);
+                var vpShare = (Horse1.VinnarOddsShare * Horse2.PlatsOddsShare) + (Horse1.PlatsOddsShare * Horse2.VinnarOddsShare);
                 if (vpShare > 0M)
                 {
-                    this.VPQuota = vpShare / adjustedCombinationShare / 2M;
-                    this.VPOdds = this.CombinationOdds / this.VPQuota;
+                    VPQuota = vpShare / adjustedCombinationShare / 2M;
+                    VPOdds = CombinationOdds / VPQuota;
                 }
 
-                decimal vShare = this.Horse1.VinnarOddsShare * this.Horse2.VinnarOddsShare;
+                var vShare = Horse1.VinnarOddsShare * Horse2.VinnarOddsShare;
                 if (vShare > 0M)
                 {
-                    this.VQuota = vShare / adjustedCombinationShare;
-                    this.VOdds = this.CombinationOdds / this.VQuota;
+                    VQuota = vShare / adjustedCombinationShare;
+                    VOdds = CombinationOdds / VQuota;
                 }
 
-                decimal pShare = this.Horse1.PlatsOddsShare * this.Horse2.PlatsOddsShare;
+                var pShare = Horse1.PlatsOddsShare * Horse2.PlatsOddsShare;
                 if (pShare > 0M)
                 {
-                    this.PQuota = pShare / adjustedCombinationShare;
-                    this.POdds = this.CombinationOdds / this.PQuota;
+                    PQuota = pShare / adjustedCombinationShare;
+                    POdds = CombinationOdds / PQuota;
                 }
 
-                this.OPQuota = (Convert.ToDecimal(this.Horse1.OwnProbability) * Convert.ToDecimal(this.Horse2.OwnProbability)) / adjustedCombinationShare;
+                OPQuota = (Convert.ToDecimal(Horse1.OwnProbability) * Convert.ToDecimal(Horse2.OwnProbability)) / adjustedCombinationShare;
 
-                if (this.Horse1.StakeShareAlternate > 0M && this.Horse2.StakeShareAlternate > 0M)
+                if (Horse1.StakeShareAlternate > 0M && Horse2.StakeShareAlternate > 0M)
                 {
-                    this.StakeQuota = (Convert.ToDecimal(this.Horse1.StakeShareAlternate) * Convert.ToDecimal(this.Horse2.StakeShareAlternate)) / adjustedCombinationShare;
+                    StakeQuota = (Convert.ToDecimal(Horse1.StakeShareAlternate) * Convert.ToDecimal(Horse2.StakeShareAlternate)) / adjustedCombinationShare;
                 }
-                if (this.Horse1.DoubleShare > 0M && this.Horse2.DoubleShare > 0M)
+                if (Horse1.DoubleShare > 0M && Horse2.DoubleShare > 0M)
                 {
-                    this.DQuota = (Convert.ToDecimal(this.Horse1.DoubleShare) * Convert.ToDecimal(this.Horse2.DoubleShare)) / adjustedCombinationShare;
+                    DQuota = (Convert.ToDecimal(Horse1.DoubleShare) * Convert.ToDecimal(Horse2.DoubleShare)) / adjustedCombinationShare;
                 }
             }
         }
@@ -585,67 +487,67 @@ namespace HPTClient
         {
             try
             {
-                this.MultipliedOdds = this.Horse1.VinnarOddsExact * this.Horse2.VinnarOddsExact * this.Horse3.VinnarOddsExact;
+                MultipliedOdds = Horse1.VinnarOddsExact * Horse2.VinnarOddsExact * Horse3.VinnarOddsExact;
                 //this.OddsQuota = this.CombinationOdds / this.MultipliedOdds / 10;
-                this.OddsQuota = this.CombinationOddsExact / this.MultipliedOdds;
+                OddsQuota = CombinationOddsExact / MultipliedOdds;
 
                 //this.CalculatedOdds = 0.343M / (this.Horse1.TrioInfo.PlaceInfo1.InvestmentShare * this.Horse2.TrioInfo.PlaceInfo2.InvestmentShare * this.Horse3.TrioInfo.PlaceInfo3.InvestmentShare);
 
                 // Beräkna vad oddset "borde" vara utifrån hur Trio-spelarena spelat
-                this.CalculatedOdds = 0.7M / (this.Horse1.TrioInfo.PlaceInfo1.InvestmentShare * this.Horse2.TrioInfo.PlaceInfo2.InvestmentShare * this.Horse3.TrioInfo.PlaceInfo3.InvestmentShare);
+                CalculatedOdds = 0.7M / (Horse1.TrioInfo.PlaceInfo1.InvestmentShare * Horse2.TrioInfo.PlaceInfo2.InvestmentShare * Horse3.TrioInfo.PlaceInfo3.InvestmentShare);
 
 
-                if (this.CombinationOdds == 0M || this.CombinationOdds == 9999M)
+                if (CombinationOdds == 0M || CombinationOdds == 9999M)
                 {
-                    this.CalculatedOddsQuota = 0M;
-                    this.VPQuota = 0M;
-                    this.VQuota = 0M;
-                    this.PQuota = 0M;
+                    CalculatedOddsQuota = 0M;
+                    VPQuota = 0M;
+                    VQuota = 0M;
+                    PQuota = 0M;
                 }
                 else
                 {
                     // Vad oddset borde vara utifrån de olika insatserna per placering
-                    this.CalculatedOddsQuota = this.CalculatedOdds / this.CombinationOdds * 10M;
+                    CalculatedOddsQuota = CalculatedOdds / CombinationOdds * 10M;
 
                     // Beräkna vad oddset "borde" varit utifrån VP
-                    decimal vpShare = this.Horse1.VinnarOddsShare * this.Horse2.PlatsOddsShare * this.Horse3.PlatsOddsShare;
+                    var vpShare = Horse1.VinnarOddsShare * Horse2.PlatsOddsShare * Horse3.PlatsOddsShare;
                     if (vpShare > 0M)
                     {
-                        this.VPOdds = 0.7M / vpShare * 10M;
-                        this.VPQuota = this.CombinationOdds / this.VPOdds;
+                        VPOdds = 0.7M / vpShare * 10M;
+                        VPQuota = CombinationOdds / VPOdds;
                     }
 
                     // Beräkna vad oddset "borde" varit utifrån Vinnare
-                    decimal vShare = this.Horse1.VinnarOddsShare * this.Horse2.VinnarOddsShare * this.Horse3.VinnarOddsShare;
+                    var vShare = Horse1.VinnarOddsShare * Horse2.VinnarOddsShare * Horse3.VinnarOddsShare;
                     if (vShare > 0M)
                     {
-                        this.VOdds = 0.7M / vShare * 10M;
-                        this.VQuota = this.CombinationOdds / this.VOdds;
+                        VOdds = 0.7M / vShare * 10M;
+                        VQuota = CombinationOdds / VOdds;
                     }
 
                     // Beräkna vad oddset "borde" varit utifrån Plats
-                    decimal pShare = this.Horse1.PlatsOddsShare * this.Horse2.PlatsOddsShare * this.Horse3.PlatsOddsShare;
+                    var pShare = Horse1.PlatsOddsShare * Horse2.PlatsOddsShare * Horse3.PlatsOddsShare;
                     if (pShare > 0M)
                     {
-                        this.POdds = 0.7M / pShare * 10M;
-                        this.PQuota = this.CombinationOdds / this.POdds;
+                        POdds = 0.7M / pShare * 10M;
+                        PQuota = CombinationOdds / POdds;
                     }
                 }
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
         private void SetColorsDD()
         {
-            Color c = Colors.White;
-            if (this.VQuota > 1.2M)
+            var c = Colors.White;
+            if (VQuota > 1.2M)
             {
                 c = HPTConfig.Config.ColorGood;
             }
-            else if (this.VQuota > 1M)
+            else if (VQuota > 1M)
             {
                 c = HPTConfig.Config.ColorMedium;
             }
@@ -653,18 +555,18 @@ namespace HPTClient
             {
                 c = HPTConfig.Config.ColorBad;
             }
-            this.OddsQuotaColor = new SolidColorBrush(c);
+            OddsQuotaColor = new SolidColorBrush(c);
         }
 
         private void SetColorsTvilling()
         {
             // Färg för oddskvot
-            Color c = Colors.White;
-            if (this.VPQuota > 1.2M)
+            var c = Colors.White;
+            if (VPQuota > 1.2M)
             {
                 c = HPTConfig.Config.ColorGood;
             }
-            else if (this.VPQuota > 1M)
+            else if (VPQuota > 1M)
             {
                 c = HPTConfig.Config.ColorMedium;
             }
@@ -672,18 +574,18 @@ namespace HPTClient
             {
                 c = HPTConfig.Config.ColorBad;
             }
-            this.OddsQuotaColor = new SolidColorBrush(c);
+            OddsQuotaColor = new SolidColorBrush(c);
         }
 
         private void SetColorsTrio()
         {
             // Färg för oddskvot
-            Color c = Colors.White;
-            if (this.VPQuota > 1.2M)
+            var c = Colors.White;
+            if (VPQuota > 1.2M)
             {
                 c = HPTConfig.Config.ColorGood;
             }
-            else if (this.VPQuota > 1M)
+            else if (VPQuota > 1M)
             {
                 c = HPTConfig.Config.ColorMedium;
             }
@@ -691,7 +593,7 @@ namespace HPTClient
             {
                 c = HPTConfig.Config.ColorBad;
             }
-            this.OddsQuotaColor = new SolidColorBrush(c);
+            OddsQuotaColor = new SolidColorBrush(c);
 
             //// Färg för differens i rank
             //int rankDiff = this.CombinationOddsRank - this.MultipliedOddsRank;
@@ -731,30 +633,29 @@ namespace HPTClient
         {
             get
             {
-                StringBuilder sb = new StringBuilder();
-                sb.Append(this.Horse1.StartNr);
+                var sb = new StringBuilder();
+                sb.Append(Horse1.StartNr);
                 sb.Append(" - ");
-                sb.Append(this.Horse1.HorseName);
+                sb.Append(Horse1.HorseName);
                 sb.Append(" / ");
-                sb.Append(this.Horse2.StartNr);
+                sb.Append(Horse2.StartNr);
                 sb.Append(" - ");
-                sb.Append(this.Horse2.HorseName);
+                sb.Append(Horse2.HorseName);
                 sb.Append(" (");
-                sb.Append(this.Stake);
+                sb.Append(Stake);
                 sb.Append(")");
                 return sb.ToString();
             }
         }
 
-        private Brush oddsQuotaColor;
         [XmlIgnore]
         public Brush OddsQuotaColor
         {
             get
             {
-                if (this.oddsQuotaColor == null)
+                if (field == null)
                 {
-                    switch (this.ParentRaceDayInfo.BetType.Code)
+                    switch (ParentRaceDayInfo.BetType.Code)
                     {
                         case "DD":
                         case "LD":
@@ -770,24 +671,23 @@ namespace HPTClient
                             break;
                     }
                 }
-                return this.oddsQuotaColor;
+                return field;
             }
             set
             {
-                this.oddsQuotaColor = value;
-                OnPropertyChanged("OddsQuotaColor");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private Brush rankDiffColor;
         [XmlIgnore]
         public Brush RankDiffColor
         {
             get
             {
-                if (this.rankDiffColor == null)
+                if (field == null)
                 {
-                    switch (this.ParentRaceDayInfo.BetType.Code)
+                    switch (ParentRaceDayInfo.BetType.Code)
                     {
                         case "DD":
                         case "LD":
@@ -803,24 +703,23 @@ namespace HPTClient
                             break;
                     }
                 }
-                return this.rankDiffColor;
+                return field;
             }
             set
             {
-                this.rankDiffColor = value;
-                OnPropertyChanged("RankDiffColor");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private Brush playabilityColor;
         [XmlIgnore]
         public Brush PlayabilityColor
         {
             get
             {
-                if (this.playabilityColor == null)
+                if (field == null)
                 {
-                    switch (this.ParentRaceDayInfo.BetType.Code)
+                    switch (ParentRaceDayInfo.BetType.Code)
                     {
                         case "DD":
                         case "LD":
@@ -836,12 +735,12 @@ namespace HPTClient
                             break;
                     }
                 }
-                return this.playabilityColor;
+                return field;
             }
             set
             {
-                this.playabilityColor = value;
-                OnPropertyChanged("PlayabilityColor");
+                field = value;
+                OnPropertyChanged();
             }
         }
     }

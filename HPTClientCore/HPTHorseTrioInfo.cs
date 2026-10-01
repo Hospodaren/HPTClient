@@ -1,88 +1,71 @@
-﻿using System.Collections.Generic;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
 namespace HPTClient
 {
     [DataContract]
     public class HPTHorseTrioInfo : Notifier
     {
-        private int? trioIndex;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public int? TrioIndex
         {
-            get
-            {
-                return this.trioIndex;
-            }
+            get;
             set
             {
-                this.trioIndex = value;
-                OnPropertyChanged("TrioIndex");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private HPTHorseTrioPlaceInfo placeInfo1;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public HPTHorseTrioPlaceInfo PlaceInfo1
         {
-            get
-            {
-                return this.placeInfo1;
-            }
+            get;
             set
             {
-                this.placeInfo1 = value;
-                OnPropertyChanged("PlaceInfo1");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private HPTHorseTrioPlaceInfo placeInfo2;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public HPTHorseTrioPlaceInfo PlaceInfo2
         {
-            get
-            {
-                return this.placeInfo2;
-            }
+            get;
             set
             {
-                this.placeInfo2 = value;
-                OnPropertyChanged("PlaceInfo2");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private HPTHorseTrioPlaceInfo placeInfo3;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public HPTHorseTrioPlaceInfo PlaceInfo3
         {
-            get
-            {
-                return this.placeInfo3;
-            }
+            get;
             set
             {
-                this.placeInfo3 = value;
-                OnPropertyChanged("PlaceInfo3");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private List<HPTHorseTrioPlaceInfo> horseTrioPlaceInfoList;
-        public List<HPTHorseTrioPlaceInfo> HorseTrioPlaceInfoList
-        {
-            get
-            {
-                if (this.horseTrioPlaceInfoList == null && this.PlaceInfo1 != null)
-                {
-                    this.horseTrioPlaceInfoList = new List<HPTHorseTrioPlaceInfo>()
-                    {
-                        this.PlaceInfo1,
-                        this.PlaceInfo2,
-                        this.PlaceInfo3
-                    };
-                }
-                return this.horseTrioPlaceInfoList;
-            }
-        }
+        // private List<HPTHorseTrioPlaceInfo> horseTrioPlaceInfoList;
+        // public List<HPTHorseTrioPlaceInfo> HorseTrioPlaceInfoList
+        // {
+        //     get
+        //     {
+        //         if (this.horseTrioPlaceInfoList == null && this.PlaceInfo1 != null)
+        //         {
+        //             this.horseTrioPlaceInfoList = new List<HPTHorseTrioPlaceInfo>()
+        //             {
+        //                 this.PlaceInfo1,
+        //                 this.PlaceInfo2,
+        //                 this.PlaceInfo3
+        //             };
+        //         }
+        //         return this.horseTrioPlaceInfoList;
+        //     }
+        // }
     }
 
     [DataContract]
@@ -90,62 +73,46 @@ namespace HPTClient
     {
         public int Place { get; set; }
 
-        private int investment;
         [DataMember]
         public int Investment
         {
-            get
-            {
-                return investment;
-            }
+            get;
             set
             {
-                this.investment = value;
-                OnPropertyChanged("Investment");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private decimal investmentShare;
         public decimal InvestmentShare
         {
-            get
-            {
-                return this.investmentShare;
-            }
+            get;
             set
             {
-                this.investmentShare = value;
-                OnPropertyChanged("InvestmentShare");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int percent;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public int Percent
         {
-            get
-            {
-                return this.percent;
-            }
+            get;
             set
             {
-                this.percent = value;
-                OnPropertyChanged("Percent");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool selected;
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public bool Selected
         {
-            get
-            {
-                return selected;
-            }
+            get;
             set
             {
-                selected = value;
-                OnPropertyChanged("Selected");
+                field = value;
+                OnPropertyChanged();
             }
         }
     }

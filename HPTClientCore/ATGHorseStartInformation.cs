@@ -46,15 +46,14 @@ namespace HPTClient
         public string color { get; set; }
         //public homeTrack { get; set; }
 
-        [DataMember]
-        public Owner owner { get; set; }
+        // [DataMember]
+        // public Owner owner { get; set; }
+        //
+        // [DataMember]
+        // public Breeder breeder { get; set; }
 
-        [DataMember]
-        public Breeder breeder { get; set; }
-        //public statistics { get; set; }
-
-        [DataMember]
-        public Pedigree pedigree { get; set; }
+        // [DataMember]
+        // public Pedigree pedigree { get; set; }
 
         [DataMember]
         public ATGHorseRecordList results { get; set; }
@@ -89,68 +88,68 @@ namespace HPTClient
     //        public int winPercentage { get; set; }
     //    }
 
-    public class Years
-    {
-        //    public 2016 2016 { get; set; }
-        //public 2015 2015 { get; set; }
-    }
+    // public class Years
+    // {
+    //     //    public 2016 2016 { get; set; }
+    //     //public 2015 2015 { get; set; }
+    // }
 
     //    public class Statistics
     //{
     //    public Years years { get; set; }
     //}
 
-    public class Trainer
-    {
-        public int id { get; set; }
-        public string firstName { get; set; }
-        public string lastName { get; set; }
-        public string shortName { get; set; }
-        public string location { get; set; }
-        public int birth { get; set; }
-        public HomeTrack homeTrack { get; set; }
-        public string license { get; set; }
-        public string silks { get; set; }
-        public Statistics statistics { get; set; }
-    }
+    // public class Trainer
+    // {
+    //     public int id { get; set; }
+    //     public string firstName { get; set; }
+    //     public string lastName { get; set; }
+    //     public string shortName { get; set; }
+    //     public string location { get; set; }
+    //     public int birth { get; set; }
+    //     public HomeTrack homeTrack { get; set; }
+    //     public string license { get; set; }
+    //     public string silks { get; set; }
+    //     public Statistics statistics { get; set; }
+    // }
 
-    public class Owner
-    {
-        public int id { get; set; }
-        public string name { get; set; }
-    }
-
-    public class Breeder
-    {
-        public int id { get; set; }
-        public string name { get; set; }
-    }
-
-    public class Father
-    {
-        public int id { get; set; }
-        public string name { get; set; }
-    }
-
-    public class Mother
-    {
-        public int id { get; set; }
-        public string name { get; set; }
-    }
-
-    public class Grandfather
-    {
-        public int id { get; set; }
-        public string name { get; set; }
-        public string nationality { get; set; }
-    }
-
-    public class Pedigree
-    {
-        public Father father { get; set; }
-        public Mother mother { get; set; }
-        public Grandfather grandfather { get; set; }
-    }
+    // public class Owner
+    // {
+    //     public int id { get; set; }
+    //     public string name { get; set; }
+    // }
+    //
+    // public class Breeder
+    // {
+    //     public int id { get; set; }
+    //     public string name { get; set; }
+    // }
+    //
+    // public class Father
+    // {
+    //     public int id { get; set; }
+    //     public string name { get; set; }
+    // }
+    //
+    // public class Mother
+    // {
+    //     public int id { get; set; }
+    //     public string name { get; set; }
+    // }
+    //
+    // public class Grandfather
+    // {
+    //     public int id { get; set; }
+    //     public string name { get; set; }
+    //     public string nationality { get; set; }
+    // }
+    //
+    // public class Pedigree
+    // {
+    //     public Father father { get; set; }
+    //     public Mother mother { get; set; }
+    //     public Grandfather grandfather { get; set; }
+    // }
 
     //public class KmTime
     //{

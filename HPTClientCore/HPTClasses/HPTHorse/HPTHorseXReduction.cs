@@ -6,50 +6,38 @@ namespace HPTClient
     [DataContract]
     public class HPTHorseXReduction : Notifier
     {
-        private HPTHorse horse;
         [XmlIgnore]
         public HPTHorse Horse
         {
-            get
-            {
-                return this.horse;
-            }
+            get;
             set
             {
-                this.horse = value;
-                OnPropertyChanged("Horse");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private HPTPrio prio;
         [DataMember]
         public HPTPrio Prio
         {
-            get
-            {
-                return this.prio;
-            }
+            get;
             set
             {
-                this.prio = value;
-                OnPropertyChanged("Prio");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool selected;
         [DataMember]
         public bool Selected
         {
-            get
-            {
-                return this.selected;
-            }
+            get;
             set
             {
-                this.selected = value;
-                if (this.Horse != null)
+                field = value;
+                if (Horse != null)
                 {
-                    this.Horse.HandlePrioChange(this);
+                    Horse.HandlePrioChange(this);
 
                     //if (value)
                     //{
@@ -65,26 +53,22 @@ namespace HPTClient
                     //    }
                     //}
                 }
-                OnPropertyChanged("Selected");
+                OnPropertyChanged();
             }
         }
 
-        private bool selectable;
         [DataMember]
         public bool Selectable
         {
-            get
-            {
-                return this.selectable;
-            }
+            get;
             set
             {
-                this.selectable = value;
-                if (!value && this.Selected)
+                field = value;
+                if (!value && Selected)
                 {
-                    this.Selected = false;
+                    Selected = false;
                 }
-                OnPropertyChanged("Selectable");
+                OnPropertyChanged();
             }
         }
     }

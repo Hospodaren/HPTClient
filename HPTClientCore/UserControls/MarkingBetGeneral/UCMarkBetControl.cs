@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 namespace HPTClient
@@ -16,12 +15,12 @@ namespace HPTClient
         {
             get
             {
-                object o = GetValue(MarkBetProperty);
+                var o = GetValue(MarkBetProperty);
                 if (o == null || o.GetType() != typeof(HPTMarkBet))
                 {
                     try
                     {
-                        HPTMarkBet markBet = (HPTMarkBet)this.DataContext;
+                        var markBet = (HPTMarkBet)DataContext;
                         SetValue(MarkBetProperty, markBet);
                     }
                     catch (Exception)

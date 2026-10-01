@@ -5,48 +5,36 @@ namespace HPTClient
     [DataContract]
     public class HPTStartNumberRank : Notifier
     {
-        private bool select;
         [DataMember]
         public bool Select
         {
-            get
-            {
-                return this.select;
-            }
+            get;
             set
             {
-                this.select = value;
-                OnPropertyChanged("Select");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int startNumber;
         [DataMember]
         public int StartNumber
         {
-            get
-            {
-                return this.startNumber;
-            }
+            get;
             set
             {
-                this.startNumber = value;
-                OnPropertyChanged("StartNumber");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int rank;
         [DataMember]
         public int Rank
         {
-            get
-            {
-                return this.rank;
-            }
+            get;
             set
             {
-                this.rank = value;
-                OnPropertyChanged("Rank");
+                field = value;
+                OnPropertyChanged();
             }
         }
     }

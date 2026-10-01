@@ -1,13 +1,9 @@
 ﻿using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Security.Policy;
+using System.Security.Cryptography;
 using System.Text;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -21,12 +17,10 @@ namespace HPTClient
     /// </summary>
     public partial class ATGCalendar : Window
     {
-        public byte[] CalendarZip { get; set; }
-        public HPTCalendar hptCalendar { get; set; }
+        private HPTCalendar? hptCalendar;
         public ObservableCollection<HPTGUIMessage> LoadingInfoList { get; set; }
         public ObservableCollection<HPTGUIMessage> MessageList { get; set; }
         private FileSystemWatcher ftw;
-        private bool isOffline;
 
         internal List<UCMarksGame> UCMarksGameList = new List<UCMarksGame>();
 
@@ -45,43 +39,39 @@ namespace HPTClient
                 // Skapa/hämta Config
                 try
                 {
-                    //DateTime dt1 = DateTime.Now;
-                    if (this.Config == null)
+                    if (Config == null)
                     {
-                        this.Config = HPTConfig.CreateHPTConfig();
+                        Config = HPTConfig.CreateHPTConfig();
                     }
                     if (tempExc != null)
                     {
-                        this.Config.AddToErrorLog(tempExc);
+                        Config.AddToErrorLog(tempExc);
                     }
                 }
                 catch (Exception configExc)
                 {
-                    this.Config = new HPTConfig();
-                    this.Config.AddToErrorLog(configExc);
+                    Config = new HPTConfig();
+                    Config.AddToErrorLog(configExc);
                 }
 
-                this.LoadingInfoList = new ObservableCollection<HPTGUIMessage>();
-                this.MessageList = new ObservableCollection<HPTGUIMessage>();
+                LoadingInfoList = new ObservableCollection<HPTGUIMessage>();
+                MessageList = new ObservableCollection<HPTGUIMessage>();
 
-                DateTime dt1 = DateTime.Now;
-                HandleFreeAndPro();
-                TimeSpan ts1 = DateTime.Now - dt1;
-                string s1 = ts1.TotalMilliseconds.ToString();
+                LoadCalendar();
 
                 // Inställningar för huvudfönstret
-                this.Width = this.Config.ApplicationWidth;
-                this.Height = this.Config.ApplicationHeight;
-                this.WindowState = this.Config.ApplicationWindowState;
-                this.WindowStartupLocation = this.Config.ApplicationStartupLocation;
+                Width = Config.ApplicationWidth;
+                Height = Config.ApplicationHeight;
+                WindowState = Config.ApplicationWindowState;
+                WindowStartupLocation = Config.ApplicationStartupLocation;
 
 
-                // TEST
-                this.tmrCalendarViewUpdate = new Timer(HandleCalendarViewUpdate, null, 120000, 120000);
+                //// TEST
+                //tmrCalendarViewUpdate = new Timer(HandleCalendarViewUpdate, null, 120000, 120000);
             }
             catch (Exception exc)
             {
-                this.Config.AddToErrorLog(exc);
+                Config.AddToErrorLog(exc);
             }
         }
 
@@ -105,85 +95,53 @@ namespace HPTClient
 
         #endregion
 
-        internal void HandleFreeAndPro()
+        internal void LoadCalendar()
         {
-            // Autenticera mot servern
             try
             {
-                try
+                // Se till att Config verkligen finns
+                if (Config == null)
                 {
-                    // Se till att Config verkligen finns
-                    if (this.Config == null)
+                    Config = HPTConfig.CreateHPTConfig();
+                }
+
+                if (hptCalendar is null)
+                {
+                    var calendarFileName = Path.Combine(HPTConfig.MyDocumentsPath, "HPT7Calendar.xml");
+                    if (File.Exists(calendarFileName))
                     {
-                        this.Config = HPTConfig.CreateHPTConfig();
-                    }
-                    //this.Config.PROVersionExpirationDate = DateTime.Today.AddMonths(3);
-
-                    if (this.CalendarZip == null)  // Hämta kalender separat
-                    {
-                        if (this.hptCalendar == null)
-                        {
-                            this.hptCalendar = new HPTCalendar();
-                        }
-                        var serviceConnector = new HPTServiceConnector();
-                        this.CalendarZip = serviceConnector.GetCalendar(this.hptCalendar);
-                    }
-
-                    // Hantera om vi inte får kalender från servern
-                    if (this.CalendarZip == null)  // Hämta kalender från disk
-                    {
-                        this.hptCalendar = HPTSerializer.DeserializeHPTCalendar(HPTConfig.MyDocumentsPath + "HPTCalendar.hptc");
-
-                        if (this.hptCalendar != null && this.hptCalendar.RaceDayInfoList != null && this.hptCalendar.RaceDayInfoList.Count > 0)
-                        {
-                            this.hptCalendar.RaceDayInfoList
-                                            .Where(rdi => rdi.RaceDayDate.Date >= DateTime.Today)
-                                            .ToList()
-                                            .ForEach(rdi => rdi.ShowInUI = true);
-
-                            BindingOperations.GetBindingExpression(this.lvwCalenda, ListView.ItemsSourceProperty).UpdateTarget();
-                        }
+                        hptCalendar = HPTSerializer.DeserializeHPTCalendar(calendarFileName);    
                     }
                     else
                     {
-                        this.hptCalendar = new HPTCalendar();
-                        ThreadPool.QueueUserWorkItem(new WaitCallback(GetCalendar), ThreadPriority.Normal);
+                        hptCalendar = new HPTCalendar();
                     }
+                    ATGDownloaderToHPTHelper.UpdateCalendar(hptCalendar);
+                    HPTSerializer.SerializeHPTCalendar(calendarFileName, hptCalendar);
                 }
-                catch(Exception exc)
-                { }
-                //catch (System.ServiceModel.EndpointNotFoundException)
-                //{
-                //    this.isOffline = true;
-                //}
-
-                // Hantering av Gratis/PRO
-                //this.Config.VersionText = "Hjälp på Traven! 5.34";'
-                //this.Config.VersionText = $"Hjälp på Traven läggs ner, mer info på www.hpt.nu ({this.Config.PROVersionExpirationDate:yyyy-MM-dd})";
-                this.Config.VersionText = $"Hjälp på Traven Open Source. Inga garantier, ingen support, ingen kostnad.";
-                this.VersionText = this.Config.VersionText;
-            }
-            //catch (System.ServiceModel.EndpointNotFoundException)
-            //{
-            //    this.isOffline = true;
-            //}
+                            }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                MessageBox.Show(exc.ToString());
             }
+
+            // Sätt versionstext som ska synas i fönstret
+            Config.VersionText = $"Hjälp på Traven Open Source Stand Alone-rc2. Inga garantier, ingen support, ingen kostnad.";
+            VersionText = Config.VersionText;
         }
+
 
         private void GetCalendar()
         {
             try
             {
-                HPTServiceToHPTHelper.CreateCalendar(this.CalendarZip, this.hptCalendar);
-                BindingOperations.GetBindingExpression(this.lvwCalenda, ListView.ItemsSourceProperty).UpdateTarget();
-                HPTSerializer.SerializeHPTCalendar(HPTConfig.MyDocumentsPath + "HPTCalendar.hptc", this.hptCalendar);
+                ATGDownloaderToHPTHelper.UpdateCalendar(hptCalendar);
+                BindingOperations.GetBindingExpression(lvwCalenda, ListView.ItemsSourceProperty).UpdateTarget();
+                HPTSerializer.SerializeHPTCalendar(Path.Combine(HPTConfig.MyDocumentsPath,"HPT7Calendar.xml"), hptCalendar);
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -191,13 +149,14 @@ namespace HPTClient
         {
             try
             {
-                Dispatcher.Invoke(GetCalendar);
-                HPTServiceToHPTHelper.CreateCalendar(this.CalendarZip, this.hptCalendar);
+                Dispatcher.Invoke(GetCalendar);// TODO: Anropa ATGToHPTHelper istället
+                //HPTServiceToHPTHelper.CreateCalendar(CalendarZip, hptCalendar);
+                ATGDownloaderToHPTHelper.UpdateCalendar(hptCalendar);
             }
             catch (Exception exc)
             {
                 Dispatcher.Invoke(GetCalendar);
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -245,8 +204,6 @@ namespace HPTClient
                 var fe = (FrameworkElement)e.OriginalSource;
                 var bt = (HPTBetType)fe.DataContext;
 
-                //bt.
-
                 LoadNewTabItem(bt, 0);
 
             }
@@ -263,15 +220,10 @@ namespace HPTClient
             {
                 Cursor = Cursors.Wait;
 
-                var hptRdi = bt.CalendarRaceDayInfo;
-                if (hptRdi == null)
-                {
-                    hptRdi = new HPTRaceDayInfo()
-                    {
-                        RaceDayDate = bt.StartTime.Date,
-                        TrackId = bt.TrackId
-                    };
-                }
+                var gameBase = ATGDownloader.ATGObjectGetter.GetGame(bt.GameInfoBase);
+                var hptRdi = ATGDownloaderToHPTHelper.CreateRaceDayInfo(gameBase);
+                hptRdi.GameInfoBase = gameBase.GameInfo;
+                hptRdi.BetType = bt;
 
                 switch (bt.Code)
                 {
@@ -284,38 +236,39 @@ namespace HPTClient
                     case "V86":
                     case "GS75":
                     case "V85":
-                        hptRdi.DataToShow = this.Config.DataToShowVxx;
+                        hptRdi.DataToShow = Config.DataToShowVxx;
                         break;
                     case "DD":
                     case "LD":
-                        hptRdi.DataToShow = this.Config.DataToShowDD;
+                        hptRdi.DataToShow = Config.DataToShowDD;
                         break;
                     case "TV":
-                        hptRdi.DataToShow = this.Config.DataToShowTvilling;
+                        hptRdi.DataToShow = Config.DataToShowTvilling;
                         break;
                     case "T":
-                        hptRdi.DataToShow = this.Config.DataToShowTrio;
+                        hptRdi.DataToShow = Config.DataToShowTrio;
                         break;
                     default:
                         break;
                 }
 
-                hptRdi.BetType = bt;
+                //var mess = new HPTGUIMessage()
+                //{
+                //    ButtonVisibility = Visibility.Collapsed,
+                //    Message = "Laddar " + bt.Code + " på " + hptRdi.Trackname + " " + hptRdi.RaceDayDateString,
+                //    Key = bt.Code + ";" + hptRdi.Trackname + ";" + hptRdi.RaceDayDateString,
+                //    KeyAlt = bt.Code + ";" + hptRdi.TrackId.ToString() + ";" + hptRdi.RaceDayDate.ToString("yyyy-MM-dd"),
+                //    RaceDayInfo = hptRdi,
+                //    RaceNumberToLoad = raceNumberToLoad
+                //};
 
-                var mess = new HPTGUIMessage()
-                {
-                    ButtonVisibility = System.Windows.Visibility.Collapsed,
-                    Message = "Laddar " + bt.Code + " på " + hptRdi.Trackname + " " + hptRdi.RaceDayDateString,
-                    Key = bt.Code + ";" + hptRdi.Trackname + ";" + hptRdi.RaceDayDateString,
-                    KeyAlt = bt.Code + ";" + hptRdi.TrackId.ToString() + ";" + hptRdi.RaceDayDate.ToString("yyyy-MM-dd"),
-                    RaceDayInfo = hptRdi,
-                    RaceNumberToLoad = raceNumberToLoad
-                };
+                //LoadingInfoList.Add(mess);
 
-                this.LoadingInfoList.Add(mess);
+                //var connector = new HPTServiceConnector();
+                //connector.GetRaceDayInfoByTrackAndDate(bt, hptRdi.TrackId, hptRdi.RaceDayDate, ReceiveRaceDayInfo);
 
-                var connector = new HPTServiceConnector();
-                connector.GetRaceDayInfoByTrackAndDate(bt, hptRdi.TrackId, hptRdi.RaceDayDate, ReceiveRaceDayInfo);
+                ReceiveRaceDayInfo(hptRdi);
+
                 Cursor = Cursors.Arrow;
 
             }
@@ -328,21 +281,21 @@ namespace HPTClient
 
         private void ReceiveRaceDayInfo(HPTRaceDayInfo hptRdi)
         {
-            if (hptRdi.BetType == null)
-            {
-                string key = hptRdi.BetTypeString + ";" + hptRdi.TrackId.ToString() + ";" + hptRdi.RaceDayDate.ToString("yyyy-MM-dd");
-                for (int i = 0; i < this.LoadingInfoList.Count; i++)
-                {
-                    HPTGUIMessage mess = this.LoadingInfoList[i];
-                    if (key == mess.KeyAlt)
-                    {
-                        mess.ErrorString = "Hämtning misslyckades.";
-                        mess.ButtonVisibility = System.Windows.Visibility.Visible;
-                    }
-                }
-                return;
-            }
-            string raceDayDirectory = HPTConfig.MyDocumentsPath + hptRdi.ToDateAndTrackString();
+            //if (hptRdi.BetType == null)
+            //{
+            //    string key = hptRdi.BetTypeString + ";" + hptRdi.TrackId.ToString() + ";" + hptRdi.RaceDayDate.ToString("yyyy-MM-dd");
+            //    for (int i = 0; i < LoadingInfoList.Count; i++)
+            //    {
+            //        HPTGUIMessage mess = LoadingInfoList[i];
+            //        if (key == mess.KeyAlt)
+            //        {
+            //            mess.ErrorString = "Hämtning misslyckades.";
+            //            mess.ButtonVisibility = Visibility.Visible;
+            //        }
+            //    }
+            //    return;
+            //}
+            var raceDayDirectory = Path.Combine(HPTConfig.MyDocumentsPath, hptRdi.ToDateAndTrackString());
             if (!Directory.Exists(raceDayDirectory))
             {
                 Directory.CreateDirectory(raceDayDirectory);
@@ -360,27 +313,31 @@ namespace HPTClient
                 case "GS75":
                 case "V86":
                     hptRdi.DataToShow = HPTConfig.Config.DataToShowVxx;
-                    HPTMarkBet hmb = new HPTMarkBet(hptRdi, hptRdi.BetType);
-                    hmb.SaveDirectory = raceDayDirectory + "\\";
+                    var hmb = new HPTMarkBet(hptRdi, hptRdi.BetType);
+                    ATGDownloaderToHPTHelper.SetNonSerializedValues(hmb);
+                    hmb.SaveDirectory = raceDayDirectory;
+                    HPTSerializer.GetTrendsFromDisk(hmb);   // TODO: Använda skiten också
+                    HPTSerializer.SerializeHPTRaceDayInfoHistory(hmb);
+                    hmb.RecalculateCategoryCodes();
                     Dispatcher.Invoke(new Action<HPTMarkBet>(AddTabItem), hmb);
                     break;
                 case "DD":
                 case "LD":
                     hptRdi.DataToShow = HPTConfig.Config.DataToShowDD;
-                    HPTCombBet hcb = new HPTCombBet(hptRdi, hptRdi.BetType);
-                    hcb.SaveDirectory = raceDayDirectory + "\\";
+                    var hcb = new HPTCombBet(hptRdi, hptRdi.BetType);
+                    hcb.SaveDirectory = raceDayDirectory;
                     Dispatcher.Invoke(new Action<HPTCombBet>(AddTabItem), hcb);
                     break;
                 case "TV":
                     hptRdi.DataToShow = HPTConfig.Config.DataToShowTvilling;
-                    HPTCombBet hcb2 = new HPTCombBet(hptRdi, hptRdi.BetType);
-                    hcb2.SaveDirectory = raceDayDirectory + "\\";
+                    var hcb2 = new HPTCombBet(hptRdi, hptRdi.BetType);
+                    hcb2.SaveDirectory = raceDayDirectory;
                     Dispatcher.Invoke(new Action<HPTCombBet>(AddTabItem), hcb2);
                     break;
                 case "T":
                     hptRdi.DataToShow = HPTConfig.Config.DataToShowTrio;
-                    HPTCombBet hcb3 = new HPTCombBet(hptRdi, hptRdi.BetType);
-                    hcb3.SaveDirectory = raceDayDirectory + "\\";
+                    var hcb3 = new HPTCombBet(hptRdi, hptRdi.BetType);
+                    hcb3.SaveDirectory = raceDayDirectory;
                     Dispatcher.Invoke(new Action<HPTCombBet>(AddTabItem), hcb3);
                     break;
                 default:
@@ -399,29 +356,25 @@ namespace HPTClient
         {
             try
             {
-                var todaysBetTypes = this.hptCalendar.RaceDayInfoList
+                var todaysBetTypes = hptCalendar.RaceDayInfoList
                     .Where(rdi => rdi.RaceDayDate.Date == DateTime.Today)
                     .SelectMany(rdi => rdi.BetTypeList)
-                        .ToList();
+                    .ToList();
 
-                todaysBetTypes
-                    .ForEach(bt =>
-                        {
-                            bt.SetCalendarRacaDayInfoBrush();
-                        });
+                todaysBetTypes.ForEach(bt => bt.SetCalendarRacaDayInfoBrush());
 
-                DateTime dtNow = DateTime.Now;
-                DateTime nextTimerUpdate = todaysBetTypes.Select(bt => bt.NextTime).OrderBy(nt => nt).FirstOrDefault(nt => nt > dtNow);
+                var dtNow = DateTime.Now;
+                var nextTimerUpdate = todaysBetTypes.Select(bt => bt.NextTime).OrderBy(nt => nt).FirstOrDefault(nt => nt > dtNow);
                 if (nextTimerUpdate != null && nextTimerUpdate > DateTime.Now)
                 {
-                    TimeSpan ts = nextTimerUpdate - dtNow;
-                    this.tmrCalendarViewUpdate.Change(ts, ts);
+                    var ts = nextTimerUpdate - dtNow;
+                    tmrCalendarViewUpdate.Change(ts, ts);
                 }
             }
             catch (Exception exc)
             {
                 // Felhantering här...
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
@@ -429,8 +382,8 @@ namespace HPTClient
 
         private ContextMenu AddContextMenuToTabItem(TabItem ti)
         {
-            ContextMenu cm = new ContextMenu();
-            MenuItem mi = new MenuItem();
+            var cm = new ContextMenu();
+            var mi = new MenuItem();
             mi.Header = "Stäng";
             mi.Tag = ti;
             cm.Items.Add(mi);
@@ -442,7 +395,7 @@ namespace HPTClient
         private void AddCrossBetMenuItemsToContextMenu(HPTBet betToApplyTo, ContextMenu cm)
         {
             // Lägg till val för att hämta egen rank/poäng från annan flik
-            MenuItem miSetOwnRanksFrom = new MenuItem()
+            var miSetOwnRanksFrom = new MenuItem()
             {
                 Header = "Kopiera egen rank/poäng från...",
                 Tag = betToApplyTo,
@@ -476,7 +429,7 @@ namespace HPTClient
 
 
             // Lägg till val för att välja hästar från annan flik
-            MenuItem miSelectHorsesFrom = new MenuItem()
+            var miSelectHorsesFrom = new MenuItem()
             {
                 Header = "Välj hästar från...",
                 Tag = betToApplyTo,
@@ -514,14 +467,14 @@ namespace HPTClient
         {
             try
             {
-                hmb.Config = this.Config;
-                hmb.RaceDayInfo.DataToShow = this.Config.DataToShowVxx;
-                this.Config.AvailableBets.Add(hmb);
+                hmb.Config = Config;
+                hmb.RaceDayInfo.DataToShow = Config.DataToShowVxx;
+                Config.AvailableBets.Add(hmb);
 
-                UCMarksGame ucMarksGame = new UCMarksGame(hmb);
-                this.UCMarksGameList.Add(ucMarksGame);
-                UCBetTabItemHeader ucItemHeader = new UCBetTabItemHeader();
-                TabItem ti = new TabItem()
+                var ucMarksGame = new UCMarksGame(hmb);
+                UCMarksGameList.Add(ucMarksGame);
+                var ucItemHeader = new UCBetTabItemHeader();
+                var ti = new TabItem()
                 {
                     DataContext = hmb,
                     Header = ucItemHeader,
@@ -531,11 +484,11 @@ namespace HPTClient
                 ucItemHeader.Tag = ti;
                 ucItemHeader.Close += new RoutedEventHandler(ucItemHeader_Close);
 
-                ContextMenu cm = AddContextMenuToTabItem(ti);
+                var cm = AddContextMenuToTabItem(ti);
 
 
                 // Lägg till val för kloning
-                MenuItem miClone = new MenuItem()
+                var miClone = new MenuItem()
                 {
                     Header = "Klona",
                     Tag = hmb
@@ -543,29 +496,8 @@ namespace HPTClient
                 cm.Items.Add(miClone);
                 miClone.Click += new RoutedEventHandler(miClone_Click);
 
-
-                //// Lägg till val för uppladdning av system
-                //MenuItem miUploadCompleteSystem = new MenuItem()
-                //{
-                //    Header = "Ladda upp system",
-                //    Tag = hmb
-                //};
-                //cm.Items.Add(miUploadCompleteSystem);
-                //miUploadCompleteSystem.Click += miUploadCompleteSystem_Click;
-
-                //// Lägg till val för uppladdning av system
-                //MenuItem miPasteTips = new MenuItem()
-                //{
-                //    Header = "Klistra in tips",
-                //    Tag = ucMarksGame,
-                //    DataContext = hmb
-                //};
-                //cm.Items.Add(miPasteTips);
-                //miPasteTips.Click += new RoutedEventHandler(miPasteTips_Click);
-
-
                 // Lägg till val för borttag av rader från fil
-                MenuItem miRemoveRowsFromFile = new MenuItem()
+                var miRemoveRowsFromFile = new MenuItem()
                 {
                     Header = "Ta bort rader från kupongfil",
                     Tag = ucMarksGame,
@@ -576,7 +508,7 @@ namespace HPTClient
 
 
                 // Lägg till val för borttag av rader från fil
-                MenuItem miAddRowsFromFile = new MenuItem()
+                var miAddRowsFromFile = new MenuItem()
                 {
                     Header = "Lägg till rader från kupongfil",
                     Tag = ucMarksGame,
@@ -589,7 +521,7 @@ namespace HPTClient
                 // Lägg till val för att beräkna jackpottrisk
                 if (hmb.BetType.HasMultiplePools)
                 {
-                    MenuItem miCalculateJackpotRows = new MenuItem()
+                    var miCalculateJackpotRows = new MenuItem()
                     {
                         Header = "Blir det jackpott?",
                         Tag = ucMarksGame,
@@ -602,7 +534,7 @@ namespace HPTClient
                 // Lägg till val för att beräkna antalet möjliga ensamma rader
                 if (hmb.BetType.HasMultiplePools)
                 {
-                    MenuItem miCalculateSingleRows = new MenuItem()
+                    var miCalculateSingleRows = new MenuItem()
                     {
                         Header = "Antal ensamma rader",
                         Tag = ucMarksGame,
@@ -617,20 +549,20 @@ namespace HPTClient
 
 
                 // Välj tillagt TabItem
-                int tabItemIndex = this.tcMain.Items.Add(ti);
-                this.tcMain.SelectedIndex = tabItemIndex;
+                var tabItemIndex = tcMain.Items.Add(ti);
+                tcMain.SelectedIndex = tabItemIndex;
 
-                string key = hmb.BetType.Code + ";" + hmb.RaceDayInfo.Trackname + ";" + hmb.RaceDayInfo.RaceDayDateString;
-                var mess = this.LoadingInfoList.FirstOrDefault(gm => gm.Key == key);
+                var key = $"{hmb.BetType.Code};{hmb.RaceDayInfo.Trackname};{hmb.RaceDayInfo.RaceDayDateString}";
+                var mess = LoadingInfoList.FirstOrDefault(gm => gm.Key == key);
                 if (mess != null)
                 {
                     hmb.RaceNumberToLoad = mess.RaceNumberToLoad;
-                    this.LoadingInfoList.Remove(mess);
+                    LoadingInfoList.Remove(mess);
                 }
             }
             catch (Exception exc)
             {
-                this.Config.AddToErrorLog(exc);
+                Config.AddToErrorLog(exc);
             }
         }
 
@@ -664,57 +596,35 @@ namespace HPTClient
 
         void miPasteTips_Click(object sender, RoutedEventArgs e)
         {
-            MenuItem mi = (MenuItem)sender;
-            HPTMarkBet hmb = (HPTMarkBet)mi.DataContext;
+            var mi = (MenuItem)sender;
+            var hmb = (HPTMarkBet)mi.DataContext;
             var uc = (UCMarksGame)mi.Tag;
-            string tips = Clipboard.GetText();
+            var tips = Clipboard.GetText();
             if (hmb.ParseTips(tips))
             {
                 uc.ShowTipsWindow();
             }
         }
 
-        void miUploadCompleteSystem_Click(object sender, RoutedEventArgs e)
-        {
-            MenuItem mi = (MenuItem)sender;
-            HPTMarkBet hmb = (HPTMarkBet)mi.Tag;
-            hmb.SetSerializerValues();
-            if (hmb != null)
-            {
-                var wndUploadSystem = new Window()
-                {
-                    SizeToContent = SizeToContent.WidthAndHeight,
-                    Title = "Ladda upp system!",
-                    ShowInTaskbar = false,
-                    ResizeMode = ResizeMode.NoResize,
-                    Owner = App.Current.MainWindow
-                };
-                wndUploadSystem.Content = new UCUserSystemUpload()
-                {
-                    DataContext = hmb,
-                    MarkBet = hmb
-                };
-                wndUploadSystem.ShowDialog();
-            }
-        }
+
 
         void ucItemHeader_Close(object sender, RoutedEventArgs e)
         {
-            UCBetTabItemHeader ucItemHeader = (UCBetTabItemHeader)e.Source;
-            this.tcMain.Items.Remove(ucItemHeader.Tag);
+            var ucItemHeader = (UCBetTabItemHeader)e.Source;
+            tcMain.Items.Remove(ucItemHeader.Tag);
         }
 
         void ucGenericItemHeader_Close(object sender, RoutedEventArgs e)
         {
-            UCGenericTabItemHeader ucItemHeader = (UCGenericTabItemHeader)e.Source;
-            this.tcMain.Items.Remove(ucItemHeader.Tag);
+            var ucItemHeader = (UCGenericTabItemHeader)e.Source;
+            tcMain.Items.Remove(ucItemHeader.Tag);
         }
 
         void miClone_Click(object sender, RoutedEventArgs e)
         {
-            MenuItem mi = (MenuItem)sender;
-            HPTMarkBet hmb = (HPTMarkBet)mi.Tag;
-            HPTMarkBet hmbClone = hmb.Clone();
+            var mi = (MenuItem)sender;
+            var hmb = (HPTMarkBet)mi.Tag;
+            var hmbClone = hmb.Clone();
             hmbClone.SetSerializerValues();
             if (hmbClone != null)
             {
@@ -726,8 +636,8 @@ namespace HPTClient
         {
             try
             {
-                hcb.Config = this.Config;
-                this.Config.AvailableBets.Add(hcb);
+                hcb.Config = Config;
+                Config.AvailableBets.Add(hcb);
 
                 UserControl uc = null;
 
@@ -735,18 +645,18 @@ namespace HPTClient
                 {
                     case "DD":
                     case "LD":
-                        hcb.RaceDayInfo.DataToShow = this.Config.DataToShowDD;
-                        hcb.DataToShow = this.Config.CombinationDataToShowDouble;
+                        hcb.RaceDayInfo.DataToShow = Config.DataToShowDD;
+                        hcb.DataToShow = Config.CombinationDataToShowDouble;
                         uc = new UCDoubleGame(hcb);
                         break;
                     case "TV":
-                        hcb.RaceDayInfo.DataToShow = this.Config.DataToShowTvilling;
-                        hcb.DataToShow = this.Config.CombinationDataToShowTvilling;
+                        hcb.RaceDayInfo.DataToShow = Config.DataToShowTvilling;
+                        hcb.DataToShow = Config.CombinationDataToShowTvilling;
                         uc = new UCTvillingGame(hcb);
                         break;
                     case "T":
-                        hcb.RaceDayInfo.DataToShow = this.Config.DataToShowTrio;
-                        hcb.DataToShow = this.Config.CombinationDataToShowTrio;
+                        hcb.RaceDayInfo.DataToShow = Config.DataToShowTrio;
+                        hcb.DataToShow = Config.CombinationDataToShowTrio;
                         uc = new UCTrioGame(hcb);
                         break;
                     default:
@@ -754,7 +664,7 @@ namespace HPTClient
                 }
 
                 var ucItemHeader = new UCBetTabItemHeader();
-                TabItem ti = new TabItem()
+                var ti = new TabItem()
                 {
                     DataContext = hcb,
                     Header = ucItemHeader,
@@ -770,35 +680,35 @@ namespace HPTClient
                 // Lägg till val för att hämta egen rank/poäng från annan flik eller välja hästar från annan flik
                 AddCrossBetMenuItemsToContextMenu(hcb, ti.ContextMenu);
 
-                int tabItemIndex = this.tcMain.Items.Add(ti);
-                this.tcMain.SelectedIndex = tabItemIndex;
+                var tabItemIndex = tcMain.Items.Add(ti);
+                tcMain.SelectedIndex = tabItemIndex;
 
-                string key = hcb.BetType.Code + ";" + hcb.RaceDayInfo.Trackname + ";" + hcb.RaceDayInfo.RaceDayDateString;
-                for (int i = 0; i < this.LoadingInfoList.Count; i++)
+                var key = $"{hcb.BetType.Code};{hcb.RaceDayInfo.Trackname};{hcb.RaceDayInfo.RaceDayDateString}";
+                for (var i = 0; i < LoadingInfoList.Count; i++)
                 {
-                    HPTGUIMessage mess = this.LoadingInfoList[i];
+                    var mess = LoadingInfoList[i];
                     if (key == mess.Key)
                     {
                         hcb.RaceNumberToLoad = mess.RaceNumberToLoad;
-                        this.LoadingInfoList.RemoveAt(i);
+                        LoadingInfoList.RemoveAt(i);
                         i--;
                     }
                 }
             }
             catch (Exception exc)
             {
-                string fel = exc.Message;
-                string key = hcb.BetType.Code + ";" + hcb.RaceDayInfo.Trackname + ";" + hcb.RaceDayInfo.RaceDayDateString;
-                for (int i = 0; i < this.LoadingInfoList.Count; i++)
+                var fel = exc.Message;
+                var key = $"{hcb.BetType.Code};{hcb.RaceDayInfo.Trackname};{hcb.RaceDayInfo.RaceDayDateString}";
+                for (var i = 0; i < LoadingInfoList.Count; i++)
                 {
-                    HPTGUIMessage mess = this.LoadingInfoList[i];
+                    var mess = LoadingInfoList[i];
                     if (key == mess.Key)
                     {
-                        this.LoadingInfoList.RemoveAt(i);
+                        LoadingInfoList.RemoveAt(i);
                         i--;
                     }
                 }
-                this.Config.AddToErrorLog(exc);
+                Config.AddToErrorLog(exc);
             }
         }
 
@@ -806,24 +716,22 @@ namespace HPTClient
         {
             try
             {
-                MenuItem mi = (MenuItem)sender;
-                TabItem ti = (TabItem)mi.Tag;
+                var mi = (MenuItem)sender;
+                var ti = (TabItem)mi.Tag;
                 ti.Content = null;
-                this.tcMain.Items.Remove(mi.Tag);
-                GC.Collect();
+                tcMain.Items.Remove(mi.Tag);
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
-                GC.Collect();
+                var s = exc.Message;
             }
         }
 
         private void miOpen_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog ofdOpenHPT = new OpenFileDialog();
+            var ofdOpenHPT = new OpenFileDialog();
             ofdOpenHPT.InitialDirectory = HPTConfig.MyDocumentsPath;
-            ofdOpenHPT.Filter = "Hjälp på traven-system|*.hpt4;*.hpt5";
+            ofdOpenHPT.Filter = "Hjälp på traven-system|*.hpt7";
             ofdOpenHPT.FileOk += new System.ComponentModel.CancelEventHandler(ofdOpenHPT_FileOk);
             ofdOpenHPT.ShowDialog();
         }
@@ -832,46 +740,59 @@ namespace HPTClient
         {
             if (!e.Cancel)
             {
+                var ofd = (OpenFileDialog)sender;
                 try
                 {
-                    OpenFileDialog ofd = (OpenFileDialog)sender;
-
-                    if (ofd.SafeFileName.StartsWith("DD_")
-                            || ofd.SafeFileName.StartsWith("LD_")
-                            || ofd.SafeFileName.ToUpper().StartsWith("TV_")
-                            || ofd.SafeFileName.ToUpper().StartsWith("T_"))
-                    {
-                        try
-                        {
-                            HPTCombBet hcb = HPTSerializer.DeserializeHPTCombinationSystem(ofd.FileName);
-                            AddTabItem(hcb);
-                        }
-                        catch (Exception)
-                        {
-                            HPTMarkBet hmb = HPTSerializer.DeserializeHPTSystem(ofd.FileName);
-                            hmb.SaveDirectory = HPTConfig.MyDocumentsPath + hmb.RaceDayInfo.ToDateAndTrackString() + "\\";
-                            AddTabItem(hmb);
-                        }
-                    }
-                    else
-                    {
-                        try
-                        {
-                            HPTMarkBet hmb = HPTSerializer.DeserializeHPTSystem(ofd.FileName);
-                            hmb.SaveDirectory = HPTConfig.MyDocumentsPath + hmb.RaceDayInfo.ToDateAndTrackString() + "\\";
-                            AddTabItem(hmb);
-                        }
-                        catch (Exception)
-                        {
-                            HPTCombBet hcb = HPTSerializer.DeserializeHPTCombinationSystem(ofd.FileName);
-                            AddTabItem(hcb);
-                        }
-                    }
+                    var hmb = HPTSerializer.DeserializeHPTSystem(ofd.FileName);
+                    hmb.SaveDirectory = Path.Combine(HPTConfig.MyDocumentsPath,hmb.RaceDayInfo.ToDateAndTrackString());
+                    ATGDownloaderToHPTHelper.SetNonSerializedValues(hmb);
+                    AddTabItem(hmb);
                 }
-                catch (Exception exc)
+                catch (Exception)
                 {
-                    this.Config.AddToErrorLog(exc);
+                    //HPTCombBet hcb = HPTSerializer.DeserializeHPTCombinationSystem(ofd.FileName);
+                    //AddTabItem(hcb);
                 }
+                //try
+                //{
+                //    var ofd = (OpenFileDialog)sender;
+
+                //    if (ofd.SafeFileName.StartsWith("DD_")
+                //            || ofd.SafeFileName.StartsWith("LD_")
+                //            || ofd.SafeFileName.ToUpper().StartsWith("TV_")
+                //            || ofd.SafeFileName.ToUpper().StartsWith("T_"))
+                //    {
+                //        try
+                //        {
+                //            HPTCombBet hcb = HPTSerializer.DeserializeHPTCombinationSystem(ofd.FileName);
+                //            AddTabItem(hcb);
+                //        }
+                //        catch (Exception)
+                //        {
+                //            HPTMarkBet hmb = HPTSerializer.DeserializeHPTSystem(ofd.FileName);
+                //            hmb.SaveDirectory = HPTConfig.MyDocumentsPath + hmb.RaceDayInfo.ToDateAndTrackString() + "\\";
+                //            AddTabItem(hmb);
+                //        }
+                //    }
+                //    else
+                //    {
+                //        try
+                //        {
+                //            HPTMarkBet hmb = HPTSerializer.DeserializeHPTSystem(ofd.FileName);
+                //            hmb.SaveDirectory = HPTConfig.MyDocumentsPath + hmb.RaceDayInfo.ToDateAndTrackString() + "\\";
+                //            AddTabItem(hmb);
+                //        }
+                //        catch (Exception)
+                //        {
+                //            HPTCombBet hcb = HPTSerializer.DeserializeHPTCombinationSystem(ofd.FileName);
+                //            AddTabItem(hcb);
+                //        }
+                //    }
+                //}
+                //catch (Exception exc)
+                //{
+                //    Config.AddToErrorLog(exc);
+                //}
             }
         }
 
@@ -880,45 +801,34 @@ namespace HPTClient
 
         private void miShutDown_Click(object sender, RoutedEventArgs e)
         {
-            //this.Config.ApplicationHeight = this.ActualHeight;
-            //this.Config.ApplicationWidth = this.ActualWidth;
-            //this.Config.SaveConfig();
             Application.Current.Shutdown();
         }
-
-        //private void miUpdateAndRestart_Click(object sender, RoutedEventArgs e)
-        //{
-        //    System.Diagnostics.Process.Start("iexplore.exe", "http://download.hpt.nu");
-        //    //System.Diagnostics.Process.Start("iexplore.exe", "www.dn.se");
-        //    Application.Current.Shutdown();
-        //}
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             // Spara config
             try
             {
-                this.Config.ApplicationHeight = this.ActualHeight;
-                this.Config.ApplicationWidth = this.ActualWidth;
-                this.Config.ApplicationStartupLocation = this.WindowStartupLocation;
-                this.Config.ApplicationWindowState = this.WindowState;
+                Config.ApplicationHeight = ActualHeight;
+                Config.ApplicationWidth = ActualWidth;
+                Config.ApplicationStartupLocation = WindowStartupLocation;
+                Config.ApplicationWindowState = WindowState;
 
-                this.Config.SaveConfig();
-                //this.Config.SaveLogFile();
+                Config.SaveConfig();
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
 
             // Spara egen info
             try
             {
-                this.Config.HorseOwnInformationCollection.SaveHorseOwnInformationList();
+                Config.HorseOwnInformationCollection.SaveHorseOwnInformationList();
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
 
             // Ta bort temporära filer
@@ -928,13 +838,13 @@ namespace HPTClient
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this) && this.IsVisible)
+            if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this) && IsVisible)
             {
                 try
                 {
@@ -946,6 +856,9 @@ namespace HPTClient
 
                     // Uppdatera värden som inte sparas i konfigurationen
                     SetNonSerializeConfigValues();
+
+                    // Försök köra filtret här
+                    SetRaceDayInfosToShow();
 
                     //// Filnamn på kommandoraden
                     //if (AppDomain.CurrentDomain.SetupInformation.ActivationArguments != null && AppDomain.CurrentDomain.SetupInformation.ActivationArguments.ActivationData != null && AppDomain.CurrentDomain.SetupInformation.ActivationArguments.ActivationData.Any())
@@ -967,7 +880,7 @@ namespace HPTClient
                 }
                 catch (Exception exc)
                 {
-                    this.Config.AddToErrorLog(exc);
+                    Config.AddToErrorLog(exc);
                 }
             }
         }
@@ -975,71 +888,73 @@ namespace HPTClient
         void miFile_Click(object sender, RoutedEventArgs e)
         {
             Cursor = Cursors.Wait;
-            MenuItem item = (MenuItem)e.OriginalSource;
+            var item = (MenuItem)e.OriginalSource;
             if (item.DataContext.GetType() != typeof(HPTSystemFile))
             {
                 Cursor = Cursors.Arrow;
                 return;
             }
-            HPTSystemFile sysFile = (HPTSystemFile)item.DataContext;
+            var sysFile = (HPTSystemFile)item.DataContext;
             try
             {
-                if (sysFile.FileType == "hpt5" || sysFile.FileType == "hpt4")
+                if (sysFile.FileType is "hpt7")
                 {
                     if (sysFile.FileNameShort.ToUpper().StartsWith("V4_")
                         || sysFile.FileNameShort.ToUpper().StartsWith("V5_")
                         || sysFile.FileNameShort.ToUpper().StartsWith("V64_")
                         || sysFile.FileNameShort.ToUpper().StartsWith("V65_")
                         || sysFile.FileNameShort.ToUpper().StartsWith("V75_")
+                        || sysFile.FileNameShort.ToUpper().StartsWith("V85_")
                         || sysFile.FileNameShort.ToUpper().StartsWith("V86_"))
                     {
-                        HPTMarkBet hmb = HPTSerializer.DeserializeHPTSystem(sysFile.FileName);
-                        hmb.SaveDirectory = HPTConfig.MyDocumentsPath + hmb.RaceDayInfo.ToDateAndTrackString() + "\\";
+                        var hmb = HPTSerializer.DeserializeHPTSystem(sysFile.FileName);
+                        hmb.SaveDirectory = Path.Combine(HPTConfig.MyDocumentsPath, hmb.RaceDayInfo.ToDateAndTrackString());
+                        ATGDownloaderToHPTHelper.SetNonSerializedValues(hmb);
                         AddTabItem(hmb);
                     }
-                    else if (sysFile.FileNameShort.ToUpper().StartsWith("DD_")
-                        || sysFile.FileNameShort.ToUpper().StartsWith("LD_")
-                        || sysFile.FileNameShort.ToUpper().StartsWith("TV_")
-                        || sysFile.FileNameShort.ToUpper().StartsWith("T_"))
-                    {
-                        HPTCombBet hcb = HPTSerializer.DeserializeHPTCombinationSystem(sysFile.FileName);
-                        AddTabItem(hcb);
-                    }
-                    else
-                    {
-                        try
-                        {
-                            HPTMarkBet hmb = HPTSerializer.DeserializeHPTSystem(sysFile.FileName);
-                            hmb.SaveDirectory = HPTConfig.MyDocumentsPath + hmb.RaceDayInfo.ToDateAndTrackString() + "\\";
-                            AddTabItem(hmb);
-                        }
-                        catch (InvalidOperationException)
-                        {
-                            HPTCombBet hcb = HPTSerializer.DeserializeHPTCombinationSystem(sysFile.FileName);
-                            hcb.SaveDirectory = HPTConfig.MyDocumentsPath + hcb.RaceDayInfo.ToDateAndTrackString() + "\\";
-                            AddTabItem(hcb);
-                        }
-                    }
+                    //else if (sysFile.FileNameShort.ToUpper().StartsWith("DD_")
+                    //    || sysFile.FileNameShort.ToUpper().StartsWith("LD_")
+                    //    || sysFile.FileNameShort.ToUpper().StartsWith("TV_")
+                    //    || sysFile.FileNameShort.ToUpper().StartsWith("T_"))
+                    //{
+                    //    HPTCombBet hcb = HPTSerializer.DeserializeHPTCombinationSystem(sysFile.FileName);
+                    //    AddTabItem(hcb);
+                    //}
+                    //else
+                    //{
+                    //    try
+                    //    {
+                    //        HPTMarkBet hmb = HPTSerializer.DeserializeHPTSystem(sysFile.FileName);
+                    //        hmb.SaveDirectory = HPTConfig.MyDocumentsPath + hmb.RaceDayInfo.ToDateAndTrackString() + "\\";
+                    //        AddTabItem(hmb);
+                    //    }
+                    //    catch (InvalidOperationException)
+                    //    {
+                    //        HPTCombBet hcb = HPTSerializer.DeserializeHPTCombinationSystem(sysFile.FileName);
+                    //        hcb.SaveDirectory = HPTConfig.MyDocumentsPath + hcb.RaceDayInfo.ToDateAndTrackString() + "\\";
+                    //        AddTabItem(hcb);
+                    //    }
+                    //}
                 }
             }
             catch (InvalidOperationException)
             {
                 try
                 {
-                    HPTMarkBet hmb = HPTSerializer.DeserializeHPTSystem(sysFile.FileName);
-                    hmb.SaveDirectory = HPTConfig.MyDocumentsPath + hmb.RaceDayInfo.ToDateAndTrackString() + "\\";
+                    var hmb = HPTSerializer.DeserializeHPTSystem(sysFile.FileName);
+                    hmb.SaveDirectory = Path.Combine(HPTConfig.MyDocumentsPath,hmb.RaceDayInfo.ToDateAndTrackString());
                     AddTabItem(hmb);
                 }
                 catch (InvalidOperationException)
                 {
-                    HPTCombBet hcb = HPTSerializer.DeserializeHPTCombinationSystem(sysFile.FileName);
-                    hcb.SaveDirectory = HPTConfig.MyDocumentsPath + hcb.RaceDayInfo.ToDateAndTrackString() + "\\";
-                    AddTabItem(hcb);
+                    //HPTCombBet hcb = HPTSerializer.DeserializeHPTCombinationSystem(sysFile.FileName);
+                    //hcb.SaveDirectory = HPTConfig.MyDocumentsPath + hcb.RaceDayInfo.ToDateAndTrackString() + "\\";
+                    //AddTabItem(hcb);
                 }
             }
             catch (Exception exc)
             {
-                this.Config.AddToErrorLog(exc);
+                Config.AddToErrorLog(exc);
             }
             finally
             {
@@ -1047,29 +962,41 @@ namespace HPTClient
             }
         }
 
-        private void miUpdateCalendar_Click(object sender, RoutedEventArgs e)
+        private CancellationTokenSource? calendarUpdateCts;
+
+        private async void miUpdateCalendar_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 Cursor = Cursors.Wait;
-                var serviceConnector = new HPTServiceConnector();
-                if (this.hptCalendar.RaceDayInfoList != null)
+                // Cancel any previous in-progress update
+                calendarUpdateCts?.Cancel();
+                calendarUpdateCts = new CancellationTokenSource();
+
+                if (hptCalendar.RaceDayInfoList != null)
                 {
-                    this.hptCalendar.RaceDayInfoList.Clear();
+                    hptCalendar.RaceDayInfoList.Clear();
                 }
-                ThreadPool.QueueUserWorkItem(new WaitCallback(GetCalendar), ThreadPriority.Normal);
-                //serviceConnector.GetCalendar(this.hptCalendar);
+
+                await Task.Run(() => GetCalendar(), calendarUpdateCts.Token);
+            }
+            catch (OperationCanceledException)
+            {
+                // Update was cancelled, ignore
             }
             catch (Exception exc)
             {
-                this.Config.AddToErrorLog(exc);
+                Config.AddToErrorLog(exc);
             }
-            Cursor = Cursors.Arrow;
+            finally
+            {
+                Cursor = Cursors.Arrow;
+            }
         }
 
         private void miAbout_Click(object sender, RoutedEventArgs e)
         {
-            HPTAboutBox aboutBox = new HPTAboutBox();
+            var aboutBox = new HPTAboutBox();
             aboutBox.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             aboutBox.ShowDialog();
         }
@@ -1091,19 +1018,19 @@ namespace HPTClient
         {
             try
             {
-                this.MessageList.RemoveAt(0);
+                MessageList.RemoveAt(0);
             }
             catch (Exception exc)
             {
-                this.Config.AddToErrorLog(exc);
+                Config.AddToErrorLog(exc);
             }
         }
 
         private void btnCloseFailedLoad_Click(object sender, RoutedEventArgs e)
         {
-            Button btn = (Button)e.OriginalSource;
-            HPTGUIMessage mess = (HPTGUIMessage)btn.DataContext;
-            this.LoadingInfoList.Remove(mess);
+            var btn = (Button)e.OriginalSource;
+            var mess = (HPTGUIMessage)btn.DataContext;
+            LoadingInfoList.Remove(mess);
         }
 
         #region Hantering av menyval under Inställningar
@@ -1117,7 +1044,7 @@ namespace HPTClient
                 Image = new BitmapImage(new Uri(imageUri, UriKind.Relative))
             };
 
-            TabItem ti = new TabItem()
+            var ti = new TabItem()
             {
                 Header = ucItemHeader,
                 Content = uc
@@ -1132,13 +1059,13 @@ namespace HPTClient
             ucItemHeader.Close += new RoutedEventHandler(ucGenericItemHeader_Close);
 
             AddContextMenuToTabItem(ti);
-            this.tcMain.Items.Add(ti);
+            tcMain.Items.Add(ti);
             ti.IsSelected = true;
         }
 
         private void miTemplates_Click(object sender, RoutedEventArgs e)
         {
-            AddTabItem(new UCTemplateMain(), string.Empty, "Mallar", "/Icons/propertiesoroptions.ico", this.Config);
+            AddTabItem(new UCTemplateMain(), string.Empty, "Mallar", "/Icons/propertiesoroptions.ico", Config);
         }
 
         //private void miSettingsAll_Click(object sender, RoutedEventArgs e)
@@ -1148,7 +1075,7 @@ namespace HPTClient
 
         private void miErrorLog_Click(object sender, RoutedEventArgs e)
         {
-            AddTabItem(new UCErrorLog(), string.Empty, "Fellogg", "/Icons/error.ico", this.Config);
+            AddTabItem(new UCErrorLog(), string.Empty, "Fellogg", "/Icons/error.ico", Config);
         }
 
         #endregion
@@ -1239,23 +1166,23 @@ namespace HPTClient
 
         private void miResetConfiguration_Click(object sender, RoutedEventArgs e)
         {
-            string eMailAddress = this.Config.EMailAddress;
-            string password = this.Config.Password;
-            this.Config = HPTConfig.ResetHPTConfig();
-            this.Config.EMailAddress = eMailAddress;
-            this.Config.Password = password;
-            HandleFreeAndPro();
+            var eMailAddress = Config.EMailAddress;
+            var password = Config.Password;
+            Config = HPTConfig.ResetHPTConfig();
+            Config.EMailAddress = eMailAddress;
+            Config.Password = password;
+            LoadCalendar();
         }
 
 
         private void miSettingsVxx_Click(object sender, RoutedEventArgs e)
         {
-            AddTabItem(new UCSettings(), string.Empty, "Streckspel", "/Icons/propertiesoroptions.ico", this.Config);
+            AddTabItem(new UCSettings(), string.Empty, "Streckspel", "/Icons/propertiesoroptions.ico", Config);
         }
 
         private void miSettingsCombination_Click(object sender, RoutedEventArgs e)
         {
-            AddTabItem(new UCSettingsCombination(), string.Empty, "Kombinationsspel", "/Icons/propertiesoroptions.ico", this.Config);
+            AddTabItem(new UCSettingsCombination(), string.Empty, "Kombinationsspel", "/Icons/propertiesoroptions.ico", Config);
         }
 
         private void atgCalendar_Initialized(object sender, EventArgs e)
@@ -1300,7 +1227,8 @@ namespace HPTClient
 
         internal void GetOldRaceDayInfos()
         {
-            string raceDayInfoList = Clipboard.GetText();
+            // TODO: Skita i det här?
+            var raceDayInfoList = Clipboard.GetText();
             var sr = new StringReader(raceDayInfoList);
             var sb = new StringBuilder();
             while (sr.Peek() != -1)
@@ -1315,12 +1243,12 @@ namespace HPTClient
                     sb.Append("\t");
                     sb.Append(raceDayData[2]);
                     sb.Append("\t");
-                    var connector = new HPTServiceConnector();
-                    var hptRdi = connector.GetRaceDayInfoByTrackAndDate(raceDayData[0], raceDayData[1], raceDayData[2]);
-                    connector.GetResultMarkingBetByTrackAndDate(raceDayData[0], raceDayData[1], raceDayData[2], hptRdi);
-                    var markBet = new HPTMarkBet(hptRdi, hptRdi.BetType);
-                    markBet.PrepareForSave();
-                    markBet.SuggestNextTimers();
+                    //var connector = new HPTServiceConnector(); // TODO?
+                    //var hptRdi = connector.GetRaceDayInfoByTrackAndDate(raceDayData[0], raceDayData[1], raceDayData[2]);
+                    //connector.GetResultMarkingBetByTrackAndDate(raceDayData[0], raceDayData[1], raceDayData[2], hptRdi);
+                    //var markBet = new HPTMarkBet(hptRdi, hptRdi.BetType);
+                    //markBet.PrepareForSave();
+                    //markBet.SuggestNextTimers();
 
                     //// Faktisk utdelning
                     //foreach (var payOut in hptRdi.PayOutList)
@@ -1355,120 +1283,18 @@ namespace HPTClient
                     //    sb.Append("DÖTT LOPP");
                     //}
 
-                    string fileName = @"c:\Temp\GamlaSystem\" + raceDayData[1] + "_" + markBet.RaceDayInfo.TracknameFile + "_" + raceDayData[0] + ".hpt5";
-                    HPTSerializer.SerializeHPTSystem(fileName, markBet);
+                    //string fileName = @"c:\Temp\GamlaSystem\" + raceDayData[1] + "_" + markBet.RaceDayInfo.TracknameFile + "_" + raceDayData[0] + ".hpt7";
+                    //HPTSerializer.SerializeHPTSystem(fileName, markBet);
                 }
                 catch (Exception exc)
                 {
-                    string s = exc.Message;
+                    var s = exc.Message;
                 }
                 sb.AppendLine();
             }
-            string completeResult = sb.ToString();
+            var completeResult = sb.ToString();
             Clipboard.SetDataObject(completeResult);
         }
-
-        internal void CreateResultData(string directory)
-        {
-            var sbMarkBetStatistics = new StringBuilder();
-            var sbRaceStatistics = new StringBuilder();
-
-            Directory.GetFiles(directory, "*V75*.hpt5")
-                .ToList()
-                .ForEach(f =>
-                {
-                    try
-                    {
-                        // Deserialisera
-                        var hmb = HPTSerializer.DeserializeHPTSystem(f);
-                        hmb.RecalculateAllRanks();
-                        var firstLeg = hmb.RaceDayInfo.RaceList.First();
-
-                        sbMarkBetStatistics.Append(hmb.BetType.Code);
-                        sbMarkBetStatistics.Append("\t");
-                        sbMarkBetStatistics.Append(hmb.RaceDayInfo.RaceDayDate.ToString("yyyy-MM-dd"));
-                        sbMarkBetStatistics.Append("\t");
-                        sbMarkBetStatistics.Append(firstLeg.PostTime.ToString("HH:mm"));
-                        sbMarkBetStatistics.Append("\t");
-                        sbMarkBetStatistics.Append(hmb.RaceDayInfo.TrackId);
-                        sbMarkBetStatistics.Append("\t");
-                        sbMarkBetStatistics.Append(hmb.RaceDayInfo.Trackname);
-                        sbMarkBetStatistics.Append("\t");
-
-                        if (hmb.RaceDayInfo.PayOutList == null || hmb.RaceDayInfo.PayOutList.Count == 0 || hmb.RaceDayInfo.PayOutList.Sum(po => po.PayOutAmount) == 0)
-                        {
-                            var serviceConnector = new HPTServiceConnector();
-                            serviceConnector.GetResultMarkingBetByTrackAndDate(hmb.BetType.Code, hmb.RaceDayInfo.TrackId, hmb.RaceDayInfo.RaceDayDate, hmb.RaceDayInfo, true);
-                        }
-
-                        sbMarkBetStatistics.Append(hmb.RaceDayInfo.PayOutList[0].PayOutAmount);
-                        sbMarkBetStatistics.Append("\t");
-
-                        // Utdelning på streckspel med minst två vinstpooler
-                        if (hmb.RaceDayInfo.PayOutListATG.Count > 1)
-                        {
-                            sbMarkBetStatistics.Append(hmb.RaceDayInfo.PayOutList[1].PayOutAmount);
-                            sbMarkBetStatistics.Append("\t");
-                        }
-                        else
-                        {
-                            sbMarkBetStatistics.Append("0\t");
-                        }
-
-                        // Utdelning på streckspel med tre vinstpooler
-                        if (hmb.RaceDayInfo.PayOutListATG.Count > 2)
-                        {
-                            sbMarkBetStatistics.Append(hmb.RaceDayInfo.PayOutList[2].PayOutAmount);
-                            sbMarkBetStatistics.Append("\t");
-                            sbMarkBetStatistics.Append(hmb.RaceDayInfo.PayOutList[2].PayOutAmount == 0 && hmb.RaceDayInfo.PayOutList[0].PayOutAmount > 0);
-                            sbMarkBetStatistics.Append("\t");
-
-                            // JACKPOTTBERÄKNINGAR
-                            hmb.CalculateJackpotRows();
-                            sbMarkBetStatistics.Append(hmb.JackpotProbability);
-                            sbMarkBetStatistics.Append("\t");
-                            sbMarkBetStatistics.Append(hmb.numberOfRowsUnderRowValue[1]);
-                            sbMarkBetStatistics.Append("\t");
-                            sbMarkBetStatistics.Append(hmb.numberOfRowsUnderRowValue[2]);
-                        }
-                        else
-                        {
-                            sbMarkBetStatistics.Append("0\t");
-                        }
-                        sbMarkBetStatistics.AppendLine();
-
-                        // Lägg till info om själva spelformen
-                        string markBetInfo = hmb.BetType.Code + "\t"
-                            + hmb.RaceDayInfo.RaceDayDate.ToString("yyyy-MM-dd") + "\t"
-                            + hmb.RaceDayInfo.TrackId.ToString() + "\t"
-                            + hmb.RaceDayInfo.Trackname + "\t";
-
-                        // Gå igenom resultatet
-                        hmb.RaceDayInfo.RaceList.ForEach(r =>
-                            {
-                                r.LegResult.Winners
-                                    .ToList()
-                                    .ForEach(w =>
-                                    {
-                                        var horse = r.HorseList.First(h => h.StartNr == w);
-                                        sbRaceStatistics.Append(markBetInfo);
-                                        AppendHorseStatistics(sbRaceStatistics, horse);
-                                        sbRaceStatistics.Append(@"\t");
-
-                                    });
-                            });
-                    }
-                    catch (Exception exc)
-                    {
-                        string s = exc.Message;
-                    }
-                });
-            string markBetStatistics = sbMarkBetStatistics.ToString();
-            Clipboard.SetDataObject(markBetStatistics);
-            string raceStatistics = sbRaceStatistics.ToString();
-            Clipboard.SetDataObject(raceStatistics);
-        }
-
         internal void AppendHorseStatistics(StringBuilder sb, HPTHorse horse)
         {
             sb.Append(horse.ParentRace.PostTime.ToString("HH:mm"));
@@ -1485,7 +1311,7 @@ namespace HPTClient
             sb.Append("\t");
             sb.Append(horse.VinnarOddsShare);
             sb.Append("\t");
-            sb.Append(horse.RankList.First(r => r.Name == "VinnarOdds").Rank);
+            sb.Append(horse.RankList.First(r => r.Name == "VinnarOddsExact").Rank);
             sb.Append("\t");
             sb.Append(horse.PlatsOddsShare);
             sb.Append("\t");
@@ -1499,7 +1325,7 @@ namespace HPTClient
             var sbMarkBetStatistics = new StringBuilder();
             var sbRaceStatistics = new StringBuilder();
 
-            Directory.GetFiles(directory, "*V64*.hpt5")
+            Directory.GetFiles(directory, "*V64*.hpt7")
                 .ToList()
                 .ForEach(f =>
                 {
@@ -1524,8 +1350,8 @@ namespace HPTClient
 
                         if (hmb.RaceDayInfo.PayOutListATG == null || hmb.RaceDayInfo.PayOutListATG.Count == 0 || hmb.RaceDayInfo.PayOutListATG.Sum(po => po.PayOutAmount) == 0)
                         {
-                            var serviceConnector = new HPTServiceConnector();
-                            serviceConnector.GetResultMarkingBetByTrackAndDate(hmb.BetType.Code, hmb.RaceDayInfo.TrackId, hmb.RaceDayInfo.RaceDayDate, hmb.RaceDayInfo, true);
+                            //var serviceConnector = new HPTServiceConnector(); // TODO?
+                            //serviceConnector.GetResultMarkingBetByTrackAndDate(hmb.BetType.Code, hmb.RaceDayInfo.TrackId, hmb.RaceDayInfo.RaceDayDate, hmb.RaceDayInfo, true);
                         }
 
                         // Utdelning på streckspel med minst två vinstpooler
@@ -1552,10 +1378,8 @@ namespace HPTClient
                         sbMarkBetStatistics.AppendLine();
 
                         // Lägg till info om själva spelformen
-                        string markBetInfo = hmb.BetType.Code + "\t"
-                            + hmb.RaceDayInfo.RaceDayDate.ToString("yyyy-MM-dd") + "\t"
-                            + hmb.RaceDayInfo.TrackId.ToString() + "\t"
-                            + hmb.RaceDayInfo.Trackname + "\t";
+                        var markBetInfo =
+                            $"{hmb.BetType.Code}\t{hmb.RaceDayInfo.RaceDayDate:yyyy-MM-dd}\t{hmb.RaceDayInfo.TrackId}\t{hmb.RaceDayInfo.Trackname}\t";
 
                         // Gå igenom resultatet
                         hmb.RaceDayInfo.RaceList.ForEach(r =>
@@ -1572,12 +1396,12 @@ namespace HPTClient
                     }
                     catch (Exception exc)
                     {
-                        string s = exc.Message;
+                        var s = exc.Message;
                     }
                 });
-            string markBetStatistics = sbMarkBetStatistics.ToString();
+            var markBetStatistics = sbMarkBetStatistics.ToString();
             Clipboard.SetDataObject(markBetStatistics);
-            string raceStatistics = sbRaceStatistics.ToString();
+            var raceStatistics = sbRaceStatistics.ToString();
             Clipboard.SetDataObject(raceStatistics);
         }
 
@@ -1589,34 +1413,18 @@ namespace HPTClient
         #endregion
 
 
-        //private void miThreeMonthsSubscription_Click(object sender, RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        System.Diagnostics.Process.Start("https://www.payson.se/myaccount/pay?De=Tre+m%e5naders+%27Hj%e4lp+p%e5+traven+PRO%27&Se=hjalp.pa.traven%40gmail.com&Cost=99%2c00&Currency=SEK&Sp=1&Lang=SE");
-        //    }
-        //    catch (Exception exc)
-        //    {
-        //        string s = exc.Message;
-        //    }
-        //}
-
-        //private void miOneYearSubscription_Click(object sender, RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        System.Diagnostics.Process.Start("https://www.payson.se/myaccount/pay?De=Ett+%e5rs+%27Hj%e4lp+p%e5+traven+PRO%27&Se=hjalp.pa.traven%40gmail.com&Cost=299%2c00&Currency=SEK&Sp=1&Lang=SE");
-        //    }
-        //    catch (Exception exc)
-        //    {
-        //        string s = exc.Message;
-        //    }
-        //}
-
         private void HandleCalendarFilter()
         {
-            var collectionView = CollectionViewSource.GetDefaultView(this.lvwCalenda.ItemsSource);
-            collectionView.Filter = new Predicate<object>(FilterCalendar);
+            // TODO: Är null här avnågon anledning
+            var collectionView = CollectionViewSource.GetDefaultView(lvwCalenda.ItemsSource);
+            if (collectionView is null)
+            {
+                lvwCalenda.ItemsSource = hptCalendar.RaceDayInfoList;
+            }
+            if (collectionView is not null)
+            {
+                collectionView.Filter = new Predicate<object>(FilterCalendar);
+            }
         }
 
         public bool FilterCalendar(object obj)
@@ -1632,15 +1440,15 @@ namespace HPTClient
 
         private void SetRaceDayInfosToShow()
         {
-            bool showYesterday = (bool)this.chkShowYesterday.IsChecked;
-            bool showOld = (bool)this.chkShowPreviousWeek.IsChecked;
-            bool showOnlySwedish = (bool)this.chkShowOnlySwedishTracks.IsChecked;
-            bool showOnlyWithMarksGame = (bool)this.chkShowOnlyWithMarksGame.IsChecked;
+            var showYesterday = (bool)chkShowYesterday.IsChecked;
+            var showOld = (bool)chkShowPreviousWeek.IsChecked;
+            var showOnlySwedish = (bool)chkShowOnlySwedishTracks.IsChecked;
+            var showOnlyWithMarksGame = (bool)chkShowOnlyWithMarksGame.IsChecked;
 
-            this.lvwCalenda.ItemsSource.Cast<HPTRaceDayInfo>().ToList().ForEach(rdi => 
+            lvwCalenda.ItemsSource.Cast<HPTRaceDayInfo>().ToList().ForEach(rdi =>
             //this.hptCalendar.RaceDayInfoList.ToList().ForEach(rdi =>
             {
-                bool showInUI = false;
+                var showInUI = false;
                 if (showYesterday && !showOld)
                 {
                     showInUI = rdi.RaceDayDate.Date >= DateTime.Today.AddDays(-1D);
@@ -1674,7 +1482,7 @@ namespace HPTClient
         private void UCOwnInformationView_RaceDayInfoSelected(int trackId, DateTime raceDate, string betType, int legNr)
         {
             // Hitta rätt RAceDayInfo i kalendern
-            var raceDayInfo = this.hptCalendar.RaceDayInfoList.FirstOrDefault(rdi => rdi.RaceDayDate.Date == raceDate.Date && rdi.TrackId == trackId);
+            var raceDayInfo = hptCalendar.RaceDayInfoList.FirstOrDefault(rdi => rdi.RaceDayDate.Date == raceDate.Date && rdi.TrackId == trackId);
             if (raceDayInfo != null)
             {
                 // Hitta rätt spelform i RaceDayInfo-objektet
@@ -1791,36 +1599,6 @@ namespace HPTClient
         private void miAnalysis_Click(object sender, RoutedEventArgs e)
         {
             AddTabItem(new UCResultAnalyzerList(), "Resultatanalys", "Analys", "/Icons/HPT.ico", HPTResultAnalyzer.ResultAnalyzerList);
-
-            //try
-            //{
-            //    Cursor = Cursors.Wait;
-
-            //    HPTRaceDayInfo hptRdi = new HPTRaceDayInfo()
-            //    {
-            //        DataToShow = this.Config.DataToShowVxx,
-            //        BetType = new HPTBetType()
-            //        {
-            //            Code = "V64",
-            //            Name = "V64"                        
-            //        }
-            //    };
-
-            //    HPTServiceConnector connector = new HPTServiceConnector();
-            //    connector.GetRaceDayInfoByTrackAndDate(hptRdi.BetType, 9, new DateTime(2013,8,6), new HPTServiceConnector.RaceDayInfoDelegate(ReceiveRaceDayInfo));
-            //    Cursor = Cursors.Arrow;
-
-            //}
-            //catch (Exception exc)
-            //{
-            //    Cursor = Cursors.Arrow;
-            //    HPTConfig.Config.AddToErrorLog(exc);
-            //}
-            //var ofd = new OpenFileDialog();
-            //ofd.InitialDirectory = HPTConfig.MyDocumentsPath;
-            //ofd.Filter = "Hjälp på traven-system|*.hpt4;*.hpt5";
-            //ofd.FileOk += new System.ComponentModel.CancelEventHandler(ofd_FileOk);
-            //ofd.ShowDialog();
         }
 
         void ofd_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
@@ -1829,9 +1607,9 @@ namespace HPTClient
             {
                 try
                 {
-                    OpenFileDialog ofd = (OpenFileDialog)sender;
+                    var ofd = (OpenFileDialog)sender;
                     var sb = new StringBuilder();
-                    string dir = System.IO.Path.GetDirectoryName(ofd.FileName);
+                    var dir = Path.GetDirectoryName(ofd.FileName);
                     var di = new DirectoryInfo(dir);
                     foreach (var fiHmb in di.GetFiles("*.hpt?"))
                     {
@@ -1853,7 +1631,7 @@ namespace HPTClient
 
                             hmb.RaceDayInfo.RaceList.ForEach(r =>
                             {
-                                foreach (int i in r.LegResult.Winners)
+                                foreach (var i in r.LegResult.Winners)
                                 {
                                     var horse = r.HorseList.FirstOrDefault(h => h.StartNr == i);
                                     horse.Correct = true;
@@ -1879,7 +1657,7 @@ namespace HPTClient
                         }
                         catch (Exception exc)
                         {
-                            string s = exc.Message;
+                            var s = exc.Message;
                         }
                         sb.Append("\r\n");
                     }
@@ -1888,7 +1666,7 @@ namespace HPTClient
                 }
                 catch (Exception exc)
                 {
-                    this.Config.AddToErrorLog(exc);
+                    Config.AddToErrorLog(exc);
                 }
             }
         }
@@ -1916,35 +1694,47 @@ namespace HPTClient
             };
             Process.Start(psi);
         }
+
+        private void UIElement_OnKeyUp(object sender, KeyEventArgs e)
+        {
+            switch (Keyboard.Modifiers)
+            {
+                case ModifierKeys.Control:
+                    switch (e.Key)
+                    {
+                        case Key.OemPlus:
+                        case Key.Add:
+                            HPTConfig.Config.Zoom += 0.1M;
+                            break;
+                        case Key.OemMinus:
+                        case Key.Subtract:
+                            HPTConfig.Config.Zoom -= 0.1M;
+                            break;
+                    }
+                    break;
+            }
+        }
     }
 
     public class HPTGUIMessage : Notifier
     {
-        private string errorString;
         public string ErrorString
         {
-            get
-            {
-                return errorString;
-            }
+            get;
             set
             {
-                errorString = value;
-                OnPropertyChanged("ErrorString");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private Visibility buttonVisibility;
         public Visibility ButtonVisibility
         {
-            get
-            {
-                return this.buttonVisibility;
-            }
+            get;
             set
             {
-                this.buttonVisibility = value;
-                OnPropertyChanged("ButtonVisibility");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -1960,18 +1750,171 @@ namespace HPTClient
 
         public int RaceNumberToLoad { get; set; }
 
-        private HPTRaceDayInfo raceDayInfo;
         public HPTRaceDayInfo RaceDayInfo
         {
-            get
-            {
-                return this.raceDayInfo;
-            }
+            get;
             set
             {
-                this.raceDayInfo = value;
-                OnPropertyChanged("RaceDayInfo");
+                field = value;
+                OnPropertyChanged();
             }
         }
+
+        #region Obsoletet
+
+        //
+        // internal void CreateResultData(string directory)
+        // {
+        //     var sbMarkBetStatistics = new StringBuilder();
+        //     var sbRaceStatistics = new StringBuilder();
+        //
+        //     Directory.GetFiles(directory, "*V75*.hpt7")
+        //         .ToList()
+        //         .ForEach(f =>
+        //         {
+        //             try
+        //             {
+        //                 // Deserialisera
+        //                 var hmb = HPTSerializer.DeserializeHPTSystem(f);
+        //                 hmb.RecalculateAllRanks();
+        //                 var firstLeg = hmb.RaceDayInfo.RaceList.First();
+        //
+        //                 sbMarkBetStatistics.Append(hmb.BetType.Code);
+        //                 sbMarkBetStatistics.Append("\t");
+        //                 sbMarkBetStatistics.Append(hmb.RaceDayInfo.RaceDayDate.ToString("yyyy-MM-dd"));
+        //                 sbMarkBetStatistics.Append("\t");
+        //                 sbMarkBetStatistics.Append(firstLeg.PostTime.ToString("HH:mm"));
+        //                 sbMarkBetStatistics.Append("\t");
+        //                 sbMarkBetStatistics.Append(hmb.RaceDayInfo.TrackId);
+        //                 sbMarkBetStatistics.Append("\t");
+        //                 sbMarkBetStatistics.Append(hmb.RaceDayInfo.Trackname);
+        //                 sbMarkBetStatistics.Append("\t");
+        //
+        //                 if (hmb.RaceDayInfo.PayOutList == null || hmb.RaceDayInfo.PayOutList.Count == 0 || hmb.RaceDayInfo.PayOutList.Sum(po => po.PayOutAmount) == 0)
+        //                 {
+        //                     var serviceConnector = new HPTServiceConnector();
+        //                     serviceConnector.GetResultMarkingBetByTrackAndDate(hmb.BetType.Code, hmb.RaceDayInfo.TrackId, hmb.RaceDayInfo.RaceDayDate, hmb.RaceDayInfo, true);
+        //                 }
+        //
+        //                 sbMarkBetStatistics.Append(hmb.RaceDayInfo.PayOutList[0].PayOutAmount);
+        //                 sbMarkBetStatistics.Append("\t");
+        //
+        //                 // Utdelning på streckspel med minst två vinstpooler
+        //                 if (hmb.RaceDayInfo.PayOutListATG.Count > 1)
+        //                 {
+        //                     sbMarkBetStatistics.Append(hmb.RaceDayInfo.PayOutList[1].PayOutAmount);
+        //                     sbMarkBetStatistics.Append("\t");
+        //                 }
+        //                 else
+        //                 {
+        //                     sbMarkBetStatistics.Append("0\t");
+        //                 }
+        //
+        //                 // Utdelning på streckspel med tre vinstpooler
+        //                 if (hmb.RaceDayInfo.PayOutListATG.Count > 2)
+        //                 {
+        //                     sbMarkBetStatistics.Append(hmb.RaceDayInfo.PayOutList[2].PayOutAmount);
+        //                     sbMarkBetStatistics.Append("\t");
+        //                     sbMarkBetStatistics.Append(hmb.RaceDayInfo.PayOutList[2].PayOutAmount == 0 && hmb.RaceDayInfo.PayOutList[0].PayOutAmount > 0);
+        //                     sbMarkBetStatistics.Append("\t");
+        //
+        //                     // JACKPOTTBERÄKNINGAR
+        //                     hmb.CalculateJackpotRows();
+        //                     sbMarkBetStatistics.Append(hmb.JackpotProbability);
+        //                     sbMarkBetStatistics.Append("\t");
+        //                     sbMarkBetStatistics.Append(hmb.numberOfRowsUnderRowValue[1]);
+        //                     sbMarkBetStatistics.Append("\t");
+        //                     sbMarkBetStatistics.Append(hmb.numberOfRowsUnderRowValue[2]);
+        //                 }
+        //                 else
+        //                 {
+        //                     sbMarkBetStatistics.Append("0\t");
+        //                 }
+        //                 sbMarkBetStatistics.AppendLine();
+        //
+        //                 // Lägg till info om själva spelformen
+        //                 string markBetInfo = hmb.BetType.Code + "\t"
+        //                     + hmb.RaceDayInfo.RaceDayDate.ToString("yyyy-MM-dd") + "\t"
+        //                     + hmb.RaceDayInfo.TrackId.ToString() + "\t"
+        //                     + hmb.RaceDayInfo.Trackname + "\t";
+        //
+        //                 // Gå igenom resultatet
+        //                 hmb.RaceDayInfo.RaceList.ForEach(r =>
+        //                     {
+        //                         r.LegResult.Winners
+        //                             .ToList()
+        //                             .ForEach(w =>
+        //                             {
+        //                                 var horse = r.HorseList.First(h => h.StartNr == w);
+        //                                 sbRaceStatistics.Append(markBetInfo);
+        //                                 AppendHorseStatistics(sbRaceStatistics, horse);
+        //                                 sbRaceStatistics.Append(@"\t");
+        //
+        //                             });
+        //                     });
+        //             }
+        //             catch (Exception exc)
+        //             {
+        //                 string s = exc.Message;
+        //             }
+        //         });
+        //     string markBetStatistics = sbMarkBetStatistics.ToString();
+        //     Clipboard.SetDataObject(markBetStatistics);
+        //     string raceStatistics = sbRaceStatistics.ToString();
+        //     Clipboard.SetDataObject(raceStatistics);
+        // }
+
+
+        //void miUploadCompleteSystem_Click(object sender, RoutedEventArgs e)
+        //{
+        //    MenuItem mi = (MenuItem)sender;
+        //    HPTMarkBet hmb = (HPTMarkBet)mi.Tag;
+        //    hmb.SetSerializerValues();
+        //    if (hmb != null)
+        //    {
+        //        var wndUploadSystem = new Window()
+        //        {
+        //            SizeToContent = SizeToContent.WidthAndHeight,
+        //            Title = "Ladda upp system!",
+        //            ShowInTaskbar = false,
+        //            ResizeMode = ResizeMode.NoResize,
+        //            Owner = App.Current.MainWindow
+        //        };
+        //        wndUploadSystem.Content = new UCUserSystemUpload()
+        //        {
+        //            DataContext = hmb,
+        //            MarkBet = hmb
+        //        };
+        //        wndUploadSystem.ShowDialog();
+        //    }
+        //}
+
+
+        //private void miThreeMonthsSubscription_Click(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        System.Diagnostics.Process.Start("https://www.payson.se/myaccount/pay?De=Tre+m%e5naders+%27Hj%e4lp+p%e5+traven+PRO%27&Se=hjalp.pa.traven%40gmail.com&Cost=99%2c00&Currency=SEK&Sp=1&Lang=SE");
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        string s = exc.Message;
+        //    }
+        //}
+
+        //private void miOneYearSubscription_Click(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        System.Diagnostics.Process.Start("https://www.payson.se/myaccount/pay?De=Ett+%e5rs+%27Hj%e4lp+p%e5+traven+PRO%27&Se=hjalp.pa.traven%40gmail.com&Cost=299%2c00&Currency=SEK&Sp=1&Lang=SE");
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        string s = exc.Message;
+        //    }
+        //}
+
+
+        #endregion
     }
 }

@@ -1,13 +1,13 @@
-﻿using ICSharpCode.SharpZipLib.Zip;
-using System;
-using System.Collections.Generic;
+﻿//using ICSharpCode.SharpZipLib.Zip;
+
+using ATGDownloader;
 using System.Collections.ObjectModel;
 using System.IO;
 //using System.IO.Compression;
-using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
-using System.Threading;
+using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -15,358 +15,105 @@ namespace HPTClient
 {
     class HPTSerializer
     {
-        #region Generell Zip-funktionalitet
-
-        // Lösenord för zip-filer
-        private const string ZipKey = "455807A1-440B-4F50-821F-AA5584D174D3";
-
-        internal static object DeserializeObjectFromStream(Type typeOfObject, Stream stream)
-        {
-            var serializer = new DataContractSerializer(typeOfObject);
-            var response = serializer.ReadObject(stream);
-            return response;
-        }
-
-        internal static Stream SerializeHPTServiceObject(Type objectType, object hptObject)
-        {
-            var ms = new MemoryStream();
-            var serializer = new DataContractSerializer(objectType);
-            serializer.WriteObject(ms, hptObject);
-            ms.Position = 0;
-            return ms;
-        }
-
-        internal static object DeserializeHPTServiceObject(Type typeOfObject, byte[] binaryZip)
-        {
-            var serializer = new DataContractSerializer(typeOfObject);
-            var stream = UnzipAndCreateStream(binaryZip);
-            var response = serializer.ReadObject(stream);
-            return response;
-        }
-
-        internal static object DeserializeHPTServiceObject(Type typeOfObject, Stream stream)
-        {
-            var serializer = new DataContractSerializer(typeOfObject);
-            var response = serializer.ReadObject(stream);
-            return response;
-        }
-
         internal static bool SerializeHPTObject(Type typeOfObject, string fileName, object hptObject)
         {
             try
             {
-                var ms = new MemoryStream();
+                using var fileStream = File.OpenWrite(fileName);
                 var serializer = new DataContractSerializer(typeOfObject);
-                serializer.WriteObject(ms, hptObject);
-                ms.Position = 0;
-                ZipAndCreateFile(ms, fileName);
-                ms.Flush();
-                ms.Close();
-                ms = null;
+                serializer.WriteObject(fileStream, hptObject);
 
                 return true;
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
+
             return false;
         }
 
-        internal static object DeserializeHPTObject(Type typeOfObject, byte[] binaryZip)
-        {
-            var serializer = new DataContractSerializer(typeOfObject);
-            var stream = UnzipAndCreateStream(binaryZip);
-            var response = serializer.ReadObject(stream);
-            return response;
-        }
-
-        internal static object DeserializeHPTObject(Type typeOfObject, string filename)
-        {
-            var serializer = new DataContractSerializer(typeOfObject);
-            var stream = UnzipAndCreateStream(filename);
-            var response = serializer.ReadObject(stream);
-            return response;
-        }
-
-        internal static byte[] SerializeHPTObject(XmlSerializer serializer, object hptObject)
-        {
-            MemoryStream ms = new MemoryStream();
-            serializer.Serialize(ms, hptObject);
-            ms.Position = 0;
-            var baObject = ZipAndCreateBinary(ms);
-            return baObject;
-        }
-        internal static Stream Decompress(string zipFilePath)
-        {
-            var zipInputStream = new ZipInputStream(File.OpenRead(zipFilePath))
-            {
-                Password = ZipKey
-            };
-
-            var entry = zipInputStream.GetNextEntry();
-            byte[] buffer = new byte[entry.Size];
-            zipInputStream.ReadExactly(buffer, 0, buffer.Length);
-            var ms = new MemoryStream(buffer);
-            ms.Position = 0;
-
-            return ms;
-        }
-
-        internal static Stream UnzipAndCreateStream(byte[] binaryZip)
-        {
-            var msIn = new MemoryStream(binaryZip);
-            msIn.Position = 0;
-            var zipInputStream = new ZipInputStream(msIn)
-            {
-                Password = ZipKey
-            };
-
-            var entry = zipInputStream.GetNextEntry();
-            byte[] buffer = new byte[entry.Size];
-            zipInputStream.ReadExactly(buffer, 0, buffer.Length);
-            var msOut = new MemoryStream(buffer);
-            msOut.Position = 0;
-
-            return msOut;
-        }
-
-        internal static byte[] ZipAndCreateBinary(Stream stream)
-        {
-            byte[] bytesIn = new byte[stream.Length];
-            stream.ReadExactly(bytesIn, 0, bytesIn.Length);
-            var ms = new MemoryStream();
-            using (var zipOutputStream = new ZipOutputStream(ms))
-            {
-                zipOutputStream.Password = ZipKey;
-                zipOutputStream.SetLevel(5); // Set compression level (0-9), 5 as a mid-range
-                var entry = new ZipEntry("System"); // Create a new entry for each file
-                zipOutputStream.PutNextEntry(entry);                
-                zipOutputStream.Write(bytesIn, 0, bytesIn.Length);
-                zipOutputStream.Finish();
-                ms.Position = 0;
-                byte[] buffer = ms.ToArray();
-                zipOutputStream.Close();
-                
-                return buffer;
-            }
-
-            return null;
-            //Ionic.Zip.ZipFile zf = new Ionic.Zip.ZipFile()
-            //{
-            //    CompressionLevel = Ionic.Zlib.CompressionLevel.BestCompression,
-            //    Password = ZipKey
-            //};
-
-            //MemoryStream ms = new MemoryStream();
-            //zf.AddEntry("System", stream);
-            //zf.Save(ms);
-            //ms.Position = 0;
-            //byte[] resultArray = ms.ToArray();
-            //return resultArray;
-        }
-
-        internal static Stream UnzipAndCreateStream(string fileName)
+        internal static bool SerializeHPTObjectJson(string fileName, object hptObject)
         {
             try
-            {                
-                return Decompress(fileName);
-
-                //Ionic.Zip.ZipFile zf = Ionic.Zip.ZipFile.Read(fileName);
-                //Ionic.Zip.ZipEntry ze = zf.Entries.First();
-                //MemoryStream outputStream = new MemoryStream();
-                //ze.ExtractWithPassword(outputStream, ZipKey);
-                //outputStream.Position = 0;
-                //return outputStream;
-                //return new MemoryStream();
-            }
-            catch (Exception)
             {
-                var fs = new FileStream(fileName, FileMode.Open);
-                return fs;
-            }
-        }
-
-        internal static bool ZipAndCreateFile(Stream stream, string fileName)
-        {
-            byte[] bytesIn = new byte[stream.Length];
-            stream.ReadExactly(bytesIn, 0, bytesIn.Length);
-            var fs = new FileStream(fileName, FileMode.OpenOrCreate);
-            using (var zipOutputStream = new ZipOutputStream(fs))
-            {
-                zipOutputStream.Password = ZipKey;
-                zipOutputStream.SetLevel(5); // Set compression level (0-9), 5 as a mid-range
-                var entry = new ZipEntry("System"); // Create a new entry for each file
-                zipOutputStream.PutNextEntry(entry);
-                zipOutputStream.Write(bytesIn, 0, bytesIn.Length);
-                zipOutputStream.Finish();
-                //ms.Position = 0;
-                //byte[] buffer = ms.ToArray();
-                zipOutputStream.Close();
+                using var fileStream = File.OpenWrite(fileName);
+                JsonSerializer.Serialize(fileStream);
+                // var serializer = new DataContractSerializer(typeOfObject);
+                // serializer.WriteObject(fileStream, hptObject);
 
                 return true;
             }
-            //try
-            //{
-            //    Ionic.Zip.ZipFile zf = new Ionic.Zip.ZipFile()
-            //    {
-            //        CompressionLevel = Ionic.Zlib.CompressionLevel.BestCompression,
-            //        Password = ZipKey
-            //    };
+            catch (Exception exc)
+            {
+                var s = exc.Message;
+            }
 
-            //    zf.AddEntry("System", stream);
-            //    zf.Save(fileName);
-            //}
-            //catch (Exception)
-            //{
-            //    return false;
-            //}
-            return true;
+            return false;
         }
 
-        #endregion
-
-        #region Serialisering/deserialisering av HPTService-objekt
-
-        internal static HPTService.AuthenticationResponse DeserializeAuthenticationResponse(byte[] binaryZip)
+        internal static object DeserializeHPTObject(Type typeOfObject, string fileName)
         {
-            var response = DeserializeHPTServiceObject(typeof(HPTService.AuthenticationResponse), binaryZip);
-            return (HPTService.AuthenticationResponse)response;
+            try
+            {
+                var serializer = new DataContractSerializer(typeOfObject);
+                var stream = File.OpenRead(fileName);
+                var response = serializer.ReadObject(stream);
+                return response;
+            }
+            catch (Exception exc)
+            {
+                HPTConfig.AddToErrorLogStatic(exc);
+            }
+
+            return null;
         }
-
-        internal static HPTService.HPTSaveSystem DeserializeHPTSaveSystem(byte[] binaryZip)
-        {
-            var response = DeserializeHPTServiceObject(typeof(HPTService.HPTSaveSystem), binaryZip);
-            return (HPTService.HPTSaveSystem)response;
-        }
-
-        internal static HPTService.HPTRegistration DeserializeHPTRegistration(byte[] binaryZip)
-        {
-            var response = DeserializeHPTServiceObject(typeof(HPTService.HPTRegistration), binaryZip);
-            return (HPTService.HPTRegistration)response;
-        }
-
-        internal static HPTService.HPTCalendar DeserializeHPTCalendar(byte[] binaryZip)
-        {
-            var response = DeserializeHPTServiceObject(typeof(HPTService.HPTCalendar), binaryZip);
-            return (HPTService.HPTCalendar)response;
-        }
-
-        internal static HPTService.HPTRaceDayInfo DeserializeHPTRaceDayInfo(byte[] binaryZip)
-        {
-            var response = DeserializeHPTServiceObject(typeof(HPTService.HPTRaceDayInfo), binaryZip);
-            return (HPTService.HPTRaceDayInfo)response;
-        }
-
-        internal static HPTService.HPTResultMarkingBet DeserializeHPTResultMarkingBet(byte[] binaryZip)
-        {
-            var response = DeserializeHPTServiceObject(typeof(HPTService.HPTResultMarkingBet), binaryZip);
-            return (HPTService.HPTResultMarkingBet)response;
-        }
-
-        internal static HPTService.HPTUserRaceDayInfoCommentsCollection DeserializeHPTUserRaceDayInfoCommentsCollection(byte[] binaryZip)
-        {
-            var response = DeserializeHPTServiceObject(typeof(HPTService.HPTUserRaceDayInfoCommentsCollection), binaryZip);
-            return (HPTService.HPTUserRaceDayInfoCommentsCollection)response;
-        }
-
-        //internal static byte[] SerializeHPTResultMarkingBet(HPTService.HPTResultMarkingBet hptRmb)
-        //{
-        //    MemoryStream ms = new MemoryStream();
-        //    XmlSerializer serializer = new XmlSerializer(typeof(HPTService.HPTResultMarkingBet));
-        //    XmlTextWriter xtw = new XmlTextWriter(ms, Encoding.UTF8);
-        //    serializer.Serialize(xtw, hptRmb);
-        //    xtw.Flush();
-        //    ms.Position = 0;
-        //    byte[] binaryZip = ZipAndCreateBinary(ms);
-        //    xtw.Close();
-        //    return binaryZip;
-        //}
-
-        //internal static List<HPTService.HPTRaceHistory> DeserializeHPTRaceHistoryList(byte[] binaryZip)
-        //{
-        //    XmlSerializer serializer = new XmlSerializer(typeof(List<HPTService.HPTRaceHistory>));
-        //    Stream stream = UnzipAndCreateStream(binaryZip);
-        //    XmlTextReader xtr = new XmlTextReader(stream);
-        //    List<HPTService.HPTRaceHistory> hptRaceHistoryList = (List<HPTService.HPTRaceHistory>)serializer.Deserialize(xtr);
-        //    xtr.Close();
-        //    xtr = null;
-        //    return hptRaceHistoryList;
-        //}
-
-        //internal static byte[] SerializeHPTRaceHistoryList(List<HPTRaceHistory> hptRaceHistoryList)
-        //{
-        //    MemoryStream ms = new MemoryStream();
-        //    XmlSerializer serializer = new XmlSerializer(typeof(List<HPTRaceHistory>));
-        //    XmlTextWriter xtw = new XmlTextWriter(ms, Encoding.UTF8);
-        //    serializer.Serialize(xtw, hptRaceHistoryList);
-        //    xtw.Flush();
-        //    ms.Position = 0;
-        //    byte[] binaryZip = ZipAndCreateBinary(ms);
-        //    xtw.Close();
-        //    return binaryZip;
-        //}
-
-        #endregion
 
         #region Serialisering/deserialisering av vanliga HPT-objekt
 
         internal static HPTConfig DeserializeHPTConfig(string fileName)
         {
-            var serializer = new DataContractSerializer(typeof(HPTConfig));
-            var stream = UnzipAndCreateStream(fileName);
-            var response = serializer.ReadObject(stream);
-            HPTConfig hptConfig = (HPTConfig)response;
-            return hptConfig;
+            try
+            {
+                var serializer = new DataContractSerializer(typeof(HPTConfig));
+                using var stream = File.OpenRead(fileName);
+                var response = serializer.ReadObject(stream);
+                return (HPTConfig)response;
+            }
+            catch (Exception exc)
+            {
+                return HPTConfig.ResetHPTConfig();
+            }
         }
 
-        internal static HPTConfig DeserializeOldHPTConfig(string fileName)
-        {
-            Stream stream = UnzipAndCreateStream(fileName);
-            XmlSerializer serializer = new XmlSerializer(typeof(HPTConfig));
-            XmlTextReader xtr = new XmlTextReader(stream);
-            HPTConfig hptConfig = (HPTConfig)serializer.Deserialize(xtr);
-            xtr.Close();
-            xtr = null;
-            return hptConfig;
-        }
+        //internal static HPTConfig DeserializeOldHPTConfig(string fileName)
+        //{
+        //    Stream stream = UnzipAndCreateStream(fileName);
+        //    XmlSerializer serializer = new XmlSerializer(typeof(HPTConfig));
+        //    XmlTextReader xtr = new XmlTextReader(stream);
+        //    HPTConfig hptConfig = (HPTConfig)serializer.Deserialize(xtr);
+        //    xtr.Close();
+        //    xtr = null;
+        //    return hptConfig;
+        //}
 
         internal static void SerializeHPTConfig(string fileName, HPTConfig hptConfig)
         {
-            //MemoryStream ms = new MemoryStream();
-            //var serializer = new XmlSerializer(typeof(HPTConfig));
-            //serializer.Serialize(ms, hptConfig);
-            //ms.Position = 0;
-            //ZipAndCreateFile(ms, fileName);
             SerializeHPTObject(typeof(HPTConfig), fileName, hptConfig);
         }
 
         internal static HPTMarkBet DeserializeHPTSystem(string fileName)
         {
-            Stream stream = UnzipAndCreateStream(fileName);
-            HPTMarkBet hmb = null;
-
-            string fileExtension = Path.GetExtension(fileName).Replace(".", string.Empty);
-            if (fileExtension == "hpt5")
-            {
-                var serializer = new DataContractSerializer(typeof(HPTMarkBet));
-                hmb = (HPTMarkBet)serializer.ReadObject(stream);
-            }
-            else if (fileExtension == "hpt4")
-            {
-                var serializer = new XmlSerializer(typeof(HPTMarkBet));
-                var xtr = new XmlTextReader(stream);
-                hmb = (HPTMarkBet)serializer.Deserialize(xtr);
-                xtr.Close();
-                xtr = null;
-            }
-
+            var hmb = (HPTMarkBet)DeserializeHPTObject(typeof(HPTMarkBet), fileName);
+            // var stream = File.OpenRead(fileName);
+            //
+            // var fileExtension = Path.GetExtension(fileName).Replace(".", string.Empty);
+            // if (fileExtension == "hpt7")
+            // {
+            //     var serializer = new DataContractSerializer(typeof(HPTMarkBet));
+            //     hmb = (HPTMarkBet)serializer.ReadObject(stream);
+            // }
             hmb.Config = HPTConfig.Config;
-
-            DateTime dt = DateTime.Now;
-            HPTServiceToHPTHelper.SetNonSerializedValues(hmb);
-            TimeSpan ts = DateTime.Now - dt;
-            string s = ts.TotalMilliseconds.ToString();
 
             return hmb;
         }
@@ -378,8 +125,7 @@ namespace HPTClient
 
             try
             {
-                ThreadPool.QueueUserWorkItem(new WaitCallback(HPTConfig.Config.UpdateHPTSystemDirectories), ThreadPriority.Normal);
-                //HPTConfig.Config.UpdateHPTSystemDirectories();
+                _ = Task.Run(() => HPTConfig.Config.UpdateHPTSystemDirectories());
             }
             catch (Exception exc)
             {
@@ -387,34 +133,132 @@ namespace HPTClient
             }
         }
 
-        internal static HPTCombBet DeserializeHPTCombinationSystem(string fileName)
+        internal static void SerializeHPTRaceDayInfoHistory(HPTMarkBet hmb)
         {
-            Stream stream = UnzipAndCreateStream(fileName);
-            HPTCombBet hcb = null;
-
-            string fileExtension = Path.GetExtension(fileName).Replace(".", string.Empty);
-            if (fileExtension == "hpt5")
+            if (hmb.RaceDayInfo.RaceDayDate.Date > DateTime.Today)
             {
-                var serializer = new DataContractSerializer(typeof(HPTCombBet));
-                hcb = (HPTCombBet)serializer.ReadObject(stream);
-            }
-            else if (fileExtension == "hpt4")
-            {
-                var serializer = new XmlSerializer(typeof(HPTCombBet));
-                var xtr = new XmlTextReader(stream);
-                hcb = (HPTCombBet)serializer.Deserialize(xtr);
-                xtr.Close();
-                xtr = null;
+                return;
             }
 
-            hcb.Config = HPTConfig.Config;
-            HPTServiceToHPTHelper.SetNonSerializedValues(hcb);
-            hcb.IsDeserializing = false;
-            hcb.RecalculateAllRanks();
-            hcb.RecalculateRank();
+            try
+            {
+                var raceDayInfoHistory = new HPTRaceDayInfoHistory()
+                {
+                    BetTypeCode = hmb.BetType.Code,
+                    RaceDayDate = hmb.RaceDayInfo.RaceDayDate,
+                    Timestamp = DateTime.Now,
+                    TrackId = hmb.RaceDayInfo.TrackId,
+                    TrackName = hmb.RaceDayInfo.Trackname,
+                    Turnover = hmb.RaceDayInfo.Turnover,
+                    RaceList = hmb.RaceDayInfo.RaceList.Select(r => new HPTRaceHistory()
+                    {
+                        LegNumber = r.LegNr,
+                        RaceNumber = r.RaceNr,
+                        AtgRaceId = r.AtgRaceId,
+                        HorseList = r.HorseList.Select(h => new HPTHorseHistory()
+                        {
+                            Name = h.HorseName,
+                            StartNumber = h.StartNr,
+                            ATGTrend = h.ATGTrend,
+                            StakeShare = h.StakeDistributionShare,
+                            VinnarOdds = h.VinnarOdds,
+                            PlatsOdds = h.MinPlatsOdds,
+                        })
+                    })
+                };
 
-            return hcb;
+                // var dirName = Path.GetDirectoryName(hmb.SaveDirectory);
+                var dirName = Path.Combine(hmb.SaveDirectory, "Historik");
+                if (!Directory.Exists(dirName))
+                {
+                    Directory.CreateDirectory(dirName);
+                }
+
+                var fileName = Path.Combine(dirName, $"{hmb.BetType.Code}_{DateTime.Now:yyyyMMddHHmmss}.xml");
+
+                SerializeHPTObject(typeof(HPTRaceDayInfoHistory), fileName, raceDayInfoHistory);
+            }
+            catch (Exception exc)
+            {
+                var s = exc.Message;
+            }
         }
+
+        internal static string SerializeHPTRaceDayInfoHistory(ATGGameBase game, string saveDirectory)
+        {
+            try
+            {
+                var raceDayInfoHistory = new HPTRaceDayInfoHistory()
+                {
+                    BetTypeCode = game.GameInfo.Code,
+                    RaceDayDate = game.GameInfo.ScheduledStartTime.Date,
+                    Timestamp = DateTime.Now,
+                    TrackId = game.GameInfo.BetTrack.TrackId,
+                    TrackName = game.GameInfo.BetTrack.TrackName,
+                    Turnover = game.Turnover,
+                    RaceList = game.Races.Select(r => new HPTRaceHistory()
+                    {
+                        LegNumber = (int)r.LegNumber,
+                        RaceNumber = r.Number,
+                        AtgRaceId = r.Id,
+                        HorseList = r.StartList.Select(s => new HPTHorseHistory()
+                        {
+                            Name = s.Horse.Name,
+                            StartNumber = s.Number,
+                            ATGTrend = (decimal)s.Trend,
+                            StakeShare = s.BetDistributionShare,
+                            VinnarOdds = s.VinnarOdds,
+                            PlatsOdds = s.PlatsOdds,
+                        })
+                    })
+                };
+
+                var dirName = Path.Combine(saveDirectory, "Historik");
+                if (!Directory.Exists(dirName))
+                {
+                    Directory.CreateDirectory(dirName);
+                }
+
+                var fileName = Path.Combine(dirName, $"{game.GameInfo.Code}_{DateTime.Now:yyyyMMddHHmmss}.xml");
+
+                SerializeHPTObject(typeof(HPTRaceDayInfoHistory), fileName, raceDayInfoHistory);
+                return fileName;
+            }
+            catch (Exception exc)
+            {
+                return string.Empty;
+            }
+        }
+
+        // TODO: Fixa kombinationsspel i framtiden...
+        //internal static HPTCombBet DeserializeHPTCombinationSystem(string fileName)
+        //{
+        //    Stream stream = UnzipAndCreateStream(fileName);
+        //    HPTCombBet hcb = null;
+
+        //    string fileExtension = Path.GetExtension(fileName).Replace(".", string.Empty);
+        //    if (fileExtension == "hpt5")
+        //    {
+        //        var serializer = new DataContractSerializer(typeof(HPTCombBet));
+        //        hcb = (HPTCombBet)serializer.ReadObject(stream);
+        //    }
+        //    else if (fileExtension == "hpt4")
+        //    {
+        //        var serializer = new XmlSerializer(typeof(HPTCombBet));
+        //        var xtr = new XmlTextReader(stream);
+        //        hcb = (HPTCombBet)serializer.Deserialize(xtr);
+        //        xtr.Close();
+        //        xtr = null;
+        //    }
+
+        //    hcb.Config = HPTConfig.Config;
+        //    HPTServiceToHPTHelper.SetNonSerializedValues(hcb);
+        //    hcb.IsDeserializing = false;
+        //    hcb.RecalculateAllRanks();
+        //    hcb.RecalculateRank();
+
+        //    return hcb;
+        //}
 
         internal static void SerializeHPTCombinationSystem(string fileName, HPTCombBet hcb)
         {
@@ -425,13 +269,14 @@ namespace HPTClient
         {
             try
             {
-                object o = DeserializeHPTObject(typeof(HPTCalendar), fileName);
+                var o = DeserializeHPTObject(typeof(HPTCalendar), fileName);
                 var hptCalendar = (HPTCalendar)o;
                 return hptCalendar;
             }
             catch (Exception)
             {
             }
+
             return new HPTCalendar();
         }
 
@@ -444,25 +289,23 @@ namespace HPTClient
         {
             try
             {
-                var stream = UnzipAndCreateStream(fileName);
+                var stream = File.OpenRead(fileName);
                 var serializer = new DataContractSerializer(typeof(HPTHorseOwnInformationCollection));
                 var response = serializer.ReadObject(stream);
                 var horseOwnInformationCollection = (HPTHorseOwnInformationCollection)response;
 
                 stream.Flush();
                 stream.Close();
-                stream = null;
 
                 return horseOwnInformationCollection;
             }
             catch (InvalidOperationException)
             {
-                var stream = UnzipAndCreateStream(fileName);
-                XmlSerializer serializer = new XmlSerializer(typeof(HPTHorseOwnInformationCollection));
-                XmlTextReader xtr = new XmlTextReader(stream);
+                var stream = File.OpenRead(fileName);
+                var serializer = new XmlSerializer(typeof(HPTHorseOwnInformationCollection));
+                var xtr = new XmlTextReader(stream);
                 var hptHorseOwnInformation = (HPTHorseOwnInformationCollection)serializer.Deserialize(xtr);
                 xtr.Close();
-                xtr = null;
                 return hptHorseOwnInformation;
             }
             catch (Exception)
@@ -471,68 +314,24 @@ namespace HPTClient
                 {
                     try
                     {
-                        File.Copy(fileName, fileName + ".OLD", true);
+                        File.Copy(fileName, $"{fileName}.OLD", true);
                     }
                     catch (Exception)
                     {
-
                     }
                 }
+
                 return new HPTHorseOwnInformationCollection()
                 {
-                    HorseOwnInformationList = new System.Collections.ObjectModel.ObservableCollection<HPTHorseOwnInformation>()
+                    HorseOwnInformationList = new ObservableCollection<HPTHorseOwnInformation>()
                 };
             }
         }
 
-        internal static HPTHorseOwnInformationCollection DeserializeHPTHorseOwnInformation(byte[] horseOwnInformationZip)
+        internal static void SerializeHPTHorseOwnInformation(string fileName,
+            HPTHorseOwnInformationCollection hptHorseOwnInformation)
         {
-            Stream stream = UnzipAndCreateStream(horseOwnInformationZip);
-            XmlSerializer serializer = new XmlSerializer(typeof(HPTHorseOwnInformationCollection));
-            XmlTextReader xtr = new XmlTextReader(stream);
-            var hptHorseOwnInformation = (HPTHorseOwnInformationCollection)serializer.Deserialize(xtr);
-            xtr.Close();
-            xtr = null;
-            return hptHorseOwnInformation;
-        }
-
-        internal static void SerializeHPTHorseOwnInformation(string fileName, HPTHorseOwnInformationCollection hptHorseOwnInformation)
-        {
-            //var fi = new FileInfo("");
-            //fi.Replace
             SerializeHPTObject(typeof(HPTHorseOwnInformationCollection), fileName, hptHorseOwnInformation);
-        }
-
-        //internal static void SerializeHPTHorseOwnInformation(string fileName, HPTHorseOwnInformation horseOwnInformation)
-        //{
-        //    try
-        //    {
-        //        var fs = new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Write);
-        //        var serializer = new DataContractSerializer(typeof(HPTHorseOwnInformation));
-        //        serializer.WriteObject(fs, horseOwnInformation);
-        //    }
-        //    catch (Exception)
-        //    {
-        //        throw;
-        //    }
-        //}
-
-        internal static byte[] SerializeHPTRaceDayInfoCommentCollection(HPTRaceDayInfoCommentCollection hptRaceDayInfoCommentCollection)
-        {
-            XmlSerializer serializer = new XmlSerializer(typeof(HPTRaceDayInfoCommentCollection));
-            var binaryZip = SerializeHPTObject(serializer, hptRaceDayInfoCommentCollection);
-            return binaryZip;
-        }
-
-        internal static HPTRaceDayInfoCommentCollection DeserializeHPTRaceDayInfoCommentCollection(byte[] raceDayInfoCommentCollection)
-        {
-            Stream stream = UnzipAndCreateStream(raceDayInfoCommentCollection);
-            XmlSerializer serializer = new XmlSerializer(typeof(HPTRaceDayInfoCommentCollection));
-            XmlTextReader xtr = new XmlTextReader(stream);
-            var hptRaceDayInfoCommentCollection = (HPTRaceDayInfoCommentCollection)serializer.Deserialize(xtr);
-            xtr.Close();
-            xtr = null;
-            return hptRaceDayInfoCommentCollection;
         }
 
         #endregion
@@ -541,42 +340,32 @@ namespace HPTClient
         {
             try
             {
-                string[] hptFiles = Directory.GetFiles(HPTConfig.MyDocumentsPath, "HPTCalendar.hptc");
+                var hptFiles = Directory.GetFiles(HPTConfig.MyDocumentsPath, "HPT7Calendar.xml");
                 if (hptFiles.Length > 0)
                 {
-                    HPTCalendar hptCalendar = DeserializeHPTCalendar(hptFiles[0]);
+                    var hptCalendar = DeserializeHPTCalendar(hptFiles[0]);
 
                     // Ta bort gamla tävlingar och sortera stigande efter datum
                     if (hptCalendar.RaceDayInfoList != null)
                     {
-                        IOrderedEnumerable<HPTRaceDayInfo> orderedRaceDayInfoList = hptCalendar.RaceDayInfoList
+                        var orderedRaceDayInfoList = hptCalendar.RaceDayInfoList
                             .Where(rdi => rdi.RaceDayDate > DateTime.Now.AddHours(-14))
                             .OrderBy(rdi => rdi.RaceDayDate);
 
-                        //// Ta bort de spelformer som inte ingår i gratisversionen
-                        //if (!HPTConfig.Config.IsPayingCustomer)
-                        //{
-                        //    foreach (var raceDayInfo in orderedRaceDayInfoList)
-                        //    {
-                        //        raceDayInfo.BetTypeList = raceDayInfo.BetTypeList
-                        //                .Where(bt => bt.Code == "V65" || bt.Code == "V75" || bt.Code == "V86" || bt.Code == "V64")
-                        //                .ToList();
-                        //    }
-                        //}
-
                         // Ta bara med de tävlingar där det finns spelbara spelformer
-                        IEnumerable<HPTRaceDayInfo> finalRaceDayInfoList = orderedRaceDayInfoList
+                        var finalRaceDayInfoList = orderedRaceDayInfoList
                             .Where(rdi => rdi.BetTypeList.Count > 0);
 
-                        hptCalendar.RaceDayInfoList = new System.Collections.ObjectModel.ObservableCollection<HPTRaceDayInfo>(finalRaceDayInfoList);
+                        hptCalendar.RaceDayInfoList = new ObservableCollection<HPTRaceDayInfo>(finalRaceDayInfoList);
 
                         hptCalendar.FromDate = DateTime.Now;
-                        hptCalendar.FromDateString = hptCalendar.FromDate.ToString("yyyy-MM-dd");
+                        //hptCalendar.FromDateString = hptCalendar.FromDate.ToString("yyyy-MM-dd");
                         if (hptCalendar.RaceDayInfoList.Count == 0)
                         {
                             return null;
                         }
                     }
+
                     return hptCalendar;
                 }
             }
@@ -584,17 +373,106 @@ namespace HPTClient
             {
                 HPTConfig.AddToErrorLogStatic(exc);
             }
+
             return null;
         }
+
+        #region Trendsiffor
+
+        public static List<(string FileName, DateTime Timestamp)> GetTrendsFromDisk(HPTMarkBet markBet)
+        {
+            var historyDir = Path.Combine(markBet.SaveDirectory, "Historik");
+            var trendFiles = new List<(string FileName, DateTime Timestamp)>();
+            if (!Directory.Exists(historyDir))
+            {
+                Directory.CreateDirectory(historyDir);
+                return trendFiles;
+            }
+
+            if (markBet.RaceDayInfo.Turnover == 0)
+            {
+                return trendFiles;
+            }
+
+            var rexTimestampFromFileName = new Regex($@"{markBet.BetType.Code}_(\d{{14}})");
+
+            Directory.GetFiles(historyDir, $"{markBet.BetType.Code}*.xml")
+                .ToList()
+                .ForEach(f =>
+                {
+                    if (rexTimestampFromFileName.IsMatch(f))
+                    {
+                        var fileTimeStamp = DateTime.ParseExact(rexTimestampFromFileName.Match(f).Groups[1].Value,
+                            "yyyyMMddHHmmss", null);
+                        // TODO: ShortTrend ska åtminstone vara en stund (30 minuter?) gammal
+                        if (fileTimeStamp.Date == markBet.RaceDayInfo.RaceDayDate.Date)
+                        {
+                            trendFiles.Add(new(f, fileTimeStamp));
+                        }
+                    }
+                });
+
+            if (trendFiles.Any())
+            {
+                var shortDiff = 0.667M;
+                var longDiff = 0.333M;
+
+                var allRaceDayInfoHistory = trendFiles
+                    .Select(tf =>
+                        (HPTRaceDayInfoHistory)DeserializeHPTObject(typeof(HPTRaceDayInfoHistory), tf.FileName))
+                    .Where(h => h != null);
+                var raceDayInfoHistoryLongTrend = allRaceDayInfoHistory
+                    .OrderBy(rdi => Math.Abs(rdi.Turnover / markBet.RaceDayInfo.Turnover - longDiff))
+                    .First();
+
+                var raceDayInfoHistoryShortTrend = allRaceDayInfoHistory
+                    .OrderBy(rdi => Math.Abs(rdi.Turnover / markBet.RaceDayInfo.Turnover - shortDiff))
+                    .First();
+
+                markBet.RaceDayInfo.RaceList.ToList().ForEach(r =>
+                {
+                    var raceLong = raceDayInfoHistoryLongTrend.RaceList.First(rl => rl.AtgRaceId == r.AtgRaceId);
+                    var raceShort = raceDayInfoHistoryShortTrend.RaceList.First(rs => rs.AtgRaceId == r.AtgRaceId);
+                    r.HorseList.ToList().ForEach(h =>
+                    {
+                        var horseLong = raceLong.HorseList.First(hl => hl.StartNumber == h.StartNr);
+                        var horseShort = raceShort.HorseList.First(hl => hl.StartNumber == h.StartNr);
+
+                        h.LongTrend = h.StakeDistributionShare / horseLong.StakeShare - 1M;
+                        h.ShortTrend = h.StakeDistributionShare / horseShort.StakeShare - 1M;
+                    });
+                    r.CalculateDynamicGameValues();
+                });
+                
+                // markBet.RaceDayInfo.RaceList.ToList().ForEach(r =>
+                // {
+                //     var raceLong = raceDayInfoHistoryLongTrend.RaceList.First(rl => rl.RaceNumber == r.RaceNr);
+                //     var raceShort = raceDayInfoHistoryShortTrend.RaceList.First(rs => rs.RaceNumber == r.RaceNr);
+                //     r.HorseList.ToList().ForEach(h =>
+                //     {
+                //         var horseLong = raceLong.HorseList.First(hl => hl.StartNumber == h.StartNr);
+                //         var horseShort = raceShort.HorseList.First(hl => hl.StartNumber == h.StartNr);
+                //
+                //         h.LongTrend = h.StakeDistributionShare / horseLong.StakeShare - 1M;
+                //         h.ShortTrend = h.StakeDistributionShare / horseShort.StakeShare - 1M;
+                //     });
+                //     r.CalculateDynamicGameValues();
+                // });
+            }
+
+            return trendFiles;
+        }
+
+        #endregion
 
         #region Rankvariabelmallar
 
         internal static HPTTemplateCollection DeserializeHPTTemplateCollection(string fileName)
         {
-            Stream stream = UnzipAndCreateStream(fileName);
+            Stream stream = File.OpenRead(fileName);
             HPTTemplateCollection templateCollection = null;
 
-            string fileExtension = Path.GetExtension(fileName).Replace(".", string.Empty);
+            var fileExtension = Path.GetExtension(fileName).Replace(".", string.Empty);
             if (fileExtension == "hpt5m")
             {
                 var serializer = new DataContractSerializer(typeof(HPTTemplateCollection));
@@ -608,25 +486,25 @@ namespace HPTClient
                 xtr.Close();
                 xtr = null;
             }
+
             return templateCollection;
         }
 
-        internal static HPTTemplateCollection DeserializeHPTTemplateCollection(byte[] templateCollectionZip)
-        {
-            Stream stream = UnzipAndCreateStream(templateCollectionZip);
-            XmlSerializer serializer = new XmlSerializer(typeof(HPTTemplateCollection));
-            XmlTextReader xtr = new XmlTextReader(stream);
-            var hptTemplateCollection = (HPTTemplateCollection)serializer.Deserialize(xtr);
-            xtr.Close();
-            xtr = null;
-            return hptTemplateCollection;
-        }
+        //internal static HPTTemplateCollection DeserializeHPTTemplateCollection(byte[] templateCollectionZip)
+        //{
+        //    Stream stream = UnzipAndCreateStream(templateCollectionZip);
+        //    XmlSerializer serializer = new XmlSerializer(typeof(HPTTemplateCollection));
+        //    XmlTextReader xtr = new XmlTextReader(stream);
+        //    var hptTemplateCollection = (HPTTemplateCollection)serializer.Deserialize(xtr);
+        //    xtr.Close();
+        //    xtr = null;
+        //    return hptTemplateCollection;
+        //}
 
-        internal static void SerializeHPTTemplateCollection(string fileName, HPTTemplateCollection hptTemplateCollection)
+        internal static void SerializeHPTTemplateCollection(string fileName,
+            HPTTemplateCollection hptTemplateCollection)
         {
             SerializeHPTObject(typeof(HPTTemplateCollection), fileName, hptTemplateCollection);
-            //XmlSerializer serializer = new XmlSerializer(typeof(HPTTemplateCollection));
-            //SerializeHPTObject(typeof(HPTTemplateCollection), fileName, hptTemplateCollection);
         }
 
         internal static object CreateDeepCopy(object o)
@@ -651,19 +529,21 @@ namespace HPTClient
             try
             {
                 var serializer = new DataContractSerializer(typeof(ObservableCollection<HPTResultAnalyzer>));
-                var stream = UnzipAndCreateStream(fileName);
+                var stream = File.OpenRead(fileName);
                 var response = serializer.ReadObject(stream);
                 var resultAnalyzerList = (ObservableCollection<HPTResultAnalyzer>)response;
                 return resultAnalyzerList;
             }
             catch (Exception exc)
             {
-                string s = exc.Message;
+                var s = exc.Message;
             }
+
             return null;
         }
 
-        internal static void SerializeHPTResultAnalyzerList(string fileName, ObservableCollection<HPTResultAnalyzer> resultAnalyzerList)
+        internal static void SerializeHPTResultAnalyzerList(string fileName,
+            ObservableCollection<HPTResultAnalyzer> resultAnalyzerList)
         {
             SerializeHPTObject(typeof(ObservableCollection<HPTResultAnalyzer>), fileName, resultAnalyzerList);
         }
@@ -679,7 +559,7 @@ namespace HPTClient
             jsonSerializer.WriteObject(ms, o);
             ms.Position = 0;
             var sr = new StreamReader(ms);
-            string jsonString = sr.ReadToEnd();
+            var jsonString = sr.ReadToEnd();
             return jsonString;
         }
 
@@ -695,11 +575,43 @@ namespace HPTClient
             sw.Write(json);
             sw.Flush();
             ms.Position = 0;
-            object o = jsonSerializer.ReadObject(ms);
+            var o = jsonSerializer.ReadObject(ms);
 
             return o;
         }
 
         #endregion
+    }
+
+    /// <summary>
+    /// Extension methods for HPT serialization.
+    /// </summary>
+    public static class HPTSerializerExtensions
+    {
+        /// <summary>
+        /// Deserializes the JSON file at <paramref name="fileName"/> into an object of type <typeparamref name="T"/>.
+        /// </summary>
+        /// <typeparam name="T">The type of object to deserialize into.</typeparam>
+        /// <param name="_">Unused receiver. Pass <c>default(T)</c>, e.g. <c>default(HPTConfig)</c>.</param>
+        /// <param name="fileName">Path to the JSON file to deserialize.</param>
+        /// <returns>The deserialized object, or <c>null</c> if deserialization failed.</returns>
+        /// <example>
+        /// <code>
+        /// var hptConfig = default(HPTConfig).DeserializeHPTObjectJson("config.json");
+        /// var hptMarkBet = default(HPTMarkBet).DeserializeHPTObjectJson("system.json");
+        /// </code>
+        /// </example>
+        public static T? DeserializeHPTObjectJson<T>(this T _, string fileName)
+        {
+            try
+            {
+                return JsonSerializer.Deserialize<T>(File.ReadAllText(fileName));
+            }
+            catch (Exception exc)
+            {
+                HPTConfig.AddToErrorLogStatic(exc);
+                return default;
+            }
+        }
     }
 }

@@ -796,7 +796,7 @@ namespace HPTClient
                 {
                     HPTConfig.AddToErrorLogStatic(exc);
                 }
-            } 
+            }
 
             hptRdi = new HPTRaceDayInfo()
             {

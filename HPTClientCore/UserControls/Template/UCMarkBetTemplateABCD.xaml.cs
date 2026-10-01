@@ -28,7 +28,7 @@ namespace HPTClient
         {
             var newTemplate = new HPTMarkBetTemplateABCD();
             newTemplate.InitializeTemplate(new HPTPrio[] { HPTPrio.A, HPTPrio.B, HPTPrio.C });
-            this.Config.MarkBetTemplateABCDList.Add(newTemplate);
+            Config.MarkBetTemplateABCDList.Add(newTemplate);
         }
 
         //private void btnClear_Click(object sender, RoutedEventArgs e)
@@ -42,7 +42,7 @@ namespace HPTClient
         {
             var btn = (Button)sender;
             var markBetTemplate = (HPTMarkBetTemplateABCD)btn.DataContext;
-            this.Config.MarkBetTemplateABCDList.Remove(markBetTemplate);
+            Config.MarkBetTemplateABCDList.Remove(markBetTemplate);
         }
     }
 }

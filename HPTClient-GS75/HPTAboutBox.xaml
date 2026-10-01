@@ -40,7 +40,7 @@
                 
                 <Button x:Name="btnClose" Content="Stäng" TextBlock.FontWeight="Black"  Margin="5" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Click="btnClose_Click" HorizontalAlignment="Right" Width="50" Height="25"/>
 
-                <TextBlock Text="Version 5.33" Grid.Row="3" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Text="Version 7.0-preview-1" Grid.Row="3" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
                 <TextBlock Name="tbATGInfo" FontStyle="Italic"
                            Text="All information i Hjälp på traven tillhandahålls enligt samarbetsavtal med ATG. Samtliga rättigheter i materialet (upphovsrätt och databasrätt) tillhör ATG och får användas av annan endast efter avtal med ATG." 
@@ -50,11 +50,11 @@
                            Text="Hjälp på traven delar ATGs grundläggande inställning till spelansvarsfrågor som den framgår på" 
                            Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkBlue" FontSize="13" TextWrapping="Wrap" />-->
 
-                <TextBlock Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Margin="2" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <Hyperlink x:Name="hlATGSpelAnsvar" NavigateUri="https://www.atg.se/spelansvar/om-spelansvar" Click="hlATGSpelAnsvar_Click">
-                        <TextBlock Text="Hjälp på traven delar ATGs grundläggande inställning till spelansvarsfrågor som den framgår på atg.se/spelansvar/om-spelansvar" FontSize="13" TextWrapping="Wrap" FontStyle="Italic"/>
-                    </Hyperlink>
-                </TextBlock>
+                <!-- <TextBlock Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Margin="2" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center"> -->
+                <!--     <Hyperlink x:Name="hlATGSpelAnsvar" NavigateUri="https://www.atg.se/spelansvar/om-spelansvar" Click="hlATGSpelAnsvar_Click"> -->
+                <!--         <TextBlock Text="Hjälp på traven delar ATGs grundläggande inställning till spelansvarsfrågor som den framgår på atg.se/spelansvar/om-spelansvar" FontSize="13" TextWrapping="Wrap" FontStyle="Italic"/> -->
+                <!--     </Hyperlink> -->
+                <!-- </TextBlock> -->
 
             </Grid>
         </Border>

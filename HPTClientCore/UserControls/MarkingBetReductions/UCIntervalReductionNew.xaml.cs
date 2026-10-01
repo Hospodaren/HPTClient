@@ -19,19 +19,19 @@ namespace HPTClient
             var rule = (HPTIntervalReductionRule)iud.DataContext;
             if (rule.Use)
             {
-                this.MarkBet.RecalculateReduction(RecalculateReason.All);
+                MarkBet.RecalculateReduction(RecalculateReason.All);
             }
         }
 
         private void lvwIntervalReduction_Checked(object sender, RoutedEventArgs e)
         {
-            this.MarkBet.RecalculateReduction(RecalculateReason.All);
+            MarkBet.RecalculateReduction(RecalculateReason.All);
         }
 
-        private bool loaded = false;
-        private void UCMarkBetControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            //this.loaded = true;
-        }
+        // private bool loaded = false;
+        // private void UCMarkBetControl_Loaded(object sender, RoutedEventArgs e)
+        // {
+        //     //this.loaded = true;
+        // }
     }
 }

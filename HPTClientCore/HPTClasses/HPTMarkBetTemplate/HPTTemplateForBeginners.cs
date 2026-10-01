@@ -1,64 +1,46 @@
-﻿using System.Collections.Generic;
-
-namespace HPTClient
+﻿namespace HPTClient
 {
     public class HPTTemplateForBeginners : Notifier
     {
         public List<HPTHorseRankVariable> HorseRankVariableList { get; set; }
 
-        private int stake;
         public int Stake
         {
-            get
-            {
-                return this.stake;
-            }
+            get;
             set
             {
-                this.stake = value;
-                OnPropertyChanged("Stake");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private int numberOfSpikes;
         public int NumberOfSpikes
         {
-            get
-            {
-                return this.numberOfSpikes;
-            }
+            get;
             set
             {
-                this.numberOfSpikes = value;
-                OnPropertyChanged("NumberOfSpikes");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private HPTReductionRisk reductionRisk;
         public HPTReductionRisk ReductionRisk
         {
-            get
-            {
-                return this.reductionRisk;
-            }
+            get;
             set
             {
-                this.reductionRisk = value;
-                OnPropertyChanged("ReductionRisk");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private HPTDesiredProfit desiredProfit;
         public HPTDesiredProfit DesiredProfit
         {
-            get
-            {
-                return this.desiredProfit;
-            }
+            get;
             set
             {
-                this.desiredProfit = value;
-                OnPropertyChanged("DesiredProfit");
+                field = value;
+                OnPropertyChanged();
             }
         }
     }

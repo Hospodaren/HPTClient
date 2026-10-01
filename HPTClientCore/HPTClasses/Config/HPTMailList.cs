@@ -7,48 +7,36 @@ namespace HPTClient
     [DataContract]
     public class HPTMailList : Notifier
     {
-        private string name;
         [DataMember]
         public string Name
         {
-            get
-            {
-                return this.name;
-            }
+            get;
             set
             {
-                this.name = value;
-                OnPropertyChanged("Name");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private ObservableCollection<HPTMailRecipient> recipientList;
         [DataMember]
         public ObservableCollection<HPTMailRecipient> RecipientList
         {
-            get
-            {
-                return this.recipientList;
-            }
+            get;
             set
             {
-                this.recipientList = value;
-                OnPropertyChanged("RecipientList");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool expanded;
         [XmlIgnore]
         public bool Expanded
         {
-            get
-            {
-                return this.expanded;
-            }
+            get;
             set
             {
-                this.expanded = value;
-                OnPropertyChanged("Expanded");
+                field = value;
+                OnPropertyChanged();
             }
         }
     }

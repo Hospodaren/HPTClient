@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -27,10 +26,10 @@ namespace HPTClient
 
         private void btnNewHorseRankReductionTemplate_Click(object sender, RoutedEventArgs e)
         {
-            this.Config.RankSumReductionRuleCollection.Add(new HPTHorseRankSumReductionRuleCollection()
+            Config.RankSumReductionRuleCollection.Add(new HPTHorseRankSumReductionRuleCollection()
             {
                 TypeCategory = BetTypeCategory.V75,
-                Name = "Ny rankreduceringsmall " + DateTime.Now.ToString("yyyy-MM-dd") + " " + DateTime.Now.ToShortTimeString(),
+                Name = $"Ny rankreduceringsmall {DateTime.Now:yyyy-MM-dd} {DateTime.Now.ToShortTimeString()}",
                 RankSumReductionRuleList = new ObservableCollection<HPTHorseRankSumReductionRule>()
             });
         }

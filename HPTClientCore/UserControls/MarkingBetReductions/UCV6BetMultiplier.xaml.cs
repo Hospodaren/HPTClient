@@ -16,13 +16,13 @@ namespace HPTClient
         private void btnNewRule_Click(object sender, RoutedEventArgs e)
         {
             ruleNumber++;
-            this.MarkBet.V6BetMultiplierRuleList.Add(new HPTV6BetMultiplierRule(this.MarkBet, ruleNumber));
+            MarkBet.V6BetMultiplierRuleList.Add(new HPTV6BetMultiplierRule(MarkBet, ruleNumber));
         }
 
         private void btnRemoveAll_Click(object sender, RoutedEventArgs e)
         {
-            this.MarkBet.V6BetMultiplierRuleList.Clear();
-            this.MarkBet.UpdateV6BetMultiplierSingleRows();
+            MarkBet.V6BetMultiplierRuleList.Clear();
+            MarkBet.UpdateV6BetMultiplierSingleRows();
             //this.MarkBet.SetV6BetMultiplierSingleRows();
         }
 

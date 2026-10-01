@@ -5,60 +5,48 @@ namespace HPTClient
     [DataContract]
     class HPTNumberOfRules : Notifier
     {
-        private int numberOfRules;
         [DataMember]
         public int NumberOfRules
         {
-            get
-            {
-                return this.numberOfRules;
-            }
+            get;
             set
             {
-                this.numberOfRules = value;
-                OnPropertyChanged("NumberOfRules");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool selected;
         [DataMember]
         public bool Selected
         {
-            get
-            {
-                return this.selected;
-            }
+            get;
             set
             {
-                if (this.selected == value)
+                if (field == value)
                 {
                     return;
                 }
-                this.selected = value;
-                OnPropertyChanged("Selected");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
-        private bool selectable;
         [DataMember]
         public bool Selectable
         {
-            get
-            {
-                return this.selectable;
-            }
+            get;
             set
             {
-                if (!value && this.Selected)
+                if (!value && Selected)
                 {
-                    this.Selected = false;
+                    Selected = false;
                 }
-                if (this.selectable == value)
+                if (field == value)
                 {
                     return;
                 }
-                this.selectable = value;
-                OnPropertyChanged("Selectable");
+                field = value;
+                OnPropertyChanged();
             }
         }
     }

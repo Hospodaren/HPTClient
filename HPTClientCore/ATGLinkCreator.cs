@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Text.RegularExpressions;
 
 namespace HPTClient
 {
@@ -27,54 +27,50 @@ namespace HPTClient
         // Resultat:   https://www.atg.se/spel/2015-09-24/vp/hagmyren/lopp1/resultat
         internal static string CreateRaceStartlistLink(HPTRace race)
         {
-            string result = ATGBaseUrl +
-                race.ParentRaceDayInfo.RaceDayDateString +
-                "/vp/" +
-                CreateTrackNameForUrl(race) +
-                "/lopp" +
-                race.RaceNr.ToString();
+            var result =
+                $"{ATGBaseUrl}{race.ParentRaceDayInfo.RaceDayDateString}/vp/{CreateTrackNameForUrl(race)}/lopp{race.RaceNr}";
 
             return result;
         }
 
         internal static string CreateRaceStartlistLink(int trackId, DateTime startDate, int raceNumber)
         {
-            string result = ATGBaseUrl +
-                startDate.ToString("yyyy-MM-dd") +
-                "/vp/" +
-                EnumHelper.GetTrackNameATGSEFromId(trackId) +
-                "/lopp" +
-                raceNumber.ToString();
+            var result =
+                $"{ATGBaseUrl}{startDate:yyyy-MM-dd}/vp/{EnumHelper.GetTrackNameATGSEFromId(trackId)}/lopp{raceNumber}";
 
             return result;
         }
 
-        internal static string CreateRaceResultLink(HPTRace race)
-        {
-            string result = CreateRaceStartlistLink(race) +
-                "/resultat";
-
-            race.ATGResultLink = result;
-
-            return result;
-        }
+        // internal static string CreateRaceResultLink(HPTRace race)
+        // {
+        //     string result = CreateRaceStartlistLink(race) +
+        //         "/resultat";
+        //
+        //     race.ATGResultLink = result;
+        //
+        //     return result;
+        // }
 
         internal static string CreateRaceResultLink(HPTHorseResult horseResult)
         {
-            string result = ATGBaseUrl +
-                horseResult.Date.ToString("yyyy-MM-dd") +
-                "/vp/" +
-                EnumHelper.GetTrackNameATGSEFromShortString(horseResult.TrackCode) +
-                "/lopp" +
-                horseResult.RaceNr.ToString() +
-                "/resultat";
+            if (horseResult.ATGId is null)
+            {
+                return string.Empty;
+            }
+            // TODO: https://www.atg.se/spel/2026-01-03/vinnare/jagersro/lopp/8/resultat
+            // 2025-08-30_18_2
 
-            return result;
-        }
+            var rexRaceParts = new Regex(@"(\d{4}-\d{2}-\d{2})_(\d{1,2})_(\d{1,2})", RegexOptions.IgnoreCase);
+            var result = rexRaceParts.Match(horseResult.ATGId);
+            var trackId = int.Parse(result.Groups[2].Value);
+            var trackName = EnumHelper.GetTrackNameForResultLinkFromTrackId(trackId);
+            
+            return $"{ATGBaseUrl}{result.Groups[1].Value}/vinnare/{trackName}/lopp/{result.Groups[2].Value}/resultat" ;
+        } 
 
         internal static string CreateTrackNameForUrl(HPTRace race)
         {
-            string trackName = race.ParentRaceDayInfo.Trackname.ToLower();
+            var trackName = race.ParentRaceDayInfo.Trackname.ToLower();
             if (race.TrackName != null)
             {
                 trackName = race.TrackName.ToLower();
@@ -99,17 +95,17 @@ namespace HPTClient
         //}
 
         // https://www.atg.se/video/archive/22321221281/vinnare_2015-10-26_15_7
-        internal static string CreateRaceVideoLink(HPTHorseResult horseResult)
-        {
-            string result = ATGBaseUrl +
-                horseResult.Date.ToString("yyyy-MM-dd") +
-                "/vp/" +
-                EnumHelper.GetTrackNameATGSEFromShortString(horseResult.TrackCode) +
-                "/lopp" +
-                horseResult.RaceNr.ToString() +
-                "/resultat";
-
-            return result;
-        }
+        // internal static string CreateRaceVideoLink(HPTHorseResult horseResult)
+        // {
+        //     string result = ATGBaseUrl +
+        //         horseResult.Date.ToString("yyyy-MM-dd") +
+        //         "/vp/" +
+        //         EnumHelper.GetTrackNameATGSEFromShortString(horseResult.TrackCode) +
+        //         "/lopp" +
+        //         horseResult.RaceNr.ToString() +
+        //         "/resultat";
+        //
+        //     return result;
+        // }
     }
 }

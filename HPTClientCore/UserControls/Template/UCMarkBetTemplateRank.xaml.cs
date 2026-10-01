@@ -27,14 +27,14 @@ namespace HPTClient
         private void btnNewTemplate_Click(object sender, RoutedEventArgs e)
         {
             var newTemplate = new HPTMarkBetTemplateRank();
-            this.Config.MarkBetTemplateRankList.Add(newTemplate);
+            Config.MarkBetTemplateRankList.Add(newTemplate);
         }
 
         private void btnRemove_Click(object sender, RoutedEventArgs e)
         {
             var btn = (Button)sender;
             var markBetTemplate = (HPTMarkBetTemplateRank)btn.DataContext;
-            this.Config.MarkBetTemplateRankList.Remove(markBetTemplate);
+            Config.MarkBetTemplateRankList.Remove(markBetTemplate);
         }
     }
 }

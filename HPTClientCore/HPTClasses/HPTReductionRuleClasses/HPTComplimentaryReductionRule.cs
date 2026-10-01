@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Xml.Serialization;
@@ -12,42 +10,38 @@ namespace HPTClient
     {
         public HPTComplementaryReductionRule()
         {
-            this.horseList = new ObservableCollection<HPTHorse>();
+            horseList = new ObservableCollection<HPTHorse>();
         }
 
         public HPTComplementaryReductionRule(int numberOfRaces, bool use)
         {
-            this.horseList = new ObservableCollection<HPTHorse>();
-            this.Use = use;
-            this.NumberOfRaces = numberOfRaces;
+            horseList = new ObservableCollection<HPTHorse>();
+            Use = use;
+            NumberOfRaces = numberOfRaces;
 
-            this.NumberOfWinnersList = new ObservableCollection<HPTNumberOfWinners>();
-            for (int i = 0; i <= numberOfRaces; i++)
-            {
-                HPTNumberOfWinners now = new HPTNumberOfWinners();
-                now.NumberOfWinners = i;
-                this.NumberOfWinnersList.Add(now);
-            }
-            this.NumberOfWinnersList.First(now => now.NumberOfWinners == 0).Selectable = true;
+            var nowList = Enumerable.Range(0, numberOfRaces + 1)
+                .Select(i => new HPTNumberOfWinners{ NumberOfWinners = i, Selectable = i == 0});
+            NumberOfWinnersList = new ObservableCollection<HPTNumberOfWinners>(nowList);            
+            NumberOfWinnersList.First(now => now.NumberOfWinners == 0).Selectable = true;   // TODO: Fult!
         }
 
         public override bool IncludeRow(HPTMarkBet markBet, HPTHorse[] horseList, int numberOfRacesToTest)
         {
-            if (this.HighestLegNumber > numberOfRacesToTest || this.LowestLegNumber > numberOfRacesToTest || !this.Use)
+            if (HighestLegNumber > numberOfRacesToTest || LowestLegNumber > numberOfRacesToTest || !Use)
             {
                 return true;
             }
 
-            int numberOfHorses = horseList
+            var numberOfHorses = horseList
                 .Take(numberOfRacesToTest)
-                .Intersect(this.HorseList)
+                .Intersect(HorseList)
                 .Count();
 
-            if (numberOfHorses > this.MaxNumberOfX) // Maxantalet har redan överskridits innan alla lopp kontrollerats
+            if (numberOfHorses > MaxNumberOfX) // Maxantalet har redan överskridits innan alla lopp kontrollerats
             {
                 return false;
             }
-            if (numberOfHorses + markBet.BetType.NumberOfRaces - numberOfRacesToTest < this.MinNumberOfX)   // Det går inte att komma upp i minimiantalet med kvarvarande lopp
+            if (numberOfHorses + markBet.BetType.NumberOfRaces - numberOfRacesToTest < MinNumberOfX)   // Det går inte att komma upp i minimiantalet med kvarvarande lopp
             {
                 return false;
             }
@@ -57,10 +51,10 @@ namespace HPTClient
         public override void Reset()
         {
             base.Reset();
-            if (this.HorseList.Any())
+            if (HorseList.Any())
             {
-                this.LowestLegNumber = this.HorseList.Min(h => h.ParentRace.LegNr);
-                this.HighestLegNumber = this.HorseList.Max(h => h.ParentRace.LegNr);
+                LowestLegNumber = HorseList.Min(h => h.ParentRace.LegNr);
+                HighestLegNumber = HorseList.Max(h => h.ParentRace.LegNr);
             }
         }
 
@@ -72,17 +66,17 @@ namespace HPTClient
 
         public void UpdateSelectable()
         {
-            this.NumberOfSelected = 0;
-            int[] raceNumbers = new int[this.HorseList.Count];
-            for (int i = 0; i < this.HorseList.Count; i++)
+            NumberOfSelected = 0;
+            var raceNumbers = new int[HorseList.Count];
+            for (var i = 0; i < HorseList.Count; i++)
             {
                 //raceNumbers[i] = this.HorseList[i].ParentRace.LegNr;
-                raceNumbers[i] = this.HorseList.ElementAt(i).ParentRace.LegNr;
+                raceNumbers[i] = HorseList.ElementAt(i).ParentRace.LegNr;
             }
-            int antal = raceNumbers.Distinct().Count();
-            for (int i = 0; i <= this.NumberOfRaces; i++)
+            var antal = raceNumbers.Distinct().Count();
+            for (var i = 0; i <= NumberOfRaces; i++)
             {
-                HPTNumberOfWinners hptNow = this.NumberOfWinnersList.First(now => now.NumberOfWinners == i);
+                var hptNow = NumberOfWinnersList.First(now => now.NumberOfWinners == i);
                 if (hptNow.NumberOfWinners > antal)
                 {
                     hptNow.Selectable = false;
@@ -91,15 +85,15 @@ namespace HPTClient
                 else
                 {
                     hptNow.Selectable = true;
-                    this.NumberOfSelected += hptNow.Selected ? 1 : 0;
+                    NumberOfSelected += hptNow.Selected ? 1 : 0;
                 }
             }
         }
 
         public override bool IncludeRow(HPTMarkBet markBet, HPTMarkBetSingleRow singleRow)
         {
-            int numberOfHorses = this.HorseList.Intersect(singleRow.HorseList).Count();
-            return this.NumberOfWinnersList.First(now => now.NumberOfWinners == numberOfHorses).Selected;
+            var numberOfHorses = HorseList.Intersect(singleRow.HorseList).Count();
+            return NumberOfWinnersList.First(now => now.NumberOfWinners == numberOfHorses).Selected;
         }
 
         public override bool GetRuleResultForCorrectRow(HPTMarkBet markBet)
@@ -107,11 +101,11 @@ namespace HPTClient
             // Skapa dictionary för att kontrollera hur många vinstrader villkoret skulle gett
             if (markBet.RaceDayInfo.ResultComplete)
             {
-                int numberOfXHorses = markBet.CouponCorrector.HorseList
-                    .Intersect(this.HorseList)
+                var numberOfXHorses = markBet.CouponCorrector.HorseList
+                    .Intersect(HorseList)
                     .Count();
 
-                this.RuleResultForCorrectRow = numberOfXHorses.ToString() + " U-Häst(ar)";
+                RuleResultForCorrectRow = $"{numberOfXHorses} U-Häst(ar)";
             }
             return true;
         }
@@ -127,18 +121,14 @@ namespace HPTClient
         //    this.ShortDescription = sb.ToString();
         //}
 
-        private string shortDescription;
         [DataMember]
         public string ShortDescription
         {
-            get
-            {
-                return shortDescription;
-            }
+            get;
             set
             {
-                shortDescription = value;
-                OnPropertyChanged("ShortDescription");
+                field = value;
+                OnPropertyChanged();
             }
         }
 
@@ -148,12 +138,12 @@ namespace HPTClient
         {
             get
             {
-                return this.horseList;
+                return horseList;
             }
             set
             {
-                this.horseList = value;
-                OnPropertyChanged("HorseList");
+                horseList = value;
+                OnPropertyChanged();
             }
         }
 
@@ -164,7 +154,7 @@ namespace HPTClient
         {
             get
             {
-                return "Utgång: " + this.NumberOfWinnersString + " vinnare";
+                return $"Utgång: {NumberOfWinnersString} vinnare";
             }
         }
 
@@ -173,7 +163,7 @@ namespace HPTClient
             // Create String representation
             var sb = new StringBuilder();
 
-            foreach (HPTHorse horse in this.HorseList.OrderBy(h => h.ParentRace.LegNr).ThenBy(h => h.StartNr))
+            foreach (var horse in HorseList.OrderBy(h => h.ParentRace.LegNr).ThenBy(h => h.StartNr))
             {
                 sb.Append(horse.ParentRace.LegNrString);
                 sb.Append(": ");
@@ -181,7 +171,7 @@ namespace HPTClient
                 sb.Append(" - ");
                 sb.AppendLine(horse.HorseName);
             }
-            this.ClipboardString = this.ReductionTypeString + "\r\n" + sb.ToString();
+            ClipboardString = $"{ReductionTypeString}\r\n{sb}";
             return sb.ToString();
         }
     }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
 namespace HPTClient
 {
@@ -15,18 +14,14 @@ namespace HPTClient
         [DataMember]
         public decimal Percentage { get; set; }
 
-        private bool _IsSelected;
         [DataMember]
         public bool IsSelected
         {
-            get
-            {
-                return _IsSelected;
-            }
+            get;
             set
             {
-                this._IsSelected = value;
-                OnPropertyChanged("IsSelected");
+                field = value;
+                OnPropertyChanged();
             }
         }
     }
