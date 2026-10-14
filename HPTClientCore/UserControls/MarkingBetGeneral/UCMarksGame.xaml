@@ -107,6 +107,7 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
                     <!--Systeminformation-->
@@ -425,6 +426,49 @@
 
                     </GroupBox>
 
+                    <GroupBox x:Name="gbFavourites" Background="{StaticResource BackgroundBrush}" Grid.Column="4"
+                              Grid.Row="0" Grid.RowSpan="2" HeaderTemplate="{StaticResource GroupBoxHeaderTemplate}" Header="Favoriter" 
+                              HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="Black">
+                        
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <!-- <RowDefinition Height="Auto"/> -->
+                                <!-- <RowDefinition Height="Auto"/> -->
+                                <!-- <RowDefinition Height="Auto"/> -->
+                                <!-- <RowDefinition Height="Auto"/> -->
+                                <!-- <RowDefinition Height="Auto"/> -->
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="320"/>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="100"/>
+                            </Grid.ColumnDefinitions>
+                            <CheckBox x:Name="chkV6SingleRows" IsChecked="{Binding Path=MarkBet.V6SingleRows}" Margin="2" Visibility="{Binding Path=MarkBet.V6Visibility}" Grid.ColumnSpan="2">
+                                <TextBlock Text="{Binding Path=Value, ElementName=iudV6SingleRows,StringFormat='Spela V6/V7 på rader med lågt radvärde (under {0:N0} kr)',ConverterCulture=sv-SE}"/>
+                            </CheckBox>
+                            <xctk:IntegerUpDown x:Name="iudV6SingleRows" FormatString="C0" Value="{Binding Path=MarkBet.V6UpperBoundary}" Minimum="0" Maximum="100000000" Increment="1000" Grid.Column="2" Margin="2" Visibility="{Binding Path=MarkBet.V6Visibility}"/>
+                            
+                            <CheckBox x:Name="chkSingleRowBetMultiplier" IsChecked="{Binding Path=MarkBet.SingleRowBetMultiplier}" Margin="2" Grid.Row="1" Grid.ColumnSpan="2">
+                                <TextBlock Text="{Binding Path=Value, ElementName=iudBetmultiplier,StringFormat='Spela flerbong på enkelrader för att nå målvinst ({0:N0} kr)',ConverterCulture=sv-SE}"/>
+                            </CheckBox>
+                            <xctk:IntegerUpDown x:Name="iudBetmultiplier" FormatString="C0" Value="{Binding Path=MarkBet.SingleRowTargetProfit}" Minimum="0" Maximum="100000000" Increment="1000" Grid.Column="2" Grid.Row="1" Margin="2"/>
+
+                            <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="2">
+                                <CheckBox x:Name="chkGuaranteeReduction" IsChecked="{Binding Path=MarkBet.GuaranteeReduction}" Margin="2">
+                                    <TextBlock Text="{Binding Path=Value, ElementName=iudnumberOfToleratedErrors,StringFormat='Använd garantireducering (högst {0} fel)'}"/>
+                                </CheckBox>
+                                <CheckBox x:Name="chkFastGuaranteeReduction" IsChecked="{Binding Path=MarkBet.FastGuaranteeReduction}" Margin="8,2">
+                                    <TextBlock Text="Snabb"/>
+                                </CheckBox>
+                            </StackPanel>
+                            <xctk:IntegerUpDown x:Name="iudnumberOfToleratedErrors" Value="{Binding Path=MarkBet.NumberOfToleratedErrors}" Minimum="0" Maximum="2" Increment="1" Grid.Column="2" Grid.Row="2" Margin="2"/>
+
+                        </Grid>
+                        
+                    </GroupBox>
                 </Grid>
             </Expander.Header>
 

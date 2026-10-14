@@ -126,7 +126,7 @@ namespace HPTClient
             }
 
             // Sätt versionstext som ska synas i fönstret
-            Config.VersionText = $"Hjälp på Traven Open Source Stand Alone-rc2. Inga garantier, ingen support, ingen kostnad.";
+            Config.VersionText = $"Hjälp på Traven Open Source Stand Alone-rc3. Inga garantier, ingen support, ingen kostnad.";
             VersionText = Config.VersionText;
         }
 
@@ -969,16 +969,17 @@ namespace HPTClient
             try
             {
                 Cursor = Cursors.Wait;
-                // Cancel any previous in-progress update
-                calendarUpdateCts?.Cancel();
-                calendarUpdateCts = new CancellationTokenSource();
-
-                if (hptCalendar.RaceDayInfoList != null)
-                {
-                    hptCalendar.RaceDayInfoList.Clear();
-                }
-
-                await Task.Run(() => GetCalendar(), calendarUpdateCts.Token);
+                GetCalendar();
+                // // Cancel any previous in-progress update
+                // calendarUpdateCts?.Cancel();
+                // calendarUpdateCts = new CancellationTokenSource();
+                //
+                // if (hptCalendar.RaceDayInfoList != null)
+                // {
+                //     hptCalendar.RaceDayInfoList.Clear();
+                // }
+                //
+                // await Task.Run(() => GetCalendar(), calendarUpdateCts.Token);
             }
             catch (OperationCanceledException)
             {

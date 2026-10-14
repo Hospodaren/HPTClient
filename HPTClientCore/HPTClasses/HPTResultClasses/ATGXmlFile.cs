@@ -1920,6 +1920,8 @@ public partial class v65CouponType
 
     private System.DateTime dateField;
 
+    private string trackcodeField;
+
     private string betmultiplierField;
 
     private bool v6Field;
@@ -1969,6 +1971,20 @@ public partial class v65CouponType
         set
         {
             this.dateField = value;
+        }
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute(DataType = "integer")]
+    public string trackcode
+    {
+        get
+        {
+            return this.trackcodeField;
+        }
+        set
+        {
+            this.trackcodeField = value;
         }
     }
 

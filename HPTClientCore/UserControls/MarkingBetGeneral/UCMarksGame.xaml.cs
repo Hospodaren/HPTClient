@@ -70,9 +70,12 @@ namespace HPTClient
                 .Where(tt => tt > DateTime.Now)
                 .ToList();
 
-            var nextUpdate = _triggerTimes.OrderBy(tt => tt).First();
-            var timeToNext = nextUpdate - DateTime.Now;
-            atgUpdateTimer.Change(timeToNext, timeToNext);
+            if (_triggerTimes.Any())
+            {
+                var nextUpdate = _triggerTimes.OrderBy(tt => tt).First();
+                var timeToNext = nextUpdate - DateTime.Now;
+                atgUpdateTimer.Change(timeToNext, timeToNext);
+            }
         }
 
         void GUIElementsToShow_PropertyChanged(object sender, PropertyChangedEventArgs e)

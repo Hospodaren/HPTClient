@@ -132,21 +132,11 @@ namespace HPTClient
         [DataMember]
         public int[] RaceNumberList { get; set; }
 
-        public bool IsMarksGame
-        {
-            get
-            {
-                return Code == "V4" || Code == "V5" || Code == "V64" || Code == "V65" || Code == "V75" || Code == "V86" || Code == "GS75" || Code == "V85";
-            }
-        }
+        // public bool IsMarksGame => Code == "V4" || Code == "V5" || Code == "V64" || Code == "V65" || Code == "V75" || Code == "V86" || Code == "GS75" || Code == "V85";
+        public bool IsMarksGame => Code is "V4" or "V5" or "GS75" or "V64" or "V65" or "V75" or "V86" or "V85";
 
-        public bool HasMultiplePools
-        {
-            get
-            {
-                return Code == "GS75" || Code == "V64" || Code == "V65" || Code == "V75" || Code == "V86" || Code == "V85";
-            }
-        }
+        // public bool HasMultiplePools => Code == "GS75" || Code == "V64" || Code == "V65" || Code == "V75" || Code == "V86" || Code == "V85";
+        public bool HasMultiplePools => Code is "GS75" or "V64" or "V65" or "V75" or "V86" or "V85";
 
         [XmlIgnore]
         public decimal PoolShare
@@ -155,41 +145,17 @@ namespace HPTClient
             {
                 if (field == 0m)
                 {
-                    switch (Code)
+                    field = Code switch
                     {
-                        case "V3":
-                        case "V4":
-                        case "DD":
-                        case "LD":
-                            field = 0.75m;
-                            break;
-                        case "V5":
-                            field = 0.65m;
-                            break;
-                        case "V64":
-                        case "V75":
-                        case "GS75":
-                        case "V86":
-                            field = 0.26m;
-                            break;
-                        case "V85":
-                            field = 0.195m;    // TODO: Ändra till 0.195 när ATG ändrar
-                            break;
-                        case "V65":
-                            field = 0.325m;
-                            break;
-                        case "T":
-                            field = 0.7m;
-                            break;
-                        case "V":
-                        case "P":
-                        case "TV":
-                            field = 0.8m;
-                            break;
-                        default:
-                            field = 1m;
-                            break;
-                    }
+                        "V3" or "V4" or "DD" or "LD" => 0.75m,
+                        "V5" => 0.65m,
+                        "V64" or "V75" or "GS75" or "V86" => 0.26m,
+                        "V85" => 0.195m,
+                        "V65" => 0.325m,
+                        "T" => 0.7m,
+                        "V" or "P" or "TV" => 0.8m,
+                        _ => 1m
+                    };
                 }
                 return field;
             }
@@ -202,35 +168,14 @@ namespace HPTClient
             {
                 if (field == 0m)
                 {
-                    switch (Code)
+                    field = Code switch
                     {
-                        case "V3":
-                        case "V4":
-                        case "DD":
-                        case "LD":
-                            field = 0.75m;
-                            break;
-                        case "V5":
-                        case "V64":
-                        case "V75":
-                        case "V85":
-                        case "GS75":
-                        case "V86":
-                        case "V65":
-                            field = 0.65m;
-                            break;
-                        case "T":
-                            field = 0.7m;
-                            break;
-                        case "V":
-                        case "P":
-                        case "TV":
-                            field = 0.8m;
-                            break;
-                        default:
-                            field = 1m;
-                            break;
-                    }
+                        "V3" or "V4" or "DD" or "LD" => 0.75m,
+                        "V5" or "V64" or "V75" or "V85" or "GS75" or "V86" or "V65" => 0.65m,
+                        "T" => 0.7m,
+                        "V" or "P" or "TV" => 0.8m,
+                        _ => 1m
+                    };
                 }
                 return field;
             }
@@ -243,24 +188,14 @@ namespace HPTClient
             {
                 if (field == 0m)
                 {
-                    switch (Code)
+                    field = Code switch
                     {
-                        case "V64":
-                        case "V75":
-                        case "GS75":
-                        case "V86":
-                            field = 0.13m;
-                            break;
-                        case "V85":
-                            field = 0.13m;    //TODO: Ändra till 0.13 när ATG ändrar
-                            break;
-                        case "V65":
-                            field = 0.325m;
-                            break;
-                        default:
-                            field = 0m;
-                            break;
-                    }
+                        "V64" or "V75" or "GS75" or "V86" => 0.13m,
+                        "V85" => 0.13m //TODO: Ändra till 0.13 när ATG ändrar
+                        ,
+                        "V65" => 0.325m,
+                        _ => 0m
+                    };
                 }
                 return field;
             }
@@ -273,21 +208,12 @@ namespace HPTClient
             {
                 if (field == 0m)
                 {
-                    switch (Code)
+                    field = Code switch
                     {
-                        case "V64":
-                        case "V75":
-                        case "GS75":
-                        case "V86":
-                            field = 0.26m;
-                            break;
-                        case "V85":
-                            field = 0.0975m;
-                            break;
-                        default:
-                            field = 0m;
-                            break;
-                    }
+                        "V64" or "V75" or "GS75" or "V86" => 0.26m,
+                        "V85" => 0.0975m,
+                        _ => 0m
+                    };
                 }
                 return field;
             }
@@ -300,15 +226,11 @@ namespace HPTClient
             {
                 if (field == 0m)
                 {
-                    switch (Code)
+                    field = Code switch
                     {
-                        case "V85":
-                            field = 0.2275m;
-                            break;
-                        default:
-                            field = 0m;
-                            break;
-                    }
+                        "V85" => 0.2275m,
+                        _ => 0m
+                    };
                 }
                 return field;
             }
@@ -321,21 +243,12 @@ namespace HPTClient
             {
                 if (field == 0m)
                 {
-                    switch (Code)
+                    field = Code switch
                     {
-                        case "V64":
-                        case "V75":
-                        case "GS75":
-                        case "V86":
-                            field = 2.5m;
-                            break;
-                        case "V65":
-                            field = 2.0m;
-                            break;
-                        default:
-                            field = 1m;
-                            break;
-                    }
+                        "V64" or "V75" or "GS75" or "V86" => 2.5m,
+                        "V65" => 2.0m,
+                        _ => 1m
+                    };
                 }
                 return field;
             }
@@ -348,23 +261,13 @@ namespace HPTClient
             {
                 if (string.IsNullOrEmpty(field))
                 {
-                    switch (Code)
+                    field = Code switch
                     {
-                        case "V64":
-                        case "V65":
-                            field = "V6";
-                            break;
-                        case "V75":
-                        case "GS75":
-                            field = "V7";
-                            break;
-                        case "V86":
-                            field = "V8";
-                            break;
-                        default:
-                            field = string.Empty;
-                            break;
-                    }
+                        "V64" or "V65" => "V6",
+                        "V75" or "GS75" => "V7",
+                        "V86" => "V8",
+                        _ => string.Empty
+                    };
                 }
                 return field;
             }
@@ -385,141 +288,165 @@ namespace HPTClient
                         case "GS75":
                         case "V86":
                         case "V85":
-                            field = new ObservableCollection<HPTRowValueInterval>
-                            {
+                            field =
+                            [
+
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = null,
                                     UpperLimit = 1000
                                 },
+
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = 1000,
                                     UpperLimit = 5000
                                 },
+
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = 5000,
                                     UpperLimit = 10000
                                 },
+
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = 10000,
                                     UpperLimit = 50000
                                 },
+
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = 50000,
                                     UpperLimit = 100000
                                 },
+
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = 100000,
                                     UpperLimit = 500000
                                 },
+
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = 500000,
                                     UpperLimit = 1000000
                                 },
+
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = 1000000,
                                     UpperLimit = null
                                 }
-                            };
+                            ];
                             break;
                         case "V4":
                         case "V5":
-                            field = new ObservableCollection<HPTRowValueInterval>
-                            {
+                            field =
+                            [
+
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = null,
                                     UpperLimit = 300
                                 },
+
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = 300,
                                     UpperLimit = 1500
                                 },
+
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = 1500,
                                     UpperLimit = 3000
                                 },
+
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = 3000,
                                     UpperLimit = 15000
                                 },
+
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = 15000,
                                     UpperLimit = 30000
                                 },
+
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = 30000,
                                     UpperLimit = 150000
                                 },
+
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = 150000,
                                     UpperLimit = 300000
                                 },
+
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = 300000,
                                     UpperLimit = null
                                 }
-                            };
+                            ];
                             break;
                         case "V64":
                         case "V65":
-                            field = new ObservableCollection<HPTRowValueInterval>
-                            {
+                            field =
+                            [
+
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = null,
                                     UpperLimit = 500
                                 },
+
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = 500,
                                     UpperLimit = 2500
                                 },
+
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = 2500,
                                     UpperLimit = 5000
                                 },
+
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = 5000,
                                     UpperLimit = 25000
                                 },
+
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = 25000,
                                     UpperLimit = 50000
                                 },
+
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = 50000,
                                     UpperLimit = 250000
                                 },
+
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = 250000,
                                     UpperLimit = 500000
                                 },
+
                                 new HPTRowValueInterval()
                                 {
                                     LowerLimit = 500000,
                                     UpperLimit = null
                                 }
-                            };
+                            ];
                             break;
                         default:
                             break;
@@ -529,7 +456,6 @@ namespace HPTClient
             }
         }
 
-
         [XmlIgnore]
         public HPTRowValuePercentile[] RowValuePercentileList
         {
@@ -537,9 +463,9 @@ namespace HPTClient
             {
                 if (field == null)
                 {
-                    field = new HPTRowValuePercentile[]
-                            {
-                                new HPTRowValuePercentile()
+                    field =
+                    [
+                        new HPTRowValuePercentile()
                                 {
                                     Percentile = 0.00M,
                                     Description = "Min"
@@ -564,7 +490,7 @@ namespace HPTClient
                                     Percentile = 1.00M,
                                     Description = "Max"
                                 }
-                            };
+                    ];
                 }
                 return field;
             }
@@ -581,13 +507,13 @@ namespace HPTClient
                     {
                         case "V75":
                         case "GS75":
-                            field = new HPTPayOut[]
-                            {
+                            field =
+                            [
                                 new HPTPayOut()
                                 {
                                     NumberOfCorrect = 7
                                 },
-                                new HPTPayOut()
+                                new HPTPayOut() 
                                 {
                                     NumberOfCorrect = 6
                                 },
@@ -595,11 +521,11 @@ namespace HPTClient
                                 {
                                     NumberOfCorrect = 5
                                 }
-                            };
+                            ];
                             break;
                         case "V86":
-                            field = new HPTPayOut[]
-                            {
+                            field =
+                            [
                                 new HPTPayOut()
                                 {
                                     NumberOfCorrect = 8
@@ -612,11 +538,11 @@ namespace HPTClient
                                 {
                                     NumberOfCorrect = 6
                                 }
-                            };
+                            ];
                             break;
                         case "V85":
-                            field = new HPTPayOut[]
-                            {
+                            field =
+                            [
                                 new HPTPayOut()
                                 {
                                     NumberOfCorrect = 8
@@ -633,29 +559,29 @@ namespace HPTClient
                                 {
                                     NumberOfCorrect = 5
                                 }
-                            };
+                            ];
                             break;
                         case "V5":
-                            field = new HPTPayOut[]
-                            {
+                            field =
+                            [
                                 new HPTPayOut()
                                 {
                                     NumberOfCorrect = 5
                                 }
-                            };
+                            ];
                             break;
                         case "V4":
-                            field = new HPTPayOut[]
-                            {
+                            field =
+                            [
                                 new HPTPayOut()
                                 {
                                     NumberOfCorrect = 4
                                 }
-                            };
+                            ];
                             break;
                         case "V64":
-                            field = new HPTPayOut[]
-                            {
+                            field =
+                            [
                                 new HPTPayOut()
                                 {
                                     NumberOfCorrect = 6
@@ -668,11 +594,11 @@ namespace HPTClient
                                 {
                                     NumberOfCorrect = 4
                                 }
-                            };
+                            ];
                             break;
                         case "V65":
-                            field = new HPTPayOut[]
-                            {
+                            field =
+                            [
                                 new HPTPayOut()
                                 {
                                     NumberOfCorrect = 6
@@ -681,7 +607,7 @@ namespace HPTClient
                                 {
                                     NumberOfCorrect = 5
                                 }
-                            };
+                            ];
                             break;
                         default:
                             break;
@@ -698,24 +624,12 @@ namespace HPTClient
             {
                 if (field == null || field.Count() == 0)
                 {
-                    switch (Code)
+                    field = Code switch
                     {
-                        case "V75":
-                        case "GS75":
-                        case "V86":
-                        case "V85":
-                        case "V5":
-                            field = new int[] { 1, 2, 5, 10, 20, 50, 100 };
-                            break;
-                        case "V4":
-                        case "V64":
-                        case "V65":
-                            field = new int[] { 1, 2, 3, 4, 5, 10, 50, 100 };
-                            break;
-                        default:
-                            field = new int[] { 1 };
-                            break;
-                    }
+                        "V75" or "GS75" or "V86" or "V85" or "V5" => [1, 2, 5, 10, 20, 50, 100],
+                        "V4" or "V64" or "V65" => [1, 2, 3, 4, 5, 10, 50, 100],
+                        _ => [1]
+                    };
                 }
                 return field;
             }
@@ -728,20 +642,12 @@ namespace HPTClient
             {
                 if (field == 0)
                 {
-                    switch (Code)
+                    field = Code switch
                     {
-                        case "DD":
-                        case "LD":
-                        case "TV":
-                            field = 5;
-                            break;
-                        case "T":
-                            field = 2;
-                            break;
-                        default:
-                            field = 1;
-                            break;
-                    }
+                        "DD" or "LD" or "TV" => 5,
+                        "T" => 2,
+                        _ => 1
+                    };
                 }
                 return field;
             }
@@ -754,20 +660,12 @@ namespace HPTClient
             {
                 if (field == 0)
                 {
-                    switch (Code)
+                    field = Code switch
                     {
-                        case "DD":
-                        case "LD":
-                        case "TV":
-                            field = 1000;
-                            break;
-                        case "T":
-                            field = 500;
-                            break;
-                        default:
-                            field = 1;
-                            break;
-                    }
+                        "DD" or "LD" or "TV" => 1000,
+                        "T" => 500,
+                        _ => 1
+                    };
                 }
                 return field;
             }
@@ -780,31 +678,16 @@ namespace HPTClient
             {
                 if (field == 0M)
                 {
-                    switch (Code)
+                    field = Code switch
                     {
-                        case "V3":
-                            field = 10m;
-                            break;
-                        case "V4":
-                            field = 2m;
-                            break;
-                        case "V5":
-                        case "V64":
-                        case "V65":
-                        case "GS75":
-                            field = 1m;
-                            break;
-                        case "V75":
-                        case "V85":
-                            field = 0.5m;
-                            break;
-                        case "V86":
-                            field = 0.25m;
-                            break;
-                        default:
-                            field = 0m;
-                            break;
-                    }
+                        "V3" => 10m,
+                        "V4" => 2m,
+                        "V5" or "V64" or "V65" or "GS75" => 1m,
+                        "V75" => 0.6m,
+                        "V85" => 0.5m,
+                        "V86" => 0.25m,
+                        _ => 0m
+                    };
                 }
                 return field;
             }
@@ -906,26 +789,13 @@ namespace HPTClient
             {
                 if (field == 0m)
                 {
-                    switch (Code)
+                    field = Code switch
                     {
-                        case "V4":
-                        case "V5":
-                            field = 500;
-                            break;
-                        case "V65":
-                        case "V64":
-                            field = 2000;
-                            break;
-                        case "V75":
-                        case "V85":
-                        case "GS75":
-                        case "V86":
-                            field = 5000;
-                            break;
-                        default:
-                            field = 9999;
-                            break;
-                    }
+                        "V4" or "V5" => 500,
+                        "V65" or "V64" => 2000,
+                        "V75" or "V85" or "GS75" or "V86" => 5000,
+                        _ => 9999
+                    };
                 }
                 return field;
             }
