@@ -7,7 +7,17 @@ namespace HPTClient
         private HPTHorse[] horseList;
         private HPTMarkBet markBet;
 
-        public List<HPTMarkBetSingleRowCombination> CompressedCoupons { get; set; }
+        public List<HPTMarkBetSingleRowCombination> CompressedCoupons
+        {
+            get;
+            set
+            {
+                if (Equals(value, field)) return;
+                field = value;
+                OnPropertyChanged();
+            }
+        }
+
         private HPTMarkBetSingleRow[] AllRows;
         internal bool SaveAllRows;
 
@@ -15,9 +25,38 @@ namespace HPTClient
         public event Action AnalyzingFinished;
 
         // Properties för att hantera trådad beräkning och komprimering
-        public bool CompressionInProgress { get; set; }
-        public bool CalculationInProgress { get; set; }
-        public bool StopCalculation { get; set; }
+        public bool CompressionInProgress
+        {
+            get;
+            set
+            {
+                if (value == field) return;
+                field = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool CalculationInProgress
+        {
+            get;
+            set
+            {
+                if (value == field) return;
+                field = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool StopCalculation
+        {
+            get;
+            set
+            {
+                if (value == field) return;
+                field = value;
+                OnPropertyChanged();
+            }
+        }
 
         public HPTMarkBetSingleRowCollection(HPTMarkBet markBet)
         {
@@ -37,6 +76,7 @@ namespace HPTClient
             set
             {
                 singleRows = value;
+                OnPropertyChanged();
                 OnPropertyChanged("SingleRowsObservable");
             }
         }
@@ -665,6 +705,7 @@ namespace HPTClient
             {
                 field = value;
                 OnPropertyChanged();
+                OnPropertyChanged();
             }
         }
 
@@ -675,6 +716,7 @@ namespace HPTClient
             {
                 field = value;
                 OnPropertyChanged();
+                OnPropertyChanged();
             }
         }
 
@@ -684,6 +726,7 @@ namespace HPTClient
             set
             {
                 field = value;
+                OnPropertyChanged();
                 OnPropertyChanged();
             }
         }
@@ -699,6 +742,7 @@ namespace HPTClient
             {
                 numberOfAnalyzedRows = value;
                 OnPropertyChanged();
+                OnPropertyChanged();
             }
         }
 
@@ -708,6 +752,7 @@ namespace HPTClient
             set
             {
                 field = value;
+                OnPropertyChanged();
                 OnPropertyChanged();
             }
         }
@@ -1186,6 +1231,7 @@ namespace HPTClient
             {
                 field = value;
                 OnPropertyChanged();
+                OnPropertyChanged();
             }
         }
 
@@ -1195,6 +1241,7 @@ namespace HPTClient
             set
             {
                 field = value;
+                OnPropertyChanged();
                 OnPropertyChanged();
             }
         }

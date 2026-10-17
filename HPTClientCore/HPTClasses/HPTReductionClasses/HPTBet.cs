@@ -353,7 +353,7 @@ namespace HPTClient
             set
             {
                 field = value;
-                OnPropertyChanged("HorseRankVariablesToShowList");
+                OnPropertyChanged();
             }
         }
 

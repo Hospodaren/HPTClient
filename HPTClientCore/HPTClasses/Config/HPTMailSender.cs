@@ -37,7 +37,7 @@ namespace HPTClient
             set
             {
                 field = value;
-                OnPropertyChanged("MyProperty");
+                OnPropertyChanged();
             }
         }
 
