@@ -593,7 +593,7 @@
 
                     <!--Kortsiktigt trend-->
                     <GridViewColumn x:Name="gvcShortTrend">
-                        <GridViewColumnHeader Tag="LongTrend" Content="Kort trend"
+                        <GridViewColumnHeader Tag="ShortTrend" Content="Kort trend"
                                     ToolTipService.ToolTip="Relativ trendprocent"/>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>

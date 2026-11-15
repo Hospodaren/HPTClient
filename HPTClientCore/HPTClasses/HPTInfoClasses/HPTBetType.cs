@@ -57,28 +57,36 @@ namespace HPTClient
 
         internal void SetCalendarRacaDayInfoBrush()
         {
-            var c = Colors.Transparent;
-            if (StartTime.Date == DateTime.Now.Date)
+            var colour = StartTime switch
             {
-                if (StartTime > DateTime.Now)
-                {
-                    c = Colors.LightGreen;
-                }
-                else if (EndTime < DateTime.Now)
-                {
-                    c = Colors.IndianRed;
-                }
-                else
-                {
-                    c = Colors.LightYellow;
-                }
-            }
-            else if (EndTime < DateTime.Now)
-            {
-                c = Colors.IndianRed;
-            }
+                _ when StartTime > DateTime.Now => Colors.LightGreen,
+                _ when EndTime < DateTime.Now => Colors.IndianRed,
+                _ when DateTime.Now > StartTime && DateTime.Now < EndTime => Colors.LightYellow,
+                _ => Colors.Transparent
+            };
+            
+            // var c = Colors.Transparent;
+            // if (StartTime.Date == DateTime.Now.Date)
+            // {
+            //     if (StartTime > DateTime.Now)
+            //     {
+            //         c = Colors.LightGreen;
+            //     }
+            //     else if (EndTime < DateTime.Now)
+            //     {
+            //         c = Colors.IndianRed;
+            //     }
+            //     else
+            //     {
+            //         c = Colors.LightYellow;
+            //     }
+            // }
+            // else if (EndTime < DateTime.Now)
+            // {
+            //     c = Colors.IndianRed;
+            // }
 
-            CalendarRacaDayInfoBrush = new SolidColorBrush(c);
+            CalendarRacaDayInfoBrush = new SolidColorBrush(colour);
         }
 
         public Brush CalendarRacaDayInfoBrush

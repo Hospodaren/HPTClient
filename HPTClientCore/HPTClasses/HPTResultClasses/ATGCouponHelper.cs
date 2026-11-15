@@ -1158,7 +1158,7 @@ namespace HPTClient
         {
             var reservsFromReservOrder = race.HorseList
                 .Where(h => h.Scratched == false || h.Scratched == null)
-                .OrderByDescending(h => h.StakeDistribution)
+                .OrderByDescending(h => h.StakeDistributionShare)
                 .Select(h => h.StartNr)
                 .Except(couponHorses)
                 .Except(reservsToChooseFrom.Where(nr => nr > 0))
@@ -1353,13 +1353,13 @@ namespace HPTClient
             {
                 var orderedHorses = race.HorseList
                     .Where(h => h.Scratched != true)
-                    .OrderByDescending(h => h.StakeDistribution)
+                    .OrderByDescending(h => h.StakeDistributionShare)
                     //.Select(h => h.StartNr)
                     .ToArray();
 
                 var reservsToChooseFrom = orderedHorses
                     .Where(h => !h.Selected)
-                    .OrderByDescending(h => h.StakeDistribution)
+                    .OrderByDescending(h => h.StakeDistributionShare)
                     .Concat(orderedHorses)
                     .Select(h => h.StartNr)
                     .ToArray();

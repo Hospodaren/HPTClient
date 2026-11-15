@@ -435,14 +435,14 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
-                                <!-- <RowDefinition Height="Auto"/> -->
-                                <!-- <RowDefinition Height="Auto"/> -->
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
                                 <!-- <RowDefinition Height="Auto"/> -->
                                 <!-- <RowDefinition Height="Auto"/> -->
                                 <!-- <RowDefinition Height="Auto"/> -->
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="320"/>
+                                <ColumnDefinition Width="300"/>
                                 <ColumnDefinition Width="50"/>
                                 <ColumnDefinition Width="100"/>
                             </Grid.ColumnDefinitions>
@@ -456,7 +456,7 @@
                             </CheckBox>
                             <xctk:IntegerUpDown x:Name="iudBetmultiplier" FormatString="C0" Value="{Binding Path=MarkBet.SingleRowTargetProfit}" Minimum="0" Maximum="100000000" Increment="1000" Grid.Column="2" Grid.Row="1" Margin="2"/>
 
-                            <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="2">
+                            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.ColumnSpan="2">
                                 <CheckBox x:Name="chkGuaranteeReduction" IsChecked="{Binding Path=MarkBet.GuaranteeReduction}" Margin="2">
                                     <TextBlock Text="{Binding Path=Value, ElementName=iudnumberOfToleratedErrors,StringFormat='Använd garantireducering (högst {0} fel)'}"/>
                                 </CheckBox>
@@ -465,6 +465,16 @@
                                 </CheckBox>
                             </StackPanel>
                             <xctk:IntegerUpDown x:Name="iudnumberOfToleratedErrors" Value="{Binding Path=MarkBet.NumberOfToleratedErrors}" Minimum="0" Maximum="2" Increment="1" Grid.Column="2" Grid.Row="2" Margin="2"/>
+
+                            <CheckBox x:Name="chkRandomRowReduction" IsChecked="{Binding Path=RandomRowReduction}" Margin="2" Grid.Row="2" Grid.ColumnSpan="2">
+                                <TextBlock Text="{Binding Path=Value, ElementName=iudRandomRowReductionTarget,StringFormat='Ta slumpmässigt bort rader för att nå {0} kr i insats'}"/>
+                            </CheckBox>
+                            <xctk:IntegerUpDown x:Name="iudRandomRowReductionTarget" Value="{Binding Path=MarkBet.RandomRowReductionTarget}" FormatString="C0" Minimum="0" Maximum="10000000" Increment="100" Grid.Column="2" Grid.Row="2" Margin="2"/>
+
+                            <CheckBox x:Name="chkBetMultiplierRowAddition" IsChecked="{Binding Path=BetMultiplierRowAddition}" Margin="2" Grid.Row="3" Grid.ColumnSpan="2">
+                                <TextBlock Text="{Binding Path=Value, ElementName=iudBetMultiplierRowAdditionTarget,StringFormat='Spela flerbong för att uppnå {0} kr i insats'}"/>
+                            </CheckBox>
+                            <xctk:IntegerUpDown x:Name="iudBetMultiplierRowAdditionTarget" Value="{Binding Path=MarkBet.BetMultiplierRowAdditionTarget}" FormatString="C0" Minimum="0" Maximum="10000000" Increment="100" Grid.Column="2" Grid.Row="3" Margin="2"/>
 
                         </Grid>
                         

@@ -64,7 +64,7 @@ namespace HPTClient
             {
                 var startTime = DateTime.Today.AddHours(8D).AddMinutes(1);  // Första hämtning 08:01 på morgonen
                 var endTime = MarkBet.RaceDayInfo.RaceDayDate.AddMinutes(-5D);  // Sista hämtning fem minuter innan spelstopp
-                _triggerTimes = CreateTriggerTimes(startTime, endTime, 10, 1.5D);
+                _triggerTimes = CreateTriggerTimes(startTime, endTime, 12, 1.6D);
             }
             _triggerTimes = _triggerTimes
                 .Where(tt => tt > DateTime.Now)

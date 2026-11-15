@@ -364,7 +364,10 @@ namespace HPTClient
                 todaysBetTypes.ForEach(bt => bt.SetCalendarRacaDayInfoBrush());
 
                 var dtNow = DateTime.Now;
-                var nextTimerUpdate = todaysBetTypes.Select(bt => bt.NextTime).OrderBy(nt => nt).FirstOrDefault(nt => nt > dtNow);
+                var nextTimerUpdate = todaysBetTypes
+                    .Select(bt => bt.NextTime)
+                    .OrderBy(nt => nt)
+                    .FirstOrDefault(nt => nt > dtNow);
                 if (nextTimerUpdate != null && nextTimerUpdate > DateTime.Now)
                 {
                     var ts = nextTimerUpdate - dtNow;
