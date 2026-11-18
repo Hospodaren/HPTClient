@@ -44,19 +44,26 @@ namespace HPTClient
 
             //SetEventHandlers();
 
-            switch (BetType.Code)
+            V6Visibility = (BetType.Code, RaceDayInfo.Jackpot) switch
             {
-                case "V64":
-                case "V65":
-                case "GS75":
-                    //case "V75":
-                    //case "V86":
-                    V6Visibility = System.Windows.Visibility.Visible;
-                    break;
-                default:
-                    V6Visibility = System.Windows.Visibility.Collapsed;
-                    break;
-            }
+                ("V64" or "V65" or "GS75", _) => System.Windows.Visibility.Visible,
+                ("V75", > 0) => System.Windows.Visibility.Visible,
+                _=> System.Windows.Visibility.Collapsed
+            };
+            
+            // switch (BetType.Code)
+            // {
+            //     case "V64":
+            //     case "V65":
+            //     case "GS75":
+            //         //case "V75":
+            //         //case "V86":
+            //         V6Visibility = System.Windows.Visibility.Visible;
+            //         break;
+            //     default:
+            //         V6Visibility = System.Windows.Visibility.Collapsed;
+            //         break;
+            // }
 
             // Lista med beräknade templates
             TemplateResultList = new ObservableCollection<HPTMarkBetTemplateResult>();

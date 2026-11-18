@@ -219,6 +219,7 @@ namespace HPTClient
                         betmultiplier = hc.BetMultiplier.ToString(),
                         couponid = hc.CouponIdFile.ToString(),
                         date = hc.Date,
+                        trackcode = hc.TrackCode,
                         v6 = hc.V6,
                         leg = ConvertRaceListToLegArray(hc.CouponRaceList)
                     }).ToArray();
@@ -1157,7 +1158,7 @@ namespace HPTClient
         {
             var reservsFromReservOrder = race.HorseList
                 .Where(h => h.Scratched == false || h.Scratched == null)
-                .OrderByDescending(h => h.StakeDistribution)
+                .OrderByDescending(h => h.StakeDistributionShare)
                 .Select(h => h.StartNr)
                 .Except(couponHorses)
                 .Except(reservsToChooseFrom.Where(nr => nr > 0))
@@ -1352,13 +1353,13 @@ namespace HPTClient
             {
                 var orderedHorses = race.HorseList
                     .Where(h => h.Scratched != true)
-                    .OrderByDescending(h => h.StakeDistribution)
+                    .OrderByDescending(h => h.StakeDistributionShare)
                     //.Select(h => h.StartNr)
                     .ToArray();
 
                 var reservsToChooseFrom = orderedHorses
                     .Where(h => !h.Selected)
-                    .OrderByDescending(h => h.StakeDistribution)
+                    .OrderByDescending(h => h.StakeDistributionShare)
                     .Concat(orderedHorses)
                     .Select(h => h.StartNr)
                     .ToArray();

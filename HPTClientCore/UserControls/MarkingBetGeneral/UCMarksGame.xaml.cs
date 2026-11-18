@@ -64,15 +64,18 @@ namespace HPTClient
             {
                 var startTime = DateTime.Today.AddHours(8D).AddMinutes(1);  // Första hämtning 08:01 på morgonen
                 var endTime = MarkBet.RaceDayInfo.RaceDayDate.AddMinutes(-5D);  // Sista hämtning fem minuter innan spelstopp
-                _triggerTimes = CreateTriggerTimes(startTime, endTime, 10, 1.5D);
+                _triggerTimes = CreateTriggerTimes(startTime, endTime, 12, 1.6D);
             }
             _triggerTimes = _triggerTimes
                 .Where(tt => tt > DateTime.Now)
                 .ToList();
 
-            var nextUpdate = _triggerTimes.OrderBy(tt => tt).First();
-            var timeToNext = nextUpdate - DateTime.Now;
-            atgUpdateTimer.Change(timeToNext, timeToNext);
+            if (_triggerTimes.Any())
+            {
+                var nextUpdate = _triggerTimes.OrderBy(tt => tt).First();
+                var timeToNext = nextUpdate - DateTime.Now;
+                atgUpdateTimer.Change(timeToNext, timeToNext);
+            }
         }
 
         void GUIElementsToShow_PropertyChanged(object sender, PropertyChangedEventArgs e)
