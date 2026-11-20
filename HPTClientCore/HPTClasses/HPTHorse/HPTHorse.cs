@@ -1,6 +1,7 @@
 ﻿using ATGDownloader;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Numerics;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Text.RegularExpressions;
